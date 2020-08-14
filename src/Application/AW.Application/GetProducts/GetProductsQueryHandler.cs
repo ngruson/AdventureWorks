@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.Interfaces;
+using AW.Application.Specifications;
 using AW.Domain.Production;
 using MediatR;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace AW.Application.GetProducts
         
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await repository.ListAllAsync();
+            var spec = new ProductFilterSpecification();
+            var products = await repository.ListAsync(spec);
             return mapper.Map<IEnumerable<ProductDto>>(products);
         }
     }

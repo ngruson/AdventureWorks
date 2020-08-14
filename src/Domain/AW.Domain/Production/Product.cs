@@ -72,7 +72,7 @@ namespace AW.Domain.Production
 
         public virtual ICollection<ProductListPriceHistory> ProductListPriceHistory { get; set; } = new List<ProductListPriceHistory>();
 
-        public virtual ICollection<ProductProductPhoto> ProductProductPhoto { get; set; } = new List<ProductProductPhoto>();
+        public virtual ICollection<ProductProductPhoto> ProductProductPhotos { get; set; } = new List<ProductProductPhoto>();
 
         public virtual ICollection<ProductReview> ProductReview { get; set; } = new List<ProductReview>();
 

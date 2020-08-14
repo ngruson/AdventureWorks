@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AW.Application.Common.Mappings;
 using AW.Domain.Production;
+using System.Linq;
 
 namespace AW.Application.GetProducts
 {
@@ -17,10 +18,16 @@ namespace AW.Application.GetProducts
         public string ProductLine { get; set; }
         public string Class { get; set; }
         public string Style { get; set; }
+        public byte[] LargePhoto { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Product, ProductDto>();
+            profile.CreateMap<Product, ProductDto>()
+                .ForMember(m => m.LargePhoto, opt => opt.MapFrom((src, dest) =>
+                    {
+                        var primaryPhoto = src.ProductProductPhotos.SingleOrDefault(p => p.Primary);
+                        return primaryPhoto.ProductPhoto.LargePhoto;
+                    }));
         }
     }
 }

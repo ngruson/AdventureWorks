@@ -1,0 +1,13 @@
+﻿@model AW.UI.Web.External.ViewModels.ProductViewModel
+
+<form>
+    <img class="aw-products-thumbnail" src=@($"data:image/gif;base64,{Convert.ToBase64String(Model.LargePhoto)}") />
+    <input class="aw-products-button" type="submit" value="[ ADD TO BASKET ]" />
+    <div class="aw-products-name">
+        <span>@Model.Name</span>
+    </div>
+    <div class="aw-products-price">
+        <span>@Model.ListPrice.ToString("N2")</span>
+    </div>
+    <input type="hidden" asp-for="@Model.Name" name="name" />
+</form>

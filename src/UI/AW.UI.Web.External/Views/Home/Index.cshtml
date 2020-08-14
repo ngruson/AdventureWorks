@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    @model ProductsIndexViewModel;
+}
+
+@if (Model.Products.Any())
+{
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4">
+                <partial name="_product" for="@product" />
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row">
+        THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+    </div>
+}

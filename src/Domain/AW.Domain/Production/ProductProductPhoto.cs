@@ -2,7 +2,7 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ProductProductPhoto : BaseEntity
+    public class ProductProductPhoto
     {
         public int ProductID { get; set; }
 

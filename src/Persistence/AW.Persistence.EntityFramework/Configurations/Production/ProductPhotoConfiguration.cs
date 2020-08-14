@@ -9,6 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         {
             ToTable("Production.ProductPhoto");
 
+            Property(pp => pp.Id)
+                .HasColumnName("ProductPhotoID");
+
             Property(pp => pp.ThumbnailPhotoFileName)
                 .HasMaxLength(50);
 
