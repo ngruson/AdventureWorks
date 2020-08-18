@@ -9,5 +9,6 @@ namespace AW.ProductService.Messages
     {
         [System.Xml.Serialization.XmlElement(Namespace = "http://services.aw.com/ProductService/1.0")]
         public List<ProductDto> Products { get; set; } = new List<ProductDto>();
+        public int TotalProducts { get; set; }
     }
 }

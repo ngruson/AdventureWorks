@@ -10,7 +10,7 @@
       "System.Collections.Generic.Dictionary`2"
     ],
     "namespaceMappings": [
-      "*, ProductService"
+      "*, AW.UI.Web.External.ProductService"
     ],
     "references": [
       "Microsoft.AspNetCore, {Microsoft.AspNetCore, 2.2.0}",

@@ -15,9 +15,9 @@ namespace AW.UI.Web.External.Controllers
             this.productsViewModelService = productsViewModelService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageId)
         {
-            return View(await productsViewModelService.GetProducts());
+            return View(await productsViewModelService.GetProducts(pageId ?? 0, Constants.ITEMS_PER_PAGE));
         }
 
         public IActionResult Privacy()

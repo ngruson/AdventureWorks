@@ -5,6 +5,6 @@ namespace AW.UI.Web.External.Interfaces
 {
     public interface IProductsViewModelService
     {
-        Task<ProductsIndexViewModel> GetProducts();
+        Task<ProductsIndexViewModel> GetProducts(int pageIndex, int pageSize);
     }
 }

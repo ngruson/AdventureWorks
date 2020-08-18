@@ -10,18 +10,6 @@ namespace AW.ProductService
     {
 
         [OperationContract(Action = "ListProducts", ReplyAction = "ListProducts")]
-        Task<ListProductsResponse> ListProducts();
-    }
-
-    [MessageContract(IsWrapped = false)]
-    public class ListProductsRequestMessage
-    {
-    }
-
-    [MessageContract(IsWrapped = false)]
-    public class ListProductsResponseMessage
-    {
-        [MessageBodyMember(Namespace = "http://services.aw.com/ProductService/1.0")]
-        public ListProductsResponse ListProductsResponse { get; set; }
+        Task<ListProductsResponse> ListProducts(ListProductsRequest request);
     }
 }

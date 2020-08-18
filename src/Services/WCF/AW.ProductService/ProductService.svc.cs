@@ -1,4 +1,5 @@
-﻿using AW.Application.GetProducts;
+﻿using AW.Application.CountProducts;
+using AW.Application.GetProducts;
 using AW.ProductService.Messages;
 using MediatR;
 using System.Linq;
@@ -13,16 +14,21 @@ namespace AW.ProductService
         private readonly IMediator mediator;
 
         public ProductService(IMediator mediator) =>
-            (this.mediator) = (mediator);
+            (this.mediator) = (mediator);        
 
-        public async Task<ListProductsResponse> ListProducts()
+        public async Task<ListProductsResponse> ListProducts(ListProductsRequest request)
         {
-            var query = new GetProductsQuery();
+            var query = new GetProductsQuery
+            {
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize
+            };
             var products = await mediator.Send(query);
             
             var response = new ListProductsResponse
             {
-                Products = products.ToList()
+                TotalProducts = await mediator.Send(new CountProductsQuery()),
+                Products = products.ToList(),
             };
 
             return response;

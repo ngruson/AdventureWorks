@@ -5,6 +5,7 @@
 
 @if (Model.Products.Any())
 {
+    <partial name="_pagination" for="@Model.PaginationInfo" />
     <div class="row">
         @foreach (var product in Model.Products)
         {

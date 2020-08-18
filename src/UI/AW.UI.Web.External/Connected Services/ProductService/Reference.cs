@@ -9,292 +9,306 @@
 
 namespace AW.UI.Web.External.ProductService
 {
-    using System.Runtime.Serialization;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ListProductsResult", Namespace="http://services.aw.com/ProductService/1.0", ItemName="Products")]
-    public class ListProductsResult : System.Collections.Generic.List<ProductService.ProductDto>
-    {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductDto", Namespace="http://services.aw.com/ProductService/1.0")]
-    public partial class ProductDto : object
-    {
-        
-        private string NameField;
-        
-        private string ProductNumberField;
-        
-        private string ColorField;
-        
-        private decimal ListPriceField;
-        
-        private string SizeField;
-        
-        private string SizeUnitMeasureCodeField;
-        
-        private decimal WeightField;
-        
-        private string WeightUnitMeasureCodeField;
-        
-        private string ProductLineField;
-        
-        private string ClassField;
-        
-        private string StyleField;
-        
-        private byte[] LargePhotoField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string Name
-        {
-            get
-            {
-                return this.NameField;
-            }
-            set
-            {
-                this.NameField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string ProductNumber
-        {
-            get
-            {
-                return this.ProductNumberField;
-            }
-            set
-            {
-                this.ProductNumberField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
-        public string Color
-        {
-            get
-            {
-                return this.ColorField;
-            }
-            set
-            {
-                this.ColorField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
-        public decimal ListPrice
-        {
-            get
-            {
-                return this.ListPriceField;
-            }
-            set
-            {
-                this.ListPriceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
-        public string Size
-        {
-            get
-            {
-                return this.SizeField;
-            }
-            set
-            {
-                this.SizeField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
-        public string SizeUnitMeasureCode
-        {
-            get
-            {
-                return this.SizeUnitMeasureCodeField;
-            }
-            set
-            {
-                this.SizeUnitMeasureCodeField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
-        public decimal Weight
-        {
-            get
-            {
-                return this.WeightField;
-            }
-            set
-            {
-                this.WeightField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
-        public string WeightUnitMeasureCode
-        {
-            get
-            {
-                return this.WeightUnitMeasureCodeField;
-            }
-            set
-            {
-                this.WeightUnitMeasureCodeField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
-        public string ProductLine
-        {
-            get
-            {
-                return this.ProductLineField;
-            }
-            set
-            {
-                this.ProductLineField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
-        public string Class
-        {
-            get
-            {
-                return this.ClassField;
-            }
-            set
-            {
-                this.ClassField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
-        public string Style
-        {
-            get
-            {
-                return this.StyleField;
-            }
-            set
-            {
-                this.StyleField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=11)]
-        public byte[] LargePhoto
-        {
-            get
-            {
-                return this.LargePhotoField;
-            }
-            set
-            {
-                this.LargePhotoField = value;
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.aw.com/ProductService/1.0", ConfigurationName="ProductService.IProductService")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.aw.com/ProductService/1.0", ConfigurationName="AW.UI.Web.External.ProductService.IProductService")]
     public interface IProductService
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="ListProducts", ReplyAction="ListProducts")]
-        System.Threading.Tasks.Task<ProductService.ListProductsResponse> ListProductsAsync(ProductService.ListProductsRequest request);
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.External.ProductService.ListProductsResponseListProductsResult> ListProductsAsync(AW.UI.Web.External.ProductService.ListProductsRequest request);
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/ProductService/1.0")]
     public partial class ListProductsRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListProducts", Namespace="http://services.aw.com/ProductService/1.0", Order=0)]
-        public ProductService.ListProductsRequestBody Body;
+        private int pageIndexField;
         
-        public ListProductsRequest()
+        private int pageSizeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageIndex
         {
+            get
+            {
+                return this.pageIndexField;
+            }
+            set
+            {
+                this.pageIndexField = value;
+            }
         }
         
-        public ListProductsRequest(ProductService.ListProductsRequestBody Body)
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int PageSize
         {
-            this.Body = Body;
+            get
+            {
+                return this.pageSizeField;
+            }
+            set
+            {
+                this.pageSizeField = value;
+            }
         }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/ProductService/1.0")]
+    public partial class ProductDto
+    {
+        
+        private string nameField;
+        
+        private string productNumberField;
+        
+        private string colorField;
+        
+        private decimal listPriceField;
+        
+        private string sizeField;
+        
+        private string sizeUnitMeasureCodeField;
+        
+        private decimal weightField;
+        
+        private string weightUnitMeasureCodeField;
+        
+        private string productLineField;
+        
+        private string classField;
+        
+        private string styleField;
+        
+        private byte[] largePhotoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string ProductNumber
+        {
+            get
+            {
+                return this.productNumberField;
+            }
+            set
+            {
+                this.productNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Color
+        {
+            get
+            {
+                return this.colorField;
+            }
+            set
+            {
+                this.colorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public decimal ListPrice
+        {
+            get
+            {
+                return this.listPriceField;
+            }
+            set
+            {
+                this.listPriceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Size
+        {
+            get
+            {
+                return this.sizeField;
+            }
+            set
+            {
+                this.sizeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string SizeUnitMeasureCode
+        {
+            get
+            {
+                return this.sizeUnitMeasureCodeField;
+            }
+            set
+            {
+                this.sizeUnitMeasureCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public decimal Weight
+        {
+            get
+            {
+                return this.weightField;
+            }
+            set
+            {
+                this.weightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string WeightUnitMeasureCode
+        {
+            get
+            {
+                return this.weightUnitMeasureCodeField;
+            }
+            set
+            {
+                this.weightUnitMeasureCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string ProductLine
+        {
+            get
+            {
+                return this.productLineField;
+            }
+            set
+            {
+                this.productLineField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string Class
+        {
+            get
+            {
+                return this.classField;
+            }
+            set
+            {
+                this.classField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Style
+        {
+            get
+            {
+                return this.styleField;
+            }
+            set
+            {
+                this.styleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", Order=11)]
+        public byte[] LargePhoto
+        {
+            get
+            {
+                return this.largePhotoField;
+            }
+            set
+            {
+                this.largePhotoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/ProductService/1.0")]
+    public partial class ListProductsResponseListProductsResult
+    {
+        
+        private ProductDto[] productsField;
+        
+        private int totalProductsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Products", Order=0)]
+        public ProductDto[] Products
+        {
+            get
+            {
+                return this.productsField;
+            }
+            set
+            {
+                this.productsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TotalProducts
+        {
+            get
+            {
+                return this.totalProductsField;
+            }
+            set
+            {
+                this.totalProductsField = value;
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    public interface IProductServiceChannel : AW.UI.Web.External.ProductService.IProductService, System.ServiceModel.IClientChannel
+    {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class ListProductsRequestBody
-    {
-        
-        public ListProductsRequestBody()
-        {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class ListProductsResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListProductsResponse", Namespace="http://services.aw.com/ProductService/1.0", Order=0)]
-        public ProductService.ListProductsResponseBody Body;
-        
-        public ListProductsResponse()
-        {
-        }
-        
-        public ListProductsResponse(ProductService.ListProductsResponseBody Body)
-        {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://services.aw.com/ProductService/1.0")]
-    public partial class ListProductsResponseBody
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public ProductService.ListProductsResult ListProductsResult;
-        
-        public ListProductsResponseBody()
-        {
-        }
-        
-        public ListProductsResponseBody(ProductService.ListProductsResult ListProductsResult)
-        {
-            this.ListProductsResult = ListProductsResult;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public interface IProductServiceChannel : ProductService.IProductService, System.ServiceModel.IClientChannel
-    {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public partial class ProductServiceClient : System.ServiceModel.ClientBase<ProductService.IProductService>, ProductService.IProductService
+    public partial class ProductServiceClient : System.ServiceModel.ClientBase<AW.UI.Web.External.ProductService.IProductService>, AW.UI.Web.External.ProductService.IProductService
     {
         
         /// <summary>
@@ -303,6 +317,13 @@ namespace AW.UI.Web.External.ProductService
         /// <param name="serviceEndpoint">The endpoint to configure</param>
         /// <param name="clientCredentials">The client credentials</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
+        
+        public ProductServiceClient() : 
+                base(ProductServiceClient.GetDefaultBinding(), ProductServiceClient.GetDefaultEndpointAddress())
+        {
+            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IProductService.ToString();
+            ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
+        }
         
         public ProductServiceClient(EndpointConfiguration endpointConfiguration) : 
                 base(ProductServiceClient.GetBindingForEndpoint(endpointConfiguration), ProductServiceClient.GetEndpointAddress(endpointConfiguration))
@@ -330,17 +351,9 @@ namespace AW.UI.Web.External.ProductService
         {
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ProductService.ListProductsResponse> ProductService.IProductService.ListProductsAsync(ProductService.ListProductsRequest request)
+        public System.Threading.Tasks.Task<AW.UI.Web.External.ProductService.ListProductsResponseListProductsResult> ListProductsAsync(AW.UI.Web.External.ProductService.ListProductsRequest request)
         {
             return base.Channel.ListProductsAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<ProductService.ListProductsResponse> ListProductsAsync()
-        {
-            ProductService.ListProductsRequest inValue = new ProductService.ListProductsRequest();
-            inValue.Body = new ProductService.ListProductsRequestBody();
-            return ((ProductService.IProductService)(this)).ListProductsAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -364,16 +377,6 @@ namespace AW.UI.Web.External.ProductService
                 result.AllowCookies = true;
                 return result;
             }
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpsBinding_IProductService))
-            {
-                System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
-                result.MaxBufferSize = int.MaxValue;
-                result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
-                result.MaxReceivedMessageSize = int.MaxValue;
-                result.AllowCookies = true;
-                result.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
-                return result;
-            }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
@@ -383,19 +386,23 @@ namespace AW.UI.Web.External.ProductService
             {
                 return new System.ServiceModel.EndpointAddress("http://localhost/AW.ProductService/ProductService.svc");
             }
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpsBinding_IProductService))
-            {
-                return new System.ServiceModel.EndpointAddress("https://desktop-3pdt884/AW.ProductService/ProductService.svc");
-            }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
+        }
+        
+        private static System.ServiceModel.Channels.Binding GetDefaultBinding()
+        {
+            return ProductServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IProductService);
+        }
+        
+        private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
+        {
+            return ProductServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IProductService);
         }
         
         public enum EndpointConfiguration
         {
             
             BasicHttpBinding_IProductService,
-            
-            BasicHttpsBinding_IProductService,
         }
     }
 }
