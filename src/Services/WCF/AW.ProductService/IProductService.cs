@@ -11,5 +11,8 @@ namespace AW.ProductService
 
         [OperationContract(Action = "ListProducts", ReplyAction = "ListProducts")]
         Task<ListProductsResponse> ListProducts(ListProductsRequest request);
+
+        [OperationContract(Action = "GetProduct", ReplyAction = "GetProduct")]
+        Task<GetProductResponse> GetProduct(GetProductRequest request);
     }
 }

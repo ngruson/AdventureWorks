@@ -9,13 +9,20 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public CustomerConfiguration()
         {
             ToTable("Sales.Customer");
+            HasKey(p => p.Id);
+
+            Property(p => p.Id)
+                .HasColumnName("CustomerID");
 
             Property(c => c.AccountNumber)
                 .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
-            
+
+            Property(c => c.StoreID)
+                .HasColumnName("StoreID");
+
             HasMany(e => e.SalesOrders)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);

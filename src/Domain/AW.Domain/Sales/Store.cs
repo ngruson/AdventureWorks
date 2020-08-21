@@ -1,16 +1,10 @@
-using AW.Domain.Person;
 using System;
-using System.Collections.Generic;
 
 namespace AW.Domain.Sales
 {
-    public partial class Store
+    public partial class Store : BaseEntity
     {
-        public int BusinessEntityID { get; set; }
-
         public string Name { get; set; }
-
-        public int? SalesPersonID { get; set; }
         
         public string Demographics { get; set; }
 
@@ -18,10 +12,7 @@ namespace AW.Domain.Sales
 
         public DateTime ModifiedDate { get; set; }
 
-        public virtual BusinessEntity BusinessEntity { get; set; }
-
-        public virtual IEnumerable<Customer> Customer { get; set; }
-
         public virtual SalesPerson SalesPerson { get; set; }
+        public int? SalesPersonID { get; set; }
     }
 }

@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public BusinessEntityConfiguration()
         {
             ToTable("Person.BusinessEntity");
+            HasKey(s => s.Id);
+
+            Property(s => s.Id)
+                .HasColumnName("BusinessEntityID");
         }
     }
 }

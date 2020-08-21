@@ -9,6 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         {
             ToTable("Production.ProductCategory");
 
+            Property(c => c.Id)
+                .HasColumnName("ProductCategoryID");
+
             Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(50);

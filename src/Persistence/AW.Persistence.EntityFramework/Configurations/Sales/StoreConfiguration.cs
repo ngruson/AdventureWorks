@@ -9,9 +9,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public StoreConfiguration()
         {
             ToTable("Sales.Store");
-            HasKey(s => s.BusinessEntityID);
+            HasKey(s => s.Id);
 
-            Property(s => s.BusinessEntityID)
+            Property(s => s.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(s => s.Name)
@@ -19,6 +20,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
 
             Property(s => s.Demographics)
                 .HasColumnType("xml");
+
+            Property(s => s.SalesPersonID)
+                .HasColumnName("SalesPersonID");
         }
     }
 }

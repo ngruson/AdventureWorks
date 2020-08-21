@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using AW.Domain.Person;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Person
@@ -11,6 +12,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
             HasKey(p => p.Id);
 
             Property(p => p.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(p => p.PersonType)
@@ -40,9 +42,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
             Property(p => p.Demographics)
                 .HasColumnType("xml");
 
-            HasMany(e => e.CreditCards);
+            HasMany(p => p.CreditCards);
 
-            HasMany(e => e.PhoneNumbers);
+            HasMany(p => p.PhoneNumbers);
         }
     }
 }

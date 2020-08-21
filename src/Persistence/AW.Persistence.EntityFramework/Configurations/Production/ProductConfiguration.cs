@@ -10,8 +10,6 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
             ToTable("Production.Product");
             HasKey(p => p.Id);
 
-            
-
             Property(p => p.Id)
             .HasColumnName("ProductId");
 

@@ -16,6 +16,8 @@ namespace AW.Domain.Person
         public string MiddleName { get; set; }
         
         public string LastName { get; set; }
+
+        public string FullName => this.FullName();
         
         public string Suffix { get; set; }
 
@@ -27,7 +29,7 @@ namespace AW.Domain.Person
 
         public virtual ICollection<EmailAddress> EmailAddress { get; set; } = new List<EmailAddress>();
 
-        public virtual Password Password { get; set; }
+        //public virtual Password Password { get; set; }
 
         public virtual ICollection<PersonCreditCard> CreditCards { get; set; } = new List<PersonCreditCard>();
 

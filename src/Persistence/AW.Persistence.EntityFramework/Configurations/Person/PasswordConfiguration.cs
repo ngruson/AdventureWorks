@@ -12,6 +12,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
             HasKey(p => p.Id);
 
             Property(p => p.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(p => p.PasswordHash)

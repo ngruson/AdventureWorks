@@ -3,9 +3,9 @@ using AW.Domain.Production;
 
 namespace AW.Application.Specifications
 {
-    public class ProductFilterSpecification : Specification<Product>
+    public class GetProductsSpecification : Specification<Product>
     {
-        public ProductFilterSpecification() : base()
+        public GetProductsSpecification() : base()
         {
             Query
                 .Where(p => p.DiscontinuedDate == null && p.ListPrice > 0);

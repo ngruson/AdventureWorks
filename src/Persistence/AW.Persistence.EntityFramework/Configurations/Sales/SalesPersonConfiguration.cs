@@ -12,6 +12,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             HasKey(sp => sp.Id);
 
             Property(sp => sp.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(sp => sp.SalesQuota)

@@ -16,7 +16,7 @@ namespace AW.Application.CountProducts
 
         public async Task<int> Handle(CountProductsQuery request, CancellationToken cancellationToken)
         {
-            var spec = new ProductFilterSpecification();
+            var spec = new GetProductsSpecification();
             var products = await repository.ListAsync(spec);
             return products.Count;
         }

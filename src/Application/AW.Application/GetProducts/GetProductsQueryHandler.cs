@@ -19,7 +19,7 @@ namespace AW.Application.GetProducts
         
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var spec = new ProductFilterPaginatedSpecification(request.PageIndex, request.PageSize);
+            var spec = new GetProductsPaginatedSpecification(request.PageIndex, request.PageSize);
             var products = await repository.ListAsync(spec);
             return mapper.Map<IEnumerable<ProductDto>>(products);
         }

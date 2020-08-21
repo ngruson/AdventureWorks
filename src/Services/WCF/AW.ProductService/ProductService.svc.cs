@@ -1,4 +1,5 @@
 ﻿using AW.Application.CountProducts;
+using AW.Application.GetProduct;
 using AW.Application.GetProducts;
 using AW.ProductService.Messages;
 using MediatR;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace AW.ProductService
 {
-    [ServiceBehavior(Namespace = "http://services.aw.com/ProductService")]
+    [ServiceBehavior(Namespace = "http://services.aw.com/ProductService/1.0")]
     public class ProductService : IProductService
     {
         private readonly IMediator mediator;
 
         public ProductService(IMediator mediator) =>
-            (this.mediator) = (mediator);        
+            (this.mediator) = (mediator);
 
         public async Task<ListProductsResponse> ListProducts(ListProductsRequest request)
         {
@@ -29,6 +30,22 @@ namespace AW.ProductService
             {
                 TotalProducts = await mediator.Send(new CountProductsQuery()),
                 Products = products.ToList(),
+            };
+
+            return response;
+        }
+
+        public async Task<GetProductResponse> GetProduct(GetProductRequest request)
+        {
+            var query = new GetProductQuery
+            {
+                ProductNumber = request.ProductNumber
+            };
+            var product = await mediator.Send(query);
+
+            var response = new GetProductResponse
+            {
+                Product = product
             };
 
             return response;

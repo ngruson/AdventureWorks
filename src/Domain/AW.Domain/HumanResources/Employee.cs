@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace AW.Domain.HumanResources
 {
-    public partial class Employee : BaseEntity
+    public partial class Employee : Person.Person
     {
-        public new int Id { get; set; }
-
         public string NationalIDNumber { get; set; }
 
         public string LoginID { get; set; }
@@ -33,12 +31,6 @@ namespace AW.Domain.HumanResources
 
         public bool CurrentFlag { get; set; }
 
-        public Guid rowguid { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
-
-        public virtual Person.Person Person { get; set; }
-
         public virtual ICollection<EmployeeDepartmentHistory> EmployeeDepartmentHistory { get; set; } = new List<EmployeeDepartmentHistory>();
 
         public virtual ICollection<EmployeePayHistory> EmployeePayHistory { get; set; } = new List<EmployeePayHistory>();
@@ -46,7 +38,5 @@ namespace AW.Domain.HumanResources
         public virtual ICollection<JobCandidate> JobCandidates { get; set; } = new List<JobCandidate>();
 
         public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; } = new List<PurchaseOrderHeader>();
-
-        public virtual SalesPerson SalesPerson { get; set; }
     }
 }

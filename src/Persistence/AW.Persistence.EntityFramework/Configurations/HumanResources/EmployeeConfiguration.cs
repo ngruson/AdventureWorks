@@ -12,6 +12,7 @@ namespace AW.Persistence.EntityFramework.Configurations.HumanResources
             HasKey(e => e.Id);
 
             Property(e => e.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(e => e.NationalIDNumber)

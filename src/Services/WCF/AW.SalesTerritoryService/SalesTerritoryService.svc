@@ -1,0 +1,5 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" 
+    Service="AW.SalesTerritoryService.SalesTerritoryService, AW.SalesTerritoryService"
+    CodeBehind="SalesTerritoryService.svc.cs" 
+    Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf"
+%>
