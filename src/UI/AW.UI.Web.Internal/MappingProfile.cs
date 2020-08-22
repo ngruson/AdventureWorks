@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Internal.CustomerService;
+using AW.UI.Web.Internal.SalesOrderService;
 using AW.UI.Web.Internal.ViewModels;
 
 namespace AW.UI.Web.Internal
@@ -12,6 +13,9 @@ namespace AW.UI.Web.Internal
                 .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Store != null ? src.Store.Name : src.Person.FullName))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Store != null ? "Store" :
                     src.Person != null ? "Individual" : null));
+
+            CreateMap<SalesOrderDto, SalesOrderViewModel>()
+                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using AW.Application.GetCustomers;
 using AW.Domain.Sales;
 
 namespace AW.Application.Specifications
@@ -11,12 +10,9 @@ namespace AW.Application.Specifications
             Query
                 .Where(c =>
                     (string.IsNullOrEmpty(territory) || c.SalesTerritory.Name == territory) &&
-                    (!customerType.HasValue ||
-                        (customerType == CustomerType.Individual ? c.Person != null :
-                          customerType == CustomerType.Store ? c.Store != null :
-                          false
-                        )
-                    )
+                    (!customerType.HasValue || (customerType == CustomerType.Individual ?
+                        c.Person != null && c.Store == null
+                        : customerType == CustomerType.Store && c.Store != null))
                 )
                 .OrderBy(c => c.AccountNumber);
         }

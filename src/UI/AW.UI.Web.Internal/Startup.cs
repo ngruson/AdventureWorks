@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
+using AW.UI.Web.Internal.SalesOrderService;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.Services;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +37,10 @@ namespace AW.UI.Web.Internal
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+
             services.AddScoped<ICustomersViewModelService, CustomersViewModelService>();
+            services.AddScoped<ISalesOrdersViewModelService, SalesOrdersViewModelService>();
+
             services.AddScoped<ICustomerService>(provider =>
             {
                 var client = new CustomerServiceClient(
@@ -51,6 +55,15 @@ namespace AW.UI.Web.Internal
                 var client = new SalesTerritoryServiceClient(
                     new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesTerritoryService:EndpointAddress"])
+                );
+
+                return client;
+            });
+            services.AddScoped<ISalesOrderService>(provider =>
+            {
+                var client = new SalesOrderServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["SalesOrderService:EndpointAddress"])
                 );
 
                 return client;

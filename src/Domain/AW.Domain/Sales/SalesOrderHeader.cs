@@ -15,7 +15,7 @@ namespace AW.Domain.Sales
 
         public DateTime? ShipDate { get; set; }
 
-        public byte Status { get; set; }
+        public SalesOrderStatus Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 

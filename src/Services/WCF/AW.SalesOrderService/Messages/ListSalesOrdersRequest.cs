@@ -1,11 +1,11 @@
 ﻿using AW.Domain.Sales;
 using System.Xml.Serialization;
 
-namespace AW.CustomerService.Messages
+namespace AW.SalesOrderService.Messages
 {
-    [XmlType(AnonymousType = true, Namespace = "http://services.aw.com/CustomerService/1.0")]
-    [XmlRoot(Namespace = "http://services.aw.com/CustomerService/1.0", IsNullable = false)]
-    public class ListCustomersRequest
+    [XmlType(AnonymousType = true, Namespace = "http://services.aw.com/SalesOrderService/1.0")]
+    [XmlRoot(Namespace = "http://services.aw.com/SalesOrderService/1.0", IsNullable = false)]
+    public class ListSalesOrdersRequest
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

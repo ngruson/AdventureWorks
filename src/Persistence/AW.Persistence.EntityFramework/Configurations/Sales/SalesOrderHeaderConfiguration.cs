@@ -11,6 +11,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             ToTable("Sales.SalesOrderHeader");
             HasKey(soh => soh.Id);
 
+            Property(sp => sp.Id)
+                .HasColumnName("SalesOrderID");
+
             Property(soh => soh.SalesOrderNumber)
                 .IsRequired()
                 .HasMaxLength(25)

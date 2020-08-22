@@ -121,3 +121,7 @@ li {
     width: 10px;
     z-index: 1;
 }
+
+.filter-button {
+    margin-bottom: 5px;
+}

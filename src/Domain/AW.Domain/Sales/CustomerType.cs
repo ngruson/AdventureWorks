@@ -1,4 +1,4 @@
-﻿namespace AW.Application.GetCustomers
+﻿namespace AW.Domain.Sales
 {
     public enum CustomerType
     {
