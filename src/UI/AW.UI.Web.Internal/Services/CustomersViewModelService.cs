@@ -31,7 +31,7 @@ namespace AW.UI.Web.Internal.Services
             this.salesTerritoryService = salesTerritoryService;
         }
 
-        public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory)
+        public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType)
         {
             logger.LogInformation("GetCustomers called");
 
@@ -40,18 +40,21 @@ namespace AW.UI.Web.Internal.Services
                 {
                     PageIndex = pageIndex,
                     PageSize = pageSize,
-                    Territory = territory
+                    Territory = territory,
+                    CustomerType = !string.IsNullOrEmpty(customerType) ? Enum.Parse<CustomerType>(customerType) : default,
+                    CustomerTypeSpecified = !string.IsNullOrEmpty(customerType)
                 }
             );
 
             var vm = new CustomersIndexViewModel
             {
-                Customers = mapper.Map<List<CustomerViewModel>>(response.Customers),
-                Territories = (await GetTerritories()).ToList(),
+                Customers = mapper.Map<List<CustomerViewModel>>(response.Customer),
+                Territories = await GetTerritories(),
+                CustomerTypes = GetCustomerTypes(),
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
-                    ItemsPerPage = response.Customers.Length,
+                    ItemsPerPage = response.Customer.Length,
                     TotalItems = response.TotalCustomers,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)response.TotalCustomers / pageSize)).ToString())
                 }
@@ -63,7 +66,7 @@ namespace AW.UI.Web.Internal.Services
             return vm;
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetTerritories()
+        private async Task<List<SelectListItem>> GetTerritories()
         {
             logger.LogInformation("GetTerritories called.");
             var territories = await salesTerritoryService.ListTerritoriesAsync(
@@ -76,8 +79,22 @@ namespace AW.UI.Web.Internal.Services
                 .OrderBy(b => b.Text)
                 .ToList();
 
-            var allItem = new SelectListItem() { Value = null, Text = "All", Selected = true };
+            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
             items.Insert(0, allItem);
+
+            return items;
+        }
+
+        private List<SelectListItem> GetCustomerTypes()
+        {
+            logger.LogInformation("GetCustomerTypes called.");
+
+            var items = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "", Text = "All", Selected = true },
+                new SelectListItem() { Value = "Individual", Text = "Individual"},
+                new SelectListItem() { Value = "Store", Text = "Store" }
+            };
 
             return items;
         }

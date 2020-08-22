@@ -16,7 +16,11 @@ namespace AW.Application.CountCustomers
 
         public async Task<int> Handle(CountCustomersQuery request, CancellationToken cancellationToken)
         {
-            var spec = new GetCustomersSpecification(request.Territory);
+            var spec = new GetCustomersSpecification(
+                request.CustomerType,
+                request.Territory
+            );
+
             var customers = await repository.ListAsync(spec);
             return customers.Count;
         }

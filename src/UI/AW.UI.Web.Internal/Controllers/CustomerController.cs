@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Controllers
 {
-    public class HomeController : Controller
+    public class CustomerController : Controller
     {
         private readonly ICustomersViewModelService customersViewModelService;
 
-        public HomeController(ICustomersViewModelService customersViewModelService)
+        public CustomerController(ICustomersViewModelService customersViewModelService)
         {
             this.customersViewModelService = customersViewModelService;
         }
 
-        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied)
+        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, string customerTypeFilterApplied)
         {
             return View(
                 await customersViewModelService.GetCustomers(
                     pageId ?? 0, 
                     Constants.ITEMS_PER_PAGE,
-                    territoryFilterApplied
+                    territoryFilterApplied,
+                    customerTypeFilterApplied
                 )
             );
         }

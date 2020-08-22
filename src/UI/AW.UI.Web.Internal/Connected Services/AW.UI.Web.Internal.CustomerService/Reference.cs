@@ -34,6 +34,10 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private string territoryField;
         
+        private System.Nullable<CustomerType> customerTypeField;
+        
+        private bool customerTypeFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int PageIndex
@@ -75,6 +79,47 @@ namespace AW.UI.Web.Internal.CustomerService
                 this.territoryField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<CustomerType> CustomerType
+        {
+            get
+            {
+                return this.customerTypeField;
+            }
+            set
+            {
+                this.customerTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CustomerTypeSpecified
+        {
+            get
+            {
+                return this.customerTypeFieldSpecified;
+            }
+            set
+            {
+                this.customerTypeFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public enum CustomerType
+    {
+        
+        /// <remarks/>
+        Individual,
+        
+        /// <remarks/>
+        Store,
     }
     
     /// <remarks/>
@@ -300,21 +345,21 @@ namespace AW.UI.Web.Internal.CustomerService
     public partial class ListCustomersResponseListCustomersResult
     {
         
-        private CustomerDto[] customersField;
+        private CustomerDto[] customerField;
         
         private int totalCustomersField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Customers", Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers", Order=0)]
-        public CustomerDto[] Customers
+        [System.Xml.Serialization.XmlElementAttribute("Customer", Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers", Order=0)]
+        public CustomerDto[] Customer
         {
             get
             {
-                return this.customersField;
+                return this.customerField;
             }
             set
             {
-                this.customersField = value;
+                this.customerField = value;
             }
         }
         

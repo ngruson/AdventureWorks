@@ -9,7 +9,7 @@ namespace AW.CustomerService.Messages
     public class ListCustomersResponse
     {
         [XmlElement(Namespace = "http://services.aw.com/CustomerService/1.0/ListCustomers")]
-        public List<CustomerDto> Customers { get; set; } = new List<CustomerDto>();
+        public List<CustomerDto> Customer { get; set; } = new List<CustomerDto>();
         public int TotalCustomers { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Customers";
     @model CustomersIndexViewModel;
 }
 
@@ -8,6 +8,9 @@
         <form method="get">
             <label class="filter-label" data-title="territory">
                 <select class="filter" asp-for="@Model.TerritoryFilterApplied" asp-items="@Model.Territories"></select>
+            </label>
+            <label class="filter-label" data-title="customer type">
+                <select class="filter" asp-for="@Model.CustomerTypeFilterApplied" asp-items="@Model.CustomerTypes"></select>
             </label>
             <input class="fa fa-search" type="submit" />
         </form>
@@ -19,13 +22,25 @@
         <partial name="_pagination" for="@Model.PaginationInfo" />
         <div class="row">
             <table class="listView">
-                @foreach (var customer in Model.Customers)
-                {
+                <thead>
+                    <tr>
+                        <th>Accountnumber</th>
+                        <th>Name</th>
+                        <th>Sales territory</th>
+                        <th>Customer type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model.Customers)
+                    {
                     <tr>
                         <td>@customer.AccountNumber</td>
                         <td>@customer.Name</td>
+                        <td>@customer.SalesTerritoryName</td>
+                        <td>@customer.CustomerType</td>
                     </tr>
-                }
+                    }
+                </tbody>
             </table>
         </div>
     }

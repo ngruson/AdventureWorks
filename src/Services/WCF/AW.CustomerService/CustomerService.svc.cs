@@ -22,6 +22,7 @@ namespace AW.CustomerService
             {
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
+                CustomerType = request.CustomerType,
                 Territory = request.Territory
             };
             var customers = await mediator.Send(query);
@@ -32,7 +33,7 @@ namespace AW.CustomerService
                     {
                         Territory = request.Territory
                     }),
-                Customers = customers.ToList(),
+                Customer = customers.ToList(),
             };
 
             return response;

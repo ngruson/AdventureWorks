@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using AW.Application.GetCustomers;
+using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages
 {
@@ -6,13 +7,11 @@ namespace AW.CustomerService.Messages
     [XmlRoot(Namespace = "http://services.aw.com/CustomerService/1.0", IsNullable = false)]
     public class ListCustomersRequest
     {
-        [XmlElement(Namespace = "http://services.aw.com/CustomerService/1.0")]
         public int PageIndex { get; set; }
-
-        [XmlElement(Namespace = "http://services.aw.com/CustomerService/1.0")]
         public int PageSize { get; set; }
-
         public string Territory { get; set; }
-
+        public CustomerType? CustomerType { get; set; }
+        [XmlIgnore]
+        public bool CustomerTypeSpecified { get; set; }
     }
 }

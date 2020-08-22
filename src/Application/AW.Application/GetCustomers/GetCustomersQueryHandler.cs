@@ -19,7 +19,13 @@ namespace AW.Application.GetCustomers
 
         public async Task<IEnumerable<CustomerDto>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
-            var spec = new GetCustomersPaginatedSpecification(request.PageIndex, request.PageSize, request.Territory);
+            var spec = new GetCustomersPaginatedSpecification(
+                request.PageIndex, 
+                request.PageSize, 
+                request.CustomerType,
+                request.Territory
+            );
+
             var customers = await repository.ListAsync(spec);
             return mapper.Map<IEnumerable<CustomerDto>>(customers);
         }

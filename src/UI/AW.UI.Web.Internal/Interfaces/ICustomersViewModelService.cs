@@ -5,6 +5,6 @@ namespace AW.UI.Web.Internal.Interfaces
 {
     public interface ICustomersViewModelService
     {
-        Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory);
+        Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType);
     }
 }
