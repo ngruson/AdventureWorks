@@ -21,7 +21,7 @@
     {
         <partial name="_pagination" for="@Model.PaginationInfo" />
         <div class="row">
-            <table class="listView">
+            <table class="table table-striped listView">
                 <thead>
                     <tr>
                         <th>Accountnumber</th>
@@ -33,16 +33,17 @@
                 <tbody>
                     @foreach (var customer in Model.Customers)
                     {
-                    <tr>
-                        <td>@customer.AccountNumber</td>
-                        <td>@customer.Name</td>
-                        <td>@customer.SalesTerritoryName</td>
-                        <td>@customer.CustomerType</td>
-                    </tr>
+                        <tr>
+                            <td>@Html.ActionLink(customer.AccountNumber, "Detail", new { customer.AccountNumber })</td>
+                            <td>@customer.Name</td>
+                            <td>@customer.SalesTerritoryName</td>
+                            <td>@customer.CustomerType</td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
+        <partial name="_pagination" for="@Model.PaginationInfo" />
     }
     else
     {

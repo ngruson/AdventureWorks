@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AW.Application.GetSalesOrders
 {
-    public class GetSalesOrdersQueryHandler : IRequestHandler<GetSalesOrdersQuery, IEnumerable<SalesOrderDto>>
+    public class GetSalesOrdersQueryHandler : IRequestHandler<GetSalesOrdersQuery, GetSalesOrdersDto>
     {
         private readonly IAsyncRepository<SalesOrderHeader> repository;
         private readonly IMapper mapper;
@@ -17,7 +17,7 @@ namespace AW.Application.GetSalesOrders
         public GetSalesOrdersQueryHandler(IAsyncRepository<SalesOrderHeader> repository, IMapper mapper) =>
             (this.repository, this.mapper) = (repository, mapper);
 
-        public async Task<IEnumerable<SalesOrderDto>> Handle(GetSalesOrdersQuery request, CancellationToken cancellationToken)
+        public async Task<GetSalesOrdersDto> Handle(GetSalesOrdersQuery request, CancellationToken cancellationToken)
         {
             var spec = new GetSalesOrdersPaginatedSpecification(
                 request.PageIndex,
@@ -25,9 +25,18 @@ namespace AW.Application.GetSalesOrders
                 request.CustomerType,
                 request.Territory
             );
+            var countSpec = new CountSalesOrdersSpecification(
+                request.CustomerType,
+                request.Territory
+            );
 
             var orders = await repository.ListAsync(spec);
-            return mapper.Map<IEnumerable<SalesOrderDto>>(orders);
+
+            return new GetSalesOrdersDto
+            {
+                SalesOrders = mapper.Map<IEnumerable<SalesOrderDto>>(orders),
+                TotalSalesOrders = await repository.CountAsync(countSpec)
+            };
         }
     }
 }

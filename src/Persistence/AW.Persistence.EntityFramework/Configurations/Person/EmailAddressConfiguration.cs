@@ -9,9 +9,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public EmailAddressConfiguration()
         {
             ToTable("Person.EmailAddress");
-            HasKey(ea => new { ea.BusinessEntityID, ea.EmailAddressID });
+            HasKey(ea => new { ea.Id, ea.EmailAddressID });
 
-            Property(ea => ea.BusinessEntityID)
+            Property(ea => ea.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

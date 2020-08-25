@@ -1,8 +1,9 @@
+using AW.Domain.Person;
 using System;
 
 namespace AW.Domain.Sales
 {
-    public partial class Store : BaseEntity
+    public partial class Store : BusinessEntity
     {
         public string Name { get; set; }
         

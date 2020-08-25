@@ -4,8 +4,6 @@ namespace AW.Domain.Person
 {
     public partial class BusinessEntityAddress : BaseEntity
     {
-        public int BusinessEntityID { get; set; }
-
         public int AddressID { get; set; }
 
         public int AddressTypeID { get; set; }

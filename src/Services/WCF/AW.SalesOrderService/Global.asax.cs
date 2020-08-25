@@ -24,7 +24,7 @@ namespace AW.SalesOrderService
                 .InstancePerLifetimeScope();
 
             builder.AddMediatR(typeof(GetSalesOrdersQuery).Assembly);
-            builder.AddAutoMapper(typeof(GetSalesOrdersQuery).Assembly);
+            builder.AddAutoMapper(typeof(Global).Assembly, typeof(GetSalesOrdersQuery).Assembly);
 
             // Set the dependency resolver.
             var container = builder.Build();

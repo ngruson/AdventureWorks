@@ -1,0 +1,86 @@
+﻿@{
+    @model CustomerViewModel;
+}
+
+<div class="row">
+    <div class="col-2">
+        <label>Account number</label>
+    </div>
+    <div class="col">
+        @Model.AccountNumber
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+        <label>Name</label>
+    </div>
+    <div class="col">
+        @Model.Name
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+        <label>Sales person</label>
+    </div>
+    <div class="col">
+        @Model.Store.SalesPerson
+    </div>
+</div>
+
+<h4>Addresses</h4>
+@if (Model.Store.Addresses.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Address type</th>
+                <th>Address line 1</th>
+                <th>Address line 2</th>
+                <th>Postal code</th>
+                <th>City</th>
+                <th>State/Province</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        @foreach (var address in Model.Store.Addresses)
+        {
+            <tr>
+                <td>@address.AddressTypeName</td>
+                <td>@address.Address.AddressLine1</td>
+                <td>@address.Address.AddressLine2</td>
+                <td>@address.Address.PostalCode</td>
+                <td>@address.Address.City</td>
+                <td>@address.Address.StateProvinceName</td>
+                <td>@address.Address.Country</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="row">
+        No addresses found
+    </div>
+}
+
+<h4>Contacts</h4>
+@if (Model.Store.Contacts.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Contact type</th>
+                <th>Contact name</th>
+                <th>Email address</th>
+            </tr>
+        </thead>
+        @foreach (var contact in Model.Store.Contacts)
+        {
+    <tr>
+        <td>@contact.ContactTypeName</td>
+        <td>@contact.ContactName</td>
+        <td>@contact.EmailAddress</td>
+    </tr>
+        }
+    </table>
+}

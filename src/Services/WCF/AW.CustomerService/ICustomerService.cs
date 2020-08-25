@@ -1,4 +1,5 @@
 ﻿using AW.CustomerService.Messages;
+using AW.CustomerService.Messages.GetCustomer;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -11,5 +12,8 @@ namespace AW.CustomerService
 
         [OperationContract(Action = "ListCustomers", ReplyAction = "ListCustomers")]
         Task<ListCustomersResponse> ListCustomers(ListCustomersRequest request);
+
+        [OperationContract(Action = "GetCustomer", ReplyAction = "GetCustomer")]
+        Task<GetCustomerResponse> GetCustomer(GetCustomerRequest request);
     }
 }

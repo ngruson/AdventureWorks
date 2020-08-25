@@ -1,8 +1,9 @@
-﻿using AW.Application.CountCustomers;
+﻿using AutoMapper;
+using AW.Application.GetCustomer;
 using AW.Application.GetCustomers;
 using AW.CustomerService.Messages;
+using AW.CustomerService.Messages.GetCustomer;
 using MediatR;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -12,9 +13,10 @@ namespace AW.CustomerService
     public class CustomerService : ICustomerService
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public CustomerService(IMediator mediator) =>
-            (this.mediator) = (mediator);
+        public CustomerService(IMediator mediator, IMapper mapper) =>
+            (this.mediator, this.mapper) = (mediator, mapper);
 
         public async Task<ListCustomersResponse> ListCustomers(ListCustomersRequest request)
         {
@@ -27,13 +29,19 @@ namespace AW.CustomerService
             };
             var customers = await mediator.Send(query);
 
-            var response = new ListCustomersResponse
+            var response = mapper.Map<ListCustomersResponse>(customers);
+            return response;
+        }
+
+        public async Task<GetCustomerResponse> GetCustomer(GetCustomerRequest request)
+        {
+            var customer = await mediator.Send(
+                new GetCustomerQuery { AccountNumber = request.AccountNumber } 
+            );
+
+            var response = new GetCustomerResponse
             {
-                TotalCustomers = await mediator.Send(new CountCustomersQuery
-                    {
-                        Territory = request.Territory
-                    }),
-                Customer = customers.ToList(),
+                Customer = mapper.Map<Customer>(customer)
             };
 
             return response;

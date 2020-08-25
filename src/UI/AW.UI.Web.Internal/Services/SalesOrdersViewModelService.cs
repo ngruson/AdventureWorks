@@ -48,20 +48,20 @@ namespace AW.UI.Web.Internal.Services
 
             var vm = new SalesOrdersIndexViewModel
             {
-                SalesOrders = mapper.Map<List<SalesOrderViewModel>>(response.SalesOrder),
+                SalesOrders = mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
                 Territories = await GetTerritories(),
                 CustomerTypes = GetCustomerTypes(),
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
-                    ItemsPerPage = response.SalesOrder.Length,
+                    ItemsPerPage = response.SalesOrders.Length, 
                     TotalItems = response.TotalSalesOrders,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)response.TotalSalesOrders / pageSize)).ToString())
                 }
             };
 
-            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
-            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "disabled" : "";
+            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "disabled" : "";
 
             return vm;
         }

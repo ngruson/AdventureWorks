@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public PhoneNumberTypeConfiguration()
         {
             ToTable("Person.PhoneNumberType");
+            HasKey(pnt => pnt.Id);
+
+            Property(pnt => pnt.Id)
+                .HasColumnName("PhoneNumberTypeID");
 
             Property(pnt => pnt.Name)
                 .IsRequired()

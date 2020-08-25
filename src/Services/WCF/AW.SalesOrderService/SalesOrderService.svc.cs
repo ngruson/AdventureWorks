@@ -1,8 +1,7 @@
-﻿using AW.Application.CountSalesOrders;
+﻿using AutoMapper;
 using AW.Application.GetSalesOrders;
 using AW.SalesOrderService.Messages;
 using MediatR;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -12,8 +11,10 @@ namespace AW.SalesOrderService
     public class SalesOrderService : ISalesOrderService
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public SalesOrderService(IMediator mediator) => this.mediator = mediator;
+        public SalesOrderService(IMediator mediator, IMapper mapper) =>
+            (this.mediator, this.mapper) = (mediator, mapper);
 
         public async Task<ListSalesOrdersResponse> ListSalesOrders(ListSalesOrdersRequest request)
         {
@@ -24,18 +25,9 @@ namespace AW.SalesOrderService
                 CustomerType = request.CustomerType,
                 Territory = request.Territory
             };
-            var salesOrders = await mediator.Send(query);
+            var result = await mediator.Send(query);
 
-            var response = new ListSalesOrdersResponse
-            {
-                TotalSalesOrders = await mediator.Send(new CountSalesOrdersQuery
-                {
-                    Territory = request.Territory
-                }),
-                SalesOrder = salesOrders.ToList(),
-            };
-
-            return response;
+            return mapper.Map<ListSalesOrdersResponse>(result);
         }
     }
 }

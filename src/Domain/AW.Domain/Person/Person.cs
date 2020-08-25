@@ -21,13 +21,13 @@ namespace AW.Domain.Person
         
         public string Suffix { get; set; }
 
-        public int EmailPromotion { get; set; }
+        public EmailPromotion EmailPromotion { get; set; }
 
         public string AdditionalContactInfo { get; set; }
         
         public string Demographics { get; set; }
 
-        public virtual ICollection<EmailAddress> EmailAddress { get; set; } = new List<EmailAddress>();
+        public virtual ICollection<EmailAddress> EmailAddresses { get; set; } = new List<EmailAddress>();
 
         //public virtual Password Password { get; set; }
 

@@ -48,20 +48,40 @@ namespace AW.UI.Web.Internal.Services
 
             var vm = new CustomersIndexViewModel
             {
-                Customers = mapper.Map<List<CustomerViewModel>>(response.Customer),
+                Customers = mapper.Map<List<CustomerViewModel>>(response.Customers),
                 Territories = await GetTerritories(),
                 CustomerTypes = GetCustomerTypes(),
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
-                    ItemsPerPage = response.Customer.Length,
+                    ItemsPerPage = response.Customers.Length,
                     TotalItems = response.TotalCustomers,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)response.TotalCustomers / pageSize)).ToString())
                 }
             };
 
-            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
-            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "disabled" : "";
+            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "disabled" : "";
+
+            return vm;
+        }
+
+        public async Task<CustomerDetailViewModel> GetCustomer(string accountNumber)
+        {
+            logger.LogInformation("GetCustomer called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var vm = new CustomerDetailViewModel
+            {
+                Customer = mapper.Map<CustomerViewModel>(response.Customer),
+                Territories = await GetTerritories(),
+            };
 
             return vm;
         }

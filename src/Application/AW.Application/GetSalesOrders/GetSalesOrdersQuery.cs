@@ -1,10 +1,9 @@
 ﻿using AW.Domain.Sales;
 using MediatR;
-using System.Collections.Generic;
 
 namespace AW.Application.GetSalesOrders
 {
-    public class GetSalesOrdersQuery : IRequest<IEnumerable<SalesOrderDto>>
+    public class GetSalesOrdersQuery : IRequest<GetSalesOrdersDto>
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

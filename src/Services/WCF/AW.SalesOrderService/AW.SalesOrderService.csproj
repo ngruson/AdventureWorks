@@ -108,6 +108,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MapperProfile.cs" />
+    <Compile Include="Messages\ListSalesOrders.cs" />
     <Compile Include="Messages\ListSalesOrdersRequest.cs" />
     <Compile Include="Messages\ListSalesOrdersResponse.cs" />
     <Compile Include="SalesOrderService.svc.cs">

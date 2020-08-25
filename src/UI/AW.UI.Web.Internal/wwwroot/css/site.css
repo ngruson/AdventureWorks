@@ -55,10 +55,10 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-li {
+/*li {
     list-style-type: none;
     padding: 5px;
-}
+}*/
 
 /* List view styles
 -------------------------------------------------- */
@@ -124,4 +124,27 @@ li {
 
 .filter-button {
     margin-bottom: 5px;
+}
+
+/* Detail form styles
+-------------------------------------------------- */
+
+.detail .nav .nav-link {
+    margin: 5px;
+}
+
+.detail .tab-content .tab-pane {
+    padding-top: 20px;
+}
+
+.detail label {
+    font-weight: bold;
+}
+
+.detail h4 {
+    padding-top: 20px;
+}
+
+.detail table {
+    max-width: 100%;
 }

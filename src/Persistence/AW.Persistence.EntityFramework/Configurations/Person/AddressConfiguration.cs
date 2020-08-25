@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public AddressConfiguration()
         {
             ToTable("Person.Address");
+            HasKey(a => a.Id);
+
+            Property(a => a.Id)
+                .HasColumnName("AddressID");
 
             Property(a => a.AddressLine1)
                 .IsRequired()

@@ -9,9 +9,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public PersonPhoneConfiguration()
         {
             ToTable("Person.PersonPhone");
-            HasKey(p => new { p.BusinessEntityID, p.PhoneNumber, p.PhoneNumberTypeID });
+            HasKey(p => new { p.Id, p.PhoneNumber, p.PhoneNumberTypeID });
 
-            Property(p => p.BusinessEntityID)
+            Property(p => p.Id)
+                .HasColumnName("BusinessEntityID")
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

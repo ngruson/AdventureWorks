@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Customer detail";
+    @model CustomerDetailViewModel;
+}
+
+<div class="container-fluid">
+    <form class="detail">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
+                <a class="nav-link" id="nav-sales-orders-tab" data-toggle="tab" href="#nav-sales-orders" role="tab" aria-controls="nav-sales-orders" aria-selected="false">Sales orders</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+                @if (Model.Customer.CustomerType == CustomerType.Individual)
+                {
+                    <partial name="_customerPerson" for="@Model.Customer" />
+                }
+                else if (Model.Customer.CustomerType == CustomerType.Store)
+                {
+                    <partial name="_customerStore" for="@Model.Customer" />
+                }
+            </div>
+            <div class="tab-pane fade" id="nav-sales-orders" role="tabpanel" aria-labelledby="nav-sales-orders-tab">
+                To do
+            </div>
+        </div>
+    </form>
+</div>

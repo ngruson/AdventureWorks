@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Application.Common.Mappings;
+using AW.Application.AutoMapper;
 using AW.Domain.Production;
 using System.Linq;
 

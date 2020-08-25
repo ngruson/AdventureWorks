@@ -447,26 +447,12 @@ namespace AW.UI.Web.Internal.SalesOrderService
     public partial class ListSalesOrdersResponseListSalesOrdersResult
     {
         
-        private SalesOrderDto[] salesOrderField;
-        
         private int totalSalesOrdersField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SalesOrder", Namespace="http://services.aw.com/SalesOrderService/1.0/ListSalesOrders", Order=0)]
-        public SalesOrderDto[] SalesOrder
-        {
-            get
-            {
-                return this.salesOrderField;
-            }
-            set
-            {
-                this.salesOrderField = value;
-            }
-        }
+        private SalesOrderDto[] salesOrdersField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int TotalSalesOrders
         {
             get
@@ -476,6 +462,21 @@ namespace AW.UI.Web.Internal.SalesOrderService
             set
             {
                 this.totalSalesOrdersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("SalesOrder", Namespace="http://services.aw.com/SalesOrderService/1.0/ListSalesOrders", IsNullable=false)]
+        public SalesOrderDto[] SalesOrders
+        {
+            get
+            {
+                return this.salesOrdersField;
+            }
+            set
+            {
+                this.salesOrdersField = value;
             }
         }
     }

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using AW.Application.AutoMapper;
+using AW.UI.Web.Internal.SalesOrderService;
+using System;
 
 namespace AW.UI.Web.Internal.ViewModels
 {
-    public class SalesOrderViewModel
+    public class SalesOrderViewModel : IMapFrom<SalesOrderDto>
     {
         public DateTime OrderDate { get; set; }
 
@@ -35,5 +38,11 @@ namespace AW.UI.Web.Internal.ViewModels
         public decimal Freight { get; set; }
 
         public decimal TotalDue { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<SalesOrderDto, SalesOrderViewModel>()
+                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"));
+        }
     }
 }

@@ -4,8 +4,6 @@ namespace AW.Domain.Person
 {    
     public class EmailAddress : BaseEntity
     {
-        public int BusinessEntityID { get; set; }
-
         public int EmailAddressID { get; set; }
 
         public string EmailAddress1 { get; set; }

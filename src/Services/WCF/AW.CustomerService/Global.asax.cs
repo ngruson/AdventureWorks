@@ -24,7 +24,7 @@ namespace AW.CustomerService
                 .InstancePerLifetimeScope();
 
             builder.AddMediatR(typeof(GetCustomersQuery).Assembly);
-            builder.AddAutoMapper(typeof(GetCustomersQuery).Assembly);
+            builder.AddAutoMapper(typeof(Global).Assembly, typeof(GetCustomersQuery).Assembly);
 
             // Set the dependency resolver.
             var container = builder.Build();

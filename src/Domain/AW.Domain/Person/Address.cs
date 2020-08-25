@@ -14,7 +14,7 @@ namespace AW.Domain.Person
         
         public string PostalCode { get; set; }
 
-        public string SpatialLocation { get; set; }
+        //public string SpatialLocation { get; set; }
 
         public Guid rowguid { get; set; }
 

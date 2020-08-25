@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\AW.Domain\AW.Domain.csproj" />
+    <ProjectReference Include="..\AW.Application.AutoMapper\AW.Application.AutoMapper.csproj" />
   </ItemGroup>
 
 </Project>

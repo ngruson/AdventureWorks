@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public StateProvinceConfiguration()
         {
             ToTable("Person.StateProvince");
+            HasKey(sp => sp.Id);
+
+            Property(sp => sp.Id)
+                .HasColumnName("StateProvinceID");
 
             Property(sp => sp.StateProvinceCode)
                 .IsRequired()

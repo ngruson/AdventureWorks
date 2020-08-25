@@ -1,15 +1,21 @@
-﻿using AW.Application.GetCustomers;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using AW.Application.AutoMapper;
+using AW.Application.GetCustomers;
 using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages
 {
     [XmlType(AnonymousType = true, Namespace = "http://services.aw.com/CustomerService/1.0")]
     [XmlRoot(Namespace = "http://services.aw.com/CustomerService/1.0", IsNullable = false)]
-    public class ListCustomersResponse
+    public class ListCustomersResponse : IMapFrom<GetCustomersDto>
     {
-        [XmlElement(Namespace = "http://services.aw.com/CustomerService/1.0/ListCustomers")]
-        public List<CustomerDto> Customer { get; set; } = new List<CustomerDto>();
         public int TotalCustomers { get; set; }
+        public ListCustomers Customers { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<GetCustomersDto, ListCustomersResponse>()
+                .ForMember(m => m.Customers, opt => opt.MapFrom(src => src));
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using AW.Application.Common.Mappings;
-using AW.Application.GetCustomers;
+using AW.Application.AutoMapper;
 using AW.Domain.Sales;
 using System;
 
