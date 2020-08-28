@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.GetSalesOrders;
 using AW.Application.Interfaces;
+using AW.Application.SalesOrder.GetSalesOrders;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using System;

@@ -24,5 +24,13 @@ namespace AW.UI.Web.Internal.Controllers
                 )
             );
         }
+
+        public async Task<IActionResult> Detail(string salesOrderNumber)
+        {
+            return View(
+                await salesOrdersViewModelService.GetSalesOrder(
+                    salesOrderNumber)
+            );
+        }
     }
 }

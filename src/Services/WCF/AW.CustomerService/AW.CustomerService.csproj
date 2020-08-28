@@ -124,10 +124,11 @@
     <Compile Include="Messages\GetCustomer\GetCustomerRequest.cs" />
     <Compile Include="Messages\GetCustomer\GetCustomerResponse.cs" />
     <Compile Include="Messages\Person.cs" />
+    <Compile Include="Messages\SalesOrder.cs" />
     <Compile Include="Messages\Store.cs" />
-    <Compile Include="Messages\ListCustomers.cs" />
-    <Compile Include="Messages\ListCustomersRequest.cs" />
-    <Compile Include="Messages\ListCustomersResponse.cs" />
+    <Compile Include="Messages\ListCustomers\ListCustomers.cs" />
+    <Compile Include="Messages\ListCustomers\ListCustomersRequest.cs" />
+    <Compile Include="Messages\ListCustomers\ListCustomersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

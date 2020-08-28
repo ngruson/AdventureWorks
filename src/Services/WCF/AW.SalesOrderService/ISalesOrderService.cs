@@ -1,4 +1,5 @@
-﻿using AW.SalesOrderService.Messages;
+﻿using AW.SalesOrderService.Messages.GetSalesOrder;
+using AW.SalesOrderService.Messages.ListSalesOrders;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -10,5 +11,8 @@ namespace AW.SalesOrderService
     {
         [OperationContract(Action = "ListSalesOrders", ReplyAction = "ListSalesOrders")]
         Task<ListSalesOrdersResponse> ListSalesOrders(ListSalesOrdersRequest request);
+
+        [OperationContract(Action = "GetSalesOrder", ReplyAction = "GetSalesOrder")]
+        Task<GetSalesOrderResponse> GetSalesOrder(GetSalesOrderRequest request);
     }
 }

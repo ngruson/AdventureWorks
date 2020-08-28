@@ -129,6 +129,279 @@ namespace AW.UI.Web.Internal.CustomerService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="SalesOrder", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class SalesOrder1
+    {
+        
+        private byte revisionNumberField;
+        
+        private System.DateTime orderDateField;
+        
+        private System.DateTime dueDateField;
+        
+        private System.Nullable<System.DateTime> shipDateField;
+        
+        private SalesOrderStatus1 statusField;
+        
+        private bool onlineOrderFlagField;
+        
+        private string salesOrderNumberField;
+        
+        private string purchaseOrderNumberField;
+        
+        private string accountNumberField;
+        
+        private string salesPersonField;
+        
+        private string territoryField;
+        
+        private decimal subTotalField;
+        
+        private decimal taxAmtField;
+        
+        private decimal freightField;
+        
+        private decimal totalDueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public byte RevisionNumber
+        {
+            get
+            {
+                return this.revisionNumberField;
+            }
+            set
+            {
+                this.revisionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public System.DateTime OrderDate
+        {
+            get
+            {
+                return this.orderDateField;
+            }
+            set
+            {
+                this.orderDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public System.DateTime DueDate
+        {
+            get
+            {
+                return this.dueDateField;
+            }
+            set
+            {
+                this.dueDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<System.DateTime> ShipDate
+        {
+            get
+            {
+                return this.shipDateField;
+            }
+            set
+            {
+                this.shipDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public SalesOrderStatus1 Status
+        {
+            get
+            {
+                return this.statusField;
+            }
+            set
+            {
+                this.statusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool OnlineOrderFlag
+        {
+            get
+            {
+                return this.onlineOrderFlagField;
+            }
+            set
+            {
+                this.onlineOrderFlagField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string SalesOrderNumber
+        {
+            get
+            {
+                return this.salesOrderNumberField;
+            }
+            set
+            {
+                this.salesOrderNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string PurchaseOrderNumber
+        {
+            get
+            {
+                return this.purchaseOrderNumberField;
+            }
+            set
+            {
+                this.purchaseOrderNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string SalesPerson
+        {
+            get
+            {
+                return this.salesPersonField;
+            }
+            set
+            {
+                this.salesPersonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Territory
+        {
+            get
+            {
+                return this.territoryField;
+            }
+            set
+            {
+                this.territoryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public decimal SubTotal
+        {
+            get
+            {
+                return this.subTotalField;
+            }
+            set
+            {
+                this.subTotalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public decimal TaxAmt
+        {
+            get
+            {
+                return this.taxAmtField;
+            }
+            set
+            {
+                this.taxAmtField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public decimal Freight
+        {
+            get
+            {
+                return this.freightField;
+            }
+            set
+            {
+                this.freightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public decimal TotalDue
+        {
+            get
+            {
+                return this.totalDueField;
+            }
+            set
+            {
+                this.totalDueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="SalesOrderStatus", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public enum SalesOrderStatus1
+    {
+        
+        /// <remarks/>
+        InProcess,
+        
+        /// <remarks/>
+        Approved,
+        
+        /// <remarks/>
+        Backordered,
+        
+        /// <remarks/>
+        Rejected,
+        
+        /// <remarks/>
+        Shipped,
+        
+        /// <remarks/>
+        Cancelled,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(TypeName="Contact", Namespace="http://services.aw.com/CustomerService/1.0")]
     public partial class Contact1
     {
@@ -650,6 +923,8 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private Store1 storeField;
         
+        private SalesOrder1[] salesOrdersField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string AccountNumber
@@ -705,6 +980,293 @@ namespace AW.UI.Web.Internal.CustomerService
                 this.storeField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
+        public SalesOrder1[] SalesOrders
+        {
+            get
+            {
+                return this.salesOrdersField;
+            }
+            set
+            {
+                this.salesOrdersField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public partial class SalesOrder
+    {
+        
+        private byte revisionNumberField;
+        
+        private System.DateTime orderDateField;
+        
+        private System.DateTime dueDateField;
+        
+        private System.Nullable<System.DateTime> shipDateField;
+        
+        private SalesOrderStatus statusField;
+        
+        private bool onlineOrderFlagField;
+        
+        private string salesOrderNumberField;
+        
+        private string purchaseOrderNumberField;
+        
+        private string accountNumberField;
+        
+        private string salesPersonField;
+        
+        private string territoryField;
+        
+        private decimal subTotalField;
+        
+        private decimal taxAmtField;
+        
+        private decimal freightField;
+        
+        private decimal totalDueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public byte RevisionNumber
+        {
+            get
+            {
+                return this.revisionNumberField;
+            }
+            set
+            {
+                this.revisionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public System.DateTime OrderDate
+        {
+            get
+            {
+                return this.orderDateField;
+            }
+            set
+            {
+                this.orderDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public System.DateTime DueDate
+        {
+            get
+            {
+                return this.dueDateField;
+            }
+            set
+            {
+                this.dueDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<System.DateTime> ShipDate
+        {
+            get
+            {
+                return this.shipDateField;
+            }
+            set
+            {
+                this.shipDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public SalesOrderStatus Status
+        {
+            get
+            {
+                return this.statusField;
+            }
+            set
+            {
+                this.statusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool OnlineOrderFlag
+        {
+            get
+            {
+                return this.onlineOrderFlagField;
+            }
+            set
+            {
+                this.onlineOrderFlagField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string SalesOrderNumber
+        {
+            get
+            {
+                return this.salesOrderNumberField;
+            }
+            set
+            {
+                this.salesOrderNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string PurchaseOrderNumber
+        {
+            get
+            {
+                return this.purchaseOrderNumberField;
+            }
+            set
+            {
+                this.purchaseOrderNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string SalesPerson
+        {
+            get
+            {
+                return this.salesPersonField;
+            }
+            set
+            {
+                this.salesPersonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Territory
+        {
+            get
+            {
+                return this.territoryField;
+            }
+            set
+            {
+                this.territoryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public decimal SubTotal
+        {
+            get
+            {
+                return this.subTotalField;
+            }
+            set
+            {
+                this.subTotalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public decimal TaxAmt
+        {
+            get
+            {
+                return this.taxAmtField;
+            }
+            set
+            {
+                this.taxAmtField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public decimal Freight
+        {
+            get
+            {
+                return this.freightField;
+            }
+            set
+            {
+                this.freightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public decimal TotalDue
+        {
+            get
+            {
+                return this.totalDueField;
+            }
+            set
+            {
+                this.totalDueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public enum SalesOrderStatus
+    {
+        
+        /// <remarks/>
+        InProcess,
+        
+        /// <remarks/>
+        Approved,
+        
+        /// <remarks/>
+        Backordered,
+        
+        /// <remarks/>
+        Rejected,
+        
+        /// <remarks/>
+        Shipped,
+        
+        /// <remarks/>
+        Cancelled,
     }
     
     /// <remarks/>
@@ -1231,6 +1793,8 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private Store storeField;
         
+        private SalesOrder[] salesOrdersField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string AccountNumber
@@ -1284,6 +1848,20 @@ namespace AW.UI.Web.Internal.CustomerService
             set
             {
                 this.storeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=4)]
+        public SalesOrder[] SalesOrders
+        {
+            get
+            {
+                return this.salesOrdersField;
+            }
+            set
+            {
+                this.salesOrdersField = value;
             }
         }
     }

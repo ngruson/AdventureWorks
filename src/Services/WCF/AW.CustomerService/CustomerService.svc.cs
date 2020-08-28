@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using AW.Application.GetCustomer;
-using AW.Application.GetCustomers;
+using AW.Application.Customer.GetCustomer;
+using AW.Application.Customer.GetCustomers;
 using AW.CustomerService.Messages;
 using AW.CustomerService.Messages.GetCustomer;
+using AW.CustomerService.Messages.ListCustomers;
 using MediatR;
 using System.ServiceModel;
 using System.Threading.Tasks;

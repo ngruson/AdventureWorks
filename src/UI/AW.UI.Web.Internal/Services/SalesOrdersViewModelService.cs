@@ -3,6 +3,7 @@ using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.SalesOrderService;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels;
+using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -97,6 +98,25 @@ namespace AW.UI.Web.Internal.Services
             };
 
             return items;
+        }
+
+        public async Task<SalesOrderDetailViewModel> GetSalesOrder(string salesOrderNumber)
+        {
+            logger.LogInformation("GetSalesOrder called");
+
+            var response = await salesOrderService.GetSalesOrderAsync(
+                new GetSalesOrderRequest
+                {
+                    SalesOrderNumber = salesOrderNumber
+                }
+            );
+
+            var vm = new SalesOrderDetailViewModel
+            {
+                SalesOrder = mapper.Map<SalesOrderViewModel>(response.SalesOrder)
+            };
+
+            return vm;
         }
     }
 }

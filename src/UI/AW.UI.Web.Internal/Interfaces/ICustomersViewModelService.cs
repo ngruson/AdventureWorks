@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ViewModels;
+﻿using AW.UI.Web.Internal.ViewModels.Customer;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Interfaces

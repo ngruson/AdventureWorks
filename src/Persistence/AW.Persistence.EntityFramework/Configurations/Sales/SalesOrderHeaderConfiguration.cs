@@ -1,6 +1,7 @@
 ﻿using AW.Domain.Sales;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using System.Data.OleDb;
 
 namespace AW.Persistence.EntityFramework.Configurations.Sales
 {
@@ -48,6 +49,8 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
 
             Property(soh => soh.Comment)
                 .HasMaxLength(128);
+
+            //HasMany<SalesOrderDetail>(soh => soh.OrderLines);
         }
     }
 }

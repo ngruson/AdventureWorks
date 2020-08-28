@@ -1,17 +1,17 @@
 ﻿using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.GetCustomers;
+using AW.Application.Customer.GetCustomers;
 using AW.Application.Interfaces;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using System;
+using System.Web;
 
 namespace AW.CustomerService
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
-
         protected void Application_Start(object sender, EventArgs e)
         {
             var builder = new ContainerBuilder();

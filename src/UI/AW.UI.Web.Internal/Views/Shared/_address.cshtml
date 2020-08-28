@@ -1,0 +1,52 @@
+﻿@{
+    @model Internal.ViewModels.SalesOrder.AddressViewModel;
+}
+
+<div class="row">
+    <div class="col">
+        <label>Address line 1</label>
+    </div>
+    <div class="col">
+        @Model.AddressLine1
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label>Address line 2</label>
+    </div>
+    <div class="col">
+        @Model.AddressLine2
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label>Postal code</label>
+    </div>
+    <div class="col">
+        @Model.PostalCode
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label>City</label>
+    </div>
+    <div class="col">
+        @Model.City
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label>State/Province</label>
+    </div>
+    <div class="col">
+        @Model.StateProvinceName
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label>Country</label>
+    </div>
+    <div class="col">
+        @Model.Country
+    </div>
+</div>

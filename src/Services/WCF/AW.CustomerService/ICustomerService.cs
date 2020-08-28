@@ -1,5 +1,5 @@
-﻿using AW.CustomerService.Messages;
-using AW.CustomerService.Messages.GetCustomer;
+﻿using AW.CustomerService.Messages.GetCustomer;
+using AW.CustomerService.Messages.ListCustomers;
 using System.ServiceModel;
 using System.Threading.Tasks;
 

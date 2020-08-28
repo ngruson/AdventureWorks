@@ -3,6 +3,7 @@ using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels;
+using AW.UI.Web.Internal.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;

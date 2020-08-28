@@ -69,12 +69,12 @@ namespace AW.Domain.Sales
 
         public virtual Customer Customer { get; set; }
 
-        public virtual IEnumerable<SalesOrderDetail> SalesOrderDetail { get; set; } = new List<SalesOrderDetail>();
+        public virtual ICollection<SalesOrderDetail> OrderLines { get; set; } = new List<SalesOrderDetail>();
 
         public virtual SalesPerson SalesPerson { get; set; }
 
         public virtual SalesTerritory SalesTerritory { get; set; }
 
-        public virtual IEnumerable<SalesOrderHeaderSalesReason> SalesOrderHeaderSalesReason { get; set; } = new List<SalesOrderHeaderSalesReason>();
+        public virtual ICollection<SalesOrderHeaderSalesReason> SalesOrderHeaderSalesReasons { get; set; } = new List<SalesOrderHeaderSalesReason>();
     }
 }

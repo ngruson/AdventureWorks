@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Purchasing
         public ShipMethodConfiguration()
         {
             ToTable("Purchasing.ShipMethod");
+            HasKey(sm => sm.Id);
+
+            Property(sm => sm.Id)
+                .HasColumnName("ShipMethodID");
 
             Property(sm => sm.Name)
                 .IsRequired()

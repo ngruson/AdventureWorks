@@ -2,16 +2,14 @@ using System;
 
 namespace AW.Domain.Sales
 {
-    public partial class SalesOrderDetail
+    public partial class SalesOrderDetail : BaseEntity
     {
-        public int SalesOrderID { get; set; }
-
         public int SalesOrderDetailID { get; set; }
 
         public string CarrierTrackingNumber { get; set; }
 
         public short OrderQty { get; set; }
-
+        
         public int ProductID { get; set; }
 
         public int SpecialOfferID { get; set; }

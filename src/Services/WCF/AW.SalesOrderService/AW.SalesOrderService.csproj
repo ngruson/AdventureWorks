@@ -108,10 +108,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MapperProfile.cs" />
-    <Compile Include="Messages\ListSalesOrders.cs" />
-    <Compile Include="Messages\ListSalesOrdersRequest.cs" />
-    <Compile Include="Messages\ListSalesOrdersResponse.cs" />
+    <Compile Include="MappingProfile.cs" />
+    <Compile Include="Messages\Address.cs" />
+    <Compile Include="Messages\CustomerType.cs" />
+    <Compile Include="Messages\GetSalesOrder\GetSalesOrderRequest.cs" />
+    <Compile Include="Messages\GetSalesOrder\GetSalesOrderResponse.cs" />
+    <Compile Include="Messages\ListSalesOrders\ListSalesOrders.cs" />
+    <Compile Include="Messages\ListSalesOrders\ListSalesOrdersRequest.cs" />
+    <Compile Include="Messages\ListSalesOrders\ListSalesOrdersResponse.cs" />
+    <Compile Include="Messages\SalesOrder.cs" />
+    <Compile Include="Messages\SalesOrderLine.cs" />
+    <Compile Include="Messages\SalesOrderStatus.cs" />
+    <Compile Include="Messages\SalesReason.cs" />
+    <Compile Include="Messages\ShipMethod.cs" />
     <Compile Include="SalesOrderService.svc.cs">
       <DependentUpon>SalesOrderService.svc</DependentUpon>
     </Compile>
@@ -129,6 +138,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\AW.Application.AutoMapper\AW.Application.AutoMapper.csproj">
+      <Project>{F54567BA-D35A-4609-AC5A-52E5F6C4FB4D}</Project>
+      <Name>AW.Application.AutoMapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Application\AW.Application\AW.Application.csproj">
       <Project>{C32EACD5-F42E-4AB6-AA49-BE6107FA7C62}</Project>
       <Name>AW.Application</Name>

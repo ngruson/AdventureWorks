@@ -133,11 +133,11 @@ body {
     margin: 5px;
 }
 
-.detail .tab-content .tab-pane {
-    padding-top: 20px;
+.detail h4, .detail .tab-content .tab-pane, .detail .card, .detail .amounts {
+    margin-top: 20px;
 }
 
-.detail label {
+.detail label, .detail .card-header {
     font-weight: bold;
 }
 
