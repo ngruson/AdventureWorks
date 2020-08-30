@@ -13,7 +13,7 @@ namespace AW.Domain.Sales
         public int? StoreID { get; set; }
 
         public virtual SalesTerritory SalesTerritory { get; set; }
-        public int? TerritoryID { get; set; }
+        public int? SalesTerritoryID { get; set; }
 
         public virtual ICollection<SalesOrderHeader> SalesOrders { get; set; } = new List<SalesOrderHeader>();
     }
