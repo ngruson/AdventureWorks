@@ -1,5 +1,5 @@
 ﻿@{    
-    @model CustomerEditViewModel;
+    @model EditStoreCustomerViewModel;
     ViewData["Title"] = $"Edit customer - {Model.Customer.Name}";
 }
 
@@ -35,7 +35,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Update" class="btn btn-primary" />
-                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+                @Html.ActionLink("Cancel", "Detail", new { Model.Customer.AccountNumber }, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>

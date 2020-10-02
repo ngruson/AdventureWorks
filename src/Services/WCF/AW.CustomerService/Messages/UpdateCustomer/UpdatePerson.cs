@@ -17,6 +17,7 @@ namespace AW.CustomerService.Messages.UpdateCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PersonCustomerDto, Person>();
+            profile.CreateMap<PersonCustomerDto, UpdatePerson>();
         }
     }
 }

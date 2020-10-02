@@ -2,6 +2,9 @@
     @model CustomerViewModel;
 }
 
+<div class="actions">
+    @Html.ActionLink("Edit", "EditIndividual", new { Model.AccountNumber }, new { @class = "btn btn-primary" })
+</div>
 <div class="row">
     <div class="col-2">
         <label>Account number</label>

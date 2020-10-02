@@ -90,9 +90,9 @@ namespace AW.UI.Web.Internal.Services
             return vm;
         }
 
-        public async Task<CustomerEditViewModel> GetCustomerForEdit(string accountNumber)
+        public async Task<EditStoreCustomerViewModel> GetStoreCustomerForEdit(string accountNumber)
         {
-            logger.LogInformation("GetCustomerForEdit called");
+            logger.LogInformation("GetStoreCustomerForEdit called");
 
             var response = await customerService.GetCustomerAsync(
                 new GetCustomerRequest
@@ -101,7 +101,7 @@ namespace AW.UI.Web.Internal.Services
                 }
             );
 
-            var vm = new CustomerEditViewModel
+            var vm = new EditStoreCustomerViewModel
             {
                 Customer = mapper.Map<CustomerViewModel>(response.Customer),
                 Territories = await GetTerritories(true),
@@ -110,6 +110,27 @@ namespace AW.UI.Web.Internal.Services
 
             return vm;
         }
+
+        public async Task<EditIndividualCustomerViewModel> GetIndividualCustomerForEdit(string accountNumber)
+        {
+            logger.LogInformation("GetIndividualCustomerForEdit called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );            
+
+            var vm = new EditIndividualCustomerViewModel
+            {
+                Customer = mapper.Map<CustomerViewModel>(response.Customer),
+                Territories = await GetTerritories(true),
+                EmailPromotions = GetEmailPromotions()
+            };
+
+            return vm;
+        }        
 
         private async Task<IEnumerable<SelectListItem>> GetTerritories(bool edit)
         {
@@ -128,6 +149,25 @@ namespace AW.UI.Web.Internal.Services
                 items.Insert(0, new SelectListItem { Value = "", Text = "--Select--", Selected = true });
             else
                 items.Insert(0, new SelectListItem { Value = "", Text = "All", Selected = true });
+
+            return items;
+        }
+
+        private IEnumerable<SelectListItem> GetEmailPromotions()
+        {
+            var items = new List<SelectListItem>();
+
+            foreach (EmailPromotionViewModel emailPromotion in (EmailPromotionViewModel[])Enum.GetValues(typeof(EmailPromotionViewModel)))
+            {
+                items.Add(new SelectListItem(
+                        EnumHelper<EmailPromotionViewModel>.GetDisplayValue(emailPromotion),
+                        emailPromotion.ToString()
+                    )
+                );
+            }
+
+            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
+            items.Insert(0, allItem);
 
             return items;
         }
@@ -187,6 +227,21 @@ namespace AW.UI.Web.Internal.Services
                 Customer = mapper.Map<UpdateCustomer>(viewModel)
             };
                 
+            logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
+            await customerService.UpdateCustomerAsync(request);
+            logger.LogInformation("Customer successfully updated");
+        }
+
+        public async Task UpdateIndividual(CustomerViewModel viewModel)
+        {
+            logger.LogInformation("UpdateIndividual called");
+            logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
+
+            var request = new UpdateCustomerRequest
+            {
+                Customer = mapper.Map<UpdateCustomer>(viewModel)
+            };
+
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
             await customerService.UpdateCustomerAsync(request);
             logger.LogInformation("Customer successfully updated");

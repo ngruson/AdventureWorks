@@ -37,17 +37,37 @@ namespace AW.UI.Web.Internal.Controllers
         public async Task<IActionResult> EditStore(string accountNumber)
         {
             return View(
-                await customersViewModelService.GetCustomerForEdit(
+                await customersViewModelService.GetStoreCustomerForEdit(
                     accountNumber)
             );
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditStore(CustomerEditViewModel viewModel)
+        public async Task<IActionResult> EditStore(EditStoreCustomerViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 await customersViewModelService.UpdateStore(viewModel.Customer);
+                return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> EditIndividual(string accountNumber)
+        {
+            return View(
+                await customersViewModelService.GetIndividualCustomerForEdit(
+                    accountNumber)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditIndividual(EditIndividualCustomerViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.UpdateIndividual(viewModel.Customer);
                 return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
             }
 

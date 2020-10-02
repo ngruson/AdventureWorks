@@ -20,6 +20,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
         {
             profile.CreateMap<Person, CustomerPersonViewModel>();
             profile.CreateMap<Person1, CustomerPersonViewModel>();
+            profile.CreateMap<CustomerPersonViewModel, UpdatePerson>();
         }
     }
 }
