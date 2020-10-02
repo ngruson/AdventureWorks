@@ -3,21 +3,21 @@ using AW.Application.AutoMapper;
 using AW.Domain.Sales;
 using System.Collections.Generic;
 
-namespace AW.Application.Customers
+namespace AW.Application.Customer
 {
-    public class StoreDto : IMapFrom<Store>
+    public class StoreCustomerDto : IMapFrom<Store>
     {
         public string Name { get; set; }
-        public string SalesPerson { get; set; }
+        public SalesPersonDto SalesPerson { get; set; }
         public List<CustomerAddressDto> Addresses { get; set; }
         public List<ContactDto> Contacts { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Store, StoreDto>()
-                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => src.SalesPerson.FullName))
+            profile.CreateMap<Store, StoreCustomerDto>()
                 .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddress))
-                .ForMember(m => m.Contacts, opt => opt.MapFrom(src => src.BusinessEntityContact));
+                .ForMember(m => m.Contacts, opt => opt.MapFrom(src => src.BusinessEntityContact))
+                .ReverseMap();
         }
     }
 }

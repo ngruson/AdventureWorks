@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
+using AW.Application.Customer;
 using AW.Domain.Sales;
 using System.Collections.Generic;
 

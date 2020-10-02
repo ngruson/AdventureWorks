@@ -15,6 +15,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
                 .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
+            Property(c => c.SalesTerritoryID)
+              .HasColumnName("TerritoryID");
+
             Property(sp => sp.SalesQuota)
                 .HasPrecision(19, 4)
                 .HasColumnType("money");

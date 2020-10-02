@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
+using AW.Application.Customer;
 using System.Collections.Generic;
 
 namespace AW.CustomerService.Messages
 {
-    public class Person : IMapFrom<PersonDto>
+    public class Person : IMapFrom<PersonCustomerDto>
     {
         public string Title { get; set; }
         public string FirstName { get; set; }
@@ -19,7 +19,7 @@ namespace AW.CustomerService.Messages
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<PersonDto, Person>();
+            profile.CreateMap<PersonCustomerDto, Person>();
         }
     }
 }

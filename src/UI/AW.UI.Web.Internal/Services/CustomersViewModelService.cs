@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
+using AW.UI.Web.Internal.SalesPersonService;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
@@ -19,17 +20,20 @@ namespace AW.UI.Web.Internal.Services
         private readonly IMapper mapper;
         private readonly ICustomerService customerService;
         private readonly ISalesTerritoryService salesTerritoryService;
+        private readonly ISalesPersonService salesPersonService;
 
         public CustomersViewModelService(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             ICustomerService customerService,
-            ISalesTerritoryService salesTerritoryService)
+            ISalesTerritoryService salesTerritoryService,
+            ISalesPersonService salesPersonService)
         {
             logger = loggerFactory.CreateLogger<CustomersViewModelService>();
             this.mapper = mapper;
             this.customerService = customerService;
             this.salesTerritoryService = salesTerritoryService;
+            this.salesPersonService = salesPersonService;
         }
 
         public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType)
@@ -50,7 +54,7 @@ namespace AW.UI.Web.Internal.Services
             var vm = new CustomersIndexViewModel
             {
                 Customers = mapper.Map<List<CustomerViewModel>>(response.Customers),
-                Territories = await GetTerritories(),
+                Territories = await GetTerritories(false),
                 CustomerTypes = GetCustomerTypes(),
                 PaginationInfo = new PaginationInfoViewModel()
                 {
@@ -81,13 +85,33 @@ namespace AW.UI.Web.Internal.Services
             var vm = new CustomerDetailViewModel
             {
                 Customer = mapper.Map<CustomerViewModel>(response.Customer),
-                Territories = await GetTerritories(),
             };
 
             return vm;
         }
 
-        private async Task<List<SelectListItem>> GetTerritories()
+        public async Task<CustomerEditViewModel> GetCustomerForEdit(string accountNumber)
+        {
+            logger.LogInformation("GetCustomerForEdit called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var vm = new CustomerEditViewModel
+            {
+                Customer = mapper.Map<CustomerViewModel>(response.Customer),
+                Territories = await GetTerritories(true),
+                SalesPersons = await GetSalesPersons(response.Customer.SalesTerritoryName)
+            };
+
+            return vm;
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetTerritories(bool edit)
         {
             logger.LogInformation("GetTerritories called.");
             var territories = await salesTerritoryService.ListTerritoriesAsync(
@@ -100,8 +124,10 @@ namespace AW.UI.Web.Internal.Services
                 .OrderBy(b => b.Text)
                 .ToList();
 
-            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
-            items.Insert(0, allItem);
+            if (edit)
+                items.Insert(0, new SelectListItem { Value = "", Text = "--Select--", Selected = true });
+            else
+                items.Insert(0, new SelectListItem { Value = "", Text = "All", Selected = true });
 
             return items;
         }
@@ -118,6 +144,52 @@ namespace AW.UI.Web.Internal.Services
             };
 
             return items;
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetSalesPersons(string salesTerritoryName)
+        {
+            logger.LogInformation("GetSalesPersons called.");
+            var salesPersons = await salesPersonService.ListSalesPersonsAsync(
+                new ListSalesPersonsRequest1(new ListSalesPersonsRequest
+                {
+                    Territory = salesTerritoryName
+                })
+            );
+
+            var items = salesPersons
+                .ListSalesPersonsResult
+                .Select(t => new SelectListItem() { Value = t.FullName, Text = t.FullName })
+                .OrderBy(b => b.Text)
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task UpdateStore(CustomerViewModel viewModel)
+        {
+            logger.LogInformation("UpdateStore called");
+
+            if (!string.IsNullOrEmpty(viewModel.Store.SalesPerson.FullName))
+            {
+                var salesPersonResponse = await salesPersonService.GetSalesPersonAsync(new GetSalesPersonRequest 
+                    { FullName = viewModel.Store.SalesPerson.FullName }
+                );
+
+                viewModel.Store.SalesPerson = mapper.Map<SalesPersonViewModel>(salesPersonResponse.SalesPerson);
+            }
+
+            logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
+            var request = new UpdateCustomerRequest
+            {
+                Customer = mapper.Map<UpdateCustomer>(viewModel)
+            };
+                
+            logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
+            await customerService.UpdateCustomerAsync(request);
+            logger.LogInformation("Customer successfully updated");
         }
     }
 }

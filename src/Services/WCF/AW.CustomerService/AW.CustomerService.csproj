@@ -125,10 +125,17 @@
     <Compile Include="Messages\GetCustomer\GetCustomerResponse.cs" />
     <Compile Include="Messages\Person.cs" />
     <Compile Include="Messages\SalesOrder.cs" />
+    <Compile Include="Messages\SalesPerson.cs" />
     <Compile Include="Messages\Store.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomers.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomersRequest.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomersResponse.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdateSalesPerson.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdateStore.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdatePerson.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdateCustomer.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdateCustomerRequest.cs" />
+    <Compile Include="Messages\UpdateCustomer\UpdateCustomerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

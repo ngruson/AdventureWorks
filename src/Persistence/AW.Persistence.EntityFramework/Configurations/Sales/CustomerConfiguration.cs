@@ -23,6 +23,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             Property(c => c.StoreID)
                 .HasColumnName("StoreID");
 
+            Property(c => c.SalesTerritoryID)
+              .HasColumnName("TerritoryID");
+
             HasMany(e => e.SalesOrders)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);

@@ -1,0 +1,42 @@
+﻿@{    
+    @model CustomerEditViewModel;
+    ViewData["Title"] = $"Edit customer - {Model.Customer.Name}";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Customer.AccountNumber)
+
+    <div class="form-horizontal detail">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.AccountNumber, new { @class = "control-label" })
+            <div class="control-label">
+                @Model.Customer.AccountNumber
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.Store.Name, new { @class = "control-label" })
+            <input asp-for="Customer.Store.Name" class="form-control" />
+            @Html.ValidationMessageFor(m => m.Customer.Store.Name, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.SalesTerritoryName, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Customer.SalesTerritoryName, Model.Territories, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.SalesTerritoryName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.Store.SalesPerson.FullName, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Customer.Store.SalesPerson.FullName, Model.SalesPersons, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.Store.SalesPerson.FullName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

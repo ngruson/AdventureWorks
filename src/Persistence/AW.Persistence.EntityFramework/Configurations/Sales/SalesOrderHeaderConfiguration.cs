@@ -50,6 +50,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             Property(soh => soh.Comment)
                 .HasMaxLength(128);
 
+            Property(c => c.SalesTerritoryID)
+              .HasColumnName("TerritoryID");
+
             //HasMany<SalesOrderDetail>(soh => soh.OrderLines);
         }
     }

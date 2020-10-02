@@ -3,7 +3,7 @@ using AW.Application.AutoMapper;
 using AW.Domain.Sales;
 using System;
 
-namespace AW.Application.Customers
+namespace AW.Application.Customer
 {
     public class SalesOrderDto : IMapFrom<SalesOrderHeader>
     {

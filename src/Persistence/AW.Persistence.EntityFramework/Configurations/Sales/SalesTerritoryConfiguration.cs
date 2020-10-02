@@ -8,7 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SalesTerritoryConfiguration()
         {
             ToTable("Sales.SalesTerritory");
-            HasKey(st => st.TerritoryID);
+            HasKey(st => st.Id);
+
+            Property(st => st.Id)
+                .HasColumnName("TerritoryID");
 
             Property(st => st.Name)
                 .IsRequired()

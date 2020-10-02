@@ -23,6 +23,10 @@ namespace AW.UI.Web.Internal.CustomerService
         [System.ServiceModel.OperationContractAttribute(Action="GetCustomer", ReplyAction="GetCustomer")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.GetCustomerResponseGetCustomerResult> GetCustomerAsync(AW.UI.Web.Internal.CustomerService.GetCustomerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="UpdateCustomer", ReplyAction="UpdateCustomer")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerResponseUpdateCustomerResult> UpdateCustomerAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerRequest request);
     }
     
     /// <remarks/>
@@ -124,6 +128,310 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         Store,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateSalesPerson
+    {
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateStore
+    {
+        
+        private string nameField;
+        
+        private UpdateSalesPerson salesPersonField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public UpdateSalesPerson SalesPerson
+        {
+            get
+            {
+                return this.salesPersonField;
+            }
+            set
+            {
+                this.salesPersonField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdatePerson
+    {
+        
+        private string titleField;
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string fullNameField;
+        
+        private string suffixField;
+        
+        private EmailPromotion1 emailPromotionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Title
+        {
+            get
+            {
+                return this.titleField;
+            }
+            set
+            {
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Suffix
+        {
+            get
+            {
+                return this.suffixField;
+            }
+            set
+            {
+                this.suffixField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public EmailPromotion1 EmailPromotion
+        {
+            get
+            {
+                return this.emailPromotionField;
+            }
+            set
+            {
+                this.emailPromotionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="EmailPromotion", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public enum EmailPromotion1
+    {
+        
+        /// <remarks/>
+        NoPromotions,
+        
+        /// <remarks/>
+        AWPromotions,
+        
+        /// <remarks/>
+        AWAndPartnerPromotions,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomer
+    {
+        
+        private string accountNumberField;
+        
+        private string salesTerritoryNameField;
+        
+        private UpdatePerson personField;
+        
+        private UpdateStore storeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string SalesTerritoryName
+        {
+            get
+            {
+                return this.salesTerritoryNameField;
+            }
+            set
+            {
+                this.salesTerritoryNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public UpdatePerson Person
+        {
+            get
+            {
+                return this.personField;
+            }
+            set
+            {
+                this.personField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public UpdateStore Store
+        {
+            get
+            {
+                return this.storeField;
+            }
+            set
+            {
+                this.storeField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -458,13 +766,85 @@ namespace AW.UI.Web.Internal.CustomerService
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="SalesPerson", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class SalesPerson1
+    {
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string fullNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(TypeName="Store", Namespace="http://services.aw.com/CustomerService/1.0")]
     public partial class Store1
     {
         
         private string nameField;
         
-        private string salesPersonField;
+        private SalesPerson1 salesPersonField;
         
         private CustomerAddress1[] addressesField;
         
@@ -486,7 +866,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string SalesPerson
+        public SalesPerson1 SalesPerson
         {
             get
             {
@@ -890,22 +1270,6 @@ namespace AW.UI.Web.Internal.CustomerService
                 this.contactInfoField = value;
             }
         }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="EmailPromotion", Namespace="http://services.aw.com/CustomerService/1.0")]
-    public enum EmailPromotion1
-    {
-        
-        /// <remarks/>
-        NoPromotions,
-        
-        /// <remarks/>
-        AWPromotions,
-        
-        /// <remarks/>
-        AWAndPartnerPromotions,
     }
     
     /// <remarks/>
@@ -1329,12 +1693,84 @@ namespace AW.UI.Web.Internal.CustomerService
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public partial class SalesPerson
+    {
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string fullNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
     public partial class Store
     {
         
         private string nameField;
         
-        private string salesPersonField;
+        private SalesPerson salesPersonField;
         
         private CustomerAddress[] addressesField;
         
@@ -1356,7 +1792,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string SalesPerson
+        public SalesPerson SalesPerson
         {
             get
             {
@@ -1955,6 +2391,54 @@ namespace AW.UI.Web.Internal.CustomerService
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerRequest
+    {
+        
+        private UpdateCustomer customerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public UpdateCustomer Customer
+        {
+            get
+            {
+                return this.customerField;
+            }
+            set
+            {
+                this.customerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerResponseUpdateCustomerResult
+    {
+        
+        private UpdateCustomer customerField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public UpdateCustomer Customer
+        {
+            get
+            {
+                return this.customerField;
+            }
+            set
+            {
+                this.customerField = value;
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICustomerServiceChannel : AW.UI.Web.Internal.CustomerService.ICustomerService, System.ServiceModel.IClientChannel
     {
@@ -2013,6 +2497,11 @@ namespace AW.UI.Web.Internal.CustomerService
         public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.GetCustomerResponseGetCustomerResult> GetCustomerAsync(AW.UI.Web.Internal.CustomerService.GetCustomerRequest request)
         {
             return base.Channel.GetCustomerAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerResponseUpdateCustomerResult> UpdateCustomerAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerRequest request)
+        {
+            return base.Channel.UpdateCustomerAsync(request);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

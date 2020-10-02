@@ -3,6 +3,7 @@ using AutoMapper;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.SalesOrderService;
+using AW.UI.Web.Internal.SalesPersonService;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.Services;
 using Microsoft.AspNetCore.Builder;
@@ -49,21 +50,30 @@ namespace AW.UI.Web.Internal
                 );
 
                 return client;
+            });            
+            services.AddScoped<ISalesOrderService>(provider =>
+            {
+                var client = new SalesOrderServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["SalesOrderService:EndpointAddress"])
+                );
+
+                return client;
+            });
+            services.AddScoped<ISalesPersonService>(provider =>
+            {
+                var client = new SalesPersonServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["SalesPersonService:EndpointAddress"])
+                );
+
+                return client;
             });
             services.AddScoped<ISalesTerritoryService>(provider =>
             {
                 var client = new SalesTerritoryServiceClient(
                     new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesTerritoryService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ISalesOrderService>(provider =>
-            {
-                var client = new SalesOrderServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["SalesOrderService:EndpointAddress"])
                 );
 
                 return client;

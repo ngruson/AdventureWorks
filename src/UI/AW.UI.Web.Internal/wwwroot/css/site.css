@@ -137,6 +137,10 @@ body {
     margin-top: 20px;
 }
 
+.detail .actions {
+    margin-bottom: 20px;
+}
+
 .detail label, .detail .card-header {
     font-weight: bold;
 }

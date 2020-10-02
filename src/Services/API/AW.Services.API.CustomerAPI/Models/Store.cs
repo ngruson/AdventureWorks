@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
+using AW.Application.Customer;
 using System.Collections.Generic;
 
 namespace AW.Services.API.CustomerAPI.Models
 {
-    public class Store : IMapFrom<StoreDto>
+    public class Store : IMapFrom<StoreCustomerDto>
     {
         public string Name { get; set; }
         public string SalesPerson { get; set; }
@@ -14,7 +14,7 @@ namespace AW.Services.API.CustomerAPI.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<StoreDto, Store>();
+            profile.CreateMap<StoreCustomerDto, Store>();
         }
     }
 }

@@ -5,8 +5,10 @@ namespace AW.Domain.Sales
 {
 
     public partial class SalesPerson : Employee
-    {       
-        public int? TerritoryID { get; set; }
+    {
+        //public int? TerritoryID { get; set; }
+        public virtual SalesTerritory SalesTerritory { get; set; }
+        public int? SalesTerritoryID { get; set; }
 
         public decimal? SalesQuota { get; set; }
 
@@ -20,7 +22,7 @@ namespace AW.Domain.Sales
 
         public virtual ICollection<SalesOrderHeader> SalesOrders { get; set; } = new List<SalesOrderHeader>();
 
-        public virtual SalesTerritory SalesTerritory { get; set; }
+        
 
         public virtual ICollection<SalesPersonQuotaHistory> SalesPersonQuotaHistory { get; set; } = new List<SalesPersonQuotaHistory>();
 

@@ -2,7 +2,7 @@
 using AW.Application.AutoMapper;
 using AW.Domain.Person;
 
-namespace AW.Application.Customers
+namespace AW.Application.Customer
 {
     public class CustomerAddressDto : IMapFrom<BusinessEntityAddress>
     {

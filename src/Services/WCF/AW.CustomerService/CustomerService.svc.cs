@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AW.Application.Customer.GetCustomer;
 using AW.Application.Customer.GetCustomers;
+using AW.Application.Customer.UpdateCustomer;
+using AW.Application.Customer;
 using AW.CustomerService.Messages;
 using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
+using AW.CustomerService.Messages.UpdateCustomer;
 using MediatR;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -46,6 +49,20 @@ namespace AW.CustomerService
             };
 
             return response;
+        }
+
+        public async Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
+        {
+            var customer = await mediator.Send(
+                new UpdateCustomerCommand
+                {
+                    Customer = mapper.Map<CustomerDto>(request.Customer)
+                });
+
+            return new UpdateCustomerResponse
+            {
+                Customer = mapper.Map<UpdateCustomer>(customer)
+            };
         }
     }
 }

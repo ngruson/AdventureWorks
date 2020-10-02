@@ -1,5 +1,6 @@
 ﻿using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
+using AW.CustomerService.Messages.UpdateCustomer;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -15,5 +16,8 @@ namespace AW.CustomerService
 
         [OperationContract(Action = "GetCustomer", ReplyAction = "GetCustomer")]
         Task<GetCustomerResponse> GetCustomer(GetCustomerRequest request);
+
+        [OperationContract(Action = "UpdateCustomer", ReplyAction = "UpdateCustomer")]
+        Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest request);
     }
 }

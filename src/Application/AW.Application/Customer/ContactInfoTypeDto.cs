@@ -1,4 +1,4 @@
-﻿namespace AW.Application.Customers
+﻿namespace AW.Application.Customer
 {
     public enum ContactInfoChannelTypeDto
     {

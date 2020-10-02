@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using AW.UI.Web.Internal.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using AW.UI.Web.Internal.Interfaces;
 using System.Threading.Tasks;
+using AW.UI.Web.Internal.ViewModels.Customer;
 
 namespace AW.UI.Web.Internal.Controllers
 {
@@ -33,6 +32,26 @@ namespace AW.UI.Web.Internal.Controllers
                 await customersViewModelService.GetCustomer(
                     accountNumber)
             );
+        }
+
+        public async Task<IActionResult> EditStore(string accountNumber)
+        {
+            return View(
+                await customersViewModelService.GetCustomerForEdit(
+                    accountNumber)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditStore(CustomerEditViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.UpdateStore(viewModel.Customer);
+                return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
+            }
+
+            return View(viewModel);
         }
     }
 }

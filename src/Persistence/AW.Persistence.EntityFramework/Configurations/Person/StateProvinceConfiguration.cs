@@ -24,6 +24,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
             Property(sp => sp.Name)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            Property(c => c.SalesTerritoryID)
+              .HasColumnName("TerritoryID");
         }
     }
 }

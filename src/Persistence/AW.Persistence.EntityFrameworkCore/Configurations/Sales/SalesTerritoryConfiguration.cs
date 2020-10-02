@@ -9,7 +9,7 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         public void Configure(EntityTypeBuilder<SalesTerritory> builder)
         {
             builder.ToTable("SalesTerritory", "Sales");
-            builder.HasKey(st => st.TerritoryID);
+            builder.HasKey(st => st.Id);
 
             builder.Property(st => st.Name)
                 .IsRequired()

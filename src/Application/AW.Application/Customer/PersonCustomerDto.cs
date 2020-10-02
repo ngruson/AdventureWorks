@@ -4,9 +4,9 @@ using AW.Domain.Person;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AW.Application.Customers
+namespace AW.Application.Customer
 {
-    public class PersonDto : IMapFrom<Person>
+    public class PersonCustomerDto : IMapFrom<Person>
     {
         public string Title { get; set; }
         public string FirstName { get; set; }
@@ -20,7 +20,7 @@ namespace AW.Application.Customers
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Person, PersonDto>()
+            profile.CreateMap<Person, PersonCustomerDto>()
                 .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddress))
                 .ForMember(m => m.ContactInfo, opt => opt.MapFrom((src, dest) =>
                 {
@@ -42,7 +42,8 @@ namespace AW.Application.Customers
                         }));
 
                     return list;
-                }));
+                }))
+                .ReverseMap();
         }
     }
 }

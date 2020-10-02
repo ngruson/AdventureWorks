@@ -3,7 +3,7 @@ using AW.Application.AutoMapper;
 using AW.Domain.Person;
 using System.Linq;
 
-namespace AW.Application.Customers
+namespace AW.Application.Customer
 {
     public class ContactDto : IMapFrom<BusinessEntityContact>
     {

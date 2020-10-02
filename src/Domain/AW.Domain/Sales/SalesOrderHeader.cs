@@ -29,7 +29,8 @@ namespace AW.Domain.Sales
 
         public int? SalesPersonID { get; set; }
 
-        public int? TerritoryID { get; set; }
+        public virtual SalesTerritory SalesTerritory { get; set; }
+        public int? SalesTerritoryID { get; set; }
 
         public int BillToAddressID { get; set; }
 
@@ -72,8 +73,6 @@ namespace AW.Domain.Sales
         public virtual ICollection<SalesOrderDetail> OrderLines { get; set; } = new List<SalesOrderDetail>();
 
         public virtual SalesPerson SalesPerson { get; set; }
-
-        public virtual SalesTerritory SalesTerritory { get; set; }
 
         public virtual ICollection<SalesOrderHeaderSalesReason> SalesOrderHeaderSalesReasons { get; set; } = new List<SalesOrderHeaderSalesReason>();
     }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
+using AW.Application.Customer;
 
 namespace AW.CustomerService.Messages
 {

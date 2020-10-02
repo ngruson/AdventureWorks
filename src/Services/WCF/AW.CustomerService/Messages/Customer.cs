@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
-using AW.Domain.Sales;
+using AW.Application.Customer;
 using System.Collections.Generic;
 
 namespace AW.CustomerService.Messages

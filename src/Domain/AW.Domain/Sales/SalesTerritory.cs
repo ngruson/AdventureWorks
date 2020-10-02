@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Sales
 {
-    public partial class SalesTerritory
+    public partial class SalesTerritory : BaseEntity
     {
-        public int TerritoryID { get; set; }
-
         public string Name { get; set; }
 
         public string CountryRegionCode { get; set; }
