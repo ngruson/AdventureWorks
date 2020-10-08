@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
 using AW.UI.Web.Internal.CustomerService;
+using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
     public class CustomerAddressViewModel : IMapFrom<CustomerAddress>
     {
-        public string AddressTypeName { get; set; }
-        public AddressViewModel Address { get; set; }
+        [Display(Name = "Address type")]
+        [Required]
+        public string AddressType { get; set; }
+        public AddressViewModel Address { get; set; } = new AddressViewModel();
 
         public void Mapping(Profile profile)
         {

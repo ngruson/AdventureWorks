@@ -28,10 +28,10 @@ namespace AW.UI.Web.Internal.Controllers
 
         public async Task<IActionResult> Detail(string accountNumber)
         {
-            return View(
-                await customersViewModelService.GetCustomer(
-                    accountNumber)
-            );
+            var viewModel = await customersViewModelService.GetCustomer(accountNumber);
+            ViewData["accountNumber"] = accountNumber;
+            ViewData["customerName"] = viewModel.Customer.Name;
+            return View(viewModel);
         }
 
         public async Task<IActionResult> EditStore(string accountNumber)
@@ -72,6 +72,59 @@ namespace AW.UI.Web.Internal.Controllers
             }
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
+        {
+            return View("Address",
+                await customersViewModelService.AddAddress(accountNumber, customerName)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAddress(EditCustomerAddressViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.AddAddress(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> EditAddress(string accountNumber, string customerName,
+            string addressType, string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode)
+        {
+            return View("Address",
+                await customersViewModelService.EditAddress(
+                    accountNumber, 
+                    customerName,
+                    addressType,
+                    addressLine1,
+                    addressLine2,
+                    postalCode,
+                    city,
+                    stateProvinceCode)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAddress(EditCustomerAddressViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.UpdateAddress(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<JsonResult> GetStateProvinces(string country)
+        {
+            var stateProvinces = await customersViewModelService.GetStateProvincesJson(country);
+            return Json(stateProvinces);
         }
     }
 }

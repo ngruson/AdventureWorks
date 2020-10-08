@@ -1,6 +1,8 @@
-﻿using AW.CustomerService.Messages.GetCustomer;
+﻿using AW.CustomerService.Messages.AddCustomerAddress;
+using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
 using AW.CustomerService.Messages.UpdateCustomer;
+using AW.CustomerService.Messages.UpdateCustomerAddress;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -19,5 +21,11 @@ namespace AW.CustomerService
 
         [OperationContract(Action = "UpdateCustomer", ReplyAction = "UpdateCustomer")]
         Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest request);
+
+        [OperationContract(Action = "AddCustomerAddress", ReplyAction = "AddCustomerAddress")]
+        Task<AddCustomerAddressResponse> AddCustomerAddress(AddCustomerAddressRequest request);
+
+        [OperationContract(Action = "UpdateCustomerAddress", ReplyAction = "UpdateCustomerAddress")]
+        Task<UpdateCustomerAddressResponse> UpdateCustomerAddress(UpdateCustomerAddressRequest request);
     }
 }

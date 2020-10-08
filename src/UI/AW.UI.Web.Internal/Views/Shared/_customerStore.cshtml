@@ -38,47 +38,7 @@
     </div>
 </div>
 
-<h4>Addresses</h4>
-@if (Model.Store.Addresses.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Address type</th>
-                <th>Address line 1</th>
-                <th>Address line 2</th>
-                <th>Postal code</th>
-                <th>City</th>
-                <th>State/Province</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        @foreach (var address in Model.Store.Addresses)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink("Edit", "EditAddress")
-                    |
-                    @Html.ActionLink("Delete", "DeleteAddress")
-                </td>
-                <td>@address.AddressTypeName</td>
-                <td>@address.Address.AddressLine1</td>
-                <td>@address.Address.AddressLine2</td>
-                <td>@address.Address.PostalCode</td>
-                <td>@address.Address.City</td>
-                <td>@address.Address.StateProvinceName</td>
-                <td>@address.Address.Country</td>
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <div class="row">
-        No addresses found
-    </div>
-}
+<partial name="Customer/_customerAddresses" for="@Model.Store.Addresses" />
 
 <h4>Contacts</h4>
 @if (Model.Store.Contacts.Any())

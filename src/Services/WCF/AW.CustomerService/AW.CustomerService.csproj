@@ -62,6 +62,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\FluentValidation.9.2.2\lib\net461\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="MediatR, Version=8.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MediatR.8.1.0\lib\net461\MediatR.dll</HintPath>
     </Reference>
@@ -108,8 +111,13 @@
     <Compile Include="CustomerService.svc.cs">
       <DependentUpon>CustomerService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Messages\AddCustomerAddress\AddCustomerAddressRequest.cs" />
+    <Compile Include="Messages\AddCustomerAddress\AddCustomerAddressResponse.cs" />
+    <Compile Include="Messages\AddCustomerAddress\Address.cs" />
+    <Compile Include="Messages\AddCustomerAddress\CustomerAddress.cs" />
     <Compile Include="Messages\ContactInfo.cs" />
     <Compile Include="Messages\ContactInfoChannelType.cs" />
+    <Compile Include="Messages\CountryRegion.cs" />
     <Compile Include="Messages\EmailAddress.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -126,10 +134,15 @@
     <Compile Include="Messages\Person.cs" />
     <Compile Include="Messages\SalesOrder.cs" />
     <Compile Include="Messages\SalesPerson.cs" />
+    <Compile Include="Messages\StateProvince.cs" />
     <Compile Include="Messages\Store.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomers.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomersRequest.cs" />
     <Compile Include="Messages\ListCustomers\ListCustomersResponse.cs" />
+    <Compile Include="Messages\UpdateCustomerAddress\UpdateCustomerAddressRequest.cs" />
+    <Compile Include="Messages\UpdateCustomerAddress\UpdateCustomerAddressResponse.cs" />
+    <Compile Include="Messages\UpdateCustomerAddress\Address.cs" />
+    <Compile Include="Messages\UpdateCustomerAddress\CustomerAddress.cs" />
     <Compile Include="Messages\UpdateCustomer\UpdateSalesPerson.cs" />
     <Compile Include="Messages\UpdateCustomer\UpdateStore.cs" />
     <Compile Include="Messages\UpdateCustomer\UpdatePerson.cs" />
@@ -165,6 +178,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

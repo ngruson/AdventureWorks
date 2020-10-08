@@ -14,9 +14,7 @@ namespace AW.CustomerService.Messages
 
         public string City { get; set; }
 
-        public string StateProvinceName { get; set; }
-
-        public string Country { get; set; }
+        public StateProvince StateProvince { get; set; }
 
         public void Mapping(Profile profile)
         {

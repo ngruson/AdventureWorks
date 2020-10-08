@@ -14,14 +14,11 @@ namespace AW.Application.Customer
 
         public string City { get; set; }
 
-        public string StateProvinceName { get; set; }
-
-        public string Country { get; set; }
+        public StateProvinceDto StateProvince { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressDto>()
-                .ForMember(m => m.Country, opt => opt.MapFrom(src => src.StateProvince.CountryRegion.Name));
+            profile.CreateMap<Address, AddressDto>();
         }
     }
 }

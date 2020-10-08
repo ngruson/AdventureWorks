@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using AW.UI.Web.Internal.AddressTypeService;
+using AW.UI.Web.Internal.CountryService;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.SalesPersonService;
 using AW.UI.Web.Internal.SalesTerritoryService;
+using AW.UI.Web.Internal.StateProvinceService;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,22 +22,32 @@ namespace AW.UI.Web.Internal.Services
     {
         private readonly ILogger<CustomersViewModelService> logger;
         private readonly IMapper mapper;
+
+        private readonly IAddressTypeService addressTypeService;
+        private readonly ICountryService countryService;
         private readonly ICustomerService customerService;
         private readonly ISalesTerritoryService salesTerritoryService;
         private readonly ISalesPersonService salesPersonService;
+        private readonly IStateProvinceService stateProvinceService;
 
         public CustomersViewModelService(
             ILoggerFactory loggerFactory,
             IMapper mapper,
+            IAddressTypeService addressTypeService,
+            ICountryService countryService,
             ICustomerService customerService,
             ISalesTerritoryService salesTerritoryService,
-            ISalesPersonService salesPersonService)
+            ISalesPersonService salesPersonService,
+            IStateProvinceService stateProvinceService)
         {
             logger = loggerFactory.CreateLogger<CustomersViewModelService>();
             this.mapper = mapper;
+            this.addressTypeService = addressTypeService;
+            this.countryService = countryService;
             this.customerService = customerService;
             this.salesTerritoryService = salesTerritoryService;
             this.salesPersonService = salesPersonService;
+            this.stateProvinceService = stateProvinceService;
         }
 
         public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType)
@@ -245,6 +259,161 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
             await customerService.UpdateCustomerAsync(request);
             logger.LogInformation("Customer successfully updated");
+        }
+
+        public async Task<EditCustomerAddressViewModel> AddAddress(string accountNumber, string customerName)
+        {
+            logger.LogInformation("AddAddress called");
+
+            var vm = new EditCustomerAddressViewModel
+            {
+                IsNewAddress = true,
+                AccountNumber = accountNumber,
+                CustomerName = customerName,
+                AddressViewModel = new CustomerAddressViewModel {  
+                    Address = new AddressViewModel
+                    {
+                        StateProvince = new StateProvinceViewModel
+                        {
+                            CountryRegion = new CountryRegionViewModel
+                            {
+                                CountryRegionCode = "US"
+                            }
+                        }
+                    }
+                },
+                AddressTypes = await GetAddressTypes(),
+                Countries = await GetCountries(),
+                StateProvinces = await GetStateProvinces("US")
+            };
+
+            return vm;
+        }
+
+        public async Task AddAddress(EditCustomerAddressViewModel viewModel)
+        {
+            logger.LogInformation("AddAddress called");
+
+            var request = new AddCustomerAddressRequest
+            {
+                CustomerAddress = mapper.Map<CustomerAddress2>(viewModel)
+            };
+
+            logger.LogInformation("Calling AddCustomerAddress operation of Customer web service");
+            await customerService.AddCustomerAddressAsync(request);
+            logger.LogInformation("Address successfully added");
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetAddressTypes()
+        {
+            logger.LogInformation("GetAddressTypes called.");
+            var addressTypes = await addressTypeService.ListAddressTypesAsync();
+
+            var items = addressTypes
+                .AddressTypes
+                .Select(at => new SelectListItem() { Value = at, Text = at })
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetCountries()
+        {
+            logger.LogInformation("GetCountries called.");
+            var response = await countryService.ListCountriesAsync();
+
+            var items = response     
+                .Countries
+                .OrderBy(c => c.Name)
+                .Select(c => new SelectListItem() { Value = c.CountryRegionCode, Text = c.Name })                
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task<EditCustomerAddressViewModel> EditAddress(string accountNumber, string customerName,
+            string addressType, string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode)
+        {
+            logger.LogInformation("EditAddress called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var addresses = response.Customer.Store != null ? response.Customer.Store.Addresses :
+                response.Customer.Person.Addresses;
+
+            var address = addresses.FirstOrDefault(a => a.AddressType == addressType &&
+                a.Address.AddressLine1 == addressLine1 &&
+                a.Address.AddressLine2 == addressLine2 &&
+                a.Address.PostalCode == postalCode &&
+                a.Address.City == city &&
+                a.Address.StateProvince.StateProvinceCode == stateProvinceCode);
+
+            var vm = new EditCustomerAddressViewModel
+            {
+                AccountNumber = accountNumber,
+                CustomerName = customerName,
+                AddressViewModel = mapper.Map<CustomerAddressViewModel>(address),
+                AddressTypes = await GetAddressTypes(),
+                Countries = await GetCountries(),
+                StateProvinces = await GetStateProvinces(address.Address.StateProvince.CountryRegion.CountryRegionCode)
+            };
+
+            return vm;
+        }
+
+        public async Task UpdateAddress(EditCustomerAddressViewModel viewModel)
+        {
+            logger.LogInformation("EditAddress called");
+
+            var request = new UpdateCustomerAddressRequest
+            {
+                CustomerAddress = mapper.Map<CustomerAddress3>(viewModel)
+            };
+
+            logger.LogInformation("Calling UpdateCustomerAddress operation of Customer web service");
+            await customerService.UpdateCustomerAddressAsync(request);
+            logger.LogInformation("Address successfully updated");
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetStateProvinces(string country)
+        {
+            logger.LogInformation("GetStateProvinces called.");
+            var response = await stateProvinceService.ListStateProvincesAsync(new ListStateProvincesRequest
+            {
+                CountryRegionCode = country
+            });
+
+            var items = response
+                .StateProvinces
+                .OrderBy(c => c.Name)
+                .Select(c => new SelectListItem() { Value = c.StateProvinceCode, Text = c.Name })
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country)
+        {
+            var response = await stateProvinceService.ListStateProvincesAsync(new ListStateProvincesRequest
+            {
+                CountryRegionCode = country
+            });
+
+            return mapper.Map<IEnumerable<StateProvinceViewModel>>(response.StateProvinces);
         }
     }
 }

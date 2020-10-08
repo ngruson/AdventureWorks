@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function getStateProvinces(country, dropdown, url) {
+    if (country === "") {
+        dropdown.empty();
+        dropdown.append('<option selected="true" disabled>--Select--</option>');
+        dropdown.prop('selectedIndex', 0);
+    }
+    else {
+        alert(country);
+        dropdown.empty();
+        $.getJSON(url, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown.append($('<option></option>').attr('value', entry.code).text(entry.name));
+            });
+        });
+    }
+}

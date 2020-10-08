@@ -3,11 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
-using AW.Domain.HumanResources;
-using AW.Domain.Person;
 using AW.Domain.Production;
-using AW.Domain.Purchasing;
-using AW.Domain.Sales;
 
 namespace AW.Persistence.EntityFramework
 {

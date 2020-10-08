@@ -27,6 +27,14 @@ namespace AW.UI.Web.Internal.CustomerService
         [System.ServiceModel.OperationContractAttribute(Action="UpdateCustomer", ReplyAction="UpdateCustomer")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerResponseUpdateCustomerResult> UpdateCustomerAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AddCustomerAddress", ReplyAction="AddCustomerAddress")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerAddressResponseAddCustomerAddressResult> AddCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.AddCustomerAddressRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="UpdateCustomerAddress", ReplyAction="UpdateCustomerAddress")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressResponseUpdateCustomerAddressResult> UpdateCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressRequest request);
     }
     
     /// <remarks/>
@@ -128,6 +136,262 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         Store,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="Address", Namespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerAddress")]
+    public partial class Address3
+    {
+        
+        private string addressLine1Field;
+        
+        private string addressLine2Field;
+        
+        private string postalCodeField;
+        
+        private string cityField;
+        
+        private string stateProvinceCodeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressLine1
+        {
+            get
+            {
+                return this.addressLine1Field;
+            }
+            set
+            {
+                this.addressLine1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string AddressLine2
+        {
+            get
+            {
+                return this.addressLine2Field;
+            }
+            set
+            {
+                this.addressLine2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PostalCode
+        {
+            get
+            {
+                return this.postalCodeField;
+            }
+            set
+            {
+                this.postalCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string City
+        {
+            get
+            {
+                return this.cityField;
+            }
+            set
+            {
+                this.cityField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string StateProvinceCode
+        {
+            get
+            {
+                return this.stateProvinceCodeField;
+            }
+            set
+            {
+                this.stateProvinceCodeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerAddress", Namespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerAddress")]
+    public partial class CustomerAddress3
+    {
+        
+        private string addressTypeField;
+        
+        private Address3 addressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressType
+        {
+            get
+            {
+                return this.addressTypeField;
+            }
+            set
+            {
+                this.addressTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Address3 Address
+        {
+            get
+            {
+                return this.addressField;
+            }
+            set
+            {
+                this.addressField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="Address", Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerAddress")]
+    public partial class Address2
+    {
+        
+        private string addressLine1Field;
+        
+        private string addressLine2Field;
+        
+        private string postalCodeField;
+        
+        private string cityField;
+        
+        private string stateProvinceCodeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressLine1
+        {
+            get
+            {
+                return this.addressLine1Field;
+            }
+            set
+            {
+                this.addressLine1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string AddressLine2
+        {
+            get
+            {
+                return this.addressLine2Field;
+            }
+            set
+            {
+                this.addressLine2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PostalCode
+        {
+            get
+            {
+                return this.postalCodeField;
+            }
+            set
+            {
+                this.postalCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string City
+        {
+            get
+            {
+                return this.cityField;
+            }
+            set
+            {
+                this.cityField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string StateProvinceCode
+        {
+            get
+            {
+                return this.stateProvinceCodeField;
+            }
+            set
+            {
+                this.stateProvinceCodeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerAddress", Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerAddress")]
+    public partial class CustomerAddress2
+    {
+        
+        private string addressTypeField;
+        
+        private Address2 addressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressType
+        {
+            get
+            {
+                return this.addressTypeField;
+            }
+            set
+            {
+                this.addressTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Address2 Address
+        {
+            get
+            {
+                return this.addressField;
+            }
+            set
+            {
+                this.addressField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -914,12 +1178,26 @@ namespace AW.UI.Web.Internal.CustomerService
     public partial class CustomerAddress1
     {
         
-        private Address1 addressField;
+        private string addressTypeField;
         
-        private string addressTypeNameField;
+        private Address1 addressField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressType
+        {
+            get
+            {
+                return this.addressTypeField;
+            }
+            set
+            {
+                this.addressTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public Address1 Address
         {
             get
@@ -929,20 +1207,6 @@ namespace AW.UI.Web.Internal.CustomerService
             set
             {
                 this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string AddressTypeName
-        {
-            get
-            {
-                return this.addressTypeNameField;
-            }
-            set
-            {
-                this.addressTypeNameField = value;
             }
         }
     }
@@ -962,9 +1226,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private string cityField;
         
-        private string stateProvinceNameField;
-        
-        private string countryField;
+        private StateProvince1 stateProvinceField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1024,29 +1286,111 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string StateProvinceName
+        public StateProvince1 StateProvince
         {
             get
             {
-                return this.stateProvinceNameField;
+                return this.stateProvinceField;
             }
             set
             {
-                this.stateProvinceNameField = value;
+                this.stateProvinceField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="StateProvince", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class StateProvince1
+    {
+        
+        private string stateProvinceCodeField;
+        
+        private string nameField;
+        
+        private CountryRegion1 countryRegionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string StateProvinceCode
+        {
+            get
+            {
+                return this.stateProvinceCodeField;
+            }
+            set
+            {
+                this.stateProvinceCodeField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Country
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Name
         {
             get
             {
-                return this.countryField;
+                return this.nameField;
             }
             set
             {
-                this.countryField = value;
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public CountryRegion1 CountryRegion
+        {
+            get
+            {
+                return this.countryRegionField;
+            }
+            set
+            {
+                this.countryRegionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CountryRegion", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class CountryRegion1
+    {
+        
+        private string countryRegionCodeField;
+        
+        private string nameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string CountryRegionCode
+        {
+            get
+            {
+                return this.countryRegionCodeField;
+            }
+            set
+            {
+                this.countryRegionCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
             }
         }
     }
@@ -1840,12 +2184,26 @@ namespace AW.UI.Web.Internal.CustomerService
     public partial class CustomerAddress
     {
         
-        private Address addressField;
+        private string addressTypeField;
         
-        private string addressTypeNameField;
+        private Address addressField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AddressType
+        {
+            get
+            {
+                return this.addressTypeField;
+            }
+            set
+            {
+                this.addressTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public Address Address
         {
             get
@@ -1855,20 +2213,6 @@ namespace AW.UI.Web.Internal.CustomerService
             set
             {
                 this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string AddressTypeName
-        {
-            get
-            {
-                return this.addressTypeNameField;
-            }
-            set
-            {
-                this.addressTypeNameField = value;
             }
         }
     }
@@ -1888,9 +2232,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private string cityField;
         
-        private string stateProvinceNameField;
-        
-        private string countryField;
+        private StateProvince stateProvinceField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1950,29 +2292,111 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string StateProvinceName
+        public StateProvince StateProvince
         {
             get
             {
-                return this.stateProvinceNameField;
+                return this.stateProvinceField;
             }
             set
             {
-                this.stateProvinceNameField = value;
+                this.stateProvinceField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public partial class StateProvince
+    {
+        
+        private string stateProvinceCodeField;
+        
+        private string nameField;
+        
+        private CountryRegion countryRegionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string StateProvinceCode
+        {
+            get
+            {
+                return this.stateProvinceCodeField;
+            }
+            set
+            {
+                this.stateProvinceCodeField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Country
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Name
         {
             get
             {
-                return this.countryField;
+                return this.nameField;
             }
             set
             {
-                this.countryField = value;
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public CountryRegion CountryRegion
+        {
+            get
+            {
+                return this.countryRegionField;
+            }
+            set
+            {
+                this.countryRegionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public partial class CountryRegion
+    {
+        
+        private string countryRegionCodeField;
+        
+        private string nameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string CountryRegionCode
+        {
+            get
+            {
+                return this.countryRegionCodeField;
+            }
+            set
+            {
+                this.countryRegionCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
             }
         }
     }
@@ -2439,6 +2863,102 @@ namespace AW.UI.Web.Internal.CustomerService
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerAddressRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerAddress2 customerAddressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerAddress2 CustomerAddress
+        {
+            get
+            {
+                return this.customerAddressField;
+            }
+            set
+            {
+                this.customerAddressField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerAddressResponseAddCustomerAddressResult
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerAddressRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerAddress3 customerAddressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerAddress3 CustomerAddress
+        {
+            get
+            {
+                return this.customerAddressField;
+            }
+            set
+            {
+                this.customerAddressField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerAddressResponseUpdateCustomerAddressResult
+    {
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICustomerServiceChannel : AW.UI.Web.Internal.CustomerService.ICustomerService, System.ServiceModel.IClientChannel
     {
@@ -2502,6 +3022,16 @@ namespace AW.UI.Web.Internal.CustomerService
         public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerResponseUpdateCustomerResult> UpdateCustomerAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerRequest request)
         {
             return base.Channel.UpdateCustomerAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerAddressResponseAddCustomerAddressResult> AddCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.AddCustomerAddressRequest request)
+        {
+            return base.Channel.AddCustomerAddressAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressResponseUpdateCustomerAddressResult> UpdateCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressRequest request)
+        {
+            return base.Channel.UpdateCustomerAddressAsync(request);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

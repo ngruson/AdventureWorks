@@ -1,11 +1,15 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using AutoMapper;
+using AW.UI.Web.Internal.AddressTypeService;
+using AW.UI.Web.Internal.CountryService;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.SalesOrderService;
 using AW.UI.Web.Internal.SalesPersonService;
 using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.Services;
+using AW.UI.Web.Internal.StateProvinceService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +46,29 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICustomersViewModelService, CustomersViewModelService>();
             services.AddScoped<ISalesOrdersViewModelService, SalesOrdersViewModelService>();
 
+            ConfigureWebservices(services);
+        }
+
+        private void ConfigureWebservices(IServiceCollection services)
+        {
+            services.AddScoped<IAddressTypeService>(provider =>
+            {
+                var client = new AddressTypeServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["AddressTypeService:EndpointAddress"])
+                );
+
+                return client;
+            });
+            services.AddScoped<ICountryService>(provider =>
+            {
+                var client = new CountryServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["CountryService:EndpointAddress"])
+                );
+
+                return client;
+            });
             services.AddScoped<ICustomerService>(provider =>
             {
                 var client = new CustomerServiceClient(
@@ -50,7 +77,7 @@ namespace AW.UI.Web.Internal
                 );
 
                 return client;
-            });            
+            });
             services.AddScoped<ISalesOrderService>(provider =>
             {
                 var client = new SalesOrderServiceClient(
@@ -74,6 +101,15 @@ namespace AW.UI.Web.Internal
                 var client = new SalesTerritoryServiceClient(
                     new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesTerritoryService:EndpointAddress"])
+                );
+
+                return client;
+            });
+            services.AddScoped<IStateProvinceService>(provider =>
+            {
+                var client = new StateProvinceServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["StateProvinceService:EndpointAddress"])
                 );
 
                 return client;

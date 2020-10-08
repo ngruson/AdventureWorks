@@ -10,6 +10,10 @@ using AW.CustomerService.Messages.UpdateCustomer;
 using MediatR;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using AW.CustomerService.Messages.AddCustomerAddress;
+using AW.Application.Customer.AddCustomerAddress;
+using AW.Application.Customer.UpdateCustomerAddress;
+using AW.CustomerService.Messages.UpdateCustomerAddress;
 
 namespace AW.CustomerService
 {
@@ -63,6 +67,28 @@ namespace AW.CustomerService
             {
                 Customer = mapper.Map<UpdateCustomer>(customer)
             };
+        }
+
+        public async Task<AddCustomerAddressResponse> AddCustomerAddress(AddCustomerAddressRequest request)
+        {
+            await mediator.Send(new AddCustomerAddressCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerAddress = mapper.Map<Application.Customer.AddCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
+            });
+
+            return new AddCustomerAddressResponse();
+        }
+
+        public async Task<UpdateCustomerAddressResponse> UpdateCustomerAddress(UpdateCustomerAddressRequest request)
+        {
+            await mediator.Send(new UpdateCustomerAddressCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerAddress = mapper.Map<Application.Customer.UpdateCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
+            });
+
+            return new UpdateCustomerAddressResponse();
         }
     }
 }
