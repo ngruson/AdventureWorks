@@ -14,6 +14,8 @@ using AW.CustomerService.Messages.AddCustomerAddress;
 using AW.Application.Customer.AddCustomerAddress;
 using AW.Application.Customer.UpdateCustomerAddress;
 using AW.CustomerService.Messages.UpdateCustomerAddress;
+using AW.CustomerService.Messages.DeleteCustomerAddress;
+using AW.Application.Customer.DeleteCustomerAddress;
 
 namespace AW.CustomerService
 {
@@ -89,6 +91,17 @@ namespace AW.CustomerService
             });
 
             return new UpdateCustomerAddressResponse();
+        }
+
+        public async Task<DeleteCustomerAddressResponse> DeleteCustomerAddress(DeleteCustomerAddressRequest request)
+        {
+            await mediator.Send(new DeleteCustomerAddressCommand
+            {
+                AccountNumber = request.AccountNumber,
+                AddressTypeName = request.AddressType
+            });
+
+            return new DeleteCustomerAddressResponse();
         }
     }
 }

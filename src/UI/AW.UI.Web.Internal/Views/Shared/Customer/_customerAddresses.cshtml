@@ -25,15 +25,13 @@
                     @Html.ActionLink("Edit", "EditAddress", new
                        {
                            accountNumber = ViewData["accountNumber"],
-                           customerName = ViewData["customerName"],
-                           address.AddressType,
-                           address.Address.AddressLine1,
-                           address.Address.AddressLine2,
-                           address.Address.PostalCode,
-                           address.Address.City,
-                           address.Address.StateProvince.StateProvinceCode
+                           address.AddressType
                        }) |
-                    @Html.ActionLink("Delete", "DeleteAddress")
+                    @Html.ActionLink("Delete", "DeleteAddress", new
+                       {
+                           accountNumber = ViewData["accountNumber"],
+                           address.AddressType
+                       })
                 </td>
                 <td>@address.AddressType</td>
                 <td>@address.Address.AddressLine1</td>

@@ -11,15 +11,15 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
         public bool IsNewAddress { get; set; }
         public string AccountNumber { get; set; }
         public string CustomerName { get; set; }
-        public CustomerAddressViewModel AddressViewModel { get; set; }
+        public CustomerAddressViewModel CustomerAddressViewModel { get; set; }
         public IEnumerable<SelectListItem> AddressTypes { get; set; }
         public IEnumerable<SelectListItem> Countries { get; set; }
         public IEnumerable<SelectListItem> StateProvinces { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EditCustomerAddressViewModel, CustomerAddress2>();
-            profile.CreateMap<EditCustomerAddressViewModel, CustomerAddress3>();
+            profile.CreateMap<EditCustomerAddressViewModel, UpdateCustomerAddressRequest>()
+                .ForMember(m => m.CustomerAddress, opt => opt.MapFrom(src => src.CustomerAddressViewModel));
         }
     }
 }

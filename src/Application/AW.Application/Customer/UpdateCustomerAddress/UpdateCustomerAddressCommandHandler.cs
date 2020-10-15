@@ -42,11 +42,11 @@ namespace AW.Application.Customer.UpdateCustomerAddress
 
             BusinessEntityAddress customerAddress = null;
             if (customer.Store != null)
-                customerAddress = customer.Store.BusinessEntityAddress.FirstOrDefault(
+                customerAddress = customer.Store.BusinessEntityAddresses.FirstOrDefault(
                     a => a.AddressType.Name == request.CustomerAddress.AddressTypeName
                 );
             else if (customer.Person != null)
-                customerAddress = customer.Person.BusinessEntityAddress.FirstOrDefault(
+                customerAddress = customer.Person.BusinessEntityAddresses.FirstOrDefault(
                     a => a.AddressType.Name == request.CustomerAddress.AddressTypeName
                 );
 

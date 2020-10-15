@@ -16,6 +16,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
         {
             profile.CreateMap<CustomerAddress, CustomerAddressViewModel>();
             profile.CreateMap<CustomerAddress1, CustomerAddressViewModel>();
+            profile.CreateMap<CustomerAddressViewModel, CustomerAddress3>();
         }
     }
 }

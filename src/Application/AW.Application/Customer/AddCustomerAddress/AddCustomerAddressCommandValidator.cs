@@ -1,6 +1,9 @@
 ﻿using AW.Application.Interfaces;
 using AW.Application.Specifications;
+using AW.Domain.Person;
 using FluentValidation;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -53,6 +56,31 @@ namespace AW.Application.Customer.AddCustomerAddress
                 .NotEmpty().WithMessage("State/province is required")
                 .MaximumLength(3).WithMessage("State/province must not exceed 3 characters")
                 .MustAsync(StateProvinceExist).WithMessage("State/province does not exist");
+
+            RuleFor(cmd => cmd)
+                .MustAsync(UniqueAddress).WithMessage("Address must be unique");
+        }
+
+        private async Task<bool> UniqueAddress(AddCustomerAddressCommand command, CancellationToken cancellationToken)
+        {
+            var customer = await customerRepository.FirstOrDefaultAsync(new GetCustomerSpecification(command.AccountNumber));
+
+            ICollection<BusinessEntityAddress> addresses = null;
+            if (customer.Store != null)
+                addresses = customer.Store.BusinessEntityAddresses;
+            else if (customer.Person != null)
+                addresses = customer.Person.BusinessEntityAddresses;
+
+            var address = addresses.FirstOrDefault(a =>
+                a.AddressType.Name == command.CustomerAddress.AddressTypeName &&
+                a.Address.AddressLine1 == command.CustomerAddress.Address.AddressLine1 &&
+                a.Address.AddressLine2 == command.CustomerAddress.Address.AddressLine2 &&
+                a.Address.PostalCode == command.CustomerAddress.Address.PostalCode &&
+                a.Address.City == command.CustomerAddress.Address.City &&
+                a.Address.StateProvince.StateProvinceCode == command.CustomerAddress.Address.StateProvinceCode
+            );
+
+            return address == null;
         }
 
         private async Task<bool> CustomerExist(string accountNumber, CancellationToken cancellationToken)

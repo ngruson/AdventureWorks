@@ -8,7 +8,6 @@ using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.StateProvinceService;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -270,7 +269,7 @@ namespace AW.UI.Web.Internal.Services
                 IsNewAddress = true,
                 AccountNumber = accountNumber,
                 CustomerName = customerName,
-                AddressViewModel = new CustomerAddressViewModel {  
+                CustomerAddressViewModel = new CustomerAddressViewModel {  
                     Address = new AddressViewModel
                     {
                         StateProvince = new StateProvinceViewModel
@@ -337,10 +336,9 @@ namespace AW.UI.Web.Internal.Services
             return items;
         }
 
-        public async Task<EditCustomerAddressViewModel> EditAddress(string accountNumber, string customerName,
-            string addressType, string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode)
+        public async Task<EditCustomerAddressViewModel> GetCustomerAddress(string accountNumber, string addressType)
         {
-            logger.LogInformation("EditAddress called");
+            logger.LogInformation("GetCustomerAddress called");
 
             var response = await customerService.GetCustomerAsync(
                 new GetCustomerRequest
@@ -352,18 +350,13 @@ namespace AW.UI.Web.Internal.Services
             var addresses = response.Customer.Store != null ? response.Customer.Store.Addresses :
                 response.Customer.Person.Addresses;
 
-            var address = addresses.FirstOrDefault(a => a.AddressType == addressType &&
-                a.Address.AddressLine1 == addressLine1 &&
-                a.Address.AddressLine2 == addressLine2 &&
-                a.Address.PostalCode == postalCode &&
-                a.Address.City == city &&
-                a.Address.StateProvince.StateProvinceCode == stateProvinceCode);
+            var address = addresses.FirstOrDefault(a => a.AddressType == addressType);
 
             var vm = new EditCustomerAddressViewModel
             {
                 AccountNumber = accountNumber,
-                CustomerName = customerName,
-                AddressViewModel = mapper.Map<CustomerAddressViewModel>(address),
+                CustomerName = response.Customer.Store != null ? response.Customer.Store.Name : response.Customer.Person.FullName,
+                CustomerAddressViewModel = mapper.Map<CustomerAddressViewModel>(address),
                 AddressTypes = await GetAddressTypes(),
                 Countries = await GetCountries(),
                 StateProvinces = await GetStateProvinces(address.Address.StateProvince.CountryRegion.CountryRegionCode)
@@ -376,10 +369,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("EditAddress called");
 
-            var request = new UpdateCustomerAddressRequest
-            {
-                CustomerAddress = mapper.Map<CustomerAddress3>(viewModel)
-            };
+            var request = mapper.Map<UpdateCustomerAddressRequest>(viewModel);
 
             logger.LogInformation("Calling UpdateCustomerAddress operation of Customer web service");
             await customerService.UpdateCustomerAddressAsync(request);
@@ -406,6 +396,29 @@ namespace AW.UI.Web.Internal.Services
             return items;
         }
 
+        public async Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType)
+        {
+            logger.LogInformation("GetCustomerAddressForDelete called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var addresses = response.Customer.Store != null ? response.Customer.Store.Addresses :
+                response.Customer.Person.Addresses;
+
+            var address = addresses.FirstOrDefault(a => a.AddressType == addressType);
+
+            var vm = mapper.Map<DeleteCustomerAddressViewModel>(address);
+            vm.AccountNumber = accountNumber;
+            vm.CustomerName = response.Customer.Store != null ? response.Customer.Store.Name : response.Customer.Person.FullName;
+
+            return vm;
+        }
+
         public async Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country)
         {
             var response = await stateProvinceService.ListStateProvincesAsync(new ListStateProvincesRequest
@@ -414,6 +427,19 @@ namespace AW.UI.Web.Internal.Services
             });
 
             return mapper.Map<IEnumerable<StateProvinceViewModel>>(response.StateProvinces);
+        }
+
+        public async Task DeleteAddress(string accountNumber, string addressType)
+        {
+            logger.LogInformation("DeleteAddress called");
+
+            logger.LogInformation("Calling DeleteCustomerAddress operation of Customer web service");
+            await customerService.DeleteCustomerAddressAsync(new DeleteCustomerAddressRequest
+            {
+                AccountNumber = accountNumber,
+                AddressType = addressType
+            });
+            logger.LogInformation("Address successfully deleted");
         }
     }
 }

@@ -5,7 +5,6 @@
         dropdown.prop('selectedIndex', 0);
     }
     else {
-        alert(country);
         dropdown.empty();
         $.getJSON(url, function (data) {
             $.each(data, function (key, entry) {

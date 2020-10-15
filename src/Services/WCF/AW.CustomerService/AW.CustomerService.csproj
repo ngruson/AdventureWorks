@@ -118,6 +118,8 @@
     <Compile Include="Messages\ContactInfo.cs" />
     <Compile Include="Messages\ContactInfoChannelType.cs" />
     <Compile Include="Messages\CountryRegion.cs" />
+    <Compile Include="Messages\DeleteCustomerAddress\DeleteCustomerAddressRequest.cs" />
+    <Compile Include="Messages\DeleteCustomerAddress\DeleteCustomerAddressResponse.cs" />
     <Compile Include="Messages\EmailAddress.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,6 +154,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Application\AW.Application.Autofac\AW.Application.Autofac.csproj">
+      <Project>{0E7AACCD-74BE-4C6F-A220-CA5330557898}</Project>
+      <Name>AW.Application.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Application\AW.Application.AutoMapper\AW.Application.AutoMapper.csproj">
       <Project>{F54567BA-D35A-4609-AC5A-52E5F6C4FB4D}</Project>
       <Name>AW.Application.AutoMapper</Name>

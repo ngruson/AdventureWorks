@@ -21,7 +21,7 @@ namespace AW.Application.Customer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Person, PersonCustomerDto>()
-                .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddress))
+                .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddresses))
                 .ForMember(m => m.ContactInfo, opt => opt.MapFrom((src, dest) =>
                 {
                     var list = new List<ContactInfoDto>();

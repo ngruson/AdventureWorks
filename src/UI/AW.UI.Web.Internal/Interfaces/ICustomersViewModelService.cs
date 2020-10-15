@@ -14,9 +14,10 @@ namespace AW.UI.Web.Internal.Interfaces
         Task UpdateIndividual(CustomerViewModel viewModel);
         Task<EditCustomerAddressViewModel> AddAddress(string accountNumber, string customerName);
         Task AddAddress(EditCustomerAddressViewModel viewModel);
-        Task<EditCustomerAddressViewModel> EditAddress(string accountNumber, string customerName,
-            string addressType, string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode);
+        Task<EditCustomerAddressViewModel> GetCustomerAddress(string accountNumber, string addressType);
         Task UpdateAddress(EditCustomerAddressViewModel viewModel);
         Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country);
+        Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType);
+        Task DeleteAddress(string accountNumber, string addressType);
     }
 }

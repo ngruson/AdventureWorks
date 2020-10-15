@@ -15,7 +15,7 @@ namespace AW.Application.Customer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Store, StoreCustomerDto>()
-                .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddress))
+                .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.BusinessEntityAddresses))
                 .ForMember(m => m.Contacts, opt => opt.MapFrom(src => src.BusinessEntityContact))
                 .ReverseMap();
         }

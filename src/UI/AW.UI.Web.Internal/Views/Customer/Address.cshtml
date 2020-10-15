@@ -11,48 +11,48 @@
 <div class="form-horizontal detail">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.AddressType, new { @class = "control-label" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.AddressType, new { @class = "control-label" })
         @if (Model.IsNewAddress)
         {
-            @Html.DropDownListFor(m => m.AddressViewModel.AddressType, Model.AddressTypes, null, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.CustomerAddressViewModel.AddressType, Model.AddressTypes, null, new { @class = "form-control" })
         }
         else
         {
-            @Html.DropDownListFor(m => m.AddressViewModel.AddressType, Model.AddressTypes, null, new { @disabled = "disabled", @class = "form-control" })
-            @Html.HiddenFor(m => m.AddressViewModel.AddressType)
+            @Html.DropDownListFor(m => m.CustomerAddressViewModel.AddressType, Model.AddressTypes, null, new { @disabled = "disabled", @class = "form-control" })
+            @Html.HiddenFor(m => m.CustomerAddressViewModel.AddressType)
         }
 
-        @Html.ValidationMessageFor(m => m.AddressViewModel.AddressType, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.AddressType, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.AddressLine1, new { @class = "control-label" })
-        <input asp-for="AddressViewModel.Address.AddressLine1" class="form-control" />
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.AddressLine1, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.AddressLine1, new { @class = "control-label" })
+        <input asp-for="CustomerAddressViewModel.Address.AddressLine1" class="form-control" />
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.AddressLine1, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.AddressLine2, new { @class = "control-label" })
-        <input asp-for="AddressViewModel.Address.AddressLine2" class="form-control" />
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.AddressLine2, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.AddressLine2, new { @class = "control-label" })
+        <input asp-for="CustomerAddressViewModel.Address.AddressLine2" class="form-control" />
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.AddressLine2, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.PostalCode, new { @class = "control-label" })
-        <input asp-for="AddressViewModel.Address.PostalCode" class="form-control" />
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.PostalCode, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.PostalCode, new { @class = "control-label" })
+        <input asp-for="CustomerAddressViewModel.Address.PostalCode" class="form-control" />
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.PostalCode, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.City, new { @class = "control-label" })
-        <input asp-for="AddressViewModel.Address.City" class="form-control" />
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.City, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.City, new { @class = "control-label" })
+        <input asp-for="CustomerAddressViewModel.Address.City" class="form-control" />
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.City, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.AddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, Model.Countries, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CustomerAddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, Model.Countries, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.StateProvince.CountryRegion.CountryRegionCode, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.AddressViewModel.Address.StateProvince.StateProvinceCode, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.AddressViewModel.Address.StateProvince.StateProvinceCode, Model.StateProvinces, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.AddressViewModel.Address.StateProvince.StateProvinceCode, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddressViewModel.Address.StateProvince.StateProvinceCode, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CustomerAddressViewModel.Address.StateProvince.StateProvinceCode, Model.StateProvinces, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAddressViewModel.Address.StateProvince.StateProvinceCode, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
@@ -68,8 +68,8 @@
 {
     <script>
         $(document).ready(function () {
-            $('#AddressViewModel_Address_StateProvince_CountryRegion_CountryRegionCode').change(function () {
-                var dropdown = $('#AddressViewModel_Address_StateProvince_StateProvinceCode');
+            $('#CustomerAddressViewModel_Address_StateProvince_CountryRegion_CountryRegionCode').change(function () {
+                var dropdown = $('#CustomerAddressViewModel_Address_StateProvince_StateProvinceCode');
                 
                 if (this.value == "--Select--") {
                     dropdown.empty();

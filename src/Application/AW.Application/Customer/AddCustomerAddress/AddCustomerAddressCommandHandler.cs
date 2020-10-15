@@ -57,9 +57,9 @@ namespace AW.Application.Customer.AddCustomerAddress
             }
 
             if (customer.Store != null)
-                customer.Store.BusinessEntityAddress.Add(customerAddress);
+                customer.Store.BusinessEntityAddresses.Add(customerAddress);
             else if (customer.Person != null)
-                customer.Store.BusinessEntityAddress.Add(customerAddress);
+                customer.Person.BusinessEntityAddresses.Add(customerAddress);
 
             await customerRepository.UpdateAsync(customer);
 

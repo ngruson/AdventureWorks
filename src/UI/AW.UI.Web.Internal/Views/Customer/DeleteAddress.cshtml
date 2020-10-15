@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = $"Delete address - {Model.CustomerName}";
+    @model DeleteCustomerAddressViewModel;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AccountNumber)    
+
+    <div class="form-horizontal detail">
+        <h4>Are you sure you want to delete this?</h4>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AddressType, new { @class = "control-label" })
+            <input asp-for="AddressType" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.AddressType)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AddressLine1, new { @class = "control-label" })
+            <input asp-for="AddressLine1" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.AddressLine1)
+        </div>
+        @if (!string.IsNullOrEmpty(Model.AddressLine2))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.AddressLine2, new { @class = "control-label" })
+                <input asp-for="AddressLine2" readonly class="form-control-plaintext" />
+                @Html.HiddenFor(m => m.AddressLine2)
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(m => m.PostalCode, new { @class = "control-label" })
+            <input asp-for="PostalCode" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.PostalCode)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.City, new { @class = "control-label" })
+            <input asp-for="City" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.City)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.StateProvinceName, new { @class = "control-label" })
+            <input asp-for="StateProvinceName" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.StateProvinceName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CountryRegionName, new { @class = "control-label" })
+            <input asp-for="CountryRegionName" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.CountryRegionName)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Detail", new { Model.AccountNumber }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

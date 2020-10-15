@@ -2,6 +2,7 @@
 using AW.UI.Web.Internal.Interfaces;
 using System.Threading.Tasks;
 using AW.UI.Web.Internal.ViewModels.Customer;
+using System.Linq;
 
 namespace AW.UI.Web.Internal.Controllers
 {
@@ -93,19 +94,13 @@ namespace AW.UI.Web.Internal.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> EditAddress(string accountNumber, string customerName,
-            string addressType, string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode)
+        public async Task<IActionResult> EditAddress(string accountNumber, string addressType)
         {
             return View("Address",
-                await customersViewModelService.EditAddress(
+                await customersViewModelService.GetCustomerAddress(
                     accountNumber, 
-                    customerName,
-                    addressType,
-                    addressLine1,
-                    addressLine2,
-                    postalCode,
-                    city,
-                    stateProvinceCode)
+                    addressType
+                )
             );
         }
 
@@ -125,6 +120,27 @@ namespace AW.UI.Web.Internal.Controllers
         {
             var stateProvinces = await customersViewModelService.GetStateProvincesJson(country);
             return Json(stateProvinces);
+        }
+
+        public async Task<IActionResult> DeleteAddress(string accountNumber, string addressType)
+        {
+            var viewModel = await customersViewModelService.GetCustomerAddressForDelete(accountNumber, addressType);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAddress(DeleteCustomerAddressViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.DeleteAddress(
+                    viewModel.AccountNumber, 
+                    viewModel.AddressType
+                );
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
         }
     }
 }

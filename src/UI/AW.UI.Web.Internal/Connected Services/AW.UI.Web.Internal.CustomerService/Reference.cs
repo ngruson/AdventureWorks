@@ -35,6 +35,10 @@ namespace AW.UI.Web.Internal.CustomerService
         [System.ServiceModel.OperationContractAttribute(Action="UpdateCustomerAddress", ReplyAction="UpdateCustomerAddress")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressResponseUpdateCustomerAddressResult> UpdateCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DeleteCustomerAddress", ReplyAction="DeleteCustomerAddress")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressResponseDeleteCustomerAddressResult> DeleteCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressRequest request);
     }
     
     /// <remarks/>
@@ -2959,6 +2963,54 @@ namespace AW.UI.Web.Internal.CustomerService
     {
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerAddressRequest
+    {
+        
+        private string accountNumberField;
+        
+        private string addressTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string AddressType
+        {
+            get
+            {
+                return this.addressTypeField;
+            }
+            set
+            {
+                this.addressTypeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerAddressResponseDeleteCustomerAddressResult
+    {
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICustomerServiceChannel : AW.UI.Web.Internal.CustomerService.ICustomerService, System.ServiceModel.IClientChannel
     {
@@ -3032,6 +3084,11 @@ namespace AW.UI.Web.Internal.CustomerService
         public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressResponseUpdateCustomerAddressResult> UpdateCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerAddressRequest request)
         {
             return base.Channel.UpdateCustomerAddressAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressResponseDeleteCustomerAddressResult> DeleteCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressRequest request)
+        {
+            return base.Channel.DeleteCustomerAddressAsync(request);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

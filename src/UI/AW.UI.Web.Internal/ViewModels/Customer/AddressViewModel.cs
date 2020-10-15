@@ -24,6 +24,8 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
         {
             profile.CreateMap<Address, AddressViewModel>();
             profile.CreateMap<Address1, AddressViewModel>();
+            profile.CreateMap<AddressViewModel, Address3>()
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvince.StateProvinceCode));
         }
     }
 }
