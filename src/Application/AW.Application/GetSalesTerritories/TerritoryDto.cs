@@ -8,6 +8,7 @@ namespace AW.Application.GetSalesTerritories
     {
         public string Name { get; set; }
         public CountryRegionDto CountryRegion { get; set; }
+        public string Group { get; set; }
 
         public void Mapping(Profile profile)
         {

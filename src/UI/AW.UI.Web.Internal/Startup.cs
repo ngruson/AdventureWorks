@@ -46,6 +46,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICustomerViewModelService, CustomerViewModelService>();
             services.AddScoped<ISalesOrderViewModelService, SalesOrderViewModelService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
+            services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
 
             ConfigureWebservices(services);
         }

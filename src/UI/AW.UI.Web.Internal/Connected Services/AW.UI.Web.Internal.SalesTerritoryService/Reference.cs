@@ -32,6 +32,8 @@ namespace AW.UI.Web.Internal.SalesTerritoryService
         
         private CountryRegionDto countryRegionField;
         
+        private string groupField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string Name
@@ -57,6 +59,20 @@ namespace AW.UI.Web.Internal.SalesTerritoryService
             set
             {
                 this.countryRegionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Group
+        {
+            get
+            {
+                return this.groupField;
+            }
+            set
+            {
+                this.groupField = value;
             }
         }
     }

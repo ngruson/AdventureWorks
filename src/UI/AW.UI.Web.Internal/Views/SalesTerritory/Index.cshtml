@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Sales territories";
+    @model SalesTerritoryIndexViewModel;
+}
+
+<div class="container">
+    <h2>Sales territories</h2>
+    @if (Model.SalesTerritories.Any())
+    {
+        <div class="row">
+            <table class="table table-striped listView">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Country/region</th>
+                        <th>Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var territory in Model.SalesTerritories)
+                    {
+                    <tr>
+                        <td>@territory.Name</td>
+                        <td>@territory.CountryRegion.Name</td>
+                        <td>@territory.Group</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+        </div>
+    }
+</div>
