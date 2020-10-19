@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Interfaces
 {
-    public interface ICustomersViewModelService
+    public interface ICustomerViewModelService
     {
         Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType);
         Task<CustomerDetailViewModel> GetCustomer(string accountNumber);

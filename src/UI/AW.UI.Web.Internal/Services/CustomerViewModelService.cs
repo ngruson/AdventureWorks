@@ -17,9 +17,9 @@ using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Services
 {
-    public class CustomersViewModelService : ICustomersViewModelService
+    public class CustomerViewModelService : ICustomerViewModelService
     {
-        private readonly ILogger<CustomersViewModelService> logger;
+        private readonly ILogger<CustomerViewModelService> logger;
         private readonly IMapper mapper;
 
         private readonly IAddressTypeService addressTypeService;
@@ -29,7 +29,7 @@ namespace AW.UI.Web.Internal.Services
         private readonly ISalesPersonService salesPersonService;
         private readonly IStateProvinceService stateProvinceService;
 
-        public CustomersViewModelService(
+        public CustomerViewModelService(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             IAddressTypeService addressTypeService,
@@ -39,7 +39,7 @@ namespace AW.UI.Web.Internal.Services
             ISalesPersonService salesPersonService,
             IStateProvinceService stateProvinceService)
         {
-            logger = loggerFactory.CreateLogger<CustomersViewModelService>();
+            logger = loggerFactory.CreateLogger<CustomerViewModelService>();
             this.mapper = mapper;
             this.addressTypeService = addressTypeService;
             this.countryService = countryService;
@@ -154,7 +154,7 @@ namespace AW.UI.Web.Internal.Services
 
             var items = territories
                 .ListTerritoriesResult
-                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
+                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegion.CountryRegionCode})" })
                 .OrderBy(b => b.Text)
                 .ToList();
 

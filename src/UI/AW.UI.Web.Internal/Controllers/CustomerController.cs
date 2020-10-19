@@ -2,15 +2,14 @@
 using AW.UI.Web.Internal.Interfaces;
 using System.Threading.Tasks;
 using AW.UI.Web.Internal.ViewModels.Customer;
-using System.Linq;
 
 namespace AW.UI.Web.Internal.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomersViewModelService customersViewModelService;
+        private readonly ICustomerViewModelService customersViewModelService;
 
-        public CustomerController(ICustomersViewModelService customersViewModelService)
+        public CustomerController(ICustomerViewModelService customersViewModelService)
         {
             this.customersViewModelService = customersViewModelService;
         }

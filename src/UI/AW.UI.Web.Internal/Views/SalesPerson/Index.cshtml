@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Sales persons";
+    @model SalesPersonIndexViewModel;
+}
+
+<div class="container">
+    <h2>Sales persons</h2>
+    @if (Model.SalesPersons.Any())
+    {
+        <div class="row">
+            <table class="table table-striped listView">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sales territory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var salesPerson in Model.SalesPersons)
+                    {
+                        <tr>
+                            <td>@salesPerson.FullName</td>
+                            <td>@(!string.IsNullOrEmpty(salesPerson.SalesTerritoryName) ? salesPerson.SalesTerritoryName : "-")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+        </div>
+    }
+</div>

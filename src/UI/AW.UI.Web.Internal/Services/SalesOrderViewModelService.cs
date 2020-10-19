@@ -13,26 +13,26 @@ using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Services
 {
-    public class SalesOrdersViewModelService : ISalesOrdersViewModelService
+    public class SalesOrderViewModelService : ISalesOrderViewModelService
     {
-        private readonly ILogger<SalesOrdersViewModelService> logger;
+        private readonly ILogger<SalesOrderViewModelService> logger;
         private readonly IMapper mapper;
         private readonly ISalesOrderService salesOrderService;
         private readonly ISalesTerritoryService salesTerritoryService;
 
-        public SalesOrdersViewModelService(
+        public SalesOrderViewModelService(
             ILoggerFactory loggerFactory,
             IMapper mapper,
             ISalesOrderService salesOrderService,
             ISalesTerritoryService salesTerritoryService)
         {
-            logger = loggerFactory.CreateLogger<SalesOrdersViewModelService>();
+            logger = loggerFactory.CreateLogger<SalesOrderViewModelService>();
             this.mapper = mapper;
             this.salesOrderService = salesOrderService;
             this.salesTerritoryService = salesTerritoryService;
         }
 
-        public async Task<SalesOrdersIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, string customerType)
+        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, string customerType)
         {
             logger.LogInformation("GetSalesOrders called");
 
@@ -47,7 +47,7 @@ namespace AW.UI.Web.Internal.Services
                 }
             );
 
-            var vm = new SalesOrdersIndexViewModel
+            var vm = new SalesOrderIndexViewModel
             {
                 SalesOrders = mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
                 Territories = await GetTerritories(),
@@ -76,7 +76,7 @@ namespace AW.UI.Web.Internal.Services
 
             var items = territories
                 .ListTerritoriesResult
-                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
+                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegion.CountryRegionCode})" })
                 .OrderBy(b => b.Text)
                 .ToList();
 

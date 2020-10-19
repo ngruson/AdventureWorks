@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Domain.Sales;
 
 namespace AW.Application.GetSalesTerritories
 {
-    public class TerritoryDto : IMapFrom<SalesTerritory>
+    public class CountryRegionDto : IMapFrom<Domain.Person.CountryRegion>
     {
+        public string CountryRegionCode { get; set; }
         public string Name { get; set; }
-        public CountryRegionDto CountryRegion { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesTerritory, TerritoryDto>();
+            profile.CreateMap<Domain.Person.CountryRegion, CountryRegionDto>();
         }
     }
 }

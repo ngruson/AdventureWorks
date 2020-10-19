@@ -17,7 +17,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesPerson, SalesPersonViewModel>();
+            profile.CreateMap<CustomerService.SalesPerson, SalesPersonViewModel>();
             profile.CreateMap<SalesPerson1, SalesPersonViewModel>();
             profile.CreateMap<SalesPersonViewModel, UpdateSalesPerson>();
             profile.CreateMap<SalesPersonDto1, SalesPersonViewModel>();

@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Sales orders";
-    @model SalesOrdersIndexViewModel;
+    @model SalesOrderIndexViewModel;
 }
 
 <section class="filters">
@@ -17,6 +17,7 @@
     </div>
 </section>
 <div class="container">
+    <h2>Sales orders</h2>
     @if (Model.SalesOrders.Any())
     {
         <partial name="_pagination" for="@Model.PaginationInfo" />
@@ -38,17 +39,17 @@
                 <tbody>
                     @foreach (var salesOrder in Model.SalesOrders)
                     {
-                    <tr>
-                        <td>@Html.ActionLink(salesOrder.SalesOrderNumber, "Detail", new { salesOrder.SalesOrderNumber })</td>
-                        <td>@salesOrder.AccountNumber</td>
-                        <td>@salesOrder.CustomerName</td>
-                        <td>@salesOrder.CustomerType</td>
-                        <td>@salesOrder.Territory</td>
-                        <td>@salesOrder.Status</td>
-                        <td>@salesOrder.OnlineOrdered</td>
-                        <td>@string.Format("{0:d}", salesOrder.OrderDate)</td>
-                        <td>@string.Format(new CultureInfo("en-US"), "{0:C}", salesOrder.TotalDue)</td>
-                    </tr>
+                        <tr>
+                            <td>@Html.ActionLink(salesOrder.SalesOrderNumber, "Detail", new { salesOrder.SalesOrderNumber })</td>
+                            <td>@salesOrder.AccountNumber</td>
+                            <td>@salesOrder.CustomerName</td>
+                            <td>@salesOrder.CustomerType</td>
+                            <td>@salesOrder.Territory</td>
+                            <td>@salesOrder.Status</td>
+                            <td>@salesOrder.OnlineOrdered</td>
+                            <td>@string.Format("{0:d}", salesOrder.OrderDate)</td>
+                            <td>@string.Format(new CultureInfo("en-US"), "{0:C}", salesOrder.TotalDue)</td>
+                        </tr>
                     }
                 </tbody>
             </table>

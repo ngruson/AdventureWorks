@@ -6,9 +6,9 @@ namespace AW.UI.Web.Internal.Controllers
 {
     public class SalesOrderController : Controller
     {
-        private readonly ISalesOrdersViewModelService salesOrdersViewModelService;
+        private readonly ISalesOrderViewModelService salesOrdersViewModelService;
 
-        public SalesOrderController(ISalesOrdersViewModelService salesOrdersViewModelService)
+        public SalesOrderController(ISalesOrderViewModelService salesOrdersViewModelService)
         {
             this.salesOrdersViewModelService = salesOrdersViewModelService;
         }

@@ -43,8 +43,9 @@ namespace AW.UI.Web.Internal
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
 
-            services.AddScoped<ICustomersViewModelService, CustomersViewModelService>();
-            services.AddScoped<ISalesOrdersViewModelService, SalesOrdersViewModelService>();
+            services.AddScoped<ICustomerViewModelService, CustomerViewModelService>();
+            services.AddScoped<ISalesOrderViewModelService, SalesOrderViewModelService>();
+            services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
 
             ConfigureWebservices(services);
         }

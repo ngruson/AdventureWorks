@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesOrdersIndexViewModel
+    public class SalesOrderIndexViewModel
     {
         public List<SalesOrderViewModel> SalesOrders { get; set; }
         public List<SelectListItem> Territories { get; set; }

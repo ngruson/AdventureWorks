@@ -30,7 +30,7 @@ namespace AW.UI.Web.Internal.SalesTerritoryService
         
         private string nameField;
         
-        private string countryRegionCodeField;
+        private CountryRegionDto countryRegionField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -48,6 +48,32 @@ namespace AW.UI.Web.Internal.SalesTerritoryService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CountryRegionDto CountryRegion
+        {
+            get
+            {
+                return this.countryRegionField;
+            }
+            set
+            {
+                this.countryRegionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/SalesTerritoryService/1.0/ListTerritories")]
+    public partial class CountryRegionDto
+    {
+        
+        private string countryRegionCodeField;
+        
+        private string nameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string CountryRegionCode
         {
             get
@@ -57,6 +83,20 @@ namespace AW.UI.Web.Internal.SalesTerritoryService
             set
             {
                 this.countryRegionCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
             }
         }
     }
