@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = $"Add contact - {Model.CustomerName}";
+    @model EditCustomerContactViewModel;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AccountNumber)
+
+    @if (Model.IsNewContact)
+    {
+        <h2>Add contact</h2>
+    }
+    else
+    {
+        <h2>Edit contact</h2>
+    }
+
+    <div class="form-horizontal detail">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.ContactType, new { @class = "control-label" })
+            @if (Model.IsNewContact)
+            {
+                @Html.DropDownListFor(m => m.CustomerContact.ContactType, Model.ContactTypes, null, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.CustomerContact.ContactType, Model.ContactTypes, null, new { @disabled = "disabled", @class = "form-control" })
+                @Html.HiddenFor(m => m.CustomerContact.ContactType)
+            }
+
+            @Html.ValidationMessageFor(m => m.CustomerContact.ContactType, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.Contact.Title, new { @class = "control-label" })
+            <input asp-for="CustomerContact.Contact.Title" class="form-control" />
+            @Html.ValidationMessageFor(m => m.CustomerContact.Contact.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.Contact.FirstName, new { @class = "control-label" })
+            @if (Model.IsNewContact)
+            {
+                <input asp-for="CustomerContact.Contact.FirstName" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="CustomerContact.Contact.FirstName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.Contact.FirstName)
+            }
+            @Html.ValidationMessageFor(m => m.CustomerContact.Contact.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.Contact.MiddleName, new { @class = "control-label" })
+            @if (Model.IsNewContact)
+            {
+                <input asp-for="CustomerContact.Contact.MiddleName" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="CustomerContact.Contact.MiddleName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.Contact.MiddleName)
+            }
+            @Html.ValidationMessageFor(m => m.CustomerContact.Contact.MiddleName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.Contact.LastName, new { @class = "control-label" })
+            @if (Model.IsNewContact)
+            {
+                <input asp-for="CustomerContact.Contact.LastName" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="CustomerContact.Contact.LastName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.Contact.LastName)
+            }
+            @Html.ValidationMessageFor(m => m.CustomerContact.Contact.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContact.Contact.Suffix, new { @class = "control-label" })
+            <input asp-for="CustomerContact.Contact.Suffix" class="form-control" />
+            @Html.ValidationMessageFor(m => m.CustomerContact.Contact.Suffix, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Detail", new { Model.AccountNumber }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

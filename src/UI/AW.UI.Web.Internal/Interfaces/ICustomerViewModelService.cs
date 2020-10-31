@@ -19,5 +19,11 @@ namespace AW.UI.Web.Internal.Interfaces
         Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country);
         Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType);
         Task DeleteAddress(string accountNumber, string addressType);
+        Task<EditCustomerContactViewModel> AddContact(string accountNumber, string customerName);
+        Task AddContact(EditCustomerContactViewModel viewModel);
+        Task<EditCustomerContactViewModel> GetCustomerContact(string accountNumber, string contactName, string contactType);
+        Task UpdateContact(EditCustomerContactViewModel viewModel);
+        Task<DeleteCustomerContactViewModel> GetCustomerContactForDelete(string accountNumber, string contactName, string contactType);
+        Task DeleteContact(DeleteCustomerContactViewModel viewModel);
     }
 }

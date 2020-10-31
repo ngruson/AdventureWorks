@@ -3,7 +3,7 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class Document : BaseEntity<string>
+    public class Document
     {
         public string DocumentNode { get; set; }
         public int DocumentLevel { get; set; }

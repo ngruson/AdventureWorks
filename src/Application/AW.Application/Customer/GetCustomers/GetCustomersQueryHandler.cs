@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AW.Application.Customers;
 using AW.Application.Interfaces;
 using AW.Application.Specifications;
 using MediatR;

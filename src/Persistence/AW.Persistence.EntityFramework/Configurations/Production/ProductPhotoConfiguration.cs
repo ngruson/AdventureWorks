@@ -9,7 +9,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         {
             ToTable("Production.ProductPhoto");
 
-            Property(pp => pp.Id)
+            Property(pp => pp.ProductPhotoID)
                 .HasColumnName("ProductPhotoID");
 
             Property(pp => pp.ThumbnailPhotoFileName)

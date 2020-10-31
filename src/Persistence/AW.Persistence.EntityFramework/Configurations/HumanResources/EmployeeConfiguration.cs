@@ -11,10 +11,6 @@ namespace AW.Persistence.EntityFramework.Configurations.HumanResources
             ToTable("HumanResources.Employee");
             HasKey(e => e.Id);
 
-            Property(e => e.Id)
-                .HasColumnName("BusinessEntityID")
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             Property(e => e.NationalIDNumber)
                 .IsRequired()
                 .HasMaxLength(15);

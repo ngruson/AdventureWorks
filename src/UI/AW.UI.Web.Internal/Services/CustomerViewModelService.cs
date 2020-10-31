@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Internal.AddressTypeService;
+using AW.UI.Web.Internal.ContactTypeService;
 using AW.UI.Web.Internal.CountryService;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
@@ -23,6 +24,7 @@ namespace AW.UI.Web.Internal.Services
         private readonly IMapper mapper;
 
         private readonly IAddressTypeService addressTypeService;
+        private readonly IContactTypeService contactTypeService;
         private readonly ICountryService countryService;
         private readonly ICustomerService customerService;
         private readonly ISalesTerritoryService salesTerritoryService;
@@ -33,6 +35,7 @@ namespace AW.UI.Web.Internal.Services
             ILoggerFactory loggerFactory,
             IMapper mapper,
             IAddressTypeService addressTypeService,
+            IContactTypeService contactTypeService,
             ICountryService countryService,
             ICustomerService customerService,
             ISalesTerritoryService salesTerritoryService,
@@ -42,6 +45,7 @@ namespace AW.UI.Web.Internal.Services
             logger = loggerFactory.CreateLogger<CustomerViewModelService>();
             this.mapper = mapper;
             this.addressTypeService = addressTypeService;
+            this.contactTypeService = contactTypeService;
             this.countryService = countryService;
             this.customerService = customerService;
             this.salesTerritoryService = salesTerritoryService;
@@ -367,7 +371,7 @@ namespace AW.UI.Web.Internal.Services
 
         public async Task UpdateAddress(EditCustomerAddressViewModel viewModel)
         {
-            logger.LogInformation("EditAddress called");
+            logger.LogInformation("UpdateAddress called");
 
             var request = mapper.Map<UpdateCustomerAddressRequest>(viewModel);
 
@@ -440,6 +444,127 @@ namespace AW.UI.Web.Internal.Services
                 AddressType = addressType
             });
             logger.LogInformation("Address successfully deleted");
+        }
+
+        public async Task<EditCustomerContactViewModel> AddContact(string accountNumber, string customerName)
+        {
+            logger.LogInformation("AddContact called");
+
+            var vm = new EditCustomerContactViewModel
+            {
+                IsNewContact = true,
+                AccountNumber = accountNumber,
+                CustomerName = customerName,
+                CustomerContact = new CustomerContactViewModel
+                {
+                    Contact = new ContactViewModel
+                    {
+                    }
+                },
+                ContactTypes = await GetContactTypes()
+            };
+
+            return vm;
+        }
+
+        public async Task AddContact(EditCustomerContactViewModel viewModel)
+        {
+            logger.LogInformation("AddContact called");
+
+            var request = mapper.Map<AddCustomerContactRequest>(viewModel);
+
+            logger.LogInformation("Calling AddCustomerContact operation of Customer web service");
+            await customerService.AddCustomerContactAsync(request);
+            logger.LogInformation("Contact successfully added");
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetContactTypes()
+        {
+            logger.LogInformation("GetContactTypes called.");
+            var contactTypes = await contactTypeService.ListContactTypesAsync();
+
+            var items = contactTypes
+                .ContactTypes
+                .Select(at => new SelectListItem() { Value = at, Text = at })
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task<EditCustomerContactViewModel> GetCustomerContact(string accountNumber, string contactName, string contactType)
+        {
+            logger.LogInformation("GetCustomerContact called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var contact = response.Customer.Store.Contacts.FirstOrDefault(c => 
+                c.ContactType == contactType &&
+                c.Contact.FullName == contactName
+            );
+
+            var vm = new EditCustomerContactViewModel
+            {
+                IsNewContact = false,
+                AccountNumber = accountNumber,
+                CustomerName = response.Customer.Store.Name,
+                CustomerContact = mapper.Map<CustomerContactViewModel>(contact),
+                ContactTypes = await GetContactTypes()
+            };
+
+            return vm;
+        }
+
+        public async Task UpdateContact(EditCustomerContactViewModel viewModel)
+        {
+            logger.LogInformation("UpdateContact called");
+
+            var request = mapper.Map<UpdateCustomerContactRequest>(viewModel);
+
+            logger.LogInformation("Calling UpdateCustomerContact operation of Customer web service");
+            await customerService.UpdateCustomerContactAsync(request);
+            logger.LogInformation("Contact successfully updated");
+        }
+
+        public async Task<DeleteCustomerContactViewModel> GetCustomerContactForDelete(string accountNumber, string contactName, string contactType)
+        {
+            logger.LogInformation("GetCustomerContactForDelete called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var contact = response.Customer.Store.Contacts.FirstOrDefault(a => 
+                a.ContactType == contactType && a.Contact.FullName == contactName
+            );
+
+            var vm = mapper.Map<DeleteCustomerContactViewModel>(contact);
+            vm.AccountNumber = accountNumber;
+            vm.CustomerName = response.Customer.Store.Name;
+
+            return vm;
+        }
+
+        public async Task DeleteContact(DeleteCustomerContactViewModel viewModel)
+        {
+            logger.LogInformation("DeleteContact called");
+
+            logger.LogInformation("Calling DeleteCustomerContact operation of Customer web service");
+            await customerService.DeleteCustomerContactAsync(
+                mapper.Map<DeleteCustomerContactRequest>(viewModel)
+            );
+
+            logger.LogInformation("Contact successfully deleted");
         }
     }
 }

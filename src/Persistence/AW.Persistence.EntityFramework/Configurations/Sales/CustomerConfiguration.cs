@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public CustomerConfiguration()
         {
             ToTable("Sales.Customer");
-            HasKey(p => p.Id);
+            HasKey(c => c.Id);
 
-            Property(p => p.Id)
+            Property(c => c.Id)
                 .HasColumnName("CustomerID");
 
             Property(c => c.AccountNumber)

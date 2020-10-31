@@ -9,10 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SalesOrderHeaderSalesReasonConfiguration()
         {
             ToTable("Sales.SalesOrderHeaderSalesReason");
-            HasKey(sohsr => new { sohsr.Id, sohsr.SalesReasonID });
+            HasKey(sohsr => new { sohsr.SalesOrderID, sohsr.SalesReasonID });
 
-            Property(sohsr => sohsr.Id)
-                .HasColumnName("SalesOrderID")
+            Property(sohsr => sohsr.SalesOrderID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

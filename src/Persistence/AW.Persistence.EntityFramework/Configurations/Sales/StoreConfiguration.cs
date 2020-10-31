@@ -1,5 +1,4 @@
 ﻿using AW.Domain.Sales;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Sales
@@ -12,8 +11,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             HasKey(s => s.Id);
 
             Property(s => s.Id)
-                .HasColumnName("BusinessEntityID")
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+                .HasColumnName("BusinessEntityID");
 
             Property(s => s.Name)
                 .HasMaxLength(50);

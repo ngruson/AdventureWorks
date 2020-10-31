@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ProductModelProductDescriptionCulture : BaseEntity
+    public class ProductModelProductDescriptionCulture
     {
+        public int ProductModelID { get; set; }
         public int ProductDescriptionID { get; set; }
 
         public string CultureID { get; set; }

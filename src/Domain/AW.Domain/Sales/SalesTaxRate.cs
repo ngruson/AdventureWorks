@@ -5,7 +5,7 @@ namespace AW.Domain.Sales
 {
     public partial class SalesTaxRate
     {
-        public int SalesTaxRateID { get; set; }
+        public virtual int Id { get; protected set; }
 
         public int StateProvinceID { get; set; }
 

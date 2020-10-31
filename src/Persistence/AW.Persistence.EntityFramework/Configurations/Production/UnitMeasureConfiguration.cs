@@ -8,9 +8,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         public UnitMeasureConfiguration()
         {
             ToTable("Production.UnitMeasure");
-            HasKey(um => um.Id);
+            HasKey(um => um.UnitMeasureCode);
 
-            Property(um => um.Id)
+            Property(um => um.UnitMeasureCode)
                 .HasColumnName("UnitMeasureCode")
                 .HasMaxLength(3);
 

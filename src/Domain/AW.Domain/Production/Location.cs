@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Production
 {
-    public class Location : BaseEntity
+    public class Location
     {
+        public virtual int Id { get; protected set; }
         public string Name { get; set; }
 
         public decimal CostRate { get; set; }

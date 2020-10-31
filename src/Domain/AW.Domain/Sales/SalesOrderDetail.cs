@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Sales
 {
-    public partial class SalesOrderDetail : BaseEntity
+    public partial class SalesOrderDetail
     {
+        public int SalesOrderID { get; set; }
         public int SalesOrderDetailID { get; set; }
 
         public string CarrierTrackingNumber { get; set; }

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Purchasing
 {    
-    public class Vendor : BaseEntity
+    public class Vendor
     {
+        public virtual int Id { get; protected set; }
         public string AccountNumber { get; set; }
         
         public string Name { get; set; }

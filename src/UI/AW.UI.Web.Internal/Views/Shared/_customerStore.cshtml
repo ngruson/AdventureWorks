@@ -53,17 +53,34 @@
             </tr>
         </thead>
         @foreach (var contact in Model.Store.Contacts)
-        {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "EditContact")
-            |
-            @Html.ActionLink("Delete", "DeleteContact")
-        </td>
-        <td>@contact.ContactTypeName</td>
-        <td>@contact.ContactName</td>
-        <td>@contact.EmailAddress</td>
-    </tr>
-        }
+            {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "EditContact", new
+                    {
+                        accountNumber = ViewData["accountNumber"],
+                        contactName = contact.Contact.FullName,
+                        contact.ContactType
+                    })
+                |
+                @Html.ActionLink("Delete", "DeleteContact", new
+                   {
+                       accountNumber = ViewData["accountNumber"],
+                       contactName = contact.Contact.FullName,
+                       contact.ContactType
+                   })
+            </td>
+            <td>@contact.ContactType</td>
+            <td>@contact.Contact.FullName</td>
+            <td>@contact.EmailAddress</td>
+        </tr>
+            }
     </table>
 }
+else
+{
+    <div class="row">
+        No contacts found
+    </div>
+}
+@Html.ActionLink("Add contact", "AddContact", new { AccountNumber = ViewData["accountNumber"], CustomerName = ViewData["customerName"] })

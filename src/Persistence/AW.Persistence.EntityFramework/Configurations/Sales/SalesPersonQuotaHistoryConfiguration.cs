@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SalesPersonQuotaHistoryConfiguration()
         {
             ToTable("Sales.SalesPersonQuotaHistory");
-            HasKey(spqh => new { spqh.Id, spqh.QuotaDate });
+            HasKey(spqh => new { spqh.BusinessEntityID, spqh.QuotaDate });
 
-            Property(spqh => spqh.Id)
+            Property(spqh => spqh.BusinessEntityID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

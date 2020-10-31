@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class WorkOrderRouting : BaseEntity
+    public class WorkOrderRouting
     {
+        public virtual int Id { get; protected set; }
         public int ProductID { get; set; }
 
         public short OperationSequence { get; set; }

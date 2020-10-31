@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.HumanResources
 {
-    public class EmployeePayHistory : BaseEntity
+    public class EmployeePayHistory
     {
+        public int BusinessEntityID { get; set; }
         public DateTime RateChangeDate { get; set; }
 
         public decimal Rate { get; set; }

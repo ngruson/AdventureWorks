@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         public void Configure(EntityTypeBuilder<PersonCreditCard> builder)
         {
             builder.ToTable("PersonCreditCard", "Sales");
-            builder.HasKey(pcc => new { pcc.Id, pcc.CreditCardID });
+            builder.HasKey(pcc => new { pcc.BusinessEntityID, pcc.CreditCardID });
 
-            builder.Property(pcc => pcc.Id)
+            builder.Property(pcc => pcc.BusinessEntityID)
                 .ValueGeneratedNever();
 
             builder.Property(pcc => pcc.CreditCardID)

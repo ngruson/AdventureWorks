@@ -8,11 +8,7 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.HumanResources
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            //builder.ToTable("HumanResources.Employee");
-
-            builder.Property(e => e.Id)
-                .HasColumnName("BusinessEntityID")
-                .ValueGeneratedNever();
+            builder.HasKey(e => e.Id);
 
             builder.Property(e => e.NationalIDNumber)
                 .IsRequired()

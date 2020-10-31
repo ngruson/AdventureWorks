@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.HumanResources
         public EmployeePayHistoryConfiguration()
         {
             ToTable("HumanResources.EmployeePayHistory");
-            HasKey(eph => new { eph.Id, eph.RateChangeDate });
+            HasKey(eph => new { eph.BusinessEntityID, eph.RateChangeDate });
 
-            Property(eph => eph.Id)
+            Property(eph => eph.BusinessEntityID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

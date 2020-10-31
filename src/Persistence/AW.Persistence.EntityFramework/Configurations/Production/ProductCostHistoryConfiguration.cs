@@ -9,7 +9,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         {
             ToTable("Production.ProductCostHistory");
 
-            HasKey(pch => new { pch.Id, pch.StartDate });
+            HasKey(pch => new { pch.ProductID, pch.StartDate });
 
             Property(pch => pch.StandardCost)
                 .HasPrecision(19, 4)

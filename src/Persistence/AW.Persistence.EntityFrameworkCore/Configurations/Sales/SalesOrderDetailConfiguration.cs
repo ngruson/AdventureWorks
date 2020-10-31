@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         public void Configure(EntityTypeBuilder<SalesOrderDetail> builder)
         {
             builder.ToTable("SalesOrderDetail", "Sales");
-            builder.HasKey(sod => new { sod.Id, sod.SalesOrderDetailID });
+            builder.HasKey(sod => new { sod.SalesOrderID, sod.SalesOrderDetailID });
 
-            builder.Property(sod => sod.Id)
+            builder.Property(sod => sod.SalesOrderID)
                 .HasColumnName("SalesOrderID")
                 .ValueGeneratedNever();
 

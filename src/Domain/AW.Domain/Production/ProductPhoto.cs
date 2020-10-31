@@ -3,8 +3,9 @@ using System;
 namespace AW.Domain.Production
 {
 
-    public class ProductPhoto : BaseEntity
+    public class ProductPhoto
     {
+        public int ProductPhotoID { get; set; }
         public byte[] ThumbNailPhoto { get; set; }
 
         public string ThumbnailPhotoFileName { get; set; }

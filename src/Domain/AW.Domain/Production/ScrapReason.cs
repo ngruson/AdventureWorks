@@ -2,9 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ScrapReason : BaseEntity
+    public class ScrapReason 
     {
-        public short ScrapReasonID { get; set; }
+        public virtual short Id { get; set; }
 
         public string Name { get; set; }
 

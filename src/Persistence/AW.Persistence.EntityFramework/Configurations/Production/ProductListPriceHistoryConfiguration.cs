@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         public ProductListPriceHistoryConfiguration()
         {
             ToTable("Production.ProductListPriceHistory");
-            HasKey(plphc => new { plphc.Id, plphc.StartDate });
+            HasKey(plphc => new { plphc.ProductID, plphc.StartDate });
 
-            Property(plphc => plphc.Id)
+            Property(plphc => plphc.ProductID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

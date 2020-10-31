@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Person
         public void Configure(EntityTypeBuilder<EmailAddress> builder)
         {
             builder.ToTable("Person.EmailAddress");
-            builder.HasKey(ea => new { ea.Id, ea.EmailAddressID });
+            builder.HasKey(ea => new { ea.PersonId, ea.EmailAddressID });
 
-            builder.Property(ea => ea.Id)
+            builder.Property(ea => ea.PersonId)
                 .HasColumnName("BusinessEntityID")
                 .ValueGeneratedNever();
 

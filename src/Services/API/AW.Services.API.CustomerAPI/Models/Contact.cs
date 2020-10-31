@@ -4,7 +4,7 @@ using AW.Application.Customer;
 
 namespace AW.Services.API.CustomerAPI.Models
 {
-    public class Contact : IMapFrom<ContactDto>
+    public class Contact : IMapFrom<CustomerContactDto>
     {
         public string ContactTypeName { get; set; }
         public string ContactName { get; set; }
@@ -12,7 +12,7 @@ namespace AW.Services.API.CustomerAPI.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<ContactDto, Contact>();
+            profile.CreateMap<CustomerContactDto, Contact>();
         }
     }
 }

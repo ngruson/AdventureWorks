@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Sales
 {
-    public class SalesPersonQuotaHistory : BaseEntity
+    public class SalesPersonQuotaHistory
     {
+        public int BusinessEntityID { get; set; }
         public DateTime QuotaDate { get; set; }
 
         public decimal SalesQuota { get; set; }

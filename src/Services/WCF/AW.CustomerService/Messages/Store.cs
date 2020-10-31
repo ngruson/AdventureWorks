@@ -10,7 +10,7 @@ namespace AW.CustomerService.Messages
         public string Name { get; set; }
         public SalesPerson SalesPerson { get; set; }
         public List<CustomerAddress> Addresses { get; set; }
-        public List<Contact> Contacts { get; set; }
+        public List<CustomerContact> Contacts { get; set; }
 
         public void Mapping(Profile profile)
         {

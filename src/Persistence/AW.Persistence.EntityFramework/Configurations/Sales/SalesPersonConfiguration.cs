@@ -1,5 +1,4 @@
 ﻿using AW.Domain.Sales;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Sales
@@ -10,10 +9,6 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         {
             ToTable("Sales.SalesPerson");
             HasKey(sp => sp.Id);
-
-            Property(sp => sp.Id)
-                .HasColumnName("BusinessEntityID")
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             Property(c => c.SalesTerritoryID)
               .HasColumnName("TerritoryID");

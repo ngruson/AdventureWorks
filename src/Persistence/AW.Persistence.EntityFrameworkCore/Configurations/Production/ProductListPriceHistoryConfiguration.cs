@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
         public void Configure(EntityTypeBuilder<ProductListPriceHistory> builder)
         {
             builder.ToTable("Production.ProductListPriceHistory");
-            builder.HasKey(plphc => new { plphc.Id, plphc.StartDate });
+            builder.HasKey(plphc => new { plphc.ProductID, plphc.StartDate });
 
-            builder.Property(plphc => plphc.Id)
+            builder.Property(plphc => plphc.ProductID)
                 .ValueGeneratedNever();
 
             builder.Property(plphc => plphc.ListPrice)

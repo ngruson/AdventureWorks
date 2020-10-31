@@ -3,8 +3,9 @@ using System;
 
 namespace AW.Domain.Person
 {
-    public class StateProvince : BaseEntity
+    public class StateProvince
     {
+        public virtual int Id { get; protected set; }
         public string StateProvinceCode { get; set; }
         
         public string CountryRegionCode { get; set; }

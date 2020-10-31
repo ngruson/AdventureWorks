@@ -9,7 +9,7 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
         public void Configure(EntityTypeBuilder<ProductCostHistory> builder)
         {
             builder.ToTable("Production.ProductCostHistory");
-            builder.HasKey(pch => new { pch.Id, pch.StartDate });
+            builder.HasKey(pch => new { pch.ProductID, pch.StartDate });
 
             builder.Property(pch => pch.StandardCost)
                 .HasColumnType("decimal(19,4)")

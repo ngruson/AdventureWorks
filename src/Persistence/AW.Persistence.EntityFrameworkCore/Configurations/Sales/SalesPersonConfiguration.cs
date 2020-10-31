@@ -9,11 +9,7 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         public void Configure(EntityTypeBuilder<SalesPerson> builder)
         {
             //builder.ToTable("SalesPerson", "Sales");
-            //builder.HasKey(sp => sp.Id);
-
-            builder.Property(sp => sp.Id)
-                .HasColumnName("BusinessEntityID")
-                .ValueGeneratedNever();
+            builder.HasKey(sp => sp.Id);
 
             builder.Property(sp => sp.SalesQuota)
                 .HasColumnType("money");

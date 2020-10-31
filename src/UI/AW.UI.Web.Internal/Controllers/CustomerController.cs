@@ -141,5 +141,65 @@ namespace AW.UI.Web.Internal.Controllers
 
             return View(viewModel);
         }
+
+        public async Task<IActionResult> AddContact(string accountNumber, string customerName)
+        {
+            return View("Contact",
+                await customersViewModelService.AddContact(accountNumber, customerName)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddContact(EditCustomerContactViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.AddContact(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> EditContact(string accountNumber, string contactName, string contactType)
+        {
+            return View("Contact",
+                await customersViewModelService.GetCustomerContact(
+                    accountNumber,
+                    contactName,
+                    contactType
+                )
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditContact(EditCustomerContactViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.UpdateContact(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> DeleteContact(string accountNumber, string contactName, string contactType)
+        {
+            var viewModel = await customersViewModelService.GetCustomerContactForDelete(accountNumber, contactName, contactType);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteContact(DeleteCustomerContactViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.DeleteContact(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
     }
 }

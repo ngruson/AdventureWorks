@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Person
 {    
-    public partial class Password : BaseEntity
+    public partial class Password
     {
+        public int BusinessEntityID { get; set; }
         public string PasswordHash { get; set; }
 
         public string PasswordSalt { get; set; }

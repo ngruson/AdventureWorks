@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Person
 {
-    public class Address : BaseEntity
+    public class Address
     {
+        public virtual int Id { get; protected set; }
         public string AddressLine1 { get; set; }
         
         public string AddressLine2 { get; set; }

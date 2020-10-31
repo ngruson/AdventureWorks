@@ -10,7 +10,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Person
             //builder.ToTable("Person.Person");
 
             builder.Property(p => p.Id)
-                .HasColumnName("BusinessEntityID")
                 .ValueGeneratedNever();
                 
             builder.Property(p => p.PersonType)

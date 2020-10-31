@@ -1,9 +1,12 @@
 ﻿using AW.CustomerService.Messages.AddCustomerAddress;
+using AW.CustomerService.Messages.AddCustomerContact;
 using AW.CustomerService.Messages.DeleteCustomerAddress;
+using AW.CustomerService.Messages.DeleteCustomerContact;
 using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
 using AW.CustomerService.Messages.UpdateCustomer;
 using AW.CustomerService.Messages.UpdateCustomerAddress;
+using AW.CustomerService.Messages.UpdateCustomerContact;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -31,5 +34,14 @@ namespace AW.CustomerService
 
         [OperationContract(Action = "DeleteCustomerAddress", ReplyAction = "DeleteCustomerAddress")]
         Task<DeleteCustomerAddressResponse> DeleteCustomerAddress(DeleteCustomerAddressRequest request);
+
+        [OperationContract(Action = "AddCustomerContact", ReplyAction = "AddCustomerContact")]
+        Task<AddCustomerContactResponse> AddCustomerContact(AddCustomerContactRequest request);
+
+        [OperationContract(Action = "UpdateCustomerContact", ReplyAction = "UpdateCustomerContact")]
+        Task<UpdateCustomerContactResponse> UpdateCustomerContact(UpdateCustomerContactRequest request);
+
+        [OperationContract(Action = "DeleteCustomerContact", ReplyAction = "DeleteCustomerContact")]
+        Task<DeleteCustomerContactResponse> DeleteCustomerContact(DeleteCustomerContactRequest request);
     }
 }

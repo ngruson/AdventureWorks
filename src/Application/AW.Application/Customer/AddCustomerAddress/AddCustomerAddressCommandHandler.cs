@@ -41,7 +41,7 @@ namespace AW.Application.Customer.AddCustomerAddress
 
             var customerAddress = new BusinessEntityAddress
             {
-                AddressTypeID = addressType.AddressTypeID,
+                AddressTypeID = addressType.Id,
                 ModifiedDate = DateTime.Now,
                 rowguid = Guid.NewGuid()
             };

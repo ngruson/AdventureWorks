@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.HumanResources
         public void Configure(EntityTypeBuilder<EmployeeDepartmentHistory> builder)
         {
             builder.ToTable("HumanResources.EmployeeDepartmentHistory");
-            builder.HasKey(edp => new { edp.Id, edp.DepartmentID, edp.ShiftID, edp.StartDate });
+            builder.HasKey(edp => new { edp.BusinessEntityID, edp.DepartmentID, edp.ShiftID, edp.StartDate });
 
-            builder.Property(edp => edp.Id)
+            builder.Property(edp => edp.BusinessEntityID)
                 .ValueGeneratedNever();
 
             builder.Property(edp => edp.DepartmentID)

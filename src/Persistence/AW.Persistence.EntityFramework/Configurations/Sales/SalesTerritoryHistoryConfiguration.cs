@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SalesTerritoryHistoryConfiguration()
         {
             ToTable("Sales.SalesTerritoryHistory");
-            HasKey(sth => new { sth.Id, sth.TerritoryID, sth.StartDate });
+            HasKey(sth => new { sth.BusinessEntityID, sth.TerritoryID, sth.StartDate });
 
-            Property(sth => sth.Id)
+            Property(sth => sth.BusinessEntityID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

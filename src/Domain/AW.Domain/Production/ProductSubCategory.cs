@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Production
 {
-    public class ProductSubcategory : BaseEntity
+    public class ProductSubcategory
     {
+        public virtual int Id { get; protected set; }
         public int ProductCategoryID { get; set; }
 
         public string Name { get; set; }

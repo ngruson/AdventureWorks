@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         public void Configure(EntityTypeBuilder<SalesPersonQuotaHistory> builder)
         {
             builder.ToTable("SalesPersonQuotaHistory", "Sales");
-            builder.HasKey(spqh => new { spqh.Id, spqh.QuotaDate });
+            builder.HasKey(spqh => new { spqh.BusinessEntityID, spqh.QuotaDate });
 
-            builder.Property(spqh => spqh.Id)
+            builder.Property(spqh => spqh.BusinessEntityID)
                 .ValueGeneratedNever();
 
             builder.Property(spqh => spqh.SalesQuota)

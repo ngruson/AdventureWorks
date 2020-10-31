@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
         public PasswordConfiguration()
         {
             ToTable("Person.Password");
-            HasKey(p => p.Id);
+            HasKey(p => p.BusinessEntityID);
 
-            Property(p => p.Id)
+            Property(p => p.BusinessEntityID)
                 .HasColumnName("BusinessEntityID")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

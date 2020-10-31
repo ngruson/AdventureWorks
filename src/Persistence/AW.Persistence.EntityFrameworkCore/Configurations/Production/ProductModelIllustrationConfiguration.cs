@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
         public void Configure(EntityTypeBuilder<ProductModelIllustration> builder)
         {
             builder.ToTable("Production.ProductModelIllustration");
-            builder.HasKey(pmi => new { pmi.Id, pmi.IllustrationID });
+            builder.HasKey(pmi => new { pmi.ProductModelID, pmi.IllustrationID });
 
-            builder.Property(pmi => pmi.Id)
+            builder.Property(pmi => pmi.ProductModelID)
                 .ValueGeneratedNever();
 
             builder.Property(pmi => pmi.IllustrationID)

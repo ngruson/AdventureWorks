@@ -2,9 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ProductReview : BaseEntity
+    public class ProductReview
     {
-        public int ProductReviewID { get; set; }
+        public virtual int Id { get; protected set; }
 
         public int ProductID { get; set; }
 

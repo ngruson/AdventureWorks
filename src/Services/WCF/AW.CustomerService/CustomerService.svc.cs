@@ -16,6 +16,12 @@ using AW.Application.Customer.UpdateCustomerAddress;
 using AW.CustomerService.Messages.UpdateCustomerAddress;
 using AW.CustomerService.Messages.DeleteCustomerAddress;
 using AW.Application.Customer.DeleteCustomerAddress;
+using AW.CustomerService.Messages.AddCustomerContact;
+using AW.Application.Customer.AddCustomerContact;
+using AW.CustomerService.Messages.DeleteCustomerContact;
+using AW.Application.Customer.DeleteCustomerContact;
+using AW.CustomerService.Messages.UpdateCustomerContact;
+using AW.Application.Customer.UpdateCustomerContact;
 
 namespace AW.CustomerService
 {
@@ -102,6 +108,45 @@ namespace AW.CustomerService
             });
 
             return new DeleteCustomerAddressResponse();
+        }
+
+        public async Task<AddCustomerContactResponse> AddCustomerContact(AddCustomerContactRequest request)
+        {
+            await mediator.Send(new AddCustomerContactCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerContact = mapper.Map<Application.Customer.AddCustomerContact.CustomerContactDto>(request.CustomerContact)
+            });
+
+            return new AddCustomerContactResponse();
+        }
+
+        public async Task<UpdateCustomerContactResponse> UpdateCustomerContact(UpdateCustomerContactRequest request)
+        {
+            await mediator.Send(new UpdateCustomerContactCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerContact = mapper.Map<Application.Customer.UpdateCustomerContact.CustomerContactDto>(request.CustomerContact)
+            });
+
+            return new UpdateCustomerContactResponse();
+        }
+
+        public async Task<DeleteCustomerContactResponse> DeleteCustomerContact(DeleteCustomerContactRequest request)
+        {
+            await mediator.Send(new DeleteCustomerContactCommand
+            {
+                AccountNumber = request.AccountNumber,
+                ContactTypeName = request.ContactType,
+                Contact = new Application.Customer.DeleteCustomerContact.ContactDto 
+                { 
+                    FirstName = request.Contact.FirstName,
+                    MiddleName = request.Contact.MiddleName,
+                    LastName = request.Contact.LastName
+                }
+            });
+
+            return new DeleteCustomerContactResponse();
         }
     }
 }

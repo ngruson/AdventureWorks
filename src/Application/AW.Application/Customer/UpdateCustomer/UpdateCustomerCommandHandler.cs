@@ -4,7 +4,6 @@ using AW.Application.Specifications;
 using AW.Domain.Person;
 using AW.Domain.Sales;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 

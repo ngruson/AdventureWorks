@@ -4,7 +4,7 @@ namespace AW.Domain.Person
 {
     public partial class AddressType
     {
-        public int AddressTypeID { get; set; }
+        public int Id { get; set; }
         
         public string Name { get; set; }
 

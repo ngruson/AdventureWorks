@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
         public void Configure(EntityTypeBuilder<ProductModelProductDescriptionCulture> builder)
         {
             builder.ToTable("Production.ProductModelProductDescriptionCulture");
-            builder.HasKey(pmpdc => new { pmpdc.Id, pmpdc.ProductDescriptionID, pmpdc.CultureID });
+            builder.HasKey(pmpdc => new { pmpdc.ProductModelID, pmpdc.ProductDescriptionID, pmpdc.CultureID });
 
-            builder.Property(pmpdc => pmpdc.Id)
+            builder.Property(pmpdc => pmpdc.ProductModelID)
                 .ValueGeneratedNever();
 
             builder.Property(pmpdc => pmpdc.ProductDescriptionID)

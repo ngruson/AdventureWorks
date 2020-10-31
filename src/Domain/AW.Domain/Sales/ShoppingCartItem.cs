@@ -5,8 +5,8 @@ namespace AW.Domain.Sales
 {    
     public partial class ShoppingCartItem
     {
-        public int ShoppingCartItemID { get; set; }
-        
+        public virtual int Id { get; protected set; }
+
         public string ShoppingCartID { get; set; }
 
         public int Quantity { get; set; }

@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.HumanResources
         public EmployeeDepartmentHistoryConfiguration()
         {
             ToTable("HumanResources.EmployeeDepartmentHistory");
-            HasKey(edp => new { edp.Id, edp.DepartmentID, edp.ShiftID, edp.StartDate });
+            HasKey(edp => new { edp.BusinessEntityID, edp.DepartmentID, edp.ShiftID, edp.StartDate });
 
-            Property(edp => edp.Id)
+            Property(edp => edp.BusinessEntityID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

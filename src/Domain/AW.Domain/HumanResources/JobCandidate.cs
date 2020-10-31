@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.HumanResources
 {    
-    public partial class JobCandidate : BaseEntity
+    public partial class JobCandidate
     {
+        public virtual int Id { get; protected set; }
         public int? BusinessEntityID { get; set; }
         
         public string Resume { get; set; }

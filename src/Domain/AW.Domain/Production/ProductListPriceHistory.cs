@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ProductListPriceHistory : BaseEntity
+    public class ProductListPriceHistory
     {
+        public int ProductID { get; set; }
         public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }

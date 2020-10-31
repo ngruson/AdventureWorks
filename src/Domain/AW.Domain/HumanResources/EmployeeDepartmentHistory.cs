@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.HumanResources
 {
-    public class EmployeeDepartmentHistory : BaseEntity
+    public class EmployeeDepartmentHistory
     {
+        public int BusinessEntityID { get; set; }
         public short DepartmentID { get; set; }
 
         public byte ShiftID { get; set; }

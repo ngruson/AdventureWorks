@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Production
 {
-    public class WorkOrder : BaseEntity
+    public class WorkOrder
     {
+        public virtual int Id { get; protected set; }
         public int ProductID { get; set; }
 
         public int OrderQty { get; set; }

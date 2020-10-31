@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         public ProductModelProductDescriptionCultureConfiguration()
         {
             ToTable("Production.ProductModelProductDescriptionCulture");
-            HasKey(pmpdc => new { pmpdc.Id, pmpdc.ProductDescriptionID, pmpdc.CultureID });
+            HasKey(pmpdc => new { pmpdc.ProductModelID, pmpdc.ProductDescriptionID, pmpdc.CultureID });
 
-            Property(pmpdc => pmpdc.Id)
+            Property(pmpdc => pmpdc.ProductModelID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

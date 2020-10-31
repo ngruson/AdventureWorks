@@ -13,7 +13,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
 
             Property(p => p.Id)
                 .HasColumnName("BusinessEntityID")
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(p => p.PersonType)
                 .IsRequired()

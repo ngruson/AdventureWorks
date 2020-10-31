@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Person
 {
-    public partial class BusinessEntityAddress : BaseEntity
+    public partial class BusinessEntityAddress
     {
+        public int BusinessEntityID { get; set; }
         public int AddressID { get; set; }
 
         public int AddressTypeID { get; set; }

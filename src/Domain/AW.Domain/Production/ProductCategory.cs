@@ -1,12 +1,12 @@
-using AW.Domain;
 using System;
 using System.Collections.Generic;
 
 namespace AW.Domain.Production
 {
 
-    public class ProductCategory : BaseEntity
+    public class ProductCategory
     {
+        public virtual int Id { get; protected set; }
         public string Name { get; set; }
 
         public Guid rowguid { get; set; }

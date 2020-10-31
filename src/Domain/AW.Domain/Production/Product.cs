@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Production
 {
-    public class Product : BaseEntity
-    {        
+    public class Product
+    {
+        public virtual int Id { get; protected set; }
         public string Name { get; set; }
        
         public string ProductNumber { get; set; }

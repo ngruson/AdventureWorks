@@ -1,4 +1,5 @@
 ﻿using AW.Domain.Person;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Person
@@ -11,7 +12,8 @@ namespace AW.Persistence.EntityFramework.Configurations.Person
             HasKey(s => s.Id);
 
             Property(s => s.Id)
-                .HasColumnName("BusinessEntityID");
+                .HasColumnName("BusinessEntityID")
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public PersonCreditCardConfiguration()
         {
             ToTable("Sales.PersonCreditCard");
-            HasKey(pcc => new { pcc.Id, pcc.CreditCardID });
+            HasKey(pcc => new { pcc.BusinessEntityID, pcc.CreditCardID });
 
-            Property(pcc => pcc.Id)
+            Property(pcc => pcc.BusinessEntityID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

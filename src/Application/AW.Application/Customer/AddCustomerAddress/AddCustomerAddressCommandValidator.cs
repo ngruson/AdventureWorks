@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace AW.Application.Customer.AddCustomerAddress
 {
-    public class AddCustomerAddressCommandValidator : AbstractValidator<AddCustomerAddressCommand>
+    public class AddCustomerContactCommandValidator : AbstractValidator<AddCustomerAddressCommand>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
         private readonly IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository;
 
-        public AddCustomerAddressCommandValidator(
+        public AddCustomerContactCommandValidator(
             IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.AddressType> addressTypeRepository,
             IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository

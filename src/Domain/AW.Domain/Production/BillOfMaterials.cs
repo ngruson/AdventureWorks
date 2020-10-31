@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class BillOfMaterials : BaseEntity
+    public class BillOfMaterials
     {
+        public virtual int Id { get; protected set; }
         public int? ProductAssemblyID { get; set; }
         public virtual Product ProductAssembly { get; set; }
 

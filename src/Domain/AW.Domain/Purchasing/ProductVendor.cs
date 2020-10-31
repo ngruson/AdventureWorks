@@ -3,7 +3,7 @@ using System;
 
 namespace AW.Domain.Purchasing
 {
-    public class ProductVendor : BaseEntity
+    public class ProductVendor
     {
         public int ProductID { get; set; }
 

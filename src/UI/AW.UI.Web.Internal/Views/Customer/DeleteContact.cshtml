@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = $"Delete contact - {Model.CustomerName}";
+    @model DeleteCustomerContactViewModel;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AccountNumber)
+
+<div class="form-horizontal detail">
+    <h4>Are you sure you want to delete this?</h4>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ContactType, new { @class = "control-label" })
+        <input asp-for="ContactType" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.ContactType)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+        <input asp-for="Title" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+        <input asp-for="FirstName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.FirstName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
+        <input asp-for="MiddleName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.MiddleName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+        <input asp-for="LastName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.LastName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Suffix, new { @class = "control-label" })
+        <input asp-for="Suffix" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.Suffix)
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            @Html.ActionLink("Cancel", "Detail", new { Model.AccountNumber }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}

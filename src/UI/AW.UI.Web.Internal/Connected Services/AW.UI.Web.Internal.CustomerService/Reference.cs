@@ -39,6 +39,18 @@ namespace AW.UI.Web.Internal.CustomerService
         [System.ServiceModel.OperationContractAttribute(Action="DeleteCustomerAddress", ReplyAction="DeleteCustomerAddress")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressResponseDeleteCustomerAddressResult> DeleteCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AddCustomerContact", ReplyAction="AddCustomerContact")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerContactResponse> AddCustomerContactAsync(AW.UI.Web.Internal.CustomerService.AddCustomerContactRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="UpdateCustomerContact", ReplyAction="UpdateCustomerContact")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerContactResponseUpdateCustomerContactResult> UpdateCustomerContactAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerContactRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DeleteCustomerContact", ReplyAction="DeleteCustomerContact")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactResponseDeleteCustomerContactResult> DeleteCustomerContactAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactRequest request);
     }
     
     /// <remarks/>
@@ -140,6 +152,406 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         Store,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteContact
+    {
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="EmailAddress", Namespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact")]
+    public partial class EmailAddress1
+    {
+        
+        private string emailAddressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string EmailAddress
+        {
+            get
+            {
+                return this.emailAddressField;
+            }
+            set
+            {
+                this.emailAddressField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="Contact", Namespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact")]
+    public partial class Contact3
+    {
+        
+        private string titleField;
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string suffixField;
+        
+        private EmailAddress1[] emailAddressesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Title
+        {
+            get
+            {
+                return this.titleField;
+            }
+            set
+            {
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Suffix
+        {
+            get
+            {
+                return this.suffixField;
+            }
+            set
+            {
+                this.suffixField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=5)]
+        public EmailAddress1[] EmailAddresses
+        {
+            get
+            {
+                return this.emailAddressesField;
+            }
+            set
+            {
+                this.emailAddressesField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerContact", Namespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact")]
+    public partial class CustomerContact3
+    {
+        
+        private string contactTypeField;
+        
+        private Contact3 contactField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ContactType
+        {
+            get
+            {
+                return this.contactTypeField;
+            }
+            set
+            {
+                this.contactTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Contact3 Contact
+        {
+            get
+            {
+                return this.contactField;
+            }
+            set
+            {
+                this.contactField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerContactResponse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerContact")]
+    public partial class EmailAddress
+    {
+        
+        private string emailAddress1Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EmailAddress", Order=0)]
+        public string EmailAddress1
+        {
+            get
+            {
+                return this.emailAddress1Field;
+            }
+            set
+            {
+                this.emailAddress1Field = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="Contact", Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerContact")]
+    public partial class Contact2
+    {
+        
+        private string titleField;
+        
+        private string firstNameField;
+        
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string suffixField;
+        
+        private EmailAddress[] emailAddressesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Title
+        {
+            get
+            {
+                return this.titleField;
+            }
+            set
+            {
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FirstName
+        {
+            get
+            {
+                return this.firstNameField;
+            }
+            set
+            {
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Suffix
+        {
+            get
+            {
+                return this.suffixField;
+            }
+            set
+            {
+                this.suffixField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=5)]
+        public EmailAddress[] EmailAddresses
+        {
+            get
+            {
+                return this.emailAddressesField;
+            }
+            set
+            {
+                this.emailAddressesField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerContact", Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerContact")]
+    public partial class CustomerContact2
+    {
+        
+        private string contactTypeField;
+        
+        private Contact2 contactField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ContactType
+        {
+            get
+            {
+                return this.contactTypeField;
+            }
+            set
+            {
+                this.contactTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Contact2 Contact
+        {
+            get
+            {
+                return this.contactField;
+            }
+            set
+            {
+                this.contactField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -982,37 +1394,141 @@ namespace AW.UI.Web.Internal.CustomerService
     public partial class Contact1
     {
         
-        private string contactTypeNameField;
+        private string titleField;
         
-        private string contactNameField;
+        private string firstNameField;
         
-        private string emailAddressField;
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string fullNameField;
+        
+        private string suffixField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string ContactTypeName
+        public string Title
         {
             get
             {
-                return this.contactTypeNameField;
+                return this.titleField;
             }
             set
             {
-                this.contactTypeNameField = value;
+                this.titleField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string ContactName
+        public string FirstName
         {
             get
             {
-                return this.contactNameField;
+                return this.firstNameField;
             }
             set
             {
-                this.contactNameField = value;
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Suffix
+        {
+            get
+            {
+                return this.suffixField;
+            }
+            set
+            {
+                this.suffixField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerContact", Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class CustomerContact1
+    {
+        
+        private string contactTypeField;
+        
+        private Contact1 contactField;
+        
+        private string emailAddressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ContactType
+        {
+            get
+            {
+                return this.contactTypeField;
+            }
+            set
+            {
+                this.contactTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Contact1 Contact
+        {
+            get
+            {
+                return this.contactField;
+            }
+            set
+            {
+                this.contactField = value;
             }
         }
         
@@ -1116,7 +1632,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private CustomerAddress1[] addressesField;
         
-        private Contact1[] contactsField;
+        private CustomerContact1[] contactsField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1162,7 +1678,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
-        public Contact1[] Contacts
+        public CustomerContact1[] Contacts
         {
             get
             {
@@ -1988,37 +2504,141 @@ namespace AW.UI.Web.Internal.CustomerService
     public partial class Contact
     {
         
-        private string contactTypeNameField;
+        private string titleField;
         
-        private string contactNameField;
+        private string firstNameField;
         
-        private string emailAddressField;
+        private string middleNameField;
+        
+        private string lastNameField;
+        
+        private string fullNameField;
+        
+        private string suffixField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string ContactTypeName
+        public string Title
         {
             get
             {
-                return this.contactTypeNameField;
+                return this.titleField;
             }
             set
             {
-                this.contactTypeNameField = value;
+                this.titleField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string ContactName
+        public string FirstName
         {
             get
             {
-                return this.contactNameField;
+                return this.firstNameField;
             }
             set
             {
-                this.contactNameField = value;
+                this.firstNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MiddleName
+        {
+            get
+            {
+                return this.middleNameField;
+            }
+            set
+            {
+                this.middleNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName
+        {
+            get
+            {
+                return this.lastNameField;
+            }
+            set
+            {
+                this.lastNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string FullName
+        {
+            get
+            {
+                return this.fullNameField;
+            }
+            set
+            {
+                this.fullNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Suffix
+        {
+            get
+            {
+                return this.suffixField;
+            }
+            set
+            {
+                this.suffixField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/ListCustomers")]
+    public partial class CustomerContact
+    {
+        
+        private string contactTypeField;
+        
+        private Contact contactField;
+        
+        private string emailAddressField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ContactType
+        {
+            get
+            {
+                return this.contactTypeField;
+            }
+            set
+            {
+                this.contactTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public Contact Contact
+        {
+            get
+            {
+                return this.contactField;
+            }
+            set
+            {
+                this.contactField = value;
             }
         }
         
@@ -2122,7 +2742,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         private CustomerAddress[] addressesField;
         
-        private Contact[] contactsField;
+        private CustomerContact[] contactsField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -2168,7 +2788,7 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
-        public Contact[] Contacts
+        public CustomerContact[] Contacts
         {
             get
             {
@@ -3011,6 +3631,158 @@ namespace AW.UI.Web.Internal.CustomerService
     {
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerContactRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerContact2 customerContactField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerContact2 CustomerContact
+        {
+            get
+            {
+                return this.customerContactField;
+            }
+            set
+            {
+                this.customerContactField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerContactRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerContact3 customerContactField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerContact3 CustomerContact
+        {
+            get
+            {
+                return this.customerContactField;
+            }
+            set
+            {
+                this.customerContactField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class UpdateCustomerContactResponseUpdateCustomerContactResult
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerContactRequest
+    {
+        
+        private string accountNumberField;
+        
+        private string contactTypeField;
+        
+        private DeleteContact contactField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string ContactType
+        {
+            get
+            {
+                return this.contactTypeField;
+            }
+            set
+            {
+                this.contactTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public DeleteContact Contact
+        {
+            get
+            {
+                return this.contactField;
+            }
+            set
+            {
+                this.contactField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerContactResponseDeleteCustomerContactResult
+    {
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICustomerServiceChannel : AW.UI.Web.Internal.CustomerService.ICustomerService, System.ServiceModel.IClientChannel
     {
@@ -3089,6 +3861,21 @@ namespace AW.UI.Web.Internal.CustomerService
         public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressResponseDeleteCustomerAddressResult> DeleteCustomerAddressAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerAddressRequest request)
         {
             return base.Channel.DeleteCustomerAddressAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerContactResponse> AddCustomerContactAsync(AW.UI.Web.Internal.CustomerService.AddCustomerContactRequest request)
+        {
+            return base.Channel.AddCustomerContactAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.UpdateCustomerContactResponseUpdateCustomerContactResult> UpdateCustomerContactAsync(AW.UI.Web.Internal.CustomerService.UpdateCustomerContactRequest request)
+        {
+            return base.Channel.UpdateCustomerContactAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactResponseDeleteCustomerContactResult> DeleteCustomerContactAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactRequest request)
+        {
+            return base.Channel.DeleteCustomerContactAsync(request);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

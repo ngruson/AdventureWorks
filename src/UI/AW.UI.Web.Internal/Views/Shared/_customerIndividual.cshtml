@@ -95,7 +95,7 @@
             }
             @channel
         </td>
-        <td>@contactInfo.ContactInfoType</td>
+        <td>@(!string.IsNullOrEmpty(contactInfo.ContactInfoType) ? contactInfo.ContactInfoType : "-")</td>
         <td>@contactInfo.Value</td>
     </tr>
         }

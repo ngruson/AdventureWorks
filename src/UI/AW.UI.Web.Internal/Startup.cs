@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using AutoMapper;
 using AW.UI.Web.Internal.AddressTypeService;
+using AW.UI.Web.Internal.ContactTypeService;
 using AW.UI.Web.Internal.CountryService;
 using AW.UI.Web.Internal.CustomerService;
 using AW.UI.Web.Internal.Interfaces;
@@ -58,6 +59,15 @@ namespace AW.UI.Web.Internal
                 var client = new AddressTypeServiceClient(
                     new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["AddressTypeService:EndpointAddress"])
+                );
+
+                return client;
+            });
+            services.AddScoped<IContactTypeService>(provider =>
+            {
+                var client = new ContactTypeServiceClient(
+                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new EndpointAddress(Configuration["ContactTypeService:EndpointAddress"])
                 );
 
                 return client;

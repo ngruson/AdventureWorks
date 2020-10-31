@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
         public void Configure(EntityTypeBuilder<ProductDocument> builder)
         {
             builder.ToTable("Production.ProductDocument");
-            builder.HasKey(pd => new { pd.Id, pd.DocumentNode });
+            builder.HasKey(pd => new { pd.ProductID, pd.DocumentNode });
 
-            builder.Property(pd => pd.Id)
+            builder.Property(pd => pd.ProductID)
                 .HasColumnName("ProductID");
         }
     }

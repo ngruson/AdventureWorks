@@ -11,9 +11,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
             builder.ToTable("Customer", "Sales");
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Id)
-                .HasColumnName("CustomerID");
-
             builder.Property(c => c.AccountNumber)
                 .IsRequired()
                 .HasMaxLength(10)

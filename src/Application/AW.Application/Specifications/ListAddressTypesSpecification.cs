@@ -7,7 +7,7 @@ namespace AW.Application.Specifications
         public ListAddressTypesSpecification() : base()
         {
             Query
-                .OrderBy(at => at.AddressTypeID);
+                .OrderBy(at => at.Id);
         }
     }
 }

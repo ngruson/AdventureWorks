@@ -2,8 +2,9 @@ using System.Collections.Generic;
 
 namespace AW.Domain.Sales
 {
-    public partial class Customer : BaseEntity
+    public partial class Customer
     {
+        public int Id { get; set; }
         public string AccountNumber { get; set; }
 
         public virtual Person.Person Person { get; set; }

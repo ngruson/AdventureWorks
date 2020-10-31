@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace AW.Application.Customer.DeleteCustomerAddress
 {
-    public class DeleteCustomerAddressCommandValidator : AbstractValidator<DeleteCustomerAddressCommand>
+    public class DeleteCustomerContactCommandValidator : AbstractValidator<DeleteCustomerAddressCommand>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
 
-        public DeleteCustomerAddressCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
+        public DeleteCustomerContactCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.AddressType> addressTypeRepository)
         {
             this.customerRepository = customerRepository;

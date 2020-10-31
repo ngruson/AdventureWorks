@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class TransactionHistoryArchive : BaseEntity
+    public class TransactionHistoryArchive
     {
+        public virtual int Id { get; protected set; }
         public int ProductID { get; set; }
 
         public int ReferenceOrderID { get; set; }

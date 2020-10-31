@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Production
 {
-    public class ProductModelIllustration : BaseEntity
+    public class ProductModelIllustration
     {
+        public int ProductModelID { get; set; }
         public int IllustrationID { get; set; }
 
         public DateTime ModifiedDate { get; set; }

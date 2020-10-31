@@ -9,10 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Person
         public void Configure(EntityTypeBuilder<BusinessEntityAddress> builder)
         {
             builder.ToTable("Person.BusinessEntityAddress");
-            builder.HasKey(bea => new { bea.Id, bea.AddressID, bea.AddressTypeID });
+            builder.HasKey(bea => new { bea.BusinessEntityID, bea.AddressID, bea.AddressTypeID });
 
-            builder.Property(bea => bea.Id)
-                .HasColumnName("BusinessEntityID")
+            builder.Property(bea => bea.BusinessEntityID)
                 .ValueGeneratedNever();
 
             builder.Property(bea => bea.AddressID)

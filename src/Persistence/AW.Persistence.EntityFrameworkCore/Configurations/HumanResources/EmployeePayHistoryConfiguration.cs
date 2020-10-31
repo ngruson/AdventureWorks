@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.HumanResources
         public void Configure(EntityTypeBuilder<EmployeePayHistory> builder)
         {
             builder.ToTable("HumanResources.EmployeePayHistory");
-            builder.HasKey(eph => new { eph.Id, eph.RateChangeDate });
+            builder.HasKey(eph => new { eph.BusinessEntityID, eph.RateChangeDate });
 
-            builder.Property(eph => eph.Id)
+            builder.Property(eph => eph.BusinessEntityID)
                 .ValueGeneratedNever();
 
             builder.Property(eph => eph.Rate)

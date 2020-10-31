@@ -9,9 +9,9 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         public ProductModelIllustrationConfiguration()
         {
             ToTable("Production.ProductModelIllustration");
-            HasKey(pmi => new { pmi.Id, pmi.IllustrationID });
+            HasKey(pmi => new { pmi.ProductModelID, pmi.IllustrationID });
 
-            Property(pmi => pmi.Id)
+            Property(pmi => pmi.ProductModelID)
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

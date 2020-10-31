@@ -8,10 +8,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
         public ProductDocumentConfiguration()
         {
             ToTable("Production.ProductDocument");
-            HasKey(pd => new { pd.Id, pd.DocumentNode });
-
-            Property(pd => pd.Id)
-                .HasColumnName("ProductID");
+            HasKey(pd => new { pd.ProductID, pd.DocumentNode });
         }
     }
 }

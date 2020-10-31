@@ -2,8 +2,9 @@ using System;
 
 namespace AW.Domain.Purchasing
 {
-    public class ShipMethod : BaseEntity
+    public class ShipMethod
     {
+        public virtual int Id { get; protected set; }
         public string Name { get; set; }
         
         public decimal ShipBase { get; set; }

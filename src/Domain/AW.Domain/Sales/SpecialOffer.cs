@@ -5,7 +5,7 @@ namespace AW.Domain.Sales
 {    
     public partial class SpecialOffer
     {
-        public int SpecialOfferID { get; set; }
+        public virtual int Id { get; protected set; }
 
         public string Description { get; set; }
         
