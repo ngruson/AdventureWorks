@@ -4,7 +4,7 @@ namespace AW.Domain.Person
 {    
     public class EmailAddress
     {
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         public int EmailAddressID { get; set; }
 
         public string EmailAddress1 { get; set; }

@@ -22,6 +22,10 @@ using AW.CustomerService.Messages.DeleteCustomerContact;
 using AW.Application.Customer.DeleteCustomerContact;
 using AW.CustomerService.Messages.UpdateCustomerContact;
 using AW.Application.Customer.UpdateCustomerContact;
+using AW.CustomerService.Messages.AddCustomerContactInfo;
+using AW.Application.Customer.AddCustomerContactInfo;
+using AW.CustomerService.Messages.DeleteCustomerContactInfo;
+using AW.Application.Customer.DeleteCustomerContactInfo;
 
 namespace AW.CustomerService
 {
@@ -147,6 +151,28 @@ namespace AW.CustomerService
             });
 
             return new DeleteCustomerContactResponse();
+        }
+
+        public async Task<AddCustomerContactInfoResponse> AddCustomerContactInfo(AddCustomerContactInfoRequest request)
+        {
+            await mediator.Send(new AddCustomerContactInfoCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerContactInfo = mapper.Map<Application.Customer.AddCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
+            });
+
+            return new AddCustomerContactInfoResponse();
+        }
+
+        public async Task<DeleteCustomerContactInfoResponse> DeleteCustomerContactInfo(DeleteCustomerContactInfoRequest request)
+        {
+            await mediator.Send(new DeleteCustomerContactInfoCommand
+            {
+                AccountNumber = request.AccountNumber,
+                CustomerContactInfo = mapper.Map<Application.Customer.DeleteCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
+            });
+
+            return new DeleteCustomerContactInfoResponse();
         }
     }
 }

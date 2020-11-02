@@ -8,6 +8,17 @@ namespace AW.UI.Web.Internal
 {
     public static class EnumHelper<T>
     {
+        public static IList<T> GetValues()
+        {
+            var enumValues = new List<T>();
+
+            foreach (var fi in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                enumValues.Add((T)Enum.Parse(typeof(T), fi.Name, false));
+            }
+            return enumValues;
+        }
+
         public static IList<T> GetValues(Enum value)
         {
             var enumValues = new List<T>();

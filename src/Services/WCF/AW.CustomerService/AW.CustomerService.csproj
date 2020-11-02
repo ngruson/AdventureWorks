@@ -115,6 +115,14 @@
     <Compile Include="Messages\AddCustomerAddress\AddCustomerAddressResponse.cs" />
     <Compile Include="Messages\AddCustomerAddress\Address.cs" />
     <Compile Include="Messages\AddCustomerAddress\CustomerAddress.cs" />
+    <Compile Include="Messages\DeleteCustomerContactInfo\DeleteCustomerContactInfoRequest.cs" />
+    <Compile Include="Messages\DeleteCustomerContactInfo\DeleteCustomerContactInfoResponse.cs" />
+    <Compile Include="Messages\DeleteCustomerContactInfo\Channel.cs" />
+    <Compile Include="Messages\DeleteCustomerContactInfo\CustomerContactInfo.cs" />
+    <Compile Include="Messages\AddCustomerContactInfo\AddCustomerContactInfoRequest.cs" />
+    <Compile Include="Messages\AddCustomerContactInfo\AddCustomerContactInfoResponse.cs" />
+    <Compile Include="Messages\AddCustomerContactInfo\Channel.cs" />
+    <Compile Include="Messages\AddCustomerContactInfo\CustomerContactInfo.cs" />
     <Compile Include="Messages\AddCustomerContact\AddCustomerContactRequest.cs" />
     <Compile Include="Messages\AddCustomerContact\AddCustomerContactResponse.cs" />
     <Compile Include="Messages\AddCustomerContact\Contact.cs" />

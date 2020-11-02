@@ -78,20 +78,29 @@
 <h4>Contact Information</h4>
 @if (Model.Person.ContactInfo.Any())
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>Channel</th>
-            <th>Type</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    @foreach (var contactInfo in Model.Person.ContactInfo)
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Channel</th>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        @foreach (var contactInfo in Model.Person.ContactInfo)
         {
     <tr>
         <td>
+            @Html.ActionLink("Delete", "DeleteContactInformation", new
+               {
+                   accountNumber = ViewData["accountNumber"],
+                   channel = contactInfo.ContactInfoChannelType,
+                   contactInfo.Value
+               })
+        </td>
+        <td>
             @{
-            var channel = EnumHelper<ContactInfoChannelTypeViewModel>.GetDisplayValue(contactInfo.ContactInfoChannelType);
+                var channel = EnumHelper<ContactInfoChannelTypeViewModel>.GetDisplayValue(contactInfo.ContactInfoChannelType);
             }
             @channel
         </td>
@@ -99,11 +108,12 @@
         <td>@contactInfo.Value</td>
     </tr>
         }
-</table>
+    </table>
 }
 else
 {
-<div class="row">
-    No contact information found
-</div>
+    <div class="row">
+        No contact information found
+    </div>
 }
+@Html.ActionLink("Add contact information", "AddContactInformation", new { AccountNumber = ViewData["accountNumber"], CustomerName = ViewData["customerName"] })

@@ -74,6 +74,8 @@ namespace AW.UI.Web.Internal.Controllers
             return View(viewModel);
         }
 
+        #region Address
+
         public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
         {
             return View("Address",
@@ -141,6 +143,9 @@ namespace AW.UI.Web.Internal.Controllers
 
             return View(viewModel);
         }
+        #endregion
+
+        #region Store contacts
 
         public async Task<IActionResult> AddContact(string accountNumber, string customerName)
         {
@@ -201,5 +206,47 @@ namespace AW.UI.Web.Internal.Controllers
 
             return View(viewModel);
         }
+        #endregion
+
+        #region Individual contact information
+
+        public async Task<IActionResult> AddContactInformation(string accountNumber, string customerName)
+        {
+            return View("ContactInfo",
+                await customersViewModelService.AddContactInformation(accountNumber, customerName)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddContactInformation(EditCustomerContactInfoViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.AddContactInformation(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> DeleteContactInformation(string accountNumber, ContactInfoChannelTypeViewModel channel, string value)
+        {
+            var viewModel = await customersViewModelService.GetCustomerContactInformationForDelete(accountNumber, channel, value);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteContactInformation(DeleteCustomerContactInfoViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customersViewModelService.DeleteContactInformation(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        #endregion
     }
 }

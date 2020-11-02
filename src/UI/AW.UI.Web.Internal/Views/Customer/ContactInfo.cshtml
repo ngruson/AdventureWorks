@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = $"Add contact information - {Model.CustomerName}";
+    @model EditCustomerContactInfoViewModel;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AccountNumber)
+
+    @if (Model.IsNewContactInfo)
+    {
+        <h2>Add contact information</h2>
+    }
+    else
+    {
+        <h2>Edit contact information</h2>
+    }
+
+    <div class="form-horizontal detail">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContactInfo.Channel, new { @class = "control-label" })
+            @if (Model.IsNewContactInfo)
+            {
+                @Html.DropDownListFor(m => m.CustomerContactInfo.Channel, Model.ChannelTypes, null, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.CustomerContactInfo.Channel, Model.ChannelTypes, null, new { @disabled = "disabled", @class = "form-control" })
+                @Html.HiddenFor(m => m.CustomerContactInfo.Channel)
+            }
+
+            @Html.ValidationMessageFor(m => m.CustomerContactInfo.Channel, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContactInfo.Type, new { @class = "control-label" })
+            @if (Model.IsNewContactInfo)
+            {
+                @Html.DropDownListFor(m => m.CustomerContactInfo.Type, Model.ContactInfoTypes, null, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.CustomerContactInfo.Type, Model.ContactInfoTypes, null, new { @disabled = "disabled", @class = "form-control" })
+                @Html.HiddenFor(m => m.CustomerContactInfo.Type)
+            }
+
+            @Html.ValidationMessageFor(m => m.CustomerContactInfo.Type, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerContactInfo.Value, new { @class = "control-label" })
+            <input asp-for="CustomerContactInfo.Value" class="form-control" />
+            @Html.ValidationMessageFor(m => m.CustomerContactInfo.Value, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Detail", new { Model.AccountNumber }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#CustomerContactInfo_Channel').change(function () {
+                var dropdown = $('#CustomerContactInfo_Type');
+                if (this.value == "Email") {                    
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                }
+            });
+
+            $('#CustomerContactInfo_Channel').change();
+        });
+    </script>
+}

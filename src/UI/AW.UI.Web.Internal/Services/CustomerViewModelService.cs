@@ -566,5 +566,92 @@ namespace AW.UI.Web.Internal.Services
 
             logger.LogInformation("Contact successfully deleted");
         }
+
+        public async Task<EditCustomerContactInfoViewModel> AddContactInformation(string accountNumber, string customerName)
+        {
+            logger.LogInformation("AddContactInformation called");
+
+            var vm = new EditCustomerContactInfoViewModel
+            {
+                IsNewContactInfo = true,
+                AccountNumber = accountNumber,
+                CustomerName = customerName,
+                CustomerContactInfo = new CustomerContactInfoViewModel(),
+                ChannelTypes = GetContactInfoChannelTypes(),
+                ContactInfoTypes = await GetContactTypes()
+            };
+
+            return vm;
+        }
+
+        private IEnumerable<SelectListItem> GetContactInfoChannelTypes()
+        {
+            logger.LogInformation("GetContactInfoChannelTypes called.");
+
+            var contactInfoTypes = EnumHelper<ContactInfoChannelTypeViewModel>.GetValues();
+
+            var items = contactInfoTypes
+                .Select(c => new SelectListItem
+                {
+                    Value = c.ToString(),
+                    Text = EnumHelper<ContactInfoChannelTypeViewModel>.GetDisplayValue(c)
+                })
+                .ToList();
+
+            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, allItem);
+
+            return items;
+        }
+
+        public async Task AddContactInformation(EditCustomerContactInfoViewModel viewModel)
+        {
+            logger.LogInformation("AddContactInformation called");
+
+            var request = mapper.Map<AddCustomerContactInfoRequest>(viewModel);
+
+            logger.LogInformation("Calling AddCustomerContactInfo operation of Customer web service");
+            await customerService.AddCustomerContactInfoAsync(request);
+            logger.LogInformation("Contact successfully added");
+        }
+
+        public async Task<DeleteCustomerContactInfoViewModel> GetCustomerContactInformationForDelete(string accountNumber, ContactInfoChannelTypeViewModel channel, string value)
+        {
+            logger.LogInformation("GetCustomerContactInformationForDelete called");
+
+            var response = await customerService.GetCustomerAsync(
+                new GetCustomerRequest
+                {
+                    AccountNumber = accountNumber
+                }
+            );
+
+            var channelType = Enum.Parse<ContactInfoChannelType1>(channel.ToString());
+            var contactInfo = response.Customer.Person.ContactInfo.FirstOrDefault(c =>
+                c.ContactInfoChannelType == channelType &&
+                c.Value == value
+            );
+
+            var vm = new DeleteCustomerContactInfoViewModel
+            {
+                AccountNumber = accountNumber,
+                CustomerName = response.Customer.Person.FullName,
+                CustomerContactInfo = mapper.Map<CustomerContactInfoViewModel>(contactInfo)
+            };
+
+            return vm;
+        }
+
+        public async Task DeleteContactInformation(DeleteCustomerContactInfoViewModel viewModel)
+        {
+            logger.LogInformation("DeleteContactInformation called");
+
+            logger.LogInformation("Calling DeleteCustomerContact operation of Customer web service");
+            await customerService.DeleteCustomerContactInfoAsync(
+                mapper.Map<DeleteCustomerContactInfoRequest>(viewModel)
+            );
+
+            logger.LogInformation("Contact information successfully deleted");
+        }
     }
 }

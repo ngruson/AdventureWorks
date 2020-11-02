@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AW.Application.Customer.AddCustomerContact
 {
-    public class UpdateCustomerContactCommandValidator : AbstractValidator<AddCustomerContactCommand>
+    public class AddCustomerContactCommandValidator : AbstractValidator<AddCustomerContactCommand>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.ContactType> contactTypeRepository;
 
-        public UpdateCustomerContactCommandValidator(
+        public AddCustomerContactCommandValidator(
             IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.ContactType> contactTypeRepository
         )

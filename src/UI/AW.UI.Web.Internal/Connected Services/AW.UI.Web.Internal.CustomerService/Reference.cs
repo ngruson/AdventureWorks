@@ -51,6 +51,14 @@ namespace AW.UI.Web.Internal.CustomerService
         [System.ServiceModel.OperationContractAttribute(Action="DeleteCustomerContact", ReplyAction="DeleteCustomerContact")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactResponseDeleteCustomerContactResult> DeleteCustomerContactAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="AddCustomerContactInfo", ReplyAction="AddCustomerContactInfo")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerContactInfoResponse> AddCustomerContactInfoAsync(AW.UI.Web.Internal.CustomerService.AddCustomerContactInfoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DeleteCustomerContactInfo", ReplyAction="DeleteCustomerContactInfo")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactInfoResponse> DeleteCustomerContactInfoAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactInfoRequest request);
     }
     
     /// <remarks/>
@@ -152,6 +160,160 @@ namespace AW.UI.Web.Internal.CustomerService
         
         /// <remarks/>
         Store,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerContactInfoResponse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CustomerContactInfo", Namespace="http://services.aw.com/CustomerService/1.0/DeleteCustomerContactInfo")]
+    public partial class CustomerContactInfo1
+    {
+        
+        private Channel1 channelField;
+        
+        private string contactInfoTypeField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Channel1 Channel
+        {
+            get
+            {
+                return this.channelField;
+            }
+            set
+            {
+                this.channelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string ContactInfoType
+        {
+            get
+            {
+                return this.contactInfoTypeField;
+            }
+            set
+            {
+                this.contactInfoTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="Channel", Namespace="http://services.aw.com/CustomerService/1.0/DeleteCustomerContactInfo")]
+    public enum Channel1
+    {
+        
+        /// <remarks/>
+        Email,
+        
+        /// <remarks/>
+        Phone,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerContactInfoResponse
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerContactInfo")]
+    public partial class CustomerContactInfo
+    {
+        
+        private Channel channelField;
+        
+        private string contactInfoTypeField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Channel Channel
+        {
+            get
+            {
+                return this.channelField;
+            }
+            set
+            {
+                this.channelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string ContactInfoType
+        {
+            get
+            {
+                return this.contactInfoTypeField;
+            }
+            set
+            {
+                this.contactInfoTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.aw.com/CustomerService/1.0/AddCustomerContactInfo")]
+    public enum Channel
+    {
+        
+        /// <remarks/>
+        Email,
+        
+        /// <remarks/>
+        Phone,
     }
     
     /// <remarks/>
@@ -3783,6 +3945,86 @@ namespace AW.UI.Web.Internal.CustomerService
     {
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class AddCustomerContactInfoRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerContactInfo customerContactInfoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerContactInfo CustomerContactInfo
+        {
+            get
+            {
+                return this.customerContactInfoField;
+            }
+            set
+            {
+                this.customerContactInfoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.aw.com/CustomerService/1.0")]
+    public partial class DeleteCustomerContactInfoRequest
+    {
+        
+        private string accountNumberField;
+        
+        private CustomerContactInfo1 customerContactInfoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public CustomerContactInfo1 CustomerContactInfo
+        {
+            get
+            {
+                return this.customerContactInfoField;
+            }
+            set
+            {
+                this.customerContactInfoField = value;
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICustomerServiceChannel : AW.UI.Web.Internal.CustomerService.ICustomerService, System.ServiceModel.IClientChannel
     {
@@ -3876,6 +4118,16 @@ namespace AW.UI.Web.Internal.CustomerService
         public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactResponseDeleteCustomerContactResult> DeleteCustomerContactAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactRequest request)
         {
             return base.Channel.DeleteCustomerContactAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.AddCustomerContactInfoResponse> AddCustomerContactInfoAsync(AW.UI.Web.Internal.CustomerService.AddCustomerContactInfoRequest request)
+        {
+            return base.Channel.AddCustomerContactInfoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<AW.UI.Web.Internal.CustomerService.DeleteCustomerContactInfoResponse> DeleteCustomerContactInfoAsync(AW.UI.Web.Internal.CustomerService.DeleteCustomerContactInfoRequest request)
+        {
+            return base.Channel.DeleteCustomerContactInfoAsync(request);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

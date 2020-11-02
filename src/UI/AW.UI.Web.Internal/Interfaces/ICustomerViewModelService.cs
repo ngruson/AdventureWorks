@@ -25,5 +25,9 @@ namespace AW.UI.Web.Internal.Interfaces
         Task UpdateContact(EditCustomerContactViewModel viewModel);
         Task<DeleteCustomerContactViewModel> GetCustomerContactForDelete(string accountNumber, string contactName, string contactType);
         Task DeleteContact(DeleteCustomerContactViewModel viewModel);
+        Task<EditCustomerContactInfoViewModel> AddContactInformation(string accountNumber, string customerName);
+        Task AddContactInformation(EditCustomerContactInfoViewModel viewModel);
+        Task<DeleteCustomerContactInfoViewModel> GetCustomerContactInformationForDelete(string accountNumber, ContactInfoChannelTypeViewModel channel, string value);
+        Task DeleteContactInformation(DeleteCustomerContactInfoViewModel viewModel);
     }
 }
