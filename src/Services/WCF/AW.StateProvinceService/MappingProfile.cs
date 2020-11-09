@@ -1,5 +1,5 @@
 ﻿using AW.Application.AutoMapper;
-using AW.Application.Customer;
+using AW.Application.Customer.GetCustomers;
 using AW.StateProvinceService.Messages.ListStateProvinces;
 using System.Reflection;
 

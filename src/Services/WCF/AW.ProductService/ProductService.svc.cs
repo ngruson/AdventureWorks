@@ -1,6 +1,6 @@
-﻿using AW.Application.CountProducts;
-using AW.Application.GetProduct;
-using AW.Application.GetProducts;
+﻿using AW.Application.Product.CountProducts;
+using AW.Application.Product.GetProduct;
+using AW.Application.Product.GetProducts;
 using AW.ProductService.Messages;
 using MediatR;
 using System.Linq;

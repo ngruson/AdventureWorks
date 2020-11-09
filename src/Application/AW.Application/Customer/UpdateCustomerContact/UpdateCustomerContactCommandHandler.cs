@@ -12,29 +12,18 @@ namespace AW.Application.Customer.UpdateCustomerContact
 {
     public class UpdateCustomerContactCommandHandler : IRequestHandler<UpdateCustomerContactCommand, Unit>
     {
-        private readonly IMapper mapper;
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Person.ContactType> contactTypeRepository;
         private readonly IAsyncRepository<Person> personRepository;
-        private readonly IAsyncRepository<EmailAddress> emailAddressRepository;
 
         public UpdateCustomerContactCommandHandler(
-            IMapper mapper,
-            IAsyncRepository<Domain.Person.ContactType> contactTypeRepository,
             IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Person> personRepository,
-            IAsyncRepository<EmailAddress> emailAddressRepository
-        ) => (this.mapper, this.contactTypeRepository, this.customerRepository, this.personRepository, this.emailAddressRepository) =
-                (mapper, contactTypeRepository, customerRepository, personRepository, emailAddressRepository);
+            IAsyncRepository<Person> personRepository
+        ) => (this.customerRepository, this.personRepository) = (customerRepository, personRepository);
 
         public async Task<Unit> Handle(UpdateCustomerContactCommand request, CancellationToken cancellationToken)
         {
             var customer = await customerRepository.FirstOrDefaultAsync(
                 new GetCustomerSpecification(request.AccountNumber)
-            );
-
-            var contactType = await contactTypeRepository.FirstOrDefaultAsync(
-                new GetContactTypeSpecification(request.CustomerContact.ContactTypeName)
             );
 
             var customerContact = customer.Store.BusinessEntityContacts.FirstOrDefault(c =>
@@ -54,22 +43,6 @@ namespace AW.Application.Customer.UpdateCustomerContact
             await UpdateEmailAddresses(request);
 
             return Unit.Value;
-        }
-
-        private async Task<int?> IsExistingPerson(ContactDto contact)
-        {
-            var person = await personRepository.FirstOrDefaultAsync(
-                new GetPersonSpecification(
-                    contact.FirstName,
-                    contact.MiddleName,
-                    contact.LastName
-                )
-            );
-
-            if (person != null)
-                return person.Id;
-
-            return null;
         }
 
         private async Task UpdateEmailAddresses(UpdateCustomerContactCommand request)

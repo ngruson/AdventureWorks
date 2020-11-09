@@ -2,21 +2,19 @@
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using FluentValidation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AW.Application.Customer.DeleteCustomerAddress
 {
-    public class DeleteCustomerContactCommandValidator : AbstractValidator<DeleteCustomerAddressCommand>
+    public class DeleteCustomerAddressCommandValidator : AbstractValidator<DeleteCustomerAddressCommand>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
 
-        public DeleteCustomerContactCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
+        public DeleteCustomerAddressCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.AddressType> addressTypeRepository)
         {
             this.customerRepository = customerRepository;

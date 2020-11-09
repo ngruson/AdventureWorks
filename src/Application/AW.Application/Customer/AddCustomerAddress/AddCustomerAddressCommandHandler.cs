@@ -12,14 +12,14 @@ namespace AW.Application.Customer.AddCustomerAddress
     public class AddCustomerAddressCommandHandler : IRequestHandler<AddCustomerAddressCommand, Unit>
     {
         private readonly IMapper mapper;
-        private readonly IAsyncRepository<Domain.Person.Address> addressRepository;
+        private readonly IAsyncRepository<Address> addressRepository;
         private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository;
 
         public AddCustomerAddressCommandHandler(
             IMapper mapper,
-            IAsyncRepository<Domain.Person.Address> addressRepository,
+            IAsyncRepository<Address> addressRepository,
             IAsyncRepository<Domain.Person.AddressType> addressTypeRepository,
             IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository

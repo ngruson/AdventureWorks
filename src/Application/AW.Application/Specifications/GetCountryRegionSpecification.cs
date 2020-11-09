@@ -2,7 +2,7 @@
 
 namespace AW.Application.Specifications
 {
-    public class GetCountryRegionSpecification : Specification<Domain.Person.CountryRegion>
+    public class GetCountryRegionSpecification : Specification<Domain.Person.StateProvince>
     {
         public GetCountryRegionSpecification(string countryRegionCode) : base()
         {

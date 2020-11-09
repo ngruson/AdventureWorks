@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AW.Application.Customer.DeleteCustomerContact
 {
-    public class DeleteCustomerContactInfoCommandValidator : AbstractValidator<DeleteCustomerContactCommand>
+    public class DeleteCustomerContactCommandValidator : AbstractValidator<DeleteCustomerContactCommand>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.ContactType> contactTypeRepository;
 
-        public DeleteCustomerContactInfoCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
+        public DeleteCustomerContactCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.ContactType> contactTypeRepository)
         {
             this.customerRepository = customerRepository;
@@ -30,10 +30,14 @@ namespace AW.Application.Customer.DeleteCustomerContact
                 .NotNull().WithMessage("Contact is required");
 
             RuleFor(cmd => cmd.Contact.FirstName)
-                .NotEmpty().WithMessage("First name is required");
+                .NotEmpty().WithMessage("First name is required")
+                .MaximumLength(50).WithMessage("First name must not exceed 50 characters")
+                .When(cmd => cmd.Contact != null);
 
             RuleFor(cmd => cmd.Contact.LastName)
-                .NotEmpty().WithMessage("Last name is required");
+                .NotEmpty().WithMessage("Last name is required")
+                .MaximumLength(50).WithMessage("Last name must not exceed 50 characters")
+                .When(cmd => cmd.Contact != null);
         }
 
         private async Task<bool> CustomerExists(string accountNumber, CancellationToken cancellationToken)

@@ -1,9 +1,8 @@
 ﻿using Ardalis.Specification;
-using AW.Domain.Production;
 
 namespace AW.Application.Specifications
 {
-    public class GetProductsSpecification : Specification<Product>
+    public class GetProductsSpecification : Specification<Domain.Production.Product>
     {
         public GetProductsSpecification() : base()
         {

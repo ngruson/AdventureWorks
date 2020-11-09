@@ -16,17 +16,15 @@ namespace AW.Application.Customer.AddCustomerContact
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
         private readonly IAsyncRepository<Domain.Person.ContactType> contactTypeRepository;
         private readonly IAsyncRepository<Person> personRepository;
-        private readonly IAsyncRepository<EmailAddress> emailAddressRepository;
 
         public AddCustomerContactCommandHandler(
             IMapper mapper,
             IAsyncRepository<Domain.Sales.Customer> customerRepository,
             IAsyncRepository<Domain.Person.ContactType> contactTypeRepository,
-            IAsyncRepository<Person> personRepository,
-            IAsyncRepository<EmailAddress> emailAddressRepository
+            IAsyncRepository<Person> personRepository
         )
-        => (this.mapper, this.customerRepository, this.contactTypeRepository, this.personRepository, this.emailAddressRepository) = 
-            (mapper, customerRepository, contactTypeRepository, personRepository, emailAddressRepository);
+        => (this.mapper, this.customerRepository, this.contactTypeRepository, this.personRepository) = 
+            (mapper, customerRepository, contactTypeRepository, personRepository);
         
         public async Task<Unit> Handle(AddCustomerContactCommand request, CancellationToken cancellationToken)
         {
@@ -84,26 +82,29 @@ namespace AW.Application.Customer.AddCustomerContact
 
         private async Task UpdateEmailAddresses(AddCustomerContactCommand request)
         {
-            var person = await personRepository.FirstOrDefaultAsync(
-                new GetPersonSpecification(
-                    request.CustomerContact.Contact.FirstName,
-                    request.CustomerContact.Contact.MiddleName,
-                    request.CustomerContact.Contact.LastName
-                )
-            );
-
-            request.CustomerContact.Contact.EmailAddresses.ForEach(x =>
+            if (request.CustomerContact.Contact.EmailAddresses.Count > 0)
             {
-                var emailAddress = person.EmailAddresses.SingleOrDefault(e => e.EmailAddress1 == x.EmailAddress);
+                var person = await personRepository.FirstOrDefaultAsync(
+                    new GetPersonSpecification(
+                        request.CustomerContact.Contact.FirstName,
+                        request.CustomerContact.Contact.MiddleName,
+                        request.CustomerContact.Contact.LastName
+                    )
+                );
 
-                if (emailAddress == null)
-                    person.EmailAddresses.Add(new EmailAddress
-                    {
-                        EmailAddress1 = x.EmailAddress
-                    });
-            });
+                request.CustomerContact.Contact.EmailAddresses.ForEach(x =>
+                {
+                    var emailAddress = person.EmailAddresses.SingleOrDefault(e => e.EmailAddress1 == x.EmailAddress);
 
-            await personRepository.UpdateAsync(person);
+                    if (emailAddress == null)
+                        person.EmailAddresses.Add(new EmailAddress
+                        {
+                            EmailAddress1 = x.EmailAddress
+                        });
+                });
+
+                await personRepository.UpdateAsync(person);
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ namespace AW.Domain.Purchasing
 {
     public class ShipMethod
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
         public string Name { get; set; }
         
         public decimal ShipBase { get; set; }

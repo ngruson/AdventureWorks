@@ -4,7 +4,7 @@ namespace AW.Domain.Sales
 {
     public partial class CurrencyRate
     {
-        public int CurrencyRateID { get; set; }
+        public int Id { get; set; }
 
         public DateTime CurrencyRateDate { get; set; }
 

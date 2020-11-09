@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace AW.Application.Customer.DeleteCustomerContact
 {
-    public class DeleteCustomerContactInfoCommandHandler : IRequestHandler<DeleteCustomerContactCommand, Unit>
+    public class DeleteCustomerContactCommandHandler : IRequestHandler<DeleteCustomerContactCommand, Unit>
     {
         private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
 
-        public DeleteCustomerContactInfoCommandHandler(IAsyncRepository<Domain.Sales.Customer> customerRepository) =>
+        public DeleteCustomerContactCommandHandler(IAsyncRepository<Domain.Sales.Customer> customerRepository) =>
             this.customerRepository = customerRepository;
 
         public async Task<Unit> Handle(DeleteCustomerContactCommand request, CancellationToken cancellationToken)

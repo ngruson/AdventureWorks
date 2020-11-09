@@ -11,7 +11,7 @@ namespace AW.Domain.Sales
 
         public DateTime ModifiedDate { get; set; }
 
-        public virtual CountryRegion CountryRegion { get; set; }
+        public virtual StateProvince CountryRegion { get; set; }
 
         public virtual Currency Currency { get; set; }
     }

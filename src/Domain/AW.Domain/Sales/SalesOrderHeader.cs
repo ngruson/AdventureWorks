@@ -7,7 +7,7 @@ namespace AW.Domain.Sales
 {
     public partial class SalesOrderHeader
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
         public byte RevisionNumber { get; set; }
 
         public DateTime OrderDate { get; set; }

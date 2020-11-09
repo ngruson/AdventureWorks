@@ -24,25 +24,27 @@ namespace AW.Application.Customer.AddCustomerContactInfo
                 .MaximumLength(10).WithMessage("Account number must not exceed 10 characters")
                 .MustAsync(CustomerExist).WithMessage("Customer does not exist");
 
+            RuleFor(cmd => cmd.CustomerContactInfo)
+                .NotNull().WithMessage("Customer contact info is required");
+
             RuleFor(cmd => cmd.CustomerContactInfo.Channel)
-                .NotNull().WithMessage("Channel is required");
+                .NotNull().WithMessage("Channel is required")
+                .When(x => x.CustomerContactInfo != null);
 
-            When(cmd => cmd.CustomerContactInfo.Channel == ContactInfoChannelTypeDto.Phone, () =>
-            {
-                RuleFor(cmd => cmd.CustomerContactInfo.ContactInfoType)
-                    .NotEmpty().WithMessage("Contact info type is required")
-                    .MustAsync(ContactInfoTypeExist).WithMessage("Contact info type does not exist");
+            RuleFor(cmd => cmd.CustomerContactInfo.ContactInfoType)
+                .NotEmpty().WithMessage("Contact info type is required")
+                .MustAsync(ContactInfoTypeExist).WithMessage("Contact info type does not exist")
+                .When(cmd => cmd.CustomerContactInfo != null && cmd.CustomerContactInfo.Channel == ContactInfoChannelTypeDto.Phone);
 
-                RuleFor(cmd => cmd.CustomerContactInfo.Value)
-                    .NotEmpty().WithMessage("Value is required")
-                    .MaximumLength(25);
-            })
-            .Otherwise(() =>
-            {
-                RuleFor(cmd => cmd.CustomerContactInfo.Value)
-                    .NotEmpty().WithMessage("Value is required")
-                    .MaximumLength(50);
-            });
+            RuleFor(cmd => cmd.CustomerContactInfo.Value)
+                .NotEmpty().WithMessage("Value is required")
+                .MaximumLength(25)
+                .When(cmd => cmd.CustomerContactInfo != null && cmd.CustomerContactInfo.Channel == ContactInfoChannelTypeDto.Phone);
+
+            RuleFor(cmd => cmd.CustomerContactInfo.Value)
+                .NotEmpty().WithMessage("Value is required")
+                .MaximumLength(50)
+                .When(cmd => cmd.CustomerContactInfo != null && cmd.CustomerContactInfo.Channel == ContactInfoChannelTypeDto.Email);
         }
 
         private async Task<bool> CustomerExist(string accountNumber, CancellationToken cancellationToken)

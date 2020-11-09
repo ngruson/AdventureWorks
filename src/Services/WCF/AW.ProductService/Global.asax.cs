@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.GetProducts;
+using AW.Application.Product.GetProducts;
 using AW.Application.Interfaces;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;

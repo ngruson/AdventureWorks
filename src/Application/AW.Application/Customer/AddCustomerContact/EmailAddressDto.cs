@@ -11,7 +11,8 @@ namespace AW.Application.Customer.AddCustomerContact
         public void Mapping(Profile profile)
         {
             profile.CreateMap<EmailAddressDto, EmailAddress>()
-                .ForMember(m => m.EmailAddress1, opt => opt.MapFrom(src => src.EmailAddress));
+                .ForMember(m => m.EmailAddress1, opt => opt.MapFrom(src => src.EmailAddress))
+                .ReverseMap();
         }
     }
 }

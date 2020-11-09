@@ -6,7 +6,7 @@ namespace AW.Domain.Sales
 {
     public partial class SalesTerritory
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
         public string Name { get; set; }
 
         public string CountryRegionCode { get; set; }

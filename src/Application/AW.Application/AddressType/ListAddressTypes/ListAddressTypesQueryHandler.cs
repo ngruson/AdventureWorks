@@ -1,4 +1,5 @@
-﻿using AW.Application.Interfaces;
+﻿using AW.Application.Exceptions;
+using AW.Application.Interfaces;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace AW.Application.AddressType.ListAddressTypes
         public async Task<IEnumerable<string>> Handle(ListAddressTypesQuery request, CancellationToken cancellationToken)
         {
             var addressTypes = await repository.ListAllAsync();
+            if (addressTypes.Count == 0)
+                throw new AddressTypesNotFoundException();
+
             return addressTypes.Select(at => at.Name);
                 
         }

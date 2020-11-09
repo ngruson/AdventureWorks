@@ -14,7 +14,8 @@ namespace AW.Application.Customer.UpdateCustomerAddress
         {
             profile.CreateMap<CustomerAddressDto, BusinessEntityAddress>()
                 .ForMember(m => m.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(m => m.rowguid, opt => opt.MapFrom(src => Guid.NewGuid()));
+                .ForMember(m => m.rowguid, opt => opt.MapFrom(src => Guid.NewGuid()))
+                .ReverseMap();
         }
     }
 }

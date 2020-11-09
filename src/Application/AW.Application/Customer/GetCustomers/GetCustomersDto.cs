@@ -1,5 +1,4 @@
-﻿using AW.Application.Customers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AW.Application.Customer.GetCustomers
 {

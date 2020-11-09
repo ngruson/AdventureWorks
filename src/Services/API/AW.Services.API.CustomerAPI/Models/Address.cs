@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer;
+using AW.Application.Customer.GetCustomer;
 
 namespace AW.Services.API.CustomerAPI.Models
 {

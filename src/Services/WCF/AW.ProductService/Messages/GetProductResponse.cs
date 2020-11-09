@@ -1,4 +1,4 @@
-﻿using AW.Application.GetProduct;
+﻿using AW.Application.Product.GetProduct;
 using System.Xml.Serialization;
 
 namespace AW.ProductService.Messages

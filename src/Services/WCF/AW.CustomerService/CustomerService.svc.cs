@@ -72,7 +72,7 @@ namespace AW.CustomerService
             var customer = await mediator.Send(
                 new UpdateCustomerCommand
                 {
-                    Customer = mapper.Map<CustomerDto>(request.Customer)
+                    Customer = mapper.Map<Application.Customer.UpdateCustomer.CustomerDto>(request.Customer)
                 });
 
             return new UpdateCustomerResponse

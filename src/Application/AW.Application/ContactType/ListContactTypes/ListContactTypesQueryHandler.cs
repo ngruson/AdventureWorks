@@ -1,4 +1,5 @@
-﻿using AW.Application.Interfaces;
+﻿using AW.Application.Exceptions;
+using AW.Application.Interfaces;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace AW.Application.ContactType.ListContactTypes
         public async Task<IEnumerable<string>> Handle(ListContactTypesQuery request, CancellationToken cancellationToken)
         {
             var contactTypes = await repository.ListAllAsync();
+            if (contactTypes.Count == 0)
+                throw new ContactTypesNotFoundException();
+
             return contactTypes.Select(at => at.Name);
         }
     }

@@ -4,7 +4,7 @@ namespace AW.Domain.Sales
 {
     public partial class CreditCard
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
 
         public string CardType { get; set; }
         

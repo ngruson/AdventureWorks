@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer;
-using AW.Domain.Sales;
+using AW.Application.Customer.GetCustomers;
 using System.Collections.Generic;
 
 namespace AW.Services.API.CustomerAPI.Models

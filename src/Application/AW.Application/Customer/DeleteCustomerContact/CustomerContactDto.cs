@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AW.Application.Customer.DeleteCustomerContact
 {
-    public class CustomerContactDto : IMapFrom<BusinessEntityContact>
+    public class CustomerContactDto : IMapFrom<BusinessEntityAddress>
     {
         public string ContactTypeName { get; set; }
         public ContactDto Contact { get; set; }
@@ -13,7 +13,7 @@ namespace AW.Application.Customer.DeleteCustomerContact
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerContactDto, BusinessEntityContact>();
+            profile.CreateMap<CustomerContactDto, BusinessEntityAddress>();
         }
     }
 }

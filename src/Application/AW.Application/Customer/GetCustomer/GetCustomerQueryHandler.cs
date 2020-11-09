@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.Customers;
 using AW.Application.Interfaces;
 using AW.Application.Specifications;
-using AW.Domain.Sales;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +22,7 @@ namespace AW.Application.Customer.GetCustomer
             );
 
             var customer = await repository.FirstOrDefaultAsync(spec);
+
             return mapper.Map<CustomerDto>(customer);
         }
     }

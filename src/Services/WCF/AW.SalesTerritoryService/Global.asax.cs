@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.GetSalesTerritories;
+using AW.Application.SalesTerritory.GetSalesTerritories;
 using AW.Application.Interfaces;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;

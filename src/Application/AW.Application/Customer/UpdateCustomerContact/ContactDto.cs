@@ -22,7 +22,8 @@ namespace AW.Application.Customer.UpdateCustomerContact
                 .ForMember(m => m.NameStyle, opt => opt.MapFrom(src => 0))
                 .ForMember(m => m.EmailPromotion, opt => opt.MapFrom(src => EmailPromotion.NoPromotions))
                 .ForMember(m => m.rowguid, opt => opt.MapFrom(src => Guid.NewGuid()))
-                .ForMember(m => m.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+                .ForMember(m => m.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ReverseMap();
         }
     }
 }

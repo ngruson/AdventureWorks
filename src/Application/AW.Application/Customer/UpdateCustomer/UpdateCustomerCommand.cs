@@ -1,5 +1,4 @@
-﻿using AW.Application.Customers;
-using MediatR;
+﻿using MediatR;
 
 namespace AW.Application.Customer.UpdateCustomer
 {

@@ -21,7 +21,9 @@ namespace AW.Application.Customer.AddCustomerAddress
         {
             profile.CreateMap<AddressDto, Address>()
                 .ForMember(m => m.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(m => m.rowguid, opt => opt.MapFrom(src => Guid.NewGuid()));
+                .ForMember(m => m.rowguid, opt => opt.MapFrom(src => Guid.NewGuid()))
+                .ReverseMap()
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvince.StateProvinceCode));
         }
     }
 }

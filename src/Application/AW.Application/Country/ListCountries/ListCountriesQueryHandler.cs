@@ -1,4 +1,5 @@
-﻿using AW.Application.Interfaces;
+﻿using AW.Application.Exceptions;
+using AW.Application.Interfaces;
 using AW.Domain.Person;
 using MediatR;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace AW.Application.Country.ListCountries
         public async Task<IEnumerable<CountryDto>> Handle(ListCountriesQuery request, CancellationToken cancellationToken)
         {
             var countries = await repository.ListAllAsync();
+            if (countries.Count == 0)
+                throw new CountriesNotFoundException();
+
             return countries.Select(c => new CountryDto
             {
                 CountryRegionCode = c.CountryRegionCode,

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customers;
-using System.Xml.Serialization;
+using AW.Application.Customer.AddCustomerContact;
 
 namespace AW.Services.API.CustomerAPI.Models
 {

@@ -1,4 +1,4 @@
-﻿using AW.Application.GetSalesTerritories;
+﻿using AW.Application.SalesTerritory.GetSalesTerritories;
 using AW.SalesTerritoryService.Messages;
 using MediatR;
 using System.Linq;
