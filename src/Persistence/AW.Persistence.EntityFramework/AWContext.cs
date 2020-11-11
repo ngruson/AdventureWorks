@@ -13,10 +13,13 @@ namespace AW.Persistence.EntityFramework
         {
         }
 
+        public virtual void SetModified(object entity)
+        {
+            Entry(entity).State = EntityState.Modified;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Configurations.Add(new BaseEntityConfiguration());
-
             var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
               .Where(type => !string.IsNullOrEmpty(type.Namespace))
               .Where(type => type.BaseType != null && type.BaseType.IsGenericType

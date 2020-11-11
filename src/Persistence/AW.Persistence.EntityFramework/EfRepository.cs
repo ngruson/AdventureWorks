@@ -46,7 +46,7 @@ namespace AW.Persistence.EntityFramework
 
         public async Task UpdateAsync(T entity)
         {
-            context.Entry(entity).State = EntityState.Modified;
+            context.SetModified(entity);
             await context.SaveChangesAsync();
         }
 
