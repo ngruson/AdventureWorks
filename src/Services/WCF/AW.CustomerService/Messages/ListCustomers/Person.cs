@@ -3,7 +3,7 @@ using AW.Application.AutoMapper;
 using AW.Application.Customer.GetCustomers;
 using System.Collections.Generic;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.ListCustomers
 {
     public class Person : IMapFrom<PersonCustomerDto>
     {

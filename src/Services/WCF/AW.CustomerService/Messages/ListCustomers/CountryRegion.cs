@@ -2,7 +2,7 @@
 using AW.Application.AutoMapper;
 using AW.Application.Customer.GetCustomers;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.ListCustomers
 {
     public class CountryRegion : IMapFrom<CountryRegionDto>
     {

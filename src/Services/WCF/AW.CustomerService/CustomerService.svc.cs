@@ -2,7 +2,6 @@
 using AW.Application.Customer.GetCustomer;
 using AW.Application.Customer.GetCustomers;
 using AW.Application.Customer.UpdateCustomer;
-using AW.Application.Customer;
 using AW.CustomerService.Messages;
 using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
@@ -61,7 +60,7 @@ namespace AW.CustomerService
 
             var response = new GetCustomerResponse
             {
-                Customer = mapper.Map<Customer>(customer)
+                Customer = mapper.Map<Messages.GetCustomer.Customer>(customer)
             };
 
             return response;
@@ -138,17 +137,8 @@ namespace AW.CustomerService
 
         public async Task<DeleteCustomerContactResponse> DeleteCustomerContact(DeleteCustomerContactRequest request)
         {
-            await mediator.Send(new DeleteCustomerContactCommand
-            {
-                AccountNumber = request.AccountNumber,
-                ContactTypeName = request.ContactType,
-                Contact = new Application.Customer.DeleteCustomerContact.ContactDto 
-                { 
-                    FirstName = request.Contact.FirstName,
-                    MiddleName = request.Contact.MiddleName,
-                    LastName = request.Contact.LastName
-                }
-            });
+            var command = mapper.Map<DeleteCustomerContactCommand>(request);
+            await mediator.Send(command);
 
             return new DeleteCustomerContactResponse();
         }

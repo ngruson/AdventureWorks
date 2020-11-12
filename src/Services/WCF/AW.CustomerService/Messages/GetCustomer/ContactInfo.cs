@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer.GetCustomers;
+using AW.Application.Customer.GetCustomer;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.GetCustomer
 {
     public class ContactInfo : IMapFrom<ContactInfoDto>
     {

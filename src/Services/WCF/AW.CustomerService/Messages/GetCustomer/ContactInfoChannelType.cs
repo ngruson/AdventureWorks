@@ -1,4 +1,4 @@
-﻿namespace AW.CustomerService.Messages
+﻿namespace AW.CustomerService.Messages.GetCustomer
 {
     public enum ContactInfoChannelType
     {

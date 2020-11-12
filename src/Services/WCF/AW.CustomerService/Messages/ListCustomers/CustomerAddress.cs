@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer.GetCustomer;
+using AW.Application.Customer.GetCustomers;
 using System.Xml.Serialization;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.ListCustomers
 {
     public class CustomerAddress : IMapFrom<CustomerAddressDto>
     {

@@ -2,7 +2,7 @@
 using AW.Application.AutoMapper;
 using AW.Application.Customer.GetCustomer;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.GetCustomer
 {
     public class Address : IMapFrom<AddressDto>
     {

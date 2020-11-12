@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer.AddCustomerContact;
+using AW.Application.Customer.UpdateCustomerContact;
 using System.Xml.Serialization;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.UpdateCustomerContact
 {
     public class EmailAddress : IMapFrom<EmailAddressDto>
     {

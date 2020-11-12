@@ -1,4 +1,4 @@
-﻿namespace AW.CustomerService.Messages
+﻿namespace AW.CustomerService.Messages.ListCustomers
 {
     public enum EmailPromotion : int
     {

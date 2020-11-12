@@ -4,7 +4,7 @@ using AW.Application.Customer.GetCustomers;
 using AW.Domain.Sales;
 using System;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.ListCustomers
 {
     public class SalesOrder : IMapFrom<SalesOrderDto>
     {

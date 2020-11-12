@@ -3,7 +3,7 @@ using AW.Application.AutoMapper;
 using AW.Application.Customer.GetCustomer;
 using System.Xml.Serialization;
 
-namespace AW.CustomerService.Messages
+namespace AW.CustomerService.Messages.GetCustomer
 {
     public class CustomerContact : IMapFrom<CustomerContactDto>
     {
