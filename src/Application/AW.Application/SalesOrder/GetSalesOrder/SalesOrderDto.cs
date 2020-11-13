@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AW.Application.SalesOrder
+namespace AW.Application.SalesOrder.GetSalesOrder
 {
     public class SalesOrderDto : IMapFrom<SalesOrderHeader>
     {

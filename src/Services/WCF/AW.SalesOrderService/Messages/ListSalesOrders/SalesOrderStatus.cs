@@ -1,4 +1,4 @@
-﻿namespace AW.SalesOrderService.Messages
+﻿namespace AW.SalesOrderService.Messages.ListSalesOrders
 {
     public enum SalesOrderStatus : byte
     {

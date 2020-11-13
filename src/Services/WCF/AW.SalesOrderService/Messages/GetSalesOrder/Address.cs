@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.SalesOrder;
-using System;
+using AW.Application.SalesOrder.GetSalesOrder;
 
-namespace AW.SalesOrderService.Messages
+namespace AW.SalesOrderService.Messages.GetSalesOrder
 {
     public class Address : IMapFrom<AddressDto>
     {

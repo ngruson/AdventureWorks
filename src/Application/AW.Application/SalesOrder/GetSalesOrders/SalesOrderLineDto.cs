@@ -2,7 +2,7 @@
 using AW.Application.AutoMapper;
 using AW.Domain.Sales;
 
-namespace AW.Application.SalesOrder
+namespace AW.Application.SalesOrder.GetSalesOrders
 {
     public class SalesOrderLineDto : IMapFrom<SalesOrderDetail>
     {

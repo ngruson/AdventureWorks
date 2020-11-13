@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.SalesOrder.GetSalesOrder;
 using AW.Application.SalesOrder.GetSalesOrders;
-using AW.SalesOrderService.Messages;
 using AW.SalesOrderService.Messages.GetSalesOrder;
 using AW.SalesOrderService.Messages.ListSalesOrders;
 using MediatR;
@@ -41,7 +40,7 @@ namespace AW.SalesOrderService
 
             var response = new GetSalesOrderResponse
             {
-                SalesOrder = mapper.Map<SalesOrder>(salesOrder)
+                SalesOrder = mapper.Map<Messages.GetSalesOrder.SalesOrder>(salesOrder)
             };
 
             return response;

@@ -112,18 +112,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MappingProfile.cs" />
-    <Compile Include="Messages\Address.cs" />
-    <Compile Include="Messages\CustomerType.cs" />
+    <Compile Include="Messages\GetSalesOrder\Address.cs" />
+    <Compile Include="Messages\GetSalesOrder\CustomerType.cs" />
     <Compile Include="Messages\GetSalesOrder\GetSalesOrderRequest.cs" />
     <Compile Include="Messages\GetSalesOrder\GetSalesOrderResponse.cs" />
+    <Compile Include="Messages\ListSalesOrders\Address.cs" />
+    <Compile Include="Messages\ListSalesOrders\CustomerType.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrders.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrdersRequest.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrdersResponse.cs" />
-    <Compile Include="Messages\SalesOrder.cs" />
-    <Compile Include="Messages\SalesOrderLine.cs" />
-    <Compile Include="Messages\SalesOrderStatus.cs" />
-    <Compile Include="Messages\SalesReason.cs" />
-    <Compile Include="Messages\ShipMethod.cs" />
+    <Compile Include="Messages\GetSalesOrder\SalesOrder.cs" />
+    <Compile Include="Messages\GetSalesOrder\SalesOrderLine.cs" />
+    <Compile Include="Messages\ListSalesOrders\SalesOrder.cs" />
+    <Compile Include="Messages\ListSalesOrders\SalesOrderLine.cs" />
+    <Compile Include="Messages\ListSalesOrders\SalesOrderStatus.cs" />
+    <Compile Include="Messages\ListSalesOrders\SalesReason.cs" />
+    <Compile Include="Messages\GetSalesOrder\SalesOrderStatus.cs" />
+    <Compile Include="Messages\GetSalesOrder\SalesReason.cs" />
+    <Compile Include="Messages\GetSalesOrder\ShipMethod.cs" />
+    <Compile Include="Messages\ListSalesOrders\ShipMethod.cs" />
     <Compile Include="SalesOrderService.svc.cs">
       <DependentUpon>SalesOrderService.svc</DependentUpon>
     </Compile>

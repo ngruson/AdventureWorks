@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Domain.Person;
+using AW.Application.SalesOrder.GetSalesOrders;
 
-namespace AW.Application.SalesOrder
+namespace AW.SalesOrderService.Messages.ListSalesOrders
 {
-    public class AddressDto : IMapFrom<Address>
+    public class Address : IMapFrom<AddressDto>
     {
         public string AddressLine1 { get; set; }
 
@@ -20,8 +20,7 @@ namespace AW.Application.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressDto>()
-                .ForMember(m => m.Country, opt => opt.MapFrom(src => src.StateProvince.CountryRegion.Name));
+            profile.CreateMap<AddressDto, Address>();
         }
     }
 }

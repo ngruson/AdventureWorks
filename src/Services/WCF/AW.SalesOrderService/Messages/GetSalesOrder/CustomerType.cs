@@ -1,4 +1,4 @@
-﻿namespace AW.SalesOrderService.Messages
+﻿namespace AW.SalesOrderService.Messages.GetSalesOrder
 {
     public enum CustomerType
     {

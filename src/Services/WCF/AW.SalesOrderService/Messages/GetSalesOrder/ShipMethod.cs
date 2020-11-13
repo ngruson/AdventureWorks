@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Domain.Purchasing;
+using AW.Application.SalesOrder.GetSalesOrder;
 
-namespace AW.Application.SalesOrder
+namespace AW.SalesOrderService.Messages.GetSalesOrder
 {
-    public class ShipMethodDto : IMapFrom<ShipMethod>
+    public class ShipMethod : IMapFrom<ShipMethodDto>
     {
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace AW.Application.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<ShipMethod, ShipMethodDto>();
+            profile.CreateMap<ShipMethodDto, ShipMethod>();
         }
     }
 }

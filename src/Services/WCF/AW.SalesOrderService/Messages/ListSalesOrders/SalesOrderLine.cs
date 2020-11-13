@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.SalesOrder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AW.Application.SalesOrder.GetSalesOrders;
 
-namespace AW.SalesOrderService.Messages
+namespace AW.SalesOrderService.Messages.ListSalesOrders
 {
     public class SalesOrderLine : IMapFrom<SalesOrderLineDto>
     {

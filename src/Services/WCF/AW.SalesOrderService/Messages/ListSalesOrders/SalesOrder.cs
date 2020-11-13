@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.SalesOrder;
+using AW.Application.SalesOrder.GetSalesOrders;
 using System;
 using System.Collections.Generic;
 
-namespace AW.SalesOrderService.Messages
+namespace AW.SalesOrderService.Messages.ListSalesOrders
 {
     public class SalesOrder : IMapFrom<SalesOrderDto>
     {
