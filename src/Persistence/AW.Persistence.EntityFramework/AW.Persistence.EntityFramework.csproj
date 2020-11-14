@@ -34,9 +34,6 @@
     <Reference Include="Ardalis.Specification">
       <HintPath>..\..\packages\Ardalis.Specification.4.0.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification.EntityFramework">
-      <HintPath>..\..\..\..\Specification\ArdalisSpecificationEF\src\Ardalis.Specification.EntityFramework\bin\Debug\Ardalis.Specification.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -134,6 +131,10 @@
     <ProjectReference Include="..\..\Domain\AW.Domain\AW.Domain.csproj">
       <Project>{12145c1b-f538-4fa9-9d42-93d167dc837b}</Project>
       <Name>AW.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
+      <Project>{8934913d-7b38-4c9a-a9d1-37d14af1312e}</Project>
+      <Name>Ardalis.Specification.EntityFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
