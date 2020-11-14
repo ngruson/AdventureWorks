@@ -1,4 +1,4 @@
-﻿using AW.Application.SalesPerson;
+﻿using AW.Application.SalesPerson.GetSalesPerson;
 using System.Xml.Serialization;
 
 namespace AW.SalesPersonService.Messages.GetSalesPerson

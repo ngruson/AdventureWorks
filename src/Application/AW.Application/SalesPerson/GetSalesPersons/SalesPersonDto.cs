@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
 
-namespace AW.Application.SalesPerson
+namespace AW.Application.SalesPerson.GetSalesPersons
 {
     public class SalesPersonDto : IMapFrom<Domain.Sales.SalesPerson>
     {
