@@ -1,5 +1,5 @@
-﻿using AW.Application.Customer.AddCustomerContactInfo;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.AddCustomerContactInfo;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
 using FluentValidation.TestHelper;
@@ -16,12 +16,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -40,12 +40,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -67,12 +67,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -91,12 +91,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -121,12 +121,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -151,12 +151,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -182,12 +182,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(
@@ -212,12 +212,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var validator = new AddCustomerContactInfoCommandValidator(

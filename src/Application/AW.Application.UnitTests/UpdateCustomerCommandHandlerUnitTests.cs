@@ -1,6 +1,6 @@
 ﻿using AW.Application.Customer;
 using AW.Application.Customer.UpdateCustomer;
-using AW.Application.Interfaces;
+using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -22,16 +22,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -66,16 +66,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -107,16 +107,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -152,16 +152,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -193,16 +193,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -237,16 +237,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -281,16 +281,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(
@@ -321,16 +321,16 @@ namespace AW.Application.UnitTests
             var salesTerritory = new SalesTerritoryBuilder().WithTestValues().Build();
             var salesPerson = new SalesPersonBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesTerritorySpecification>()))
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesTerritorySpecification>()))
                 .ReturnsAsync(salesTerritory);
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesPersonSpecification>()))
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesPersonSpecification>()))
                 .ReturnsAsync(salesPerson);
 
             var handler = new UpdateCustomerCommandHandler(

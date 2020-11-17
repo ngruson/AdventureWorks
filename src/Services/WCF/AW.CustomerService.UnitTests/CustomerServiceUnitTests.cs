@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AW.Application.Customer.AddCustomerAddress;
 using AW.Application.Customer.GetCustomer;
 using AW.Application.Customer.GetCustomers;
 using AW.Application.Customer.UpdateCustomer;

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using MediatR;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace AW.Application.SalesPerson.GetSalesPersons
 {
     public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, IEnumerable<SalesPersonDto>>
     {
-        private readonly IAsyncRepository<Domain.Sales.SalesPerson> repository;
+        private readonly IRepositoryBase<Domain.Sales.SalesPerson> repository;
         private readonly IMapper mapper;
 
-        public GetSalesPersonsQueryHandler(IAsyncRepository<Domain.Sales.SalesPerson> repository, IMapper mapper)
+        public GetSalesPersonsQueryHandler(IRepositoryBase<Domain.Sales.SalesPerson> repository, IMapper mapper)
             => (this.repository, this.mapper) = (repository, mapper);
 
         public async Task<IEnumerable<SalesPersonDto>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ namespace AW.Application.SalesPerson.GetSalesPersons
             }
             else
             {
-                var salesPersons = await repository.ListAllAsync();
+                var salesPersons = await repository.ListAsync();
                 return mapper.Map<IEnumerable<SalesPersonDto>>(salesPersons);
             }
         }

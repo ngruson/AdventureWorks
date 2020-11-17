@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using FluentValidation;
@@ -11,11 +11,11 @@ namespace AW.Application.Customer.DeleteCustomerAddress
 {
     public class DeleteCustomerAddressCommandValidator : AbstractValidator<DeleteCustomerAddressCommand>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Person.AddressType> addressTypeRepository;
 
-        public DeleteCustomerAddressCommandValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Domain.Person.AddressType> addressTypeRepository)
+        public DeleteCustomerAddressCommandValidator(IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Domain.Person.AddressType> addressTypeRepository)
         {
             this.customerRepository = customerRepository;
             this.addressTypeRepository = addressTypeRepository;
@@ -35,19 +35,19 @@ namespace AW.Application.Customer.DeleteCustomerAddress
 
         private async Task<bool> CustomerExists(string accountNumber, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(new GetCustomerSpecification(accountNumber));
+            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(accountNumber));
             return customer != null;
         }
 
         private async Task<bool> AddressTypeExists(string name, CancellationToken cancellationToken)
         {
-            var addressType = await addressTypeRepository.FirstOrDefaultAsync(new GetAddressTypeSpecification(name));
+            var addressType = await addressTypeRepository.GetBySpecAsync(new GetAddressTypeSpecification(name));
             return addressType != null;
         }
 
         private async Task<bool> AddressExistsWithAddressType(DeleteCustomerAddressCommand command, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(new GetCustomerSpecification(command.AccountNumber));
+            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(command.AccountNumber));
 
             ICollection<BusinessEntityAddress> addresses = null;
             if (customer.Store != null)

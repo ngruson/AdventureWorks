@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using MediatR;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace AW.Application.Customer.GetCustomers
 {
     public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersDto>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> repository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> repository;
         private readonly IMapper mapper;
 
-        public GetCustomersQueryHandler(IAsyncRepository<Domain.Sales.Customer> repository, IMapper mapper) =>
+        public GetCustomersQueryHandler(IRepositoryBase<Domain.Sales.Customer> repository, IMapper mapper) =>
             (this.repository, this.mapper) = (repository, mapper);
 
         public async Task<GetCustomersDto> Handle(GetCustomersQuery request, CancellationToken cancellationToken)

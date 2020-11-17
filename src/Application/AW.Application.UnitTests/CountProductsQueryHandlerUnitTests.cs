@@ -1,6 +1,5 @@
 ﻿using Ardalis.Specification;
 using AW.Application.Product.CountProducts;
-using AW.Application.Interfaces;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace AW.Application.UnitTests
                 new Domain.Production.Product {  Name = "Product 3"}
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
+            var repoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
             repoMock.Setup(x => x.ListAsync(It.IsAny<ISpecification<Domain.Production.Product>>()))
                 .ReturnsAsync(products);
 
@@ -40,7 +39,7 @@ namespace AW.Application.UnitTests
             // Arrange
             var products = new List<Domain.Production.Product>();
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
+            var repoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
             repoMock.Setup(x => x.ListAsync(It.IsAny<ISpecification<Domain.Production.Product>>()))
                 .ReturnsAsync(products);
 

@@ -1,10 +1,10 @@
-﻿using Autofac;
+﻿using Ardalis.Specification;
+using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AW.Application.Autofac;
 using AW.Application.Common.Behaviours;
 using AW.Application.Customer.GetCustomers;
-using AW.Application.Interfaces;
 using AW.Persistence.EntityFramework;
 using FluentValidation;
 using MediatR;
@@ -24,7 +24,7 @@ namespace AW.CustomerService
             builder.RegisterType<AWContext>();
 
             builder.RegisterGeneric(typeof(EfRepository<>))
-                .As(typeof(IAsyncRepository<>))
+                .As(typeof(IRepositoryBase<>))
                 .InstancePerLifetimeScope();
 
             builder.AddMediatR(typeof(GetCustomersQuery).Assembly);

@@ -1,5 +1,5 @@
-﻿using AW.Application.Customer.AddCustomerContactInfo;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.AddCustomerContactInfo;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -22,11 +22,11 @@ namespace AW.Application.UnitTests
                 .Person(new PersonBuilder().WithTestValues().Build())
                 .Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
 
             var handler = new AddCustomerContactInfoCommandHandler(
                 customerRepoMock.Object,
@@ -60,12 +60,12 @@ namespace AW.Application.UnitTests
                 .Build();
             var phoneNumberType = new PhoneNumberTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var phoneNumberTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.PhoneNumberType>>();
-            phoneNumberTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
+            var phoneNumberTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.PhoneNumberType>>();
+            phoneNumberTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPhoneNumberTypeSpecification>()))
                 .ReturnsAsync(phoneNumberType);
 
             var handler = new AddCustomerContactInfoCommandHandler(

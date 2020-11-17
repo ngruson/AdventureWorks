@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.SalesOrder.GetSalesOrder;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
@@ -19,8 +19,8 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var salesOrder = new SalesOrderBuilder().WithTestValues().Build();
 
-            var productRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesOrderHeader>>();
-            productRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesOrderSpecification>()))
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesOrderHeader>>();
+            productRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesOrderSpecification>()))
                 .ReturnsAsync(salesOrder);
 
             var handler = new GetSalesOrderQueryHandler(

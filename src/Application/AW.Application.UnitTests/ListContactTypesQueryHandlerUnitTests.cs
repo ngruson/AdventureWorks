@@ -1,6 +1,6 @@
+using Ardalis.Specification;
 using AW.Application.ContactType.ListContactTypes;
 using AW.Application.Exceptions;
-using AW.Application.Interfaces;
 using FluentAssertions;
 using Moq;
 using System;
@@ -24,8 +24,8 @@ namespace AW.Application.UnitTests
                 new Domain.Person.ContactType {  Name = "Product Manager"}
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(contactTypes);
 
             var handler = new ListContactTypesQueryHandler(repoMock.Object);
@@ -43,8 +43,8 @@ namespace AW.Application.UnitTests
             // Arrange
             var contactTypes = new List<Domain.Person.ContactType>();
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(contactTypes);
 
             var handler = new ListContactTypesQueryHandler(repoMock.Object);

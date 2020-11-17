@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using AW.Domain.Sales;
 using MediatR;
@@ -11,10 +11,10 @@ namespace AW.Application.SalesOrder.GetSalesOrders
 {
     public class GetSalesOrdersQueryHandler : IRequestHandler<GetSalesOrdersQuery, GetSalesOrdersDto>
     {
-        private readonly IAsyncRepository<SalesOrderHeader> repository;
+        private readonly IRepositoryBase<SalesOrderHeader> repository;
         private readonly IMapper mapper;
 
-        public GetSalesOrdersQueryHandler(IAsyncRepository<SalesOrderHeader> repository, IMapper mapper) =>
+        public GetSalesOrdersQueryHandler(IRepositoryBase<SalesOrderHeader> repository, IMapper mapper) =>
             (this.repository, this.mapper) = (repository, mapper);
 
         public async Task<GetSalesOrdersDto> Handle(GetSalesOrdersQuery request, CancellationToken cancellationToken)

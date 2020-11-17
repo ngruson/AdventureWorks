@@ -1,7 +1,7 @@
-﻿using Autofac;
+﻿using Ardalis.Specification;
+using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.Interfaces;
 using AW.Application.StateProvince.ListStateProvinces;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
@@ -20,7 +20,7 @@ namespace AW.StateProvinceService
             builder.RegisterType<AWContext>();
 
             builder.RegisterGeneric(typeof(EfRepository<>))
-                .As(typeof(IAsyncRepository<>))
+                .As(typeof(IRepositoryBase<>))
                 .InstancePerLifetimeScope();
 
             builder.AddMediatR(typeof(ListStateProvincesQuery).Assembly);

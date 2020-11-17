@@ -1,5 +1,5 @@
-﻿using AW.Application.Customer.AddCustomerContact;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.AddCustomerContact;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -23,16 +23,16 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var person = new PersonBuilder().WithTestValues().Build();
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var personRepoMock = new Mock<IAsyncRepository<Domain.Person.Person>>();
-            personRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPersonSpecification>()))
+            var personRepoMock = new Mock<IRepositoryBase<Domain.Person.Person>>();
+            personRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPersonSpecification>()))
                 .ReturnsAsync(person);
 
             var handler = new AddCustomerContactCommandHandler(
@@ -68,16 +68,16 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var person = new PersonBuilder().WithTestValues().Build();
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var personRepoMock = new Mock<IAsyncRepository<Domain.Person.Person>>();
-            personRepoMock.SetupSequence(x => x.FirstOrDefaultAsync(It.IsAny<GetPersonSpecification>()))
+            var personRepoMock = new Mock<IRepositoryBase<Domain.Person.Person>>();
+            personRepoMock.SetupSequence(x => x.GetBySpecAsync(It.IsAny<GetPersonSpecification>()))
                 .Returns(Task.FromResult<Domain.Person.Person>(null))
                 .Returns(Task.FromResult(person));
 

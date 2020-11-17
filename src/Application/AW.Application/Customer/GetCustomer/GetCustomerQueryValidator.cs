@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using FluentValidation;
 using System.Threading;
@@ -8,9 +8,9 @@ namespace AW.Application.Customer.GetCustomer
 {
     public class GetCustomerQueryValidator : AbstractValidator<GetCustomerQuery>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
 
-        public GetCustomerQueryValidator(IAsyncRepository<Domain.Sales.Customer> customerRepository)
+        public GetCustomerQueryValidator(IRepositoryBase<Domain.Sales.Customer> customerRepository)
         {
             this.customerRepository = customerRepository;
 
@@ -23,7 +23,7 @@ namespace AW.Application.Customer.GetCustomer
 
         private async Task<bool> CustomerExists(string accountNumber, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(new GetCustomerSpecification(accountNumber));
+            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(accountNumber));
             return customer != null;
         }
     }

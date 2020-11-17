@@ -1,5 +1,5 @@
-﻿using AW.Application.Product.GetProduct;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Product.GetProduct;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -19,8 +19,8 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var product = new ProductBuilder().WithTestValues().Build();
 
-            var productRepoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
-            productRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetProductSpecification>()))
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
+            productRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetProductSpecification>()))
                 .ReturnsAsync(product);
 
             var handler = new GetProductQueryHandler(

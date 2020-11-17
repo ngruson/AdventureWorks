@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using MediatR;
@@ -12,17 +11,17 @@ namespace AW.Application.Customer.UpdateCustomerContact
 {
     public class UpdateCustomerContactCommandHandler : IRequestHandler<UpdateCustomerContactCommand, Unit>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Person> personRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Person> personRepository;
 
         public UpdateCustomerContactCommandHandler(
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Person> personRepository
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Person> personRepository
         ) => (this.customerRepository, this.personRepository) = (customerRepository, personRepository);
 
         public async Task<Unit> Handle(UpdateCustomerContactCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(
+            var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
 
@@ -47,7 +46,7 @@ namespace AW.Application.Customer.UpdateCustomerContact
 
         private async Task UpdateEmailAddresses(UpdateCustomerContactCommand request)
         {
-            var person = await personRepository.FirstOrDefaultAsync(
+            var person = await personRepository.GetBySpecAsync(
                 new GetPersonSpecification(
                     request.CustomerContact.Contact.FirstName,
                     request.CustomerContact.Contact.MiddleName,

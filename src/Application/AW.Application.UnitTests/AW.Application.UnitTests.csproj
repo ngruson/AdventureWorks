@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\AW.Domain\AW.Domain.csproj" />
-    <ProjectReference Include="..\..\Persistence\AW.Persistence.EntityFrameworkCore\AW.Persistence.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\Persistence\AW.Persistence.EntityFramework\AW.Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\AW.Application\AW.Application.csproj" />
   </ItemGroup>
 

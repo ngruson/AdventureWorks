@@ -1,6 +1,6 @@
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Application.Customer.GetCustomers;
-using AW.Application.Interfaces;
 using AW.Persistence.EntityFrameworkCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +28,7 @@ namespace AW.Services.API.CustomerAPI
             services.AddDbContext<AWContext>(c =>
                 c.UseSqlServer(configuration.GetConnectionString("CatalogConnection"))
             );
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetCustomersQuery).Assembly);
             services.AddMediatR(typeof(GetCustomersQuery));
         }

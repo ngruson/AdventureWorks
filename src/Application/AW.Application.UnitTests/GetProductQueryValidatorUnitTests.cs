@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Product.GetProduct;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
@@ -15,8 +15,8 @@ namespace AW.Application.UnitTests
         {
             var product = new ProductBuilder().WithTestValues().Build();
 
-            var productRepoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
-            productRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetProductSpecification>()))
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
+            productRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetProductSpecification>()))
                 .ReturnsAsync(product);
 
             var validator = new GetProductQueryValidator(
@@ -32,8 +32,8 @@ namespace AW.Application.UnitTests
         {
             var product = new ProductBuilder().WithTestValues().Build();
 
-            var productRepoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
-            productRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetProductSpecification>()))
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
+            productRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetProductSpecification>()))
                 .ReturnsAsync(product);
 
             var validator = new GetProductQueryValidator(
@@ -50,7 +50,7 @@ namespace AW.Application.UnitTests
         [Fact]
         public void Product_DoesNotExist_ValidationError()
         {
-            var productRepoMock = new Mock<IAsyncRepository<Domain.Production.Product>>();
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Production.Product>>();
             var validator = new GetProductQueryValidator(productRepoMock.Object);
 
             var query = new GetProductQuery();

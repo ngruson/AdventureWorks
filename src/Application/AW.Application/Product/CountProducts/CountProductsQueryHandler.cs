@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using MediatR;
 using System.Threading;
@@ -8,9 +8,9 @@ namespace AW.Application.Product.CountProducts
 {
     public class CountProductsQueryHandler : IRequestHandler<CountProductsQuery, int>
     {
-        private readonly IAsyncRepository<Domain.Production.Product> repository;
+        private readonly IRepositoryBase<Domain.Production.Product> repository;
 
-        public CountProductsQueryHandler(IAsyncRepository<Domain.Production.Product> repository)
+        public CountProductsQueryHandler(IRepositoryBase<Domain.Production.Product> repository)
             => (this.repository) = (repository);
 
         public async Task<int> Handle(CountProductsQuery request, CancellationToken cancellationToken)

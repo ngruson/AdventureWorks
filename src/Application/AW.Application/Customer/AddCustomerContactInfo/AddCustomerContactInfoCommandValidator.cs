@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using FluentValidation;
 using System.Threading;
@@ -8,12 +8,12 @@ namespace AW.Application.Customer.AddCustomerContactInfo
 {
     public class AddCustomerContactInfoCommandValidator : AbstractValidator<AddCustomerContactInfoCommand>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Person.PhoneNumberType> phoneNumberTypeRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Person.PhoneNumberType> phoneNumberTypeRepository;
 
         public AddCustomerContactInfoCommandValidator(
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Domain.Person.PhoneNumberType> phoneNumberTypeRepository
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Domain.Person.PhoneNumberType> phoneNumberTypeRepository
         )
         {
             this.customerRepository = customerRepository;
@@ -49,13 +49,13 @@ namespace AW.Application.Customer.AddCustomerContactInfo
 
         private async Task<bool> CustomerExist(string accountNumber, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(new GetCustomerSpecification(accountNumber));
+            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(accountNumber));
             return customer != null;
         }
 
         private async Task<bool> ContactInfoTypeExist(string name, CancellationToken cancellationToken)
         {
-            var contactType = await phoneNumberTypeRepository.FirstOrDefaultAsync(new GetPhoneNumberTypeSpecification(name));
+            var contactType = await phoneNumberTypeRepository.GetBySpecAsync(new GetPhoneNumberTypeSpecification(name));
             return contactType != null;
         }
     }

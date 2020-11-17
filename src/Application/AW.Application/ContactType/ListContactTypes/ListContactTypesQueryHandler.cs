@@ -1,5 +1,5 @@
-﻿using AW.Application.Exceptions;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Exceptions;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +10,14 @@ namespace AW.Application.ContactType.ListContactTypes
 {
     public class ListContactTypesQueryHandler : IRequestHandler<ListContactTypesQuery, IEnumerable<string>>
     {
-        private readonly IAsyncRepository<Domain.Person.ContactType> repository;
+        private readonly IRepositoryBase<Domain.Person.ContactType> repository;
 
-        public ListContactTypesQueryHandler(IAsyncRepository<Domain.Person.ContactType> repository) =>
+        public ListContactTypesQueryHandler(IRepositoryBase<Domain.Person.ContactType> repository) =>
             this.repository = repository;
 
         public async Task<IEnumerable<string>> Handle(ListContactTypesQuery request, CancellationToken cancellationToken)
         {
-            var contactTypes = await repository.ListAllAsync();
+            var contactTypes = await repository.ListAsync();
             if (contactTypes.Count == 0)
                 throw new ContactTypesNotFoundException();
 

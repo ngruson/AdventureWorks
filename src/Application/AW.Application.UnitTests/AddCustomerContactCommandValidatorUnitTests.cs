@@ -1,6 +1,5 @@
-﻿using AW.Application.Customer.AddCustomerAddress;
+﻿using Ardalis.Specification;
 using AW.Application.Customer.AddCustomerContact;
-using AW.Application.Interfaces;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
 using FluentValidation.TestHelper;
@@ -17,12 +16,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -41,12 +40,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -68,12 +67,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -95,12 +94,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -122,12 +121,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -149,12 +148,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -179,12 +178,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -212,12 +211,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(
@@ -242,12 +241,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new AddCustomerContactCommandValidator(

@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using MediatR;
@@ -12,30 +12,30 @@ namespace AW.Application.Customer.AddCustomerAddress
     public class AddCustomerAddressCommandHandler : IRequestHandler<AddCustomerAddressCommand, Unit>
     {
         private readonly IMapper mapper;
-        private readonly IAsyncRepository<Address> addressRepository;
-        private readonly IAsyncRepository<Domain.Person.AddressType> addressTypeRepository;
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository;
+        private readonly IRepositoryBase<Address> addressRepository;
+        private readonly IRepositoryBase<Domain.Person.AddressType> addressTypeRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Person.StateProvince> stateProvinceRepository;
 
         public AddCustomerAddressCommandHandler(
             IMapper mapper,
-            IAsyncRepository<Address> addressRepository,
-            IAsyncRepository<Domain.Person.AddressType> addressTypeRepository,
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Domain.Person.StateProvince> stateProvinceRepository
+            IRepositoryBase<Address> addressRepository,
+            IRepositoryBase<Domain.Person.AddressType> addressTypeRepository,
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Domain.Person.StateProvince> stateProvinceRepository
         ) => (this.mapper, this.addressRepository, this.addressTypeRepository, this.customerRepository, this.stateProvinceRepository) = 
                 (mapper, addressRepository, addressTypeRepository, customerRepository, stateProvinceRepository);
         
         public async Task<Unit> Handle(AddCustomerAddressCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(
+            var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
 
-            var addressType = await addressTypeRepository.FirstOrDefaultAsync(
+            var addressType = await addressTypeRepository.GetBySpecAsync(
                 new GetAddressTypeSpecification(request.CustomerAddress.AddressTypeName)
             );
-            var stateProvince = await stateProvinceRepository.FirstOrDefaultAsync(
+            var stateProvince = await stateProvinceRepository.GetBySpecAsync(
                 new GetStateProvinceSpecification(request.CustomerAddress.Address.StateProvinceCode)
             );
 
@@ -68,7 +68,7 @@ namespace AW.Application.Customer.AddCustomerAddress
 
         private async Task<int?> IsExistingAddress(AddressDto addressDto, int stateProvinceID)
         {
-            var address = await addressRepository.FirstOrDefaultAsync(
+            var address = await addressRepository.GetBySpecAsync(
                 new GetAddressSpecification(
                     addressDto.AddressLine1,
                     addressDto.AddressLine2,

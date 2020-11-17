@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.SalesOrder.GetSalesOrder;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
@@ -15,8 +15,8 @@ namespace AW.Application.UnitTests
         {
             var salesOrder = new SalesOrderBuilder().WithTestValues().Build();
 
-            var salesOrderRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesOrderHeader>>();
-            salesOrderRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesOrderSpecification>()))
+            var salesOrderRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesOrderHeader>>();
+            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesOrderSpecification>()))
                 .ReturnsAsync(salesOrder);
 
             var validator = new GetSalesOrderQueryValidator(
@@ -32,8 +32,8 @@ namespace AW.Application.UnitTests
         {
             var salesOrder = new SalesOrderBuilder().WithTestValues().Build();
 
-            var salesOrderRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesOrderHeader>>();
-            salesOrderRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetSalesOrderSpecification>()))
+            var salesOrderRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesOrderHeader>>();
+            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetSalesOrderSpecification>()))
                 .ReturnsAsync(salesOrder);
 
             var validator = new GetSalesOrderQueryValidator(
@@ -50,7 +50,7 @@ namespace AW.Application.UnitTests
         [Fact]
         public void SalesOrder_DoesNotExist_ValidationError()
         {
-            var salesOrderRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesOrderHeader>>();
+            var salesOrderRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesOrderHeader>>();
             var validator = new GetSalesOrderQueryValidator(salesOrderRepoMock.Object);
 
             var query = new GetSalesOrderQuery();

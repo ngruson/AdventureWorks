@@ -1,5 +1,5 @@
 ﻿using AW.Application.Customer.UpdateCustomer;
-using AW.Application.Interfaces;
+using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
 using FluentValidation.TestHelper;
@@ -15,8 +15,8 @@ namespace AW.Application.UnitTests
         {
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
             var validator = new UpdateCustomerCommandValidator(
@@ -33,8 +33,8 @@ namespace AW.Application.UnitTests
         {
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
             var validator = new UpdateCustomerCommandValidator(
@@ -54,8 +54,8 @@ namespace AW.Application.UnitTests
         {
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
             var validator = new UpdateCustomerCommandValidator(

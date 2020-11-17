@@ -71,7 +71,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
             var repository = new EfRepository<Person>(mockContext.Object);
 
             //Act
-            var list = await repository.ListAllAsync();
+            var list = await repository.ListAsync();
 
             //Assert
             list.Count.Should().Be(2);
@@ -196,7 +196,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
 
             //Act
             var spec = new GetPersonByIdSpecification(1);
-            var person = await repository.FirstOrDefaultAsync(spec);
+            var person = await repository.GetBySpecAsync(spec);
 
             //Assert
             person.FirstName.Should().Be("Ken");

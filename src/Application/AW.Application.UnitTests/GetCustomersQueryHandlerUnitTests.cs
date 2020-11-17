@@ -1,12 +1,11 @@
-﻿using AW.Application.Customer.GetCustomers;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.GetCustomers;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using Xunit;
@@ -34,9 +33,9 @@ namespace AW.Application.UnitTests
                 new CustomerBuilder().AccountNumber("AW00000010").Build()
             };
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
             customerRepoMock.Setup(x => x.ListAsync(It.IsAny<GetCustomersPaginatedSpecification>()))
-                .ReturnsAsync(customers.Take(5).ToImmutableList());
+                .ReturnsAsync(customers.Take(5).ToList());
             customerRepoMock.Setup(x => x.CountAsync(It.IsAny<CountCustomersSpecification>()))
                 .ReturnsAsync(10);
 

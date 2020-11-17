@@ -1,5 +1,5 @@
 ﻿using AW.Application.Customer.UpdateCustomerContact;
-using AW.Application.Interfaces;
+using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -24,20 +24,20 @@ namespace AW.Application.UnitTests
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
             var emailAddress = new EmailAddressBuilder().WithTestValues().Build();
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var personRepoMock = new Mock<IAsyncRepository<Domain.Person.Person>>();
-            personRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPersonSpecification>()))
+            var personRepoMock = new Mock<IRepositoryBase<Domain.Person.Person>>();
+            personRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPersonSpecification>()))
                 .ReturnsAsync(person);
 
-            var emailAddressRepoMock = new Mock<IAsyncRepository<Domain.Person.EmailAddress>>();
-            emailAddressRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetEmailAddressSpecification>()))
+            var emailAddressRepoMock = new Mock<IRepositoryBase<Domain.Person.EmailAddress>>();
+            emailAddressRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetEmailAddressSpecification>()))
                 .ReturnsAsync(emailAddress);
 
             var handler = new UpdateCustomerContactCommandHandler(
@@ -76,20 +76,20 @@ namespace AW.Application.UnitTests
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
             var emailAddress = new EmailAddressBuilder().WithTestValues().Build();
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var personRepoMock = new Mock<IAsyncRepository<Domain.Person.Person>>();
-            personRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetPersonSpecification>()))
+            var personRepoMock = new Mock<IRepositoryBase<Domain.Person.Person>>();
+            personRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetPersonSpecification>()))
                 .ReturnsAsync(person);
 
-            var emailAddressRepoMock = new Mock<IAsyncRepository<Domain.Person.EmailAddress>>();
-            emailAddressRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetEmailAddressSpecification>()))
+            var emailAddressRepoMock = new Mock<IRepositoryBase<Domain.Person.EmailAddress>>();
+            emailAddressRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetEmailAddressSpecification>()))
                 .ReturnsAsync(emailAddress);
 
             var handler = new UpdateCustomerContactCommandHandler(

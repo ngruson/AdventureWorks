@@ -1,5 +1,5 @@
-﻿using AW.Application.Customer.AddCustomerAddress;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.AddCustomerAddress;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -27,20 +27,20 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             
 
-            var addressRepoMock = new Mock<IAsyncRepository<Domain.Person.Address>>();
-            addressRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressSpecification>()))
+            var addressRepoMock = new Mock<IRepositoryBase<Domain.Person.Address>>();
+            addressRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressSpecification>()))
                 .ReturnsAsync(address);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            addressTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressTypeSpecification>()))
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            addressTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressTypeSpecification>()))
                 .ReturnsAsync(addressType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
-            stateProvinceRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetStateProvinceSpecification>()))
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
+            stateProvinceRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStateProvinceSpecification>()))
                 .ReturnsAsync(stateProvince);
 
             var handler = new AddCustomerAddressCommandHandler(
@@ -77,18 +77,18 @@ namespace AW.Application.UnitTests
             var addressType = new AddressTypeBuilder().WithTestValues().Build();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var addressRepoMock = new Mock<IAsyncRepository<Domain.Person.Address>>();
+            var addressRepoMock = new Mock<IRepositoryBase<Domain.Person.Address>>();
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            addressTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressTypeSpecification>()))
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            addressTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressTypeSpecification>()))
                 .ReturnsAsync(addressType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
-            stateProvinceRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetStateProvinceSpecification>()))
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
+            stateProvinceRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStateProvinceSpecification>()))
                 .ReturnsAsync(stateProvince);
 
             var handler = new AddCustomerAddressCommandHandler(
@@ -134,20 +134,20 @@ namespace AW.Application.UnitTests
                 .Build();
 
 
-            var addressRepoMock = new Mock<IAsyncRepository<Domain.Person.Address>>();
-            addressRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressSpecification>()))
+            var addressRepoMock = new Mock<IRepositoryBase<Domain.Person.Address>>();
+            addressRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressSpecification>()))
                 .ReturnsAsync(address);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            addressTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressTypeSpecification>()))
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            addressTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressTypeSpecification>()))
                 .ReturnsAsync(addressType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
-            stateProvinceRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetStateProvinceSpecification>()))
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
+            stateProvinceRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStateProvinceSpecification>()))
                 .ReturnsAsync(stateProvince);
 
             var handler = new AddCustomerAddressCommandHandler(
@@ -187,18 +187,18 @@ namespace AW.Application.UnitTests
                 .Person(new PersonBuilder().WithTestValues().Build())
                 .Build();
 
-            var addressRepoMock = new Mock<IAsyncRepository<Domain.Person.Address>>();
+            var addressRepoMock = new Mock<IRepositoryBase<Domain.Person.Address>>();
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            addressTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetAddressTypeSpecification>()))
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            addressTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetAddressTypeSpecification>()))
                 .ReturnsAsync(addressType);
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
-            stateProvinceRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetStateProvinceSpecification>()))
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
+            stateProvinceRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStateProvinceSpecification>()))
                 .ReturnsAsync(stateProvince);
 
             var handler = new AddCustomerAddressCommandHandler(

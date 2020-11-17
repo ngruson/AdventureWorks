@@ -1,5 +1,5 @@
-﻿using AW.Application.Exceptions;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Exceptions;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +10,14 @@ namespace AW.Application.AddressType.ListAddressTypes
 {
     public class ListAddressTypesQueryHandler : IRequestHandler<ListAddressTypesQuery, IEnumerable<string>>
     {
-        private readonly IAsyncRepository<Domain.Person.AddressType> repository;
+        private readonly IRepositoryBase<Domain.Person.AddressType> repository;
 
-        public ListAddressTypesQueryHandler(IAsyncRepository<Domain.Person.AddressType> repository) =>
+        public ListAddressTypesQueryHandler(IRepositoryBase<Domain.Person.AddressType> repository) =>
             this.repository = repository;
 
         public async Task<IEnumerable<string>> Handle(ListAddressTypesQuery request, CancellationToken cancellationToken)
         {
-            var addressTypes = await repository.ListAllAsync();
+            var addressTypes = await repository.ListAsync();
             if (addressTypes.Count == 0)
                 throw new AddressTypesNotFoundException();
 

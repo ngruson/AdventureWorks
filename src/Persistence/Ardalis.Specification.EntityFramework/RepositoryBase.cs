@@ -23,6 +23,11 @@ namespace Ardalis.Specification.EntityFramework
             this.specificationEvaluator = specificationEvaluator;
         }
 
+        protected DbContext DbContext
+        {
+            get { return dbContext; }
+        }
+
         public async Task<T> AddAsync(T entity)
         {
             dbContext.Set<T>().Add(entity);
@@ -32,7 +37,7 @@ namespace Ardalis.Specification.EntityFramework
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             dbContext.Entry(entity).State = EntityState.Modified;
 

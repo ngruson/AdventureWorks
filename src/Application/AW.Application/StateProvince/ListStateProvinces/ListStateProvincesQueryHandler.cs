@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using MediatR;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace AW.Application.StateProvince.ListStateProvinces
     public class ListStateProvincesQueryHandler : IRequestHandler<ListStateProvincesQuery, IEnumerable<StateProvinceDto>>
     {
         private readonly IMapper mapper;
-        private readonly IAsyncRepository<Domain.Person.StateProvince> repository;
+        private readonly IRepositoryBase<Domain.Person.StateProvince> repository;
 
-        public ListStateProvincesQueryHandler(IMapper mapper, IAsyncRepository<Domain.Person.StateProvince> repository)
+        public ListStateProvincesQueryHandler(IMapper mapper, IRepositoryBase<Domain.Person.StateProvince> repository)
             => (this.mapper, this.repository) = (mapper, repository);
 
         public async Task<IEnumerable<StateProvinceDto>> Handle(ListStateProvincesQuery request, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace AW.Application.StateProvince.ListStateProvinces
                     new ListStateProvincesSpecification(request.CountryRegionCode)
                 );
             else
-                stateProvinces = await repository.ListAllAsync();
+                stateProvinces = await repository.ListAsync();
 
             return mapper.Map<IEnumerable<StateProvinceDto>>(stateProvinces);
         }

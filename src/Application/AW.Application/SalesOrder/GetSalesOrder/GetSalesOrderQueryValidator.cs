@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using FluentValidation;
 using System.Threading;
@@ -8,9 +8,9 @@ namespace AW.Application.SalesOrder.GetSalesOrder
 {
     public class GetSalesOrderQueryValidator : AbstractValidator<GetSalesOrderQuery>
     {
-        private readonly IAsyncRepository<Domain.Sales.SalesOrderHeader> salesOrderRepository;
+        private readonly IRepositoryBase<Domain.Sales.SalesOrderHeader> salesOrderRepository;
 
-        public GetSalesOrderQueryValidator(IAsyncRepository<Domain.Sales.SalesOrderHeader> salesOrderRepository)
+        public GetSalesOrderQueryValidator(IRepositoryBase<Domain.Sales.SalesOrderHeader> salesOrderRepository)
         {
             this.salesOrderRepository = salesOrderRepository;
 
@@ -22,7 +22,7 @@ namespace AW.Application.SalesOrder.GetSalesOrder
 
         private async Task<bool> SalesOrderExists(string salesOrderNumber, CancellationToken cancellationToken)
         {
-            var salesOrder = await salesOrderRepository.FirstOrDefaultAsync(new GetSalesOrderSpecification(salesOrderNumber));
+            var salesOrder = await salesOrderRepository.GetBySpecAsync(new GetSalesOrderSpecification(salesOrderNumber));
             return salesOrder != null;
         }
     }

@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using MediatR;
@@ -10,19 +10,19 @@ namespace AW.Application.Customer.AddCustomerContactInfo
 {
     public class AddCustomerContactInfoCommandHandler : IRequestHandler<AddCustomerContactInfoCommand, Unit>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<PhoneNumberType> phoneNumberRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<PhoneNumberType> phoneNumberRepository;
 
         public AddCustomerContactInfoCommandHandler(
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<PhoneNumberType> phoneNumberRepository
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<PhoneNumberType> phoneNumberRepository
         )
         => (this.customerRepository, this.phoneNumberRepository) =
             (customerRepository, phoneNumberRepository);
 
         public async Task<Unit> Handle(AddCustomerContactInfoCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(
+            var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );            
 
@@ -40,7 +40,7 @@ namespace AW.Application.Customer.AddCustomerContactInfo
             }
             else if (request.CustomerContactInfo.Channel == ContactInfoChannelTypeDto.Phone)
             {
-                var phoneNumberType = await phoneNumberRepository.FirstOrDefaultAsync(
+                var phoneNumberType = await phoneNumberRepository.GetBySpecAsync(
                     new GetPhoneNumberTypeSpecification(request.CustomerContactInfo.ContactInfoType)
                 );
 

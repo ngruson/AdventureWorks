@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using MediatR;
@@ -13,26 +13,26 @@ namespace AW.Application.Customer.AddCustomerContact
     public class AddCustomerContactCommandHandler : IRequestHandler<AddCustomerContactCommand, Unit>
     {
         private readonly IMapper mapper;
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Person.ContactType> contactTypeRepository;
-        private readonly IAsyncRepository<Person> personRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Person.ContactType> contactTypeRepository;
+        private readonly IRepositoryBase<Person> personRepository;
 
         public AddCustomerContactCommandHandler(
             IMapper mapper,
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Domain.Person.ContactType> contactTypeRepository,
-            IAsyncRepository<Person> personRepository
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Domain.Person.ContactType> contactTypeRepository,
+            IRepositoryBase<Person> personRepository
         )
         => (this.mapper, this.customerRepository, this.contactTypeRepository, this.personRepository) = 
             (mapper, customerRepository, contactTypeRepository, personRepository);
         
         public async Task<Unit> Handle(AddCustomerContactCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(
+            var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
 
-            var contactType = await contactTypeRepository.FirstOrDefaultAsync(
+            var contactType = await contactTypeRepository.GetBySpecAsync(
                 new GetContactTypeSpecification(request.CustomerContact.ContactTypeName)
             );
 
@@ -66,7 +66,7 @@ namespace AW.Application.Customer.AddCustomerContact
 
         private async Task<int?> IsExistingPerson(ContactDto contact)
         {
-            var person = await personRepository.FirstOrDefaultAsync(
+            var person = await personRepository.GetBySpecAsync(
                 new GetPersonSpecification(
                     contact.FirstName,
                     contact.MiddleName,
@@ -84,7 +84,7 @@ namespace AW.Application.Customer.AddCustomerContact
         {
             if (request.CustomerContact.Contact.EmailAddresses.Count > 0)
             {
-                var person = await personRepository.FirstOrDefaultAsync(
+                var person = await personRepository.GetBySpecAsync(
                     new GetPersonSpecification(
                         request.CustomerContact.Contact.FirstName,
                         request.CustomerContact.Contact.MiddleName,

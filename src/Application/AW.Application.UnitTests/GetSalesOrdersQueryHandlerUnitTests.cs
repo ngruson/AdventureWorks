@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.SalesOrder.GetSalesOrders;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
@@ -23,7 +23,7 @@ namespace AW.Application.UnitTests
                 new Domain.Sales.SalesOrderHeader { SalesOrderNumber = "SO43660" }
             };
 
-            var salesOrderRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesOrderHeader>>();
+            var salesOrderRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesOrderHeader>>();
             salesOrderRepoMock.Setup(x => x.ListAsync(It.IsAny<GetSalesOrdersPaginatedSpecification>()))
                 .ReturnsAsync(salesOrders);
             salesOrderRepoMock.Setup(x => x.CountAsync(It.IsAny<CountSalesOrdersSpecification>()))

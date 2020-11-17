@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.SalesPerson.GetSalesPerson;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -22,8 +22,8 @@ namespace AW.Application.UnitTests
                 new SalesPersonBuilder().WithTestValues().Build()
             };
 
-            var salesPersonRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesPerson>>();
-            salesPersonRepoMock.Setup(x => x.ListAllAsync())
+            var salesPersonRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesPerson>>();
+            salesPersonRepoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(salesPersons);
 
             var handler = new GetSalesPersonQueryHandler(

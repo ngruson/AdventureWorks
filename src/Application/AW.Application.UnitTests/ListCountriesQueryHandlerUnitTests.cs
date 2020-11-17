@@ -1,6 +1,6 @@
 ﻿using AW.Application.Country.ListCountries;
 using AW.Application.Exceptions;
-using AW.Application.Interfaces;
+using Ardalis.Specification;
 using FluentAssertions;
 using Moq;
 using System;
@@ -24,8 +24,8 @@ namespace AW.Application.UnitTests
                 new Domain.Person.CountryRegion {  Name = "Germany"}
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.CountryRegion>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.CountryRegion>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(countries);
 
             var handler = new ListCountriesQueryHandler(repoMock.Object);
@@ -43,8 +43,8 @@ namespace AW.Application.UnitTests
             // Arrange
             var countries = new List<Domain.Person.CountryRegion>();
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.CountryRegion>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.CountryRegion>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(countries);
 
             var handler = new ListCountriesQueryHandler(repoMock.Object);

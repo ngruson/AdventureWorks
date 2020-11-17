@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using FluentValidation;
 using System.Threading;
@@ -8,9 +8,9 @@ namespace AW.Application.Product.GetProduct
 {
     public class GetProductQueryValidator : AbstractValidator<GetProductQuery>
     {
-        private readonly IAsyncRepository<Domain.Production.Product> productRepository;
+        private readonly IRepositoryBase<Domain.Production.Product> productRepository;
 
-        public GetProductQueryValidator(IAsyncRepository<Domain.Production.Product> productRepository)
+        public GetProductQueryValidator(IRepositoryBase<Domain.Production.Product> productRepository)
         {
             this.productRepository = productRepository;
 
@@ -22,7 +22,7 @@ namespace AW.Application.Product.GetProduct
 
         private async Task<bool> ProductExists(string productNumber, CancellationToken cancellationToken)
         {
-            var product = await productRepository.FirstOrDefaultAsync(new GetProductSpecification(productNumber));
+            var product = await productRepository.GetBySpecAsync(new GetProductSpecification(productNumber));
             return product != null;
         }
     }

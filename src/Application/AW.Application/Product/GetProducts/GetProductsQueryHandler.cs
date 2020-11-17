@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using MediatR;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace AW.Application.Product.GetProducts
 {
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IEnumerable<ProductDto>>
     {
-        private readonly IAsyncRepository<Domain.Production.Product> repository;
+        private readonly IRepositoryBase<Domain.Production.Product> repository;
         private readonly IMapper mapper;
 
-        public GetProductsQueryHandler(IAsyncRepository<Domain.Production.Product> repository, IMapper mapper) 
+        public GetProductsQueryHandler(IRepositoryBase<Domain.Production.Product> repository, IMapper mapper) 
             => (this.repository, this.mapper) = (repository, mapper);
         
         public async Task<IEnumerable<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)

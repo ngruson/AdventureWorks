@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Application.StateProvince.ListStateProvinces;
 using AW.Application.UnitTests.AutoMapper;
@@ -24,8 +24,8 @@ namespace AW.Application.UnitTests
                 new Domain.Person.StateProvince { StateProvinceCode = "AL" }
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(stateProvinces);
 
             var handler = new ListStateProvincesQueryHandler(mapper, repoMock.Object);
@@ -48,7 +48,7 @@ namespace AW.Application.UnitTests
                 new Domain.Person.StateProvince { StateProvinceCode = "AR" }
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
             repoMock.Setup(x => x.ListAsync(It.IsAny<ListStateProvincesSpecification>()))
                 .ReturnsAsync(stateProvinces);
 

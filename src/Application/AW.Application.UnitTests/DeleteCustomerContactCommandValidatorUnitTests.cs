@@ -1,14 +1,9 @@
-﻿using AW.Application.Customer.DeleteCustomerContact;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AW.Application.Customer.DeleteCustomerContact;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.TestBuilders;
 using FluentValidation.TestHelper;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Application.UnitTests
@@ -21,12 +16,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -45,12 +40,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -72,12 +67,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -95,12 +90,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -118,12 +113,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -144,12 +139,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -173,12 +168,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(
@@ -199,12 +194,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var contactType = new ContactTypeBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var contactTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.ContactType>>();
-            contactTypeRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetContactTypeSpecification>()))
+            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.ContactType>>();
+            contactTypeRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetContactTypeSpecification>()))
                 .ReturnsAsync(contactType);
 
             var validator = new DeleteCustomerContactCommandValidator(

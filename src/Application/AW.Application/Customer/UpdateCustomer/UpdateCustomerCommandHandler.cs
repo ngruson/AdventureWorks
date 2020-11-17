@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
+using AutoMapper;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using AW.Domain.Sales;
@@ -11,15 +11,15 @@ namespace AW.Application.Customer.UpdateCustomer
 {
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerDto>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
-        private readonly IAsyncRepository<Domain.Sales.SalesTerritory> salesTerritoryRepository;
-        private readonly IAsyncRepository<Domain.Sales.SalesPerson> salesPersonRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Sales.SalesTerritory> salesTerritoryRepository;
+        private readonly IRepositoryBase<Domain.Sales.SalesPerson> salesPersonRepository;
         private readonly IMapper mapper;
 
         public UpdateCustomerCommandHandler(
-            IAsyncRepository<Domain.Sales.Customer> customerRepository,
-            IAsyncRepository<Domain.Sales.SalesTerritory> salesTerritoryRepository,
-            IAsyncRepository<Domain.Sales.SalesPerson> salesPersonRepository,
+            IRepositoryBase<Domain.Sales.Customer> customerRepository,
+            IRepositoryBase<Domain.Sales.SalesTerritory> salesTerritoryRepository,
+            IRepositoryBase<Domain.Sales.SalesPerson> salesPersonRepository,
             IMapper mapper) =>
                 (this.customerRepository, this.salesTerritoryRepository, this.salesPersonRepository, this.mapper) =
                 (customerRepository, salesTerritoryRepository, salesPersonRepository, mapper);
@@ -27,7 +27,7 @@ namespace AW.Application.Customer.UpdateCustomer
         public async Task<CustomerDto> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
-            var customer = await customerRepository.FirstOrDefaultAsync(spec);
+            var customer = await customerRepository.GetBySpecAsync(spec);
 
             await UpdateSalesTerritory(request, customer);
             if (customer.Person != null)
@@ -45,7 +45,7 @@ namespace AW.Application.Customer.UpdateCustomer
             if (!string.IsNullOrEmpty(request.Customer.SalesTerritoryName))
             {
                 var territorySpec = new GetSalesTerritorySpecification(request.Customer.SalesTerritoryName);
-                var salesTerritory = await salesTerritoryRepository.FirstOrDefaultAsync(territorySpec);
+                var salesTerritory = await salesTerritoryRepository.GetBySpecAsync(territorySpec);
                 customer.SalesTerritoryID = salesTerritory.Id;
             }
             else
@@ -73,7 +73,7 @@ namespace AW.Application.Customer.UpdateCustomer
                     request.Customer.Store.SalesPerson.LastName
                 );
 
-                var salesPerson = await salesPersonRepository.FirstOrDefaultAsync(spec);
+                var salesPerson = await salesPersonRepository.GetBySpecAsync(spec);
                 if (salesPerson != null)
                     store.SalesPersonID = salesPerson.Id;
             }

@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.SalesTerritory.GetSalesTerritories;
 using AW.Application.UnitTests.AutoMapper;
 using FluentAssertions;
@@ -23,8 +23,8 @@ namespace AW.Application.UnitTests
                 new Domain.Sales.SalesTerritory { Name = "Northeast"}
             };
 
-            var salesTerritoryRepoMock = new Mock<IAsyncRepository<Domain.Sales.SalesTerritory>>();
-            salesTerritoryRepoMock.Setup(x => x.ListAllAsync())
+            var salesTerritoryRepoMock = new Mock<IRepositoryBase<Domain.Sales.SalesTerritory>>();
+            salesTerritoryRepoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(salesTerritories);
 
             var handler = new GetSalesTerritoriesQueryHandler(

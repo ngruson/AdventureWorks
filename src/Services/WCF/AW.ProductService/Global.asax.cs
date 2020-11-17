@@ -1,8 +1,8 @@
-﻿using Autofac;
+﻿using Ardalis.Specification;
+using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AW.Application.Product.GetProducts;
-using AW.Application.Interfaces;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using System;
@@ -20,7 +20,7 @@ namespace AW.ProductService
             builder.RegisterType<AWContext>();
 
             builder.RegisterGeneric(typeof(EfRepository<>))
-                .As(typeof(IAsyncRepository<>))
+                .As(typeof(IRepositoryBase<>))
                 .InstancePerLifetimeScope();
 
             builder.AddMediatR(typeof(GetProductsQuery).Assembly);

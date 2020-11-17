@@ -1,5 +1,5 @@
 ﻿using AW.Application.Customer.UpdateCustomerAddress;
-using AW.Application.Interfaces;
+using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Application.UnitTests.AutoMapper;
 using AW.Application.UnitTests.TestBuilders;
@@ -19,12 +19,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var address = new AddressBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -44,12 +44,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var address = new AddressBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -71,12 +71,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
                 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -96,12 +96,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var address = new AddressBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -124,12 +124,12 @@ namespace AW.Application.UnitTests
             var customer = new CustomerBuilder().WithTestValues().Build();
             var address = new AddressBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -154,12 +154,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -181,12 +181,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -211,12 +211,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -244,12 +244,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -277,12 +277,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -307,12 +307,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -340,12 +340,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -370,12 +370,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -403,12 +403,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -433,12 +433,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,
@@ -466,12 +466,12 @@ namespace AW.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var customer = new CustomerBuilder().WithTestValues().Build();
 
-            var customerRepoMock = new Mock<IAsyncRepository<Domain.Sales.Customer>>();
-            customerRepoMock.Setup(x => x.FirstOrDefaultAsync(It.IsAny<GetCustomerSpecification>()))
+            var customerRepoMock = new Mock<IRepositoryBase<Domain.Sales.Customer>>();
+            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
                 .ReturnsAsync(customer);
 
-            var addressTypeRepoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            var stateProvinceRepoMock = new Mock<IAsyncRepository<Domain.Person.StateProvince>>();
+            var addressTypeRepoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.Person.StateProvince>>();
 
             var validator = new UpdateCustomerAddressCommandValidator(
                 customerRepoMock.Object,

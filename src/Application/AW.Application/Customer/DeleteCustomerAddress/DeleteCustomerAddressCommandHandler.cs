@@ -1,4 +1,4 @@
-﻿using AW.Application.Interfaces;
+﻿using Ardalis.Specification;
 using AW.Application.Specifications;
 using AW.Domain.Person;
 using MediatR;
@@ -11,14 +11,14 @@ namespace AW.Application.Customer.DeleteCustomerAddress
 {
     public class DeleteCustomerAddressCommandHandler : IRequestHandler<DeleteCustomerAddressCommand, Unit>
     {
-        private readonly IAsyncRepository<Domain.Sales.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
 
-        public DeleteCustomerAddressCommandHandler(IAsyncRepository<Domain.Sales.Customer> customerRepository) =>
+        public DeleteCustomerAddressCommandHandler(IRepositoryBase<Domain.Sales.Customer> customerRepository) =>
             this.customerRepository = customerRepository;
 
         public async Task<Unit> Handle(DeleteCustomerAddressCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.FirstOrDefaultAsync(
+            var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
 

@@ -1,6 +1,6 @@
+using Ardalis.Specification;
 using AW.Application.AddressType.ListAddressTypes;
 using AW.Application.Exceptions;
-using AW.Application.Interfaces;
 using FluentAssertions;
 using Moq;
 using System;
@@ -24,8 +24,8 @@ namespace AW.Application.UnitTests
                 new Domain.Person.AddressType {  Name = "Main Primary"}
             };
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(addressTypes);
 
             var handler = new ListAddressTypesQueryHandler(repoMock.Object);
@@ -43,8 +43,8 @@ namespace AW.Application.UnitTests
             // Arrange
             var addressTypes = new List<Domain.Person.AddressType>();
 
-            var repoMock = new Mock<IAsyncRepository<Domain.Person.AddressType>>();
-            repoMock.Setup(x => x.ListAllAsync())
+            var repoMock = new Mock<IRepositoryBase<Domain.Person.AddressType>>();
+            repoMock.Setup(x => x.ListAsync())
                 .ReturnsAsync(addressTypes);
 
             var handler = new ListAddressTypesQueryHandler(repoMock.Object);
