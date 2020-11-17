@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\AW.Domain\AW.Domain.csproj" />
+    <ProjectReference Include="..\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj" />
     <ProjectReference Include="..\AW.Persistence.EntityFramework\AW.Persistence.EntityFramework.csproj" />
   </ItemGroup>
 
