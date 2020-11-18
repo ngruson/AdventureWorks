@@ -65,7 +65,7 @@ steps:
       $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"  
       $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)  
       "Analyse '$($_.Name)' with output '$outfile'..."  
-      . $env:USERPROFILE\.nuget\packages\microsoft.codecoverage\16.6.1\build  
+      . $env:USERPROFILE\.nuget\packages\microsoft.codecoverage\16.8.0\build  
       etstandard1.0\CodeCoverage\CodeCoverage.exe analyze /output:$output $_.FullName  
       }  
       "Done"
