@@ -31,6 +31,7 @@ steps:
     projectName: 'sonar-adventureworks'
 
 - task: VSBuild@1
+  displayName: 'Build'
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
@@ -38,7 +39,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
+  displayName: 'Test'
   inputs:
     command: 'test'
     projects: '**/*[Tt]ests/*.csproj'
@@ -55,6 +56,20 @@ steps:
   inputs:  
     codeCoverageTool: Cobertura  
     summaryFileLocation: '$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Get-ChildItem -Recurse -Filter "*.coverage" | % {  
+      $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"  
+      $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)  
+      "Analyse '$($_.Name)' with output '$outfile'..."  
+      . $env:USERPROFILE\.nuget\packages\microsoft.codecoverage\16.6.1\build  
+      etstandard1.0\CodeCoverage\CodeCoverage.exe analyze /output:$output $_.FullName  
+      }  
+      "Done"
+    workingDirectory: '$(Agent.TempDirectory)'
 
 - task: SonarCloudAnalyze@1
 
