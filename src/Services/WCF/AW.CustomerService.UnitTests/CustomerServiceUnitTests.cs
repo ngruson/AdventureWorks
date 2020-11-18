@@ -15,19 +15,18 @@ using AW.CustomerService.Messages.UpdateCustomerAddress;
 using AW.CustomerService.Messages.UpdateCustomerContact;
 using FluentAssertions;
 using MediatR;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AW.CustomerService.UnitTests
 {
-    [TestClass]
     public class CustomerServiceUnitTests
     {
-        [TestMethod]
+        [Fact]
         public async Task ListCustomers_ReturnsCustomers()
         {
             //Arrange
@@ -63,7 +62,7 @@ namespace AW.CustomerService.UnitTests
             result.Customers.Customer.Count().Should().Be(2);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetCustomer_ReturnsCustomer()
         {
             //Arrange
@@ -95,7 +94,7 @@ namespace AW.CustomerService.UnitTests
             result.Customer.AccountNumber.Should().Be("AW00000001");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task UpdateCustomer_ReturnsCustomer()
         {
             //Arrange
@@ -127,7 +126,7 @@ namespace AW.CustomerService.UnitTests
             result.Customer.AccountNumber.Should().Be("AW00000001");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task AddCustomerAddress_ReturnsResponse()
         {
             //Arrange
@@ -155,7 +154,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task UpdateCustomerAddress_ReturnsResponse()
         {
             //Arrange
@@ -178,7 +177,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task DeleteCustomerAddress_ReturnsResponse()
         {
             //Arrange
@@ -201,7 +200,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task AddCustomerContact_ReturnsResponse()
         {
             //Arrange
@@ -224,7 +223,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task UpdateCustomerContact_ReturnsResponse()
         {
             //Arrange
@@ -247,7 +246,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task DeleteCustomerContact_ReturnsResponse()
         {
             //Arrange
@@ -270,7 +269,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task AddCustomerContactInfo_ReturnsResponse()
         {
             //Arrange
@@ -293,7 +292,7 @@ namespace AW.CustomerService.UnitTests
             result.Should().NotBeNull();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task DeleteCustomerContactInfo_ReturnsResponse()
         {
             //Arrange
