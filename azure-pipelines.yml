@@ -48,6 +48,14 @@ steps:
       **/AW.Persistence.EntityFramework.UnitTests
       **/AW.Persistence.EntityFrameworkCore.UnitTests
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\AW.CustomerService.UnitTests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - script: 'dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8'  
   displayName: 'Install ReportGenerator tool'
