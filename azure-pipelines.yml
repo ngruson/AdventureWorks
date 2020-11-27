@@ -54,7 +54,7 @@ steps:
     targetType: 'inline'
     script: |
       dotnet tool install --global coverlet.console
-      Get-ChildItem -Recurse -Filter "*AW.CustomerService.UnitTests.dll*" | {
+      Get-ChildItem -Recurse -Filter "*AW.CustomerService.UnitTests.dll*" | % {
         Write-Host "File: $_.FullName"
         coverlet $_.FullName --target "dotnet" --targetargs "vstest $_.FullName" --format "cobertura"
       }
