@@ -49,15 +49,13 @@ steps:
       **/AW.Persistence.EntityFrameworkCore.UnitTests
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
-- task: VSTest@2
+- task: PowerShell@2
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\AW.CustomerService.UnitTests.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    otherConsoleOptions: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+    targetType: 'inline'
+    script: |
+      dotnet tool install --global coverlet.console
+      $unitTestFile = gci -Recurse | ?{ $_.FullName -like "*bin\AW.CustomerService.UnitTests.dll" }
+      coverlet $($unitTestFile.FullName) --target "vstest.console.exe" --targetargs "$($unitTestFile.FullName)" --format "cobertura"
 
 - script: 'dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8'  
   displayName: 'Install ReportGenerator tool'
