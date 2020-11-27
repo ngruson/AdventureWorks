@@ -54,9 +54,10 @@ steps:
     targetType: 'inline'
     script: |
       dotnet tool install --global coverlet.console
-      $unitTestFile = gci -Recurse | ?{ $_.FullName -like "*bin\AW.CustomerService.UnitTests.dll" }
-      Write-Host "File: $unitTestFile"
-      coverlet $($unitTestFile.FullName) --target "dotnet" --targetargs "vstest $($unitTestFile.FullName)" --format "cobertura"
+      Get-ChildItem -Recurse -Filter "AW.CustomerService.UnitTests.dll" | % {
+        Write-Host "File: $_.FullName"
+        coverlet $_.FullName --target "dotnet" --targetargs "vstest $_.FullName" --format "cobertura"
+      }
 
 - script: 'dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8'  
   displayName: 'Install ReportGenerator tool'
