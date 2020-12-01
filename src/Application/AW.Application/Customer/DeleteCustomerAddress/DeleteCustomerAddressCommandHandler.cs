@@ -32,7 +32,8 @@ namespace AW.Application.Customer.DeleteCustomerAddress
                 a => a.AddressType.Name == request.AddressTypeName
             );
 
-            customerAddresses.Remove(customerAddress);
+            if (customerAddresses != null)
+                customerAddresses.Remove(customerAddress);
 
             await customerRepository.UpdateAsync(customer);
             return Unit.Value;

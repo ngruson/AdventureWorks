@@ -50,20 +50,23 @@ namespace AW.Application.Customer.UpdateCustomerAddress
                     a => a.AddressType.Name == request.CustomerAddress.AddressTypeName
                 );
 
-            var existingAddressID = await IsExistingAddress(request.CustomerAddress.Address, stateProvince.Id);
-
-            if (existingAddressID.HasValue)
-                customerAddress.AddressID = existingAddressID.Value;
-            else
+            if (customerAddress != null)
             {
-                customerAddress.Address = mapper.Map<Address>(request.CustomerAddress.Address);
-                customerAddress.Address.StateProvinceID = stateProvince.Id;
+                var existingAddressID = await IsExistingAddress(request.CustomerAddress.Address, stateProvince.Id);
+
+                if (existingAddressID.HasValue)
+                    customerAddress.AddressID = existingAddressID.Value;
+                else
+                {
+                    customerAddress.Address = mapper.Map<Address>(request.CustomerAddress.Address);
+                    customerAddress.Address.StateProvinceID = stateProvince.Id;
+                }
+
+                customerAddress.ModifiedDate = DateTime.Now;
+                customerAddress.rowguid = Guid.NewGuid();
+
+                await customerRepository.UpdateAsync(customer);
             }
-
-            customerAddress.ModifiedDate = DateTime.Now;
-            customerAddress.rowguid = Guid.NewGuid();
-
-            await customerRepository.UpdateAsync(customer);
 
             return Unit.Value;
         }
