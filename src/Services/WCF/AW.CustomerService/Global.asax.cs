@@ -9,7 +9,10 @@ using AW.Persistence.EntityFramework;
 using FluentValidation;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using Microsoft.Azure.Services.AppAuthentication;
 using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Web;
 
 namespace AW.CustomerService
@@ -21,7 +24,14 @@ namespace AW.CustomerService
             var builder = new ContainerBuilder();
 
             builder.RegisterType<CustomerService>();
-            builder.RegisterType<AWContext>();
+
+            var sqlConnection = new SqlConnection
+            {
+                AccessToken = (new AzureServiceTokenProvider())
+                    .GetAccessTokenAsync("https://database.windows.net").Result,
+                ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
+            };
+            builder.RegisterInstance(new AWContext(sqlConnection, true));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
                 .As(typeof(IRepositoryBase<>))

@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace AW.Persistence.EntityFramework
     {
         public AWContext()
             : base("AWContext")
+        {
+        }
+
+        public AWContext(DbConnection existingConnection, bool contextOwnsConnection) 
+            : base(existingConnection, contextOwnsConnection)
         {
         }
 
