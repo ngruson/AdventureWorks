@@ -53,7 +53,13 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             Property(c => c.SalesTerritoryID)
               .HasColumnName("TerritoryID");
 
-            //HasMany<SalesOrderDetail>(soh => soh.OrderLines);
+            HasMany(soh => soh.OrderLines)
+                .WithRequired(e => e.SalesOrder)
+                .HasForeignKey(e => e.SalesOrderID);
+
+            HasMany(soh => soh.SalesReasons)
+                .WithRequired(sr => sr.SalesOrder)
+                .HasForeignKey(e => e.SalesOrderID);
         }
     }
 }

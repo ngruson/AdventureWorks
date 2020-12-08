@@ -12,6 +12,7 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
             HasKey(sod => new { sod.SalesOrderID, sod.SalesOrderDetailID });
 
             Property(sod => sod.SalesOrderID)
+                .HasColumnName("SalesOrderID")
                 .HasColumnOrder(0)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

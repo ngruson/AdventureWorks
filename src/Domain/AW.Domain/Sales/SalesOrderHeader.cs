@@ -75,6 +75,6 @@ namespace AW.Domain.Sales
 
         public virtual SalesPerson SalesPerson { get; set; }
 
-        public virtual ICollection<SalesOrderHeaderSalesReason> SalesOrderHeaderSalesReasons { get; set; } = new List<SalesOrderHeaderSalesReason>();
+        public virtual ICollection<SalesOrderHeaderSalesReason> SalesReasons { get; set; } = new List<SalesOrderHeaderSalesReason>();
     }
 }

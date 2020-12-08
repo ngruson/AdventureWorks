@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SpecialOfferConfiguration()
         {
             ToTable("Sales.SpecialOffer");
+            HasKey(so => so.Id);
+
+            Property(sp => sp.Id)
+                .HasColumnName("SpecialOfferID");
 
             Property(so => so.Description)
                 .IsRequired()

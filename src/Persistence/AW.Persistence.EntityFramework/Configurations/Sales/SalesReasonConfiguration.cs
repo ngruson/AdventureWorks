@@ -8,6 +8,10 @@ namespace AW.Persistence.EntityFramework.Configurations.Sales
         public SalesReasonConfiguration()
         {
             ToTable("Sales.SalesReason");
+            HasKey(sr => sr.Id);
+
+            Property(sr => sr.Id)
+                .HasColumnName("SalesReasonID");
 
             Property(sr => sr.Name)
                 .IsRequired()

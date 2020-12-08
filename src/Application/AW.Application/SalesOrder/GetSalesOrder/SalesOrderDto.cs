@@ -60,7 +60,7 @@ namespace AW.Application.SalesOrder.GetSalesOrder
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => src.SalesPerson != null ? src.SalesPerson.FullName : null))
                 .ForMember(m => m.Territory, opt => opt.MapFrom(src => src.SalesTerritory != null ? src.SalesTerritory.Name : null))
                 .ForMember(m => m.OrderLines, opt => opt.MapFrom(src => src.OrderLines))
-                .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesOrderHeaderSalesReasons
+                .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
                     .Select(r => r.SalesReason)));
         }
     }

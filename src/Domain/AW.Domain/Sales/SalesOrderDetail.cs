@@ -7,6 +7,7 @@ namespace AW.Domain.Sales
         public int SalesOrderID { get; set; }
         public int SalesOrderDetailID { get; set; }
 
+        public SalesOrderHeader SalesOrder { get; set; }
         public string CarrierTrackingNumber { get; set; }
 
         public short OrderQty { get; set; }

@@ -4,7 +4,10 @@ using Autofac.Integration.Wcf;
 using AW.Application.Country.ListCountries;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using Microsoft.Azure.Services.AppAuthentication;
 using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Web;
 
 namespace AW.CountryService
@@ -14,9 +17,15 @@ namespace AW.CountryService
         protected void Application_Start(object sender, EventArgs e)
         {
             var builder = new ContainerBuilder();
-
             builder.RegisterType<CountryService>();
-            builder.RegisterType<AWContext>();
+
+            var sqlConnection = new SqlConnection
+            {
+                AccessToken = (new AzureServiceTokenProvider())
+                    .GetAccessTokenAsync("https://database.windows.net").Result,
+                ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
+            };
+            builder.RegisterInstance(new AWContext(sqlConnection, true));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
                 .As(typeof(IRepositoryBase<>))
