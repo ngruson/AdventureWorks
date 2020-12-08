@@ -31,4 +31,9 @@ steps:
     command: 'test'
     projects: |
       **/AW.Domain.UnitTests.csproj
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
+    arguments: '--configuration $(BuildConfiguration)'
+  
+- task: NuGetCommand@2
+  inputs:
+      command: pack
+      packagesToPack: '**/AW.Domain.csproj'
