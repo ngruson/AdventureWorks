@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {
+        "planName": "plan-adventureworks"
+    },
+    "resources": [
+        {
+            "name": "[variables('planName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "F1",
+                "capacity": 1
+            },
+            "tags": {
+                "displayName": "[variables('planName')]"
+            },
+            "properties": {
+                "name": "[variables('planName')]"
+            }
+        }
+    ],
+    "outputs": {
+        "planName": {
+            "type": "string",
+            "value": "[variables('planName')]"
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "planName": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, concat('/providers/Microsoft.Web/serverfarms/', parameters('planName')))]": "Resource",
+                "displayName": "[parameters('name')]"
+            },
+            "properties": {
+                "name": "[parameters('name')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('planName'))]",
+                "httpsOnly": true
+            }
+        }
+    ],
+    "outputs": {}
+}
