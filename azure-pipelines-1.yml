@@ -17,6 +17,8 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+    feedsToUse: select
+    vstsFeed: 'AdventureWorks/AdventureWorksFeed'
 
 - task: VSBuild@1
   inputs:
