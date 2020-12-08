@@ -18,6 +18,22 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'ngruson'
+    scannerMode: 'MSBuild'
+    projectKey: 'sonar-adventureworks'
+    projectName: 'sonar-adventureworks'
+  
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: 'test'
+    projects: |
+      **/AW.Domain.UnitTests.csproj
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -29,3 +45,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
