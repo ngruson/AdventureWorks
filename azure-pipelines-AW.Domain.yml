@@ -44,5 +44,5 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    publishVstsFeed: 'https://pkgs.dev.azure.com/ngruson/AdventureWorks/_packaging/AdventureWorksFeed/nuget/v3/index.json'
+    publishVstsFeed: 'AdventureWorks/AdventureWorksFeed'
     allowPackageConflicts: true
