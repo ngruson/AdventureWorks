@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\AW.Application.UnitTests\AW.Application.UnitTests.csproj" />
     <ProjectReference Include="..\AW.Domain\AW.Domain.csproj" />
   </ItemGroup>
 
