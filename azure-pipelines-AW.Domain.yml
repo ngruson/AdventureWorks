@@ -7,7 +7,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: '**/AW.Domain.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
