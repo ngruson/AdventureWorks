@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "wcf-services": {
+            "type": "array",
+            "defaultValue": [
+                "app-adventureworks-wcf-addresstypeservice",
+                "app-adventureworks-wcf-contacttypeservice",
+                "app-adventureworks-wcf-countryservice",
+                "app-adventureworks-wcf-customerservice",
+                "app-adventureworks-wcf-productservice",
+                "app-adventureworks-wcf-salesorderservice",
+                "app-adventureworks-wcf-salespersonservice",
+                "app-adventureworks-wcf-salesterritoryservice",
+                "app-adventureworks-wcf-stateprovinceservice"
+            ]
+        }
+    },
+    "functions": [],
+    "variables": {
+        "templateLocation": "https://raw.githubusercontent.com/ngruson/AdventureWorks/master/ARM%20templates",
+        "plan-linked-template": "/arm-plan-adventureworks.json",
+        "app-linked-template": "/arm-app-adventureworks.json"
+    },
+    "resources": [
+        {
+            "name": "plan-adventureworks",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateLocation'), variables('plan-linked-template'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+        {
+            "name": "[parameters('wcf-services')[copyIndex()]]",
+            "copy": {
+                "name": "wcf-service-copy",
+                "count": "[length(parameters('wcf-services'))]"
+            },
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'plan-adventureworks')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateLocation'), variables('app-linked-template'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "name": { "value": "[toLower(parameters('wcf-services')[copyIndex()])]" },
+                    "planName": { "value": "[reference('plan-adventureworks').outputs.planName.value]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
