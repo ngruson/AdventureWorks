@@ -37,3 +37,12 @@ steps:
   inputs:
       command: pack
       packagesToPack: '**/AW.Domain.csproj'
+
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: 'https://pkgs.dev.azure.com/ngruson/AdventureWorks/_packaging/AdventureWorksFeed/nuget/v3/index.json'
+    allowPackageConflicts: true
