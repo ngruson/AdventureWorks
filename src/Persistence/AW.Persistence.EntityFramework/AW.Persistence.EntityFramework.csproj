@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AW.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AW.Domain.1.0.0\lib\netstandard2.0\AW.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -128,10 +131,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Domain\AW.Domain\AW.Domain.csproj">
-      <Project>{5d05073c-31bc-41a9-a707-27864165eb7c}</Project>
-      <Name>AW.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
       <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
       <Name>Ardalis.Specification.EntityFramework</Name>
