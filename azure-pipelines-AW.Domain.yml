@@ -25,14 +25,6 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'sonar-adventureworks'
     projectName: 'sonar-adventureworks'
-  
-- task: DotNetCoreCLI@2
-  displayName: 'Test'
-  inputs:
-    command: 'test'
-    projects: |
-      **/AW.Domain.UnitTests.csproj
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
 - task: VSBuild@1
   inputs:
@@ -41,10 +33,13 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    projects: |
+      **/AW.Domain.UnitTests.csproj
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
 - task: SonarCloudAnalyze@1
 
