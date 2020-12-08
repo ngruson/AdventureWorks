@@ -25,7 +25,24 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    projects: |
+      **/AW.Domain.UnitTests.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+  
+- task: NuGetCommand@2
+  inputs:
+      command: pack
+      packagesToPack: '**/AW.Domain.csproj'
+
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: 'AdventureWorks/AdventureWorksFeed'
+    allowPackageConflicts: true
