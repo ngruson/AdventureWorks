@@ -1,5 +1,4 @@
-﻿using AW.Application.UnitTests.TestBuilders;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace AW.Domain.UnitTests
@@ -10,7 +9,12 @@ namespace AW.Domain.UnitTests
         public void PersonFullName_PersonWithMiddleName()
         {
             //Arrange
-            var person = new PersonBuilder().WithTestValues().Build();
+            var person = new Person.Person
+            {
+                FirstName = "Orlando",
+                MiddleName = "N.",
+                LastName = "Gee"
+            };
 
             //Act
             string personName = person.FullName;
@@ -23,8 +27,11 @@ namespace AW.Domain.UnitTests
         public void PersonFullName_PersonWithoutMiddleName()
         {
             //Arrange
-            var person = new PersonBuilder().WithTestValues().Build();
-            person.MiddleName = "";
+            var person = new Person.Person
+            {
+                FirstName = "Orlando",
+                LastName = "Gee"
+            };
 
             //Act
             string personName = person.FullName;
@@ -37,9 +44,10 @@ namespace AW.Domain.UnitTests
         public void PersonFullName_PersonFirstNameOnly()
         {
             //Arrange
-            var person = new PersonBuilder().WithTestValues().Build();
-            person.MiddleName = "";
-            person.LastName = "";
+            var person = new Person.Person
+            {
+                FirstName = "Orlando"
+            };
 
             //Act
             string personName = person.FullName;
