@@ -21,7 +21,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-    packagesdirectory: '..\packages'
+    #packagesdirectory: '..\packages'
     feedsToUse: select
     vstsFeed: 'AdventureWorks/AdventureWorksFeed'
     
