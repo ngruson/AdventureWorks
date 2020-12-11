@@ -4,7 +4,7 @@ namespace AW.Domain.Sales
 {
     public partial class SalesReason
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
 
         public string Name { get; set; }
 

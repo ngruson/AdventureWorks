@@ -1,10 +1,12 @@
-﻿using System;
+﻿using AW.Domain.Sales;
+using System;
+using System.Collections.Generic;
 
 namespace AW.Application.UnitTests.TestBuilders
 {
     public class SalesOrderBuilder
     {
-        private Domain.Sales.SalesOrderHeader salesOrder = new Domain.Sales.SalesOrderHeader();
+        private SalesOrderHeader salesOrder = new SalesOrderHeader();
 
         public SalesOrderBuilder Id(int id)
         {
@@ -164,21 +166,66 @@ namespace AW.Application.UnitTests.TestBuilders
                 PurchaseOrderNumber = "PO522145787",
                 AccountNumber = "10-4020-000676",
                 Customer = new CustomerBuilder().WithTestValues().Build(),
+                CustomerID = new Random().Next(),
                 SalesPerson = new SalesPersonBuilder().WithTestValues().Build(),
+                SalesPersonID = new Random().Next(),
                 SalesTerritory = new SalesTerritoryBuilder().WithTestValues().Build(),
+                SalesTerritoryID = new Random().Next(),
                 BillToAddress = new AddressBuilder().WithTestValues().Build(),
+                BillToAddressID = new Random().Next(),
                 ShipToAddress = new AddressBuilder().WithTestValues().Build(),
+                ShipMethodID = new Random().Next(),
                 ShipMethod = new ShipMethodBuilder().WithTestValues().Build(),
                 CreditCard = new CreditCardBuilder().WithTestValues().Build(),
+                CreditCardID = new Random().Next(),
                 CreditCardApprovalCode = "105041Vi84182",
                 CurrencyRate = new CurrencyRateBuilder().WithTestValues().Build(),
+                CurrencyRateID = new Random().Next(),
                 SubTotal = 20565.6206M,
                 TaxAmt = 1971.5149M,
                 Freight = 616.0984M,
-                TotalDue = 23153.2339M
+                TotalDue = 23153.2339M,
+                Comment = "Comment",
+                rowguid = Guid.NewGuid(),
+                ModifiedDate = DateTime.Now,
+                OrderLines = CreateOrderLines(),
+                SalesReasons = CreateSalesReasons()
             };
 
             return this;
+        }
+
+        private ICollection<SalesOrderDetail> CreateOrderLines()
+        {
+            return new List<SalesOrderDetail>
+            {
+                new SalesOrderDetail
+                {
+                    SalesOrderID = 43659,
+                    SalesOrderDetailID = 1,
+                    CarrierTrackingNumber = "4911-403C-98",
+                    OrderQty = 1,
+                    ProductID = 776,
+                    SpecialOfferID = 1,
+                    UnitPrice = 2024.994M,
+                    LineTotal = 2024.994M,
+                    rowguid = Guid.NewGuid(),
+                    ModifiedDate = DateTime.Now,
+                    SpecialOfferProduct = new SpecialOfferProductBuilder().WithTestValues().Build()
+                }
+            };
+        }
+
+        private ICollection<SalesOrderHeaderSalesReason> CreateSalesReasons()
+        {
+            return new List<SalesOrderHeaderSalesReason>
+            {
+                new SalesOrderHeaderSalesReasonBuilder()
+                    .SalesOrderID(43659)
+                    .SalesReasonID(5)
+                    .SalesReason(new SalesReasonBuilder().WithTestValues().Build())
+                    .Build()
+            };
         }
     }
 }
