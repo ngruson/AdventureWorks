@@ -201,13 +201,15 @@ namespace AW.Application.UnitTests.TestBuilders
             {
                 new SalesOrderDetail
                 {
-                    SalesOrderID = 43659,
+                    SalesOrderID = salesOrder.Id,
+                    SalesOrder = salesOrder,
                     SalesOrderDetailID = 1,
                     CarrierTrackingNumber = "4911-403C-98",
                     OrderQty = 1,
                     ProductID = 776,
                     SpecialOfferID = 1,
                     UnitPrice = 2024.994M,
+                    UnitPriceDiscount = 0,
                     LineTotal = 2024.994M,
                     rowguid = Guid.NewGuid(),
                     ModifiedDate = DateTime.Now,
