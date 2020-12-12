@@ -29,6 +29,12 @@ namespace AW.Application.UnitTests.TestBuilders
             return this;
         }
 
+        public SalesReasonBuilder ModifiedDate(DateTime modifiedDate)
+        {
+            salesReason.ModifiedDate = modifiedDate;
+            return this;
+        }
+
         public SalesReasonBuilder WithTestValues()
         {
             salesReason = new Domain.Sales.SalesReason

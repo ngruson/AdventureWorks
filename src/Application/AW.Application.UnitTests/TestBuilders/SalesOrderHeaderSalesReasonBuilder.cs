@@ -1,4 +1,6 @@
-﻿namespace AW.Application.UnitTests.TestBuilders
+﻿using System;
+
+namespace AW.Application.UnitTests.TestBuilders
 {
     public class SalesOrderHeaderSalesReasonBuilder
     {
@@ -34,8 +36,10 @@
                 SalesOrderID = 43659,
                 SalesReasonID = 5,
                 SalesReason = new SalesReasonBuilder()
+                    .Id(1)
                     .Name("Price")
                     .ReasonType("Other")
+                    .ModifiedDate(DateTime.Now)
                     .Build()
             };
 
