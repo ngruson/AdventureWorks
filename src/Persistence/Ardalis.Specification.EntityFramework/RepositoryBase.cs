@@ -11,13 +11,13 @@ namespace Ardalis.Specification.EntityFramework
         private readonly DbContext dbContext;
         private readonly ISpecificationEvaluator<T> specificationEvaluator;
 
-        public RepositoryBase(DbContext dbContext)
+        protected RepositoryBase(DbContext dbContext)
         {
             this.dbContext = dbContext;
             this.specificationEvaluator = new SpecificationEvaluator<T>();
         }
 
-        public RepositoryBase(DbContext dbContext, ISpecificationEvaluator<T> specificationEvaluator)
+        protected RepositoryBase(DbContext dbContext, ISpecificationEvaluator<T> specificationEvaluator)
         {
             this.dbContext = dbContext;
             this.specificationEvaluator = specificationEvaluator;

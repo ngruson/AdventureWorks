@@ -1,3 +1,4 @@
+using Ardalis.Specification.EntityFramework;
 using AW.Domain.Person;
 using AW.Persistence.EntityFramework.UnitTests.Mocking;
 using AW.Persistence.EntityFramework.UnitTests.Specifications;
@@ -46,6 +47,30 @@ namespace AW.Persistence.EntityFramework.UnitTests
             mockContext.Setup(x => x.Set<Person>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            var person = await repository.GetByIdAsync(1);
+
+            //Assert
+            person.FirstName.Should().Be("Ken");
+        }
+
+        [Fact]
+        public async void GetByIdAsync_WithSpecificationEvaluator_ReturnsObject()
+        {
+            //Arrange
+            var mockSet = new Mock<DbSet<Person>>();
+            mockSet.Setup(x => x.FindAsync(It.IsAny<int>()))
+                .ReturnsAsync(
+                    new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" }
+                );
+
+            var mockContext = new Mock<AWContext>();
+            mockContext.Setup(x => x.Set<Person>())
+                .Returns(mockSet.Object);
+            var repository = new EfRepository<Person>(mockContext.Object, 
+                new SpecificationEvaluator<Person>()
+            );
 
             //Act
             var person = await repository.GetByIdAsync(1);

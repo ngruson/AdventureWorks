@@ -8,6 +8,7 @@ namespace AW.Application.SalesOrder.GetSalesOrder
     {
         public string Name { get; set; }
         public string ReasonType { get; set; }
+        public string ModifiedDate { get; set; }
 
         public void Mapping(Profile profile)
         {
