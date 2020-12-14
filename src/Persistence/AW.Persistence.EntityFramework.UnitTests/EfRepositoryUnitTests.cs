@@ -56,24 +56,47 @@ namespace AW.Persistence.EntityFramework.UnitTests
         }
 
         [Fact]
-        public async void GetByIdAsync_WithSpecificationEvaluator_ReturnsObject()
+        public async void GetByIdAsync_WithStringId_ReturnsObject()
         {
             //Arrange
-            var mockSet = new Mock<DbSet<Person>>();
-            mockSet.Setup(x => x.FindAsync(It.IsAny<int>()))
+            var mockSet = new Mock<DbSet<CountryRegion>>();
+            mockSet.Setup(x => x.FindAsync(It.IsAny<string>()))
                 .ReturnsAsync(
-                    new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" }
+                    new CountryRegion { CountryRegionCode = "US", Name = "United States" }
                 );
+
+            var mockContext = new Mock<AWContext>();
+            mockContext.Setup(x => x.Set<CountryRegion>())
+                .Returns(mockSet.Object);
+            var repository = new EfRepository<CountryRegion>(mockContext.Object);
+
+            //Act
+            var countryRegion = await repository.GetByIdAsync("US");
+
+            //Assert
+            countryRegion.CountryRegionCode.Should().Be("US");
+            countryRegion.Name.Should().Be("United States");
+        }
+
+        [Fact]
+        public async void GetBySpecAsync_ReturnsObject()
+        {
+            //Arrange
+            var persons = new List<Person>
+            {
+                new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" },
+                new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" }
+            };
+            var mockSet = GetQueryableMockDbSet(persons);
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Person>())
                 .Returns(mockSet.Object);
-            var repository = new EfRepository<Person>(mockContext.Object, 
-                new SpecificationEvaluator<Person>()
-            );
+            var repository = new EfRepository<Person>(mockContext.Object);
 
             //Act
-            var person = await repository.GetByIdAsync(1);
+            var spec = new GetPersonByIdSpecification(1);
+            var person = await repository.GetBySpecAsync(spec);
 
             //Assert
             person.FirstName.Should().Be("Ken");
@@ -125,6 +148,31 @@ namespace AW.Persistence.EntityFramework.UnitTests
 
             //Assert
             list.Count.Should().Be(2);
+        }
+
+        [Fact]
+        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        {
+            //Arrange
+            var persons = new List<Person>
+            {
+                new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" },
+                new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" },
+                new Person { Id = 3, FirstName = "Angela", MiddleName = "C", LastName = "Sánchez" }
+            };
+            var mockSet = GetQueryableMockDbSet(persons);
+
+            var mockContext = new Mock<AWContext>();
+            mockContext.Setup(x => x.Set<Person>())
+                .Returns(mockSet.Object);
+            var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            var spec = new GetPersonsLastNameSpecification();
+            var list = await repository.ListAsync(spec);
+
+            //Assert
+            list.Count.Should().Be(3);
         }
 
         [Fact]
@@ -225,6 +273,56 @@ namespace AW.Persistence.EntityFramework.UnitTests
 
             //Assert
             person.FirstName.Should().Be("Ken");
+        }
+
+        [Fact]
+        public async void DeleteAsync_ReturnsObject()
+        {
+            //Arrange
+            var person1 = new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" };
+            var person2 = new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" };
+            var persons = new List<Person>
+            {
+                person1,                
+                person2
+            };
+            var mockSet = GetQueryableMockDbSet(persons);
+
+            var mockContext = new Mock<AWContext>();
+            mockContext.Setup(x => x.Set<Person>())
+                .Returns(mockSet.Object);
+            var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            await repository.DeleteAsync(person1);
+
+            //Assert
+            mockContext.Verify(x => x.SaveChangesAsync());
+        }
+
+        [Fact]
+        public async void DeleteRangeAsync_ReturnsObject()
+        {
+            //Arrange
+            var person1 = new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" };
+            var person2 = new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" };
+            var persons = new List<Person>
+            {
+                person1,
+                person2
+            };
+            var mockSet = GetQueryableMockDbSet(persons);
+
+            var mockContext = new Mock<AWContext>();
+            mockContext.Setup(x => x.Set<Person>())
+                .Returns(mockSet.Object);
+            var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            await repository.DeleteRangeAsync(persons);
+
+            //Assert
+            mockContext.Verify(x => x.SaveChangesAsync());
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using AutoMapper;
 using AW.UI.Web.Internal.AddressTypeService;
 using AW.UI.Web.Internal.ContactTypeService;
@@ -57,7 +56,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<IAddressTypeService>(provider =>
             {
                 var client = new AddressTypeServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["AddressTypeService:EndpointAddress"])
                 );
 
@@ -66,7 +65,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<IContactTypeService>(provider =>
             {
                 var client = new ContactTypeServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["ContactTypeService:EndpointAddress"])
                 );
 
@@ -75,7 +74,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICountryService>(provider =>
             {
                 var client = new CountryServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["CountryService:EndpointAddress"])
                 );
 
@@ -84,7 +83,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICustomerService>(provider =>
             {
                 var client = new CustomerServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["CustomerService:EndpointAddress"])
                 );
 
@@ -93,7 +92,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ISalesOrderService>(provider =>
             {
                 var client = new SalesOrderServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesOrderService:EndpointAddress"])
                 );
 
@@ -102,7 +101,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ISalesPersonService>(provider =>
             {
                 var client = new SalesPersonServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesPersonService:EndpointAddress"])
                 );
 
@@ -111,7 +110,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ISalesTerritoryService>(provider =>
             {
                 var client = new SalesTerritoryServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["SalesTerritoryService:EndpointAddress"])
                 );
 
@@ -120,7 +119,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<IStateProvinceService>(provider =>
             {
                 var client = new StateProvinceServiceClient(
-                    new BasicHttpBinding { MaxReceivedMessageSize = int.MaxValue },
+                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
                     new EndpointAddress(Configuration["StateProvinceService:EndpointAddress"])
                 );
 

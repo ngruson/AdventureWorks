@@ -50,6 +50,7 @@ steps:
       **/AW.Domain.UnitTests.csproj
       **/AW.Persistence.EntityFramework.UnitTests
       **/AW.Persistence.EntityFrameworkCore.UnitTests
+      **/AW.UI.Web.Internal.UnitTests.csproj
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
 - task: PowerShell@2

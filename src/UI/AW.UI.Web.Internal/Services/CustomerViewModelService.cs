@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
 using AW.UI.Web.Internal.AddressTypeService;
 using AW.UI.Web.Internal.ContactTypeService;
 using AW.UI.Web.Internal.CountryService;
@@ -32,7 +33,7 @@ namespace AW.UI.Web.Internal.Services
         private readonly IStateProvinceService stateProvinceService;
 
         public CustomerViewModelService(
-            ILoggerFactory loggerFactory,
+            ILogger<CustomerViewModelService> logger,
             IMapper mapper,
             IAddressTypeService addressTypeService,
             IContactTypeService contactTypeService,
@@ -42,7 +43,7 @@ namespace AW.UI.Web.Internal.Services
             ISalesPersonService salesPersonService,
             IStateProvinceService stateProvinceService)
         {
-            logger = loggerFactory.CreateLogger<CustomerViewModelService>();
+            this.logger = logger;
             this.mapper = mapper;
             this.addressTypeService = addressTypeService;
             this.contactTypeService = contactTypeService;
@@ -228,8 +229,9 @@ namespace AW.UI.Web.Internal.Services
         public async Task UpdateStore(CustomerViewModel viewModel)
         {
             logger.LogInformation("UpdateStore called");
+            Guard.Against.Null(viewModel.Store, nameof(viewModel.Store));
 
-            if (!string.IsNullOrEmpty(viewModel.Store.SalesPerson.FullName))
+            if (!string.IsNullOrEmpty(viewModel.Store.SalesPerson?.FullName))
             {
                 var salesPersonResponse = await salesPersonService.GetSalesPersonAsync(new GetSalesPersonRequest 
                     { FullName = viewModel.Store.SalesPerson.FullName }
@@ -584,6 +586,17 @@ namespace AW.UI.Web.Internal.Services
             return vm;
         }
 
+        public async Task AddContactInformation(EditCustomerContactInfoViewModel viewModel)
+        {
+            logger.LogInformation("AddContactInformation called");
+
+            var request = mapper.Map<AddCustomerContactInfoRequest>(viewModel);
+
+            logger.LogInformation("Calling AddCustomerContactInfo operation of Customer web service");
+            await customerService.AddCustomerContactInfoAsync(request);
+            logger.LogInformation("Contact successfully added");
+        }
+
         private IEnumerable<SelectListItem> GetContactInfoChannelTypes()
         {
             logger.LogInformation("GetContactInfoChannelTypes called.");
@@ -602,18 +615,7 @@ namespace AW.UI.Web.Internal.Services
             items.Insert(0, allItem);
 
             return items;
-        }
-
-        public async Task AddContactInformation(EditCustomerContactInfoViewModel viewModel)
-        {
-            logger.LogInformation("AddContactInformation called");
-
-            var request = mapper.Map<AddCustomerContactInfoRequest>(viewModel);
-
-            logger.LogInformation("Calling AddCustomerContactInfo operation of Customer web service");
-            await customerService.AddCustomerContactInfoAsync(request);
-            logger.LogInformation("Contact successfully added");
-        }
+        }        
 
         public async Task<DeleteCustomerContactInfoViewModel> GetCustomerContactInformationForDelete(string accountNumber, ContactInfoChannelTypeViewModel channel, string value)
         {

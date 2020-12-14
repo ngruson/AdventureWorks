@@ -18,6 +18,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
+            profile.CreateMap<EditCustomerAddressViewModel, CustomerAddress2>();
             profile.CreateMap<EditCustomerAddressViewModel, UpdateCustomerAddressRequest>()
                 .ForMember(m => m.CustomerAddress, opt => opt.MapFrom(src => src.CustomerAddressViewModel));
         }

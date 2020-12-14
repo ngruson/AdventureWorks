@@ -11,6 +11,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
