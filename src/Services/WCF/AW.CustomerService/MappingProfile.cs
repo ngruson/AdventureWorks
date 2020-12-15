@@ -10,9 +10,9 @@ namespace AW.CustomerService
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-            CreateMap<UpdateCustomer, Application.Customer.UpdateCustomer.CustomerDto>();
-            CreateMap<UpdateStore, Application.Customer.UpdateCustomer.StoreCustomerDto>();
-            CreateMap<UpdatePerson, Application.Customer.UpdateCustomer.PersonCustomerDto>();
+            //CreateMap<UpdateCustomer, Application.Customer.UpdateCustomer.CustomerDto>();
+            //CreateMap<UpdateStore, Application.Customer.UpdateCustomer.StoreCustomerDto>();
+            //CreateMap<UpdatePerson, Application.Customer.UpdateCustomer.PersonCustomerDto>();
         }
     }
 }

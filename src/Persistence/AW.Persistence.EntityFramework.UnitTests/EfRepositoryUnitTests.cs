@@ -4,10 +4,12 @@ using AW.Persistence.EntityFramework.UnitTests.Mocking;
 using AW.Persistence.EntityFramework.UnitTests.Specifications;
 using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Persistence.EntityFramework.UnitTests
@@ -173,6 +175,37 @@ namespace AW.Persistence.EntityFramework.UnitTests
 
             //Assert
             list.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ListAsync_WithNullResultSpec_ThrowsArgumentNullException()
+        {
+            //Arrange
+            var mockContext = new Mock<AWContext>();
+            var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            Func<Task> func = async () => await repository.ListAsync<string>(null);
+
+            //Assert
+            func.Should().Throw<ArgumentNullException>()
+                .WithMessage("Specification is required (Parameter 'specification')");
+        }
+
+        [Fact]
+        public void ListAsync_WithResultSpecWithoutSelector_ThrowsArgumentNullException()
+        {
+            //Arrange
+            var mockContext = new Mock<AWContext>();
+            var repository = new EfRepository<Person>(mockContext.Object);
+
+            //Act
+            var spec = new GetPersonsLastNameWithoutSelectorSpecification();
+            Func<Task> func = async () => await repository.ListAsync<string>(spec);
+
+            //Assert
+            func.Should().Throw<ArgumentNullException>()
+                .WithMessage("Specification must have Selector defined (Parameter 'specification')");
         }
 
         [Fact]

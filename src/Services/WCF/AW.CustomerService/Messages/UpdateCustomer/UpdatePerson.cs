@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Application.AutoMapper;
-using AW.Application.Customer.GetCustomers;
+using AW.Application.Customer.UpdateCustomer;
 
 namespace AW.CustomerService.Messages.UpdateCustomer
 {
@@ -16,8 +16,9 @@ namespace AW.CustomerService.Messages.UpdateCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<PersonCustomerDto, Person>();
-            profile.CreateMap<PersonCustomerDto, UpdatePerson>();
+            profile.CreateMap<UpdatePerson, PersonCustomerDto>()
+                .ForMember(m => m.Addresses, opt => opt.Ignore())
+                .ForMember(m => m.ContactInfo, opt => opt.Ignore());
         }
     }
 }

@@ -12,8 +12,8 @@ namespace AW.CustomerService.Messages.UpdateCustomerContact
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EmailAddressDto, EmailAddress>()
-                .ForMember(m => m.EmailAddress1, opt => opt.MapFrom(src => src.EmailAddress));
+            profile.CreateMap<EmailAddress, EmailAddressDto>()
+                .ForMember(m => m.EmailAddress, opt => opt.MapFrom(src => src.EmailAddress1));
         }
     }
 }

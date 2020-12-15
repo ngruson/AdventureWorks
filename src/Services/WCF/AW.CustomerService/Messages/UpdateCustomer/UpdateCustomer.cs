@@ -13,7 +13,9 @@ namespace AW.CustomerService.Messages.UpdateCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerDto, UpdateCustomer>();
+            profile.CreateMap<UpdateCustomer, CustomerDto>()
+                .ForMember(m => m.SalesOrders, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }
