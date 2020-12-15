@@ -1,7 +1,6 @@
 ﻿using AW.Domain.Sales;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using System.Data.OleDb;
 
 namespace AW.Persistence.EntityFramework.Configurations.Sales
 {

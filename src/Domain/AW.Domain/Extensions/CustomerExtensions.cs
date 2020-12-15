@@ -15,8 +15,13 @@
 
         public static CustomerType GetCustomerType(this Customer customer)
         {
-            return customer.Person != null && customer.Store == null ? CustomerType.Individual :
-                customer.Store != null ? CustomerType.Store : default;
+            if ((customer.Person != null) && (customer.Store == null))
+                return CustomerType.Individual;
+
+            if (customer.Store != null)
+                return CustomerType.Store;
+
+            return default;
         }
     }
 }

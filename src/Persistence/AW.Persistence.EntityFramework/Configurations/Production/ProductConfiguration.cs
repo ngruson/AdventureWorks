@@ -62,10 +62,6 @@ namespace AW.Persistence.EntityFramework.Configurations.Production
             Property(e => e.Style)
                 .HasMaxLength(2);
 
-            //HasMany(e => e.BillOfMaterials);
-
-            //HasMany(e => e.ProductProductPhoto);
-
             HasMany(e => e.ProductReview)
                 .WithRequired(e => e.Product)
                 .WillCascadeOnDelete(false);

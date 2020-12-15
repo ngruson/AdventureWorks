@@ -1,6 +1,4 @@
-﻿using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {

@@ -20,9 +20,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
             builder.Property(c => c.StoreID)
                 .HasColumnName("StoreID");
 
-            //builder.Property(c => c.SalesTerritoryID)
-              //  .HasColumnName("TerritoryID");
-
             builder.HasMany(e => e.SalesOrders)
                 .WithOne(e => e.Customer)
                 .OnDelete(DeleteBehavior.SetNull);

@@ -1,6 +1,6 @@
 ﻿namespace AW.CustomerService.Messages.ListCustomers
 {
-    public enum EmailPromotion : int
+    public enum EmailPromotion
     {
         NoPromotions = 0,
         AWPromotions = 1,

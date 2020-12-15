@@ -47,11 +47,11 @@ namespace AW.UI.Web.Internal
 
         private static string LookupResource(Type resourceManagerProvider, string resourceKey)
         {
-            foreach (PropertyInfo staticProperty in resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public))
+            foreach (var staticProperty in resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.Public))
             {
                 if (staticProperty.PropertyType == typeof(System.Resources.ResourceManager))
                 {
-                    System.Resources.ResourceManager resourceManager = (System.Resources.ResourceManager)staticProperty.GetValue(null, null);
+                    var resourceManager = (System.Resources.ResourceManager)staticProperty.GetValue(null, null);
                     return resourceManager.GetString(resourceKey);
                 }
             }

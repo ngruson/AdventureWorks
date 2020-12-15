@@ -54,18 +54,38 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesOrderService.SalesOrder, SalesOrderViewModel>()
-                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"))
-                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.PurchaseOrderNumber) ? src.PurchaseOrderNumber : "-"))
-                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.SalesPerson) ? src.SalesPerson : "-"));
+                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
+                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));
 
             profile.CreateMap<SalesOrderService.SalesOrder1, SalesOrderViewModel>()
-                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"))
-                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.PurchaseOrderNumber) ? src.PurchaseOrderNumber : "-"))
-                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.SalesPerson) ? src.SalesPerson : "-"));
+                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
+                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));
+        }
+
+        private string MapOnlineOrderFlag(bool onlineOrderFlag)
+        {
+            if (onlineOrderFlag)
+                return "Yes";
+
+            return "No";
+        }
+
+        private string MapPurchaseOrderNumber(string purchaseOrderNumber)
+        {
+            if (!string.IsNullOrEmpty(purchaseOrderNumber))
+                return purchaseOrderNumber;
+
+            return "-";
+        }
+
+        private string MapSalesPerson(string salesPerson)
+        {
+            if (!string.IsNullOrEmpty(salesPerson))
+                return salesPerson;
+
+            return "-";
         }
     }
 }

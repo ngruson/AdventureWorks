@@ -1,5 +1,4 @@
-﻿using AW.Domain.Sales;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace AW.SalesOrderService.Messages.ListSalesOrders
 {

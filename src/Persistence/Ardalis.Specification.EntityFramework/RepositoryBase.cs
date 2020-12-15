@@ -93,12 +93,12 @@ namespace Ardalis.Specification.EntityFramework
             return await ApplySpecification(specification).ToListAsync();
         }
 
-        public async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
+        public Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification)
         {
-            if (specification is null) throw new ArgumentNullException("specification", "Specification is required");
-            if (specification.Selector is null) throw new ArgumentNullException("specification.Selector", "Specification must have Selector defined.");
+            if (specification is null) throw new ArgumentNullException(nameof(specification), "Specification is required");
+            if (specification.Selector is null) throw new ArgumentNullException(nameof(specification.Selector), "Specification must have Selector defined.");
 
-            return await ApplySpecification(specification).ToListAsync();
+            return ApplySpecification(specification).ToListAsync();
         }
 
         public async Task<int> CountAsync(ISpecification<T> specification)

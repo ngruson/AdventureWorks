@@ -1,6 +1,6 @@
 ﻿namespace AW.Domain.Person
 {
-    public enum EmailPromotion : int
+    public enum EmailPromotion
     {
         NoPromotions = 0,
         AWPromotions = 1,

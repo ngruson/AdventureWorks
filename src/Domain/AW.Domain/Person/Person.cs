@@ -29,8 +29,6 @@ namespace AW.Domain.Person
 
         public virtual ICollection<EmailAddress> EmailAddresses { get; set; } = new List<EmailAddress>();
 
-        //public virtual Password Password { get; set; }
-
         public virtual ICollection<PersonCreditCard> CreditCards { get; set; } = new List<PersonCreditCard>();
 
         public virtual ICollection<PersonPhone> PhoneNumbers { get; set; }

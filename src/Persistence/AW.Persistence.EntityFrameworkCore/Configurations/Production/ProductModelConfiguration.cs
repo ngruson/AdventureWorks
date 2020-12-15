@@ -19,9 +19,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
 
             builder.Property(pmc => pmc.Instructions)
                 .HasColumnType("xml");
-
-            //HasMany(pmc => pmc.ProductModelIllustrations);
-            //HasMany(e => e.ProductModelProductDescriptionCultures);
         }
     }
 }

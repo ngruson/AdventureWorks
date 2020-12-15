@@ -21,19 +21,12 @@ namespace AW.Services.API.CustomerAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCustomers([FromQuery] GetCustomersQuery request)
         {
-            //var query = new GetCustomersQuery
-            //{
-            //    PageIndex = request.PageIndex,
-            //    PageSize = request.PageSize,
-            //    CustomerType = request.CustomerType,
-            //    Territory = request.Territory
-            //};
-            var customers = await mediator.Send(request);
+            var dto = await mediator.Send(request);
 
-            if (customers.Customers == null || customers.Customers.Count() == 0)
+            if (!dto.Customers.Any())
                 return new NotFoundResult();
 
-            var response = mapper.Map<ListCustomersResponse>(customers);
+            var response = mapper.Map<ListCustomersResponse>(dto);
             return new OkObjectResult(response);
         }
     }

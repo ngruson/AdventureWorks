@@ -44,8 +44,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
 
             builder.Property(soh => soh.Comment)
                 .HasMaxLength(128);
-
-            //HasMany<SalesOrderDetail>(soh => soh.OrderLines);
         }
     }
 }

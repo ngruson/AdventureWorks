@@ -14,7 +14,6 @@ namespace AW.Application.Customer.UpdateCustomerAddress
     {
         private readonly IMapper mapper;
         private readonly IRepositoryBase<Address> addressRepository;
-        private readonly IRepositoryBase<Domain.Person.AddressType> addressTypeRepository;
         private readonly IRepositoryBase<Domain.Sales.Customer> customerRepository;
         private readonly IRepositoryBase<Domain.Person.StateProvince> stateProvinceRepository;
 
@@ -24,8 +23,8 @@ namespace AW.Application.Customer.UpdateCustomerAddress
             IRepositoryBase<Domain.Person.AddressType> addressTypeRepository,
             IRepositoryBase<Domain.Sales.Customer> customerRepository,
             IRepositoryBase<Domain.Person.StateProvince> stateProvinceRepository
-        ) => (this.mapper, this.addressRepository, this.addressTypeRepository, this.customerRepository, this.stateProvinceRepository) =
-                (mapper, addressRepository, addressTypeRepository, customerRepository, stateProvinceRepository);
+        ) => (this.mapper, this.addressRepository, this.customerRepository, this.stateProvinceRepository) =
+                (mapper, addressRepository, customerRepository, stateProvinceRepository);
 
         public async Task<Unit> Handle(UpdateCustomerAddressCommand request, CancellationToken cancellationToken)
         {
@@ -33,9 +32,6 @@ namespace AW.Application.Customer.UpdateCustomerAddress
                 new GetCustomerSpecification(request.AccountNumber)
             );
 
-            var addressType = await addressTypeRepository.GetBySpecAsync(
-                new GetAddressTypeSpecification(request.CustomerAddress.AddressTypeName)
-            );
             var stateProvince = await stateProvinceRepository.GetBySpecAsync(
                 new GetStateProvinceSpecification(request.CustomerAddress.Address.StateProvinceCode)
             );

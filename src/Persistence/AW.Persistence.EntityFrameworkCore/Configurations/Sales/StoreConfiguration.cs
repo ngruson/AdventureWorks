@@ -10,9 +10,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Sales
         {
             builder.ToTable("Store", "Sales");
 
-            //builder.Property(s => s.Id)
-                //.ValueGeneratedNever();
-
             builder.Property(s => s.Name)
                 .HasMaxLength(50);
 

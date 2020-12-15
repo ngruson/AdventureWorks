@@ -1,5 +1,4 @@
-﻿using AW.Application.StateProvince;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace AW.StateProvinceService.Messages.ListStateProvinces

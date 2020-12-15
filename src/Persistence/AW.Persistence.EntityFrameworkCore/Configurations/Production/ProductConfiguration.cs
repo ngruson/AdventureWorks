@@ -65,8 +65,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
 
             builder.HasMany(e => e.BillOfMaterials);
 
-            //HasMany(e => e.ProductProductPhoto);
-
             builder.HasMany(e => e.ProductReview)
                 .WithOne(e => e.Product)
                 .OnDelete(DeleteBehavior.SetNull);

@@ -1,6 +1,6 @@
 ﻿namespace AW.Services.API.CustomerAPI.Models
 {
-    public enum EmailPromotion : int
+    public enum EmailPromotion
     {
         NoPromotions = 0,
         AWPromotions = 1,
