@@ -17,7 +17,7 @@
                 "capacity": 1
             },
             "properties": {
-                "publisherEmail": "ngruson@hotmail.com",
+                "publisherEmail": "abc@def.com",
                 "publisherName": "AdventureWorks",
                 "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
                 "hostnameConfigurations": [
