@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.GetCustomers;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.GetCustomers;
 using System.Collections.Generic;
 
 namespace AW.CustomerService.Messages.ListCustomers

@@ -1,4 +1,4 @@
-﻿using AW.Application.AutoMapper;
+﻿using AW.Core.Application.AutoMapper;
 using System.Reflection;
 
 namespace AW.SalesOrderService

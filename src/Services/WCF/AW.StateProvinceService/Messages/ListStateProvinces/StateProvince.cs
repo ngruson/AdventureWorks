@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.StateProvince;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.StateProvince;
 
 namespace AW.StateProvinceService.Messages.ListStateProvinces
 {

@@ -1,4 +1,4 @@
-﻿using AW.Application.Country.ListCountries;
+﻿using AW.Core.Application.Country.ListCountries;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 

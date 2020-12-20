@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using AddCustomerContact = AW.Core.Abstractions.Api.CustomerApi.AddCustomerContact;
+using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class EditCustomerContactViewModel : IMapFrom<CustomerContact2>
+    public class EditCustomerContactViewModel : IMapFrom<AddCustomerContact.CustomerContact>
     {
         public bool IsNewContact { get; set; }
         public string AccountNumber { get; set; }
@@ -16,8 +17,8 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EditCustomerContactViewModel, AddCustomerContactRequest>();
-            profile.CreateMap<EditCustomerContactViewModel, UpdateCustomerContactRequest>();
+            profile.CreateMap<EditCustomerContactViewModel, AddCustomerContact.AddCustomerContactRequest>();
+            profile.CreateMap<EditCustomerContactViewModel, UpdateCustomerContact.UpdateCustomerContactRequest>();
         }
     }
 }

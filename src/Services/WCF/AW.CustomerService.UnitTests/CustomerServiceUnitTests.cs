@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.Application.Customer.GetCustomer;
-using AW.Application.Customer.GetCustomers;
-using AW.Application.Customer.UpdateCustomer;
+using AW.Core.Application.Customer.GetCustomer;
+using AW.Core.Application.Customer.GetCustomers;
+using AW.Core.Application.Customer.UpdateCustomer;
 using AW.CustomerService.Messages.AddCustomerAddress;
 using AW.CustomerService.Messages.AddCustomerContact;
 using AW.CustomerService.Messages.AddCustomerContactInfo;
@@ -37,10 +37,10 @@ namespace AW.CustomerService.UnitTests
 
             var dto = new GetCustomersDto
             {
-                Customers = new List<Application.Customer.GetCustomers.CustomerDto>
+                Customers = new List<Core.Application.Customer.GetCustomers.CustomerDto>
                 {
-                    new Application.Customer.GetCustomers.CustomerDto { AccountNumber = "AW00000001" },
-                    new Application.Customer.GetCustomers.CustomerDto { AccountNumber = "AW00000002" }
+                    new Core.Application.Customer.GetCustomers.CustomerDto { AccountNumber = "AW00000001" },
+                    new Core.Application.Customer.GetCustomers.CustomerDto { AccountNumber = "AW00000002" }
                 },
                 TotalCustomers = 2
             };
@@ -71,7 +71,7 @@ namespace AW.CustomerService.UnitTests
                 opts.AddProfile<MappingProfile>();
             }).CreateMapper();
 
-            var dto = new Application.Customer.GetCustomer.CustomerDto
+            var dto = new Core.Application.Customer.GetCustomer.CustomerDto
             {
                 AccountNumber = "AW00000001"
             };
@@ -103,7 +103,7 @@ namespace AW.CustomerService.UnitTests
                 opts.AddProfile<MappingProfile>();
             }).CreateMapper();
 
-            var dto = new Application.Customer.UpdateCustomer.CustomerDto
+            var dto = new Core.Application.Customer.UpdateCustomer.CustomerDto
             {
                 AccountNumber = "AW00000001"
             };
@@ -135,7 +135,7 @@ namespace AW.CustomerService.UnitTests
                 opts.AddProfile<MappingProfile>();
             }).CreateMapper();
 
-            var dto = new Application.Customer.UpdateCustomer.CustomerDto
+            var dto = new Core.Application.Customer.UpdateCustomer.CustomerDto
             {
                 AccountNumber = "AW00000001"
             };

@@ -1,0 +1,39 @@
+﻿{
+  "ProviderId": "Microsoft.VisualStudio.ConnectedService.Wcf",
+  "Version": "15.0.40203.910",
+  "ExtendedData": {
+    "inputs": [
+      "https://app-adventureworks-wcf-contacttypeservice.azurewebsites.net/ContactTypeService.svc"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, AW.Infrastructure.Api.WCF.ContactTypeService"
+    ],
+    "references": [
+      "AutoMapper, {AutoMapper, 10.0.0}",
+      "Microsoft.CSharp, {Microsoft.CSharp, 4.7.0}",
+      "Microsoft.Extensions.Configuration, {Microsoft.Extensions.Configuration, 5.0.0}",
+      "Microsoft.Extensions.Configuration.Abstractions, {Microsoft.Extensions.Configuration.Abstractions, 5.0.0}",
+      "Microsoft.Extensions.DependencyInjection.Abstractions, {Microsoft.Extensions.DependencyInjection.Abstractions, 5.0.0}",
+      "Microsoft.Extensions.Logging.Abstractions, {Microsoft.Extensions.Logging.Abstractions, 5.0.0}",
+      "Microsoft.Extensions.Primitives, {Microsoft.Extensions.Primitives, 5.0.0}",
+      "System.Buffers, {System.Buffers, 4.5.1}",
+      "System.Memory, {System.Memory, 4.5.4}",
+      "System.Numerics.Vectors, {System.Numerics.Vectors, 4.4.0}",
+      "System.Reflection.Emit, {System.Reflection.Emit, 4.7.0}",
+      "System.Reflection.Emit.ILGeneration, {System.Reflection.Emit.ILGeneration, 4.7.0}",
+      "System.Runtime.CompilerServices.Unsafe, {System.Runtime.CompilerServices.Unsafe, 5.0.0}",
+      "System.ServiceModel, {System.ServiceModel.Primitives, 4.4.4}",
+      "System.ServiceModel.Duplex, {System.ServiceModel.Duplex, 4.4.4}",
+      "System.ServiceModel.Http, {System.ServiceModel.Http, 4.4.4}",
+      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 4.4.4}",
+      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 4.4.4}",
+      "System.ServiceModel.Security, {System.ServiceModel.Security, 4.4.4}"
+    ],
+    "targetFramework": "netstandard2.0",
+    "typeReuseMode": "All"
+  }
+}

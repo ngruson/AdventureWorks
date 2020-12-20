@@ -94,13 +94,13 @@
             @Html.ActionLink("Delete", "DeleteContactInformation", new
                {
                    accountNumber = ViewData["accountNumber"],
-                   channel = contactInfo.ContactInfoChannelType,
+                   channel = contactInfo.Channel,
                    contactInfo.Value
                })
         </td>
         <td>
             @{
-                var channel = EnumHelper<ContactInfoChannelTypeViewModel>.GetDisplayValue(contactInfo.ContactInfoChannelType);
+                var channel = EnumHelper<ContactInfoChannelTypeViewModel>.GetDisplayValue(contactInfo.Channel);
             }
             @channel
         </td>

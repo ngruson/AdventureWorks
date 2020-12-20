@@ -46,8 +46,9 @@ steps:
   inputs:
     command: 'test'
     projects: |
-      **/AW.Application.UnitTests.csproj
-      **/AW.Domain.UnitTests.csproj
+      **/AW.Core.Application.UnitTests.csproj
+      **/AW.Core.Domain.UnitTests.csproj
+      **/AW.Infrastructure.Api.WCF.UnitTests
       **/AW.Persistence.EntityFramework.UnitTests
       **/AW.Persistence.EntityFrameworkCore.UnitTests
       **/AW.UI.Web.Internal.UnitTests.csproj

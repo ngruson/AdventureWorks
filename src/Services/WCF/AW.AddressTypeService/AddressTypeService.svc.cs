@@ -1,5 +1,5 @@
 ﻿using AW.AddressTypeService.Messages.ListAddressTypes;
-using AW.Application.AddressType.ListAddressTypes;
+using AW.Core.Application.AddressType.ListAddressTypes;
 using MediatR;
 using System.Linq;
 using System.ServiceModel;

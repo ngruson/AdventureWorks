@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.Application.Customer.GetCustomer;
-using AW.Application.Customer.GetCustomers;
-using AW.Application.Customer.UpdateCustomer;
+using AW.Core.Application.Customer.GetCustomer;
+using AW.Core.Application.Customer.GetCustomers;
+using AW.Core.Application.Customer.UpdateCustomer;
 using AW.CustomerService.Messages;
 using AW.CustomerService.Messages.GetCustomer;
 using AW.CustomerService.Messages.ListCustomers;
@@ -10,21 +10,21 @@ using MediatR;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using AW.CustomerService.Messages.AddCustomerAddress;
-using AW.Application.Customer.AddCustomerAddress;
-using AW.Application.Customer.UpdateCustomerAddress;
+using AW.Core.Application.Customer.AddCustomerAddress;
+using AW.Core.Application.Customer.UpdateCustomerAddress;
 using AW.CustomerService.Messages.UpdateCustomerAddress;
 using AW.CustomerService.Messages.DeleteCustomerAddress;
-using AW.Application.Customer.DeleteCustomerAddress;
+using AW.Core.Application.Customer.DeleteCustomerAddress;
 using AW.CustomerService.Messages.AddCustomerContact;
-using AW.Application.Customer.AddCustomerContact;
+using AW.Core.Application.Customer.AddCustomerContact;
 using AW.CustomerService.Messages.DeleteCustomerContact;
-using AW.Application.Customer.DeleteCustomerContact;
+using AW.Core.Application.Customer.DeleteCustomerContact;
 using AW.CustomerService.Messages.UpdateCustomerContact;
-using AW.Application.Customer.UpdateCustomerContact;
+using AW.Core.Application.Customer.UpdateCustomerContact;
 using AW.CustomerService.Messages.AddCustomerContactInfo;
-using AW.Application.Customer.AddCustomerContactInfo;
+using AW.Core.Application.Customer.AddCustomerContactInfo;
 using AW.CustomerService.Messages.DeleteCustomerContactInfo;
-using AW.Application.Customer.DeleteCustomerContactInfo;
+using AW.Core.Application.Customer.DeleteCustomerContactInfo;
 
 namespace AW.CustomerService
 {
@@ -71,7 +71,7 @@ namespace AW.CustomerService
             var customer = await mediator.Send(
                 new UpdateCustomerCommand
                 {
-                    Customer = mapper.Map<Application.Customer.UpdateCustomer.CustomerDto>(request.Customer)
+                    Customer = mapper.Map<Core.Application.Customer.UpdateCustomer.CustomerDto>(request.Customer)
                 });
 
             return new UpdateCustomerResponse
@@ -85,7 +85,7 @@ namespace AW.CustomerService
             await mediator.Send(new AddCustomerAddressCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerAddress = mapper.Map<Application.Customer.AddCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
+                CustomerAddress = mapper.Map<Core.Application.Customer.AddCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
             });
 
             return new AddCustomerAddressResponse();
@@ -96,7 +96,7 @@ namespace AW.CustomerService
             await mediator.Send(new UpdateCustomerAddressCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerAddress = mapper.Map<Application.Customer.UpdateCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
+                CustomerAddress = mapper.Map<Core.Application.Customer.UpdateCustomerAddress.CustomerAddressDto>(request.CustomerAddress)
             });
 
             return new UpdateCustomerAddressResponse();
@@ -118,7 +118,7 @@ namespace AW.CustomerService
             await mediator.Send(new AddCustomerContactCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerContact = mapper.Map<Application.Customer.AddCustomerContact.CustomerContactDto>(request.CustomerContact)
+                CustomerContact = mapper.Map<Core.Application.Customer.AddCustomerContact.CustomerContactDto>(request.CustomerContact)
             });
 
             return new AddCustomerContactResponse();
@@ -129,7 +129,7 @@ namespace AW.CustomerService
             await mediator.Send(new UpdateCustomerContactCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerContact = mapper.Map<Application.Customer.UpdateCustomerContact.CustomerContactDto>(request.CustomerContact)
+                CustomerContact = mapper.Map<Core.Application.Customer.UpdateCustomerContact.CustomerContactDto>(request.CustomerContact)
             });
 
             return new UpdateCustomerContactResponse();
@@ -148,7 +148,7 @@ namespace AW.CustomerService
             await mediator.Send(new AddCustomerContactInfoCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerContactInfo = mapper.Map<Application.Customer.AddCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
+                CustomerContactInfo = mapper.Map<Core.Application.Customer.AddCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
             });
 
             return new AddCustomerContactInfoResponse();
@@ -159,7 +159,7 @@ namespace AW.CustomerService
             await mediator.Send(new DeleteCustomerContactInfoCommand
             {
                 AccountNumber = request.AccountNumber,
-                CustomerContactInfo = mapper.Map<Application.Customer.DeleteCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
+                CustomerContactInfo = mapper.Map<Core.Application.Customer.DeleteCustomerContactInfo.CustomerContactInfoDto>(request.CustomerContactInfo)
             });
 
             return new DeleteCustomerContactInfoResponse();

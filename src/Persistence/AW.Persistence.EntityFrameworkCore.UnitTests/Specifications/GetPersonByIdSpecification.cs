@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using AW.Domain.Person;
+using AW.Core.Domain.Person;
 
 namespace AW.Persistence.EntityFrameworkCore.UnitTests.Specifications
 {

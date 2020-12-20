@@ -1,5 +1,4 @@
-﻿using AW.UI.Web.Internal.CustomerService;
-using AW.UI.Web.Internal.SalesTerritoryService;
+﻿using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders
 {

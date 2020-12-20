@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.SalesOrder.GetSalesOrder;
-using AW.Application.SalesOrder.GetSalesOrders;
+using AW.Core.Application.SalesOrder.GetSalesOrder;
+using AW.Core.Application.SalesOrder.GetSalesOrders;
 using AW.SalesOrderService.Messages.GetSalesOrder;
 using AW.SalesOrderService.Messages.ListSalesOrders;
 using MediatR;
@@ -24,7 +24,7 @@ namespace AW.SalesOrderService
             {
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
-                CustomerType = mapper.Map<Domain.Sales.CustomerType>(request.CustomerType),
+                CustomerType = mapper.Map<Core.Domain.Sales.CustomerType>(request.CustomerType),
                 Territory = request.Territory
             };
             var result = await mediator.Send(query);

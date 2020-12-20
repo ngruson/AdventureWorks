@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
+using AW.Core.Application.AutoMapper;
 using System;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesOrderViewModel : IMapFrom<SalesOrderService.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<Infrastructure.Api.WCF.SalesOrderService.SalesOrder>
     {
         public string RevisionNumber { get; set; }
 
@@ -53,12 +53,12 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesOrderService.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.WCF.SalesOrderService.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));
 
-            profile.CreateMap<SalesOrderService.SalesOrder1, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.WCF.SalesOrderService.SalesOrder1, SalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));

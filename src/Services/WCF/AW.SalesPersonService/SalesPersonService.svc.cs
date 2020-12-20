@@ -1,5 +1,5 @@
-﻿using AW.Application.SalesPerson.GetSalesPerson;
-using AW.Application.SalesPerson.GetSalesPersons;
+﻿using AW.Core.Application.SalesPerson.GetSalesPerson;
+using AW.Core.Application.SalesPerson.GetSalesPersons;
 using AW.SalesPersonService.Messages.GetSalesPerson;
 using AW.SalesPersonService.Messages.ListSalesPersons;
 using MediatR;

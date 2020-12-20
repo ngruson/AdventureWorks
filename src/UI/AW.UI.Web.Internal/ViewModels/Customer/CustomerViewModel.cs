@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AW.Core.Domain.Sales;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class CustomerViewModel : IMapFrom<CustomerService.Customer>
+    public class CustomerViewModel : IMapFrom<GetCustomer.Customer>
     {
         [Display(Name="Account number")]
         public string AccountNumber { get; set; }
@@ -21,18 +24,20 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerService.Customer, CustomerViewModel>()
+            profile.CreateMap<GetCustomer.Customer, CustomerViewModel>()
                 .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Store.Name ?? src.Person.FullName))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => MapCustomerType(src)));
 
-            profile.CreateMap<Customer1, CustomerViewModel>()
+            profile.CreateMap<ListCustomers.Customer, CustomerViewModel>()
                 .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Store.Name ?? src.Person.FullName))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => MapCustomerType(src)));
 
-            profile.CreateMap<CustomerViewModel, UpdateCustomer>();
+            profile.CreateMap<CustomerViewModel, UpdateCustomer.UpdateCustomerRequest>()
+                .ForMember(m => m.Customer, opt => opt.MapFrom(src => src));
+            profile.CreateMap<CustomerViewModel, UpdateCustomer.Customer>();
         }
 
-        private string MapCustomerType(CustomerService.Customer customer)
+        private string MapCustomerType(GetCustomer.Customer customer)
         {
             if (customer.Store != null)
                 return "Store";
@@ -43,7 +48,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
             return null;
         }
 
-        private string MapCustomerType(Customer1 customer)
+        private string MapCustomerType(ListCustomers.Customer customer)
         {
             if (customer.Store != null)
                 return "Store";

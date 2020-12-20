@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesPersonService;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.SalesPersonService;
-using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels.SalesPerson;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
 using Microsoft.Extensions.Logging;

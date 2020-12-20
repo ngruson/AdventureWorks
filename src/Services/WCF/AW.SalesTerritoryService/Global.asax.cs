@@ -2,7 +2,7 @@
 using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.SalesTerritory.GetSalesTerritories;
+using AW.Core.Application.SalesTerritory.GetSalesTerritories;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;

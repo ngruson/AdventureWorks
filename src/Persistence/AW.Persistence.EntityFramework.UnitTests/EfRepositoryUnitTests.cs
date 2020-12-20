@@ -1,5 +1,5 @@
 using Ardalis.Specification.EntityFramework;
-using AW.Domain.Person;
+using AW.Core.Domain.Person;
 using AW.Persistence.EntityFramework.UnitTests.Mocking;
 using AW.Persistence.EntityFramework.UnitTests.Specifications;
 using FluentAssertions;

@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Application\AW.Application\AW.Application.csproj" />
+    <ProjectReference Include="..\..\..\Core\AW.Core.Abstractions\AW.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application\AW.Core.Application.csproj" />
     <ProjectReference Include="..\..\..\Persistence\AW.Persistence.EntityFrameworkCore\AW.Persistence.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

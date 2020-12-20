@@ -1,13 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.UI.Web.Internal.AddressTypeService;
-using AW.UI.Web.Internal.ContactTypeService;
-using AW.UI.Web.Internal.CountryService;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Domain.Sales;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.SalesPersonService;
-using AW.UI.Web.Internal.SalesTerritoryService;
-using AW.UI.Web.Internal.StateProvinceService;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +10,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AW.Core.Abstractions.Api.CustomerApi;
+using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
+using AW.Core.Abstractions.Api.CustomerApi.AddCustomerAddress;
+using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerAddress;
+using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerAddress;
+using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContact;
+using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
+using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
+using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
+using AW.Core.Domain.Person;
+using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
+using AW.Infrastructure.Api.WCF.AddressTypeService;
+using AW.Infrastructure.Api.WCF.ContactTypeService;
+using AW.Infrastructure.Api.WCF.CountryService;
+using AW.Infrastructure.Api.WCF.SalesPersonService;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
+using AW.Infrastructure.Api.WCF.StateProvinceService;
 
 namespace AW.UI.Web.Internal.Services
 {
@@ -27,7 +40,7 @@ namespace AW.UI.Web.Internal.Services
         private readonly IAddressTypeService addressTypeService;
         private readonly IContactTypeService contactTypeService;
         private readonly ICountryService countryService;
-        private readonly ICustomerService customerService;
+        private readonly ICustomerApi customerService;
         private readonly ISalesTerritoryService salesTerritoryService;
         private readonly ISalesPersonService salesPersonService;
         private readonly IStateProvinceService stateProvinceService;
@@ -38,7 +51,7 @@ namespace AW.UI.Web.Internal.Services
             IAddressTypeService addressTypeService,
             IContactTypeService contactTypeService,
             ICountryService countryService,
-            ICustomerService customerService,
+            ICustomerApi customerService,
             ISalesTerritoryService salesTerritoryService,
             ISalesPersonService salesPersonService,
             IStateProvinceService stateProvinceService)
@@ -64,8 +77,7 @@ namespace AW.UI.Web.Internal.Services
                     PageIndex = pageIndex,
                     PageSize = pageSize,
                     Territory = territory,
-                    CustomerType = !string.IsNullOrEmpty(customerType) ? Enum.Parse<CustomerType>(customerType) : default,
-                    CustomerTypeSpecified = !string.IsNullOrEmpty(customerType)
+                    CustomerType = !string.IsNullOrEmpty(customerType) ? Enum.Parse<CustomerType>(customerType) : default
                 }
             );
 
@@ -77,7 +89,7 @@ namespace AW.UI.Web.Internal.Services
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
-                    ItemsPerPage = response.Customers.Length,
+                    ItemsPerPage = response.Customers.Count,
                     TotalItems = response.TotalCustomers,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)response.TotalCustomers / pageSize)).ToString())
                 }
@@ -241,10 +253,7 @@ namespace AW.UI.Web.Internal.Services
             }
 
             logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var request = new UpdateCustomerRequest
-            {
-                Customer = mapper.Map<UpdateCustomer>(viewModel)
-            };
+            var request = mapper.Map<UpdateCustomerRequest>(viewModel);
                 
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
             await customerService.UpdateCustomerAsync(request);
@@ -256,10 +265,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateIndividual called");
             logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
 
-            var request = new UpdateCustomerRequest
-            {
-                Customer = mapper.Map<UpdateCustomer>(viewModel)
-            };
+            var request = mapper.Map<UpdateCustomerRequest>(viewModel);
 
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
             await customerService.UpdateCustomerAsync(request);
@@ -275,7 +281,7 @@ namespace AW.UI.Web.Internal.Services
                 IsNewAddress = true,
                 AccountNumber = accountNumber,
                 CustomerName = customerName,
-                CustomerAddressViewModel = new CustomerAddressViewModel {  
+                CustomerAddress = new CustomerAddressViewModel {  
                     Address = new AddressViewModel
                     {
                         StateProvince = new StateProvinceViewModel
@@ -299,10 +305,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("AddAddress called");
 
-            var request = new AddCustomerAddressRequest
-            {
-                CustomerAddress = mapper.Map<CustomerAddress2>(viewModel)
-            };
+            var request = mapper.Map<AddCustomerAddressRequest>(viewModel);
 
             logger.LogInformation("Calling AddCustomerAddress operation of Customer web service");
             await customerService.AddCustomerAddressAsync(request);
@@ -362,7 +365,7 @@ namespace AW.UI.Web.Internal.Services
             {
                 AccountNumber = accountNumber,
                 CustomerName = response.Customer.Store != null ? response.Customer.Store.Name : response.Customer.Person.FullName,
-                CustomerAddressViewModel = mapper.Map<CustomerAddressViewModel>(address),
+                CustomerAddress = mapper.Map<CustomerAddressViewModel>(address),
                 AddressTypes = await GetAddressTypes(),
                 Countries = await GetCountries(),
                 StateProvinces = await GetStateProvinces(address.Address.StateProvince.CountryRegion.CountryRegionCode)
@@ -628,9 +631,9 @@ namespace AW.UI.Web.Internal.Services
                 }
             );
 
-            var channelType = Enum.Parse<ContactInfoChannelType1>(channel.ToString());
+            var channelType = Enum.Parse<ContactInfoChannelType>(channel.ToString());
             var contactInfo = response.Customer.Person.ContactInfo.FirstOrDefault(c =>
-                c.ContactInfoChannelType == channelType &&
+                c.Channel == channelType &&
                 c.Value == value
             );
 

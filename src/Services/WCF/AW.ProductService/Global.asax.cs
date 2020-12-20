@@ -2,7 +2,7 @@
 using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.Product.GetProducts;
+using AW.Core.Application.Product.GetProducts;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;

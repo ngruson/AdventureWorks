@@ -93,13 +93,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Application\AW.Application.AutoMapper\AW.Application.AutoMapper.csproj">
-      <Project>{F54567BA-D35A-4609-AC5A-52E5F6C4FB4D}</Project>
-      <Name>AW.Application.AutoMapper</Name>
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj">
+      <Project>{9b414c99-e397-4c74-af45-307f29164d63}</Project>
+      <Name>AW.Core.Application.AutoMapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Application\AW.Application\AW.Application.csproj">
-      <Project>{c32eacd5-f42e-4ab6-aa49-be6107fa7c62}</Project>
-      <Name>AW.Application</Name>
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application\AW.Core.Application.csproj">
+      <Project>{33a4e34f-17c0-4d84-8241-6882b85add89}</Project>
+      <Name>AW.Core.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.CustomerService\AW.CustomerService.csproj">
       <Project>{ea0a0801-69ee-4de1-8526-243df937d213}</Project>

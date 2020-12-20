@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesOrderService;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.SalesOrderService;
-using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using Microsoft.AspNetCore.Mvc.Rendering;

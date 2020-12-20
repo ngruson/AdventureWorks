@@ -1,4 +1,4 @@
-﻿using AW.Domain.Purchasing;
+﻿using AW.Core.Domain.Purchasing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

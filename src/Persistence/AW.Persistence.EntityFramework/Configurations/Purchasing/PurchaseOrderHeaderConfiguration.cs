@@ -1,4 +1,4 @@
-﻿using AW.Domain.Purchasing;
+﻿using AW.Core.Domain.Purchasing;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 

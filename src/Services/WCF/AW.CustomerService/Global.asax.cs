@@ -2,9 +2,9 @@
 using Autofac;
 using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using AW.Application.Autofac;
-using AW.Application.Common.Behaviours;
-using AW.Application.Customer.GetCustomers;
+using AW.Core.Application.Autofac;
+using AW.Core.Application.Common.Behaviours;
+using AW.Core.Application.Customer.GetCustomers;
 using AW.Persistence.EntityFramework;
 using FluentValidation;
 using MediatR;

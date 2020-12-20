@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AW.Persistence.EntityFrameworkCore.Configurations.Person
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<Domain.Person.Person>
+    public class PersonConfiguration : IEntityTypeConfiguration<Core.Domain.Person.Person>
     {
-        public void Configure(EntityTypeBuilder<Domain.Person.Person> builder)
+        public void Configure(EntityTypeBuilder<Core.Domain.Person.Person> builder)
         {
             builder.ToTable("Person.Person");
             builder.HasKey(p => p.Id);

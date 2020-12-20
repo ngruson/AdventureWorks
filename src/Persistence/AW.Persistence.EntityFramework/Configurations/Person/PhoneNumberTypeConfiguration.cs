@@ -1,4 +1,4 @@
-﻿using AW.Domain.Person;
+﻿using AW.Core.Domain.Person;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Person

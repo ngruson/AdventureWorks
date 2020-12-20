@@ -1,4 +1,4 @@
-﻿using AW.Application.Country.ListCountries;
+﻿using AW.Core.Application.Country.ListCountries;
 using AW.CountryService.Messages.ListCountries;
 using MediatR;
 using System.Linq;

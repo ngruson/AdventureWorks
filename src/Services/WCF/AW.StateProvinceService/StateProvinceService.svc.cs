@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Application.StateProvince.ListStateProvinces;
+using AW.Core.Application.StateProvince.ListStateProvinces;
 using AW.StateProvinceService.Messages.ListStateProvinces;
 using MediatR;
 using System.Collections.Generic;

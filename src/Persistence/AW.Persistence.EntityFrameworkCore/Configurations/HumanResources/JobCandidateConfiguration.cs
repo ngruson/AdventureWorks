@@ -1,4 +1,4 @@
-﻿using AW.Domain.HumanResources;
+﻿using AW.Core.Domain.HumanResources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

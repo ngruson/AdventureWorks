@@ -1,4 +1,4 @@
-﻿using AW.Domain.Sales;
+﻿using AW.Core.Domain.Sales;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 

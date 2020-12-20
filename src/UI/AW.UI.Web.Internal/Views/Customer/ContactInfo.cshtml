@@ -34,18 +34,18 @@
             @Html.ValidationMessageFor(m => m.CustomerContactInfo.Channel, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CustomerContactInfo.Type, new { @class = "control-label" })
+            @Html.LabelFor(m => m.CustomerContactInfo.ContactInfoType, new { @class = "control-label" })
             @if (Model.IsNewContactInfo)
             {
-                @Html.DropDownListFor(m => m.CustomerContactInfo.Type, Model.ContactInfoTypes, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.CustomerContactInfo.ContactInfoType, Model.ContactInfoTypes, null, new { @class = "form-control" })
             }
             else
             {
-                @Html.DropDownListFor(m => m.CustomerContactInfo.Type, Model.ContactInfoTypes, null, new { @disabled = "disabled", @class = "form-control" })
-                @Html.HiddenFor(m => m.CustomerContactInfo.Type)
+                @Html.DropDownListFor(m => m.CustomerContactInfo.ContactInfoType, Model.ContactInfoTypes, null, new { @disabled = "disabled", @class = "form-control" })
+                @Html.HiddenFor(m => m.CustomerContactInfo.ContactInfoType)
             }
 
-            @Html.ValidationMessageFor(m => m.CustomerContactInfo.Type, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.CustomerContactInfo.ContactInfoType, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.CustomerContactInfo.Value, new { @class = "control-label" })

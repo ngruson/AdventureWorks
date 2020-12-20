@@ -1,4 +1,4 @@
-﻿using AW.Domain.Sales;
+﻿using AW.Core.Domain.Sales;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Sales

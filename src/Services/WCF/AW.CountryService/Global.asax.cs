@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using Autofac;
 using Autofac.Integration.Wcf;
-using AW.Application.Country.ListCountries;
+using AW.Core.Application.Country.ListCountries;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;

@@ -176,9 +176,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Application\AW.Application\AW.Application.csproj">
-      <Project>{C32EACD5-F42E-4AB6-AA49-BE6107FA7C62}</Project>
-      <Name>AW.Application</Name>
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application\AW.Core.Application.csproj">
+      <Project>{33a4e34f-17c0-4d84-8241-6882b85add89}</Project>
+      <Name>AW.Core.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Persistence\AW.Persistence.EntityFramework\AW.Persistence.EntityFramework.csproj">
       <Project>{59b60488-d115-4b74-a41a-77197a1105e2}</Project>

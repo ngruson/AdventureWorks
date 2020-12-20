@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.SalesTerritoryService;
+using AW.Core.Application.AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 {

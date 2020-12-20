@@ -1,4 +1,4 @@
-﻿using AW.Domain.Person;
+﻿using AW.Core.Domain.Person;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

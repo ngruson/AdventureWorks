@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class CustomerPersonViewModel : IMapFrom<Person>
+    public class CustomerPersonViewModel : IMapFrom<GetCustomer.Person>
     {
         public string Title { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get; set; }
         public string Suffix { get; set; }
         public EmailPromotionViewModel EmailPromotion { get; set; }
         public List<CustomerAddressViewModel> Addresses { get; set; }
@@ -18,9 +21,9 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Person, CustomerPersonViewModel>();
-            profile.CreateMap<Person1, CustomerPersonViewModel>();
-            profile.CreateMap<CustomerPersonViewModel, UpdatePerson>();
+            profile.CreateMap<GetCustomer.Person, CustomerPersonViewModel>();
+            profile.CreateMap<ListCustomers.Person, CustomerPersonViewModel>();
+            profile.CreateMap<CustomerPersonViewModel, UpdateCustomer.Person>();
         }
     }
 }

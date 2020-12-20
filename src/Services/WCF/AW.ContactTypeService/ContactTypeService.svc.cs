@@ -1,4 +1,4 @@
-﻿using AW.Application.ContactType.ListContactTypes;
+﻿using AW.Core.Application.ContactType.ListContactTypes;
 using AW.ContactTypeService.Messages.ListContactTypes;
 using MediatR;
 using System.Linq;

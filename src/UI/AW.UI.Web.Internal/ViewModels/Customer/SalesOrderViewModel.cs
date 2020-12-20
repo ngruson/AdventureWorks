@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using System;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class SalesOrderViewModel : IMapFrom<CustomerService.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<GetCustomer.SalesOrder>
     {
         public DateTime OrderDate { get; set; }
 
@@ -37,9 +38,9 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerService.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<GetCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"));
-            profile.CreateMap<SalesOrder1, SalesOrderViewModel>()
+            profile.CreateMap<ListCustomers.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => src.OnlineOrderFlag ? "Yes" : "No"));
         }
     }

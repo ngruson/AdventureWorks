@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.SalesOrderService;
+using AW.Core.Application.AutoMapper;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class AddressViewModel : IMapFrom<Address>
+    public class AddressViewModel : IMapFrom<ListCustomers.Address>
     {
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
@@ -15,13 +16,18 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressViewModel>()
+            profile.CreateMap<ListCustomers.Address, AddressViewModel>()
                 .ForMember(m => m.AddressLine2, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"));
+                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"))
+                .ForMember(m => m.Country, opt => opt.MapFrom(src => src.StateProvince.CountryRegion.CountryRegionCode));
 
-            profile.CreateMap<Address1, AddressViewModel>()
+            profile.CreateMap<GetCustomer.Address, AddressViewModel>()
                 .ForMember(m => m.AddressLine2, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"));
+                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"))
+                .ForMember(m => m.Country, opt => opt.MapFrom(src => src.StateProvince.CountryRegion.CountryRegionCode));
+
+            profile.CreateMap<Infrastructure.Api.WCF.SalesOrderService.Address, AddressViewModel>();
+            profile.CreateMap<Infrastructure.Api.WCF.SalesOrderService.Address1, AddressViewModel>();
         }
     }
 }

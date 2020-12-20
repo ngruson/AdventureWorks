@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.SalesPersonService;
+using AW.Core.Application.AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesPersonService;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesPerson
 {

@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class CountryRegionViewModel : IMapFrom<CountryRegion>
+    public class CountryRegionViewModel : IMapFrom<GetCustomer.CountryRegion>
     {
         [Display(Name = "Country")]
         [Required]
@@ -14,8 +16,12 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CountryRegion, CountryRegionViewModel>();
-            profile.CreateMap<CountryRegion1, CountryRegionViewModel>();
+            profile.CreateMap<GetCustomer.CountryRegion, CountryRegionViewModel>();
+            profile.CreateMap<ListCustomers.CountryRegion, CountryRegionViewModel>();
+            profile.CreateMap<Infrastructure.Api.WCF.StateProvinceService.StateProvince, CountryRegionViewModel>();
+
+            profile.CreateMap<CountryRegionViewModel, GetCustomer.CountryRegion>();
+            profile.CreateMap<CountryRegionViewModel, UpdateCustomer.CountryRegion>();
         }
     }
 }

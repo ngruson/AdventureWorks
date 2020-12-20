@@ -1,4 +1,4 @@
-﻿using AW.Application.Product.GetProducts;
+﻿using AW.Core.Application.Product.GetProducts;
 using System.Collections.Generic;
 
 namespace AW.ProductService.Messages

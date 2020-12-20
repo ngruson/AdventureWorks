@@ -1,5 +1,5 @@
-﻿using AW.Application.SalesPerson.GetSalesPerson;
-using AW.Application.SalesPerson.GetSalesPersons;
+﻿using AW.Core.Application.SalesPerson.GetSalesPerson;
+using AW.Core.Application.SalesPerson.GetSalesPersons;
 using AW.SalesPersonService.Messages.GetSalesPerson;
 using AW.SalesPersonService.Messages.ListSalesPersons;
 using FluentAssertions;
@@ -20,10 +20,10 @@ namespace AW.SalesPersonService.UnitTests
         public async Task ListCustomers_ReturnsCustomers()
         {
             //Arrange
-            var dto = new List<Application.SalesPerson.GetSalesPersons.SalesPersonDto>
+            var dto = new List<Core.Application.SalesPerson.GetSalesPersons.SalesPersonDto>
             {
-                new Application.SalesPerson.GetSalesPersons.SalesPersonDto { FirstName = "Stephen" },
-                new Application.SalesPerson.GetSalesPersons.SalesPersonDto { FirstName = "Michael" }
+                new Core.Application.SalesPerson.GetSalesPersons.SalesPersonDto { FirstName = "Stephen" },
+                new Core.Application.SalesPerson.GetSalesPersons.SalesPersonDto { FirstName = "Michael" }
             };
 
             var mockMediator = new Mock<IMediator>();
@@ -46,7 +46,7 @@ namespace AW.SalesPersonService.UnitTests
         public async Task GetSalesPerson_ReturnsSalesPerson()
         {
             //Arrange
-            var dto = new Application.SalesPerson.GetSalesPerson.SalesPersonDto { FirstName = "Stephen" };
+            var dto = new Core.Application.SalesPerson.GetSalesPerson.SalesPersonDto { FirstName = "Stephen" };
 
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(x => x.Send(It.IsAny<GetSalesPersonQuery>(), It.IsAny<CancellationToken>()))

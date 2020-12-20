@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using DeleteCustomerContactInfo = AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class DeleteCustomerContactInfoViewModel : IMapFrom<ContactInfo1>
+    public class DeleteCustomerContactInfoViewModel : IMapFrom<GetCustomer.ContactInfo>
     {
         public string AccountNumber { get; set; }
         public string CustomerName { get; set; }
@@ -12,8 +13,11 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<ContactInfo1, DeleteCustomerContactInfoViewModel>();
-            profile.CreateMap<DeleteCustomerContactInfoViewModel, DeleteCustomerContactInfoRequest>();
+            profile.CreateMap<GetCustomer.ContactInfo, DeleteCustomerContactInfoViewModel>()
+                .ForMember(m => m.AccountNumber, opt => opt.Ignore())
+                .ForMember(m => m.CustomerName, opt => opt.Ignore())
+                .ForMember(m => m.CustomerContactInfo, opt => opt.MapFrom(src => src));
+            profile.CreateMap<DeleteCustomerContactInfoViewModel, DeleteCustomerContactInfo.DeleteCustomerContactInfoRequest>();
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using AddCustomerContact = AW.Core.Abstractions.Api.CustomerApi.AddCustomerContact;
+using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class CustomerContactViewModel : IMapFrom<CustomerContact>
+    public class CustomerContactViewModel : IMapFrom<GetCustomer.CustomerContact>
     {
         [Display(Name = "Contact type")]
         [Required]
@@ -15,10 +18,11 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerContact, CustomerContactViewModel>();
-            profile.CreateMap<CustomerContact1, CustomerContactViewModel>();
-            profile.CreateMap<CustomerContactViewModel, CustomerContact2>();
-            profile.CreateMap<CustomerContactViewModel, CustomerContact3>();
+            profile.CreateMap<GetCustomer.CustomerContact, CustomerContactViewModel>();
+            profile.CreateMap<ListCustomers.CustomerContact, CustomerContactViewModel>();
+
+            profile.CreateMap<CustomerContactViewModel, AddCustomerContact.CustomerContact>();
+            profile.CreateMap<CustomerContactViewModel, UpdateCustomerContact.CustomerContact>();
         }
     }
 }

@@ -1,15 +1,7 @@
-﻿using System.ServiceModel;
-using AutoMapper;
-using AW.UI.Web.Internal.AddressTypeService;
-using AW.UI.Web.Internal.ContactTypeService;
-using AW.UI.Web.Internal.CountryService;
-using AW.UI.Web.Internal.CustomerService;
+﻿using AutoMapper;
+using AW.Infrastructure.Api.WCF;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.SalesOrderService;
-using AW.UI.Web.Internal.SalesPersonService;
-using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.Services;
-using AW.UI.Web.Internal.StateProvinceService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -48,83 +40,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
             services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
 
-            ConfigureWebservices(services);
-        }
-
-        private void ConfigureWebservices(IServiceCollection services)
-        {
-            services.AddScoped<IAddressTypeService>(provider =>
-            {
-                var client = new AddressTypeServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["AddressTypeService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<IContactTypeService>(provider =>
-            {
-                var client = new ContactTypeServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["ContactTypeService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ICountryService>(provider =>
-            {
-                var client = new CountryServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["CountryService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ICustomerService>(provider =>
-            {
-                var client = new CustomerServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["CustomerService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ISalesOrderService>(provider =>
-            {
-                var client = new SalesOrderServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["SalesOrderService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ISalesPersonService>(provider =>
-            {
-                var client = new SalesPersonServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["SalesPersonService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<ISalesTerritoryService>(provider =>
-            {
-                var client = new SalesTerritoryServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["SalesTerritoryService:EndpointAddress"])
-                );
-
-                return client;
-            });
-            services.AddScoped<IStateProvinceService>(provider =>
-            {
-                var client = new StateProvinceServiceClient(
-                    new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["StateProvinceService:EndpointAddress"])
-                );
-
-                return client;
-            });
+            services.ConfigureServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

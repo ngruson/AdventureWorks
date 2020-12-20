@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.SalesTerritoryService;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

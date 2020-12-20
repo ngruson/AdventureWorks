@@ -1,10 +1,10 @@
-﻿using AW.Domain.Person;
+﻿using AW.Core.Domain.Person;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Person
 {
-    public class PersonConfiguration : EntityTypeConfiguration<Domain.Person.Person>
+    public class PersonConfiguration : EntityTypeConfiguration<Core.Domain.Person.Person>
     {
         public PersonConfiguration()
         {

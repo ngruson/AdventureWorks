@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.SalesOrder.GetSalesOrders;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.SalesOrder.GetSalesOrders;
 using System.Xml.Serialization;
 
 namespace AW.SalesOrderService.Messages.ListSalesOrders

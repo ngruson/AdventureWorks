@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.UpdateCustomer;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.UpdateCustomer;
 
 namespace AW.CustomerService.Messages.UpdateCustomer
 {

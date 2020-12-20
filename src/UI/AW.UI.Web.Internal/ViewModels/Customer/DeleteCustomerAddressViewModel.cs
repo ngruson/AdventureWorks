@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class DeleteCustomerAddressViewModel : IMapFrom<CustomerAddress1>
+    public class DeleteCustomerAddressViewModel : IMapFrom<GetCustomer.CustomerAddress>
     {
         public string AccountNumber { get; set; }
         public string CustomerName { get; set; }
@@ -33,7 +33,9 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerAddress1, DeleteCustomerAddressViewModel>()
+            profile.CreateMap<GetCustomer.CustomerAddress, DeleteCustomerAddressViewModel>()
+                .ForMember(m => m.AccountNumber, opt => opt.Ignore())
+                .ForMember(m => m.CustomerName, opt => opt.Ignore())
                 .ForMember(m => m.AddressLine1, opt => opt.MapFrom(src => src.Address.AddressLine1))
                 .ForMember(m => m.AddressLine2, opt => opt.MapFrom(src => src.Address.AddressLine2))
                 .ForMember(m => m.PostalCode, opt => opt.MapFrom(src => src.Address.PostalCode))

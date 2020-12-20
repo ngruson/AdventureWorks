@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.DeleteCustomerContact;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.DeleteCustomerContact;
 using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages.DeleteCustomerContact

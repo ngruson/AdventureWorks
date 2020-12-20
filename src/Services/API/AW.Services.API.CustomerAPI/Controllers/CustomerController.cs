@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.Customer.GetCustomers;
-using AW.Services.API.CustomerAPI.Models.ListCustomers;
+using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using AW.Core.Application.Customer.GetCustomers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -19,9 +19,10 @@ namespace AW.Services.API.CustomerAPI.Controllers
             (this.mediator, this.mapper) = (mediator, mapper);
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomers([FromQuery] GetCustomersQuery request)
+        public async Task<IActionResult> GetCustomers([FromQuery] ListCustomersRequest request)
         {
-            var dto = await mediator.Send(request);
+            var query = mapper.Map<GetCustomersQuery>(request);
+            var dto = await mediator.Send(query);
 
             if (!dto.Customers.Any())
                 return new NotFoundResult();

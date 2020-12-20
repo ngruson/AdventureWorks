@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using Autofac;
 using Autofac.Integration.Wcf;
-using AW.Application.AddressType.ListAddressTypes;
+using AW.Core.Application.AddressType.ListAddressTypes;
 using AW.Persistence.EntityFramework;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;

@@ -1,4 +1,4 @@
-﻿using AW.Domain.Sales;
+﻿using AW.Core.Domain.Sales;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

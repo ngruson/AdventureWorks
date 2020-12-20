@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.GetCustomers;
-using AW.Domain.Sales;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.GetCustomers;
+using AW.Core.Domain.Sales;
 using System;
 
 namespace AW.CustomerService.Messages.ListCustomers

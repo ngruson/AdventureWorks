@@ -1,4 +1,4 @@
-﻿using AW.Domain.Production;
+﻿using AW.Core.Domain.Production;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

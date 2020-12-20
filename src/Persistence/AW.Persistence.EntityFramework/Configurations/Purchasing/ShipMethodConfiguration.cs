@@ -1,4 +1,4 @@
-﻿using AW.Domain.Purchasing;
+﻿using AW.Core.Domain.Purchasing;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Purchasing

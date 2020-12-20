@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.SalesOrder.GetSalesOrder;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.SalesOrder.GetSalesOrder;
 using System;
 using System.Collections.Generic;
 

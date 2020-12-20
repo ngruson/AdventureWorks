@@ -1,4 +1,4 @@
-﻿using AW.Application.SalesTerritory.GetSalesTerritories;
+﻿using AW.Core.Application.SalesTerritory.GetSalesTerritories;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 

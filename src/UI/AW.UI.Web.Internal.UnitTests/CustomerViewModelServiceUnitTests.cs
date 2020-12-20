@@ -1,11 +1,16 @@
-﻿using AW.UI.Web.Internal.AddressTypeService;
-using AW.UI.Web.Internal.ContactTypeService;
-using AW.UI.Web.Internal.CountryService;
-using AW.UI.Web.Internal.CustomerService;
-using AW.UI.Web.Internal.SalesPersonService;
-using AW.UI.Web.Internal.SalesTerritoryService;
+﻿using AW.Core.Abstractions.Api.CustomerApi;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
+using AddCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.AddCustomerAddress;
+using UpdateCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerAddress;
+using DeleteCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerAddress;
+using AddCustomerContact = AW.Core.Abstractions.Api.CustomerApi.AddCustomerContact;
+using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
+using DeleteCustomerContact = AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
+using AddCustomerContactInfo = AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
+using DeleteCustomerContactInfo = AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
 using AW.UI.Web.Internal.Services;
-using AW.UI.Web.Internal.StateProvinceService;
 using AW.UI.Web.Internal.UnitTests.AutoMapper;
 using AW.UI.Web.Internal.UnitTests.TestBuilders;
 using AW.UI.Web.Internal.ViewModels.Customer;
@@ -14,6 +19,14 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System.Linq;
 using Xunit;
+using System.Collections.Generic;
+using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer;
+using AW.Infrastructure.Api.WCF.AddressTypeService;
+using AW.Infrastructure.Api.WCF.ContactTypeService;
+using AW.Infrastructure.Api.WCF.CountryService;
+using AW.Infrastructure.Api.WCF.SalesPersonService;
+using AW.Infrastructure.Api.WCF.SalesTerritoryService;
+using AW.Infrastructure.Api.WCF.StateProvinceService;
 
 namespace AW.UI.Web.Internal.UnitTests
 {
@@ -27,17 +40,17 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.ListCustomersAsync(It.IsAny<ListCustomersRequest>()))
-                .ReturnsAsync(new ListCustomersResponseListCustomersResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.ListCustomersAsync(It.IsAny<ListCustomers.ListCustomersRequest>()))
+                .ReturnsAsync(new ListCustomers.ListCustomersResponse
                 {
-                    Customers = new Customer[]
+                    Customers = new List<ListCustomers.Customer>
                     {
-                        new CustomerBuilder().AccountNumber("AW00000001").Build(),
-                        new CustomerBuilder().AccountNumber("AW00000002").Build(),
-                        new CustomerBuilder().AccountNumber("AW00000003").Build(),
-                        new CustomerBuilder().AccountNumber("AW00000004").Build(),
-                        new CustomerBuilder().AccountNumber("AW00000005").Build()
+                        new TestBuilders.ListCustomers.CustomerBuilder().AccountNumber("AW00000001").Build(),
+                        new TestBuilders.ListCustomers.CustomerBuilder().AccountNumber("AW00000002").Build(),
+                        new TestBuilders.ListCustomers.CustomerBuilder().AccountNumber("AW00000003").Build(),
+                        new TestBuilders.ListCustomers.CustomerBuilder().AccountNumber("AW00000004").Build(),
+                        new TestBuilders.ListCustomers.CustomerBuilder().AccountNumber("AW00000005").Build()
                     },
                     TotalCustomers = 100
                 });
@@ -98,11 +111,11 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1 { AccountNumber = "AW00000001" }
+                    Customer = new GetCustomer.Customer { AccountNumber = "AW00000001" }
                 });
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
@@ -136,11 +149,11 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1 { AccountNumber = "AW00000001" }
+                    Customer = new GetCustomer.Customer { AccountNumber = "AW00000001" }
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -193,7 +206,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -218,7 +231,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.UpdateStore(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomerRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomer.UpdateCustomerRequest>()));
         }
 
         [Fact]
@@ -229,7 +242,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -255,7 +268,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.UpdateStore(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomerRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomer.UpdateCustomerRequest>()));
         }
 
         [Fact]
@@ -266,7 +279,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             mockSalesPersonService.Setup(x => x.GetSalesPersonAsync(It.IsAny<GetSalesPersonRequest>()))
@@ -305,7 +318,7 @@ namespace AW.UI.Web.Internal.UnitTests
 
             //Assert
 
-            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomerRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomer.UpdateCustomerRequest>()));
         }
 
         [Fact]
@@ -316,7 +329,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -342,7 +355,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.UpdateIndividual(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomerRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerAsync(It.IsAny<UpdateCustomer.UpdateCustomerRequest>()));
         }
 
         [Fact]
@@ -371,7 +384,7 @@ namespace AW.UI.Web.Internal.UnitTests
                     }
                 });
 
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             
@@ -379,11 +392,11 @@ namespace AW.UI.Web.Internal.UnitTests
             mockStateProvinceService.Setup(x => x.ListStateProvincesAsync(It.IsAny<ListStateProvincesRequest>()))
                 .ReturnsAsync(new ListStateProvincesResponse
                 {
-                    StateProvinces = new StateProvinceService.StateProvince[]
+                    StateProvinces = new StateProvince[]
                     {
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", Name = "Alaska" },
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", Name = "North Carolina" },
-                        new StateProvinceService.StateProvince { CountryRegionCode = "CA", Name = "Brunswick" }
+                        new StateProvince { CountryRegionCode = "US", Name = "Alaska" },
+                        new StateProvince { CountryRegionCode = "US", Name = "North Carolina" },
+                        new StateProvince { CountryRegionCode = "CA", Name = "Brunswick" }
                     }
                 });
 
@@ -421,7 +434,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -446,7 +459,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.AddAddress(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.AddCustomerAddressAsync(It.IsAny<AddCustomerAddressRequest>()));
+            mockCustomerService.Verify(x => x.AddCustomerAddressAsync(It.IsAny<AddCustomerAddress.AddCustomerAddressRequest>()));
         }
 
         [Fact]
@@ -474,48 +487,47 @@ namespace AW.UI.Web.Internal.UnitTests
                     }
                 });
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService
+                .Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Store = new Store1
-                        {
-                            Name = "A Bike Store",
-                            Addresses = new CustomerAddress1[]
-                            {
-                                new CustomerAddress1
-                                {
-                                    AddressType = "Main Office",
-                                    Address = new Address1
-                                    {
-                                        StateProvince = new StateProvince1
-                                        {
-                                            CountryRegion = new CountryRegion1 {
-                                                CountryRegionCode = "US"
-                                            },
-                                            StateProvinceCode = "AZ",
-                                            Name = "Arizona"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Store(new StoreBuilder()
+                            .Name("A Bike Store")
+                            .Addresses(new CustomerAddressBuilder()
+                                .AddressTypeName("Main Office")
+                                .Address(new AddressBuilder()
+                                    .StateProvince(new StateProvinceBuilder()
+                                        .StateProvinceCode("AZ")
+                                        .Name("Arizona")
+                                        .CountryRegion(new CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Build()
+                                        )
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
             var mockStateProvinceService = new Mock<IStateProvinceService>();
-            mockStateProvinceService.Setup(x => x.ListStateProvincesAsync(It.IsAny<ListStateProvincesRequest>()))
+            mockStateProvinceService
+                .Setup(x => x.ListStateProvincesAsync(It.IsAny<ListStateProvincesRequest>()))
                 .ReturnsAsync(new ListStateProvincesResponse
                 {
-                    StateProvinces = new StateProvinceService.StateProvince[]
+                    StateProvinces = new Infrastructure.Api.WCF.StateProvinceService.StateProvince[]
                     {
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona" },
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California" }
+                        new StateProvince { CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona" },
+                        new StateProvince { CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California" }
                     }
                 });
 
@@ -552,7 +564,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -577,7 +589,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.UpdateAddress(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.UpdateCustomerAddressAsync(It.IsAny<UpdateCustomerAddressRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerAddressAsync(It.IsAny<UpdateCustomerAddress.UpdateCustomerAddressRequest>()));
         }
 
         [Fact]
@@ -590,35 +602,32 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Store = new Store1
-                        {
-                            Name = "A Bike Store",
-                            Addresses = new CustomerAddress1[]
-                            {
-                                new CustomerAddress1
-                                {
-                                    AddressType = "Main Office",
-                                    Address = new Address1
-                                    {
-                                        StateProvince = new StateProvince1
-                                        {
-                                            CountryRegion = new CountryRegion1 {
-                                                CountryRegionCode = "US"
-                                            },
-                                            StateProvinceCode = "AZ",
-                                            Name = "Arizona"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Store(new StoreBuilder()
+                            .Name("A Bike Store")
+                            .Addresses(new CustomerAddressBuilder()
+                                .AddressTypeName("Main Office")
+                                .Address(new AddressBuilder()
+                                    .StateProvince(new StateProvinceBuilder()
+                                        .StateProvinceCode("AZ")
+                                        .Name("Arizona")
+                                        .CountryRegion(new CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Build()
+                                        )
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
             
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -654,35 +663,33 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService
+                .Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Person = new Person1
-                        {
-                            FullName = "Jon V Yang",
-                            Addresses = new CustomerAddress1[]
-                            {
-                                new CustomerAddress1
-                                {
-                                    AddressType = "Home",
-                                    Address = new Address1
-                                    {
-                                        StateProvince = new StateProvince1
-                                        {
-                                            CountryRegion = new CountryRegion1 {
-                                                CountryRegionCode = "US"
-                                            },
-                                            StateProvinceCode = "AZ",
-                                            Name = "Arizona"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Person(new PersonBuilder()
+                            .FullName("Jon V Yang")
+                            .Addresses(new CustomerAddressBuilder()
+                                .AddressTypeName("Home")
+                                .Address(new AddressBuilder()
+                                    .StateProvince(new StateProvinceBuilder()
+                                        .StateProvinceCode("AZ")
+                                        .Name("Arizona")
+                                        .CountryRegion(new CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Build()
+                                        )
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -717,17 +724,17 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
             mockStateProvinceService.Setup(x => x.ListStateProvincesAsync(It.IsAny<ListStateProvincesRequest>()))
                 .ReturnsAsync(new ListStateProvincesResponse
                 {
-                    StateProvinces = new StateProvinceService.StateProvince[]
+                    StateProvinces = new StateProvince[]
                     {
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona" },
-                        new StateProvinceService.StateProvince { CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California" }
+                        new StateProvince { CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona" },
+                        new StateProvince { CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California" }
                     }
                 });
 
@@ -758,7 +765,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -779,7 +786,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.DeleteAddress("AW00000001", "Main Office");
 
             //Assert
-            mockCustomerService.Verify(x => x.DeleteCustomerAddressAsync(It.IsAny<DeleteCustomerAddressRequest>()));
+            mockCustomerService.Verify(x => x.DeleteCustomerAddressAsync(It.IsAny<DeleteCustomerAddress.DeleteCustomerAddressRequest>()));
         }
 
         [Fact]
@@ -800,7 +807,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 });
 
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -844,7 +851,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 });
 
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
             var mockStateProvinceService = new Mock<IStateProvinceService>();
@@ -866,7 +873,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.AddContact(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.AddCustomerContactAsync(It.IsAny<AddCustomerContactRequest>()));
+            mockCustomerService.Verify(x => x.AddCustomerContactAsync(It.IsAny<AddCustomerContact.AddCustomerContactRequest>()));
         }
 
         [Fact]
@@ -894,28 +901,25 @@ namespace AW.UI.Web.Internal.UnitTests
                     }
                 });
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService
+                .Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Store = new Store1
-                        {
-                            Name = "A Bike Store",
-                            Contacts = new CustomerContact1[]
-                            {
-                                new CustomerContact1
-                                {
-                                    ContactType = "Order Administrator",
-                                    Contact = new Contact1
-                                    {
-                                        FullName = "Orlando N. Gee"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Store(new StoreBuilder()
+                            .Name("A Bike Store")
+                            .Contacts(new CustomerContactBuilder()
+                                .ContactTypeName("Order Administrator")
+                                .Contact(new ContactBuilder()
+                                    .FullName("Orlando N. Gee")
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -952,7 +956,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -977,7 +981,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.UpdateContact(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.UpdateCustomerContactAsync(It.IsAny<UpdateCustomerContactRequest>()));
+            mockCustomerService.Verify(x => x.UpdateCustomerContactAsync(It.IsAny<UpdateCustomerContact.UpdateCustomerContactRequest>()));
         }
 
         [Fact]
@@ -990,28 +994,24 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Store = new Store1
-                        {
-                            Name = "A Bike Store",
-                            Contacts = new CustomerContact1[]
-                            {
-                                new CustomerContact1
-                                {
-                                    ContactType = "Order Administrator",
-                                    Contact = new Contact1
-                                    {
-                                        FullName = "Orlando N. Gee"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Store(new StoreBuilder()
+                            .Name("A Bike Store")
+                            .Contacts(new CustomerContactBuilder()
+                                .ContactTypeName("Order Administrator")
+                                .Contact(new ContactBuilder()
+                                    .FullName("Orlando N. Gee")
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -1048,7 +1048,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -1070,7 +1070,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.DeleteContact(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.DeleteCustomerContactAsync(It.IsAny<DeleteCustomerContactRequest>()));
+            mockCustomerService.Verify(x => x.DeleteCustomerContactAsync(It.IsAny<DeleteCustomerContact.DeleteCustomerContactRequest>()));
         }
 
         [Fact]
@@ -1088,7 +1088,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 });
 
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -1124,7 +1124,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -1146,7 +1146,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.AddContactInformation(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.AddCustomerContactInfoAsync(It.IsAny<AddCustomerContactInfoRequest>()));
+            mockCustomerService.Verify(x => x.AddCustomerContactInfoAsync(It.IsAny<AddCustomerContactInfo.AddCustomerContactInfoRequest>()));
         }
 
         [Fact]
@@ -1159,26 +1159,21 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
 
-            var mockCustomerService = new Mock<ICustomerService>();
-            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomerRequest>()))
-                .ReturnsAsync(new GetCustomerResponseGetCustomerResult
+            var mockCustomerService = new Mock<ICustomerApi>();
+            mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<GetCustomer.GetCustomerRequest>()))
+                .ReturnsAsync(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Customer1
-                    {
-                        Person = new Person1
-                        {
-                            FullName = "Jon V Yang",
-                            ContactInfo = new ContactInfo1[]
-                            {
-                                new ContactInfo1
-                                {
-                                    ContactInfoChannelType = ContactInfoChannelType1.Email,
-                                    Value = "orlando0@adventure-works.com"
-                                }
-                            }
-                            
-                        }
-                    }
+                    Customer = new CustomerBuilder()
+                        .Person(new PersonBuilder()
+                            .FullName("Jon V Yang")
+                            .ContactInfo(new ContactInfoBuilder()
+                                .ContactInfoChannelType(Core.Domain.Person.ContactInfoChannelType.Email)
+                                .Value("orlando0@adventure-works.com")
+                                .Build()
+                            )
+                            .Build()
+                        )
+                        .Build()
                 });
 
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
@@ -1203,7 +1198,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             viewModel.AccountNumber.Should().Be("AW00000001");
             viewModel.CustomerName.Should().Be("Jon V Yang");
-            viewModel.CustomerContactInfo.Channel.Should().Be(ContactInfoChannelType.Email);
+            viewModel.CustomerContactInfo.Channel.Should().Be(Core.Domain.Person.ContactInfoChannelType.Email);
             viewModel.CustomerContactInfo.Value.Should().Be("orlando0@adventure-works.com");
         }
 
@@ -1216,7 +1211,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockAddressTypeService = new Mock<IAddressTypeService>();
             var mockContactTypeService = new Mock<IContactTypeService>();
             var mockCountryService = new Mock<ICountryService>();
-            var mockCustomerService = new Mock<ICustomerService>();
+            var mockCustomerService = new Mock<ICustomerApi>();
             var mockSalesTerritoryService = new Mock<ISalesTerritoryService>();
             var mockSalesPersonService = new Mock<ISalesPersonService>();
 
@@ -1238,7 +1233,7 @@ namespace AW.UI.Web.Internal.UnitTests
             await svc.DeleteContactInformation(viewModel);
 
             //Assert
-            mockCustomerService.Verify(x => x.DeleteCustomerContactInfoAsync(It.IsAny<DeleteCustomerContactInfoRequest>()));
+            mockCustomerService.Verify(x => x.DeleteCustomerContactInfoAsync(It.IsAny<DeleteCustomerContactInfo.DeleteCustomerContactInfoRequest>()));
         }
     }
 }

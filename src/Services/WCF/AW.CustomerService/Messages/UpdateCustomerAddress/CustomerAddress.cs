@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.UpdateCustomerAddress;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.UpdateCustomerAddress;
 using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages.UpdateCustomerAddress

@@ -1,4 +1,4 @@
-﻿using AW.Domain.Production;
+﻿using AW.Core.Domain.Production;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 

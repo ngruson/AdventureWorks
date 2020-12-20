@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.SalesOrder.GetSalesOrder;
-using AW.Application.SalesOrder.GetSalesOrders;
+using AW.Core.Application.SalesOrder.GetSalesOrder;
+using AW.Core.Application.SalesOrder.GetSalesOrders;
 using AW.SalesOrderService.Messages.GetSalesOrder;
 using AW.SalesOrderService.Messages.ListSalesOrders;
 using FluentAssertions;
@@ -28,10 +28,10 @@ namespace AW.SalesOrderService.UnitTests
 
             var dto = new GetSalesOrdersDto
             {
-                SalesOrders = new List<Application.SalesOrder.GetSalesOrders.SalesOrderDto>
+                SalesOrders = new List<Core.Application.SalesOrder.GetSalesOrders.SalesOrderDto>
                 {
-                    new Application.SalesOrder.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "1" },
-                    new Application.SalesOrder.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "2" }
+                    new Core.Application.SalesOrder.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "1" },
+                    new Core.Application.SalesOrder.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "2" }
                 },
                 TotalSalesOrders = 2
             };
@@ -63,7 +63,7 @@ namespace AW.SalesOrderService.UnitTests
                 opts.AddProfile<MappingProfile>();
             }).CreateMapper();
 
-            var dto = new Application.SalesOrder.GetSalesOrder.SalesOrderDto
+            var dto = new Core.Application.SalesOrder.GetSalesOrder.SalesOrderDto
             {
                 
             };

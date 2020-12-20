@@ -1,4 +1,4 @@
-﻿using AW.Domain.Production;
+﻿using AW.Core.Domain.Production;
 using System.Data.Entity.ModelConfiguration;
 
 namespace AW.Persistence.EntityFramework.Configurations.Production

@@ -1,4 +1,4 @@
-﻿using AW.Domain.HumanResources;
+﻿using AW.Core.Domain.HumanResources;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 

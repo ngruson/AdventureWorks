@@ -1,15 +1,12 @@
-using AW.Domain.Person;
+using AW.Core.Domain.Person;
 using AW.Persistence.EntityFrameworkCore.UnitTests.Specifications;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MockQueryable.Moq;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Persistence.EntityFrameworkCore.UnitTests

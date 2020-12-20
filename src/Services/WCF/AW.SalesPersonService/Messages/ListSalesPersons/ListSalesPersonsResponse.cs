@@ -1,4 +1,4 @@
-﻿using AW.Application.SalesPerson.GetSalesPersons;
+﻿using AW.Core.Application.SalesPerson.GetSalesPersons;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 

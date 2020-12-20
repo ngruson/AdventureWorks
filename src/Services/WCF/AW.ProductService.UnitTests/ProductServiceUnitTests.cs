@@ -1,5 +1,5 @@
-﻿using AW.Application.Product.GetProduct;
-using AW.Application.Product.GetProducts;
+﻿using AW.Core.Application.Product.GetProduct;
+using AW.Core.Application.Product.GetProducts;
 using AW.ProductService.Messages;
 using FluentAssertions;
 using MediatR;
@@ -19,10 +19,10 @@ namespace AW.ProductService.UnitTests
         public async Task ListCustomers_ReturnsCustomers()
         {
             //Arrange
-            var dto = new List<Application.Product.GetProducts.ProductDto>
+            var dto = new List<Core.Application.Product.GetProducts.ProductDto>
             {
-                new Application.Product.GetProducts.ProductDto { ProductNumber = "1" },
-                new Application.Product.GetProducts.ProductDto { ProductNumber = "2" }
+                new Core.Application.Product.GetProducts.ProductDto { ProductNumber = "1" },
+                new Core.Application.Product.GetProducts.ProductDto { ProductNumber = "2" }
             };
 
             var mockMediator = new Mock<IMediator>();
@@ -45,7 +45,7 @@ namespace AW.ProductService.UnitTests
         public async Task GetProduct_ReturnsProduct()
         {
             //Arrange
-            var dto = new Application.Product.GetProduct.ProductDto { ProductNumber = "1" };
+            var dto = new Core.Application.Product.GetProduct.ProductDto { ProductNumber = "1" };
 
             var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(x => x.Send(It.IsAny<GetProductQuery>(), It.IsAny<CancellationToken>()))

@@ -13,6 +13,9 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
@@ -21,12 +24,19 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\AW.Application.AutoMapper\AW.Application.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\Core\AW.Core.Abstractions\AW.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AW.Infrastructure.Api.WCF\AW.Infrastructure.Api.WCF.csproj" />
   </ItemGroup>
 
 
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
   </ItemGroup>
 
 </Project>

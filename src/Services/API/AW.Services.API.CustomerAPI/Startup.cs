@@ -1,6 +1,6 @@
 using Ardalis.Specification;
 using AutoMapper;
-using AW.Application.Customer.GetCustomers;
+using AW.Core.Application.Customer.GetCustomers;
 using AW.Persistence.EntityFrameworkCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

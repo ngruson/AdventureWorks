@@ -1,4 +1,4 @@
-﻿using AW.Application.AutoMapper;
+﻿using AW.Core.Application.AutoMapper;
 using AW.CustomerService.Messages.UpdateCustomer;
 using System.Reflection;
 

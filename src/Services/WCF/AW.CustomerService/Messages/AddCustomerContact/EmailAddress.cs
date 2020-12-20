@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.Application.Customer.AddCustomerContact;
+using AW.Core.Application.AutoMapper;
+using AW.Core.Application.Customer.AddCustomerContact;
 using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages.AddCustomerContact

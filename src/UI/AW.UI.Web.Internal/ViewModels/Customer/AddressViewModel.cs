@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
+using AddCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.AddCustomerAddress;
+using UpdateCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerAddress;
+using AW.Core.Application.AutoMapper;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class AddressViewModel : IMapFrom<Address>
+    public class AddressViewModel : IMapFrom<ListCustomers.Address>
     {
         [Display(Name = "Address line 1")]
         [Required]
@@ -22,9 +26,14 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressViewModel>();
-            profile.CreateMap<Address1, AddressViewModel>();
-            profile.CreateMap<AddressViewModel, Address3>()
+            profile.CreateMap<ListCustomers.Address, AddressViewModel>();
+            profile.CreateMap<GetCustomer.Address, AddressViewModel>()
+                .ReverseMap();
+
+            profile.CreateMap<AddressViewModel, UpdateCustomer.Address>();
+            profile.CreateMap<AddressViewModel, AddCustomerAddress.Address>()
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvince.StateProvinceCode));
+            profile.CreateMap<AddressViewModel, UpdateCustomerAddress.Address>()
                 .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvince.StateProvinceCode));
         }
     }

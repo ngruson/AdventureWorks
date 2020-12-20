@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="CustomerService" targetNamespace="http://services.aw.com/CustomerService/1.0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+    xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+    xmlns:tns="http://services.aw.com/CustomerService/1.0"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:i0="http://tempuri.org/"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsp:Policy wsu:Id="BasicHttpsBinding_ICustomerService_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="ListCustomers">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="1" maxOccurs="1" name="PageIndex" type="xs:int"/>
+                                    <xs:element minOccurs="1" maxOccurs="1" name="PageSize" type="xs:int"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Territory" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerType" nillable="true" type="tns:CustomerType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:simpleType name="CustomerType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Individual"/>
+                    <xs:enumeration value="Store"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="ListCustomersResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="ListCustomersResult">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="1" maxOccurs="1" name="TotalCustomers" type="xs:int"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Customers" type="tns:ListCustomers"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="ListCustomers">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="q1:Customer"
+                        xmlns:q1="http://services.aw.com/CustomerService/1.0/ListCustomers"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="GetCustomer">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetCustomerResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="GetCustomerResult">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Customer" type="tns:Customer"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesTerritoryName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Person" type="tns:Person"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Store" type="tns:Store"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesOrders" type="tns:ArrayOfSalesOrder"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Person">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="EmailPromotion" type="q2:EmailPromotion"
+                        xmlns:q2="http://services.aw.com/CustomerService/1.0/GetCustomer"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfCustomerAddress"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfo" type="tns:ArrayOfContactInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfCustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerAddress" nillable="true" type="tns:CustomerAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PostalCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="City" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvince" type="tns:StateProvince"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StateProvince">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CountryRegion" type="tns:CountryRegion"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CountryRegion">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CountryRegionCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactInfo" nillable="true" type="tns:ContactInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ContactInfoChannelType" type="tns:ContactInfoChannelType"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfoType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ContactInfoChannelType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Email"/>
+                    <xs:enumeration value="Phone"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="Store">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesPerson" type="tns:SalesPerson"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfCustomerAddress"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contacts" type="tns:ArrayOfCustomerContact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SalesPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfCustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerContact" nillable="true" type="tns:CustomerContact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Contact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfSalesOrder">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="SalesOrder" nillable="true" type="tns:SalesOrder"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SalesOrder">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="RevisionNumber" type="xs:unsignedByte"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="OrderDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="DueDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ShipDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Status" type="tns:SalesOrderStatus"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="OnlineOrderFlag" type="xs:boolean"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesOrderNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PurchaseOrderNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesPerson" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Territory" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="SubTotal" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="TaxAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Freight" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="TotalDue" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="SalesOrderStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="InProcess"/>
+                    <xs:enumeration value="Approved"/>
+                    <xs:enumeration value="Backordered"/>
+                    <xs:enumeration value="Rejected"/>
+                    <xs:enumeration value="Shipped"/>
+                    <xs:enumeration value="Cancelled"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="UpdateCustomer">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Customer" type="tns:UpdateCustomer"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="UpdateCustomer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesTerritoryName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Person" type="tns:UpdatePerson"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Store" type="tns:UpdateStore"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdatePerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="EmailPromotion" type="q3:EmailPromotion"
+                        xmlns:q3="http://services.aw.com/CustomerService/1.0/UpdateCustomer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateStore">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesPerson" type="tns:UpdateSalesPerson"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateSalesPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="UpdateCustomerResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="UpdateCustomerResult">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Customer" type="tns:UpdateCustomer"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerAddress">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerAddress" type="q4:CustomerAddress"
+                                        xmlns:q4="http://services.aw.com/CustomerService/1.0/AddCustomerAddress"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerAddressResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="AddCustomerAddressResult">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateCustomerAddress">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerAddress" type="q5:CustomerAddress"
+                                        xmlns:q5="http://services.aw.com/CustomerService/1.0/UpdateCustomerAddress"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateCustomerAddressResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="UpdateCustomerAddressResult">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteCustomerAddress">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AddressType" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteCustomerAddressResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="DeleteCustomerAddressResult">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerContact">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerContact" type="q6:CustomerContact"
+                                        xmlns:q6="http://services.aw.com/CustomerService/1.0/AddCustomerContact"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerContactResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="AddCustomerContactResult" type="tns:AddCustomerContactResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="AddCustomerContactResponse"/>
+            <xs:element name="UpdateCustomerContact">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerContact" type="q7:CustomerContact"
+                                        xmlns:q7="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateCustomerContactResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="UpdateCustomerContactResult">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteCustomerContact">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="ContactType" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:DeleteContact"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="DeleteContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DeleteCustomerContactResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="DeleteCustomerContactResult">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerContactInfo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerContactInfo" type="q8:CustomerContactInfo"
+                                        xmlns:q8="http://services.aw.com/CustomerService/1.0/AddCustomerContactInfo"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AddCustomerContactInfoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="AddCustomerContactInfoResult" type="tns:AddCustomerContactInfoResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="AddCustomerContactInfoResponse"/>
+            <xs:element name="DeleteCustomerContactInfo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                                    <xs:element minOccurs="0" maxOccurs="1" name="CustomerContactInfo" type="q9:CustomerContactInfo"
+                                        xmlns:q9="http://services.aw.com/CustomerService/1.0/DeleteCustomerContactInfo"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DeleteCustomerContactInfoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" maxOccurs="1" name="DeleteCustomerContactInfoResult" type="tns:DeleteCustomerContactInfoResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="DeleteCustomerContactInfoResponse"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/ListCustomers"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/ListCustomers">
+            <xs:element name="Customer" type="tns:Customer"/>
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesTerritoryName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Person" type="tns:Person"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Store" type="tns:Store"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesOrders" type="tns:ArrayOfSalesOrder"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Person">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="EmailPromotion" type="tns:EmailPromotion"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfCustomerAddress"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfo" type="tns:ArrayOfContactInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="EmailPromotion">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NoPromotions"/>
+                    <xs:enumeration value="AWPromotions"/>
+                    <xs:enumeration value="AWAndPartnerPromotions"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="ArrayOfCustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerAddress" nillable="true" type="tns:CustomerAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PostalCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="City" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvince" type="tns:StateProvince"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StateProvince">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CountryRegion" type="tns:CountryRegion"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CountryRegion">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CountryRegionCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactInfo" nillable="true" type="tns:ContactInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ContactInfoChannelType" type="tns:ContactInfoChannelType"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfoType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ContactInfoChannelType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Email"/>
+                    <xs:enumeration value="Phone"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="Store">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesPerson" type="tns:SalesPerson"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfCustomerAddress"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contacts" type="tns:ArrayOfCustomerContact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SalesPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfCustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerContact" nillable="true" type="tns:CustomerContact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Contact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FullName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfSalesOrder">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="SalesOrder" nillable="true" type="tns:SalesOrder"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SalesOrder">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="RevisionNumber" type="xs:unsignedByte"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="OrderDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="DueDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ShipDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Status" type="tns:SalesOrderStatus"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="OnlineOrderFlag" type="xs:boolean"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesOrderNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PurchaseOrderNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="SalesPerson" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Territory" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="SubTotal" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="TaxAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Freight" type="xs:decimal"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="TotalDue" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="SalesOrderStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="InProcess"/>
+                    <xs:enumeration value="Approved"/>
+                    <xs:enumeration value="Backordered"/>
+                    <xs:enumeration value="Rejected"/>
+                    <xs:enumeration value="Shipped"/>
+                    <xs:enumeration value="Cancelled"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/GetCustomer"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/GetCustomer">
+            <xs:simpleType name="EmailPromotion">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NoPromotions"/>
+                    <xs:enumeration value="AWPromotions"/>
+                    <xs:enumeration value="AWAndPartnerPromotions"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/UpdateCustomer"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/UpdateCustomer">
+            <xs:simpleType name="EmailPromotion">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NoPromotions"/>
+                    <xs:enumeration value="AWPromotions"/>
+                    <xs:enumeration value="AWAndPartnerPromotions"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/AddCustomerAddress"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/AddCustomerAddress">
+            <xs:complexType name="CustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PostalCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="City" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerAddress"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/UpdateCustomerAddress">
+            <xs:complexType name="CustomerAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PostalCode" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="City" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="StateProvinceCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/AddCustomerContact"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/AddCustomerContact">
+            <xs:complexType name="CustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Contact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddresses" type="tns:ArrayOfEmailAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfEmailAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailAddress" nillable="true" type="tns:EmailAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="EmailAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/UpdateCustomerContact">
+            <xs:complexType name="CustomerContact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:Contact"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Contact">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="MiddleName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Suffix" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddresses" type="tns:ArrayOfEmailAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfEmailAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailAddress" nillable="true" type="tns:EmailAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="EmailAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/AddCustomerContactInfo"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/AddCustomerContactInfo">
+            <xs:complexType name="CustomerContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Channel" type="tns:Channel"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfoType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="Channel">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Email"/>
+                    <xs:enumeration value="Phone"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://services.aw.com/CustomerService/1.0/DeleteCustomerContactInfo"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://services.aw.com/CustomerService/1.0/DeleteCustomerContactInfo">
+            <xs:complexType name="CustomerContactInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Channel" type="tns:Channel"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ContactInfoType" type="xs:string"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="Channel">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Email"/>
+                    <xs:enumeration value="Phone"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ICustomerService_ListCustomers_InputMessage">
+        <wsdl:part name="parameters" element="tns:ListCustomers"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_ListCustomers_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ListCustomersResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_GetCustomer_InputMessage">
+        <wsdl:part name="parameters" element="tns:GetCustomer"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_GetCustomer_OutputMessage">
+        <wsdl:part name="parameters" element="tns:GetCustomerResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomer_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomer"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomer_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomerResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerAddress_InputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerAddress"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerAddress_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerAddressResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomerAddress_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomerAddress"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomerAddress_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomerAddressResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerAddress_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerAddress"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerAddress_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerAddressResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerContact_InputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerContact"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerContact_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerContactResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomerContact_InputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomerContact"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_UpdateCustomerContact_OutputMessage">
+        <wsdl:part name="parameters" element="tns:UpdateCustomerContactResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerContact_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerContact"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerContact_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerContactResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerContactInfo_InputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerContactInfo"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_AddCustomerContactInfo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AddCustomerContactInfoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerContactInfo_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerContactInfo"/>
+    </wsdl:message>
+    <wsdl:message name="ICustomerService_DeleteCustomerContactInfo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeleteCustomerContactInfoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ICustomerService">
+        <wsdl:operation name="ListCustomers">
+            <wsdl:input wsaw:Action="ListCustomers" message="tns:ICustomerService_ListCustomers_InputMessage"/>
+            <wsdl:output wsaw:Action="ListCustomers" message="tns:ICustomerService_ListCustomers_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetCustomer">
+            <wsdl:input wsaw:Action="GetCustomer" message="tns:ICustomerService_GetCustomer_InputMessage"/>
+            <wsdl:output wsaw:Action="GetCustomer" message="tns:ICustomerService_GetCustomer_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomer">
+            <wsdl:input wsaw:Action="UpdateCustomer" message="tns:ICustomerService_UpdateCustomer_InputMessage"/>
+            <wsdl:output wsaw:Action="UpdateCustomer" message="tns:ICustomerService_UpdateCustomer_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerAddress">
+            <wsdl:input wsaw:Action="AddCustomerAddress" message="tns:ICustomerService_AddCustomerAddress_InputMessage"/>
+            <wsdl:output wsaw:Action="AddCustomerAddress" message="tns:ICustomerService_AddCustomerAddress_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomerAddress">
+            <wsdl:input wsaw:Action="UpdateCustomerAddress" message="tns:ICustomerService_UpdateCustomerAddress_InputMessage"/>
+            <wsdl:output wsaw:Action="UpdateCustomerAddress" message="tns:ICustomerService_UpdateCustomerAddress_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerAddress">
+            <wsdl:input wsaw:Action="DeleteCustomerAddress" message="tns:ICustomerService_DeleteCustomerAddress_InputMessage"/>
+            <wsdl:output wsaw:Action="DeleteCustomerAddress" message="tns:ICustomerService_DeleteCustomerAddress_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerContact">
+            <wsdl:input wsaw:Action="AddCustomerContact" message="tns:ICustomerService_AddCustomerContact_InputMessage"/>
+            <wsdl:output wsaw:Action="AddCustomerContact" message="tns:ICustomerService_AddCustomerContact_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomerContact">
+            <wsdl:input wsaw:Action="UpdateCustomerContact" message="tns:ICustomerService_UpdateCustomerContact_InputMessage"/>
+            <wsdl:output wsaw:Action="UpdateCustomerContact" message="tns:ICustomerService_UpdateCustomerContact_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerContact">
+            <wsdl:input wsaw:Action="DeleteCustomerContact" message="tns:ICustomerService_DeleteCustomerContact_InputMessage"/>
+            <wsdl:output wsaw:Action="DeleteCustomerContact" message="tns:ICustomerService_DeleteCustomerContact_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerContactInfo">
+            <wsdl:input wsaw:Action="AddCustomerContactInfo" message="tns:ICustomerService_AddCustomerContactInfo_InputMessage"/>
+            <wsdl:output wsaw:Action="AddCustomerContactInfo" message="tns:ICustomerService_AddCustomerContactInfo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerContactInfo">
+            <wsdl:input wsaw:Action="DeleteCustomerContactInfo" message="tns:ICustomerService_DeleteCustomerContactInfo_InputMessage"/>
+            <wsdl:output wsaw:Action="DeleteCustomerContactInfo" message="tns:ICustomerService_DeleteCustomerContactInfo_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpsBinding_ICustomerService" type="tns:ICustomerService">
+        <wsp:PolicyReference URI="#BasicHttpsBinding_ICustomerService_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ListCustomers">
+            <soap:operation soapAction="ListCustomers" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCustomer">
+            <soap:operation soapAction="GetCustomer" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomer">
+            <soap:operation soapAction="UpdateCustomer" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerAddress">
+            <soap:operation soapAction="AddCustomerAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomerAddress">
+            <soap:operation soapAction="UpdateCustomerAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerAddress">
+            <soap:operation soapAction="DeleteCustomerAddress" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerContact">
+            <soap:operation soapAction="AddCustomerContact" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateCustomerContact">
+            <soap:operation soapAction="UpdateCustomerContact" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerContact">
+            <soap:operation soapAction="DeleteCustomerContact" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddCustomerContactInfo">
+            <soap:operation soapAction="AddCustomerContactInfo" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerContactInfo">
+            <soap:operation soapAction="DeleteCustomerContactInfo" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerService">
+        <wsdl:port name="BasicHttpsBinding_ICustomerService" binding="tns:BasicHttpsBinding_ICustomerService">
+            <soap:address location="https://app-adventureworks-wcf-customerservice.azurewebsites.net/CustomerService.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

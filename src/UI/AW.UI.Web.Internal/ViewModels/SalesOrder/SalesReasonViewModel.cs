@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.SalesOrderService;
+using AW.Core.Application.AutoMapper;
+using AW.Infrastructure.Api.WCF.SalesOrderService;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {

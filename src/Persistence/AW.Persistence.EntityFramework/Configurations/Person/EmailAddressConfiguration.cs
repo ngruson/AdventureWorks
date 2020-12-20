@@ -1,4 +1,4 @@
-﻿using AW.Domain.Person;
+﻿using AW.Core.Domain.Person;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 

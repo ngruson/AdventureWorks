@@ -1,4 +1,4 @@
-﻿using AW.Domain.Sales;
+﻿using AW.Core.Domain.Sales;
 using System.Xml.Serialization;
 
 namespace AW.CustomerService.Messages.ListCustomers

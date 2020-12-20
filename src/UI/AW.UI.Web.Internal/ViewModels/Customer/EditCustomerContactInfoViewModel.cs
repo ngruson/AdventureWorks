@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using AW.Application.AutoMapper;
-using AW.UI.Web.Internal.CustomerService;
+using AW.Core.Application.AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
