@@ -48,9 +48,9 @@ steps:
     projects: |
       **/AW.Core.Application.UnitTests.csproj
       **/AW.Core.Domain.UnitTests.csproj
-      **/AW.Infrastructure.Api.WCF.UnitTests
-      **/AW.Persistence.EntityFramework.UnitTests
-      **/AW.Persistence.EntityFrameworkCore.UnitTests
+      **/AW.Infrastructure.Api.WCF.UnitTests.csproj
+      **/AW.Persistence.EntityFramework.UnitTests.csproj
+      **/AW.Persistence.EntityFrameworkCore.UnitTests.csproj
       **/AW.UI.Web.Internal.UnitTests.csproj
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
@@ -61,10 +61,6 @@ steps:
     script: |
       dotnet tool install --global coverlet.console
       Get-ChildItem -Recurse -Filter "*AW.CustomerService.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
-        Write-Host "File: $_"
-        coverlet $_ --target "dotnet" --targetargs "vstest $_" --format "opencover"
-      }
-      Get-ChildItem -Recurse -Filter "*AW.Infrastructure.Api.WCF.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
         Write-Host "File: $_"
         coverlet $_ --target "dotnet" --targetargs "vstest $_" --format "opencover"
       }
