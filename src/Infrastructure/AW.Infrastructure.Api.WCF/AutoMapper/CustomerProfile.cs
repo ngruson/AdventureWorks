@@ -12,11 +12,11 @@ using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using UpdateCustomerAddress = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerAddress;
 using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
 
-namespace AW.Infrastructure.Api.WCF
+namespace AW.Infrastructure.Api.WCF.AutoMapper
 {
-    public class MappingProfile : Profile
+    public class CustomerProfile : Profile
     {
-        public MappingProfile()
+        public CustomerProfile()
         {
             //Mappings for AddCustomerAddress
             CreateMap<AddCustomerAddress.AddCustomerAddressRequest, AddCustomerAddressRequest>();

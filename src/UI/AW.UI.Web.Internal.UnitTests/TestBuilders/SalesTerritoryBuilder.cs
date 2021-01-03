@@ -1,12 +1,12 @@
-﻿using AW.Infrastructure.Api.WCF.SalesTerritoryService;
+﻿using AW.Core.Abstractions.Api.SalesTerritoryApi.ListTerritories;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders
 {
     public class SalesTerritoryBuilder
     {
-        private TerritoryDto territory = new TerritoryDto();
+        private Territory territory = new Territory();
 
-        public SalesTerritoryBuilder CountryRegion(CountryRegionDto countryRegion)
+        public SalesTerritoryBuilder CountryRegion(CountryRegion countryRegion)
         {
             territory.CountryRegion = countryRegion;
             return this;
@@ -24,16 +24,16 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders
             return this;
         }
 
-        public TerritoryDto Build()
+        public Territory Build()
         {
             return territory;
         }
 
         public SalesTerritoryBuilder WithTestValues()
         {
-            territory = new TerritoryDto
+            territory = new Territory
             {
-                CountryRegion = new CountryRegionDto
+                CountryRegion = new CountryRegion
                 {
                     CountryRegionCode = "US",
                     Name = "United States"

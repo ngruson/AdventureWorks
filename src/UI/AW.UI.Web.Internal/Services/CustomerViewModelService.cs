@@ -23,12 +23,15 @@ using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
 using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
 using AW.Core.Domain.Person;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
-using AW.Infrastructure.Api.WCF.AddressTypeService;
-using AW.Infrastructure.Api.WCF.ContactTypeService;
-using AW.Infrastructure.Api.WCF.CountryService;
-using AW.Infrastructure.Api.WCF.SalesPersonService;
-using AW.Infrastructure.Api.WCF.SalesTerritoryService;
-using AW.Infrastructure.Api.WCF.StateProvinceService;
+using AW.Core.Abstractions.Api.AddressTypeApi;
+using AW.Core.Abstractions.Api.ContactTypeApi;
+using AW.Core.Abstractions.Api.CountryApi;
+using AW.Core.Abstractions.Api.StateProvinceApi;
+using AW.Core.Abstractions.Api.SalesTerritoryApi;
+using AW.Core.Abstractions.Api.SalesPersonApi;
+using AW.Core.Abstractions.Api.SalesPersonApi.ListSalesPersons;
+using AW.Core.Abstractions.Api.StateProvinceApi.ListStateProvinces;
+using AW.Core.Abstractions.Api.SalesPersonApi.GetSalesPerson;
 
 namespace AW.UI.Web.Internal.Services
 {
@@ -37,41 +40,41 @@ namespace AW.UI.Web.Internal.Services
         private readonly ILogger<CustomerViewModelService> logger;
         private readonly IMapper mapper;
 
-        private readonly IAddressTypeService addressTypeService;
-        private readonly IContactTypeService contactTypeService;
-        private readonly ICountryService countryService;
-        private readonly ICustomerApi customerService;
-        private readonly ISalesTerritoryService salesTerritoryService;
-        private readonly ISalesPersonService salesPersonService;
-        private readonly IStateProvinceService stateProvinceService;
+        private readonly IAddressTypeApi addressTypeApi;
+        private readonly IContactTypeApi contactTypeApi;
+        private readonly ICountryApi countryApi;
+        private readonly ICustomerApi customerApi;
+        private readonly ISalesTerritoryApi salesTerritoryApi;
+        private readonly ISalesPersonApi salesPersonApi;
+        private readonly IStateProvinceApi stateProvinceApi;
 
         public CustomerViewModelService(
             ILogger<CustomerViewModelService> logger,
             IMapper mapper,
-            IAddressTypeService addressTypeService,
-            IContactTypeService contactTypeService,
-            ICountryService countryService,
-            ICustomerApi customerService,
-            ISalesTerritoryService salesTerritoryService,
-            ISalesPersonService salesPersonService,
-            IStateProvinceService stateProvinceService)
+            IAddressTypeApi addressTypeApi,
+            IContactTypeApi contactTypeApi,
+            ICountryApi countryApi,
+            ICustomerApi customerApi,
+            ISalesTerritoryApi salesTerritoryApi,
+            ISalesPersonApi salesPersonApi,
+            IStateProvinceApi stateProvinceApi)
         {
             this.logger = logger;
             this.mapper = mapper;
-            this.addressTypeService = addressTypeService;
-            this.contactTypeService = contactTypeService;
-            this.countryService = countryService;
-            this.customerService = customerService;
-            this.salesTerritoryService = salesTerritoryService;
-            this.salesPersonService = salesPersonService;
-            this.stateProvinceService = stateProvinceService;
+            this.addressTypeApi = addressTypeApi;
+            this.contactTypeApi = contactTypeApi;
+            this.countryApi = countryApi;
+            this.customerApi = customerApi;
+            this.salesTerritoryApi = salesTerritoryApi;
+            this.salesPersonApi = salesPersonApi;
+            this.stateProvinceApi = stateProvinceApi;
         }
 
         public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, string customerType)
         {
             logger.LogInformation("GetCustomers called");
 
-            var response = await customerService.ListCustomersAsync(
+            var response = await customerApi.ListCustomersAsync(
                 new ListCustomersRequest
                 {
                     PageIndex = pageIndex,
@@ -105,7 +108,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomer called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -124,7 +127,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetStoreCustomerForEdit called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -145,7 +148,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetIndividualCustomerForEdit called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -165,12 +168,10 @@ namespace AW.UI.Web.Internal.Services
         private async Task<IEnumerable<SelectListItem>> GetTerritories(bool edit)
         {
             logger.LogInformation("GetTerritories called.");
-            var territories = await salesTerritoryService.ListTerritoriesAsync(
-                new ListTerritoriesRequest()
-            );
+            var territories = await salesTerritoryApi.ListTerritoriesAsync();
 
             var items = territories
-                .ListTerritoriesResult
+                .Territories
                 .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegion.CountryRegionCode})" })
                 .OrderBy(b => b.Text)
                 .ToList();
@@ -219,15 +220,15 @@ namespace AW.UI.Web.Internal.Services
         private async Task<IEnumerable<SelectListItem>> GetSalesPersons(string salesTerritoryName)
         {
             logger.LogInformation("GetSalesPersons called.");
-            var salesPersons = await salesPersonService.ListSalesPersonsAsync(
-                new ListSalesPersonsRequest1(new ListSalesPersonsRequest
+            var salesPersons = await salesPersonApi.ListSalesPersonsAsync(
+                new ListSalesPersonsRequest
                 {
                     Territory = salesTerritoryName
-                })
+                }
             );
 
             var items = salesPersons
-                .ListSalesPersonsResult
+                .SalesPersons
                 .Select(t => new SelectListItem() { Value = t.FullName, Text = t.FullName })
                 .OrderBy(b => b.Text)
                 .ToList();
@@ -245,7 +246,7 @@ namespace AW.UI.Web.Internal.Services
 
             if (!string.IsNullOrEmpty(viewModel.Store.SalesPerson?.FullName))
             {
-                var salesPersonResponse = await salesPersonService.GetSalesPersonAsync(new GetSalesPersonRequest 
+                var salesPersonResponse = await salesPersonApi.GetSalesPersonAsync(new GetSalesPersonRequest 
                     { FullName = viewModel.Store.SalesPerson.FullName }
                 );
 
@@ -256,7 +257,7 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<UpdateCustomerRequest>(viewModel);
                 
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
-            await customerService.UpdateCustomerAsync(request);
+            await customerApi.UpdateCustomerAsync(request);
             logger.LogInformation("Customer successfully updated");
         }
 
@@ -268,7 +269,7 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<UpdateCustomerRequest>(viewModel);
 
             logger.LogInformation("Calling UpdateCustomer operation of Customer web service");
-            await customerService.UpdateCustomerAsync(request);
+            await customerApi.UpdateCustomerAsync(request);
             logger.LogInformation("Customer successfully updated");
         }
 
@@ -308,14 +309,14 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<AddCustomerAddressRequest>(viewModel);
 
             logger.LogInformation("Calling AddCustomerAddress operation of Customer web service");
-            await customerService.AddCustomerAddressAsync(request);
+            await customerApi.AddCustomerAddressAsync(request);
             logger.LogInformation("Address successfully added");
         }
 
         private async Task<IEnumerable<SelectListItem>> GetAddressTypes()
         {
             logger.LogInformation("GetAddressTypes called.");
-            var addressTypes = await addressTypeService.ListAddressTypesAsync();
+            var addressTypes = await addressTypeApi.ListAddressTypesAsync();
 
             var items = addressTypes
                 .AddressTypes
@@ -331,7 +332,7 @@ namespace AW.UI.Web.Internal.Services
         private async Task<IEnumerable<SelectListItem>> GetCountries()
         {
             logger.LogInformation("GetCountries called.");
-            var response = await countryService.ListCountriesAsync();
+            var response = await countryApi.ListCountriesAsync();
 
             var items = response     
                 .Countries
@@ -349,7 +350,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerAddress called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -381,14 +382,14 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<UpdateCustomerAddressRequest>(viewModel);
 
             logger.LogInformation("Calling UpdateCustomerAddress operation of Customer web service");
-            await customerService.UpdateCustomerAddressAsync(request);
+            await customerApi.UpdateCustomerAddressAsync(request);
             logger.LogInformation("Address successfully updated");
         }
 
         public async Task<IEnumerable<SelectListItem>> GetStateProvinces(string country)
         {
             logger.LogInformation("GetStateProvinces called.");
-            var response = await stateProvinceService.ListStateProvincesAsync(new ListStateProvincesRequest
+            var response = await stateProvinceApi.ListStateProvincesAsync(new ListStateProvincesRequest
             {
                 CountryRegionCode = country
             });
@@ -409,7 +410,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerAddressForDelete called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -430,7 +431,7 @@ namespace AW.UI.Web.Internal.Services
 
         public async Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country)
         {
-            var response = await stateProvinceService.ListStateProvincesAsync(new ListStateProvincesRequest
+            var response = await stateProvinceApi.ListStateProvincesAsync(new ListStateProvincesRequest
             {
                 CountryRegionCode = country
             });
@@ -443,7 +444,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteAddress called");
 
             logger.LogInformation("Calling DeleteCustomerAddress operation of Customer web service");
-            await customerService.DeleteCustomerAddressAsync(new DeleteCustomerAddressRequest
+            await customerApi.DeleteCustomerAddressAsync(new DeleteCustomerAddressRequest
             {
                 AccountNumber = accountNumber,
                 AddressType = addressType
@@ -479,14 +480,14 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<AddCustomerContactRequest>(viewModel);
 
             logger.LogInformation("Calling AddCustomerContact operation of Customer web service");
-            await customerService.AddCustomerContactAsync(request);
+            await customerApi.AddCustomerContactAsync(request);
             logger.LogInformation("Contact successfully added");
         }
 
         private async Task<IEnumerable<SelectListItem>> GetContactTypes()
         {
             logger.LogInformation("GetContactTypes called.");
-            var contactTypes = await contactTypeService.ListContactTypesAsync();
+            var contactTypes = await contactTypeApi.ListContactTypesAsync();
 
             var items = contactTypes
                 .ContactTypes
@@ -503,7 +504,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerContact called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -534,7 +535,7 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<UpdateCustomerContactRequest>(viewModel);
 
             logger.LogInformation("Calling UpdateCustomerContact operation of Customer web service");
-            await customerService.UpdateCustomerContactAsync(request);
+            await customerApi.UpdateCustomerContactAsync(request);
             logger.LogInformation("Contact successfully updated");
         }
 
@@ -542,7 +543,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerContactForDelete called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -565,7 +566,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContact called");
 
             logger.LogInformation("Calling DeleteCustomerContact operation of Customer web service");
-            await customerService.DeleteCustomerContactAsync(
+            await customerApi.DeleteCustomerContactAsync(
                 mapper.Map<DeleteCustomerContactRequest>(viewModel)
             );
 
@@ -596,7 +597,7 @@ namespace AW.UI.Web.Internal.Services
             var request = mapper.Map<AddCustomerContactInfoRequest>(viewModel);
 
             logger.LogInformation("Calling AddCustomerContactInfo operation of Customer web service");
-            await customerService.AddCustomerContactInfoAsync(request);
+            await customerApi.AddCustomerContactInfoAsync(request);
             logger.LogInformation("Contact successfully added");
         }
 
@@ -624,7 +625,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerContactInformationForDelete called");
 
-            var response = await customerService.GetCustomerAsync(
+            var response = await customerApi.GetCustomerAsync(
                 new GetCustomerRequest
                 {
                     AccountNumber = accountNumber
@@ -652,7 +653,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContactInformation called");
 
             logger.LogInformation("Calling DeleteCustomerContact operation of Customer web service");
-            await customerService.DeleteCustomerContactInfoAsync(
+            await customerApi.DeleteCustomerContactInfoAsync(
                 mapper.Map<DeleteCustomerContactInfoRequest>(viewModel)
             );
 

@@ -7,6 +7,7 @@ using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
 using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using AW.Infrastructure.Api.WCF.AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -20,7 +21,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void AddCustomerAddress_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -42,7 +43,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void AddCustomerContact_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -64,7 +65,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void AddCustomerContactInfo_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -86,7 +87,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void DeleteCustomerAddress_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -108,7 +109,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void DeleteCustomerContact_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -130,7 +131,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void DeleteCustomerContactInfo_OK()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -152,7 +153,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void GetCustomer_ReturnsCustomer()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
@@ -184,7 +185,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
         public async void ListCustomers_ReturnsCustomers()
         {
             //Arrange
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>())
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
             var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();

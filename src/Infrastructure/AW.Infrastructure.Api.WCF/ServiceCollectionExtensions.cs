@@ -1,6 +1,11 @@
 ﻿using AutoMapper;
+using AW.Core.Abstractions.Api.AddressTypeApi;
+using AW.Core.Abstractions.Api.ContactTypeApi;
+using AW.Core.Abstractions.Api.CountryApi;
 using AW.Core.Abstractions.Api.CustomerApi;
+using AW.Core.Abstractions.Api.ProductApi;
 using AW.Infrastructure.Api.WCF.AddressTypeService;
+using AW.Infrastructure.Api.WCF.AutoMapper;
 using AW.Infrastructure.Api.WCF.ContactTypeService;
 using AW.Infrastructure.Api.WCF.CountryService;
 using AW.Infrastructure.Api.WCF.CustomerService;
@@ -18,8 +23,12 @@ namespace AW.Infrastructure.Api.WCF
     {
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(CustomerProfile));
+            services.AddScoped<IAddressTypeApi, AddressTypeServiceAdapter>();
+            services.AddScoped<IContactTypeApi, ContactTypeServiceAdapter>();
+            services.AddScoped<ICountryApi, CountryServiceAdapter>();
             services.AddScoped<ICustomerApi, CustomerServiceAdapter>();
+            services.AddScoped<IProductApi, ProductServiceAdapter>();
 
             services.AddWCFServices(configuration);
         }

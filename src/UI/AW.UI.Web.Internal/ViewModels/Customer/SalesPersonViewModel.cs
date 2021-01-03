@@ -3,8 +3,8 @@ using AW.Core.Application.AutoMapper;
 using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
 using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
+using GetSalesPerson = AW.Core.Abstractions.Api.SalesPersonApi.GetSalesPerson;
 using System.ComponentModel.DataAnnotations;
-using AW.Infrastructure.Api.WCF.SalesPersonService;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
@@ -22,7 +22,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
             profile.CreateMap<GetCustomer.SalesPerson, SalesPersonViewModel>();
             profile.CreateMap<ListCustomers.SalesPerson, SalesPersonViewModel>();
             profile.CreateMap<SalesPersonViewModel, UpdateCustomer.SalesPerson>();
-            profile.CreateMap<SalesPersonDto1, SalesPersonViewModel>();
+            profile.CreateMap<GetSalesPerson.SalesPerson, SalesPersonViewModel>();
         }
     }
 }

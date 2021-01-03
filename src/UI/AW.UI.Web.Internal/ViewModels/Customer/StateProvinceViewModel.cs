@@ -3,6 +3,7 @@ using AW.Core.Application.AutoMapper;
 using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
 using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
+using ListStateProvinces = AW.Core.Abstractions.Api.StateProvinceApi.ListStateProvinces;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
@@ -25,7 +26,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
             profile.CreateMap<GetCustomer.StateProvince, StateProvinceViewModel>()
                 .ReverseMap();
             profile.CreateMap<ListCustomers.StateProvince, StateProvinceViewModel>();
-            profile.CreateMap<Infrastructure.Api.WCF.StateProvinceService.StateProvince, StateProvinceViewModel>()
+            profile.CreateMap<ListStateProvinces.StateProvince, StateProvinceViewModel>()
                 .ForMember(m => m.CountryRegion, opt => opt.MapFrom(src => src));
 
             profile.CreateMap<StateProvinceViewModel, UpdateCustomer.StateProvince>();
