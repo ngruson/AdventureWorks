@@ -55,11 +55,16 @@ steps:
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
 - task: PowerShell@2
+  displayName: 'Run Coverlet for WCF projects'
   inputs:
     targetType: 'inline'
     script: |
       dotnet tool install --global coverlet.console
       Get-ChildItem -Recurse -Filter "*AW.CustomerService.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
+        Write-Host "File: $_"
+        coverlet $_ --target "dotnet" --targetargs "vstest $_" --format "opencover"
+      }
+      Get-ChildItem -Recurse -Filter "*AW.Infrastructure.Api.WCF.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
         Write-Host "File: $_"
         coverlet $_ --target "dotnet" --targetargs "vstest $_" --format "opencover"
       }
