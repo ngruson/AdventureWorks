@@ -9,7 +9,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class SalesOrderServiceAdapterUnitTests
+    public class SalesOrderServiceWCFUnitTests
     {
         [Fact]
         public async void ListSalesOrders_ReturnsSalesOrders()
@@ -17,7 +17,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<SalesOrderProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<SalesOrderServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<SalesOrderServiceWCF>>();
             var mockSalesOrderService = new Mock<SalesOrderService.ISalesOrderService>();
             mockSalesOrderService.Setup(x => x.ListSalesOrdersAsync(It.IsAny<SalesOrderService.ListSalesOrdersRequest>()))
                 .ReturnsAsync(new SalesOrderService.ListSalesOrdersResponseListSalesOrdersResult
@@ -36,7 +36,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new SalesOrderServiceAdapter(
+            var sut = new SalesOrderServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockSalesOrderService.Object
@@ -57,7 +57,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<SalesOrderProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<SalesOrderServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<SalesOrderServiceWCF>>();
             var mockSalesOrderService = new Mock<SalesOrderService.ISalesOrderService>();
             mockSalesOrderService.Setup(x => x.GetSalesOrderAsync(It.IsAny<SalesOrderService.GetSalesOrderRequest>()))
                 .ReturnsAsync(new SalesOrderService.GetSalesOrderResponseGetSalesOrderResult
@@ -68,7 +68,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new SalesOrderServiceAdapter(
+            var sut = new SalesOrderServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockSalesOrderService.Object

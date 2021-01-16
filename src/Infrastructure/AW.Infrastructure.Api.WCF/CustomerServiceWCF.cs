@@ -16,13 +16,13 @@ using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class CustomerServiceAdapter : ICustomerApi
+    public class CustomerServiceWCF : ICustomerApi
     {        
         private readonly IMapper mapper;
-        private readonly ILogger<CustomerServiceAdapter> logger;
+        private readonly ILogger<CustomerServiceWCF> logger;
         private readonly CustomerService.ICustomerService customerService;
 
-        public CustomerServiceAdapter(ILogger<CustomerServiceAdapter> logger, IMapper mapper, CustomerService.ICustomerService customerService)
+        public CustomerServiceWCF(ILogger<CustomerServiceWCF> logger, IMapper mapper, CustomerService.ICustomerService customerService)
             => (this.logger, this.mapper, this.customerService) = (logger, mapper, customerService);
 
         public async Task AddCustomerAddressAsync(AddCustomerAddressRequest request)

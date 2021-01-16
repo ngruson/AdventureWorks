@@ -1,0 +1,513 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apim-name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apiVersionSets",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api-version-set')]",
+            "properties": {
+                "displayName": "SalesOrder API",
+                "versioningScheme": "Segment"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesorder-api-version-set')]"
+            ],
+            "properties": {
+                "displayName": "SalesOrder API",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://app-adventureworks-wcf-salesorderservice.azurewebsites.net/",
+                "path": "salesorder",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true,
+                "apiVersion": "1.0",
+                "apiVersionSetId": "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesorder-api-version-set')]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api/ListSalesOrders')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesorder-api')]"
+            ],
+            "properties": {
+                "displayName": "ListSalesOrders",
+                "method": "GET",
+                "urlTemplate": "/?pageIndex={pageIndex}&pageSize={pageSize}",
+                "templateParameters": [
+                    {
+                        "name": "pageIndex",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "ListSalesOrders",
+                "request": {
+                    "queryParameters": [
+                        {
+                            "name": "customerType",
+                            "type": "string",
+                            "values": []
+                        },
+                        {
+                            "name": "territory",
+                            "type": "string",
+                            "values": []
+                        }
+                    ],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "ISalesOrderService_ListSalesOrders_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"totalSalesOrders\": 1,\r\n  \"salesOrders\": [\r\n    {\r\n      \"revisionNumber\": 1,\r\n      \"orderDate\": {},\r\n      \"dueDate\": {},\r\n      \"shipDate\": {},\r\n      \"status\": \"sample\",\r\n      \"onlineOrderFlag\": false,\r\n      \"salesOrderNumber\": \"sample\",\r\n      \"purchaseOrderNumber\": \"sample\",\r\n      \"accountNumber\": \"sample\",\r\n      \"customerName\": \"sample\",\r\n      \"customerType\": \"sample\",\r\n      \"salesPerson\": \"sample\",\r\n      \"territory\": \"sample\",\r\n      \"subTotal\": 1,\r\n      \"taxAmt\": 1,\r\n      \"freight\": 1,\r\n      \"totalDue\": 1,\r\n      \"billToAddress\": {\r\n        \"addressLine1\": \"sample\",\r\n        \"addressLine2\": \"sample\",\r\n        \"city\": \"sample\",\r\n        \"stateProvinceName\": \"sample\",\r\n        \"country\": \"sample\",\r\n        \"postalCode\": \"sample\"\r\n      },\r\n      \"shipToAddress\": {\r\n        \"addressLine1\": \"sample\",\r\n        \"addressLine2\": \"sample\",\r\n        \"city\": \"sample\",\r\n        \"stateProvinceName\": \"sample\",\r\n        \"country\": \"sample\",\r\n        \"postalCode\": \"sample\"\r\n      },\r\n      \"shipMethod\": {\r\n        \"name\": \"sample\",\r\n        \"shipBase\": 1,\r\n        \"shipRate\": 1\r\n      },\r\n      \"orderLines\": [\r\n        {\r\n          \"carrierTrackingNumber\": \"sample\",\r\n          \"orderQty\": 1,\r\n          \"productName\": \"sample\",\r\n          \"specialOfferDescription\": \"sample\",\r\n          \"unitPrice\": 1,\r\n          \"unitPriceDiscount\": 1,\r\n          \"lineTotal\": 1\r\n        }\r\n      ],\r\n      \"salesReasons\": [\r\n        {\r\n          \"name\": \"sample\",\r\n          \"reasonType\": \"sample\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+                                "typeName": "ListSalesOrdersResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api/ListSalesOrders/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'salesorder-api', 'ListSalesOrders')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesorder-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/SalesOrderService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"ListSalesOrders\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/SalesOrderService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <ListSalesOrders>\r\n            <request>\r\n                            {% if context.Request.OriginalUrl.Query.pageIndex != null %}\r\n                            <PageIndex>{{context.Request.OriginalUrl.Query.pageIndex}}</PageIndex>\r\n                            {% else %}\r\n                            <PageIndex xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                            {% if context.Request.OriginalUrl.Query.pageSize != null %}\r\n                            <PageSize>{{context.Request.OriginalUrl.Query.pageSize}}</PageSize>\r\n                            {% else %}\r\n                            <PageSize xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                            {% if context.Request.OriginalUrl.Query.territory %}\r\n                            <Territory>{{context.Request.OriginalUrl.Query.territory}}</Territory>\r\n                            {% endif %}\r\n                            {% if context.Request.OriginalUrl.Query.customerType %}\r\n                            <CustomerType>{{context.Request.OriginalUrl.Query.customerType}}</CustomerType>\r\n                            {% endif %}\r\n                        </request>\r\n          </ListSalesOrders>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"totalSalesOrders\": {% if body.envelope.body.ListSalesOrdersResponse.ListSalesOrdersResult.TotalSalesOrders %}{{body.envelope.body.ListSalesOrdersResponse.ListSalesOrdersResult.TotalSalesOrders}}{% else %} null {% endif %},\r\n            \"salesOrders\":\r\n            [\r\n                {% JSONArrayFor item in body.envelope.body.ListSalesOrdersResponse.ListSalesOrdersResult.SalesOrders -%}\r\n                {\r\n                    \"revisionNumber\": {% if item.RevisionNumber %}\"{{item.RevisionNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"orderDate\": {% if item.OrderDate %}\"{{item.OrderDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"dueDate\": {% if item.DueDate %}\"{{item.DueDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"shipDate\": {% if item.ShipDate %}\"{{item.ShipDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"status\": {% if item.Status %}\"{{item.Status | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"onlineOrderFlag\": {% if item.OnlineOrderFlag %}{{item.OnlineOrderFlag}}{% else %} null {% endif %},\r\n                    \"salesOrderNumber\": {% if item.SalesOrderNumber %}\"{{item.SalesOrderNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"purchaseOrderNumber\": {% if item.PurchaseOrderNumber %}\"{{item.PurchaseOrderNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"accountNumber\": {% if item.AccountNumber %}\"{{item.AccountNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"customerName\": {% if item.CustomerName %}\"{{item.CustomerName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"customerType\": {% if item.CustomerType %}\"{{item.CustomerType | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"salesPerson\": {% if item.SalesPerson %}\"{{item.SalesPerson | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"territory\": {% if item.Territory %}\"{{item.Territory | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"subTotal\": {% if item.SubTotal %}{{item.SubTotal}}{% else %} null {% endif %},\r\n                    \"taxAmt\": {% if item.TaxAmt %}{{item.TaxAmt}}{% else %} null {% endif %},\r\n                    \"freight\": {% if item.Freight %}{{item.Freight}}{% else %} null {% endif %},\r\n                    \"totalDue\": {% if item.TotalDue %}{{item.TotalDue}}{% else %} null {% endif %},\r\n                    \"billToAddress\": \r\n                    {\r\n                        \"addressLine1\": {% if item.BillToAddress.AddressLine1 %}\"{{item.BillToAddress.AddressLine1 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"addressLine2\": {% if item.BillToAddress.AddressLine2 %}\"{{item.BillToAddress.AddressLine2 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"city\": {% if item.BillToAddress.City %}\"{{item.BillToAddress.City | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"stateProvinceName\": {% if item.BillToAddress.StateProvinceName %}\"{{item.BillToAddress.StateProvinceName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"country\": {% if item.BillToAddress.Country %}\"{{item.BillToAddress.Country | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"postalCode\": {% if item.BillToAddress.PostalCode %}\"{{item.BillToAddress.PostalCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                    },\r\n                    \"shipToAddress\": \r\n                    {\r\n                        \"addressLine1\": {% if item.ShipToAddress.AddressLine1 %}\"{{item.ShipToAddress.AddressLine1 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"addressLine2\": {% if item.ShipToAddress.AddressLine2 %}\"{{item.ShipToAddress.AddressLine2 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"city\": {% if item.ShipToAddress.City %}\"{{item.ShipToAddress.City | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"stateProvinceName\": {% if item.ShipToAddress.StateProvinceName %}\"{{item.ShipToAddress.StateProvinceName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"country\": {% if item.ShipToAddress.Country %}\"{{item.ShipToAddress.Country | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"postalCode\": {% if item.ShipToAddress.PostalCode %}\"{{item.ShipToAddress.PostalCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                    },\r\n                    \"shipMethod\": \r\n                    {\r\n                        \"name\": {% if item.ShipMethod.Name %}\"{{item.ShipMethod.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"shipBase\": {% if item.ShipMethod.ShipBase %}{{item.ShipMethod.ShipBase}}{% else %} null {% endif %},\r\n                        \"shipRate\": {% if item.ShipMethod.ShipRate %}{{item.ShipMethod.ShipRate}}{% else %} null {% endif %}\r\n                    },\r\n                    \"orderLines\": \r\n                    [\r\n                        {% JSONArrayFor item2 in item.OrderLines -%}\r\n                        {\r\n                            \"carrierTrackingNumber\": {% if item2.CarrierTrackingNumber %}\"{{item2.CarrierTrackingNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                            \"orderQty\": {% if item2.OrderQty %}\"{{item2.OrderQty | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                            \"productName\": {% if item2.ProductName %}\"{{item2.ProductName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                            \"specialOfferDescription\": {% if item2.SpecialOfferDescription %}\"{{item2.SpecialOfferDescription | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                            \"unitPrice\": {% if item2.UnitPrice %}{{item2.UnitPrice}}{% else %} null {% endif %},\r\n                            \"unitPriceDiscount\": {% if item2.UnitPriceDiscount %}{{item2.UnitPriceDiscount}}{% else %} null {% endif %},\r\n                            \"lineTotal\": {% if item2.LineTotal %}{{item2.LineTotal}}{% else %} null {% endif %}\r\n                        }\r\n                        {% endJSONArrayFor -%}\r\n                    ],\r\n                    \"salesReasons\": \r\n                    [\r\n                        {% JSONArrayFor item2 in item.SalesReasons -%}\r\n                        {\r\n                            \"name\": {% if item2.Name %}\"{{item2.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                            \"reasonType\": {% if item2.ReasonType %}\"{{item2.ReasonType | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                        }\r\n                        {% endJSONArrayFor -%}\r\n                    ]\r\n                }\r\n                {% endJSONArrayFor -%}\r\n            ]\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api/GetSalesOrder')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesorder-api')]"
+            ],
+            "properties": {
+                "displayName": "GetSalesOrder",
+                "method": "GET",
+                "urlTemplate": "/{salesOrderNumber}",
+                "templateParameters": [
+                    {
+                        "name": "salesOrderNumber",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "GetSalesOrder",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "ISalesOrderService_GetSalesOrder_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"salesOrder\": {\r\n    \"revisionNumber\": 1,\r\n    \"orderDate\": {},\r\n    \"dueDate\": {},\r\n    \"shipDate\": {},\r\n    \"status\": \"sample\",\r\n    \"onlineOrderFlag\": false,\r\n    \"salesOrderNumber\": \"sample\",\r\n    \"purchaseOrderNumber\": \"sample\",\r\n    \"accountNumber\": \"sample\",\r\n    \"customerName\": \"sample\",\r\n    \"customerType\": \"sample\",\r\n    \"salesPerson\": \"sample\",\r\n    \"territory\": \"sample\",\r\n    \"subTotal\": 1,\r\n    \"taxAmt\": 1,\r\n    \"freight\": 1,\r\n    \"totalDue\": 1,\r\n    \"billToAddress\": {\r\n      \"addressLine1\": \"sample\",\r\n      \"addressLine2\": \"sample\",\r\n      \"city\": \"sample\",\r\n      \"stateProvinceName\": \"sample\",\r\n      \"country\": \"sample\",\r\n      \"postalCode\": \"sample\"\r\n    },\r\n    \"shipToAddress\": {\r\n      \"addressLine1\": \"sample\",\r\n      \"addressLine2\": \"sample\",\r\n      \"city\": \"sample\",\r\n      \"stateProvinceName\": \"sample\",\r\n      \"country\": \"sample\",\r\n      \"postalCode\": \"sample\"\r\n    },\r\n    \"shipMethod\": {\r\n      \"name\": \"sample\",\r\n      \"shipBase\": 1,\r\n      \"shipRate\": 1\r\n    },\r\n    \"orderLines\": [\r\n      {\r\n        \"carrierTrackingNumber\": \"sample\",\r\n        \"orderQty\": 1,\r\n        \"productName\": \"sample\",\r\n        \"specialOfferDescription\": \"sample\",\r\n        \"unitPrice\": 1,\r\n        \"unitPriceDiscount\": 1,\r\n        \"lineTotal\": 1\r\n      }\r\n    ],\r\n    \"salesReasons\": [\r\n      {\r\n        \"name\": \"sample\",\r\n        \"reasonType\": \"sample\"\r\n      }\r\n    ]\r\n  }\r\n}",
+                                "typeName": "GetSalesOrderResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api/GetSalesOrder/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'salesorder-api', 'GetSalesOrder')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesorder-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/SalesOrderService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"GetSalesOrder\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/SalesOrderService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <GetSalesOrder>\r\n            <request>\r\n                            {% if context.Request.MatchedParameters[\"salesOrderNumber\"] != null %}\r\n                            <SalesOrderNumber>{{context.Request.MatchedParameters[\"salesOrderNumber\"]}}</SalesOrderNumber>\r\n                            {% else %}\r\n                            <SalesOrderNumber xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                        </request>\r\n          </GetSalesOrder>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"salesOrder\": \r\n            {\r\n                \"revisionNumber\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.RevisionNumber %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.RevisionNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"orderDate\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.OrderDate %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.OrderDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"dueDate\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.DueDate %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.DueDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"shipDate\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipDate %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipDate | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"status\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Status %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Status | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"onlineOrderFlag\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.OnlineOrderFlag %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.OnlineOrderFlag}}{% else %} null {% endif %},\r\n                \"salesOrderNumber\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SalesOrderNumber %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SalesOrderNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"purchaseOrderNumber\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.PurchaseOrderNumber %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.PurchaseOrderNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"accountNumber\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.AccountNumber %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.AccountNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"customerName\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.CustomerName %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.CustomerName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"customerType\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.CustomerType %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.CustomerType | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"salesPerson\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SalesPerson %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SalesPerson | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"territory\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Territory %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Territory | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"subTotal\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SubTotal %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SubTotal}}{% else %} null {% endif %},\r\n                \"taxAmt\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.TaxAmt %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.TaxAmt}}{% else %} null {% endif %},\r\n                \"freight\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Freight %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.Freight}}{% else %} null {% endif %},\r\n                \"totalDue\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.TotalDue %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.TotalDue}}{% else %} null {% endif %},\r\n                \"billToAddress\": \r\n                {\r\n                    \"addressLine1\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.AddressLine1 %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.AddressLine1 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"addressLine2\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.AddressLine2 %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.AddressLine2 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"city\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.City %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.City | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"stateProvinceName\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.StateProvinceName %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.StateProvinceName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"country\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.Country %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.Country | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"postalCode\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.PostalCode %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.BillToAddress.PostalCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                },\r\n                \"shipToAddress\": \r\n                {\r\n                    \"addressLine1\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.AddressLine1 %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.AddressLine1 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"addressLine2\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.AddressLine2 %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.AddressLine2 | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"city\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.City %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.City | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"stateProvinceName\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.StateProvinceName %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.StateProvinceName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"country\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.Country %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.Country | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"postalCode\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.PostalCode %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipToAddress.PostalCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                },\r\n                \"shipMethod\": \r\n                {\r\n                    \"name\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.Name %}\"{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"shipBase\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.ShipBase %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.ShipBase}}{% else %} null {% endif %},\r\n                    \"shipRate\": {% if body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.ShipRate %}{{body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.ShipMethod.ShipRate}}{% else %} null {% endif %}\r\n                },\r\n                \"orderLines\": \r\n                [\r\n                    {% JSONArrayFor item in body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.OrderLines -%}\r\n                    {\r\n                        \"carrierTrackingNumber\": {% if item.CarrierTrackingNumber %}\"{{item.CarrierTrackingNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"orderQty\": {% if item.OrderQty %}\"{{item.OrderQty | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"productName\": {% if item.ProductName %}\"{{item.ProductName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"specialOfferDescription\": {% if item.SpecialOfferDescription %}\"{{item.SpecialOfferDescription | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"unitPrice\": {% if item.UnitPrice %}{{item.UnitPrice}}{% else %} null {% endif %},\r\n                        \"unitPriceDiscount\": {% if item.UnitPriceDiscount %}{{item.UnitPriceDiscount}}{% else %} null {% endif %},\r\n                        \"lineTotal\": {% if item.LineTotal %}{{item.LineTotal}}{% else %} null {% endif %}\r\n                    }\r\n                    {% endJSONArrayFor -%}\r\n                ],\r\n                \"salesReasons\": \r\n                [\r\n                    {% JSONArrayFor item in body.envelope.body.GetSalesOrderResponse.GetSalesOrderResult.SalesOrder.SalesReasons -%}\r\n                    {\r\n                        \"name\": {% if item.Name %}\"{{item.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"reasonType\": {% if item.ReasonType %}\"{{item.ReasonType | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                    }\r\n                    {% endJSONArrayFor -%}\r\n                ]\r\n            }\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesorder-api/schemas')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesorder-api')]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {
+                    "definitions": {
+                        "ListSalesOrdersResponse": {
+                            "type": "object",
+                            "properties": {
+                                "totalSalesOrders": {
+                                    "type": "number"
+                                },
+                                "salesOrders": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "revisionNumber": {
+                                                "type": "number"
+                                            },
+                                            "orderDate": {
+                                                "type": "object"
+                                            },
+                                            "dueDate": {
+                                                "type": "object"
+                                            },
+                                            "shipDate": {
+                                                "type": "object"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "onlineOrderFlag": {
+                                                "type": "boolean"
+                                            },
+                                            "salesOrderNumber": {
+                                                "type": "string"
+                                            },
+                                            "purchaseOrderNumber": {
+                                                "type": "string"
+                                            },
+                                            "accountNumber": {
+                                                "type": "string"
+                                            },
+                                            "customerName": {
+                                                "type": "string"
+                                            },
+                                            "customerType": {
+                                                "type": "string"
+                                            },
+                                            "salesPerson": {
+                                                "type": "string"
+                                            },
+                                            "territory": {
+                                                "type": "string"
+                                            },
+                                            "subTotal": {
+                                                "type": "number"
+                                            },
+                                            "taxAmt": {
+                                                "type": "number"
+                                            },
+                                            "freight": {
+                                                "type": "number"
+                                            },
+                                            "totalDue": {
+                                                "type": "number"
+                                            },
+                                            "billToAddress": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "addressLine1": {
+                                                        "type": "string"
+                                                    },
+                                                    "addressLine2": {
+                                                        "type": "string"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "stateProvinceName": {
+                                                        "type": "string"
+                                                    },
+                                                    "country": {
+                                                        "type": "string"
+                                                    },
+                                                    "postalCode": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "shipToAddress": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "addressLine1": {
+                                                        "type": "string"
+                                                    },
+                                                    "addressLine2": {
+                                                        "type": "string"
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "stateProvinceName": {
+                                                        "type": "string"
+                                                    },
+                                                    "country": {
+                                                        "type": "string"
+                                                    },
+                                                    "postalCode": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "shipMethod": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "shipBase": {
+                                                        "type": "number"
+                                                    },
+                                                    "shipRate": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            },
+                                            "orderLines": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "carrierTrackingNumber": {
+                                                            "type": "string"
+                                                        },
+                                                        "orderQty": {
+                                                            "type": "number"
+                                                        },
+                                                        "productName": {
+                                                            "type": "string"
+                                                        },
+                                                        "specialOfferDescription": {
+                                                            "type": "string"
+                                                        },
+                                                        "unitPrice": {
+                                                            "type": "number"
+                                                        },
+                                                        "unitPriceDiscount": {
+                                                            "type": "number"
+                                                        },
+                                                        "lineTotal": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "salesReasons": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "reasonType": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "GetSalesOrderResponse": {
+                            "type": "object",
+                            "properties": {
+                                "salesOrder": {
+                                    "type": "object",
+                                    "properties": {
+                                        "revisionNumber": {
+                                            "type": "number"
+                                        },
+                                        "orderDate": {
+                                            "type": "object"
+                                        },
+                                        "dueDate": {
+                                            "type": "object"
+                                        },
+                                        "shipDate": {
+                                            "type": "object"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "onlineOrderFlag": {
+                                            "type": "boolean"
+                                        },
+                                        "salesOrderNumber": {
+                                            "type": "string"
+                                        },
+                                        "purchaseOrderNumber": {
+                                            "type": "string"
+                                        },
+                                        "accountNumber": {
+                                            "type": "string"
+                                        },
+                                        "customerName": {
+                                            "type": "string"
+                                        },
+                                        "customerType": {
+                                            "type": "string"
+                                        },
+                                        "salesPerson": {
+                                            "type": "string"
+                                        },
+                                        "territory": {
+                                            "type": "string"
+                                        },
+                                        "subTotal": {
+                                            "type": "number"
+                                        },
+                                        "taxAmt": {
+                                            "type": "number"
+                                        },
+                                        "freight": {
+                                            "type": "number"
+                                        },
+                                        "totalDue": {
+                                            "type": "number"
+                                        },
+                                        "billToAddress": {
+                                            "type": "object",
+                                            "properties": {
+                                                "addressLine1": {
+                                                    "type": "string"
+                                                },
+                                                "addressLine2": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "stateProvinceName": {
+                                                    "type": "string"
+                                                },
+                                                "country": {
+                                                    "type": "string"
+                                                },
+                                                "postalCode": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "shipToAddress": {
+                                            "type": "object",
+                                            "properties": {
+                                                "addressLine1": {
+                                                    "type": "string"
+                                                },
+                                                "addressLine2": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "stateProvinceName": {
+                                                    "type": "string"
+                                                },
+                                                "country": {
+                                                    "type": "string"
+                                                },
+                                                "postalCode": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "shipMethod": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "shipBase": {
+                                                    "type": "number"
+                                                },
+                                                "shipRate": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "orderLines": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "carrierTrackingNumber": {
+                                                        "type": "string"
+                                                    },
+                                                    "orderQty": {
+                                                        "type": "number"
+                                                    },
+                                                    "productName": {
+                                                        "type": "string"
+                                                    },
+                                                    "specialOfferDescription": {
+                                                        "type": "string"
+                                                    },
+                                                    "unitPrice": {
+                                                        "type": "number"
+                                                    },
+                                                    "unitPriceDiscount": {
+                                                        "type": "number"
+                                                    },
+                                                    "lineTotal": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "salesReasons": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "reasonType": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

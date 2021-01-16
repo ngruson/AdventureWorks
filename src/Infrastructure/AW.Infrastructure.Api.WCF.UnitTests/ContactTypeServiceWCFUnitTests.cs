@@ -7,7 +7,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class ContactTypeServiceAdapterUnitTests
+    public class ContactTypeServiceWCFUnitTests
     {
         [Fact]
         public async void ListContactypes_ReturnsContactTypes()
@@ -15,7 +15,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<ContactTypeProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<ContactTypeServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<ContactTypeServiceWCF>>();
             var mockContactTypeService = new Mock<ContactTypeService.IContactTypeService>();
             mockContactTypeService.Setup(x => x.ListContactTypesAsync())
                 .ReturnsAsync(new ContactTypeService.ListContactTypesResponse
@@ -23,7 +23,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     ContactTypes = new string[] { "Owner", "Order Administrator" }
                 });
 
-            var sut = new ContactTypeServiceAdapter(
+            var sut = new ContactTypeServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockContactTypeService.Object

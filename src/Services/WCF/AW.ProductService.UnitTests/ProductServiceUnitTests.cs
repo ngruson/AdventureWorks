@@ -26,6 +26,8 @@ namespace AW.ProductService.UnitTests
             };
 
             var mockMediator = new Mock<IMediator>();
+
+
             mockMediator.Setup(x => x.Send(It.IsAny<GetProductsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dto);
             var productService = new ProductService(
@@ -38,7 +40,7 @@ namespace AW.ProductService.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            result.Products.Count().Should().Be(2);
+            result.Products.Product.Count().Should().Be(2);
         }
 
         [TestMethod]

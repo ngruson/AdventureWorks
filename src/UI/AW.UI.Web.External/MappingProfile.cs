@@ -1,14 +1,13 @@
-﻿using AutoMapper;
-using AW.UI.Web.External.ProductService;
-using AW.UI.Web.External.ViewModels;
+﻿using AW.Core.Application.AutoMapper;
+using System.Reflection;
 
 namespace AW.UI.Web.External
 {
-    public class MappingProfile : Profile
+    public class MappingProfile : BaseMappingProfile
     {
-        public MappingProfile()
+        public MappingProfile() : base()
         {
-            CreateMap<ProductDto, ProductViewModel>();
+            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

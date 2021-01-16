@@ -20,7 +20,7 @@ namespace AW.UI.Web.Internal
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
-                .WriteTo.File(new JsonFormatter(), path: @"..\logs\aw-ui-web-internal.json", shared: true)
+                .WriteTo.File(new JsonFormatter(), path: @"..\logs\aw-ui-web-internal.json")
                 .CreateLogger();
 
             try

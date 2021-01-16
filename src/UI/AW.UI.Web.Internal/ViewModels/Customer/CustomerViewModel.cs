@@ -25,16 +25,38 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<GetCustomer.Customer, CustomerViewModel>()
-                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Store.Name ?? src.Person.FullName))
+                .ForMember(m => m.Name, opt => opt.MapFrom(src => MapName(src) ))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => MapCustomerType(src)));
 
             profile.CreateMap<ListCustomers.Customer, CustomerViewModel>()
-                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Store.Name ?? src.Person.FullName))
+                .ForMember(m => m.Name, opt => opt.MapFrom(src => MapName(src) ))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => MapCustomerType(src)));
 
             profile.CreateMap<CustomerViewModel, UpdateCustomer.UpdateCustomerRequest>()
                 .ForMember(m => m.Customer, opt => opt.MapFrom(src => src));
             profile.CreateMap<CustomerViewModel, UpdateCustomer.Customer>();
+        }
+
+        private string MapName(GetCustomer.Customer src)
+        {
+            if (src.Store != null)
+                return src.Store.Name;
+
+            if (src.Person != null)
+                return src.Person.FullName;
+
+            return null;
+        }
+
+        private string MapName(ListCustomers.Customer src)
+        {
+            if (src.Store != null)
+                return src.Store.Name;
+
+            if (src.Person != null)
+                return src.Person.FullName;
+
+            return null;
         }
 
         private string MapCustomerType(GetCustomer.Customer customer)

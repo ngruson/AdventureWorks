@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using AW.Core.Abstractions.Api.ProductApi;
+using AW.Core.Abstractions.Api.ProductApi.ListProducts;
 using AW.UI.Web.External.Interfaces;
-using AW.UI.Web.External.ProductService;
 using AW.UI.Web.External.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,23 +14,23 @@ namespace AW.UI.Web.External.Services
     {
         private readonly ILogger<ProductsViewModelService> logger;
         private readonly IMapper mapper;
-        private readonly IProductService productService;
+        private readonly IProductApi productApi;
 
         public ProductsViewModelService(
             ILoggerFactory loggerFactory,
             IMapper mapper,
-            IProductService productService)
+            IProductApi productApi)
         {
             logger = loggerFactory.CreateLogger<ProductsViewModelService>();
             this.mapper = mapper;
-            this.productService = productService;
+            this.productApi = productApi;
         }
 
         public async Task<ProductsIndexViewModel> GetProducts(int pageIndex, int pageSize)
         {
             logger.LogInformation("GetProducts called");
 
-            var response = await productService.ListProductsAsync(
+            var response = await productApi.ListProductsAsync(
                 new ListProductsRequest
                 {
                     PageIndex = pageIndex,
@@ -43,7 +44,7 @@ namespace AW.UI.Web.External.Services
                 PaginationInfo = new PaginationInfoViewModel()
                 {
                     ActualPage = pageIndex,
-                    ItemsPerPage = response.Products.Length,
+                    ItemsPerPage = response.Products.Count,
                     TotalItems = response.TotalProducts,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)response.TotalProducts / pageSize)).ToString())
                 }

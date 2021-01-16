@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AW.Core.Application.AutoMapper;
-using AW.Infrastructure.Api.WCF.SalesTerritoryService;
+using ListTerritories = AW.Core.Abstractions.Api.SalesTerritoryApi.ListTerritories;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 {
-    public class SalesTerritoryViewModel : IMapFrom<TerritoryDto>
+    public class SalesTerritoryViewModel : IMapFrom<ListTerritories.Territory>
     {
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TerritoryDto, SalesTerritoryViewModel>();
+            profile.CreateMap<ListTerritories.Territory, SalesTerritoryViewModel>();
         }
     }
 }

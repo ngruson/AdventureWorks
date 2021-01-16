@@ -7,7 +7,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class CountryServiceAdapterUnitTests
+    public class CountryServiceWCFUnitTests
     {
         [Fact]
         public async void ListCountries_ReturnsCountries()
@@ -15,7 +15,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CountryProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CountryServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CountryServiceWCF>>();
             var mockCountryService = new Mock<CountryService.ICountryService>();
             mockCountryService.Setup(x => x.ListCountriesAsync())
                 .ReturnsAsync(new CountryService.ListCountriesResponse
@@ -35,7 +35,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new CountryServiceAdapter(
+            var sut = new CountryServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCountryService.Object

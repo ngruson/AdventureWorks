@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class StateProvinceServiceAdapter : IStateProvinceApi
+    public class StateProvinceServiceWCF : IStateProvinceApi
     {
-        private readonly ILogger<StateProvinceServiceAdapter> logger;
+        private readonly ILogger<StateProvinceServiceWCF> logger;
         private readonly IMapper mapper;
         private readonly StateProvinceService.IStateProvinceService stateProvinceService;
 
-        public StateProvinceServiceAdapter(
-            ILogger<StateProvinceServiceAdapter> logger,
+        public StateProvinceServiceWCF(
+            ILogger<StateProvinceServiceWCF> logger,
             IMapper mapper,
             StateProvinceService.IStateProvinceService stateProvinceService
         ) => (this.logger, this.mapper, this.stateProvinceService) = (logger, mapper, stateProvinceService);

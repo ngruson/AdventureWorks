@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class SalesPersonServiceAdapter : ISalesPersonApi
+    public class SalesPersonServiceWCF : ISalesPersonApi
     {
-        private readonly ILogger<SalesPersonServiceAdapter> logger;
+        private readonly ILogger<SalesPersonServiceWCF> logger;
         private readonly IMapper mapper;
         private readonly SalesPersonService.ISalesPersonService salesPersonService;
 
-        public SalesPersonServiceAdapter(
-            ILogger<SalesPersonServiceAdapter> logger,
+        public SalesPersonServiceWCF(
+            ILogger<SalesPersonServiceWCF> logger,
             IMapper mapper,
             SalesPersonService.ISalesPersonService salesPersonService
         ) => (this.logger, this.mapper, this.salesPersonService) = (logger, mapper, salesPersonService);

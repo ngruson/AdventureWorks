@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -31,6 +32,17 @@ namespace AW.Infrastructure.Http
                 .AddMethod(HttpMethod.Get)
                 .AddRequestUri(requestUri)
                 .AddBearerToken(await GetBearerToken(accessToken));
+
+            return await builder.SendAsync();
+        }
+
+        public async Task<HttpResponseMessage> Get(string requestUri, Dictionary<string, string> headers, string accessToken = "")
+        {
+            var builder = requestBuilder
+                .AddMethod(HttpMethod.Get)
+                .AddRequestUri(requestUri)
+                .AddHeaders(headers)
+                .AddBearerToken(await GetBearerToken(accessToken));            
 
             return await builder.SendAsync();
         }

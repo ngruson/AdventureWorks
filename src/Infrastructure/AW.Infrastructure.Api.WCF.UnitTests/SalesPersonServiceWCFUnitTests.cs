@@ -9,7 +9,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class SalesPersonServiceAdapterUnitTests
+    public class SalesPersonServiceWCFUnitTests
     {
         [Fact]
         public async void ListSalesPersons_ReturnsSalesPersons()
@@ -17,7 +17,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<SalesPersonProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<SalesPersonServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<SalesPersonServiceWCF>>();
             var mockSalesPersonService = new Mock<SalesPersonService.ISalesPersonService>();
             mockSalesPersonService.Setup(x => x.ListSalesPersonsAsync(It.IsAny<SalesPersonService.ListSalesPersonsRequest1>()))
                 .ReturnsAsync(new SalesPersonService.ListSalesPersonsResponse
@@ -35,7 +35,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new SalesPersonServiceAdapter(
+            var sut = new SalesPersonServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockSalesPersonService.Object
@@ -56,7 +56,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<SalesPersonProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<SalesPersonServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<SalesPersonServiceWCF>>();
             var mockSalesPersonService = new Mock<SalesPersonService.ISalesPersonService>();
             mockSalesPersonService.Setup(x => x.GetSalesPersonAsync(It.IsAny<SalesPersonService.GetSalesPersonRequest>()))
                 .ReturnsAsync(new SalesPersonService.GetSalesPersonResponseGetSalesPersonResult
@@ -67,7 +67,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new SalesPersonServiceAdapter(
+            var sut = new SalesPersonServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockSalesPersonService.Object

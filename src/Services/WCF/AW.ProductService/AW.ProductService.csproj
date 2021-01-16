@@ -165,6 +165,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Messages\GetProductRequest.cs" />
+    <Compile Include="Messages\ListProducts.cs" />
     <Compile Include="Messages\ListProductsRequest.cs" />
     <Compile Include="Messages\GetProductResponse.cs" />
     <Compile Include="Messages\ListProductsResponse.cs" />
@@ -175,6 +176,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj">
+      <Project>{9b414c99-e397-4c74-af45-307f29164d63}</Project>
+      <Name>AW.Core.Application.AutoMapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\AW.Core.Application\AW.Core.Application.csproj">
       <Project>{33a4e34f-17c0-4d84-8241-6882b85add89}</Project>
       <Name>AW.Core.Application</Name>

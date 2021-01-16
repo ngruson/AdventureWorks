@@ -1,0 +1,244 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apim-name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apiVersionSets",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api-version-set')]",
+            "properties": {
+                "displayName": "SalesPerson API",
+                "versioningScheme": "Segment"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesperson-api-version-set')]"
+            ],
+            "properties": {
+                "displayName": "SalesPerson API",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://app-adventureworks-wcf-salespersonservice.azurewebsites.net/",
+                "path": "salesperson",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true,
+                "apiVersion": "1.0",
+                "apiVersionSetId": "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesperson-api-version-set')]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api/ListSalesPersons')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesperson-api')]"
+            ],
+            "properties": {
+                "displayName": "ListSalesPersons",
+                "method": "GET",
+                "urlTemplate": "/",
+                "templateParameters": [],
+                "description": "ListSalesPersons",
+                "request": {
+                    "queryParameters": [
+                        {
+                            "name": "territory",
+                            "type": "string",
+                            "values": []
+                        }
+                    ],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "ISalesPersonService_ListSalesPersons_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"salesPersons\": [\r\n    {\r\n      \"firstName\": \"sample\",\r\n      \"middleName\": \"sample\",\r\n      \"lastName\": \"sample\",\r\n      \"fullName\": \"sample\",\r\n      \"salesTerritoryName\": \"sample\",\r\n      \"salesQuota\": 1,\r\n      \"bonus\": 1,\r\n      \"commissionPct\": 1,\r\n      \"salesYTD\": 1,\r\n      \"salesLastYear\": 1\r\n    }\r\n  ]\r\n}",
+                                "typeName": "ListSalesPersonsResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api/ListSalesPersons/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'salesperson-api', 'ListSalesPersons')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesperson-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/SalesPersonService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"ListSalesPersons\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/SalesPersonService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <ListSalesPersons>\r\n            <request>\r\n                            {% if context.Request.OriginalUrl.Query.territory %}\r\n                            <Territory>{{context.Request.OriginalUrl.Query.territory}}</Territory>\r\n                            {% else %}\r\n                            <Territory xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                        </request>\r\n          </ListSalesPersons>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"salesPersons\":\r\n            [\r\n                {% JSONArrayFor item in body.envelope.body.ListSalesPersonsResponse.ListSalesPersonsResult -%}\r\n                {\r\n                    \"firstName\": {% if item.FirstName %}\"{{item.FirstName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"middleName\": {% if item.MiddleName %}\"{{item.MiddleName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"lastName\": {% if item.LastName %}\"{{item.LastName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"fullName\": {% if item.FullName %}\"{{item.FullName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"salesTerritoryName\": {% if item.SalesTerritoryName %}\"{{item.SalesTerritoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"salesQuota\": {% if item.SalesQuota and item.SalesQuota != blank %}{{item.SalesQuota}}{% else %} null {% endif %},\r\n                    \"bonus\": {% if item.Bonus %}{{item.Bonus}}{% else %} null {% endif %},\r\n                    \"commissionPct\": {% if item.CommissionPct %}{{item.CommissionPct}}{% else %} null {% endif %},\r\n                    \"salesYTD\": {% if item.SalesYTD %}{{item.SalesYTD}}{% else %} null {% endif %},\r\n                    \"salesLastYear\": {% if item.SalesLastYear %}{{item.SalesLastYear}}{% else %} null {% endif %}\r\n                }\r\n                {% endJSONArrayFor -%}\r\n            ]\r\n            }\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api/GetSalesPerson')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesperson-api')]"
+            ],
+            "properties": {
+                "displayName": "GetSalesPerson",
+                "method": "GET",
+                "urlTemplate": "/{fullName}",
+                "templateParameters": [
+                    {
+                        "name": "fullName",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "GetSalesPerson",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "ISalesPersonService_GetSalesPerson_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"salesPerson\": {\r\n    \"firstName\": \"sample\",\r\n    \"middleName\": \"sample\",\r\n    \"lastName\": \"sample\",\r\n    \"fullName\": \"sample\",\r\n    \"salesTerritoryName\": \"sample\",\r\n    \"salesQuota\": 1,\r\n    \"bonus\": 1,\r\n    \"commissionPct\": 1,\r\n    \"salesYTD\": 1,\r\n    \"salesLastYear\": 1\r\n  }\r\n}",
+                                "typeName": "GetSalesPersonResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api/GetSalesPerson/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'salesperson-api', 'GetSalesPerson')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesperson-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/SalesPersonService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"GetSalesPerson\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/SalesPersonService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <GetSalesPerson>\r\n            <request>\r\n                            {% if context.Request.MatchedParameters[\"fullName\"] != null %}\r\n                            <FullName>{{context.Request.MatchedParameters[\"fullName\"]}}</FullName>\r\n                            {% else %}\r\n                            <FullName xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                        </request>\r\n          </GetSalesPerson>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"salesPerson\": \r\n            {\r\n                \"firstName\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.FirstName %}\"{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.FirstName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"middleName\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.MiddleName %}\"{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.MiddleName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"lastName\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.LastName %}\"{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.LastName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"fullName\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.FullName %}\"{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.FullName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"salesTerritoryName\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesTerritoryName %}\"{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesTerritoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"salesQuota\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesQuota and body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesQuota != blank %}{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesQuota}}{% else %} null {% endif %},\r\n                \"bonus\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.Bonus %}{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.Bonus}}{% else %} null {% endif %},\r\n                \"commissionPct\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.CommissionPct %}{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.CommissionPct}}{% else %} null {% endif %},\r\n                \"salesYTD\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesYTD %}{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesYTD}}{% else %} null {% endif %},\r\n                \"salesLastYear\": {% if body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesLastYear %}{{body.envelope.body.GetSalesPersonResponse.GetSalesPersonResult.SalesPerson.SalesLastYear}}{% else %} null {% endif %}\r\n            }\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesperson-api/schemas')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesperson-api')]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {
+                    "definitions": {
+                        "ListSalesPersonsResponse": {
+                            "type": "object",
+                            "properties": {
+                                "salesPersons": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "firstName": {
+                                                "type": "string"
+                                            },
+                                            "middleName": {
+                                                "type": "string"
+                                            },
+                                            "lastName": {
+                                                "type": "string"
+                                            },
+                                            "fullName": {
+                                                "type": "string"
+                                            },
+                                            "salesTerritoryName": {
+                                                "type": "string"
+                                            },
+                                            "salesQuota": {
+                                                "type": "number"
+                                            },
+                                            "bonus": {
+                                                "type": "number"
+                                            },
+                                            "commissionPct": {
+                                                "type": "number"
+                                            },
+                                            "salesYTD": {
+                                                "type": "number"
+                                            },
+                                            "salesLastYear": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "GetSalesPersonResponse": {
+                            "type": "object",
+                            "properties": {
+                                "salesPerson": {
+                                    "type": "object",
+                                    "properties": {
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "middleName": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "fullName": {
+                                            "type": "string"
+                                        },
+                                        "salesTerritoryName": {
+                                            "type": "string"
+                                        },
+                                        "salesQuota": {
+                                            "type": "number"
+                                        },
+                                        "bonus": {
+                                            "type": "number"
+                                        },
+                                        "commissionPct": {
+                                            "type": "number"
+                                        },
+                                        "salesYTD": {
+                                            "type": "number"
+                                        },
+                                        "salesLastYear": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

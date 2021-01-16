@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using AW.Infrastructure.Api.WCF.SalesPersonService;
-using AW.Infrastructure.Api.WCF.SalesTerritoryService;
+using AW.Core.Abstractions.Api.SalesPersonApi;
+using AW.Core.Abstractions.Api.SalesPersonApi.ListSalesPersons;
+using AW.Core.Abstractions.Api.SalesTerritoryApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels.SalesPerson;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
@@ -14,32 +15,29 @@ namespace AW.UI.Web.Internal.Services
     {
         private readonly ILogger<SalesPersonViewModelService> logger;
         private readonly IMapper mapper;
-        private readonly ISalesPersonService salesPersonService;
-        private readonly ISalesTerritoryService salesTerritoryService;
+        private readonly ISalesPersonApi salesPersonApi;
+        private readonly ISalesTerritoryApi salesTerritoryApi;
 
         public SalesPersonViewModelService(
             ILogger<SalesPersonViewModelService> logger,
             IMapper mapper,
-            ISalesPersonService salesPersonService,
-            ISalesTerritoryService salesTerritoryService
+            ISalesPersonApi salesPersonApi,
+            ISalesTerritoryApi salesTerritoryApi
         ) =>
-            (this.logger, this.mapper, this.salesPersonService, this.salesTerritoryService) = 
-                (logger, mapper, salesPersonService, salesTerritoryService);
+            (this.logger, this.mapper, this.salesPersonApi, this.salesTerritoryApi) = 
+                (logger, mapper, salesPersonApi, salesTerritoryApi);
 
         public async Task<SalesPersonIndexViewModel> GetSalesPersons()
         {
             logger.LogInformation("GetSalesPersons called");
 
-            var response = await salesPersonService.ListSalesPersonsAsync(
-                new ListSalesPersonsRequest1
-                {
-                    request = new ListSalesPersonsRequest()
-                }
+            var response = await salesPersonApi.ListSalesPersonsAsync(
+                new ListSalesPersonsRequest()
             );
 
             var vm = new SalesPersonIndexViewModel
             {
-                SalesPersons = mapper.Map<IEnumerable<SalesPersonViewModel>>(response.ListSalesPersonsResult),
+                SalesPersons = mapper.Map<IEnumerable<SalesPersonViewModel>>(response.SalesPersons),
                 Territories = await GetTerritories(),
             };
 
@@ -48,11 +46,9 @@ namespace AW.UI.Web.Internal.Services
 
         private async Task<IEnumerable<SalesTerritoryViewModel>> GetTerritories()
         {
-            var response = await salesTerritoryService.ListTerritoriesAsync(
-                new ListTerritoriesRequest()
-            );
+            var response = await salesTerritoryApi.ListTerritoriesAsync();
 
-            return mapper.Map<IEnumerable<SalesTerritoryViewModel>>(response.ListTerritoriesResult);
+            return mapper.Map<IEnumerable<SalesTerritoryViewModel>>(response.Territories);
         }
     }
 }

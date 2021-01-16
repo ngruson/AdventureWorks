@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class AddressTypeServiceAdapter : IAddressTypeApi
+    public class AddressTypeServiceWCF : IAddressTypeApi
     {
-        private readonly ILogger<AddressTypeServiceAdapter> logger;
+        private readonly ILogger<AddressTypeServiceWCF> logger;
         private readonly IMapper mapper;
         private readonly AddressTypeService.IAddressTypeService addressTypeService;
 
-        public AddressTypeServiceAdapter(
-            ILogger<AddressTypeServiceAdapter> logger,
+        public AddressTypeServiceWCF(
+            ILogger<AddressTypeServiceWCF> logger,
             IMapper mapper,
             AddressTypeService.IAddressTypeService addressTypeService
         ) => (this.logger, this.mapper, this.addressTypeService) = (logger, mapper, addressTypeService);

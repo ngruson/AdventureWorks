@@ -8,7 +8,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class SalesTerritoryServiceAdapterUnitTests
+    public class SalesTerritoryServiceWCFUnitTests
     {
         [Fact]
         public async void ListSalesTerritories_ReturnsSalesTerritories()
@@ -16,7 +16,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<SalesTerritoryProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<SalesTerritoryServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<SalesTerritoryServiceWCF>>();
             var mockSalesTerritoryService = new Mock<SalesTerritoryService.ISalesTerritoryService>();
             mockSalesTerritoryService
                 .Setup(x => x.ListTerritoriesAsync(It.IsAny<SalesTerritoryService.ListTerritoriesRequest>()))
@@ -35,7 +35,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new SalesTerritoryServiceAdapter(
+            var sut = new SalesTerritoryServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockSalesTerritoryService.Object

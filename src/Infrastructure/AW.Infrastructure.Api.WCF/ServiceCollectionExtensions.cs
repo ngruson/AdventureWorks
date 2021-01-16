@@ -23,13 +23,7 @@ namespace AW.Infrastructure.Api.WCF
     {
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAutoMapper(typeof(CustomerProfile));
-            services.AddScoped<IAddressTypeApi, AddressTypeServiceAdapter>();
-            services.AddScoped<IContactTypeApi, ContactTypeServiceAdapter>();
-            services.AddScoped<ICountryApi, CountryServiceAdapter>();
-            services.AddScoped<ICustomerApi, CustomerServiceAdapter>();
-            services.AddScoped<IProductApi, ProductServiceAdapter>();
-
+            services.AddAutoMapper(typeof(CustomerProfile));            
             services.AddWCFServices(configuration);
         }
 
@@ -39,7 +33,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new AddressTypeServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["AddressTypeService:EndpointAddress"])
+                    new EndpointAddress(configuration["AddressTypeAPI:Uri"])
                 );
 
                 return client;
@@ -48,7 +42,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new ContactTypeServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["ContactTypeService:EndpointAddress"])
+                    new EndpointAddress(configuration["ContactTypeAPI:Uri"])
                 );
 
                 return client;
@@ -57,7 +51,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new CountryServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["CountryService:EndpointAddress"])
+                    new EndpointAddress(configuration["CountryAPI:Uri"])
                 );
 
                 return client;
@@ -66,7 +60,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new CustomerServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["CustomerService:EndpointAddress"])
+                    new EndpointAddress(configuration["CustomerAPI:Uri"])
                 );
 
                 return client;
@@ -75,7 +69,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new SalesOrderServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["SalesOrderService:EndpointAddress"])
+                    new EndpointAddress(configuration["SalesOrderAPI:Uri"])
                 );
 
                 return client;
@@ -84,7 +78,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new SalesPersonServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["SalesPersonService:EndpointAddress"])
+                    new EndpointAddress(configuration["SalesPersonAPI:Uri"])
                 );
 
                 return client;
@@ -93,7 +87,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new SalesTerritoryServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["SalesTerritoryService:EndpointAddress"])
+                    new EndpointAddress(configuration["SalesTerritoryAPI:Uri"])
                 );
 
                 return client;
@@ -102,7 +96,7 @@ namespace AW.Infrastructure.Api.WCF
             {
                 var client = new StateProvinceServiceClient(
                     new BasicHttpsBinding { MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(configuration["StateProvinceService:EndpointAddress"])
+                    new EndpointAddress(configuration["StateProvinceAPI:Uri"])
                 );
 
                 return client;

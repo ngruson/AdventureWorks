@@ -1,0 +1,270 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apim-name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apiVersionSets",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api-version-set')]",
+            "properties": {
+                "displayName": "Product API",
+                "versioningScheme": "Segment"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'product-api-version-set')]"
+            ],
+            "properties": {
+                "displayName": "Product API",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://app-adventureworks-wcf-productservice.azurewebsites.net/",
+                "path": "product",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true,
+                "apiVersion": "1.0",
+                "apiVersionSetId": "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'product-api-version-set')]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api/ListProducts')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'product-api')]"
+            ],
+            "properties": {
+                "displayName": "ListProducts",
+                "method": "GET",
+                "urlTemplate": "/?pageIndex={pageIndex}&pageSize={pageSize}",
+                "templateParameters": [
+                    {
+                        "name": "pageIndex",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "ListProducts",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "IProductService_ListProducts_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"products\": {\r\n    \"name\": \"sample\",\r\n    \"productNumber\": \"sample\",\r\n    \"color\": \"sample\",\r\n    \"listPrice\": 1,\r\n    \"size\": \"sample\",\r\n    \"sizeUnitMeasureCode\": \"sample\",\r\n    \"weight\": 1,\r\n    \"weightUnitMeasureCode\": \"sample\",\r\n    \"productLine\": \"sample\",\r\n    \"class\": \"sample\",\r\n    \"style\": \"sample\",\r\n    \"productSubcategoryName\": \"sample\",\r\n    \"productCategoryName\": \"sample\",\r\n    \"largePhoto\": {}\r\n  },\r\n  \"totalProducts\": 1\r\n}",
+                                "typeName": "ListProductsResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api/GetProduct')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'product-api')]"
+            ],
+            "properties": {
+                "displayName": "GetProduct",
+                "method": "GET",
+                "urlTemplate": "/{productNumber}",
+                "templateParameters": [
+                    {
+                        "name": "productNumber",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "GetProduct",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "IProductService_GetProduct_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"product\": {\r\n    \"name\": \"sample\",\r\n    \"productNumber\": \"sample\",\r\n    \"color\": \"sample\",\r\n    \"listPrice\": 1,\r\n    \"size\": \"sample\",\r\n    \"sizeUnitMeasureCode\": \"sample\",\r\n    \"weight\": 1,\r\n    \"weightUnitMeasureCode\": \"sample\",\r\n    \"productLine\": \"sample\",\r\n    \"class\": \"sample\",\r\n    \"style\": \"sample\",\r\n    \"productSubcategoryName\": \"sample\",\r\n    \"productCategoryName\": \"sample\",\r\n    \"largePhoto\": {}\r\n  }\r\n}",
+                                "typeName": "GetProductResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api/ListProducts/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'product-api', 'ListProducts')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'product-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/ProductService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"ListProducts\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/ProductService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <ListProducts>\r\n            <request>\r\n                            {% if context.Request.OriginalUrl.Query.pageIndex != null %}\r\n                            <PageIndex>{{context.Request.OriginalUrl.Query.pageIndex}}</PageIndex>\r\n                            {% else %}\r\n                            <PageIndex xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                            {% if context.Request.OriginalUrl.Query.pageSize != null %}\r\n                            <PageSize>{{context.Request.OriginalUrl.Query.pageSize}}</PageSize>\r\n                            {% else %}\r\n                            <PageSize xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                        </request>\r\n          </ListProducts>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"products\": \r\n            [\r\n                {% JSONArrayFor item in body.envelope.body.ListProductsResponse.ListProductsResult.Products -%}\r\n                {\r\n                    \"name\": {% if item.Name %}\"{{item.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"productNumber\": {% if item.ProductNumber %}\"{{item.ProductNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"color\": {% if item.Color %}\"{{item.Color | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"listPrice\": {% if item.ListPrice %}{{item.ListPrice}}{% else %} null {% endif %},\r\n                    \"size\": {% if item.Size %}\"{{item.Size | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"sizeUnitMeasureCode\": {% if item.SizeUnitMeasureCode %}\"{{item.SizeUnitMeasureCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"weight\": {% if item.Weight %}{{item.Weight}}{% else %} null {% endif %},\r\n                    \"weightUnitMeasureCode\": {% if item.WeightUnitMeasureCode %}\"{{item.WeightUnitMeasureCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"productLine\": {% if item.ProductLine %}\"{{item.ProductLine | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"class\": {% if item.Class %}\"{{item.Class | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"style\": {% if item.Style %}\"{{item.Style | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"productSubcategoryName\": {% if item.ProductSubcategoryName %}\"{{item.ProductSubcategoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"productCategoryName\": {% if item.ProductCategoryName %}\"{{item.ProductCategoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"largePhoto\": {% if item.LargePhoto %}\"{{item.LargePhoto | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                }\r\n                {% endJSONArrayFor -%}\r\n            ],\r\n            \"totalProducts\": {% if body.envelope.body.ListProductsResponse.ListProductsResult.TotalProducts %}{{body.envelope.body.ListProductsResponse.ListProductsResult.TotalProducts}}{% else %} null {% endif %}\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/product-api/GetProduct/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'product-api', 'GetProduct')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'product-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/ProductService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"GetProduct\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/ProductService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <GetProduct>\r\n            <request>\r\n                            {% if context.Request.MatchedParameters[\"productNumber\"] != null %}\r\n                            <ProductNumber>{{context.Request.MatchedParameters[\"productNumber\"]}}</ProductNumber>\r\n                            {% else %}\r\n                            <ProductNumber xsi:nil=\"true\" />\r\n                            {% endif %}\r\n                        </request>\r\n          </GetProduct>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \"product\": \r\n            {\r\n                \"name\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Name %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"productNumber\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.ProductNumber %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.ProductNumber | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"color\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Color %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.Color | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"listPrice\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.ListPrice %}{{body.envelope.body.GetProductResponse.GetProductResult.Product.ListPrice}}{% else %} null {% endif %},\r\n                \"size\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Size %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.Size | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"sizeUnitMeasureCode\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.SizeUnitMeasureCode %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.SizeUnitMeasureCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"weight\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Weight %}{{body.envelope.body.GetProductResponse.GetProductResult.Product.Weight}}{% else %} null {% endif %},\r\n                \"weightUnitMeasureCode\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.WeightUnitMeasureCode %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.WeightUnitMeasureCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"productLine\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.ProductLine %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.ProductLine | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"class\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Class %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.Class | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"style\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.Style %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.Style | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"productSubcategoryName\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.ProductSubcategoryName %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.ProductSubcategoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"productCategoryName\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.ProductCategoryName %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.ProductCategoryName | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                \"largePhoto\": {% if body.envelope.body.GetProductResponse.GetProductResult.Product.LargePhoto %}\"{{body.envelope.body.GetProductResponse.GetProductResult.Product.LargePhoto | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n            }\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/customer-api/schemas')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'product-api')]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {
+                    "definitions": {
+                        "ListProductsResponse": {
+                            "type": "object",
+                            "properties": {
+                                "products": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "productNumber": {
+                                            "type": "string"
+                                        },
+                                        "color": {
+                                            "type": "string"
+                                        },
+                                        "listPrice": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "string"
+                                        },
+                                        "sizeUnitMeasureCode": {
+                                            "type": "string"
+                                        },
+                                        "weight": {
+                                            "type": "number"
+                                        },
+                                        "weightUnitMeasureCode": {
+                                            "type": "string"
+                                        },
+                                        "productLine": {
+                                            "type": "string"
+                                        },
+                                        "class": {
+                                            "type": "string"
+                                        },
+                                        "style": {
+                                            "type": "string"
+                                        },
+                                        "productSubcategoryName": {
+                                            "type": "string"
+                                        },
+                                        "productCategoryName": {
+                                            "type": "string"
+                                        },
+                                        "largePhoto": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "totalProducts": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "GetProductResponse": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "productNumber": {
+                                            "type": "string"
+                                        },
+                                        "color": {
+                                            "type": "string"
+                                        },
+                                        "listPrice": {
+                                            "type": "number"
+                                        },
+                                        "size": {
+                                            "type": "string"
+                                        },
+                                        "sizeUnitMeasureCode": {
+                                            "type": "string"
+                                        },
+                                        "weight": {
+                                            "type": "number"
+                                        },
+                                        "weightUnitMeasureCode": {
+                                            "type": "string"
+                                        },
+                                        "productLine": {
+                                            "type": "string"
+                                        },
+                                        "class": {
+                                            "type": "string"
+                                        },
+                                        "style": {
+                                            "type": "string"
+                                        },
+                                        "productSubcategoryName": {
+                                            "type": "string"
+                                        },
+                                        "productCategoryName": {
+                                            "type": "string"
+                                        },
+                                        "largePhoto": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

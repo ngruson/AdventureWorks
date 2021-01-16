@@ -1,7 +1,7 @@
-﻿using System.ServiceModel;
-using AutoMapper;
+﻿using AutoMapper;
+using AW.Infrastructure.Api.REST;
+using AW.Infrastructure.Http;
 using AW.UI.Web.External.Interfaces;
-using AW.UI.Web.External.ProductService;
 using AW.UI.Web.External.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,15 +36,10 @@ namespace AW.UI.Web.External
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddScoped<IProductsViewModelService, ProductsViewModelService>();
-            services.AddScoped<IProductService>(provider =>
-            {
-                var client = new ProductServiceClient(
-                    new BasicHttpBinding {  MaxReceivedMessageSize = int.MaxValue },
-                    new EndpointAddress(Configuration["ProductService:EndpointAddress"])
-                );
+            services.AddScoped<IHttpRequestFactory, HttpRequestFactory>();
+            services.AddScoped<IHttpRequestBuilder, HttpRequestBuilder>();
 
-                return client;
-            });
+            services.ConfigureProductApi(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

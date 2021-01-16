@@ -53,6 +53,20 @@ namespace AW.Infrastructure.Http
             return this;
         }
 
+        public HttpRequestBuilder AddHeaders(Dictionary<string, string> headers)
+        {
+            headers
+                .ToList()
+                .ForEach(hdr =>
+                   {
+                       if (!this.headers.ContainsKey(hdr.Key))
+                           AddHeader(hdr.Key, hdr.Value);
+                   }
+                );
+
+            return this;
+        }
+
         public HttpRequestBuilder AddTimeout(TimeSpan timeout)
         {
             this.timeout = timeout;

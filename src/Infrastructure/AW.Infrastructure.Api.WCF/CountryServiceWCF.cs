@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class CountryServiceAdapter : ICountryApi
+    public class CountryServiceWCF : ICountryApi
     {
-        private readonly ILogger<CountryServiceAdapter> logger;
+        private readonly ILogger<CountryServiceWCF> logger;
         private readonly IMapper mapper;
         private readonly CountryService.ICountryService countryService;
 
-        public CountryServiceAdapter(
-            ILogger<CountryServiceAdapter> logger,
+        public CountryServiceWCF(
+            ILogger<CountryServiceWCF> logger,
             IMapper mapper,
             CountryService.ICountryService countryService
         ) => (this.logger, this.mapper, this.countryService) = (logger, mapper, countryService);

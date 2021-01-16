@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.Core.Application.AutoMapper;
-using AW.Infrastructure.Api.WCF.SalesTerritoryService;
 using System.ComponentModel.DataAnnotations;
+using ListTerritories = AW.Core.Abstractions.Api.SalesTerritoryApi.ListTerritories;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 {
-    public class CountryRegionViewModel : IMapFrom<CountryRegionDto>
+    public class CountryRegionViewModel : IMapFrom<ListTerritories.CountryRegion>
     {
         [Display(Name = "Country")]
         [Required]
@@ -14,7 +14,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CountryRegionDto, CountryRegionViewModel>();
+            profile.CreateMap<ListTerritories.CountryRegion, CountryRegionViewModel>();
         }
     }
 }

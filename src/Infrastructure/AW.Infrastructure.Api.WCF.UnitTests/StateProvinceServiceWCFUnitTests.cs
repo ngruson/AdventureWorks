@@ -8,7 +8,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class StateProvinceServiceAdapterUnitTests
+    public class StateProvinceServiceWCFUnitTests
     {
         [Fact]
         public async void ListStateProvinces_ReturnsStateProvinces()
@@ -16,7 +16,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<StateProvinceProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<StateProvinceServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<StateProvinceServiceWCF>>();
             var mockStateProvinceService = new Mock<StateProvinceService.IStateProvinceService>();
             mockStateProvinceService
                 .Setup(x => x.ListStateProvincesAsync(It.IsAny<StateProvinceService.ListStateProvincesRequest>()))
@@ -35,7 +35,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }
                 });
 
-            var sut = new StateProvinceServiceAdapter(
+            var sut = new StateProvinceServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockStateProvinceService.Object

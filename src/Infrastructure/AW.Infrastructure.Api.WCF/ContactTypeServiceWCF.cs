@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.WCF
 {
-    public class ContactTypeServiceAdapter : IContactTypeApi
+    public class ContactTypeServiceWCF : IContactTypeApi
     {
-        private readonly ILogger<ContactTypeServiceAdapter> logger;
+        private readonly ILogger<ContactTypeServiceWCF> logger;
         private readonly IMapper mapper;
         private readonly ContactTypeService.IContactTypeService contactTypeService;
 
-        public ContactTypeServiceAdapter(
-            ILogger<ContactTypeServiceAdapter> logger,
+        public ContactTypeServiceWCF(
+            ILogger<ContactTypeServiceWCF> logger,
             IMapper mapper,
             ContactTypeService.IContactTypeService contactTypeService
         ) => (this.logger, this.mapper, this.contactTypeService) = (logger, mapper, contactTypeService);

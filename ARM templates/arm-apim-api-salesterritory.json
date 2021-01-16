@@ -1,0 +1,131 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apim-name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+       {
+            "type": "Microsoft.ApiManagement/service/apiVersionSets",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesterritory-api-version-set')]",
+            "properties": {
+                "displayName": "SalesTerritory API",
+                "versioningScheme": "Segment"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesterritory-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesterritory-api-version-set')]"
+            ],
+            "properties": {
+                "displayName": "SalesTerritory API",
+                "apiRevision": "1",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://app-adventureworks-wcf-salesterritoryservice.azurewebsites.net/",
+                "path": "salesterritory",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true,
+                "apiVersion": "1.0",
+                "apiVersionSetId": "[resourceId('Microsoft.ApiManagement/service/apiVersionSets', parameters('apim-name'), 'salesterritory-api-version-set')]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesterritory-api/ListTerritories')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesterritory-api')]"
+            ],
+            "properties": {
+                "displayName": "ListTerritories",
+                "method": "GET",
+                "urlTemplate": "/",
+                "templateParameters": [],
+                "description": "ListTerritories",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "ISalesTerritoryService_ListTerritories_OutputMessage",
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"territories\": [\r\n    {\r\n      \"name\": \"sample\",\r\n      \"countryRegion\": {\r\n        \"countryRegionCode\": \"sample\",\r\n        \"name\": \"sample\"\r\n      },\r\n      \"group\": \"sample\"\r\n    }\r\n  ]\r\n}",
+                                "typeName": "ListTerritoriesResponse"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/policies",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesterritory-api/ListTerritories/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('apim-name'), 'salesterritory-api', 'ListTerritories')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesterritory-api')]"
+            ],
+            "properties": {
+                "value": "<policies>\r\n  <inbound>\r\n    <base />\r\n    <rewrite-uri template=\"/SalesTerritoryService.svc\" copy-unmatched-params=\"false\" />\r\n    <set-method>POST</set-method>\r\n    <set-header name=\"SOAPAction\" exists-action=\"override\">\r\n      <value>\"ListTerritories\"</value>\r\n    </set-header>\r\n    <set-body template=\"liquid\">\r\n      <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://services.aw.com/SalesTerritoryService/1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n        <soap:Body>\r\n          <ListTerritories></ListTerritories>\r\n        </soap:Body>\r\n      </soap:Envelope>\r\n    </set-body>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>text/xml</value>\r\n    </set-header>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Response.StatusCode &lt; 400)\">\r\n        <set-body template=\"liquid\">\r\n        {\r\n            \r\n            \"territories\": \r\n            [\r\n                {% JSONArrayFor item in body.envelope.body.ListTerritoriesResponse.ListTerritoriesResult -%}\r\n                {\r\n                    \"name\": {% if item.Name %}\"{{item.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                    \"countryRegion\": \r\n                    {\r\n                        \"countryRegionCode\": {% if item.CountryRegion.CountryRegionCode %}\"{{item.CountryRegion.CountryRegionCode | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %},\r\n                        \"name\": {% if item.CountryRegion.Name %}\"{{item.CountryRegion.Name | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                    },\r\n                    \"group\": {% if item.Group %}\"{{item.Group | Replace: '\\r', '\\r' | Replace: '\\n', '\\n' | Replace: '([^\\\\](\\\\\\\\)*)\"', '$1\\\"'}}\"{% else %} null {% endif %}\r\n                }\r\n                {% endJSONArrayFor -%}\r\n            ]\r\n        }</set-body>\r\n      </when>\r\n      <otherwise>\r\n        <set-variable name=\"old-body\" value=\"@(context.Response.Body.As&lt;string&gt;(preserveContent: true))\" />\r\n        <!-- Error response as per https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#7102-error-condition-responses -->\r\n        <set-body template=\"liquid\">{\r\n            \"error\": {\r\n                \"code\": \"{{body.envelope.body.fault.faultcode}}\",\r\n                \"message\": \"{{body.envelope.body.fault.faultstring}}\"\r\n            }\r\n        }</set-body>\r\n        <choose>\r\n          <when condition=\"@(string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;code&quot;].ToString()) &amp;&amp; string.IsNullOrEmpty(context.Response.Body.As&lt;JObject&gt;(preserveContent: true)[&quot;error&quot;][&quot;message&quot;].ToString()))\">\r\n            <set-body>@{\r\n                    var newResponseBody = new JObject();\r\n                    newResponseBody[\"error\"] = new JObject();\r\n                    newResponseBody[\"error\"][\"code\"] = \"InvalidErrorResponseBody\";\r\n                    if (string.IsNullOrEmpty((string)context.Variables[\"old-body\"]))\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was empty.\";\r\n                    }\r\n                    else\r\n                    {\r\n                        newResponseBody[\"error\"][\"message\"] = \"The error response body was not a valid SOAP error response. The response body was: '\" + context.Variables[\"old-body\"] + \"'.\";\r\n                    }\r\n                    return newResponseBody.ToString();\r\n                }</set-body>\r\n          </when>\r\n        </choose>\r\n      </otherwise>\r\n    </choose>\r\n    <set-header name=\"Content-Type\" exists-action=\"override\">\r\n      <value>application/json</value>\r\n    </set-header>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apim-name'), '/salesterritory-api/schemas')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apim-name'), 'salesterritory-api')]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {
+                    "definitions": {
+                        "ListSalesTerritoriesResponse": {
+                            "type": "object",
+                            "properties": {
+                                "territories": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "countryRegion": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "countryRegionCode": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "group": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

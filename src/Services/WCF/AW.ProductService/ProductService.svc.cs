@@ -1,8 +1,10 @@
-﻿using AW.Core.Application.Product.CountProducts;
+﻿using AutoMapper;
+using AW.Core.Application.Product.CountProducts;
 using AW.Core.Application.Product.GetProduct;
 using AW.Core.Application.Product.GetProducts;
 using AW.ProductService.Messages;
 using MediatR;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -14,8 +16,7 @@ namespace AW.ProductService
     {
         private readonly IMediator mediator;
 
-        public ProductService(IMediator mediator) =>
-            (this.mediator) = (mediator);
+        public ProductService(IMediator mediator) => (this.mediator) = (mediator);
 
         public async Task<ListProductsResponse> ListProducts(ListProductsRequest request)
         {
@@ -29,7 +30,10 @@ namespace AW.ProductService
             var response = new ListProductsResponse
             {
                 TotalProducts = await mediator.Send(new CountProductsQuery()),
-                Products = products.ToList(),
+                Products = new ListProducts
+                {
+                    Product = products.ToList()
+                }
             };
 
             return response;

@@ -15,7 +15,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class CustomerServiceAdapterUnitTests
+    public class CustomerServiceWCFUnitTests
     {
         [Fact]
         public async void AddCustomerAddress_OK()
@@ -23,10 +23,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -45,10 +45,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -67,10 +67,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -89,10 +89,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -111,10 +111,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -133,10 +133,10 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -155,7 +155,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
             mockCustomerService.Setup(x => x.GetCustomerAsync(It.IsAny<CustomerService.GetCustomerRequest>()))
                 .ReturnsAsync(new CustomerService.GetCustomerResponseGetCustomerResult
@@ -166,7 +166,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     }                        
                 });
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object
@@ -187,7 +187,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<CustomerProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<CustomerServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<CustomerServiceWCF>>();
             var mockCustomerService = new Mock<CustomerService.ICustomerService>();
             mockCustomerService.Setup(x => x.ListCustomersAsync(It.IsAny<CustomerService.ListCustomersRequest>()))
                 .ReturnsAsync(new CustomerService.ListCustomersResponseListCustomersResult
@@ -205,7 +205,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     TotalCustomers = 2
                 });
 
-            var sut = new CustomerServiceAdapter(
+            var sut = new CustomerServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockCustomerService.Object

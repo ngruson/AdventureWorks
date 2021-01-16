@@ -8,7 +8,7 @@ using Xunit;
 
 namespace AW.Infrastructure.Api.WCF.UnitTests
 {
-    public class AddressTypeServiceAdapterUnitTests
+    public class AddressTypeServiceWCFUnitTests
     {
         [Fact]
         public async void ListAddressTypes_ReturnsAddressTypes()
@@ -16,7 +16,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
             //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<AddressTypeProfile>())
                 .CreateMapper();
-            var mockLogger = new Mock<ILogger<AddressTypeServiceAdapter>>();
+            var mockLogger = new Mock<ILogger<AddressTypeServiceWCF>>();
             var mockAddressTypeService = new Mock<AddressTypeService.IAddressTypeService>();
             mockAddressTypeService.Setup(x => x.ListAddressTypesAsync())
                 .ReturnsAsync(new AddressTypeService.ListAddressTypesResponse
@@ -24,7 +24,7 @@ namespace AW.Infrastructure.Api.WCF.UnitTests
                     AddressTypes = new string[] { "Home", "Main Office" }
                 });
 
-            var sut = new AddressTypeServiceAdapter(
+            var sut = new AddressTypeServiceWCF(
                 mockLogger.Object,
                 mapper,
                 mockAddressTypeService.Object

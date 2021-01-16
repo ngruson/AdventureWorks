@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AW.Core.Abstractions\AW.Core.Abstractions.csproj" />
     <ProjectReference Include="..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AW.Infrastructure.Api.REST\AW.Infrastructure.Api.REST.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AW.Infrastructure.Api.WCF\AW.Infrastructure.Api.WCF.csproj" />
   </ItemGroup>
 
