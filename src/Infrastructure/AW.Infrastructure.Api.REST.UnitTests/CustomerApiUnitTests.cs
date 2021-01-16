@@ -36,7 +36,19 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            await sut.AddCustomerAddressAsync(new AddCustomerAddressRequest());
+            await sut.AddCustomerAddressAsync(new AddCustomerAddressRequest
+                {
+                    AccountNumber = "1",
+                    CustomerAddress = new Core.Abstractions.Api.CustomerApi.AddCustomerAddress.CustomerAddress
+                    {
+                        AddressType = "Home",
+                        Address = new Core.Abstractions.Api.CustomerApi.AddCustomerAddress.Address
+                        {
+                            City = "Seattle"
+                        }
+                    }
+                }
+            );
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));

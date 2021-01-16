@@ -48,6 +48,7 @@ steps:
     projects: |
       **/AW.Core.Application.UnitTests.csproj
       **/AW.Core.Domain.UnitTests.csproj
+      **/AW.Infrastructure.Api.REST.UnitTests.csproj
       **/AW.Infrastructure.Api.WCF.UnitTests.csproj
       **/AW.Persistence.EntityFramework.UnitTests.csproj
       **/AW.Persistence.EntityFrameworkCore.UnitTests.csproj
