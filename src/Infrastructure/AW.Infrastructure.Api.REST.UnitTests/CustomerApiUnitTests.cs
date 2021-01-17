@@ -176,7 +176,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             var mockLogger = new Mock<ILogger<CustomerApi>>();
             var mockHttpRequestFactory = new Mock<IHttpRequestFactory>();
             mockHttpRequestFactory.Setup(x => x.Get(
-                    It.IsAny<string>(), It.IsAny<string>()
+                    It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()
                 )
             )
             .ReturnsAsync(new HttpResponseMessage
@@ -203,7 +203,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             var response = await sut.GetCustomerAsync(new GetCustomerRequest());
 
             //Assert
-            mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<string>()));
+            mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()));
 
             response.Customer.AccountNumber.Should().Be("1");
         }
@@ -215,7 +215,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             var mockLogger = new Mock<ILogger<CustomerApi>>();
             var mockHttpRequestFactory = new Mock<IHttpRequestFactory>();
             mockHttpRequestFactory.Setup(x => x.Get(
-                    It.IsAny<string>(), It.IsAny<string>()
+                    It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()
                 )
             )
             .ReturnsAsync(new HttpResponseMessage
@@ -244,7 +244,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             var response = await sut.ListCustomersAsync(new ListCustomersRequest());
 
             //Assert
-            mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<string>()));
+            mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()));
             response.TotalCustomers.Should().Be(2);
             response.Customers[0].AccountNumber.Should().Be("1");
             response.Customers[1].AccountNumber.Should().Be("2");
