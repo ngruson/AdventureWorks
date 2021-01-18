@@ -1,5 +1,4 @@
-﻿using AW.Core.Domain.Person;
-using System;
+﻿using System;
 
 namespace AW.Core.Application.UnitTests.TestBuilders
 {

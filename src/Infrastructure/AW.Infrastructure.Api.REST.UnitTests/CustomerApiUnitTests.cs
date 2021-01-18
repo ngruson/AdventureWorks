@@ -4,8 +4,9 @@ using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerAddress;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
-using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
-using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+using AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCustomers;
 using AW.Infrastructure.Http;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,67 @@ namespace AW.Infrastructure.Api.REST.UnitTests
 {
     public class CustomerApiUnitTests
     {
+        #region ListCustomers helpers
+        private ListCustomers.Customer Customer1()
+        {
+            return new CustomerBuilder()
+                .AccountNumber("AW00000001")
+                .Store(new StoreBuilder()
+                    .Name("A Bike Store")
+                    .Addresses(new List<ListCustomers.CustomerAddress>
+                        {
+                            new CustomerAddressBuilder()
+                                .Address(new AddressBuilder()
+                                    .AddressLine1("2251 Elliot Avenue")
+                                    .City("Seattle")
+                                    .StateProvince(new StateProvinceBuilder()
+                                        .StateProvinceCode("WA")
+                                        .Name("Washington")
+                                        .SalesTerritory("Northwest")
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                        }
+                    )
+                    .Build()
+                )
+                .Build();
+        }
+
+        private ListCustomers.Customer Customer2()
+        {
+            return new CustomerBuilder()
+                .AccountNumber("AW00000002")
+                .Person(new PersonBuilder()
+                    .FirstName("Jon")
+                    .MiddleName("V")
+                    .LastName("Yang")
+                    .Addresses(new List<ListCustomers.CustomerAddress>
+                        {
+                            new CustomerAddressBuilder()
+                                .Address(new AddressBuilder()
+                                    .AddressLine1("3761 N. 14th St")
+                                    .City("Rockhampton")
+                                    .StateProvince(new StateProvinceBuilder()
+                                        .StateProvinceCode("QLD")
+                                        .Name("Queensland")
+                                        .SalesTerritory("Australia")
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                        }
+                    )
+                    .Build()
+                )
+                .Build();
+        }
+
+        #endregion
+
         [Fact]
         public async void AddCustomerAddress_OK()
         {
@@ -71,7 +133,19 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            await sut.AddCustomerContactAsync(new AddCustomerContactRequest());
+            await sut.AddCustomerContactAsync(new AddCustomerContactRequest
+                {
+                    AccountNumber = "1",
+                    CustomerContact = new Core.Abstractions.Api.CustomerApi.AddCustomerContact.CustomerContact
+                    {
+                        Contact = new Core.Abstractions.Api.CustomerApi.AddCustomerContact.Contact
+                        {
+                            FirstName = "John"
+                        },
+                        ContactType = "Owner"
+                    }
+                }
+            );
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));
@@ -94,7 +168,16 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            await sut.AddCustomerContactInfoAsync(new AddCustomerContactInfoRequest());
+            await sut.AddCustomerContactInfoAsync(new AddCustomerContactInfoRequest
+                {
+                    AccountNumber = "1",
+                    CustomerContactInfo = new Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo.CustomerContactInfo
+                    {
+                        Channel = Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo.Channel.Email,
+                        Value = "test@mail.com"
+                    }
+                }
+            );
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));
@@ -182,9 +265,9 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new JsonContent(new GetCustomerResponse
+                Content = new JsonContent(new GetCustomer.GetCustomerResponse
                 {
-                    Customer = new Core.Abstractions.Api.CustomerApi.GetCustomer.Customer
+                    Customer = new GetCustomer.Customer
                     {
                         AccountNumber = "1"
                     }
@@ -200,7 +283,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            var response = await sut.GetCustomerAsync(new GetCustomerRequest());
+            var response = await sut.GetCustomerAsync(new GetCustomer.GetCustomerRequest());
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()));
@@ -213,6 +296,13 @@ namespace AW.Infrastructure.Api.REST.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerApi>>();
+
+            var customers = new List<ListCustomers.Customer>
+            {
+                Customer1(),
+                Customer2()
+            };
+
             var mockHttpRequestFactory = new Mock<IHttpRequestFactory>();
             mockHttpRequestFactory.Setup(x => x.Get(
                     It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()
@@ -221,13 +311,9 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new JsonContent(new ListCustomersResponse
+                Content = new JsonContent(new ListCustomers.ListCustomersResponse
                 {
-                    Customers = new List<Core.Abstractions.Api.CustomerApi.ListCustomers.Customer>
-                    {
-                        new Core.Abstractions.Api.CustomerApi.ListCustomers.Customer { AccountNumber = "1" },
-                        new Core.Abstractions.Api.CustomerApi.ListCustomers.Customer { AccountNumber = "2" }
-                    },
+                    Customers = customers,
                     TotalCustomers = 2
                 })
             });
@@ -241,13 +327,13 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            var response = await sut.ListCustomersAsync(new ListCustomersRequest());
+            var response = await sut.ListCustomersAsync(new ListCustomers.ListCustomersRequest());
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<string>()));
             response.TotalCustomers.Should().Be(2);
-            response.Customers[0].AccountNumber.Should().Be("1");
-            response.Customers[1].AccountNumber.Should().Be("2");
+            response.Customers[0].AccountNumber.Should().Be("AW00000001");
+            response.Customers[1].AccountNumber.Should().Be("AW00000002");
         }
     }
 }
