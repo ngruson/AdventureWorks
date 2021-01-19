@@ -1,4 +1,16 @@
-﻿.aw-products-thumbnail {
+﻿.aw-products-items {
+    margin-top: 1rem;
+}
+
+.aw-products-item {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    width: 33%;
+    display: inline-block;
+    float: none !important;
+}
+
+.aw-products-thumbnail {
     max-width: 370px;
     width: 100%;
 }

@@ -6,10 +6,10 @@
 @if (Model.Products.Any())
 {
     <partial name="_pagination" for="@Model.PaginationInfo" />
-    <div class="row">
+    <div class="aw-products-items row">
         @foreach (var product in Model.Products)
         {
-            <div class="col-md-4">
+            <div class="aw-products-item col-md-4">
                 <partial name="_product" for="@product" />
             </div>
         }

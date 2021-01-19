@@ -35,8 +35,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCust
             {
                 FirstName = "Pamela",
                 MiddleName = "O",
-                LastName = "Ansman-Wolfe",
-                SalesTerritoryName = "Northwest"
+                LastName = "Ansman-Wolfe"
             };
 
             return this;

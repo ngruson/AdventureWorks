@@ -24,12 +24,6 @@ namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCust
             return this;
         }
 
-        public StateProvinceBuilder SalesTerritory(string salesTerritoryName)
-        {
-            stateProvince.SalesTerritoryName = salesTerritoryName;
-            return this;
-        }
-
         public StateProvince Build()
         {
             return stateProvince;
@@ -41,8 +35,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCust
             {
                 StateProvinceCode = "WA",
                 CountryRegion = new CountryRegionBuilder().WithTestValues().Build(),
-                Name = "Washington",
-                SalesTerritoryName = "Northwest"
+                Name = "Washington"
             };
 
             return this;
