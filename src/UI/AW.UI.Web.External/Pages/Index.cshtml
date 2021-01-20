@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+
+@if (Model.ProductsModel.Products.Any())
+{
+    <partial name="_pagination" for="@Model.ProductsModel.PaginationInfo" />
+    <div class="aw-products-items row">
+        @foreach (var product in Model.ProductsModel.Products)
+        {
+            <div class="aw-products-item col-md-4">
+                <partial name="_product" for="@product" />
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row">
+        THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+    </div>
+}

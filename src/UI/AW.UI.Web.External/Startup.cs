@@ -1,11 +1,10 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AW.Infrastructure.Api.REST;
 using AW.Infrastructure.Http;
 using AW.UI.Web.External.Interfaces;
 using AW.UI.Web.External.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,17 +23,10 @@ namespace AW.UI.Web.External
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-            services.AddMvc();
-
+            //services.AddMvc();
+            services.AddRazorPages();
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllersWithViews();
+
             services.AddScoped<IProductsViewModelService, ProductsViewModelService>();
             services.AddScoped<IHttpRequestFactory, HttpRequestFactory>();
             services.AddScoped<IHttpRequestBuilder, HttpRequestBuilder>();
@@ -51,7 +43,7 @@ namespace AW.UI.Web.External
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -60,21 +52,11 @@ namespace AW.UI.Web.External
             app.UseStaticFiles();
             app.UseRouting();
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute("default", "{controller:slugify=Home}/{action:slugify=Index}/{id?}");
-                //endpoints.MapRazorPages();
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapRazorPages();
             });
         }
     }

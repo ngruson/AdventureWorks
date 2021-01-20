@@ -1,0 +1,34 @@
+﻿@model PaginationInfoViewModel
+@{
+    var prevRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+    if (prevRouteData.ContainsKey("pageId"))
+        prevRouteData.Remove("pageId");
+    prevRouteData.Add("pageId", (Model.ActualPage - 1).ToString());
+    var nextRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+    if (nextRouteData.ContainsKey("pageId"))
+        nextRouteData.Remove("pageId");
+    nextRouteData.Add("pageId", (Model.ActualPage + 1).ToString());
+}
+<div class="aw-pager">
+    <div class="container-fluid">
+        <nav class="aw-pager-wrapper">
+            <ul class="pagination">
+                <li class="page-item @Model.Previous"><a class="page-link" asp-all-route-data="prevRouteData">Previous</a></li>
+                @if (Model.ActualPage == 0)
+                {
+                    <li class="page-item active"><a class="page-link" href="?pageId=@Model.ActualPage">@(Model.ActualPage + 1)</a></li>
+                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 1)">@(Model.ActualPage + 2)</a></li>
+                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 2)">@(Model.ActualPage + 3)</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage - 1)">@(Model.ActualPage)</a></li>
+                    <li class="page-item active"><a class="page-link" href="?pageId=@(Model.ActualPage)">@(Model.ActualPage + 1)</a></li>
+                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 1)">@(Model.ActualPage + 2)</a></li>
+                }
+
+                <li class="page-item @Model.Next"><a class="page-link" asp-all-route-data="nextRouteData">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
