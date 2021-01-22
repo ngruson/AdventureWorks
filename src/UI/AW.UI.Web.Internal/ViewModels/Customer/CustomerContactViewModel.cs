@@ -4,6 +4,7 @@ using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
 using AddCustomerContact = AW.Core.Abstractions.Api.CustomerApi.AddCustomerContact;
 using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
+using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
@@ -23,6 +24,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
             profile.CreateMap<CustomerContactViewModel, AddCustomerContact.CustomerContact>();
             profile.CreateMap<CustomerContactViewModel, UpdateCustomerContact.CustomerContact>();
+            profile.CreateMap<CustomerContactViewModel, UpdateCustomer.CustomerContact>();
         }
     }
 }
