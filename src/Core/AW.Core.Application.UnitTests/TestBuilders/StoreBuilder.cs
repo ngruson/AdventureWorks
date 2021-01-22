@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AW.Core.Domain.Person;
+using System.Collections.Generic;
 
 namespace AW.Core.Application.UnitTests.TestBuilders
 {
@@ -15,6 +16,18 @@ namespace AW.Core.Application.UnitTests.TestBuilders
         public StoreBuilder SalesPerson(Domain.Sales.SalesPerson salesPerson)
         {
             store.SalesPerson = salesPerson;
+            return this;
+        }
+
+        public StoreBuilder Addresses(ICollection<BusinessEntityAddress> addresses)
+        {
+            store.BusinessEntityAddresses = addresses;
+            return this;
+        }
+
+        public StoreBuilder Contacts(ICollection<BusinessEntityContact> contacts)
+        {
+            store.BusinessEntityContacts = contacts;
             return this;
         }
 

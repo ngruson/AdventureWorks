@@ -1,8 +1,7 @@
-﻿using AW.Core.Domain.Person;
-using System;
+﻿using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using System.Collections.Generic;
 
-namespace AW.Core.Application.UnitTests.TestBuilders
+namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.UpdateCustomer
 {
     public class PersonBuilder
     {
@@ -38,21 +37,15 @@ namespace AW.Core.Application.UnitTests.TestBuilders
             return this;
         }
 
-        public PersonBuilder Addresses(ICollection<BusinessEntityAddress> addresses)
+        public PersonBuilder Addresses(List<CustomerAddress> addresses)
         {
-            person.BusinessEntityAddresses = addresses;
+            person.Addresses = addresses;
             return this;
         }
 
-        public PersonBuilder EmailAddresses(ICollection<EmailAddress> emailAddresses)
+        public PersonBuilder ContactInfo(List<ContactInfo> contactInfo)
         {
-            person.EmailAddresses = emailAddresses;
-            return this;
-        }
-
-        public PersonBuilder PhoneNumbers(ICollection<PersonPhone> phoneNumbers)
-        {
-            person.PhoneNumbers = phoneNumbers;
+            person.ContactInfo = contactInfo;
             return this;
         }
 
@@ -65,22 +58,17 @@ namespace AW.Core.Application.UnitTests.TestBuilders
         {
             person = new Person
             {
-                Id = new Random().Next(),
                 Title = "Mr.",
                 FirstName = "Orlando",
                 MiddleName = "N.",
                 LastName = "Gee",
-                BusinessEntityAddresses = new List<BusinessEntityAddress>
+                Addresses = new List<CustomerAddress>
                 {
-                    new BusinessEntityAddressBuilder().WithTestValues().Build()
+                    new CustomerAddressBuilder().WithTestValues().Build()
                 },
-                PhoneNumbers = new List<PersonPhone>
+                ContactInfo = new List<ContactInfo>
                 {
-                    new PersonPhoneBuilder().WithTestValues().Build()
-                },
-                EmailAddresses = new List<EmailAddress>
-                {
-                    new EmailAddressBuilder().WithTestValues().Build()
+                    new ContactInfoBuilder().Build()
                 }
             };
 

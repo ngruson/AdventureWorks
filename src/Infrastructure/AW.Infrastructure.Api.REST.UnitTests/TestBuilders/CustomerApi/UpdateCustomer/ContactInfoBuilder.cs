@@ -1,7 +1,7 @@
-﻿using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+﻿using AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
 using AW.Core.Domain.Person;
 
-namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCustomers
+namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.UpdateCustomer
 {
     public class ContactInfoBuilder
     {
@@ -34,7 +34,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCust
         {
             contactInfo = new ContactInfo
             {
-                Channel = Core.Domain.Person.ContactInfoChannelType.Phone,
+                Channel = ContactInfoChannelType.Phone,
                 ContactInfoType = "Cell",
                 Value = "245-555-0173"
             };

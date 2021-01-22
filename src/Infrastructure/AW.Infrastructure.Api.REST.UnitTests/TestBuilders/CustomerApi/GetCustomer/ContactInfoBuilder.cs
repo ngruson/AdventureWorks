@@ -1,7 +1,7 @@
-﻿using AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
+﻿using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using AW.Core.Domain.Person;
 
-namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCustomers
+namespace AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.GetCustomer
 {
     public class ContactInfoBuilder
     {
