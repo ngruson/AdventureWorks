@@ -52,6 +52,7 @@ steps:
       **/AW.Infrastructure.Api.WCF.UnitTests.csproj
       **/AW.Persistence.EntityFramework.UnitTests.csproj
       **/AW.Persistence.EntityFrameworkCore.UnitTests.csproj
+      **/AW.CustomerService.UnitTests.csproj
       **/AW.UI.Web.Internal.UnitTests.csproj
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 

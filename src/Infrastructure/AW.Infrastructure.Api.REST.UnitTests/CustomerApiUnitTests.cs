@@ -4,12 +4,11 @@ using AW.Core.Abstractions.Api.CustomerApi.AddCustomerContactInfo;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerAddress;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
 using AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContactInfo;
-using DeleteCustomerContact = AW.Core.Abstractions.Api.CustomerApi.DeleteCustomerContact;
 using GetCustomer = AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
 using ListCustomers = AW.Core.Abstractions.Api.CustomerApi.ListCustomers;
 using UpdateCustomer = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomer;
-using UpdateCustomerContact = AW.Core.Abstractions.Api.CustomerApi.UpdateCustomerContact;
 using AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.ListCustomers;
+using UpdateCustomerAddress_TB = AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.UpdateCustomerAddress;
 using UpdateCustomerContact_TB = AW.Infrastructure.Api.REST.UnitTests.TestBuilders.CustomerApi.UpdateCustomerContact;
 using AW.Infrastructure.Http;
 using FluentAssertions;
@@ -28,7 +27,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
     public class CustomerApiUnitTests
     {
         #region ListCustomers helpers
-        private ListCustomers.Customer ListCustomer_Store()
+        private ListCustomers.Customer ListCustomers_Store()
         {
             return new CustomerBuilder()
                 .AccountNumber("AW00000001")
@@ -43,6 +42,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new StateProvinceBuilder()
                                         .StateProvinceCode("WA")
                                         .Name("Washington")
+                                        .CountryRegion(new CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Name("United Status")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -80,7 +84,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                 .Build();
         }
 
-        private ListCustomers.Customer ListCustomer_Person()
+        private ListCustomers.Customer ListCustomers_Person()
         {
             return new CustomerBuilder()
                 .AccountNumber("AW00011000")
@@ -97,6 +101,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new StateProvinceBuilder()
                                         .StateProvinceCode("QLD")
                                         .Name("Queensland")
+                                        .CountryRegion(new CountryRegionBuilder()
+                                            .CountryRegionCode("AU")
+                                            .Name("Australia")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -141,6 +150,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new TestBuilders.CustomerApi.GetCustomer.StateProvinceBuilder()
                                         .StateProvinceCode("WA")
                                         .Name("Washington")
+                                        .CountryRegion(new TestBuilders.CustomerApi.GetCustomer.CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Name("United Status")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -195,6 +209,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new TestBuilders.CustomerApi.GetCustomer.StateProvinceBuilder()
                                         .StateProvinceCode("QLD")
                                         .Name("Queensland")
+                                        .CountryRegion(new TestBuilders.CustomerApi.GetCustomer.CountryRegionBuilder()
+                                            .CountryRegionCode("AU")
+                                            .Name("Australia")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -238,6 +257,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new TestBuilders.CustomerApi.UpdateCustomer.StateProvinceBuilder()
                                         .StateProvinceCode("WA")
                                         .Name("Washington")
+                                        .CountryRegion(new TestBuilders.CustomerApi.UpdateCustomer.CountryRegionBuilder()
+                                            .CountryRegionCode("US")
+                                            .Name("United States")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -292,6 +316,11 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                                     .StateProvince(new TestBuilders.CustomerApi.UpdateCustomer.StateProvinceBuilder()
                                         .StateProvinceCode("QLD")
                                         .Name("Queensland")
+                                        .CountryRegion(new TestBuilders.CustomerApi.UpdateCustomer.CountryRegionBuilder()
+                                            .CountryRegionCode("AU")
+                                            .Name("Australia")
+                                            .Build()
+                                        )
                                         .Build()
                                     )
                                     .Build()
@@ -319,7 +348,7 @@ namespace AW.Infrastructure.Api.REST.UnitTests
         }
         #endregion
 
-            [Fact]
+        [Fact]
         public async void AddCustomerAddress_OK()
         {
             //Arrange
@@ -438,7 +467,12 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            await sut.DeleteCustomerAddressAsync(new DeleteCustomerAddressRequest());
+            await sut.DeleteCustomerAddressAsync(new DeleteCustomerAddressRequest
+                {
+                    AccountNumber = "AW00000001",
+                    AddressType = "Home"
+                }
+            );
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));
@@ -490,7 +524,13 @@ namespace AW.Infrastructure.Api.REST.UnitTests
             );
 
             //Act
-            await sut.DeleteCustomerContactInfoAsync(new DeleteCustomerContactInfoRequest());
+            await sut.DeleteCustomerContactInfoAsync(new DeleteCustomerContactInfoRequest
+                {
+                    AccountNumber = "AW00000001",
+                    CustomerContactInfo = new TestBuilders.CustomerApi.DeleteCustomerContactInfo.CustomerContactInfoBuilder()
+                        .WithTestValues().Build()
+                }
+            );
 
             //Assert
             mockHttpRequestFactory.Verify(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));
@@ -671,6 +711,14 @@ namespace AW.Infrastructure.Api.REST.UnitTests
         public async void UpdateCustomerAddress_OK()
         {
             //Arrange
+            var customerAddress = new UpdateCustomerAddress_TB.CustomerAddressBuilder()
+                .AddressType("Home")
+                .Address(new UpdateCustomerAddress_TB.AddressBuilder()
+                    .WithTestValues().
+                    Build()
+                )
+                .Build();
+
             var mockLogger = new Mock<ILogger<CustomerApi>>();
             var mockHttpRequestFactory = new Mock<IHttpRequestFactory>();
             mockHttpRequestFactory.Setup(x => x.Post(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()))

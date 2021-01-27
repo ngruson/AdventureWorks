@@ -29,3 +29,4 @@ bld/
 [Ll]og/
 [Ll]ogs/
 /src/Persistence/AW.Persistence.EntityFramework.UnitTests/coverage.opencover.xml
+/data/sql
