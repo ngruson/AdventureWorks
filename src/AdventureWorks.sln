@@ -139,7 +139,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{CE96D456
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.UI.Web.Store", "UI\AW.UI.Web.Store\AW.UI.Web.Store.csproj", "{89348296-B4CE-4286-874B-6F33EE7755EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.Product.REST.API", "Services\Product\AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj", "{79780632-047A-46E9-8CDC-0DFE992DCBF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.Product.REST.API", "Services\Product\AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj", "{79780632-047A-46E9-8CDC-0DFE992DCBF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -344,7 +344,6 @@ Global
 		{20D01F71-868A-4CA7-B4D4-8CDC3610CC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D01F71-868A-4CA7-B4D4-8CDC3610CC96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C64D416-80FD-4102-9EF1-6DD29AC58A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C64D416-80FD-4102-9EF1-6DD29AC58A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C64D416-80FD-4102-9EF1-6DD29AC58A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C64D416-80FD-4102-9EF1-6DD29AC58A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89348296-B4CE-4286-874B-6F33EE7755EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
