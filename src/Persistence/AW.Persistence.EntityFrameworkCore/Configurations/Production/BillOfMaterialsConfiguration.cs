@@ -8,7 +8,7 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Production
     {
         public void Configure(EntityTypeBuilder<BillOfMaterials> builder)
         {
-            builder.ToTable("Production.BillOfMaterials");
+            builder.ToTable("BillOfMaterials", "Production");
             builder.HasKey(bom => bom.Id);
 
             builder.HasOne(bom => bom.ProductAssembly);

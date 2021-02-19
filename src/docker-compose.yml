@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+    reverseproxy:
+      build:
+        context: .
+        dockerfile: nginx/nginx.Dockerfile
+      depends_on:
+        - adventureworks.web.store
+        - adventureworks.countryregion-api
+        - adventureworks.product-api
+      ports:
+        - "44395:443"
+
+    adventureworks.web.store:
+      build:
+        context: .
+        dockerfile: UI/AW.UI.Web.Store/Dockerfile
+      environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+      ports:
+        - "5000:80"
+
+    adventureworks.countryregion-api:
+      build:
+        context: .
+        dockerfile: Services/CountryRegion/AW.Services.CountryRegion.REST.API/Dockerfile
+      environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+      ports:
+        - "5005:80"
+
+    adventureworks.product-api:
+      build:
+        context: .
+        dockerfile: Services/Product/AW.Services.Product.REST.API/Dockerfile
+      environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+      ports:
+        - "5006:80"

@@ -115,12 +115,12 @@ namespace AW.Infrastructure.Api.REST.UnitTests
                     )
                     .ContactInfo(new List<ListCustomers.ContactInfo>
                         {
-                            new TestBuilders.CustomerApi.ListCustomers.ContactInfoBuilder()
+                            new ContactInfoBuilder()
                                 .Channel(Core.Domain.Person.ContactInfoChannelType.Email)
                                 .Value("jon24@adventure-works.com")
                                 .Build(),
 
-                            new TestBuilders.CustomerApi.ListCustomers.ContactInfoBuilder()
+                            new ContactInfoBuilder()
                                 .Channel(Core.Domain.Person.ContactInfoChannelType.Phone)
                                 .ContactInfoType("Home")
                                 .Value("1 (11) 500 555-0162")
@@ -616,8 +616,8 @@ namespace AW.Infrastructure.Api.REST.UnitTests
 
             var customers = new List<ListCustomers.Customer>
             {
-                ListCustomer_Store(),
-                ListCustomer_Person()
+                ListCustomers_Store(),
+                ListCustomers_Person()
             };
 
             var mockHttpRequestFactory = new Mock<IHttpRequestFactory>();

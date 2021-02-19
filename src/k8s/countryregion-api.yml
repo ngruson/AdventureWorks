@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-countryregion-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-countryregion-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-countryregion-api
+    spec:
+      containers:
+      - name: countryregion-api
+        image: ngruson/adventureworks_countryregionapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-countryregion-api-config
+          - secretRef:
+              name: adventureworks-countryregion-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: countryregion-api-service
+spec:
+  selector:
+    app: adventureworks-countryregion-api
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 31500

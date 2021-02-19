@@ -4,6 +4,7 @@ using AW.Core.Abstractions.Api.ProductApi.ListProducts;
 using AW.Infrastructure.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AW.Infrastructure.Api.REST

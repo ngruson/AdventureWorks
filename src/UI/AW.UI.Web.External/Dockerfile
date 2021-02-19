@@ -11,6 +11,11 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["UI/AW.UI.Web.External/AW.UI.Web.External.csproj", "UI/AW.UI.Web.External/"]
+COPY ["Infrastructure/AW.Infrastructure.Api.REST/AW.Infrastructure.Api.REST.csproj", "Infrastructure/AW.Infrastructure.Api.REST/"]
+COPY ["Infrastructure/AW.Infrastructure/AW.Infrastructure.csproj", "Infrastructure/AW.Infrastructure/"]
+COPY ["Core/AW.Core.Abstractions/AW.Core.Abstractions.csproj", "Core/AW.Core.Abstractions/"]
+COPY ["Core/AW.Core.Domain/AW.Core.Domain.csproj", "Core/AW.Core.Domain/"]
+COPY ["Core/AW.Core.Application.AutoMapper/AW.Core.Application.AutoMapper.csproj", "Core/AW.Core.Application.AutoMapper/"]
 RUN dotnet restore "UI/AW.UI.Web.External/AW.UI.Web.External.csproj"
 COPY . .
 WORKDIR "/src/UI/AW.UI.Web.External"

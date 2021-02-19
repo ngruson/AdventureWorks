@@ -89,7 +89,7 @@ namespace AW.Infrastructure.Api.REST
                     configuration["ProductApi:Uri"]
                 );
 
-                api.Headers.Add("Ocp-Apim-Subscription-Key", configuration["ProductApi:SubscriptionKey"]);
+                //api.Headers.Add("Ocp-Apim-Subscription-Key", configuration["ProductApi:SubscriptionKey"]);
 
                 return api;
             });

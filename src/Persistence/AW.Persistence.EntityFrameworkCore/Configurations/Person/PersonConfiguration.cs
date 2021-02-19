@@ -8,7 +8,6 @@ namespace AW.Persistence.EntityFrameworkCore.Configurations.Person
         public void Configure(EntityTypeBuilder<Core.Domain.Person.Person> builder)
         {
             builder.ToTable("Person.Person");
-            builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
                 .ValueGeneratedNever();

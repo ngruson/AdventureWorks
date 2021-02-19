@@ -21,7 +21,7 @@ namespace AW.UI.Web.External
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
-                .WriteTo.File(new JsonFormatter(), path: @"..\logs\aw-ui-web-external.json")
+                .WriteTo.File(new JsonFormatter(), path: @"logs\aw-ui-web-external.json")
                 .CreateLogger();
 
             try

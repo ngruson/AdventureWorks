@@ -1,0 +1,20 @@
+ apiVersion: networking.k8s.io/v1
+ kind: Ingress
+ metadata:
+   name: adventureworks-ingress
+ spec:
+   tls:
+   - hosts:
+     - k8s-local.adventureworks.com
+     secretName: local-tls
+   rules:
+   - host: k8s-local.adventureworks.com
+     http:
+       paths:
+       - pathType: Prefix
+         path: /
+         backend:
+           service:
+             name: countryregion-api-service
+             port:
+               number: 5000

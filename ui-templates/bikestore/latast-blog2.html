@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Bike Store</title>
+<meta name="keywords" content="Latest Blog" />
+<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&display=swap" rel="stylesheet">
+<link href="css/stylesheet.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,800&display=swap" rel="stylesheet">
+<script src="js/wow.min.js" type="text/javascript"></script>
+<link href="css/style.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="css/animate.css" rel="stylesheet"/>
+<link href="css/owl.carousel.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet" />
+<link href="css/swiper.min.css" type="text/css" rel="stylesheet" media="screen" />
+<script src="js/swiper.jquery.js" type="text/javascript"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/jquery.zoom.js"></script>
+<script src="js/thestore.js"></script>
+<link href="css/opencart.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="css/magnific-popup.css" type="text/css" rel="stylesheet" media="screen" />
+<script src="js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+<script>
+       new WOW().init();
+</script>
+</head>
+<body>
+<!-- loader -->
+	<div class="loader" id="window">
+		<img src="image/preloader.gif" id="hourglass2" alt="hourglass" title="hourglass">
+	</div>
+<!-- loader end -->
+ <script>
+$(window).load(function(){
+   setTimeout(function(){
+   $('#window').hide();
+   },500);          
+})
+</script> 
+<!-- top section -->
+<nav id="top">
+	<div class="container-fluid">
+		<div class="row">
+		   <a href="" class="phone_contact">Welcome to our online store!</a>
+			<div id="top-links" class="nav pull-right">
+				<ul class="list-inline">
+					<li>
+					<a href="#" title="Compare (0)">
+					<i class="fa fa-balance-scale"></i> 
+					<span class="hidden-xs hidden-sm hidden-md">Compare (0)</span></a>
+					</li>
+				    <li>
+						<div class="pull-left">
+							<form action="#" method="post"  enctype= "multipart/form-data" id="form-currency">
+							<div class="btn-group">
+								<button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><strong>$</strong><span class="hidden-xs hidden-sm hidden-md">USD</span>&nbsp;<i class="fa fa-angle-down"></i></button>
+								<ul class="dropdown-menu">
+								<li><button class="currency-select btn btn-link btn-block" type="button" name="EUR">€ Euro</button></li>
+								<li> <button class="currency-select btn btn-link btn-block" type="button" name="GBP">£ Pound Sterling</button></li>
+								<li><button class="currency-select btn btn-link btn-block" type="button" name="USD">$ US Dollar</button></li>
+								</ul>
+							</div>
+								<input type="hidden" name="code" value="" />
+								<input type="hidden" name="redirect" value="image" />
+							</form>
+						</div>
+                    </li>
+				    <li>
+						<div class="pull-left">
+							<form action="#" method="post" enctype="multipart/form-data" id="form-language">
+								<div class="btn-group">
+									<button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+									<img src="image/en-gb.png" alt="English" title="English">
+									<span class="hidden-xs hidden-sm hidden-md">English</span>&nbsp;<i class="fa fa-angle-down"></i>
+									</button>
+									<ul class="dropdown-menu">
+									<li>
+									<button class="btn btn-link btn-block language-select" type="button" name="en-gb"><img src="image/en-gb.png" alt="English" title="English" /> English</button>
+									</li>
+									<li>
+									<button class="btn btn-link btn-block language-select" type="button" name="ar"><img src="image/ar.png" alt="Arabic" title="Arabic" /> Arabic</button>
+									</li>
+									</ul>
+								</div>
+									<input type="hidden" name="code" value="" />
+									<input type="hidden" name="redirect" value="image" />		
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+<!-- end -->
+<!-- header section -->
+<header class="main-menu">
+	<div class="header_wrapper_home">
+		<div class="container-fluid">
+			<!-- destop vergian -->
+			<div class="row header_sec destop_header">
+				<div class="col-sm-4 rtl_logo">
+					<div id="logo">
+						<a href="index.html"><img src="image/logo1.png" title="Your Store" alt="Your Store" class="img-responsive" /></a>
+					</div>
+				</div>
+				<!-- my account -->
+				<div class="col-sm-8">
+					<div class="text_account_wrapper pull-right">
+						<div class="header_transaction header_account">
+							<a href="#" title="My Account" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-o faicons"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> <span class="caret"></span></a>
+							<ul class="dropdown-menu dropdown-menu-right megamenu">
+								<li><a href="register.html">Register</a>
+								</li>
+								<li><a href="login.html">Login</a>
+								</li>
+							</ul>					  
+						</div>
+						<!-- wishlist -->
+							<div class="header_transaction header_wishlist">
+							<a href="#" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart-o faicons"></i> <span class="hidden-xs hidden-sm hidden-md">Wish List (0)</span></a>
+							</div>
+						<!-- cart -->
+						<div class="header_transaction heder_cart">
+							<div id="cart" class="btn-group btn-block">
+								<button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="btn btn-inverse btn-block btn-lg dropdown-toggle"><p class="cart_data_p"><i class="fa fa-shopping-cart faicons"></i> My Cart <span class="cart_qut">0</span></p> </button>
+								<ul class="dropdown-menu pull-right cheekout_weap">
+								<li>
+								 <p class="text-center">Your shopping cart is empty!</p>
+								</li>
+                                </ul>
+							</div>
+						</div>
+						 <!-- search -->
+						<div class=" search_and_cart_wrapper_header">
+							<div class="text-right cart-menu">
+								<div class="search_wrapper">
+								<a class="ebsearch"><i class="fa fa-search"></i></a>
+								</div>
+							</div>
+							<div id="search" class="input-group">
+							    <span class="close">x</span>
+								<div class="bikes_search">					
+								<p>Find Your Desire</p>
+								</div>
+								<input value="" class="esearch" name="search" type="search" placeholder="Search here" >
+								<span class="input-group-btn searchicon">
+								<button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+<script>
+	$(document).ready(function(){
+		$('.ebsearch').on('click', function(event) { 
+			$('#search').addClass('open');
+			$('#search > form > input[type="search"]').focus();
+		});            
+		$('#search, #search button.close').on('click keyup', function(event) {
+			if (event.target == this || event.target.className == 'close' || event.keyCode == 27) {
+				$(this).removeClass('open');
+			}
+		});            
+	});
+</script>
+</header>
+<!-- header section end-->
+
+<!--menu-->
+<div class="header_menu">
+	<div class="container-fluid">
+		<div class="row">
+			 <nav id="menu" class="navbar">
+				<div class="navbar-header"><span id="category" class="visible-xs"> Categories </span>
+				<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<i class="fa fa-bars"></i></button>
+				</div>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Racing Bicycles</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">               
+									<ul class="list-unstyled">
+										<li><a href="catagory.html">Racing Bicycle Thin Tyre (0)</a></li>
+										<li><a href="catagory.html">Racing Bicycle Alminium Frame (2)</a></li>
+										<li><a href="catagory.html">Racing Bicycle Down Frame (2)</a></li>
+										<li><a href="catagory.html">Racing Bicycle Magnesium (3)</a></li>
+										<li><a href="catagory.html">Racing Bicycle Alminium Break (4)</a></li>
+									</ul>
+								</div>
+								<a href="#" class="see-all">Show All Racing Bicycles</a> 
+							</div>
+						</li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Baby Try Cycles</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">               
+									<ul class="list-unstyled">
+										<li><a href="catagory.html">Tri Cycle With Push Handle (5)</a>
+										</li>
+										<li><a href="catagory.html">Tri Cycle With Back Basket (4)</a>
+										</li>
+										<li><a href="catagory.html">Tri Cycle With Basket (5)</a>
+										</li>
+										<li><a href="catagory.html">Tri Cycle With Plastic Tyre (5)</a>
+										</li>
+										<li><a href="catagory.html">Tri Cycle With Rubber Tyre (4)</a>
+										</li>
+								  </ul>
+								</div>
+									<a href="index.html" class="see-all">Show All Baby Try Cycles</a> 
+							</div>
+						</li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fat Bikes</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">               
+									<ul class="list-unstyled">
+										<li><a href="catagory.html">Aliminium Frame Body (4)</a>
+										</li>
+										<li><a href="catagory.html">Fat Bike Front Disc (4)</a>
+										</li>
+										<li><a href="catagory.html">Iron Frame Body (4)</a>
+										</li>
+										<li><a href="catagory.html">Fat Bike Back Disc (4)</a>
+										</li>
+										<li><a href="catagory.html">Fat Bike Combo Disc (4)</a>
+										</li>
+									</ul>
+								</div>
+									<a href="index.html" class="see-all">Show All 		Fat 			Bikes</a> 
+							</div>
+						</li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hybrid Bicycles</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">              
+      								<ul class="list-unstyled">
+									<li><a href="catagory.html">Hybrid Powerfull Breaks (0)</a>
+									</li>
+									<li><a href="catagory.html">Hybrid Bicycle With Disc (2)</a>
+									</li>
+									<li><a href="catagory.html">Hybrid Bicycle Without Disc (1)</a>
+									</li>
+									<li><a href="catagory.html">Hybrid Bicycle With Gear (1)</a>
+									</li>
+									<li><a href="catagory.html">Hybrid Bicycle Without Gear (2)</a>
+									</li>
+									</ul>
+								</div>
+									<a href="index.html" class="see-all">Show All Hybrid Bicycles</a> 
+							</div>
+						</li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Track Bicycles</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">               
+									<ul class="list-unstyled">
+										<li><a href="catagory.html">Track Bicycle Heavy Body (2)</a></li>
+										<li><a href="catagory.html">Track Bicycle With Adustable Seat (2)</a></li>
+										<li><a href="catagory.html">Track Bicycle Sports Look (1)</a></li>
+										<li><a href="catagory.html">Track Bicycle With Adustable Handle (3)</a></li>
+										<li><a href="catagory.html">Track Bicycle With Thick Tyre (2)</a></li>
+									</ul>
+								</div>
+									<a href="index.html" class="see-all">Show All Track Bicycles</a> 
+							</div>
+						</li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Motorized Bicycles</a>
+							<div class="dropdown-menu megamenu">
+								<div class="dropdown-inner">              
+									<ul class="list-unstyled">
+										<li><a href="catagory.html">Motorized Bicycle 4 Batteries (2)</a></li>
+										<li><a href="catagory.html">Motorized Bicycle 6 Batteries (1)</a></li>
+										<li><a href="catagory.html">Motorized Bicycle With Accessories (2)</a></li>
+										<li><a href="catagory.html">Motorized Bicycle Without Paddle (2)</a></li>
+										<li><a href="catagory.html">Motorized Bicycle With Paddle (2)</a></li>
+									</ul>
+								</div>
+									<a href="index.html" class="see-all">Show All Motorized Bicycles</a>
+							</div>
+						</li>
+                        <li>
+						<a href="latast-blog.html"> Latest Blog</a>
+						</li>
+                    </ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+</div>
+<!--menu end-->
+<script>
+$(window).scroll(function() {
+  if ($(this).scrollTop() > 211){
+    $('header .header_menu').addClass("sticky_header");
+  } else{
+    $('header .header_menu').removeClass("sticky_header");
+  }
+});
+</script>
+<!---------catagory-banner-------->
+<div class="main_breadcrumb">
+	<div class="container-fluid">
+		<div class="row">
+		 <ul class="breadcrumb">
+		   <h3>Bike News Roundup: The Future Of Mobility</h3>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="latast-blog.html">Bike News Roundup: The Future Of Mobility</a></li>
+					  </ul>
+		</div>
+	</div>
+</div><!------catagry banner end------>
+<div id="blog-wrapper" class="blog-wrapper inner-blog-wrapper">
+<div class="container-fluid">
+  <div class="row eblog" ><aside id="column-left" class="col-sm-3 hidden-xs">
+    <div class="search popular_posts">
+	<h4 class="">Latest Blog</h4>
+	<div id="blog_sidebar0" class="owl-carousel">
+				<div class="">
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB2.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Admin</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB1.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Ashley Wick</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB3.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Ashley Wick</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+					</div>
+				<div class="">
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB4.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Admin</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+					</div>
+			</div>
+</div>
+
+  <script>
+$(document).ready(function(){
+	$('#blog_sidebar0').owlCarousel({
+		items: 1,
+		itemsDesktop:[1199,1],
+		itemsDesktopSmall:[992,1],
+		itemsTablet:[768,1],
+		itemsMobile:[450,1],
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+	});
+});   
+</script>
+    <div class="search popular_posts">
+	<h4 class="">Popular Posts</h4>
+	<div id="blog_sidebar1" class="owl-carousel">
+				<div class="">
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB2.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Admin</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB3.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Ashley Wick</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+						<div class="popular_posts_section">
+			 				<div class="popular_posts_images">
+					<a href="#"><img alt="Bike News Roundup: T.." title="Bike News Roundup: T.." class="img-responsive" src="image/EB1.jpg"/></a>
+				</div>
+			 				<div class="popular_posts_text">
+					<h5><a href="#">Bike News Roundup: T..</a></h5>
+					<Span>By Ashley Wick</Span>
+					<span>						<a href="#">23 Apr,2019</a>
+						</span>
+				</div>
+			</div>
+					</div>
+			</div>
+</div>
+
+  <script>
+$(document).ready(function(){
+	$('#blog_sidebar1').owlCarousel({
+		items: 1,
+		itemsDesktop:[1199,1],
+		itemsDesktopSmall:[992,1],
+		itemsTablet:[768,1],
+		itemsMobile:[450,1],
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+	});
+});   
+</script>
+  </aside>
+
+                <div id="content" class="col-sm-9">
+	
+      <div class="row">
+			     <div class="openthumbs">
+                        <a href="image/EB2.jpg" title="Bike News Roundup: The Future of Mobility"><img src="image/EB2.jpg" title="Bike News Roundup: The Future of Mobility" alt="Bike News Roundup: The Future of Mobility"></a>
+                        			<div class="subimages">
+								<div class="col-sm-3 images_silde"><a href="image/EB1.jpg" title="Bike News Roundup: The Future of Mobility"> <img src="image/EB1.jpg" title="Bike News Roundup: The Future of Mobility" alt="Bike News Roundup: The Future of Mobility"></a></div>
+								<div class="col-sm-3 images_silde"><a href="image/EB3.jpg" title="Bike News Roundup: The Future of Mobility"> <img src="image/EB3.jpg" title="Bike News Roundup: The Future of Mobility" alt="Bike News Roundup: The Future of Mobility"></a></div>
+								<div class="col-sm-3 images_silde"><a href="image/EB4.jpg" title="Bike News Roundup: The Future of Mobility"> <img src="image/EB4.jpg" title="Bike News Roundup: The Future of Mobility" alt="Bike News Roundup: The Future of Mobility"></a></div>
+								<div class="col-sm-3 images_silde"><a href="image/EB2.jpg" title="Bike News Roundup: The Future of Mobility"> <img src="image/EB2.jpg" title="Bike News Roundup: The Future of Mobility" alt="Bike News Roundup: The Future of Mobility"></a></div>
+							</div>
+			<div class="clear"></div>
+                      </div>
+          		  
+		  <h3 class="mail_page_hadding">Bike News Roundup: The Future of Mobility</h3>
+	  <div class="row shear_and_editer">
+		  <div class="col-sm-6">
+			<div class="update_post_text">
+			<ul class="fullblogcomments">
+				<li><a href="#"><i class="fa fa-user"></i> <span>Admin</span></a></li>
+				<li><i class="fa fa-clock-o"></i> <span>23 April, 2019</span></li>
+				<li><i class="fa fa-eye"></i> <span>106</span></li>
+				<li><i class="fa fa-comments-o"></i> <span>0</span></li>
+			</ul>
+			</div>
+		  </div>
+		  <div class="col-sm-6">
+		  <div class="shear_social_media">
+			<!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style" data-url="
+            #"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+            <!-- AddThis Button END -->
+					  </div>
+		  </div>
+		  </div>
+
+		  <div class="update_post_text">
+			<p></p><p> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p><p></p>
+			<p class="dec_tags">
+			 
+						</p><p><span><i class="fa fa-tags"></i> Tags</span>
+						 <a href="#">Bike News Roundup: The Future of Mobility</a> 						 <a href=""></a> 			 </p>
+						<p></p>
+		 </div>
+		 <hr>
+		              <form class="form-horizontal" id="form-comment">
+                <div id="comment"><p></p>
+ </div>
+                <h2>Write a Comment</h2>
+                                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-name" style="float:left;">Your Name</label>
+                    <input type="text" name="name" value="" id="input-name" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-comment" style="float:left;">Your Comment</label>
+                    <textarea name="text" rows="5" id="input-comment" class="form-control"></textarea>
+                    <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
+                  </div>
+                </div>
+				                <div class="form-group required">
+                  <div class="col-sm-12">
+                    <label class="control-label" style="float:left;">Rating
+                    &nbsp;&nbsp;&nbsp; Bad&nbsp;
+                    <input type="radio" name="rating" value="1">
+                    &nbsp;
+                    <input type="radio" name="rating" value="2">
+                    &nbsp;
+                    <input type="radio" name="rating" value="3">
+                    &nbsp;
+                    <input type="radio" name="rating" value="4">
+                    &nbsp;
+                    <input type="radio" name="rating" value="5">
+                    &nbsp;Good</label></div>
+                </div>
+				                
+                <div class="buttons clearfix">
+                  <div class="pull-right">
+                    <button type="button" id="button-comment" data-loading-text="Loading..." class="btn btn-primary">Continue</button>
+                  </div>
+                </div>
+                              </form>
+            			
+	<div id="blog-wrapper" class="blog-wrapper epost_related">
+					  
+		   
+			<div class="comman_title text-center">
+				<h2>Related Posts</h2>
+			</div> 
+		    <div id="related_post" class="owl-carousel" style="opacity: 1;">
+		  		   
+				<div class="update_post item col-sm-12">
+					<div class="blog-inner-section">
+							<div class="blog-images-section">
+							<div class="video-image">
+								<a href="product-header.html"><img src="image/EB2-380x300.jpg" alt="Bike News Roundup: The Future of Mobility" title="Bike News Roundup: The Future of Mobility" class="img-responsive" /></a>
+															</div>
+							<!--<div class="date">
+																<a href=""><p>23</p><span>Apr</span></a>
+															</div> -->
+	</div>
+		<div class="blog-text-section">					
+				<h3><a href="product-header.html">Bike News Roundup: The Future of Mobility</a></h3>
+							<div class="auther_wrp">
+										<a href="" class="auther_wrapper"><span>Post By</span> Admin</a>
+										<span><a href="">23 Apr,2019</a></span>
+				</div>	
+							
+								
+						<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi..</p>
+		<div class="readmore_button pull-left">
+							<a href="product-header.html" class="base-button">Read More</a>
+																		
+								</div>	
+								
+									<div class="clear"></div>
+								</div>
+					  </div> 
+				</div> 
+			
+				   
+				<div class="update_post item col-sm-12">
+					<div class="blog-inner-section">
+							<div class="blog-images-section">
+							<div class="video-image">
+						<a href="product-header.html"><img src="image/EB1-380x300.jpg" alt="Bike News Roundup: The Future of Mobility" title="Bike News Roundup: The Future of Mobility" class="img-responsive" /></a>
+			</div>
+							<!--<div class="date">
+																<a href=""><p>23</p><span>Apr</span></a>
+															</div> -->
+							</div>
+	<div class="blog-text-section">
+						<h3><a href="product-header.html">Bike News Roundup: The Future of Mobility</a></h3>
+														
+							
+				<div class="auther_wrp">
+								<a href="" class="auther_wrapper"><span>Post By</span> Ashley Wick</a> |
+									<span><a href="">23 Apr,2019</a></span>
+					</div>	
+							
+						<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi..</p>
+	<div class="readmore_button pull-left">
+							<a href="product-header.html" class="base-button">Read More</a>
+																		
+								</div>	
+								
+									<div class="clear"></div>
+								</div>
+					  </div> 
+				</div> 
+			
+				   
+				<div class="update_post item col-sm-12">
+					<div class="blog-inner-section">
+							<div class="blog-images-section">
+							<div class="video-image">
+										<a href="product-header.html"><img src="image/EB3-380x300.jpg" alt="Bike News Roundup: The Future of Mobility" title="Bike News Roundup: The Future of Mobility" class="img-responsive" /></a>
+															</div>
+							<!--<div class="date">
+																<a href=""><p>23</p><span>Apr</span></a>
+															</div> -->
+					</div>
+							<div class="blog-text-section">
+                               <h3><a href="product-header.html">Bike News Roundup: The Future of Mobility</a></h3>
+							<div class="auther_wrp">
+								<a href="" class="auther_wrapper"><span>Post By</span> Ashley Wick</a> |
+							<span><a href="">23 Apr,2019</a></span>
+					</div>	
+						       <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi..</p>
+									<div class="readmore_button pull-left">
+										<a href="latast-blog.html" class="base-button">Read More</a>
+																		
+								</div>	
+								
+									<div class="clear"></div>
+								</div>
+					  </div> 
+				</div> 
+			
+				   
+				<div class="update_post item col-sm-12">
+					<div class="blog-inner-section">
+							<div class="blog-images-section">
+							<div class="video-image">
+									<a href="product-header.html"><img src="image/EB4-380x300.jpg" alt="Bike News Roundup: The Future of Mobility" title="Bike News Roundup: The Future of Mobility" class="img-responsive" /></a>
+															</div>
+							<!--<div class="date">
+																<a href=""><p>23</p><span>Apr</span></a>
+															</div> -->
+							</div>
+							<div class="blog-text-section">
+							   <h3><a href="product-header.html">Bike News Roundup: The Future of Mobility</a></h3>
+														
+							
+							<div class="auther_wrp">
+								<a href="" class="auther_wrapper"><span>Post By</span> Admin</a> |
+										<span><a href="">23 Apr,2019</a></span>
+				</div>	
+							<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomi..</p>
+				<div class="readmore_button pull-left">
+							<a href="product-header.html" class="base-button">Read More</a>
+		</div>		
+									<div class="clear"></div>
+								</div>
+					  </div> 
+				</div> 
+			
+				</div> 
+				</div>
+			
+				<div class="owl-controls clickable" style="display: none;"><div class="owl-buttons"><div class="owl-prev"><i class="fa fa-angle-left fa-5x"></i></div><div class="owl-next"><i class="fa fa-angle-right fa-5x"></i></div></div></div></div> 
+				</div>
+		<div class="product_wrapper">
+				</div>
+		
+		
+		</div>
+    </div>
+</div></div>
+<!-----image script------>
+<script type="text/javascript"><!--
+ $('.quickviewopen').magnificPopup({
+	disableOn: 700,
+	type: 'iframe',
+	mainClass: 'mfp-fade',
+	removalDelay: 160,
+	preloader: true,
+	fixedContentPos: true
+});
+
+	$(document).ready(function(){
+	$('#related_prodcts_blog').owlCarousel({	
+		items: 3,
+		itemsDesktop:[1199,3],
+		itemsDesktopSmall:[992,3],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 6000,
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+	});
+}); 
+
+
+$(document).ready(function(){
+	$('#related_post').owlCarousel({	
+		items: 2,
+		itemsDesktop:[1199,2],
+		itemsDesktopSmall:[992,2],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 6000,
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+	});
+}); 
+</script>
+<script>
+	
+</script>
+
+<script>
+
+</script>
+<script type="text/javascript"><!--
+$('#comment').delegate('.pagination a', 'click', function(e) {
+    e.preventDefault();
+
+    $('#comment').fadeOut('slow');
+
+    $('#comment').load(this.href);
+
+    $('#comment').fadeIn('slow');
+});
+
+$('#comment').load('index.php?route=extension/eblog/epost/comment&epost_id=1');
+
+$('#button-comment').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/eblog/epost/write&epost_id=1',
+		type: 'post',
+		dataType: 'json',
+		data: $("#form-comment").serialize(),
+		beforeSend: function() {
+			$('#button-comment').button('loading');
+		},
+		complete: function() {
+			$('#button-comment').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#comment').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('#comment').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('input[name=\'name\']').val('');
+				$('textarea[name=\'text\']').val('');
+				$('input[name=\'rating\']:checked').prop('checked', false);
+			}
+		}
+	});
+});
+
+$(document).ready(function() {
+	$('.openthumbs').magnificPopup({
+		type:'image',
+		delegate: 'a',
+		gallery: {
+			enabled: true
+		}
+	});
+});
+//--></script>
+<!--------/ end --->
+<!-------news letter style and script----->
+<style>
+	#newsletterModal .modal-body{
+		background-image:url('');
+	}
+	
+</style>
+<div id="newsletterModal" class="modal fade newsletter_popup" role="dialog"  aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content swing">
+			<button type="button" class="close closepopup" data-dismiss="modal"><img src="image/close_news.png" alt="close_news" title="close_news"/></button>
+
+			<div class="modal-body">
+							
+				<h3>Sign Up For Our Newsletter:</h3>
+<p>Get All The Latest Information On Events,Sales And Offers.<br> Sign Up For Newsletter Today</p>
+				
+				<form class="subsribe">
+					<div class="successmsg"></div>
+											<div class="form-group required">
+														  <input type="text" id="input-newsletter-email" class="form-control" placeholder="Enter Your Email Address here" value="" name="email"/>
+							  <div class="input-group">
+							  <span class="">
+								<a class="btn btn-primary button-subsribe">Subscribe</a>
+							  </span>
+							</div>
+							<!-- /input-group -->
+						</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$('#newsletterModal .button-subsribe').on('click', function(){
+	$.ajax({
+		url: 'index.php?route=extension/awesomenewsletter_popup/addsubscribe',
+		type: 'post',
+		data: $('#newsletterModal .subsribe input[type=\'text\']'),
+		dataType: 'json',
+		beforeSend: function(){
+			$('#newsletterModal .button-subsribe').button('loading');
+		},
+		complete: function(){
+			$('#newsletterModal .button-subsribe').button('reset');
+		},
+		success: function(json){
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+			$('#newsletterModal .successmsg').html('');
+			
+			if(json['error']) {
+				for (i in json['error']) {
+					var element = $('#newsletterModal #input-newsletter-' + i.replace('_', '-'));
+
+					if ($(element).parent().hasClass('input-group')){
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
+				}
+				
+				$('.text-danger').parent().addClass('has-error');
+			}
+			
+			if(json['success']) {
+				$('#newsletterModal .successmsg').html('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('#newsletterModal .subsribe input[type=\'text\']').val('');
+			}
+			
+			if(json['warring']) {
+				$('#newsletterModal .successmsg').html('<div class="alert alert-danger">' + json['warring'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		}
+	});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+	var time = parseInt(10*1000);
+	setTimeout(function(){
+		$('#newsletterModal').modal('show')  
+	}, time); 
+});
+</script>
+<!-----footer area-------->
+<footer id="footer">
+	<div class="container-fluid clear">
+		<div class=" row">
+			<div class=" footer_links">
+			<!-- contact us -->
+				<div class="col-sm-3 col_footer footer_padding">
+					<div class="footer-inner-matter">
+						<h3 class="wow fadeInUp">Contact Us</h3>
+						<ul>
+							<li><img src="image/icon-phone.png"><p>Hotline Free 24/24:</p><span><i class="fa fa-volume-control-phone"></i>(+800) 123 456 789</span></li>
+							<li><i class="fa fa-map-marker"></i> 622 Vernon Drive Flushing, NY 11354</li>
+							<li class="email"><i class="fa fa-envelope"></i> company123@gmail.com</li>
+						</ul>
+						<div class="social_media_wrapper">
+						<ul>
+							<li class="facebook"><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+							<li class="skype"><a href="#"><i class="fa fa-skype"></i></a></li>
+							<li class="youtube"><a href="#"><i class="fa fa-youtube-square"></i></a></li>
+							<li class="google"><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+							<li class="linkedin"><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+						</ul>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div><!---------/ end cntact us--------->
+				<!-- information -->
+				<div class="col-sm-3 col_footer footer_padding">
+					<div class="footer-inner-matter">
+						<h3 class="wow fadeInUp">Information</h3>
+						<ul class="list-unstyled">
+							 <li><a href="about.html" class="wow fadeInUp"> About Us</a></li>
+							 <li><a href="#" class="wow fadeInUp"> Delivery Information</a></li>
+							 <li><a href="#" class="wow fadeInUp"> Privacy Policy</a></li>
+							<li><a href="#" class="wow fadeInUp"> Terms &amp; Conditions</a></li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<!-- / information end-->
+				<!-- extra -->
+				<div class="col-sm-3 col_footer footer_padding">
+					<div class="footer-inner-matter">
+						<h3 class="wow fadeInUp">Extras</h3>
+						<ul class="list-unstyled">
+							<li><a href="contact.html" class="wow fadeInUp"> Contact Us</a></li>
+							<li><a href="brands.html" class="wow fadeInUp"> Brands</a></li>
+							<li><a href="index.html" class="wow fadeInUp"> Specials</a></li>
+							<li><a href="return.html" class="wow fadeInUp"> Returns</a></li>
+							<li><a href="#" class="wow fadeInUp"> Gift Certificates</a></li>
+							<li><a href="#" class="wow fadeInUp"> Affiliate</a></li>
+							<li><a href="#" class="wow fadeInUp"> Site Map</a></li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					</div>
+				<!-- / extra end-->
+				<!-- play_store -->
+				<div class="col-sm-3 col_footer footer_padding Get_the_App">
+					<div class="footer-inner-matter">
+						<h3 class="wow fadeInUp"><!--{{ text_extra }}--->Get The App
+						</h3>
+						<h4>GreenLife App Is Now Available On Google 
+						Play &amp; App Store. Get It Now.
+						</h4>
+						<div class="images_dat_dec">
+							<div class="img_1">
+							<a href="#"><img src="image/icon1-app.jpg"></a>
+							</div>
+							<div class="img_2">
+							<a href="#"><img src="image/icon-app.jpg"></a>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>	
+				<!-- / play_store end -->
+				<!-- newsletters -->
+<div class="new_bottom_newsletter">
+	<div class="col-sm-12 col_footer">
+		<div class="head_newsletter text-center">
+			<div class="head_newsletter_one">
+				<div class="footer-inner-matter news_letter_subscription wow fadeInUp">
+					<div id="newsletterModule-footer" class="">
+						<div id="newsletterFooterModule0">
+							<div class="news_latter" id="news_latter">
+								<div class="">
+									<div class="row" id="subsribe">	
+										<div class="successmsg">
+										</div>
+										<div class="news_latte_text">
+											<div class="col-sm-4 text-left">
+												<h3>Join Our<span> Newsletter Now</span></h3>
+											</div>
+											<div class="col-sm-3 newletter_desc text-left">
+											<p>Join 10.000+ subscribers and get a new discount coupon.</p>
+											</div>
+											<!-- <p>Subscribe to our newsletter to receive special offers and latest news. </p> -->
+											<div class="col-sm-5">
+												<div class="form-group required text-right">
+													<div class="news_latter_form">
+														<div class="input-news">
+															<input type="text" id="input-newsletter-email" class="fem form-control" placeholder="Enter Your Email Address here" value="" name="email"/>
+														</div>
+														<div class="subscribe-btn input-group-btn">
+															<a id="button-subsribe" class="btn btn-primary btn-xs">Subscribe</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>			
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script type="text/javascript">
+					$('#newsletterFooterModule0 #button-subsribe').on('click', function() {
+						//alert('ss');
+						$.ajax({
+							url: 'index.php?route=extension/module/awesomenewsletter/addsubscribe',
+							type: 'post',
+							data: $('#newsletterFooterModule0 #subsribe input[type=\'text\']'),
+							dataType: 'json',
+							beforeSend: function(){
+								$('#newsletterFooterModule0 #button-subsribe').button('loading');
+							},
+							complete: function(){
+								$('#newsletterFooterModule0 #button-subsribe').button('reset');
+							},
+							success: function(json){
+								$('.text-danger').parent().removeClass('has-error');
+								$('.alert, .text-danger').remove();
+								$('#newsletterFooterModule0 #successmsg').html('');
+								
+								if(json['error']) {
+									if(json['error']['email']) {
+										$('#newsletterFooterModule0 #input-newsletter-email').parent().after('<div class="col-sm-12 text-left text-danger">' + json['error']['email'] + '</div>');
+										
+										$('.text-danger').parent().addClass('has-error');
+									}
+									
+									if(json['error']['name']) {
+										$('#newsletterFooterModule0 #input-newsletter-name').parent().after('<div class="text-left text-danger">' + json['error']['name'] + '</div>');
+										$('.text-danger').parent().addClass('has-error');
+									}
+								}
+								
+								if(json['success']){
+									$('#newsletterFooterModule0 #input-newsletter-email').parent().after('<div class="text-left text-success">' +  json['success'] + '</div>');	
+									setTimeout(function(){
+										$('.text-success').remove();
+									}, 2000);
+									
+									$('#newsletterFooterModule0 #subsribe input[type=\'text\']').val('');
+									$('#newsletterFooterModule0 #subsribe input[type=\'email\']').val('');
+								}
+								
+								if(json['warring']) {
+									$('#newsletterFooterModule0 #successmsg').html('<div class="alert alert-danger">' + json['warring'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+								}
+								
+							}
+						});
+					});
+					</script>
+				</div>
+			</div> 
+		</div> 
+	</div> 	 
+</div>
+<div class="clear"> </div>
+				<!--- copy-right-area -->
+				<div class=" social_footer copy_right_wrapper">		
+				<div class="col-sm-6 rtl_text">
+				<div class="copy-right">
+					<p class="wow fadeInDown   animated" style="visibility: visible; animation-name: fadeInDown;">© Copyright 2020 by Bike Store. All right Reserved - Design By <a href="https://www.templatebazaar.in/" target="_blank">Template bazaar</a></p>
+				</div>
+				</div>
+				<!-------/ end copyright----------->
+				<!--- payment_links -->
+				<div class="col-sm-6 rtl_text">
+					<div class="payment_method_footer">
+						<div class="payment_option_methods">
+							<ul>
+								<li><a href=""><img src="image/payment-1.png"></a></li>
+								<li><a href=""><img src="image/payment-2.png"></a></li>
+								<li><a href=""><img src="image/payment-3.png"></a></li>
+								<li><a href=""><img src="image/payment-4.png"></a></li>
+							  <li><a href=""><img src="image/payment-5.png"></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="clear"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--------/ end payment link------------>
+</footer>
+<div class="top_button">
+  <a class="back-to-top" style="cursor:pointer;" id="top-scrolltop"><i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+$('#top-scrolltop').on('click',function(){
+ $('html, body').animate({scrollTop:0},500);
+});
+
+$(function ($) {
+    "use strict";
+    /*Back to top */
+	$(".back-to-top").addClass("hidden-top");
+		$(window).scroll(function () {
+		if ($(this).scrollTop() === 0) {
+			$(".back-to-top").addClass("hidden-top")
+		} else {
+			$(".back-to-top").removeClass("hidden-top")
+		}
+	});
+
+	$('.back-to-top').click(function () {
+		$('body,html').animate({scrollTop:0}, 1200);
+		return false;
+	});	
+});
+</script>
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+Please donate via PayPal to donate@opencart.com
+//-->
+</body>
+</html>
