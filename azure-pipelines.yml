@@ -33,36 +33,36 @@ steps:
     projectKey: 'sonar-adventureworks'
     projectName: 'sonar-adventureworks'
 
-- task: VSBuild@1
-  displayName: 'Build'
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'build'
+    projects: |
+      **/*.csproj
+      !**/*.dcproj
+
+# - task: VSBuild@1
+#  displayName: 'Build'
+#  inputs:
+#    solution: '$(solution)'
+#    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+#    platform: '$(buildPlatform)'
+#    configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Test'
   inputs:
     command: 'test'
     projects: |
-      **/AW.Core.Application.UnitTests.csproj
-      **/AW.Core.Domain.UnitTests.csproj
-      **/AW.Infrastructure.Api.REST.UnitTests.csproj
-      **/AW.Infrastructure.Api.WCF.UnitTests.csproj
-      **/AW.Persistence.EntityFramework.UnitTests.csproj
-      **/AW.Persistence.EntityFrameworkCore.UnitTests.csproj
-      **/AW.CustomerService.UnitTests.csproj
-      **/AW.UI.Web.Internal.UnitTests.csproj
+      **/*.UnitTests.csproj
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura%2copencover"'
 
 - task: PowerShell@2
-  displayName: 'Run Coverlet for WCF projects'
+  displayName: 'Run Coverlet for WCF services'
   inputs:
     targetType: 'inline'
     script: |
       dotnet tool install --global coverlet.console
-      Get-ChildItem -Recurse -Filter "*AW.CustomerService.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
+      Get-ChildItem -Recurse -Filter "*WCF.UnitTests.dll*" | Select-Object -ExpandProperty FullName | % {
         Write-Host "File: $_"
         coverlet $_ --target "dotnet" --targetargs "vstest $_" --format "opencover"
       }
