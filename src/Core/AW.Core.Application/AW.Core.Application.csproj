@@ -12,9 +12,4 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj" />
-    <ProjectReference Include="..\AW.Core.Domain\AW.Core.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

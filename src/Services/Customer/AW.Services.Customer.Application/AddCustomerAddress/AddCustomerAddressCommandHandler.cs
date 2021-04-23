@@ -1,10 +1,10 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
 using AW.Services.Customer.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,6 +30,8 @@ namespace AW.Services.Customer.Application.AddCustomerAddress
             var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
+
+            Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Adding address to customer");
             var customerAddress = mapper.Map<CustomerAddress>(request.CustomerAddress);

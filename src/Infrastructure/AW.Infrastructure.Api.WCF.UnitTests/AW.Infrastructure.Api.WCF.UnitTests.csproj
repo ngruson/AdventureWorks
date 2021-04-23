@@ -26,8 +26,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AW.Infrastructure.Api.WCF\AW.Infrastructure.Api.WCF.csproj" />
-  </ItemGroup>
-
 </Project>

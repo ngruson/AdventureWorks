@@ -1,0 +1,53 @@
+﻿@{
+    @model IEnumerable<CustomerAddressViewModel>;
+}
+
+<h4>Addresses</h4>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Address type</th>
+                <th>Address line 1</th>
+                <th>Address line 2</th>
+                <th>Postal code</th>
+                <th>City</th>
+                <th>State/Province</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        @foreach (var address in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "EditAddress", new
+                       {
+                           accountNumber = ViewData["accountNumber"],
+                           address.AddressType
+                       }) |
+                    @Html.ActionLink("Delete", "DeleteAddress", new
+                       {
+                           accountNumber = ViewData["accountNumber"],
+                           address.AddressType
+                       })
+                </td>
+                <td>@address.AddressType</td>
+                <td>@address.Address.AddressLine1</td>
+                <td>@address.Address.AddressLine2</td>
+                <td>@address.Address.PostalCode</td>
+                <td>@address.Address.City</td>
+                <td>@address.Address.StateProvince</td>
+                <td>@address.Address.Country</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="row">
+        No addresses found
+    </div>
+}
+@Html.ActionLink("Add address", "AddAddress", new { AccountNumber = ViewData["accountNumber"], CustomerName = ViewData["customerName"] })

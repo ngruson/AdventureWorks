@@ -42,6 +42,7 @@ namespace AW.Services.Product.REST.API
 
             services.AddSwaggerGen(c =>
             {
+                c.DescribeAllParametersInCamelCase();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product API", Version = "v1" });
             });
 

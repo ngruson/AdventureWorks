@@ -1,43 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AW.UI.Web.Internal.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 using AW.UI.Web.Internal.ViewModels.Customer;
+using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
+using AW.UI.Web.Internal.Services;
+using AW.UI.Web.Internal.Extensions;
 
 namespace AW.UI.Web.Internal.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomerViewModelService customersViewModelService;
+        private readonly ICustomerService customerService;
+        private readonly IReferenceDataService referenceDataService;
 
-        public CustomerController(ICustomerViewModelService customersViewModelService)
+        public CustomerController(ICustomerService customerService, IReferenceDataService referenceDataService)
         {
-            this.customersViewModelService = customersViewModelService;
+            this.customerService = customerService;
+            this.referenceDataService = referenceDataService;
         }
 
-        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, string customerTypeFilterApplied)
+        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, CustomerType? customerTypeFilterApplied, string accountNumber)
         {
             return View(
-                await customersViewModelService.GetCustomers(
+                await customerService.GetCustomers(
                     pageId ?? 0, 
                     Constants.ITEMS_PER_PAGE,
                     territoryFilterApplied,
-                    customerTypeFilterApplied
+                    customerTypeFilterApplied,
+                    accountNumber
                 )
             );
         }
 
         public async Task<IActionResult> Detail(string accountNumber)
         {
-            var viewModel = await customersViewModelService.GetCustomer(accountNumber);
+            var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
-            ViewData["customerName"] = viewModel.Customer.Name;
+            ViewData["customerName"] = viewModel.Customer.CustomerName;
+            ViewData["countries"] = await referenceDataService.GetCountries();
+            ViewData["statesProvinces"] = await referenceDataService.GetStatesProvinces();
             return View(viewModel);
         }
 
         public async Task<IActionResult> EditStore(string accountNumber)
         {
             return View(
-                await customersViewModelService.GetStoreCustomerForEdit(
+                await customerService.GetStoreCustomerForEdit(
                     accountNumber)
             );
         }
@@ -47,7 +55,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.UpdateStore(viewModel.Customer);
+                await customerService.UpdateStore(viewModel.Customer);
                 return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
             }
 
@@ -57,7 +65,7 @@ namespace AW.UI.Web.Internal.Controllers
         public async Task<IActionResult> EditIndividual(string accountNumber)
         {
             return View(
-                await customersViewModelService.GetIndividualCustomerForEdit(
+                await customerService.GetIndividualCustomerForEdit(
                     accountNumber)
             );
         }
@@ -67,7 +75,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.UpdateIndividual(viewModel.Customer);
+                await customerService.UpdateIndividual(viewModel.Customer);
                 return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
             }
 
@@ -78,9 +86,24 @@ namespace AW.UI.Web.Internal.Controllers
 
         public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
         {
-            return View("Address",
-                await customersViewModelService.AddAddress(accountNumber, customerName)
-            );
+            var vm = customerService.AddAddress(accountNumber, customerName);
+
+            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypes())
+                .OrderBy(a => a.Name)
+                .ToList()
+                .ToSelectList(a => a.Name, a => a.Name);
+
+            ViewData["countries"] = (await referenceDataService.GetCountries())
+                .OrderBy(c => c.Name)
+                .ToList()
+                .ToSelectList(x => x.CountryRegionCode, x => x.Name);
+
+            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvinces("US"))
+                .OrderBy(s => s.Name)
+                .ToList()
+                .ToSelectList(x => x.StateProvinceCode, x => x.Name);
+
+            return View("Address", vm);
         }
 
         [HttpPost]
@@ -88,7 +111,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.AddAddress(viewModel);
+                await customerService.AddAddress(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
@@ -97,12 +120,25 @@ namespace AW.UI.Web.Internal.Controllers
 
         public async Task<IActionResult> EditAddress(string accountNumber, string addressType)
         {
-            return View("Address",
-                await customersViewModelService.GetCustomerAddress(
-                    accountNumber, 
-                    addressType
-                )
-            );
+            var vm = await customerService.GetCustomerAddress(accountNumber, addressType);
+            var countryRegionCode = vm.CustomerAddress.Address.CountryRegionCode;
+
+            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypes())
+                .OrderBy(a => a.Name)
+                .ToList()
+                .ToSelectList(a => a.Name, a => a.Name);
+
+            ViewData["countries"] = (await referenceDataService.GetCountries())
+                .OrderBy(c => c.Name)
+                .ToList()
+                .ToSelectList(c => c.CountryRegionCode, c => c.Name);
+               
+            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvinces(countryRegionCode))
+                .OrderBy(s => s.Name)
+                .ToList()
+                .ToSelectList(s => s.StateProvinceCode, s => s.Name);
+
+            return View("Address", vm);
         }
 
         [HttpPost]
@@ -110,7 +146,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.UpdateAddress(viewModel);
+                await customerService.UpdateAddress(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
@@ -119,13 +155,13 @@ namespace AW.UI.Web.Internal.Controllers
 
         public async Task<JsonResult> GetStateProvinces(string country)
         {
-            var stateProvinces = await customersViewModelService.GetStateProvincesJson(country);
+            var stateProvinces = await customerService.GetStateProvincesJson(country);
             return Json(stateProvinces);
         }
 
         public async Task<IActionResult> DeleteAddress(string accountNumber, string addressType)
         {
-            var viewModel = await customersViewModelService.GetCustomerAddressForDelete(accountNumber, addressType);
+            var viewModel = await customerService.GetCustomerAddressForDelete(accountNumber, addressType);
             return View(viewModel);
         }
 
@@ -134,7 +170,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.DeleteAddress(
+                await customerService.DeleteAddress(
                     viewModel.AccountNumber, 
                     viewModel.AddressType
                 );
@@ -150,7 +186,7 @@ namespace AW.UI.Web.Internal.Controllers
         public async Task<IActionResult> AddContact(string accountNumber, string customerName)
         {
             return View("Contact",
-                await customersViewModelService.AddContact(accountNumber, customerName)
+                await customerService.AddContact(accountNumber, customerName)
             );
         }
 
@@ -159,7 +195,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.AddContact(viewModel);
+                await customerService.AddContact(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
@@ -169,7 +205,7 @@ namespace AW.UI.Web.Internal.Controllers
         public async Task<IActionResult> EditContact(string accountNumber, string contactName, string contactType)
         {
             return View("Contact",
-                await customersViewModelService.GetCustomerContact(
+                await customerService.GetCustomerContact(
                     accountNumber,
                     contactName,
                     contactType
@@ -182,7 +218,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.UpdateContact(viewModel);
+                await customerService.UpdateContact(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
@@ -191,7 +227,7 @@ namespace AW.UI.Web.Internal.Controllers
 
         public async Task<IActionResult> DeleteContact(string accountNumber, string contactName, string contactType)
         {
-            var viewModel = await customersViewModelService.GetCustomerContactForDelete(accountNumber, contactName, contactType);
+            var viewModel = await customerService.GetCustomerContactForDelete(accountNumber, contactName, contactType);
             return View(viewModel);
         }
 
@@ -200,7 +236,7 @@ namespace AW.UI.Web.Internal.Controllers
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.DeleteContact(viewModel);
+                await customerService.DeleteContact(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
@@ -210,40 +246,46 @@ namespace AW.UI.Web.Internal.Controllers
 
         #region Individual contact information
 
-        public async Task<IActionResult> AddContactInformation(string accountNumber, string customerName)
+        public IActionResult AddContactEmailAddress(string accountNumber, string customerName)
         {
             return View("ContactInfo",
-                await customersViewModelService.AddContactInformation(accountNumber, customerName)
+                customerService.AddEmailAddress(accountNumber, customerName)
             );
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddContactInformation(EditCustomerContactInfoViewModel viewModel)
+        public async Task<IActionResult> AddContactEmailAddress(EditEmailAddressViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.AddContactInformation(viewModel);
+                await customerService.AddContactEmailAddress(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
             return View(viewModel);
         }
 
-        public async Task<IActionResult> DeleteContactInformation(string accountNumber, ContactInfoChannelTypeViewModel channel, string value)
+        public async Task<IActionResult> DeleteIndividualCustomerEmailAddress(string accountNumber, string emailAddress)
         {
-            var viewModel = await customersViewModelService.GetCustomerContactInformationForDelete(accountNumber, channel, value);
+            var viewModel = await customerService.GetIndividualCustomerEmailAddressForDelete(accountNumber, emailAddress);
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteContactInformation(DeleteCustomerContactInfoViewModel viewModel)
+        public async Task<IActionResult> DeleteIndividualCustomerEmailAddress(DeleteIndividualCustomerEmailAddressViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                await customersViewModelService.DeleteContactInformation(viewModel);
+                await customerService.DeleteIndividualCustomerEmailAddress(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> DeleteContactEmailAddress(string accountNumber, string contactType, string contactName, string emailAddress)
+        {
+            var viewModel = await customerService.GetContactEmailAddressForDelete(accountNumber, contactType, contactName, emailAddress);
             return View(viewModel);
         }
 

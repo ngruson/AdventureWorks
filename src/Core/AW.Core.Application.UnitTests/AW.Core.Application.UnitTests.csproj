@@ -21,9 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Persistence\AW.Persistence.EntityFramework\AW.Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\AW.Core.Application\AW.Core.Application.csproj" />
-    <ProjectReference Include="..\AW.Core.Domain\AW.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,37 +16,37 @@
             @Html.HiddenFor(m => m.AddressType)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.AddressLine1, new { @class = "control-label" })
-            <input asp-for="AddressLine1" readonly class="form-control-plaintext" />
-            @Html.HiddenFor(m => m.AddressLine1)
+            @Html.LabelFor(m => m.Address.AddressLine1, new { @class = "control-label" })
+            <input asp-for="Address.AddressLine1" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.Address.AddressLine1)
         </div>
-        @if (!string.IsNullOrEmpty(Model.AddressLine2))
+        @if (!string.IsNullOrEmpty(Model.Address.AddressLine2))
         {
             <div class="form-group">
-                @Html.LabelFor(m => m.AddressLine2, new { @class = "control-label" })
-                <input asp-for="AddressLine2" readonly class="form-control-plaintext" />
-                @Html.HiddenFor(m => m.AddressLine2)
+                @Html.LabelFor(m => m.Address.AddressLine2, new { @class = "control-label" })
+                <input asp-for="Address.AddressLine2" readonly class="form-control-plaintext" />
+                @Html.HiddenFor(m => m.Address.AddressLine2)
             </div>
         }
         <div class="form-group">
-            @Html.LabelFor(m => m.PostalCode, new { @class = "control-label" })
-            <input asp-for="PostalCode" readonly class="form-control-plaintext" />
-            @Html.HiddenFor(m => m.PostalCode)
+            @Html.LabelFor(m => m.Address.PostalCode, new { @class = "control-label" })
+            <input asp-for="Address.PostalCode" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.Address.PostalCode)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.City, new { @class = "control-label" })
-            <input asp-for="City" readonly class="form-control-plaintext" />
-            @Html.HiddenFor(m => m.City)
+            @Html.LabelFor(m => m.Address.City, new { @class = "control-label" })
+            <input asp-for="Address.City" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.Address.City)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.StateProvinceName, new { @class = "control-label" })
-            <input asp-for="StateProvinceName" readonly class="form-control-plaintext" />
-            @Html.HiddenFor(m => m.StateProvinceName)
+            @Html.LabelFor(m => m.Address.StateProvinceCode, new { @class = "control-label" })
+            <input asp-for="Address.StateProvinceCode" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.Address.StateProvinceCode)
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CountryRegionName, new { @class = "control-label" })
-            <input asp-for="CountryRegionName" readonly class="form-control-plaintext" />
-            @Html.HiddenFor(m => m.CountryRegionName)
+            @Html.LabelFor(m => m.Address.CountryRegionCode, new { @class = "control-label" })
+            <input asp-for="Address.CountryRegionCode" readonly class="form-control-plaintext" />
+            @Html.HiddenFor(m => m.Address.CountryRegionCode)
         </div>
 
         <div class="form-group">

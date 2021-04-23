@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-referencedata-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-referencedata-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-referencedata-api
+    spec:
+      containers:
+      - name: referencedata-api
+        image: ngruson/adventureworks_referencedataapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-referencedata-api-config
+          - secretRef:
+              name: adventureworks-referencedata-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: referencedata-api-service
+spec:
+  selector:
+    app: adventureworks-referencedata-api
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 31501

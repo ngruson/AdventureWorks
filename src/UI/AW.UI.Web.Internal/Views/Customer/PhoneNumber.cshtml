@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = $"Edit phone number - {Model.ContactName}";
+    @model EditPhoneNumberViewModel;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AccountNumber)
+
+    
+    <h2>Edit phone number</h2>
+
+    <div class="form-horizontal detail">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumberType, new { @class = "control-label" })
+            @if (Model.IsNewPhoneNumber)
+            {
+                @Html.DropDownListFor(m => m.PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.PhoneNumberType, Model.PhoneNumberTypes, null, new { @disabled = "disabled", @class = "form-control" })
+                @Html.HiddenFor(m => m.PhoneNumberType)
+            }
+
+            @Html.ValidationMessageFor(m => m.PhoneNumberType, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+            <input asp-for="PhoneNumber" class="form-control" />
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                @Html.ActionLink("Cancel", "Detail", new { Model.AccountNumber }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#CustomerContactInfo_Channel').change(function () {
+                var dropdown = $('#CustomerContactInfo_Type');
+                if (this.value == "Email") {                    
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                }
+            });
+
+            $('#CustomerContactInfo_Channel').change();
+        });
+    </script>
+}

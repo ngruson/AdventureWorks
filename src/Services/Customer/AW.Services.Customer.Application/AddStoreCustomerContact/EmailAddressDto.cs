@@ -9,7 +9,7 @@ namespace AW.Services.Customer.Application.AddStoreCustomerContact
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EmailAddressDto, Domain.PersonEmailAddress>();
+            profile.CreateMap<Domain.PersonEmailAddress, EmailAddressDto>();
         }
     }
 }

@@ -4,8 +4,9 @@ namespace AW.Services.Customer.Domain
 {
     public class StoreCustomer : Customer
     {
+        public override CustomerType CustomerType => CustomerType.Store;
         public string Name { get; set; }
-        public string SalesPersonName { get; set; }
+        public string SalesPerson { get; set; }
         public List<StoreCustomerContact> Contacts { get; set; } = new List<StoreCustomerContact>();
     }
 }

@@ -23,8 +23,14 @@ namespace AW.Services.Product.REST.API.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Application.GetProducts.Product, Product>();
-            profile.CreateMap<Application.GetProduct.Product, Product>();
+            profile.CreateMap<Application.GetProducts.Product, Product>()
+                .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode.Trim()))
+                .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => src.ProductLine.Trim()))
+                .ForMember(m => m.Style, opt => opt.MapFrom(src => src.Style.Trim()));
+            profile.CreateMap<Application.GetProduct.Product, Product>()
+                .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode.Trim()))
+                .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => src.ProductLine.Trim()))
+                .ForMember(m => m.Style, opt => opt.MapFrom(src => src.Style.Trim()));
         }
     }
 }

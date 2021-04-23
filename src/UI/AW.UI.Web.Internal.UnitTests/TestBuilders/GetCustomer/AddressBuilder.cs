@@ -1,4 +1,4 @@
-﻿using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+﻿using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomer;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
 {
@@ -30,9 +30,27 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
             return this;
         }
 
-        public AddressBuilder StateProvince(StateProvince stateProvince)
+        public AddressBuilder StateProvinceCode(string stateProvinceCode)
         {
-            address.StateProvince = stateProvince;
+            address.StateProvinceCode = stateProvinceCode;
+            return this;
+        }
+
+        public AddressBuilder CountryRegionCode(string countryRegionCode)
+        {
+            address.CountryRegionCode = countryRegionCode;
+            return this;
+        }
+
+        public AddressBuilder WithTestValues()
+        {
+            address = new Address
+            {
+                City = "Seattle",
+                StateProvinceCode = "WA",
+                CountryRegionCode = "US"
+            };
+
             return this;
         }
 

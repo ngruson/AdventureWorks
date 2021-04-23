@@ -1,9 +1,10 @@
-﻿using AW.Services.Customer.Application.Common;
+﻿using AutoMapper;
+using AW.Services.Customer.Application.Common;
 using System.Collections.Generic;
 
 namespace AW.Services.Customer.Application.GetCustomers
 {
-    public class PersonDto : IMapFrom<Domain.Customer>
+    public class PersonDto : IMapFrom<Domain.Person>
     {
         public string Title { get; set; }
         public string FirstName { get; set; }
@@ -12,5 +13,10 @@ namespace AW.Services.Customer.Application.GetCustomers
         public string Suffix { get; set; }
         public List<PersonEmailAddressDto> EmailAddresses { get; set; }
         public List<PersonPhoneDto> PhoneNumbers { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Domain.Person, PersonDto>();
+        }
     }
 }

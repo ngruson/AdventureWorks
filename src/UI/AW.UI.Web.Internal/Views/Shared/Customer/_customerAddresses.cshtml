@@ -1,5 +1,7 @@
 ﻿@{
     @model IEnumerable<CustomerAddressViewModel>;
+    var statesProvinces = ViewData["statesProvinces"] as List<StateProvince>;
+    var countries = ViewData["countries"] as List<CountryRegion>;
 }
 
 <h4>Addresses</h4>
@@ -38,8 +40,8 @@
                 <td>@address.Address.AddressLine2</td>
                 <td>@address.Address.PostalCode</td>
                 <td>@address.Address.City</td>
-                <td>@address.Address.StateProvince.Name</td>
-                <td>@address.Address.StateProvince.CountryRegion.Name</td>
+                <td>@address.Address.StateProvinceCode.StateProvinceName(statesProvinces)</td>
+                <td>@address.Address.CountryRegionCode.CountryRegionName(countries)</td>
             </tr>
         }
     </table>

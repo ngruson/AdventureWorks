@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Core.Abstractions.Api.SalesTerritoryApi;
+using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
 using Microsoft.Extensions.Logging;
@@ -12,25 +12,25 @@ namespace AW.UI.Web.Internal.Services
     {
         private readonly ILogger<SalesTerritoryViewModelService> logger;
         private readonly IMapper mapper;
-        private readonly ISalesTerritoryApi salesTerritoryApi;
+        private readonly IReferenceDataApiClient referenceDataApiClient;
 
         public SalesTerritoryViewModelService(
             ILogger<SalesTerritoryViewModelService> logger,
             IMapper mapper,
-            ISalesTerritoryApi salesTerritoryApi
+            IReferenceDataApiClient referenceDataApiClient
         ) =>
-            (this.logger, this.mapper, this.salesTerritoryApi) =
-                (logger, mapper, salesTerritoryApi);
+            (this.logger, this.mapper, this.referenceDataApiClient) =
+                (logger, mapper, referenceDataApiClient);
 
         public async Task<SalesTerritoryIndexViewModel> GetSalesTerritories()
         {
             logger.LogInformation("GetSalesTerritories called");
 
-            var response = await salesTerritoryApi.ListTerritoriesAsync();
+            var territories = await referenceDataApiClient.GetTerritoriesAsync();
 
             var vm = new SalesTerritoryIndexViewModel
             {
-                SalesTerritories = mapper.Map<IEnumerable<SalesTerritoryViewModel>>(response.Territories)
+                SalesTerritories = mapper.Map<IEnumerable<SalesTerritoryViewModel>>(territories)
             };
 
             return vm;

@@ -25,17 +25,12 @@ namespace AW.Services.Product.REST.API.Controllers
         ) => (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Product>>> GetProducts(int pageIndex, int pageSize)
+        public async Task<ActionResult<IEnumerable<Models.Product>>> GetProducts([FromQuery] GetProductsQuery query)
         {
             logger.LogInformation("GetProducts called. pageIndex = {PageIndex}, pageSize = {PageSize}",
-                pageIndex, pageSize
+                query.PageIndex, query.PageSize
             );
 
-            var query = new GetProductsQuery
-            {
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
             logger.LogInformation("Sending the GetProducts query");
             var products = await mediator.Send(query);
 
@@ -46,7 +41,7 @@ namespace AW.Services.Product.REST.API.Controllers
             }
 
             logger.LogInformation("Returning {Count} products", products.Count());
-            return new OkObjectResult(mapper.Map<IEnumerable<Models.Product>>(products));
+            return Ok(mapper.Map<IEnumerable<Models.Product>>(products));
         }
 
         [HttpGet("{productNumber}")]

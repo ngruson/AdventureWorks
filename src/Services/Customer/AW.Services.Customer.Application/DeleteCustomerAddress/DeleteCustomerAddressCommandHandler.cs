@@ -31,7 +31,7 @@ namespace AW.Services.Customer.Application.DeleteCustomerAddress
 
             logger.LogInformation("Removing address from customer");
             var customerAddress = customer.Addresses.FirstOrDefault(
-                a => a.AddressType == request.CustomerAddress.AddressTypeName
+                a => a.AddressType == request.CustomerAddress.AddressType
             );
             Guard.Against.Null(customerAddress, nameof(customerAddress), logger);
 

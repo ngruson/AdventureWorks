@@ -32,10 +32,10 @@ namespace AW.Services.Customer.Application.DeleteStoreCustomerContact
 
             logger.LogInformation("Removing phone from contact");
             var contact = storeCustomer.Contacts.FirstOrDefault(
-                c => c.ContactType == request.CustomerContact.ContactTypeName &&
-                    c.ContactPerson.FirstName == request.CustomerContact.Contact.FirstName &&
-                    c.ContactPerson.MiddleName == request.CustomerContact.Contact.MiddleName &&
-                    c.ContactPerson.LastName == request.CustomerContact.Contact.LastName
+                c => c.ContactType == request.CustomerContact.ContactType &&
+                    c.ContactPerson.FirstName == request.CustomerContact.ContactPerson.FirstName &&
+                    c.ContactPerson.MiddleName == request.CustomerContact.ContactPerson.MiddleName &&
+                    c.ContactPerson.LastName == request.CustomerContact.ContactPerson.LastName
             );
             Guard.Against.Null(contact, nameof(contact), logger);
 

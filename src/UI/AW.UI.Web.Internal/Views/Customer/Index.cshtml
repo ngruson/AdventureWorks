@@ -12,6 +12,9 @@
             <label class="filter-label" data-title="customer type">
                 <select class="filter" asp-for="@Model.CustomerTypeFilterApplied" asp-items="@Model.CustomerTypes"></select>
             </label>
+            <label class="filter-label" data-title="account number">
+                <input class="filter" asp-for="@Model.AccountNumber" />
+            </label>
             <button class="btn btn-default fa fa-search filter-button" type="submit"></button>
         </form>
     </div>
@@ -36,8 +39,8 @@
                     {
                         <tr>
                             <td>@Html.ActionLink(customer.AccountNumber, "Detail", new { customer.AccountNumber })</td>
-                            <td>@customer.Name</td>
-                            <td>@customer.SalesTerritoryName</td>
+                            <td>@customer.CustomerName</td>
+                            <td>@customer.Territory</td>
                             <td>@customer.CustomerType</td>
                         </tr>
                     }

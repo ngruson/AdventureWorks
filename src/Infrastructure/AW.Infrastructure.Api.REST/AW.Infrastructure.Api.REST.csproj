@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\AW.Core.Abstractions\AW.Core.Abstractions.csproj" />
     <ProjectReference Include="..\AW.Infrastructure\AW.Infrastructure.csproj" />
   </ItemGroup>
 

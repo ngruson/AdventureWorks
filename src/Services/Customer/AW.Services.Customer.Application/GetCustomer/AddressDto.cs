@@ -1,4 +1,5 @@
-﻿using AW.Services.Customer.Application.Common;
+﻿using AutoMapper;
+using AW.Services.Customer.Application.Common;
 
 namespace AW.Services.Customer.Application.GetCustomer
 {
@@ -8,6 +9,13 @@ namespace AW.Services.Customer.Application.GetCustomer
         public string AddressLine2 { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
-        public string StateProvince { get; set; }
+        public string StateProvinceCode { get; set; }
+        public string CountryRegionCode { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Domain.Address, AddressDto>()
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()));
+        }
     }
 }

@@ -20,8 +20,6 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             var profile = new TestProfile();
             new Customer.AddressViewModel().Mapping(profile);
-            new Customer.StateProvinceViewModel().Mapping(profile);
-            new Customer.CountryRegionViewModel().Mapping(profile);
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile(profile));
             config.AssertConfigurationIsValid();

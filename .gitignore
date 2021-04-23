@@ -13,6 +13,8 @@ packages
 *.userosscache
 *.sln.docstates
 
+appsettings.Development.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -30,3 +32,5 @@ bld/
 [Ll]ogs/
 /src/Persistence/AW.Persistence.EntityFramework.UnitTests/coverage.opencover.xml
 /data/sql
+*.dbmdl
+*.jfm

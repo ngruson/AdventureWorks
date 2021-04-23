@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-salesperson-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-salesperson-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-salesperson-api
+    spec:
+      containers:
+      - name: salesperson-api
+        image: ngruson/adventureworks_salespersonapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-salesperson-api-config
+          - secretRef:
+              name: adventureworks-salesperson-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: salesperson-api-service
+spec:
+  selector:
+    app: adventureworks-salesperson-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

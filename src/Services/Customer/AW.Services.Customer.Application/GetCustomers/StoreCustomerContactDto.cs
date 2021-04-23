@@ -1,4 +1,5 @@
-﻿using AW.Services.Customer.Application.Common;
+﻿using AutoMapper;
+using AW.Services.Customer.Application.Common;
 
 namespace AW.Services.Customer.Application.GetCustomers
 {
@@ -6,5 +7,10 @@ namespace AW.Services.Customer.Application.GetCustomers
     {
         public string ContactType { get; set; }
         public PersonDto ContactPerson { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Domain.StoreCustomerContact, StoreCustomerContactDto>();
+        }
     }
 }

@@ -2,7 +2,8 @@
 {
     public class CustomerAddressDto
     {
+        public string AddressType { get; set; }
         public AddressDto Address { get; set; }
-        public string AddressTypeName { get; set; }
+        
     }
 }

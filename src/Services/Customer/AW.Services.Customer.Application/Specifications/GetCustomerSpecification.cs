@@ -7,6 +7,12 @@ namespace AW.Services.Customer.Application.Specifications
     {
         public GetCustomerSpecification(string accountNumber) : base()
         {
+            Query.Include(c => c.Addresses)
+                .ThenInclude(a => a.Address);
+            Query.Include("Contacts.ContactPerson.EmailAddresses");
+            Query.Include("Contacts.ContactPerson.PhoneNumbers");
+            Query.Include(c => c.SalesOrders);
+
             Query
                 .Where(c => c.AccountNumber == accountNumber);
 

@@ -17,8 +17,11 @@
                 @if (Model.ActualPage == 0)
                 {
                     <li class="page-item active"><a class="page-link" href="?pageId=@Model.ActualPage">@(Model.ActualPage + 1)</a></li>
-                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 1)">@(Model.ActualPage + 2)</a></li>
-                    <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 2)">@(Model.ActualPage + 3)</a></li>
+                    @if (Model.TotalPages > 1)
+                    {
+                        <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 1)">@(Model.ActualPage + 2)</a></li>
+                        <li class="page-item"><a class="page-link" href="?pageId=@(Model.ActualPage + 2)">@(Model.ActualPage + 3)</a></li>
+                    }
                 }
                 else
                 {

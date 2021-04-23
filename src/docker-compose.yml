@@ -6,21 +6,23 @@ services:
         context: .
         dockerfile: nginx/nginx.Dockerfile
       depends_on:
-        - adventureworks.web.store
+        #- adventureworks.web.store
         - adventureworks.countryregion-api
+        #- adventureworks.customer-api
         - adventureworks.product-api
+        - adventureworks.reference-data-api
       ports:
         - "44395:443"
 
-    adventureworks.web.store:
-      build:
-        context: .
-        dockerfile: UI/AW.UI.Web.Store/Dockerfile
-      environment:
-        - ASPNETCORE_URLS=http://*:80
-        - ASPNETCORE_ENVIRONMENT=Development
-      ports:
-        - "5000:80"
+    #adventureworks.web.store:
+    #  build:
+    #    context: .
+    #    dockerfile: UI/AW.UI.Web.Store/Dockerfile
+    #  environment:
+    #    - ASPNETCORE_URLS=http://*:80
+    #    - ASPNETCORE_ENVIRONMENT=Development
+    #  ports:
+    #    - "5000:80"
 
     adventureworks.countryregion-api:
       build:
@@ -32,6 +34,16 @@ services:
       ports:
         - "5005:80"
 
+    #adventureworks.customer-api:
+    #  build:
+    #    context: .
+    #    dockerfile: Services/Customer/AW.Services.Customer.REST.API/Dockerfile
+    #  environment:
+    #    - ASPNETCORE_URLS=http://*:80
+    #    - ASPNETCORE_ENVIRONMENT=Development
+    #  ports:
+    #    - "5006:80"
+
     adventureworks.product-api:
       build:
         context: .
@@ -40,4 +52,14 @@ services:
         - ASPNETCORE_URLS=http://*:80
         - ASPNETCORE_ENVIRONMENT=Development
       ports:
-        - "5006:80"
+        - "5007:80"
+
+    adventureworks.reference-data-api:
+      build:
+        context: .
+        dockerfile: Services/ReferenceData/AW.Services.ReferenceData.REST.API/Dockerfile
+      environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+      ports:
+        - "5008:80"

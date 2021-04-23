@@ -14,10 +14,4 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\AW.Core.Abstractions\AW.Core.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Core\AW.Core.Application.AutoMapper\AW.Core.Application.AutoMapper.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\AW.Infrastructure.Api.REST\AW.Infrastructure.Api.REST.csproj" />
-  </ItemGroup>
-
 </Project>

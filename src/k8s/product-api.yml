@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-product-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-product-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-product-api
+    spec:
+      containers:
+      - name: product-api
+        image: ngruson/adventureworks_productapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-product-api-config
+          - secretRef:
+              name: adventureworks-product-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-api-service
+spec:
+  selector:
+    app: adventureworks-product-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

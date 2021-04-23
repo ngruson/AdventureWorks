@@ -42,7 +42,9 @@ namespace AW.UI.Web.Internal
 
         public static IList<string> GetDisplayValues(Enum value)
         {
-            return GetNames(value).Select(obj => GetDisplayValue(Parse(obj))).ToList();
+            return GetNames(value).Select(obj => GetDisplayValue(Parse(obj)))
+                .OrderBy(x => x)
+                .ToList();
         }
 
         private static string LookupResource(Type resourceManagerProvider, string resourceKey)

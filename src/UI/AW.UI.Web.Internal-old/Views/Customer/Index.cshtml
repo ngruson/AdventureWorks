@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Customers";
+    @model CustomersIndexViewModel;
+}
+
+<section class="filters">
+    <div class="container">
+        <form method="get">
+            <label class="filter-label" data-title="territory">
+                <select class="filter" asp-for="@Model.TerritoryFilterApplied" asp-items="@Model.Territories"></select>
+            </label>
+            <label class="filter-label" data-title="customer type">
+                <select class="filter" asp-for="@Model.CustomerTypeFilterApplied" asp-items="@Model.CustomerTypes"></select>
+            </label>
+            <button class="btn btn-default fa fa-search filter-button" type="submit"></button>
+        </form>
+    </div>
+</section>
+<div class="container">
+    <h2>Customers</h2>
+    @if (Model.Customers.Any())
+    {
+        <partial name="_pagination" for="@Model.PaginationInfo" />
+        <div class="row">
+            <table class="table table-striped listView">
+                <thead>
+                    <tr>
+                        <th>Accountnumber</th>
+                        <th>Name</th>
+                        <th>Sales territory</th>
+                        <th>Customer type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model.Customers)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(customer.AccountNumber, "Detail", new { customer.AccountNumber })</td>
+                            <td>@customer.CustomerName</td>
+                            <td>@customer.Territory</td>
+                            <td>@customer.CustomerType</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <partial name="_pagination" for="@Model.PaginationInfo" />
+    }
+    else
+    {
+        <div class="row">
+            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+        </div>
+    }
+</div>

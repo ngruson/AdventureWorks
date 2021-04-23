@@ -1,6 +1,6 @@
-﻿@{    
+﻿@{
     @model EditStoreCustomerViewModel;
-    ViewData["Title"] = $"Edit customer - {Model.Customer.Name}";
+    ViewData["Title"] = $"Edit customer - {Model.Customer.CustomerName}";
 }
 
 @using (Html.BeginForm())
@@ -17,19 +17,19 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.Store.Name, new { @class = "control-label" })
-            <input asp-for="Customer.Store.Name" class="form-control" />
-            @Html.ValidationMessageFor(m => m.Customer.Store.Name, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.Customer.Name, new { @class = "control-label" })
+            <input asp-for="Customer.Name" class="form-control" />
+            @Html.ValidationMessageFor(m => m.Customer.Name, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.SalesTerritoryName, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.Customer.SalesTerritoryName, Model.Territories, null, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Customer.SalesTerritoryName, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.Customer.Territory, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Customer.Territory, Model.Territories, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.Territory, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.Store.SalesPerson.FullName, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.Customer.Store.SalesPerson.FullName, Model.SalesPersons, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Customer.Store.SalesPerson.FullName, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.Customer.SalesPerson, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.Customer.SalesPerson, Model.SalesPersons, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.SalesPerson, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">

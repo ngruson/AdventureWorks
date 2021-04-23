@@ -10,10 +10,12 @@ namespace AW.Services.Customer.Application.AddCustomerAddress
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string StateProvinceCode { get; set; }
+        public string CountryRegionCode { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AddressDto, Domain.Address>();
+            profile.CreateMap<AddressDto, Domain.Address>()
+                .ForMember(m => m.Id, opt => opt.Ignore());
         }
     }
 }

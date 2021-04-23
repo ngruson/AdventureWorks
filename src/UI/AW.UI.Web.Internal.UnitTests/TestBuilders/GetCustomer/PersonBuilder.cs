@@ -1,6 +1,4 @@
-﻿using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomer;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
 {
@@ -32,33 +30,21 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
             return this;
         }
 
-        public PersonBuilder FullName(string fullName)
-        {
-            person.FullName = fullName;
-            return this;
-        }
-
         public PersonBuilder Suffix(string suffix)
         {
             person.Suffix = suffix;
             return this;
         }
 
-        public PersonBuilder EmailPromotion(Core.Domain.Person.EmailPromotion emailPromotion)
+        public PersonBuilder WithTestValues()
         {
-            person.EmailPromotion = emailPromotion;
-            return this;
-        }
+            person = new Person
+            {
+                FirstName = "Orlando",
+                MiddleName = "N.",
+                LastName = "Gee"
+            };
 
-        public PersonBuilder Addresses(params CustomerAddress[] addresses)
-        {
-            person.Addresses = addresses.ToList();
-            return this;
-        }
-
-        public PersonBuilder ContactInfo(params ContactInfo[] contactInfo)
-        {
-            person.ContactInfo = contactInfo.ToList();
             return this;
         }
 

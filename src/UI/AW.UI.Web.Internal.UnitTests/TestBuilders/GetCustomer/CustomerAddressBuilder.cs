@@ -1,4 +1,4 @@
-﻿using AW.Core.Abstractions.Api.CustomerApi.GetCustomer;
+﻿using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomer;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
 {
@@ -15,6 +15,19 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
         public CustomerAddressBuilder Address(Address address)
         {
             customerAddress.Address = address;
+            return this;
+        }
+
+        public CustomerAddressBuilder WithTestValues()
+        {
+            customerAddress = new CustomerAddress
+            {
+                AddressType = "Main Office",
+                Address = new AddressBuilder()
+                    .WithTestValues()
+                    .Build()
+            };
+
             return this;
         }
 

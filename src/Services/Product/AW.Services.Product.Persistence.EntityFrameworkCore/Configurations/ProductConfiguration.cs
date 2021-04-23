@@ -61,9 +61,6 @@ namespace AW.Services.Product.Persistence.EntityFrameworkCore.Configurations
             builder.Property(e => e.Style)
                 .HasMaxLength(2);
 
-            //builder.HasMany(e => e.ProductProductPhotos)
-            //    .WithOne();
-
             //builder.HasMany(e => e.BillOfMaterials);
 
             //builder.HasMany(e => e.ProductReview)

@@ -15,6 +15,30 @@
          path: /
          backend:
            service:
-             name: countryregion-api-service
+             name: referencedata-api-service
+             port:
+               number: 5000
+
+       - pathType: Prefix
+         path: /customer-api/
+         backend:
+           service:
+             name: customer-api-service
+             port:
+               number: 5000
+
+       - pathType: Prefix
+         path: /product-api/
+         backend:
+           service:
+             name: product-api-service
+             port:
+               number: 5000
+            
+       - pathType: Prefix
+         path: /salesperson-api/
+         backend:
+           service:
+             name: salesperson-api-service
              port:
                number: 5000

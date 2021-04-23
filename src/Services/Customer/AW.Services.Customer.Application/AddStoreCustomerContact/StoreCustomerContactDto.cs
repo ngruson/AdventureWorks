@@ -5,8 +5,8 @@ namespace AW.Services.Customer.Application.AddStoreCustomerContact
 {
     public class StoreCustomerContactDto : IMapFrom<Domain.StoreCustomerContact>
     {
-        public string ContactTypeName { get; set; }
-        public ContactDto Contact { get; set; }
+        public string ContactType { get; set; }
+        public PersonDto ContactPerson { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -1,5 +1,8 @@
 ﻿@{
-    ViewData["Title"] = $"Add address - {Model.CustomerName}";
+    ViewData["Title"] = $"Edit address - {Model.CustomerName}";
+    var addressTypes = ViewData["addressTypes"] as List<SelectListItem>;
+    var statesProvinces = ViewData["statesProvinces"] as List<SelectListItem>;
+    var countries = ViewData["countries"] as List<SelectListItem>;
     @model EditCustomerAddressViewModel;
 }
 
@@ -15,11 +18,11 @@
         @Html.LabelFor(m => m.CustomerAddress.AddressType, new { @class = "control-label" })
         @if (Model.IsNewAddress)
         {
-            @Html.DropDownListFor(m => m.CustomerAddress.AddressType, Model.AddressTypes, null, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.CustomerAddress.AddressType, addressTypes, null, new { @class = "form-control" })
         }
         else
         {
-            @Html.DropDownListFor(m => m.CustomerAddress.AddressType, Model.AddressTypes, null, new { @disabled = "disabled", @class = "form-control" })
+            @Html.DropDownListFor(m => m.CustomerAddress.AddressType, addressTypes, null, new { @disabled = "disabled", @class = "form-control" })
             @Html.HiddenFor(m => m.CustomerAddress.AddressType)
         }
 
@@ -46,15 +49,16 @@
         @Html.ValidationMessageFor(m => m.CustomerAddress.Address.City, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.CustomerAddress.Address.StateProvince.CountryRegion.CountryRegionCode, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.CustomerAddress.Address.StateProvince.CountryRegion.CountryRegionCode, Model.Countries, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.CustomerAddress.Address.StateProvince.CountryRegion.CountryRegionCode, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddress.Address.StateProvinceCode, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CustomerAddress.Address.StateProvinceCode, statesProvinces, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAddress.Address.StateProvinceCode, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.CustomerAddress.Address.StateProvince.StateProvinceCode, new { @class = "control-label" })
-        @Html.DropDownListFor(m => m.CustomerAddress.Address.StateProvince.StateProvinceCode, Model.StateProvinces, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.CustomerAddress.Address.StateProvince.StateProvinceCode, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.CustomerAddress.Address.CountryRegionCode, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.CustomerAddress.Address.CountryRegionCode, countries, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAddress.Address.CountryRegionCode, "", new { @class = "text-danger" })
     </div>
+    
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

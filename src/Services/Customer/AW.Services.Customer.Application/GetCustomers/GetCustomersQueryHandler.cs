@@ -10,19 +10,17 @@ using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Application.GetCustomers
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersDto>
+    public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersDto>
     {
-        private readonly ILogger<GetCustomerQueryHandler> logger;
-        private readonly IMediator mediator;
+        private readonly ILogger<GetCustomersQueryHandler> logger;
         private readonly IMapper mapper;
         private readonly IRepositoryBase<Domain.Customer> repository;
 
-        public GetCustomerQueryHandler(
-            ILogger<GetCustomerQueryHandler> logger,
-            IMediator mediator,
+        public GetCustomersQueryHandler(
+            ILogger<GetCustomersQueryHandler> logger,
             IMapper mapper,
             IRepositoryBase<Domain.Customer> repository
-        ) => (this.logger, this.mediator, this.mapper, this.repository) = (logger, mediator, mapper, repository);
+        ) => (this.logger, this.mapper, this.repository) = (logger, mapper, repository);
 
         public async Task<GetCustomersDto> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
@@ -32,12 +30,14 @@ namespace AW.Services.Customer.Application.GetCustomers
             var spec = new GetCustomersPaginatedSpecification(
                 request.PageIndex,
                 request.PageSize,
-                request.CustomerType,
-                request.Territory
+                mapper.Map<Domain.CustomerType?>(request.CustomerType),
+                request.Territory,
+                request.AccountNumber
             );
             var countSpec = new CountCustomersSpecification(
-                request.CustomerType,
-                request.Territory
+                mapper.Map<Domain.CustomerType?>(request.CustomerType),
+                request.Territory,
+                request.AccountNumber
             );
 
             var customers = await repository.ListAsync(spec);
