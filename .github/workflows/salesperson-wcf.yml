@@ -1,0 +1,40 @@
+name: salesperson-wcf
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+    - src/Services/SalesPerson/**
+    - .github/workflows/salesperson-wcf.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+    - src/Services/SalesPerson/**
+    - .github/workflows/salesperson-wcf.yml
+
+jobs:
+  BuildWindows:
+    runs-on: windows-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Restore Packages
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+          cd Services/SalesPerson/AW.Services.SalesPerson.WCF
+          msbuild.exe AW.Services.SalesPerson.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          cd -
+          cd Services/SalesPerson/AW.Services.SalesPerson.WCF.UnitTests
+          msbuild.exe AW.Services.SalesPerson.WCF.UnitTests.csproj /p:Platform=AnyCPU /p:Configuration=Release
