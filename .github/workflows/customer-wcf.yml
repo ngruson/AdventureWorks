@@ -11,9 +11,6 @@ on:
     - src/Services/Customer/**
     - .github/workflows/customer-wcf.yml
 
-env:
-  DOTNET_VERSION: 5.0.x
-
 jobs:
   BuildWindows:
     runs-on: windows-latest
