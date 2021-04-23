@@ -5,9 +5,11 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-api.yml
   pull_request:
-    branches: [ master ]
-    
+    branches: [ master ]    
     paths:
     - src/Services/Customer/**
     - .github/workflows/customer-api.yml
