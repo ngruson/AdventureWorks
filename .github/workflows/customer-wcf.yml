@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
   push:
     branches: [ master ]
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-wcf.yml
   pull_request:
     branches: [ master ]
-    
     paths:
     - src/Services/Customer/**
     - .github/workflows/customer-wcf.yml
