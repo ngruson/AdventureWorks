@@ -1,0 +1,43 @@
+name: customer-api
+
+on:
+  workflow_dispatch:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-api.yml
+
+env:
+  SERVICE: customer-api
+  IMAGE: customer.api
+  DOTNET_VERSION: 5.0.x
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  BuildLinux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          dotnet restore "AdventureWorks.sln"
+          cd Services/Customer
+          dotnet build --no-restore
+          cd -
+          cd Services/Customer/AW.Services.Customer.REST.API.UnitTests
+          dotnet build --no-restore
+          dotnet test --no-build -v=normal
