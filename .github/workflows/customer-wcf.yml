@@ -19,6 +19,9 @@ jobs:
       - name: 'Checkout Github Action'
         uses: actions/checkout@master
         
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+        
       - name: Restore Packages
         run: |
           cd src
