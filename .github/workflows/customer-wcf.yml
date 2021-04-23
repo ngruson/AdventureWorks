@@ -1,0 +1,39 @@
+name: customer-wcf
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-wcf.yml
+
+env:
+  DOTNET_VERSION: 5.0.x
+
+jobs:
+  BuildWindows:
+    runs-on: windows
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          dotnet restore "AdventureWorks.sln"
+          cd Services/Customer/AW.Services.Customer.WCF
+          dotnet build --no-restore
+          cd -
+          cd Services/Customer/AW.Services.Customer.WCF.UnitTests
+          dotnet build --no-restore
+          dotnet test --no-build -v=normal
