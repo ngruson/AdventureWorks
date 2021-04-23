@@ -32,4 +32,4 @@ jobs:
           cd src
           nuget restore AdventureWorks.sln
           cd Services/Customer/AW.Services.Customer.WCF
-          msbuild.exe AW.Services.Customer.WCF.csproj /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release"
+          msbuild.exe AW.Services.Customer.WCF.csproj /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:Platform=AnyCPU /p:Configuration=Release
