@@ -1,0 +1,41 @@
+name: product-api
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+    paths:
+    - src/Services/Product/**
+    - .github/workflows/product-api.yml
+
+env:
+  SERVICE: product-api
+  IMAGE: product.api
+  DOTNET_VERSION: 5.0.x
+
+jobs:
+  BuildLinux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          dotnet restore "AdventureWorks.sln"
+          cd Services/Product/AW.Services.Product.REST.API
+          dotnet build --no-restore
+          cd -
+          cd Services/Product/AW.Services.Product.REST.API.UnitTests
+          dotnet build --no-restore
+          dotnet test --no-build -v=normal
