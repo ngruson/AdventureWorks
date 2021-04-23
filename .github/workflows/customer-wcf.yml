@@ -22,18 +22,20 @@ jobs:
       - name: 'Checkout Github Action'
         uses: actions/checkout@master
         
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.2
+        
+      - name: Restore Packages
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
 
       - name: Build and run unit tests
         run: |
           cd src
-          dotnet restore "AdventureWorks.sln"
+          nuget restore AdventureWorks.sln
           cd Services/Customer/AW.Services.Customer.WCF
-          dotnet build --no-restore
-          cd -
-          cd Services/Customer/AW.Services.Customer.WCF.UnitTests
-          dotnet build --no-restore
-          dotnet test --no-build -v=normal
+          msbuild.exe AW.Services.Customer.WCF.csproj /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release"
