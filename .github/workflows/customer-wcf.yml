@@ -16,7 +16,7 @@ env:
 
 jobs:
   BuildWindows:
-    runs-on: windows
+    runs-on: windows-latest
 
     steps:
       - name: 'Checkout Github Action'
