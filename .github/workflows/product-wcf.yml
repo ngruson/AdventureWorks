@@ -1,0 +1,38 @@
+name: product-wcf
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+    paths:
+    - src/Services/Product/**
+    - .github/workflows/product-wcf.yml
+
+jobs:
+  BuildWindows:
+    runs-on: windows-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Restore Packages
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+          cd Services/Product/AW.Services.Product.WCF
+          msbuild.exe AW.Services.Product.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          cd -
+          cd Services/Product/AW.Services.Product.WCF.UnitTests
+          msbuild.exe AW.Services.Product.WCF.UnitTests.csproj /p:Platform=AnyCPU /p:Configuration=Release
