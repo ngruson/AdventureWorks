@@ -34,7 +34,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
           
       - name: Install global tool
-        run: dotnet tool install --global dotnet-sonarscanner --version 4.10.0
+        run: dotnet tool install --global dotnet-sonarscanner --version 5.2.0
 
       - name: Build and run unit tests
         run: |
