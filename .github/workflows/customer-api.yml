@@ -38,7 +38,7 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.sources=src/Services/Customer /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
+          dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.sources="src/Services/Customer" /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
           cd src
           dotnet restore "AdventureWorks.sln"
           cd Services/Customer/AW.Services.Customer.REST.API
