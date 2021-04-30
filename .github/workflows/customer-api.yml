@@ -32,6 +32,9 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Install global tool
+        run: dotnet tool install --global dotnet-sonarscanner --version 4.10.0
 
       - name: Build and run unit tests
         run: |
@@ -42,4 +45,4 @@ jobs:
           cd -
           cd Services/Customer/AW.Services.Customer.REST.API.UnitTests
           dotnet build --no-restore
-          dotnet test --no-build -v=normal
+          dotnet test --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
