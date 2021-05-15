@@ -1,0 +1,37 @@
+name: customer-wcf
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-wcf.yml
+  pull_request:
+    branches: [ master ]
+    paths:
+    - src/Services/Customer/**
+    - .github/workflows/customer-wcf.yml
+
+jobs:
+  BuildWindows:
+    runs-on: windows-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Restore Packages
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+
+      - name: Build and run unit tests
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+          cd Services/Customer/AW.Services.Customer.WCF
+          msbuild.exe AW.Services.Customer.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
