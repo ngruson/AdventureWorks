@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.Product.Application.Common;
+using AW.Services.Product.Application.Common.AutoMapper;
 using System.Collections.Generic;
 
 namespace AW.Services.Product.Application.GetProductCategories

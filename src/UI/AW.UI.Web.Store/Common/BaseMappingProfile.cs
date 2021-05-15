@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace AW.Services.Product.Application.Common
+namespace AW.UI.Web.Store.Common
 {
     public class BaseMappingProfile : Profile
     {
@@ -14,7 +14,7 @@ namespace AW.Services.Product.Application.Common
 
         protected void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            var types = assembly.GetExportedTypes();
+            var types = assembly.GetExportedTypes().Where(x => !x.IsAbstract);
             var interfaceType = typeof(IMapFrom<>);
             var methodName = nameof(IMapFrom<object>.Mapping);
             var argumentTypes = new Type[] { typeof(Profile) };
@@ -28,6 +28,7 @@ namespace AW.Services.Product.Application.Common
                 // Has the type implemented any IMapFrom<T>?
                 if (interfaces.Count > 0)
                 {
+
                     // Yes, then let's create an instance
                     var instance = Activator.CreateInstance(type);
 

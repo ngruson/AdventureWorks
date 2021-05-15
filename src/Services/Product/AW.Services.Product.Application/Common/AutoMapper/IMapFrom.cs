@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace AW.Services.Product.Application.Common
+namespace AW.Services.Product.Application.Common.AutoMapper
 {
     public interface IMapFrom<T>
     {

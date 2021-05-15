@@ -103,8 +103,8 @@ namespace AW.Services.Product.Application.UnitTests
             //Assert
             result.Should().NotBeNull();
             productRepoMock.Verify(x => x.ListAsync(It.IsAny<ISpecification<Domain.Product>>()));
-            result.ToList()[0].ProductNumber.Should().Be("FR-R92B-58");
-            result.ToList()[1].ProductNumber.Should().Be("FR-R92R-44");
+            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
+            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
         }
 
         [Fact]
@@ -129,6 +129,64 @@ namespace AW.Services.Product.Application.UnitTests
             //Assert
             func.Should().Throw<ArgumentNullException>();
             productRepoMock.Verify(x => x.ListAsync(It.IsAny<ISpecification<Domain.Product>>()));
+        }
+
+        [Fact]
+        public async void Handle_ValidAscOrderBy_ReturnProducts()
+        {
+            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Product>>();
+            productRepoMock.Setup(x => x.ListAsync(It.IsAny<GetProductsPaginatedSpecification>()))
+                .ReturnsAsync(new List<Domain.Product>
+                {
+                    new Domain.Product { ProductNumber = "FR-R92B-58" },
+                    new Domain.Product { ProductNumber = "FR-R92R-44" },
+                });
+
+            var handler = new GetProductsQueryHandler(
+                loggerMock.Object,
+                productRepoMock.Object,
+                Mapper.CreateMapper()
+            );
+
+            //Act
+            var query = new GetProductsQuery { OrderBy = "asc(name)" };
+            var result = await handler.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Should().NotBeNull();
+            productRepoMock.Verify(x => x.ListAsync(It.IsAny<ISpecification<Domain.Product>>()));
+            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
+            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
+        }
+
+        [Fact]
+        public async void Handle_ValidDescOrderBy_ReturnProducts()
+        {
+            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
+            var productRepoMock = new Mock<IRepositoryBase<Domain.Product>>();
+            productRepoMock.Setup(x => x.ListAsync(It.IsAny<GetProductsPaginatedSpecification>()))
+                .ReturnsAsync(new List<Domain.Product>
+                {
+                    new Domain.Product { ProductNumber = "FR-R92B-58" },
+                    new Domain.Product { ProductNumber = "FR-R92R-44" },
+                });
+
+            var handler = new GetProductsQueryHandler(
+                loggerMock.Object,
+                productRepoMock.Object,
+                Mapper.CreateMapper()
+            );
+
+            //Act
+            var query = new GetProductsQuery { OrderBy = "desc(name)" };
+            var result = await handler.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Should().NotBeNull();
+            productRepoMock.Verify(x => x.ListAsync(It.IsAny<ISpecification<Domain.Product>>()));
+            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
+            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
         }
     }
 }

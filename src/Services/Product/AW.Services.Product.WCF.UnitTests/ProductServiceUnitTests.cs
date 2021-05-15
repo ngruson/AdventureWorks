@@ -18,10 +18,14 @@ namespace AW.Services.Product.WCF.UnitTests
         public async Task ListCustomers_ReturnsCustomers()
         {
             //Arrange
-            var products = new List<Application.GetProducts.Product>
+            var products = new GetProductsDto
             {
-                new Application.GetProducts.Product { ProductNumber = "1" },
-                new Application.GetProducts.Product { ProductNumber = "2" }
+                Products = new List<Application.GetProducts.Product>
+                {
+                    new Application.GetProducts.Product { ProductNumber = "1" },
+                    new Application.GetProducts.Product { ProductNumber = "2" }
+                },
+                TotalProducts = 2
             };
 
             var mockMediator = new Mock<IMediator>();

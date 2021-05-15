@@ -83,7 +83,6 @@ namespace AW.UI.Web.Internal.ApiClients.CustomerApi
 
             using var response = await client.GetAsync($"customer-api/Customer/{accountNumber}?&api-version=1.0");
             response.EnsureSuccessStatusCode();
-            var str = await response.Content.ReadAsStringAsync();
             var stream = await response.Content.ReadAsStreamAsync();
 
             return await stream.DeserializeAsync<T>(

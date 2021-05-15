@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Product Catalog";
+    @model ProductsViewModel
+
+    var pageSizeList = ViewData["pageSizeList"] as List<SelectListItem>;
+}
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    @Html.HiddenFor(m => m.ProductCategory)
+    @Html.HiddenFor(m => m.ProductSubcategory)
+
+    <div class="main_breadcrumb">
+        <div class="row">
+            <h3>@Model.Title</h3>
+        </div>
+        <div class="row">
+            <ul class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink(Model.ProductCategory, "Index", new { productCategory = Model.ProductCategory })</li>
+                @if (!string.IsNullOrEmpty(Model.ProductSubcategory))
+                {
+                    <li>@Html.ActionLink(Model.ProductSubcategory, "Index", new { productCategory = Model.ProductCategory, productSubcategory = Model.ProductSubcategory })</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="main_padding product_wrapper_sec product_wrapper">
+        <div id="product-category" class="container-fluid">
+            <div class="row">
+                <aside id="column-left" class="col-sm-3 hidden-xs">
+                    <style>
+                        .categories_wrapper_home ul li .head .collapsed .plus {
+                            display: block;
+                        }
+
+                        .categories_wrapper_home ul li .head .plus {
+                            display: none;
+                        }
+
+                        .categories_wrapper_home ul li .head .collapsed .minus {
+                            display: none;
+                        }
+                    </style>
+                    <div class="list-group categories_wrapper_home">
+                        <h4>Categories</h4>
+                        <ul class="accordion" id="accordion-category">
+                            @foreach (var category in Model.ProductCategories)
+                            {
+                                string categoryDisplay = $"{category.Name} ({category.Subcategories.Select(s => s.ProductCount).Sum()})";
+                                <li class="panel">
+                                    <a href="#" class="">@categoryDisplay</a>
+                                    <span class="head"><a style="float:right;padding-right:5px; font-size: 18px;" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category-@category.Name" aria-expanded="false"><span class="plus">+</span><span class="minus">-</span></a></span>
+                                    <div id="category-@category.Name" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
+                                        <ul>
+                                            @foreach (var subcategory in category.Subcategories)
+                                            {
+                                                string linkText = $"{subcategory.Name} ({subcategory.ProductCount})";
+                                                <li>
+                                                    @Html.ActionLink(linkText, "Index", "Product", new { productCategory = category.Name, productSubcategory = subcategory.Name })
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+                </aside>
+                <div id="content" class="col-sm-9">
+                    <h3>@Model.ProductSubcategory</h3>
+                    <div class="category_grid-wrapper row">
+                        <div class="col-md-4 col-xs-6">
+                            <div class="form-group input-group input-group-sm">
+                                <label class="input-group-addon" for="input-sort">Sort By:</label>
+                                <select id="input-sort" class="form-control" onchange="this.form.submit();">
+                                    <option value="#" selected="selected">Default</option>
+                                    <option value="#">Name (A - Z)</option>
+                                    <option value="#">Name (Z - A)</option>
+                                    <option value="#">Price (Low &gt; High)</option>
+                                    <option value="#">Price (High &gt; Low)</option>
+                                    <option value="#">Rating (Highest)</option>
+                                    <option value="#">Rating (Lowest)</option>
+                                    <option value="#">Model (A - Z)</option>
+                                    <option value="#">Model (Z - A)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <div class="form-group input-group input-group-sm">
+                                @Html.LabelFor(m => m.PageSize, "Show:", new { @class = "input-group-addon" })
+                                @Html.DropDownListFor(m => m.PageSize, pageSizeList, new { @class = "form-control", onchange = "this.form.submit();" })
+                                @*<select id="input-limit" class="form-control" onchange="this.form.submit();">
+                        <option value="#" selected="selected">12</option>
+                        <option value="#">25</option>
+                        <option value="#">50</option>
+                        <option value="#">75</option>
+                        <option value="#">100</option>
+                    </select>*@
+                            </div>
+                        </div>
+                        <div class="col-md-2 offset-md-3 col-sm-6 hidden-xs">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" id="grid-view" class="btn btn-default active" data-toggle="tooltip" title="" data-original-title="Grid"><i class="fa fa-th-large"></i></button>
+                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="List"><i class="fa fa-list-ul"></i></button>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="row">
+                        <div class="w-50 mx-auto">
+                            <partial name="_pagination" for="@Model.PaginationInfo" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="product-thumb">
+                                    <div class="image">
+                                        <!--image -->
+                                        <a href="#">
+                                            <img src="@product.ThumbnailPhoto" alt="@product.Name" title="@product.Name" class="img-responsive">
+                                        </a>
+                                        <div class="hover-button button-group ">
+                                            <button type="button" class="addtocart" data-toggle="tooltip" data-placement="left" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
+                                            <div class="custom-button-group">
+                                                <a class="quickviewopen" href="product.html" data-toggle="tooltip" data-placement="left" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
+                                            </div>
+                                            <button type="button" title="" class="wishlist" data-toggle="tooltip" data-placement="left" data-original-title="wishlist"><i class="fa fa-heart"></i></button>
+                                        </div>
+                                    </div>
+                                    <!--products text matter -->
+                                    <div class="caption">
+                                        <div class="grid_products_section">
+                                            <div class="rate-and-title">
+                                                <div class="rating">
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <h4><a href="product-header.html">@product.Name</a></h4>
+                                                <p class="price">
+                                                    @product.ListPrice
+                                                    <!--  <span class="price-tax">Ex Tax: $100.00</span> -->
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- list-view style section -->
+                                        <div class="second_products_design list_products_section" style="display: none;">
+                                            <div class="rate-and-title">
+                                                <!--review_status -->
+                                                <div class="rating">
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+
+                                                </div>
+                                                <h4><a href="product-header.html">Kids Bicycle</a></h4>
+                                                <p class="price">$122.00</p>
+                                                <p>Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Mon..</p>
+                                                <button type="button" class="addtocart"><i class="fa fa-shopping-cart"></i> Add to Cart </button>
+
+                                                <div class="second_button_desgin">
+                                                    <div class="button-group custom-button-group">
+
+                                                        <button type="button" title="Add to Wish List" class="products_wishlist"><i class="fa fa-heart-o"></i></button>
+                                                        <div class="custom-button-group">
+                                                            <a class="quickviewopen" href="product.html"><i class="fa fa-eye"></i></a>
+                                                        </div>
+
+                                                        <button type="button" title="Compare this Product" class="products_wishlist"><i class="fa fa-signal"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="w-50 mx-auto">
+                            <partial name="_pagination" for="@Model.PaginationInfo" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

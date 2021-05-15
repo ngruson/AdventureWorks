@@ -2,6 +2,7 @@ using Ardalis.Specification;
 using AW.Services.Product.Application.GetProducts;
 using AW.Services.Product.Persistence.EntityFrameworkCore;
 using AW.Services.Product.REST.API.Extensions;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,11 @@ namespace AW.Services.Product.REST.API
         {
             services.AddControllers();
             services.AddMvcCore()
-                .AddApiExplorer();
-            
+                .AddApiExplorer()
+                .AddFluentValidation(fv => fv
+                    .RegisterValidatorsFromAssemblyContaining<GetProductsQueryValidator>()
+                );
+
             services.AddApiVersioning(options => options.ReportApiVersions = true)
                 .AddVersionedApiExplorer(
                     options =>

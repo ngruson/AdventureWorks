@@ -1,4 +1,4 @@
-﻿using AW.Services.Product.Application.Common;
+﻿using AW.Services.Product.Application.Common.AutoMapper;
 using System.Reflection;
 
 namespace AW.Services.Product.Application

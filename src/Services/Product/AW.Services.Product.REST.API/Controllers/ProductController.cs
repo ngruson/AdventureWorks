@@ -25,23 +25,35 @@ namespace AW.Services.Product.REST.API.Controllers
         ) => (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Product>>> GetProducts([FromQuery] GetProductsQuery query)
+        public async Task<IActionResult> GetProducts([FromQuery] GetProductsQuery query)
         {
-            logger.LogInformation("GetProducts called. pageIndex = {PageIndex}, pageSize = {PageSize}",
-                query.PageIndex, query.PageSize
-            );
+            string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
+            var args = new List<object> { query.PageIndex, query.PageSize };
+
+            if (!string.IsNullOrEmpty(query.Category))
+            {
+                logMessage += ", category {Category}";
+                args.Add(query.Category);
+            };
+            if (!string.IsNullOrEmpty(query.Subcategory))
+            {
+                logMessage += ", subcategory {Subcategory}";
+                args.Add(query.Subcategory);
+            };
+
+            logger.LogInformation(logMessage, args.ToArray());
 
             logger.LogInformation("Sending the GetProducts query");
-            var products = await mediator.Send(query);
+            var result = await mediator.Send(query);
 
-            if (!products.Any())
+            if (!result.Products.Any())
             {
                 logger.LogInformation("No products were found");
                 return new NotFoundResult();
             }
 
-            logger.LogInformation("Returning {Count} products", products.Count());
-            return Ok(mapper.Map<IEnumerable<Models.Product>>(products));
+            logger.LogInformation("Returning {Count} products", result.Products.Count());
+            return Ok(mapper.Map<Models.GetProductsResult>(result));
         }
 
         [HttpGet("{productNumber}")]

@@ -1628,6 +1628,13 @@ html body #footer .footer-inner-matter .news_latte_text h3
     background-repeat: no-repeat;
     background-position:top center;
 }
+
+.main_breadcrumb h3 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
 .breadcrumb {
 	margin: 0;
 	padding: 0;
@@ -1641,12 +1648,6 @@ html body #footer .footer-inner-matter .news_latte_text h3
 	font-size: 15px;
 }
 
-.breadcrumb h3{
-    font-size: 36px;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
 .breadcrumb a i
 {
 	color:#ffffff;	
@@ -1656,6 +1657,7 @@ html body #footer .footer-inner-matter .news_latte_text h3
     padding: 0;
 	position: relative;
 	white-space: nowrap;
+    display: inline-block;
 }
 .breadcrumb a {
     color:#6f6f6f;
@@ -3167,6 +3169,7 @@ html body .pagination>li>a, html body .pagination>li>span {
     background: transparent;
     border: 0;
     border-radius: 0px;
+    padding: 5px 10px;
 }
 
 .product_wrapper_sec .category_grid-wrapper .input-group-sm>.form-control{
@@ -4956,4 +4959,10 @@ html body .swiper-wrapper {
    color: #0dbab5;
     text-transform: lowercase;
     font-size: 14px;
+}
+
+/* pagination */
+.page-item.active .page-link {
+    background-color: #0dbab5;
+    border-color: #0dbab5;
 }

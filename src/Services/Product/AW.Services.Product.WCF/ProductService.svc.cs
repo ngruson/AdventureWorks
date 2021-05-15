@@ -30,7 +30,7 @@ namespace AW.Services.Product.WCF
                 TotalProducts = await mediator.Send(new CountProductsQuery()),
                 Products = new ListProducts
                 {
-                    Product = products.ToList()
+                    Product = products.Products.ToList()
                 }
             };
 

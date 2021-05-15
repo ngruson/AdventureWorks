@@ -1,0 +1,43 @@
+﻿@model PaginationInfoViewModel
+@{
+    var routeData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+}
+<div class="aw-pager">
+    <div class="container-fluid">
+        <nav class="aw-pager-wrapper">
+            <ul class="pagination">
+                <li class="page-item @Model.Previous"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@(Model.ActualPage - 1)">Previous</a></li>
+                @if (Model.ActualPage == 0)
+                {
+                    <li class="page-item active"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@Model.ActualPage">@(Model.ActualPage + 1)</a></li>
+                    @if (Model.TotalPages > 1)
+                    {
+                        @for (int i = 1; i < Model.TotalPages; i++)
+                        {
+                            <li class="page-item"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@i">@(i + 1)</a></li>
+                        }
+                    }
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.TotalPages; i++)
+                    {
+                        if (i == Model.ActualPage)
+                        {
+                            <li class="page-item active"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@i">@(i + 1)</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@i">@(i + 1)</a></li>
+                        }
+                    }
+
+                    @*<li class="page-item"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@(Model.ActualPage - 1)">@(Model.ActualPage)</a></li>
+            <li class="page-item active"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@(Model.ActualPage)">@(Model.ActualPage + 1)</a></li>
+            <li class="page-item"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@(Model.ActualPage + 1)">@(Model.ActualPage + 2)</a></li>*@
+                }
+                <li class="page-item @Model.Next"><a class="page-link" asp-all-route-data="routeData" asp-route-page="@(Model.ActualPage + 1)">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
