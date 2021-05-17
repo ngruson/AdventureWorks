@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.ReferenceData.Application.Common;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.ReferenceData.Application.UnitTests
 {
@@ -9,7 +9,7 @@ namespace AW.Services.ReferenceData.Application.UnitTests
         {
             return new MapperConfiguration(opts =>
             {
-                opts.AddProfile<BaseMappingProfile>();
+                opts.AddProfile<MappingProfile>();
             });
         }
 

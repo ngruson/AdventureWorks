@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
+﻿using AW.UI.Web.Common.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetAddressTypes;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetContactTypes;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCountries;

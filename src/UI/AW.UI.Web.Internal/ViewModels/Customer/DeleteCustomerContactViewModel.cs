@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
+using AW.Common.AutoMapper;
 using System.ComponentModel.DataAnnotations;
-using m = AW.UI.Web.Internal.ApiClients.CustomerApi.Models;
+using m = AW.UI.Web.Common.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {

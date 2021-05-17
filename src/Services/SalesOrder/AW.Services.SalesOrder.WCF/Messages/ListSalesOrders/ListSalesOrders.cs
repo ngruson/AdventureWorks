@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesOrder.Application.Common;
+using AW.Common.AutoMapper;
 using AW.Services.SalesOrder.Application.GetSalesOrders;
 using System.Collections.Generic;
 using System.Xml.Serialization;

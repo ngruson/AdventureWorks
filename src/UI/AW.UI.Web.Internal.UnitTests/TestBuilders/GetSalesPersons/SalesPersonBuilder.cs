@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.SalesPersonApi.Models;
+﻿using AW.UI.Web.Common.ApiClients.SalesPersonApi.Models;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetSalesPersons

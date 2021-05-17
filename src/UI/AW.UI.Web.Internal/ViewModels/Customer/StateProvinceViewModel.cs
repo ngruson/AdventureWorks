@@ -1,5 +1,5 @@
-﻿using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
-using AW.UI.Web.Internal.Common;
+﻿using AW.Common.AutoMapper;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {

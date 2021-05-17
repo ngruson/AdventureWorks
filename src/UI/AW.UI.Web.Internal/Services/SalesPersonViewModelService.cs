@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Internal.ApiClients.SalesPersonApi;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi;
+using AW.UI.Web.Common.ApiClients.SalesPersonApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels.SalesPerson;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;

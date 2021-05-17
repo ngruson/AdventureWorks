@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Store.Common;
+using AW.Common.AutoMapper;
 using System;
-using m = AW.UI.Web.Store.ApiClients.ProductApi.Models;
+using m = AW.UI.Web.Common.ApiClients.ProductApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels.Product
 {

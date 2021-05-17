@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesPerson.Application.Common;
+using AW.Common.AutoMapper;
 using AW.Services.SalesPerson.Application.GetSalesPerson;
 
 namespace AW.Services.SalesPerson.WCF.Messages.GetSalesPerson

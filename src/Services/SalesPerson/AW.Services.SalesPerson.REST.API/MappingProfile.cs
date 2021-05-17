@@ -1,4 +1,4 @@
-﻿using AW.Services.SalesPerson.Application.Common;
+﻿using AW.Common.AutoMapper;
 using System.Reflection;
 
 namespace AW.Services.SalesPerson.REST.API

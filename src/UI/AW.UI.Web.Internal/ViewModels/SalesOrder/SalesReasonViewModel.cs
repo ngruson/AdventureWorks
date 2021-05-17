@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
-using m = AW.UI.Web.Internal.ApiClients.SalesOrderApi.Models;
+using AW.Common.AutoMapper;
+using m = AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {

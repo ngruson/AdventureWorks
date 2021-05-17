@@ -1,4 +1,4 @@
-﻿using AW.Services.Product.Application.Common.AutoMapper;
+﻿using AW.Common.AutoMapper;
 using AW.Services.Product.Application.GetProducts;
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetContactTypes;
+﻿using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetContactTypes;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetContactTypes
 {

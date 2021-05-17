@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
 {

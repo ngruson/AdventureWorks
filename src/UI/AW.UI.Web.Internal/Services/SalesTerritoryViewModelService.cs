@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
 using Microsoft.Extensions.Logging;

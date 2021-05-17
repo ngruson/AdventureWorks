@@ -4,6 +4,6 @@ namespace AW.UI.Web.Store.ViewModels.Home
 {
     public class HomeViewModel
     {
-        public List<ApiClients.ProductApi.Models.ProductCategory> ProductCategories { get; set; }
+        public List<Common.ApiClients.ProductApi.Models.ProductCategory> ProductCategories { get; set; }
     }
 }

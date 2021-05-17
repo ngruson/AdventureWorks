@@ -1,7 +1,7 @@
 ﻿using AW.Services.Customer.Application.DeleteCustomerAddress;
-using AW.Services.Customer.Application.Common;
 using System.Xml.Serialization;
 using AutoMapper;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Customer.WCF.Messages.DeleteCustomerAddress
 {

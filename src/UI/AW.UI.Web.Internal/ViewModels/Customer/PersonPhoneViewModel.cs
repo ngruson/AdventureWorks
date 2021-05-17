@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
-using m = AW.UI.Web.Internal.ApiClients.CustomerApi.Models;
+using AW.Common.AutoMapper;
+using m = AW.UI.Web.Common.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {

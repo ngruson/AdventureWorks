@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesPerson.Application.Common;
+using AW.Common.AutoMapper;
 using AW.Services.SalesPerson.Application.GetSalesPersons;
 using System.Collections.Generic;
 

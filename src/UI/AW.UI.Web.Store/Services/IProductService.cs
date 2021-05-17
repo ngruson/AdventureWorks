@@ -1,12 +1,12 @@
-﻿using AW.UI.Web.Store.ViewModels.Home;
-using AW.UI.Web.Store.ViewModels.Product;
+﻿using AW.UI.Web.Common.ApiClients.ProductApi.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Services
 {
     public interface IProductService
     {
-        Task<HomeViewModel> GetCategories();
-        Task<ProductsViewModel> GetProducts(int pageIndex, int pageSize, string category, string subcategory);
+        Task<List<ProductCategory>> GetCategoriesAsync();
+        Task<GetProductsResult> GetProductsAsync(int pageIndex, int pageSize, string category, string subcategory);
     }
 }

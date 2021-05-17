@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using AW.Services.SalesOrder.Application.Common;
+using AW.Common.AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.SalesOrder.REST.API.Models
 {

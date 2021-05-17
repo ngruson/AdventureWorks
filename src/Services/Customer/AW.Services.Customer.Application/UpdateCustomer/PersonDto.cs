@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.Customer.Application.Common;
+using AW.Common.AutoMapper;
 using System.Collections.Generic;
 
 namespace AW.Services.Customer.Application.UpdateCustomer

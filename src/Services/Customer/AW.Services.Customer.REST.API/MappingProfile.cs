@@ -1,6 +1,6 @@
-﻿using AW.Services.Customer.Application.Common;
-using app =AW.Services.Customer.Application;
+﻿using app =AW.Services.Customer.Application;
 using System.Reflection;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -28,9 +28,6 @@ namespace AW.Services.Customer.REST.API
                 .ReverseMap()
                 .Include<app.UpdateCustomer.IndividualCustomerDto, Models.UpdateCustomer.IndividualCustomer>()
                 .Include<app.UpdateCustomer.StoreCustomerDto, Models.UpdateCustomer.StoreCustomer>();
-
-            //CreateMap<app.UpdateCustomer.CustomerDto, Models.UpdateCustomer.Customer>()
-                
         }
     }
 }

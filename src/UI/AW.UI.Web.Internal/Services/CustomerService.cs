@@ -1,9 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.UI.Web.Internal.ApiClients.CustomerApi;
-using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Internal.ApiClients.SalesPersonApi;
+using AW.Common.Extensions;
+using AW.UI.Web.Common.ApiClients.CustomerApi;
+using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+using referenceDataApi = AW.UI.Web.Common.ApiClients.ReferenceDataApi;
+using salesPersonApi = AW.UI.Web.Common.ApiClients.SalesPersonApi;
 using AW.UI.Web.Internal.Extensions;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
@@ -21,15 +22,15 @@ namespace AW.UI.Web.Internal.Services
         private readonly ILogger<CustomerService> logger;
         private readonly IMapper mapper;
         private readonly ICustomerApiClient customerApiClient;
-        private readonly IReferenceDataApiClient referenceDataApiClient;
-        private readonly ISalesPersonApiClient salesPersonApiClient;
+        private readonly referenceDataApi.IReferenceDataApiClient referenceDataApiClient;
+        private readonly salesPersonApi.ISalesPersonApiClient salesPersonApiClient;
 
         public CustomerService(
             ILogger<CustomerService> logger,
             IMapper mapper,
             ICustomerApiClient customerApiClient,
-            IReferenceDataApiClient referenceDataApiClient,
-            ISalesPersonApiClient salesPersonApiClient
+            referenceDataApi.IReferenceDataApiClient referenceDataApiClient,
+            salesPersonApi.ISalesPersonApiClient salesPersonApiClient
         )
         {
             this.logger = logger;
@@ -82,7 +83,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("GetStoreCustomerForEdit called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 accountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
@@ -102,7 +103,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("GetIndividualCustomerForEdit called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
                 accountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
@@ -190,10 +191,10 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(viewModel, nameof(viewModel));
 
             logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var storeCustomer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var storeCustomer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
-            var storeCustomerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(storeCustomer);
+            var storeCustomerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(storeCustomer);
 
             storeCustomerToUpdate.Name = viewModel.Name;
             storeCustomerToUpdate.Territory = viewModel.Territory;
@@ -209,7 +210,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, nameof(viewModel));
 
-            var individualCustomer = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(viewModel);
+            var individualCustomer = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(viewModel);
 
             logger.LogInformation("Calling Customer API to update customer");
             await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, individualCustomer);
@@ -245,9 +246,9 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
-            var newAddress = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.CustomerAddress>(viewModel.CustomerAddress);
+            var newAddress = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.CustomerAddress>(viewModel.CustomerAddress);
             Guard.Against.Null(newAddress, nameof(newAddress));
             customerToUpdate.Addresses.Add(newAddress);
 
@@ -284,7 +285,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var addressToUpdate = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == viewModel.CustomerAddress.AddressType);
             Guard.Against.Null(addressToUpdate, nameof(addressToUpdate));
@@ -339,7 +340,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var addressToDelete = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == addressType);
             Guard.Against.Null(addressToDelete, nameof(addressToDelete));
@@ -370,7 +371,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerContact called");
             var customer = await customerApiClient
-                .GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+                .GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
 
             var contact = customer.Contacts.FirstOrDefault(c =>
                 c.ContactType == contactType &&
@@ -415,15 +416,15 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
-            var contactToAdd = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomerContact>(
+            var contactToAdd = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomerContact>(
                 viewModel.CustomerContact
             );
             customerToUpdate.Contacts.Add(contactToAdd);
@@ -438,13 +439,13 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactType == viewModel.CustomerContact.ContactType);
             Guard.Against.Null(contact, nameof(contact));
@@ -459,7 +460,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetCustomerContactForDelete called");
             var customer = await customerApiClient
-                .GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+                .GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
@@ -478,13 +479,13 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactType == viewModel.ContactType);
             Guard.Against.Null(contact, nameof(contact));
@@ -514,16 +515,16 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddIndividualCustomerEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
-            customerToUpdate.Person.EmailAddresses.Add(new ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
+            customerToUpdate.Person.EmailAddresses.Add(new Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
             {
                 EmailAddress = viewModel.EmailAddress
             });
@@ -538,19 +539,19 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.FullName() == viewModel.PersonName);
             Guard.Against.Null(contact, nameof(contact));
 
-            contact.ContactPerson.EmailAddresses.Add(new ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
+            contact.ContactPerson.EmailAddresses.Add(new Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
             {
                 EmailAddress = viewModel.EmailAddress
             });
@@ -564,7 +565,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetIndividualCustomerEmailAddressForDelete called");
             var customer = await customerApiClient
-                .GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(accountNumber);
+                .GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(accountNumber);
             Guard.Against.Null(customer, nameof(customer));
 
             var personEmailAddress = customer.Person.EmailAddresses.FirstOrDefault(c =>
@@ -583,7 +584,7 @@ namespace AW.UI.Web.Internal.Services
         {
             logger.LogInformation("GetContactEmailAddressForDelete called");
             var customer = await customerApiClient
-                .GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+                .GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
@@ -622,13 +623,13 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteIndividualCustomerEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var personEmailAddress = customerToUpdate.Person.EmailAddresses.FirstOrDefault(c =>
@@ -663,13 +664,13 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Web.Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Web.Common.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => 

@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.SalesOrderApi;
+﻿using AW.UI.Web.Common.ApiClients.SalesOrderApi;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetSalesOrders;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -27,9 +27,9 @@ namespace AW.UI.Web.Internal.UnitTests
 
                 var mockLogger = new Mock<ILogger<SalesOrderApiClient>>();
 
-                var salesOrders = new ApiClients.SalesOrderApi.Models.SalesOrdersResult
+                var salesOrders = new Common.ApiClients.SalesOrderApi.Models.SalesOrdersResult
                 {
-                    SalesOrders = new List<ApiClients.SalesOrderApi.Models.SalesOrder>
+                    SalesOrders = new List<Common.ApiClients.SalesOrderApi.Models.SalesOrder>
                     {
                         new SalesOrderBuilder()
                             .WithTestValues()

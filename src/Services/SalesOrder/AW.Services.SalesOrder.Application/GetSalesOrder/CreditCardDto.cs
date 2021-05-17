@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesOrder.Application.Common;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.SalesOrder.Application.GetSalesOrder
 {

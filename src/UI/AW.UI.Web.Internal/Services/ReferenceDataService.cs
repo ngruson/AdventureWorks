@@ -1,9 +1,9 @@
 ﻿using Ardalis.GuardClauses;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetContactTypes;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetCountries;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetContactTypes;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetCountries;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;

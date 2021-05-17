@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.SalesPersonApi;
+﻿using AW.UI.Web.Common.ApiClients.SalesPersonApi;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetSalesPersons;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -26,7 +26,7 @@ namespace AW.UI.Web.Internal.UnitTests
 
                 var mockLogger = new Mock<ILogger<SalesPersonApiClient>>();
 
-                var salesPersons = new List<ApiClients.SalesPersonApi.Models.SalesPerson>
+                var salesPersons = new List<Common.ApiClients.SalesPersonApi.Models.SalesPerson>
                 {
                     new SalesPersonBuilder()
                         .WithTestValues()

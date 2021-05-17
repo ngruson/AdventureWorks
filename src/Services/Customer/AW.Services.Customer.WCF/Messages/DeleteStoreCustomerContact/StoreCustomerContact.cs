@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Services.Customer.Application.DeleteStoreCustomerContact;
-using AW.Services.Customer.Application.Common;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Customer.WCF.Messages.DeleteStoreCustomerContact
 {

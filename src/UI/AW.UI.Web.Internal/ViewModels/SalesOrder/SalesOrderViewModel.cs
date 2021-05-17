@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
+using AW.Common.AutoMapper;
 using System;
 using System.Collections.Generic;
-using s = AW.UI.Web.Internal.ApiClients.SalesOrderApi.Models;
+using s = AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {

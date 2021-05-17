@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.Product.Application.Common.AutoMapper;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Product.REST.API.Models
 {

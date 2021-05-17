@@ -16,4 +16,9 @@
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\AW.Common\AW.Common.csproj" />
+    <ProjectReference Include="..\AW.UI.Web.Common\AW.UI.Web.Common.csproj" />
+  </ItemGroup>
+
 </Project>

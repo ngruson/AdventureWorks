@@ -1,5 +1,5 @@
-﻿using AW.UI.Web.Internal.ApiClients.CustomerApi;
-using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.UI.Web.Common.ApiClients.CustomerApi;
+using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 using AW.UI.Web.Internal.JsonConverters;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers;
 using FluentAssertions;
@@ -28,14 +28,14 @@ namespace AW.UI.Web.Internal.UnitTests
 
                 var mockLogger = new Mock<ILogger<CustomerApiClient>>();
 
-                var customers = new ApiClients.CustomerApi.Models.GetCustomers.GetCustomersResponse
+                var customers = new GetCustomersResponse
                 {
-                    Customers = new List<ApiClients.CustomerApi.Models.GetCustomers.Customer>
-                {
-                    new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                },
+                    Customers = new List<Customer>
+                    {
+                        new StoreCustomerBuilder()
+                            .WithTestValues()
+                            .Build()
+                    },
                     TotalCustomers = 1
                 };
 
@@ -50,9 +50,9 @@ namespace AW.UI.Web.Internal.UnitTests
                                 {
                                     new JsonStringEnumConverter(),
                                     new CustomerConverter<
-                                        ApiClients.CustomerApi.Models.GetCustomers.Customer,
-                                        ApiClients.CustomerApi.Models.GetCustomers.StoreCustomer,
-                                        ApiClients.CustomerApi.Models.GetCustomers.IndividualCustomer>()
+                                        Customer,
+                                        StoreCustomer,
+                                        IndividualCustomer>()
                                 },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -133,9 +133,9 @@ namespace AW.UI.Web.Internal.UnitTests
                                 {
                                 new JsonStringEnumConverter(),
                                 new CustomerConverter<
-                                        ApiClients.CustomerApi.Models.GetCustomer.Customer,
-                                        ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer,
-                                        ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>()
+                                    Customer,
+                                    StoreCustomer,
+                                    IndividualCustomer>()
                                 },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -161,7 +161,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 response.Addresses.Should().BeEquivalentTo(customer.Addresses);
                 response.SalesOrders.Should().BeEquivalentTo(customer.SalesOrders);
 
-                var store = response as ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer;
+                var store = response as Common.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer;
                 store.Name.Should().Be(customer.Name);
                 store.SalesPerson.Should().Be(customer.SalesPerson);
                 store.Territory.Should().Be(customer.Territory);

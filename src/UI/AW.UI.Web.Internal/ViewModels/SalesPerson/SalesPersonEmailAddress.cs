@@ -1,5 +1,5 @@
-﻿using AW.UI.Web.Internal.Common;
-using m = AW.UI.Web.Internal.ApiClients.SalesPersonApi.Models;
+﻿using AW.Common.AutoMapper;
+using m = AW.UI.Web.Common.ApiClients.SalesPersonApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesPerson
 {

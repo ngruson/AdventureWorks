@@ -1,5 +1,5 @@
-﻿using AW.UI.Web.Internal.Common;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetTerritories;
+﻿using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetTerritories;
+using AW.Common.AutoMapper;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesTerritory
 {

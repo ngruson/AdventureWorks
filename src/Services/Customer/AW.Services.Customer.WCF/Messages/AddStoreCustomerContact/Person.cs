@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using AW.Common.AutoMapper;
 using AW.Services.Customer.Application.AddStoreCustomerContact;
-using AW.Services.Customer.Application.Common;
 using System.Collections.Generic;
 
 namespace AW.Services.Customer.WCF.Messages.AddStoreCustomerContact

@@ -1,4 +1,5 @@
 ﻿using AW.UI.Web.Store.Services;
+using AW.UI.Web.Store.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,9 +14,12 @@ namespace AW.UI.Web.Store.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(
-                await productService.GetCategories()
-            );
+            var vm = new HomeViewModel
+            {
+                ProductCategories = await productService.GetCategoriesAsync()
+            };
+
+            return View(vm);
         }
     }
 }

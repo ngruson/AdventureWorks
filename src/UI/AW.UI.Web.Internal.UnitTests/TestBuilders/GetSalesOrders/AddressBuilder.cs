@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.SalesOrderApi.Models;
+﻿using AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetSalesOrders
 {

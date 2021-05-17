@@ -1,4 +1,4 @@
-﻿using AW.Services.Customer.Application.Common;
+﻿using AW.Common.AutoMapper;
 using System.Reflection;
 
 namespace AW.Services.Customer.WCF

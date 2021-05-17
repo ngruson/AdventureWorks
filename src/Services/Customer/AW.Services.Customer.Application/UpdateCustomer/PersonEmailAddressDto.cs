@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.EquivalencyExpression;
-using AW.Services.Customer.Application.Common;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Customer.Application.UpdateCustomer
 {

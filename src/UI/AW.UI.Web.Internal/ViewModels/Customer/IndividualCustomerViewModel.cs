@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
-using AW.UI.Web.Internal.Common;
-using m = AW.UI.Web.Internal.ApiClients.CustomerApi.Models;
+using AW.Common.AutoMapper;
+using m = AW.UI.Web.Common.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
     public class IndividualCustomerViewModel : CustomerViewModel, IMapFrom<m.GetCustomers.IndividualCustomer>
     {
-        public override CustomerType CustomerType => CustomerType.Individual;
+        public override m.GetCustomers.CustomerType CustomerType => m.GetCustomers.CustomerType.Individual;
 
-        public PersonViewModel Person { get; set; }        
+        public PersonViewModel Person { get; set; }
 
         public void Mapping(Profile profile)
         {

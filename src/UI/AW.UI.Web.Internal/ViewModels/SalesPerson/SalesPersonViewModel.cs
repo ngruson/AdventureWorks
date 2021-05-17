@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
-using AW.UI.Web.Internal.Interfaces;
+using AW.Common.AutoMapper;
+using AW.Common.Interfaces;
 using System.Collections.Generic;
-using m = AW.UI.Web.Internal.ApiClients.SalesPersonApi.Models;
+using m = AW.UI.Web.Common.ApiClients.SalesPersonApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesPerson
 {

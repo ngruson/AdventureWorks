@@ -1,4 +1,4 @@
-using AW.UI.Web.Store.ApiClients.ProductApi;
+using AW.UI.Web.Common.ApiClients.ProductApi;
 using AW.UI.Web.Store.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

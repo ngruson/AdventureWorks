@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetCountries;
+﻿using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetCountries;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCountries
 {

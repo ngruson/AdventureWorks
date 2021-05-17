@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
+﻿using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetAddressTypes
 {

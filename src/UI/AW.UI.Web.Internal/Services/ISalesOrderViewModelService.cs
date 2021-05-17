@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.SalesOrderApi.Models;
+﻿using AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using System.Threading.Tasks;
 

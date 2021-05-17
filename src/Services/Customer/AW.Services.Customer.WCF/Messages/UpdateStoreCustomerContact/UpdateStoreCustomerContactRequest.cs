@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.Customer.Application.Common;
+using AW.Common.AutoMapper;
 using AW.Services.Customer.Application.UpdateStoreCustomerContact;
 using System.Xml.Serialization;
 

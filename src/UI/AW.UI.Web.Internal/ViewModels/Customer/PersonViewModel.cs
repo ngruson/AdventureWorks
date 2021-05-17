@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.Common;
-using AW.UI.Web.Internal.Interfaces;
+using AW.Common.AutoMapper;
+using AW.Common.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using m = AW.UI.Web.Internal.ApiClients.CustomerApi.Models;
+using customerApi = AW.UI.Web.Common.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class PersonViewModel : IPerson, IMapFrom<m.GetCustomers.Person>
+    public class PersonViewModel : IPerson, IMapFrom<customerApi.GetCustomers.Person>
     {
         public string Title { get; set; }
 
@@ -29,9 +29,9 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.GetCustomers.Person, PersonViewModel>();
-            profile.CreateMap<m.GetCustomer.Person, PersonViewModel>();
-            profile.CreateMap<PersonViewModel, m.UpdateCustomer.Person>();
+            profile.CreateMap<customerApi.GetCustomers.Person, PersonViewModel>();
+            profile.CreateMap<customerApi.GetCustomer.Person, PersonViewModel>();
+            profile.CreateMap<PersonViewModel, customerApi.UpdateCustomer.Person>();
         }
     }
 }

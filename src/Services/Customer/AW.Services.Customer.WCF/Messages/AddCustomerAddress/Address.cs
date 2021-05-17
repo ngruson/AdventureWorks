@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AW.Common.AutoMapper;
 using AW.Services.Customer.Application.AddCustomerAddress;
 using AW.Services.Customer.Application.Common;
 

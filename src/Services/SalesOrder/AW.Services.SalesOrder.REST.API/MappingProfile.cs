@@ -1,4 +1,4 @@
-﻿using AW.Services.SalesOrder.Application.Common;
+﻿using AW.Common.AutoMapper;
 using System.Reflection;
 
 namespace AW.Services.SalesOrder.REST.API

@@ -1,4 +1,4 @@
-﻿using AW.Services.ReferenceData.Application.Common;
+﻿using AW.Common.AutoMapper;
 using System.Reflection;
 
 namespace AW.Services.ReferenceData.REST.API

@@ -6,12 +6,10 @@ using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer;
-using c = AW.UI.Web.Internal.ApiClients.CustomerApi;
-using r = AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
+using customerApi = AW.UI.Web.Common.ApiClients.CustomerApi;
+using referenceDataApi = AW.UI.Web.Common.ApiClients.ReferenceDataApi;
+using salesPersonApi = AW.UI.Web.Common.ApiClients.SalesPersonApi;
 using AW.UI.Web.Internal.Services;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Internal.ApiClients.SalesPersonApi;
-using AW.UI.Web.Internal.ApiClients.CustomerApi;
 using Microsoft.Extensions.Logging;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
@@ -25,11 +23,11 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
-            var customers = new List<c.Models.GetCustomers.Customer>();
+            var customers = new List<customerApi.Models.GetCustomers.Customer>();
             for (int i = 1; i <= 10; i++)
             {
                 string accountNumber = "AW" + (i.ToString().PadLeft(8, '0'));
@@ -43,10 +41,10 @@ namespace AW.UI.Web.Internal.UnitTests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<string>(),
-                It.IsAny<c.Models.GetCustomers.CustomerType>(),
+                It.IsAny<customerApi.Models.GetCustomers.CustomerType>(),
                 It.IsAny<string>()
             ))
-            .ReturnsAsync(new c.Models.GetCustomers.GetCustomersResponse
+            .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
             {
                 Customers = customers,
                 TotalCustomers = 100
@@ -54,7 +52,7 @@ namespace AW.UI.Web.Internal.UnitTests
 
             mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync()
             )
-            .ReturnsAsync(new List<r.Models.GetTerritories.Territory>
+            .ReturnsAsync(new List<referenceDataApi.Models.GetTerritories.Territory>
             {
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northwest").Build(),
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northeast").Build()
@@ -69,7 +67,7 @@ namespace AW.UI.Web.Internal.UnitTests
             );
 
             //Act
-            var viewModel = await svc.GetCustomers(0, 10, null, c.Models.GetCustomers.CustomerType.Store, null);
+            var viewModel = await svc.GetCustomers(0, 10, null, customerApi.Models.GetCustomers.CustomerType.Store, null);
 
             //Assert
             viewModel.Customers.Count.Should().Be(10);
@@ -90,9 +88,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
             .ReturnsAsync(new StoreCustomerBuilder()
@@ -120,11 +118,11 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.IndividualCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.IndividualCustomer>(It.IsAny<string>()))
            .ReturnsAsync(new IndividualCustomerBuilder()
                 .WithTestValues()
                 .Build()
@@ -132,7 +130,7 @@ namespace AW.UI.Web.Internal.UnitTests
             
             mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync()
             )
-            .ReturnsAsync(new List<r.Models.GetTerritories.Territory>
+            .ReturnsAsync(new List<referenceDataApi.Models.GetTerritories.Territory>
             {
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northwest").Build(),
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northeast").Build()
@@ -162,16 +160,16 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
             
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
            .ReturnsAsync(new StoreCustomerBuilder()
                 .WithTestValues()
                 .Build()
             );
 
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
 
             var svc = new CustomerService(
                 mockLogger.Object,
@@ -190,7 +188,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>())
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
             );
         }
 
@@ -199,16 +197,16 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
             
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
            .ReturnsAsync(new StoreCustomerBuilder()
                 .WithTestValues()
                 .Build()
             );
 
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
 
             var svc = new CustomerService(
                 mockLogger.Object,
@@ -228,7 +226,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>())
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
             );
         }
 
@@ -237,23 +235,23 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
 
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
            .ReturnsAsync(new StoreCustomerBuilder()
                 .WithTestValues()
                 .Build()
             );
 
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockSalesPersonApi.Setup(x => x.GetSalesPersonAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>()
             ))
-            .ReturnsAsync(new ApiClients.SalesPersonApi.Models.SalesPerson());
+            .ReturnsAsync(new salesPersonApi.Models.SalesPerson());
 
             var svc = new CustomerService(
                 mockLogger.Object,
@@ -274,7 +272,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>())
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
             );
         }
 
@@ -283,9 +281,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             var svc = new CustomerService(
                 mockLogger.Object,
@@ -305,7 +303,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>())
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
             );
         }
 
@@ -314,14 +312,14 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();            
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();            
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetAddressTypesAsync())
             .ReturnsAsync(
                 new string[] { "Main Office", "Home" }
-                    .Select(x => new r.Models.GetAddressTypes.AddressType
+                    .Select(x => new referenceDataApi.Models.GetAddressTypes.AddressType
                     {
                         Name = x
                     })
@@ -329,14 +327,14 @@ namespace AW.UI.Web.Internal.UnitTests
            );
 
             mockReferenceDataApi.Setup(x => x.GetCountriesAsync())
-            .ReturnsAsync(new List<r.Models.GetCountries.CountryRegion>()
+            .ReturnsAsync(new List<referenceDataApi.Models.GetCountries.CountryRegion>()
             {
-                new r.Models.GetCountries.CountryRegion
+                new referenceDataApi.Models.GetCountries.CountryRegion
                 {
                     CountryRegionCode = "US",
                     Name = "United States"
                 },
-                new r.Models.GetCountries.CountryRegion
+                new referenceDataApi.Models.GetCountries.CountryRegion
                 {
                     CountryRegionCode = "GB",
                     Name = "United Kingdom"
@@ -346,19 +344,19 @@ namespace AW.UI.Web.Internal.UnitTests
             mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(
                 It.IsAny<string>()
             ))
-            .ReturnsAsync(new List<r.Models.GetStateProvinces.StateProvince>()
+            .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>()
             {
-                new r.Models.GetStateProvinces.StateProvince
+                new referenceDataApi.Models.GetStateProvinces.StateProvince
                 {
                     CountryRegionCode = "US",
                     Name = "Alaska"
                 },
-                new r.Models.GetStateProvinces.StateProvince
+                new referenceDataApi.Models.GetStateProvinces.StateProvince
                 {
                     CountryRegionCode = "US",
                     Name = "North Carolina"
                 },
-                new r.Models.GetStateProvinces.StateProvince
+                new referenceDataApi.Models.GetStateProvinces.StateProvince
                 {
                     CountryRegionCode = "CA",
                     Name = "Brunswick"
@@ -385,9 +383,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
             .ReturnsAsync(
@@ -425,7 +423,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()));
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()));
         }
 
         [Fact]
@@ -433,35 +431,35 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetAddressTypesAsync())
-            .ReturnsAsync(new List<r.Models.GetAddressTypes.AddressType>
+            .ReturnsAsync(new List<referenceDataApi.Models.GetAddressTypes.AddressType>
             {
-                new r.Models.GetAddressTypes.AddressType { Name = "Billing" },
-                new r.Models.GetAddressTypes.AddressType { Name = "Home" },
-                new r.Models.GetAddressTypes.AddressType { Name = "Main Office" }
+                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Billing" },
+                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Home" },
+                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Main Office" }
             });
 
             mockReferenceDataApi.Setup(x => x.GetCountriesAsync())
-            .ReturnsAsync(new List<r.Models.GetCountries.CountryRegion>
+            .ReturnsAsync(new List<referenceDataApi.Models.GetCountries.CountryRegion>
             {
-                new r.Models.GetCountries.CountryRegion { CountryRegionCode = "US", Name = "United States" },
-                new r.Models.GetCountries.CountryRegion { CountryRegionCode = "GB", Name = "United Kingdom" }
+                new referenceDataApi.Models.GetCountries.CountryRegion { CountryRegionCode = "US", Name = "United States" },
+                new referenceDataApi.Models.GetCountries.CountryRegion { CountryRegionCode = "GB", Name = "United Kingdom" }
             });
 
             mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(It.IsAny<string>()))
-            .ReturnsAsync(new List<r.Models.GetStateProvinces.StateProvince>
+            .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
             {
-                new r.Models.GetStateProvinces.StateProvince 
+                new referenceDataApi.Models.GetStateProvinces.StateProvince 
                 { 
                     CountryRegionCode = "US", 
                     StateProvinceCode = "CA", 
                     Name = "California" 
                 },
-                new r.Models.GetStateProvinces.StateProvince
+                new referenceDataApi.Models.GetStateProvinces.StateProvince
                 {
                     CountryRegionCode = "US",
                     StateProvinceCode = "TX",
@@ -499,9 +497,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
             .ReturnsAsync(
@@ -540,7 +538,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
 
@@ -549,15 +547,15 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
             .ReturnsAsync(
                 new StoreCustomerBuilder()
                     .Name("A Bike Store")
-                    .Addresses(new List<c.Models.GetCustomer.CustomerAddress>
+                    .Addresses(new List<customerApi.Models.GetCustomer.CustomerAddress>
                     {
                         new CustomerAddressBuilder()
                             .AddressTypeName("Main Office")
@@ -592,9 +590,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi
                 .Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
@@ -623,18 +621,18 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(It.IsAny<string>()))
-                .ReturnsAsync(new List<r.Models.GetStateProvinces.StateProvince>
+                .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
                 {
-                    new r.Models.GetStateProvinces.StateProvince
+                    new referenceDataApi.Models.GetStateProvinces.StateProvince
                     {
                         CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona"
                     },
-                    new r.Models.GetStateProvinces.StateProvince
+                    new referenceDataApi.Models.GetStateProvinces.StateProvince
                     {
                         CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California"
                     }
@@ -660,9 +658,9 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi
                 .Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
@@ -685,7 +683,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
 
@@ -694,16 +692,16 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                .ReturnsAsync(new List<r.Models.GetContactTypes.ContactType>
+                .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
                     {
-                        new r.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
                     });
 
             var svc = new CustomerService(
@@ -728,20 +726,20 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                .ReturnsAsync(new List<r.Models.GetContactTypes.ContactType>
+                .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
                     {
-                        new r.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
                     });
 
             mockCustomerApi
-                .Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+                .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .WithTestValues()
                     .Build()
@@ -774,7 +772,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
 
@@ -783,23 +781,23 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                .ReturnsAsync(new List<r.Models.GetContactTypes.ContactType>
+                .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
                     {
-                        new r.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
                     });
 
             mockCustomerApi
-                .Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+                .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .Name("A Bike Store")
-                    .Contacts(new List<c.Models.GetCustomer.StoreCustomerContact>
+                    .Contacts(new List<customerApi.Models.GetCustomer.StoreCustomerContact>
                     {
                         new StoreCustomerContactBuilder()
                             .WithTestValues()
@@ -830,11 +828,11 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .WithTestValues()
                     .Build()
@@ -868,7 +866,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
 
@@ -877,11 +875,11 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
-            mockCustomerApi.Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+            mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .WithTestValues()
                     .Build()
@@ -909,12 +907,12 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi
-                .Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+                .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .WithTestValues()
                     .Build()
@@ -946,7 +944,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
 
@@ -955,16 +953,16 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                .ReturnsAsync(new List<r.Models.GetContactTypes.ContactType>
+                .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
                     {
-                        new r.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new r.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
                     });
 
             var svc = new CustomerService(
@@ -987,12 +985,12 @@ namespace AW.UI.Web.Internal.UnitTests
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
             mockCustomerApi
-                .Setup(x => x.GetCustomerAsync<c.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+                .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
                 .ReturnsAsync(new StoreCustomerBuilder()
                     .WithTestValues()
                     .Build()
@@ -1019,7 +1017,7 @@ namespace AW.UI.Web.Internal.UnitTests
             //Assert
             mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
                 It.IsAny<string>(),
-                It.IsAny<c.Models.UpdateCustomer.Customer>()
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
     }

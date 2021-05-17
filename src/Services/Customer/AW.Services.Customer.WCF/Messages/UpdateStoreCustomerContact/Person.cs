@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AW.Services.Customer.Application.UpdateStoreCustomerContact;
-using AW.Services.Customer.Application.Common;
 using System.Collections.Generic;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.Customer.WCF.Messages.UpdateStoreCustomerContact
 {

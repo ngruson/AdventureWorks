@@ -191,6 +191,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Common\AW.Common.csproj">
+      <Project>{356BC875-3A1A-4DD4-80E1-65B66F8764C8}</Project>
+      <Name>AW.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Services.SalesOrder.Application\AW.Services.SalesOrder.Application.csproj">
       <Project>{dfdc78a5-ce14-4a4b-8f4d-22e4ee8bea54}</Project>
       <Name>AW.Services.SalesOrder.Application</Name>

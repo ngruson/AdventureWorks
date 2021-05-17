@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.Customer.Application.Common;
+using AW.Common.AutoMapper;
 using AW.Services.Customer.Domain;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace AW.Services.Customer.Application.GetCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.StoreCustomer, StoreCustomerDto>();
+            profile.CreateMap<StoreCustomer, StoreCustomerDto>();
         }
     }
 }

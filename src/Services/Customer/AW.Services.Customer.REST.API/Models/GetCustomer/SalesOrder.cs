@@ -1,4 +1,4 @@
-﻿using AW.Services.Customer.Application.Common;
+﻿using AW.Common.AutoMapper;
 using AW.Services.Customer.Application.GetCustomer;
 using System;
 using System.Text.Json.Serialization;

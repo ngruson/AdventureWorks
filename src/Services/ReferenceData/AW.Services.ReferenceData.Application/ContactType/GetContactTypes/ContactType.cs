@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.ReferenceData.Application.Common;
+using AW.Common.AutoMapper;
 
 namespace AW.Services.ReferenceData.Application.ContactType.GetContactTypes
 {

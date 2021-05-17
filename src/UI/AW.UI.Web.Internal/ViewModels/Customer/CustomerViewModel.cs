@@ -1,5 +1,4 @@
-﻿using AW.UI.Web.Internal.ApiClients.CustomerApi.Models.GetCustomers;
-using AW.UI.Web.Internal.ViewModels.SalesOrder;
+﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

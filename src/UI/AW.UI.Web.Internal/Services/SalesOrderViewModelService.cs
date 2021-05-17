@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Internal.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Internal.ApiClients.SalesOrderApi;
-using AW.UI.Web.Internal.ApiClients.SalesOrderApi.Models;
+using AW.UI.Web.Common.ApiClients.ReferenceDataApi;
+using AW.UI.Web.Common.ApiClients.SalesOrderApi;
+using AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
