@@ -29,6 +29,6 @@ jobs:
       - name: Build and run unit tests
         run: |
           cd src
-          dotnet restore "AdventureWorks.sln"
-          dotnet build --no-restore
-          dotnet test --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet restore AdventureWorks.sln
+          dotnet build AdventureWorks.sln --no-restore
+          dotnet test AdventureWorks.sln --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
