@@ -41,3 +41,4 @@ jobs:
           msbuild AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
           nuget restore AW.Services.Customer.WCF.UnitTests\packages.config
           msbuild AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
+          dotnet test AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
