@@ -30,7 +30,7 @@ jobs:
       - name: Build Customer services and run unit tests
         run: |
           cd src
-          dotnet restore AdventureWorks.sln
+          nuget restore AdventureWorks.sln
           
           cd Services\Customer
           dotnet build AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
