@@ -37,7 +37,7 @@ jobs:
           dotnet build AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
           dotnet test AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          msbuild AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj -p:RestorePackagesConfig=true -t:restore
+          nuget restore AW.Services.Customer.WCF\packages.config
           msbuild AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
-          msbuild AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj -p:RestorePackagesConfig=true -t:restore
+          nuget restore AW.Services.Customer.WCF.UnitTests\packages.config
           msbuild AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
