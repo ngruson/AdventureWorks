@@ -1,0 +1,44 @@
+name: build-all
+
+# Controls when the action will run. 
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+          
+      - name: Build Customer services and run unit tests
+        run: |
+          cd src
+          nuget restore AdventureWorks.sln
+          
+          cd Services\Customer
+          dotnet build AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
+          dotnet build AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
+          dotnet test AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          nuget restore AW.Services.Customer.WCF\packages.config
+          msbuild AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
+          nuget restore AW.Services.Customer.WCF.UnitTests\packages.config
+          msbuild AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
+          dotnet test AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
