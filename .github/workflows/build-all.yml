@@ -34,7 +34,7 @@ jobs:
           
       - name: Build Customer services and run unit tests
         run: |
-          cd Services\Customer
+          cd src\Services\Customer
           dotnet build AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
           dotnet build AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
           dotnet test AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
@@ -47,8 +47,7 @@ jobs:
 
       - name: Build Product services and run unit tests
         run: |
-          cd -
-          cd Services\Product
+          cd src\Services\Product
           dotnet build AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj --no-restore
           
           nuget restore AW.Services.Product.WCF\packages.config
