@@ -64,8 +64,8 @@ jobs:
           dotnet build AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-restore
           dotnet test AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          nuget restore AW.Services.Product.WCF\packages.config
-          msbuild AW.Services.Product.WCF\AW.Services.Product.WCF.csproj
+          nuget restore AW.Services.ReferenceData.WCF\packages.config
+          msbuild AW.Services.ReferenceData.WCF\AW.Services.ReferenceData.WCF.csproj
           
       - name: Build SalesOrder services and run unit tests
         run: |
