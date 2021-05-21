@@ -7,7 +7,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-windows:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
@@ -26,19 +26,78 @@ jobs:
           
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
-          
-      - name: Build Customer services and run unit tests
+        
+      - name: Restore NuGet packages
         run: |
           cd src
           nuget restore AdventureWorks.sln
           
-          cd Services\Customer
+      - name: Build Customer services and run unit tests
+        run: |
+          cd src\Services\Customer
           dotnet build AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
           dotnet build AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
+          dotnet build AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-restore          
           dotnet test AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          nuget restore AW.Services.Customer.WCF\packages.config
           msbuild AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
-          nuget restore AW.Services.Customer.WCF.UnitTests\packages.config
           msbuild AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
+          dotnet test AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
+      - name: Build Product services and run unit tests
+        run: |
+          cd src\Services\Product
+          dotnet build AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj --no-restore
+          dotnet build AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-restore
+          dotnet test AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          nuget restore AW.Services.Product.WCF\packages.config
+          msbuild AW.Services.Product.WCF\AW.Services.Product.WCF.csproj
+          nuget restore AW.Services.Product.WCF.UnitTests\packages.config
+          msbuild AW.Services.Product.WCF.UnitTests\AW.Services.Product.WCF.UnitTests.csproj
+          dotnet test AW.Services.Product.WCF.UnitTests\AW.Services.Product.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
+      - name: Build ReferenceData services and run unit tests
+        run: |
+          cd src\Services\ReferenceData
+          dotnet build AW.Services.ReferenceData.REST.API\AW.Services.ReferenceData.REST.API.csproj --no-restore
+          dotnet build AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-restore
+          dotnet test AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          nuget restore AW.Services.ReferenceData.WCF\packages.config
+          msbuild AW.Services.ReferenceData.WCF\AW.Services.ReferenceData.WCF.csproj
+          
+      - name: Build SalesOrder services and run unit tests
+        run: |
+          cd src\Services\SalesOrder
+          dotnet build AW.Services.SalesOrder.REST.API\AW.Services.SalesOrder.REST.API.csproj --no-restore
+          dotnet build AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-restore
+          dotnet test AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          nuget restore AW.Services.SalesOrder.WCF\packages.config
+          msbuild AW.Services.SalesOrder.WCF\AW.Services.SalesOrder.WCF.csproj
+          msbuild AW.Services.SalesOrder.WCF.UnitTests\AW.Services.SalesOrder.WCF.UnitTests.csproj
+          dotnet test AW.Services.SalesOrder.WCF.UnitTests\AW.Services.SalesOrder.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+        
+      - name: Build SalesPerson services and run unit tests
+        run: |
+          cd src\Services\SalesPerson
+          dotnet build AW.Services.SalesPerson.REST.API\AW.Services.SalesPerson.REST.API.csproj --no-restore
+          dotnet build AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-restore
+          dotnet test AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          nuget restore AW.Services.SalesPerson.WCF\packages.config
+          msbuild AW.Services.SalesPerson.WCF\AW.Services.SalesPerson.WCF.csproj
+          msbuild AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj
+          dotnet test AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+        
+      - name: Build UI and run unit tests
+        run: |
+          cd src\UI
+          dotnet build AW.UI.Web.Internal\AW.UI.Web.Internal.csproj --no-restore
+          dotnet build AW.UI.Web.Internal.UnitTests\AW.UI.Web.Internal.UnitTests.csproj --no-restore
+          dotnet test AW.UI.Web.Internal.UnitTests\AW.UI.Web.Internal.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build AW.UI.Web.Store\AW.UI.Web.Store.csproj --no-restore
