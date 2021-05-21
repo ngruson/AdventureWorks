@@ -93,4 +93,11 @@ jobs:
           msbuild AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj
           dotnet test AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
         
-  
+      - name: Build UI and run unit tests
+        run: |
+          cd src\UI
+          dotnet build AW.UI.Web.Internal\AW.UI.Web.Internal.csproj --no-restore
+          dotnet build AW.UI.Web.Internal.UnitTests\AW.UI.Web.Internal.UnitTests.csproj --no-restore
+          dotnet test AW.UI.Web.Internal.UnitTests\AW.UI.Web.Internal.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build AW.UI.Web.Store\AW.UI.Web.Store.csproj --no-restore
