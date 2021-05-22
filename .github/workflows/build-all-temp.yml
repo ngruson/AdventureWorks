@@ -32,7 +32,7 @@ jobs:
         
       - name : Check Java
         run: |
-          cd 'C:\Program Files'
+          cd 'C:\Program Files (x86)'
           dir
         
       #- name: Restore NuGet packages
