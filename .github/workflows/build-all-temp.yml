@@ -42,6 +42,7 @@ jobs:
           
       - name: Build Customer services and run unit tests
         run: |
+          dir
           dotnet build Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore          
           
       - name: End Sonar scan
