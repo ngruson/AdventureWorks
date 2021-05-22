@@ -21,6 +21,10 @@ jobs:
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
@@ -30,23 +34,18 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
         
-      - name : Check Java
+      - name: Restore NuGet packages
         run: |
-          cd 'C:\Program Files (x86)'
-          dir
-        
-      #- name: Restore NuGet packages
-      #  run: |
-      #    nuget restore src\AdventureWorks.sln
+          nuget restore src\AdventureWorks.sln
           
-      #- name: Begin Sonar scan
-      #  run: |
-      #    dotnet tool install --global dotnet-sonarscanner
-      #    dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url=https://sonarcloud.io
+      - name: Begin Sonar scan
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url=https://sonarcloud.io
           
-      #- name: Build Customer services and run unit tests
-      #  run: |
-      #    dotnet build src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore          
+      - name: Build Customer services and run unit tests
+        run: |
+          dotnet build src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore          
           
-      #- name: End Sonar scan
-      #  run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: End Sonar scan
+        run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
