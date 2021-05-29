@@ -1,0 +1,24 @@
+
+UAW.Services.Customer.Application.UpdateCustomer.PersonDto.Mapping(AutoMapper.Profile)–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs ("0*¾
+0–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs (°
+­
+–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs (9:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.Profileçä
+–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs (:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()*
+1*Í
+1–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs	 (	"®
+–
+‹C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonDto.cs (	
+implicit return:
+profileAutoMapper.ProfileB=;
+9AW.Services.Customer.Application.UpdateCustomer.PersonDto

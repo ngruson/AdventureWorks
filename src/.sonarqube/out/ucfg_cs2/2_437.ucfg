@@ -1,0 +1,24 @@
+
+\AW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Mapping(AutoMapper.Profile)ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs ("0*”
+0ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs (∑
+¥
+ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs (G:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.ProfileÓÎ
+ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs (:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()*
+1*€
+1ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs	 (	"µ
+ù
+íC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\StoreCustomerDto.cs (	
+implicit return:
+profileAutoMapper.ProfileBDB
+@AW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto

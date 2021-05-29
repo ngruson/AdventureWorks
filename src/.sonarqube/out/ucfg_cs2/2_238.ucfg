@@ -1,0 +1,226 @@
+
+ñAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler.Handle(AW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommand, System.Threading.CancellationToken)’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs  (&"0*Æm
+0’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs *(›
+⁄
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ô
+Ï
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""›
+⁄
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ä
+˝
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""›
+⁄
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs+ (G.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*…*∆z
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>Ô
+Ï
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs7 (L
+%5string"ÉAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommand.AccountNumber.get*~
+|
+requestqAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandâÜ
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (MX
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification"RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification“
+œ
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (6
+
+%7void"}AW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification.GetIndividualCustomerSpecification(string)*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification*
+
+%5string∞≠
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs+ (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)Ø
+¨
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer"__id*
+""Ã
+…
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs ('
+%9!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guardﬁ
+€
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.csO (U:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ò
+Ó
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs (V5
+%11.AW.Services.Customer.Domain.IndividualCustomer"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses*)
+'
+%9!Ardalis.GuardClauses.IGuardClause*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer*
+""*<
+:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>ﬁ
+€
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs   (:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ç
+ˇ
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs   (C
+%13void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Removing address from customer*
+""â
+Ü
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs! !(8)
+%14"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomerÍ
+Á
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs! !(G)
+%15"System.Collections.Generic.List<T>"5AW.Services.Customer.Domain.Person.EmailAddresses.get*+
+)
+%14"AW.Services.Customer.Domain.Person‡
+›
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs! #(5
+%16.AW.Services.Customer.Domain.PersonEmailAddress"{System.Linq.Enumerable.FirstOrDefault<TSource>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, bool>)*"
+System.Linq.Enumerable*+
+)
+%15"System.Collections.Generic.List<T>*
+""⁄
+◊
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs! #(>
+emailAddress.AW.Services.Customer.Domain.PersonEmailAddress"__id*7
+5
+%16.AW.Services.Customer.Domain.PersonEmailAddressÕ
+ 
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs$ $((
+%17!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guardﬁ
+€
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs$C $(I:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ï
+È
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs$ $(J5
+%19.AW.Services.Customer.Domain.PersonEmailAddress"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses**
+(
+%17!Ardalis.GuardClauses.IGuardClause*@
+>
+emailAddress.AW.Services.Customer.Domain.PersonEmailAddress*
+""*<
+:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>â
+Ü
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs& &(%)
+%20"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomerÍ
+Á
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs& &(4)
+%21"System.Collections.Generic.List<T>"5AW.Services.Customer.Domain.Person.EmailAddresses.get*+
+)
+%20"AW.Services.Customer.Domain.PersonÖ
+Ç
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs& &(I
+%22bool",System.Collections.Generic.List<T>.Remove(T)*+
+)
+%21"System.Collections.Generic.List<T>*@
+>
+emailAddress.AW.Services.Customer.Domain.PersonEmailAddressﬁ
+€
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs( ((:
+%233Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*æ*ªz
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Å
+˛
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs( ((B
+%24void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%233Microsoft.Extensions.Logging.ILogger<TCategoryName>*!
+Updating customer to database*
+""ﬁ
+€
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs) )(./
+%25(Ardalis.Specification.IRepositoryBase<T>"__id*…*∆z
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>√¿
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs) )(N"
+%26System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%25(Ardalis.Specification.IRepositoryBase<T>*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer2UpdateAsync(T)°
+û
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs* *(
+%27MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"Ô
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs* *(
+
+%27MediatR.Unit*À
+1’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs+	 +(	"Ì
+’
+ C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerEmailAddress\DeleteIndividualCustomerEmailAddressCommandHandler.cs+ +(	
+implicit return:|
+requestqAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommand:7
+cancellationToken"System.Threading.CancellationTokenB|z
+xAW.Services.Customer.Application.DeleteIndividualCustomerEmailAddress.DeleteIndividualCustomerEmailAddressCommandHandler

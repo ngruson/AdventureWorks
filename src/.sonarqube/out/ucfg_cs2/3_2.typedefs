@@ -1,0 +1,4 @@
+ü
+bAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonEmailAddressConfigurationobjectà
+|Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.PersonEmailAddress>)ßAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonEmailAddressConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.PersonEmailAddress>)ª
+!PersonEmailAddressConfiguration()„AW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonEmailAddressConfiguration.PersonEmailAddressConfiguration()

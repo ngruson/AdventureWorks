@@ -1,0 +1,24 @@
+
+dAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomerContact.Mapping(AutoMapper.Profile)¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs ("0*ë
+0¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs (¿
+¼
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs (N:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.Profileöó
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs (:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()*
+1*ë
+1¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs	 (	"½
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\StoreCustomerContact.cs (	
+implicit return:
+profileAutoMapper.ProfileBLJ
+HAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomerContact

@@ -1,0 +1,11 @@
+Í
++AW.Services.Customer.Domain.CustomerAddressobjectR
+CustomerAddress()=AW.Services.Customer.Domain.CustomerAddress.CustomerAddress()<
+Id.get2AW.Services.Customer.Domain.CustomerAddress.Id.get<
+Id.set2AW.Services.Customer.Domain.CustomerAddress.Id.setN
+AddressType.get;AW.Services.Customer.Domain.CustomerAddress.AddressType.getN
+AddressType.set;AW.Services.Customer.Domain.CustomerAddress.AddressType.setF
+Address.get7AW.Services.Customer.Domain.CustomerAddress.Address.getF
+Address.set7AW.Services.Customer.Domain.CustomerAddress.Address.setJ
+AddressID.get9AW.Services.Customer.Domain.CustomerAddress.AddressID.getJ
+AddressID.set9AW.Services.Customer.Domain.CustomerAddress.AddressID.set

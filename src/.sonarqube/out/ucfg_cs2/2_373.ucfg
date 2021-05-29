@@ -1,0 +1,174 @@
+
+‚AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler.Handle(AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommand, System.Threading.CancellationToken)ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs  (&"0*ìM
+0ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs '(©
+¶
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*§*°`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>’
+“
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""©
+¶
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*§*°`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ê
+„
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""ú
+ô
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (-.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*¢*ü`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler";
+storeRepository(Ardalis.Specification.IRepositoryBase<T>†
+ù
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs2 (G
+%5string"iAW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommand.AccountNumber.get*d
+b
+requestWAW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandÂ‚
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (HS
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification"MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification©
+¶
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (1
+
+%7void"sAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification.GetStoreCustomerSpecification(string)*U
+S
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification*
+
+%5stringëé
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*U
+S
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)É
+Ä
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs (2
+store)AW.Services.Customer.Domain.StoreCustomer"__id*
+""©
+¶
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs   (9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*§*°`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>‡
+›
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs   (<
+%10void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Adding contact to store*
+""Ë
+Â
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs! !( 
+%11AutoMapper.IMapper"__id*É*Ä`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler"
+mapperAutoMapper.IMapperÌ
+Í
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs!B !(YW
+%12PAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto"kAW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommand.CustomerContact.get*d
+b
+requestWAW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandøº
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs! !(Z7
+%130AW.Services.Customer.Domain.StoreCustomerContact"0AutoMapper.IMapperBase.Map<TDestination>(object)*
+
+%11AutoMapper.IMapper*Y
+W
+%12PAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto2Map<TDestination>(object)ø
+º
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs! !(Z;
+contact0AW.Services.Customer.Domain.StoreCustomerContact"__id*9
+7
+%130AW.Services.Customer.Domain.StoreCustomerContact⁄
+◊
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs" "()
+%14"System.Collections.Generic.List<T>"6AW.Services.Customer.Domain.StoreCustomer.Contacts.get*4
+2
+store)AW.Services.Customer.Domain.StoreCustomer 
+«
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs" "('
+%15void"
+__arrayAdd*+
+)
+%14"System.Collections.Generic.List<T>*: *=
+;
+contact0AW.Services.Customer.Domain.StoreCustomerContact™
+ß
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs$ $(:
+%163Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*§*°`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Â
+‚
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs$ $(@
+%17void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%163Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Saving customer to database*
+""ù
+ö
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs% %(!/
+%18(Ardalis.Specification.IRepositoryBase<T>"__id*¢*ü`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler";
+storeRepository(Ardalis.Specification.IRepositoryBase<T>óî
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs% %(4"
+%19System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%18(Ardalis.Specification.IRepositoryBase<T>*4
+2
+store)AW.Services.Customer.Domain.StoreCustomer2UpdateAsync(T)á
+Ñ
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs' '(
+%20MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"’
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs' '(
+
+%20MediatR.Unit*ó
+1ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs(	 ((	"”
+ª
+∞C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddStoreCustomerContact\AddStoreCustomerContactCommandHandler.cs( ((	
+implicit return:b
+requestWAW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommand:7
+cancellationToken"System.Threading.CancellationTokenBb`
+^AW.Services.Customer.Application.AddStoreCustomerContact.AddStoreCustomerContactCommandHandler

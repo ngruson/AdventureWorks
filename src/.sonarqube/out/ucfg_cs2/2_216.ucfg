@@ -1,0 +1,38 @@
+
+¯AW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler.AddCustomerCommandHandler(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler>, Ardalis.Specification.IRepositoryBase<AW.Services.Customer.Domain.Customer>, AutoMapper.IMapper)£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs (("1*®
+1£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.csk (k*
+0*‡
+0£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs (iù
+ö
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*Œ*‰H
+FAW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ï
+ì
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs (5.
+%1(Ardalis.Specification.IRepositoryBase<T>"__id**ŠH
+FAW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>µ
+²
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs7 (B
+%2AutoMapper.IMapper"__id*j*hH
+FAW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler"
+mapperAutoMapper.IMapper"µ
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.cs (j
+	{unknown}*ç
+2£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.csk (k"»
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomer\AddCustomerCommandHandler.csj (k
+implicit return:=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>:>
+customerRepository(Ardalis.Specification.IRepositoryBase<T>:
+mapperAutoMapper.IMapperBJH
+FAW.Services.Customer.Application.AddCustomer.AddCustomerCommandHandler

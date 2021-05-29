@@ -30,7 +30,6 @@ namespace AW.Services.Customer.Application.AddCustomerAddress
             var customer = await customerRepository.GetBySpecAsync(
                 new GetCustomerSpecification(request.AccountNumber)
             );
-
             Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Adding address to customer");

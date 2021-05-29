@@ -9,7 +9,9 @@ namespace AW.Services.Customer.Application.AddCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.PersonEmailAddress, PersonEmailAddressDto>();
+            profile.CreateMap<PersonEmailAddressDto, Domain.PersonEmailAddress>()
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
 using MediatR;
@@ -27,6 +28,7 @@ namespace AW.Services.Customer.Application.UpdateCustomer
             logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
             var customer = await customerRepository.GetBySpecAsync(spec);
+            Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Updating customer");
             mapper.Map(request.Customer, customer);

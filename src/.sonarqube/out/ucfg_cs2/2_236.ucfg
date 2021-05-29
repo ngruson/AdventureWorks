@@ -1,0 +1,26 @@
+
+ZAW.Services.Customer.Application.AddCustomerAddress.AddressDto.Mapping(AutoMapper.Profile)õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs ("0*Ø	
+0õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs (9µ
+≤
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs (;:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.ProfileŒÀ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs (::
+%14AutoMapper.IMappingExpression<TSource, TDestination>"ÈAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2¥ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*
+1*◊
+1õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs	 (	"≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddressDto.cs (	
+implicit return:
+profileAutoMapper.ProfileBB@
+>AW.Services.Customer.Application.AddCustomerAddress.AddressDto

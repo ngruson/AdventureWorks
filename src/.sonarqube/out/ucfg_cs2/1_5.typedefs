@@ -1,0 +1,9 @@
+­
+'AW.Services.Customer.Domain.PersonPhoneobjectF
+PersonPhone()5AW.Services.Customer.Domain.PersonPhone.PersonPhone()8
+Id.get.AW.Services.Customer.Domain.PersonPhone.Id.get8
+Id.set.AW.Services.Customer.Domain.PersonPhone.Id.setR
+PhoneNumberType.get;AW.Services.Customer.Domain.PersonPhone.PhoneNumberType.getR
+PhoneNumberType.set;AW.Services.Customer.Domain.PersonPhone.PhoneNumberType.setJ
+PhoneNumber.get7AW.Services.Customer.Domain.PersonPhone.PhoneNumber.getJ
+PhoneNumber.set7AW.Services.Customer.Domain.PersonPhone.PhoneNumber.set

@@ -1,0 +1,46 @@
+
+ÇAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Person>)´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs ("0*À
+0´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs
+ ()å
+â
+´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs
+ 
+(%P
+%0JMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>"¨Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable<TEntity>(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>, string)*G"E
+CMicrosoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+
+Person½º
+´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs (%@
+%1:Microsoft.EntityFrameworkCore.Metadata.Builders.KeyBuilder"“Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.HasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2HHasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)íê
+´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs ('P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"£Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.Property<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2XProperty<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)æ
+ã
+´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs (*P
+%3JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"®Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName<TProperty>(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>, string)*E"C
+AMicrosoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions*R
+P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>*
+
+PersonID*
+1*‰
+1´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs	 (	"Ì
+´
+©C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonConfiguration.cs (	
+implicit return:U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>BZX
+VAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonConfiguration

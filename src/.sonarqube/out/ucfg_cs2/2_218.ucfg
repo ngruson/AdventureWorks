@@ -1,0 +1,148 @@
+
+æAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler.Handle(AW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand, System.Threading.CancellationToken)©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs  (&"0*Á<
+0©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (Ö
+Ç
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*í*èN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>√
+¿
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""Ö
+Ç
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*í*èN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>‘
+—
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""Í
+Á
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs4 (I
+%4string"WAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand.AccountNumber.get*R
+P
+requestEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand…∆
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (JN
+%5HAW.Services.Customer.Application.Specifications.GetCustomerSpecification"HAW.Services.Customer.Application.Specifications.GetCustomerSpecificationà
+Ö
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (3
+
+%6void"iAW.Services.Customer.Application.Specifications.GetCustomerSpecification.GetCustomerSpecification(string)*P
+N
+%5HAW.Services.Customer.Application.Specifications.GetCustomerSpecification*
+
+%4stringŸ
+÷
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (JP
+specHAW.Services.Customer.Application.Specifications.GetCustomerSpecification"__id*P
+N
+%5HAW.Services.Customer.Application.Specifications.GetCustomerSpecification˚
+¯
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs! (3.
+%7(Ardalis.Specification.IRepositoryBase<T>"__id*ì*êN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>¸˘
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs! (H*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%7(Ardalis.Specification.IRepositoryBase<T>*R
+P
+specHAW.Services.Customer.Application.Specifications.GetCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)Ô
+Ï
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (H0
+customer$AW.Services.Customer.Domain.Customer"__id*
+""†
+ù
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs ('
+%9!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.GuardÜ
+É
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs; (A:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*í*èN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ß
+§
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (B+
+%11$AW.Services.Customer.Domain.Customer"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses*)
+'
+%9!Ardalis.GuardClauses.IGuardClause*2
+0
+customer$AW.Services.Customer.Domain.Customer*
+""*<
+:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>Ü
+É
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*í*èN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>◊
+‘
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (D
+%13void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>*#!
+Deleting customer from database*
+""¸
+˘
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs ($/
+%14(Ardalis.Specification.IRepositoryBase<T>"__id*ì*êN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>ÉÄ
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (:"
+%15System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.DeleteAsync(T)*1
+/
+%14(Ardalis.Specification.IRepositoryBase<T>*2
+0
+customer$AW.Services.Customer.Domain.Customer2DeleteAsync(T)ı
+Ú
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (
+%16MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"√
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (
+
+%16MediatR.Unit*Û
+1©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs	 (	"¡
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteCustomer\DeleteCustomerCommandHandler.cs (	
+implicit return:P
+requestEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand:7
+cancellationToken"System.Threading.CancellationTokenBPN
+LAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandHandler

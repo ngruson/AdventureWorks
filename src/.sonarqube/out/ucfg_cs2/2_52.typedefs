@@ -1,0 +1,20 @@
+ÿ
+9AW.Services.Customer.Application.UpdateCustomer.PersonDtoobjectt
+Mapping(AutoMapper.Profile)UAW.Services.Customer.Application.UpdateCustomer.PersonDto.Mapping(AutoMapper.Profile)T
+PersonDto()EAW.Services.Customer.Application.UpdateCustomer.PersonDto.PersonDto()P
+	Title.getCAW.Services.Customer.Application.UpdateCustomer.PersonDto.Title.getP
+	Title.setCAW.Services.Customer.Application.UpdateCustomer.PersonDto.Title.setX
+FirstName.getGAW.Services.Customer.Application.UpdateCustomer.PersonDto.FirstName.getX
+FirstName.setGAW.Services.Customer.Application.UpdateCustomer.PersonDto.FirstName.setZ
+MiddleName.getHAW.Services.Customer.Application.UpdateCustomer.PersonDto.MiddleName.getZ
+MiddleName.setHAW.Services.Customer.Application.UpdateCustomer.PersonDto.MiddleName.setV
+LastName.getFAW.Services.Customer.Application.UpdateCustomer.PersonDto.LastName.getV
+LastName.setFAW.Services.Customer.Application.UpdateCustomer.PersonDto.LastName.setR
+
+Suffix.getDAW.Services.Customer.Application.UpdateCustomer.PersonDto.Suffix.getR
+
+Suffix.setDAW.Services.Customer.Application.UpdateCustomer.PersonDto.Suffix.setb
+EmailAddresses.getLAW.Services.Customer.Application.UpdateCustomer.PersonDto.EmailAddresses.getb
+EmailAddresses.setLAW.Services.Customer.Application.UpdateCustomer.PersonDto.EmailAddresses.set^
+PhoneNumbers.getJAW.Services.Customer.Application.UpdateCustomer.PersonDto.PhoneNumbers.get^
+PhoneNumbers.setJAW.Services.Customer.Application.UpdateCustomer.PersonDto.PhoneNumbers.set

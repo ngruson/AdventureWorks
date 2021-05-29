@@ -1,0 +1,184 @@
+
+ŠAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler.Handle(AW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommand, System.Threading.CancellationToken)Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs  (&"0*¦W
+0Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs !(Ñ
+Î
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*¸*µt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>é
+æ
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""Ñ
+Î
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*¸*µt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ú
+÷
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""Ñ
+Î
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs+ (G.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*Ã*Àt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>Ü
+Ù
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs7 (L
+%5string"}AW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommand.AccountNumber.get*x
+v
+requestkAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandƒ€
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (MX
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification"RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecificationÌ
+É
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (6
+
+%7void"}AW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification.GetIndividualCustomerSpecification(string)*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification*
+
+%5stringª§
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs+ (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)©
+¦
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer"__id*
+""Ñ
+Î
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*¸*µt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ý
+ú
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (E
+%10void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>*$"
+ Adding email address to customer*
+""¼¹
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (d5
+%11.AW.Services.Customer.Domain.PersonEmailAddress".AW.Services.Customer.Domain.PersonEmailAddressà
+Ý
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs# (<
+%12void"CAW.Services.Customer.Domain.PersonEmailAddress.PersonEmailAddress()*7
+5
+%11.AW.Services.Customer.Domain.PersonEmailAddressÜ
+Ù
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.csN (b
+%13string"|AW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommand.EmailAddress.get*x
+v
+requestkAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandï
+ì
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs? (b
+%14string"?AW.Services.Customer.Domain.PersonEmailAddress.EmailAddress.set*7
+5
+%11.AW.Services.Customer.Domain.PersonEmailAddress*
+
+%13stringÔ
+Ñ
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (d>
+emailAddress.AW.Services.Customer.Domain.PersonEmailAddress"__id*7
+5
+%11.AW.Services.Customer.Domain.PersonEmailAddressƒ
+€
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (%)
+%15"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomerä
+á
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (4)
+%16"System.Collections.Generic.List<T>"5AW.Services.Customer.Domain.Person.EmailAddresses.get*+
+)
+%15"AW.Services.Customer.Domain.Personá
+Þ
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (F
+%17void"
+__arrayAdd*+
+)
+%16"System.Collections.Generic.List<T>*: *@
+>
+emailAddress.AW.Services.Customer.Domain.PersonEmailAddressÒ
+Ï
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*¸*µt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ù
+ö
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (@
+%19void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Saving customer to database*
+""Ò
+Ï
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (./
+%20(Ardalis.Specification.IRepositoryBase<T>"__id*Ã*Àt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>½º
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs (N"
+%21System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%20(Ardalis.Specification.IRepositoryBase<T>*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer2UpdateAsync(T)›
+˜
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs! !(
+%22MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"é
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs! !(
+
+%22MediatR.Unit*¿
+1Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs"	 "(	"ç
+Ï
+ÄC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerEmailAddress\AddIndividualCustomerEmailAddressCommandHandler.cs" "(	
+implicit return:v
+requestkAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommand:7
+cancellationToken"System.Threading.CancellationTokenBvt
+rAW.Services.Customer.Application.AddIndividualCustomerEmailAddress.AddIndividualCustomerEmailAddressCommandHandler

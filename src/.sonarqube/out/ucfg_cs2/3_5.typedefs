@@ -1,0 +1,4 @@
+®
+WAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.AddressConfigurationobject¿
+qConfigure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Address>)ÉAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.AddressConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Address>)ˆ
+AddressConfiguration()nAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.AddressConfiguration.AddressConfiguration()

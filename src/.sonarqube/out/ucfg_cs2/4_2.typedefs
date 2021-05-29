@@ -1,0 +1,7 @@
+»
+%AW.Services.Customer.REST.API.Startupobjectû
+:Startup(Microsoft.Extensions.Configuration.IConfiguration)`AW.Services.Customer.REST.API.Startup.Startup(Microsoft.Extensions.Configuration.IConfiguration)∆
+NConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)tAW.Services.Customer.REST.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)ê
+≤Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)ÿAW.Services.Customer.REST.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)L
+Configuration.get7AW.Services.Customer.REST.API.Startup.Configuration.getL
+Configuration.set7AW.Services.Customer.REST.API.Startup.Configuration.set

@@ -1,0 +1,102 @@
+
+’AW.Services.Customer.REST.API.Controllers.CustomerController.DeleteCustomer(AW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand)™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csY) Y(7"2*Î!
+0™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs[ a(ä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs[ [(9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ú
+×
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs[_ [(t
+%1string"WAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand.AccountNumber.get*R
+P
+commandEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandç
+ä
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs[ [(u
+
+%2void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*=;
+9DeleteCustomer called with account number {AccountNumber}*
+
+%1stringä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs] ](9
+%33Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>È
+Å
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs] ](G
+
+%4void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%33Microsoft.Extensions.Logging.ILogger<TCategoryName>*&$
+"Sending the DeleteCustomer command*
+""¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs^ ^(
+%5MediatR.IMediator"__id*a*_>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mediatorMediatR.IMediatoröó
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs^ ^((*
+%6$System.Threading.Tasks.Task<TResult>"`MediatR.ISender.Send<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)*
+
+%5MediatR.IMediator*R
+P
+commandEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand*
+""2PSend<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)ä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs_ _(9
+%73Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>¶
+³
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs_ _(5
+
+%8void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%73Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Customer deleted*
+""¾»
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csa a(.
+%9(Microsoft.AspNetCore.Mvc.NoContentResult"3Microsoft.AspNetCore.Mvc.ControllerBase.NoContent()*+)
+'Microsoft.AspNetCore.Mvc.ControllerBase2NoContent()"Î
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csa a(0
+.
+%9(Microsoft.AspNetCore.Mvc.NoContentResult*Ó
+1™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csb	 b(	"±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csb b(	
+implicit return*ø
+2™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csYV Y(Vš
+—
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csY) Y(7k
+P
+commandEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand"
+AccountNumberstring"__entrypoint´
+±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csY) Y(7
+%10"__entrypoint*
+0:P
+commandEAW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommandB@>
+<AW.Services.Customer.REST.API.Controllers.CustomerController

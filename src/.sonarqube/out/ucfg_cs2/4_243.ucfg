@@ -1,0 +1,183 @@
+
+‘AW.Services.Customer.REST.API.Controllers.CustomerController.UpdateCustomer(string, AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer)™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7"2*Ô4
+0™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csM U(Pä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csM M(9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>»
+¸
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csM M(:
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+UpdateCustomer called*
+""ä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csO O(9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>È
+Å
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csO O(G
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*&$
+"Sending the UpdateCustomer command*
+""¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csP P( 
+%4AutoMapper.IMapper"__id*`*^>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mapperAutoMapper.IMapper¡ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csP P(EK
+%5EAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommand"0AutoMapper.IMapperBase.Map<TDestination>(object)*
+
+%4AutoMapper.IMapper*J
+H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer2Map<TDestination>(object)Æ
+Ã
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csP P(EP
+commandEAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommand"__id*M
+K
+%5EAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommandŠ
+‡
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csQ Q(A
+%6;AW.Services.Customer.Application.UpdateCustomer.CustomerDto"RAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommand.Customer.get*R
+P
+commandEAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommandÜ
+Ù
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csQ Q(:
+%7string"MAW.Services.Customer.Application.UpdateCustomer.CustomerDto.AccountNumber.set*C
+A
+%6;AW.Services.Customer.Application.UpdateCustomer.CustomerDto*
+
+accountNumberstring¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csR( R(0
+%8MediatR.IMediator"__id*a*_>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mediatorMediatR.IMediatoröó
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csR( R(>*
+%9$System.Threading.Tasks.Task<TResult>"`MediatR.ISender.Send<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)*
+
+%8MediatR.IMediator*R
+P
+commandEAW.Services.Customer.Application.UpdateCustomer.UpdateCustomerCommand*
+""2PSend<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)ý
+ú
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csR R(>N
+updatedCustomer;AW.Services.Customer.Application.UpdateCustomer.CustomerDto"__id*
+""å
+â
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csT T(:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>º
+·
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csT T(7
+%11void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Returning customer*
+""¢
+Ÿ
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csU U(
+%12AutoMapper.IMapper"__id*`*^>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mapperAutoMapper.IMapper 
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csU U(QC
+%13<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer"0AutoMapper.IMapperBase.Map<TDestination>(object)*
+
+%12AutoMapper.IMapper*P
+N
+updatedCustomer;AW.Services.Customer.Application.UpdateCustomer.CustomerDto2Map<TDestination>(object)ƒ€
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csU U(R.
+%14'Microsoft.AspNetCore.Mvc.OkObjectResult"2Microsoft.AspNetCore.Mvc.ControllerBase.Ok(object)*+)
+'Microsoft.AspNetCore.Mvc.ControllerBase*E
+C
+%13<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer2
+Ok(object)"Î
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csU U(S0
+.
+%14'Microsoft.AspNetCore.Mvc.OkObjectResult*Ó
+1™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csV	 V(	"±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csV V(	
+implicit return*ÿ
+2™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csKv K(vŸ
+œ
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7p
+H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer"$
+<Territory>k__BackingFieldstring"__entrypointŽ
+‹
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7_
+H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer"
+	Territorystring"__entrypoint¼
+¹
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7Œ
+H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer"@
+<Addresses>k__BackingField"System.Collections.Generic.List<T>"__entrypointª
+§
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7{
+H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer"/
+	Addresses"System.Collections.Generic.List<T>"__entrypointÏ
+Ì
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK) K(7
+%15"__entrypoint*
+
+accountNumberstring•
+’
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csJ	 J(#
+%16"
+__annotate*FD
+BMicrosoft.AspNetCore.Mvc.HttpPutAttribute.HttpPutAttribute(string)*
+
+accountNumberstringÏ
+Ì
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csK8 K(L
+accountNumberstring"__annotation*
+
+%16*
+0:
+accountNumberstring:H
+customer<AW.Services.Customer.REST.API.Models.UpdateCustomer.CustomerB@>
+<AW.Services.Customer.REST.API.Controllers.CustomerController

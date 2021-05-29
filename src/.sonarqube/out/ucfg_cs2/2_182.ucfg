@@ -1,0 +1,180 @@
+
+ÓAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler.Handle(AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommand, System.Threading.CancellationToken)¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs  (&"0*ÍQ
+0¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs &(µ
+≤
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*™*ßf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>€
+ÿ
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""µ
+≤
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*™*ßf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ï
+È
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""µ
+≤
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs+ (G.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*µ*≤f
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>≤
+Ø
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs7 (L
+%5string"oAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommand.AccountNumber.get*j
+h
+request]AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandıÚ
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (MX
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification"RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecificationæ
+ª
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (6
+
+%7void"}AW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification.GetIndividualCustomerSpecification(string)*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification*
+
+%5stringúô
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs+ (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)õ
+ò
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer"__id*
+""µ
+≤
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*™*ßf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Á
+‰
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (=
+%10void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%93Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Adding phone to customer*
+""Ù
+Ò
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs   (
+%11AutoMapper.IMapper"__id*â*Üf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"
+mapperAutoMapper.IMapperÈ
+Ê
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs 7  (DK
+%12DAW.Services.Customer.Application.AddIndividualCustomerPhone.PhoneDto"gAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommand.Phone.get*j
+h
+request]AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommand∞≠
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs   (E.
+%13'AW.Services.Customer.Domain.PersonPhone"0AutoMapper.IMapperBase.Map<TDestination>(object)*
+
+%11AutoMapper.IMapper*M
+K
+%12DAW.Services.Customer.Application.AddIndividualCustomerPhone.PhoneDto2Map<TDestination>(object)±
+Æ
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs   (E0
+phone'AW.Services.Customer.Domain.PersonPhone"__id*0
+.
+%13'AW.Services.Customer.Domain.PersonPhoneı
+Ú
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs! !(%)
+%14"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer‘
+—
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs! !(2)
+%15"System.Collections.Generic.List<T>"3AW.Services.Customer.Domain.Person.PhoneNumbers.get*+
+)
+%14"AW.Services.Customer.Domain.Person≈
+¬
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs! !(=
+%16void"
+__arrayAdd*+
+)
+%15"System.Collections.Generic.List<T>*: *2
+0
+phone'AW.Services.Customer.Domain.PersonPhone∂
+≥
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs# #(:
+%173Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*™*ßf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Î
+Ë
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs# #(@
+%18void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%173Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Saving customer to database*
+""∂
+≥
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs$ $(./
+%19(Ardalis.Specification.IRepositoryBase<T>"__id*µ*≤f
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>Ø¨
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs$ $(N"
+%20System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%19(Ardalis.Specification.IRepositoryBase<T>*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer2UpdateAsync(T)ç
+ä
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs& &(
+%21MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"€
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs& &(
+
+%21MediatR.Unit*£
+1¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs'	 '(	"Ÿ
+¡
+∂C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs' '(	
+implicit return:h
+request]AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommand:7
+cancellationToken"System.Threading.CancellationTokenBhf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler

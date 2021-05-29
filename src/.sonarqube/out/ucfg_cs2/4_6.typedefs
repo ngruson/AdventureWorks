@@ -1,0 +1,16 @@
+©
+;AW.Services.Customer.REST.API.Models.UpdateCustomer.Addressobjectv
+Mapping(AutoMapper.Profile)WAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.Mapping(AutoMapper.Profile)R
+	Address()EAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.Address()`
+AddressLine1.getLAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.AddressLine1.get`
+AddressLine1.setLAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.AddressLine1.set`
+AddressLine2.getLAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.AddressLine2.get`
+AddressLine2.setLAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.AddressLine2.set\
+PostalCode.getJAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.PostalCode.get\
+PostalCode.setJAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.PostalCode.setP
+City.getDAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.City.getP
+City.setDAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.City.setj
+StateProvinceCode.getQAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.StateProvinceCode.getj
+StateProvinceCode.setQAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.StateProvinceCode.setj
+CountryRegionCode.getQAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.CountryRegionCode.getj
+CountryRegionCode.setQAW.Services.Customer.REST.API.Models.UpdateCustomer.Address.CountryRegionCode.set

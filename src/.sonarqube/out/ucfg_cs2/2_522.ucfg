@@ -1,0 +1,66 @@
+
+eAW.Services.Customer.Application.GetCustomers.GetCustomersQueryValidator.GetCustomersQueryValidator()¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs ()"1*¦
+1¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs	 (	t
+r
+
+%0void"9FluentValidation.AbstractValidator<T>.AbstractValidator()*)'
+%FluentValidation.AbstractValidator<T>*
+0*¿
+0¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs
+ (?‘
+Ž
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs
+ 
+()8
+%12FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ã
+À
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs
+ (8
+%22FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%12FluentValidation.IRuleBuilderInitial<T, TProperty>ë
+è
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs
+ (A8
+%32FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%22FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Page index is required‘
+Ž
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs ((8
+%42FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ã
+À
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs (8
+%52FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%42FluentValidation.IRuleBuilderInitial<T, TProperty>ê
+ç
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs (@8
+%62FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%52FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Page size is required*
+2*ë
+2¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs	 (	"½
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryValidator.cs (	
+implicit returnBLJ
+HAW.Services.Customer.Application.GetCustomers.GetCustomersQueryValidator

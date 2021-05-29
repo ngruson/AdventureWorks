@@ -1,0 +1,259 @@
+
+µAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>.Read(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs ("0*á
+0õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (6£
+†
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs ( $
+%0System.Text.Json.JsonTokenType"-System.Text.Json.Utf8JsonReader.TokenType.get*+
+)
+readerSystem.Text.Json.Utf8JsonReaderµ
+≤
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs$ (6
+%1"__id*
+""*
+1
+2* 
+1õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs? (C"¶
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs8 (D
+""*¿
+2õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (>É
+Ä
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (#-
+
+readerCopySystem.Text.Json.Utf8JsonReader"__id*+
+)
+readerSystem.Text.Json.Utf8JsonReaderÈ
+Ê
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs% (L#
+%2System.Text.Json.JsonDocument"MSystem.Text.Json.JsonDocument.ParseValue(ref System.Text.Json.Utf8JsonReader)*!"
+System.Text.Json.JsonDocument*/
+-
+
+readerCopySystem.Text.Json.Utf8JsonReader˝
+˙
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (L-
+jsonDocumentSystem.Text.Json.JsonDocument"__id*%
+#
+%2System.Text.Json.JsonDocument•
+¢
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (5"
+%3System.Text.Json.JsonElement"-System.Text.Json.JsonDocument.RootElement.get*/
+-
+jsonDocumentSystem.Text.Json.JsonDocument˘
+ˆ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (5*
+
+jsonObjectSystem.Text.Json.JsonElement"__id*$
+"
+%3System.Text.Json.JsonElement∑
+¥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (E"
+%4System.Text.Json.JsonElement"0System.Text.Json.JsonElement.GetProperty(string)*,
+*
+
+jsonObjectSystem.Text.Json.JsonElement*
+customerType˚
+¯
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (E,
+customerTypeSystem.Text.Json.JsonElement"__id*$
+"
+%4System.Text.Json.JsonElementí
+è
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs ('
+%5!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard∫
+∑
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (B"
+%6System.Text.Json.JsonElement"`Ardalis.GuardClauses.GuardClauseExtensions.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string)*.",
+*Ardalis.GuardClauses.GuardClauseExtensions*)
+'
+%5!Ardalis.GuardClauses.IGuardClause*.
+,
+customerTypeSystem.Text.Json.JsonElement*
+""â
+Ü
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs& (>
+%7string"(System.Text.Json.JsonElement.GetString()*.
+,
+customerTypeSystem.Text.Json.JsonElementË
+Â
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (?
+
+%8bool"string.IsNullOrEmpty(string?)*
+"
+string*
+
+%7string*
+3
+4*è
+3õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (\â
+Ü
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs- (E
+%9string"(System.Text.Json.JsonElement.GetString()*.
+,
+customerTypeSystem.Text.Json.JsonElementû
+õ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (F8
+%101AW.Services.Customer.REST.API.Models.CustomerType" System.Enum.Parse<TEnum>(string)*"
+System.Enum*
+
+%9string∂
+≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.csJ (\
+%11"__id*
+""*
+5
+6*Ë
+5õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (Y»
+≈
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (Z
+%12object"ÜSystem.Text.Json.JsonSerializer.Deserialize(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions?)*#"!
+System.Text.Json.JsonSerializer*+
+)
+readerSystem.Text.Json.Utf8JsonReader*
+""*3
+1
+options&System.Text.Json.JsonSerializerOptions«
+ƒ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (d
+%13object"__id*
+
+%12object"Ø
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (e
+
+%13object*ë
+6õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (aä
+á
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs- (E
+%14string"(System.Text.Json.JsonElement.GetString()*.
+,
+customerTypeSystem.Text.Json.JsonElementü
+ú
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs (F8
+%151AW.Services.Customer.REST.API.Models.CustomerType" System.Enum.Parse<TEnum>(string)*"
+System.Enum*
+
+%14string∂
+≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.csJ (a
+%16"__id*
+""*
+7
+4*Ë
+7õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs   (^»
+≈
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs   (_
+%17object"ÜSystem.Text.Json.JsonSerializer.Deserialize(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions?)*#"!
+System.Text.Json.JsonSerializer*+
+)
+readerSystem.Text.Json.Utf8JsonReader*
+""*3
+1
+options&System.Text.Json.JsonSerializerOptions«
+ƒ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs   (n
+%18object"__id*
+
+%17object"Ø
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs   (o
+
+%18object* 
+4õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#/ #(Gä
+á
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#/ #(G
+%22string"(System.Text.Json.JsonElement.GetString()*.
+,
+customerTypeSystem.Text.Json.JsonElement«
+ƒ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#/ #(G
+%20string"__id*
+
+%22string«
+ƒ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#/ #(G
+%19string"__id*
+
+%20string*
+8
+9*∏
+8õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#K #(V≈
+¬
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#K #(V
+%21string"__id*
+	<unknown>«
+ƒ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#K #(V
+%19string"__id*
+
+%21string*
+9*ä
+9õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs# #(p”
+–
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs#, #(p
+%23string"__concat*
+
+%19string*
+""‰·
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs# #(q#
+%24System.NotSupportedException"System.NotSupportedException£
+†
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs# #(+
+%25void";System.NotSupportedException.NotSupportedException(string?)*%
+#
+%24System.NotSupportedException*
+
+%23string*
+10*ÿ
+10õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs$	 $(	"≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs$ $(	
+implicit return:)
+readerSystem.Text.Json.Utf8JsonReader:
+typeToConvertSystem.Type:1
+options&System.Text.Json.JsonSerializerOptionsBZX
+VAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>

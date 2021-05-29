@@ -1,0 +1,8 @@
+ã
+SAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDtoobjectŽ
+Mapping(AutoMapper.Profile)oAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.Mapping(AutoMapper.Profile)Š
+StoreCustomerContactDto()mAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.StoreCustomerContactDto()v
+ContactType.getcAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.ContactType.getv
+ContactType.setcAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.ContactType.setz
+ContactPerson.geteAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.ContactPerson.getz
+ContactPerson.seteAW.Services.Customer.Application.DeleteStoreCustomerContact.StoreCustomerContactDto.ContactPerson.set

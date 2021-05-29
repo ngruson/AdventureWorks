@@ -1,5 +1,5 @@
-﻿using AW.Services.ReferenceData.Application.StateProvince.GetStateProvinces;
-using AW.Services.ReferenceData.WCF.Messages.ListStateProvinces;
+﻿using AW.Services.ReferenceData.Application.StateProvince.GetStatesProvinces;
+using AW.Services.ReferenceData.WCF.Messages.ListStatesProvinces;
 using MediatR;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -13,13 +13,13 @@ namespace AW.Services.ReferenceData.WCF
 
         public StateProvinceService(IMediator mediator) => this.mediator = mediator;
 
-        public async Task<ListStateProvincesResponse> ListStateProvinces(ListStateProvincesRequest request)
+        public async Task<ListStatesProvincesResponse> ListStatesProvinces(ListStatesProvincesRequest request)
         {
             var stateProvinces = await mediator.Send(
-                new GetStateProvincesQuery {  CountryRegionCode = request.CountryRegionCode }
+                new GetStatesProvincesQuery {  CountryRegionCode = request.CountryRegionCode }
             );
 
-            return new ListStateProvincesResponse
+            return new ListStatesProvincesResponse
             {
                 StateProvinces = stateProvinces
             };

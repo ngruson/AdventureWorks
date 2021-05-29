@@ -1,0 +1,15 @@
+¥	
+0AW.Services.Customer.Domain.StoreCustomerContactobjecta
+StoreCustomerContact()GAW.Services.Customer.Domain.StoreCustomerContact.StoreCustomerContact()A
+Id.get7AW.Services.Customer.Domain.StoreCustomerContact.Id.getA
+Id.set7AW.Services.Customer.Domain.StoreCustomerContact.Id.setS
+ContactType.get@AW.Services.Customer.Domain.StoreCustomerContact.ContactType.getS
+ContactType.set@AW.Services.Customer.Domain.StoreCustomerContact.ContactType.setW
+StoreCustomer.getBAW.Services.Customer.Domain.StoreCustomerContact.StoreCustomer.getW
+StoreCustomer.setBAW.Services.Customer.Domain.StoreCustomerContact.StoreCustomer.set[
+StoreCustomerId.getDAW.Services.Customer.Domain.StoreCustomerContact.StoreCustomerId.get[
+StoreCustomerId.setDAW.Services.Customer.Domain.StoreCustomerContact.StoreCustomerId.setW
+ContactPerson.getBAW.Services.Customer.Domain.StoreCustomerContact.ContactPerson.getW
+ContactPerson.setBAW.Services.Customer.Domain.StoreCustomerContact.ContactPerson.set[
+ContactPersonId.getDAW.Services.Customer.Domain.StoreCustomerContact.ContactPersonId.get[
+ContactPersonId.setDAW.Services.Customer.Domain.StoreCustomerContact.ContactPersonId.set

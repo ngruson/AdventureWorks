@@ -1,0 +1,8 @@
+à
+<AW.Services.Customer.REST.API.Controllers.CustomerController'Microsoft.AspNetCore.Mvc.ControllerBaseobjectý
+CustomerController(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.REST.API.Controllers.CustomerController>, MediatR.IMediator, AutoMapper.IMapper)ÚAW.Services.Customer.REST.API.Controllers.CustomerController.CustomerController(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.REST.API.Controllers.CustomerController>, MediatR.IMediator, AutoMapper.IMapper)Ü
+MGetCustomers(AW.Services.Customer.Application.GetCustomers.GetCustomersQuery)ŠAW.Services.Customer.REST.API.Controllers.CustomerController.GetCustomers(AW.Services.Customer.Application.GetCustomers.GetCustomersQuery)Ö
+JGetCustomer(AW.Services.Customer.Application.GetCustomer.GetCustomerQuery)‡AW.Services.Customer.REST.API.Controllers.CustomerController.GetCustomer(AW.Services.Customer.Application.GetCustomer.GetCustomerQuery)Ú
+LAddCustomer(AW.Services.Customer.Application.AddCustomer.AddCustomerCommand)‰AW.Services.Customer.REST.API.Controllers.CustomerController.AddCustomer(AW.Services.Customer.Application.AddCustomer.AddCustomerCommand)ê
+TUpdateCustomer(string, AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer)‘AW.Services.Customer.REST.API.Controllers.CustomerController.UpdateCustomer(string, AW.Services.Customer.REST.API.Models.UpdateCustomer.Customer)ì
+UDeleteCustomer(AW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand)’AW.Services.Customer.REST.API.Controllers.CustomerController.DeleteCustomer(AW.Services.Customer.Application.DeleteCustomer.DeleteCustomerCommand)

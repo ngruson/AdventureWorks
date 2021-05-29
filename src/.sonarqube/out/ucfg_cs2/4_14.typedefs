@@ -1,0 +1,20 @@
+ã
+
+7AW.Services.Customer.REST.API.Models.GetCustomer.PersonobjectL
+Person()@AW.Services.Customer.REST.API.Models.GetCustomer.Person.Person()N
+	Title.getAAW.Services.Customer.REST.API.Models.GetCustomer.Person.Title.getN
+	Title.setAAW.Services.Customer.REST.API.Models.GetCustomer.Person.Title.setV
+FirstName.getEAW.Services.Customer.REST.API.Models.GetCustomer.Person.FirstName.getV
+FirstName.setEAW.Services.Customer.REST.API.Models.GetCustomer.Person.FirstName.setX
+MiddleName.getFAW.Services.Customer.REST.API.Models.GetCustomer.Person.MiddleName.getX
+MiddleName.setFAW.Services.Customer.REST.API.Models.GetCustomer.Person.MiddleName.setT
+LastName.getDAW.Services.Customer.REST.API.Models.GetCustomer.Person.LastName.getT
+LastName.setDAW.Services.Customer.REST.API.Models.GetCustomer.Person.LastName.setP
+
+Suffix.getBAW.Services.Customer.REST.API.Models.GetCustomer.Person.Suffix.getP
+
+Suffix.setBAW.Services.Customer.REST.API.Models.GetCustomer.Person.Suffix.set`
+EmailAddresses.getJAW.Services.Customer.REST.API.Models.GetCustomer.Person.EmailAddresses.get`
+EmailAddresses.setJAW.Services.Customer.REST.API.Models.GetCustomer.Person.EmailAddresses.set\
+PhoneNumbers.getHAW.Services.Customer.REST.API.Models.GetCustomer.Person.PhoneNumbers.get\
+PhoneNumbers.setHAW.Services.Customer.REST.API.Models.GetCustomer.Person.PhoneNumbers.set

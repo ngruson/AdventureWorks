@@ -1,0 +1,17 @@
+Í
+#AW.Services.Customer.Domain.Addressobject:
+	Address()-AW.Services.Customer.Domain.Address.Address()4
+Id.get*AW.Services.Customer.Domain.Address.Id.get4
+Id.set*AW.Services.Customer.Domain.Address.Id.setH
+AddressLine1.get4AW.Services.Customer.Domain.Address.AddressLine1.getH
+AddressLine1.set4AW.Services.Customer.Domain.Address.AddressLine1.setH
+AddressLine2.get4AW.Services.Customer.Domain.Address.AddressLine2.getH
+AddressLine2.set4AW.Services.Customer.Domain.Address.AddressLine2.setD
+PostalCode.get2AW.Services.Customer.Domain.Address.PostalCode.getD
+PostalCode.set2AW.Services.Customer.Domain.Address.PostalCode.set8
+City.get,AW.Services.Customer.Domain.Address.City.get8
+City.set,AW.Services.Customer.Domain.Address.City.setR
+StateProvinceCode.get9AW.Services.Customer.Domain.Address.StateProvinceCode.getR
+StateProvinceCode.set9AW.Services.Customer.Domain.Address.StateProvinceCode.setR
+CountryRegionCode.get9AW.Services.Customer.Domain.Address.CountryRegionCode.getR
+CountryRegionCode.set9AW.Services.Customer.Domain.Address.CountryRegionCode.set

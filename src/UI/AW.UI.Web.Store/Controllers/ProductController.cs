@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
 using AW.UI.Web.Store.ViewModels.Product;
@@ -32,6 +33,7 @@ namespace AW.UI.Web.Store.Controllers
 
         public async Task<IActionResult> Index(int? page, int? pageSize, string productCategory, string productSubcategory)
         {
+            Guard.Against.NullOrEmpty(productCategory, nameof(productCategory));
             ViewData["pageSizeList"] = GetPageSizeList();
 
             var products = await productService.GetProductsAsync(page ?? 0, pageSize ?? 12, productCategory, productSubcategory);

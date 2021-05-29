@@ -46,7 +46,7 @@ namespace AW.Services.ReferenceData.REST.API
                 c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
             );
             services.AddScoped(typeof(IRepositoryBase<>), typeof(EfRepository<>));
-            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetAddressTypesQuery).Assembly);
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddMediatR(typeof(GetAddressTypesQuery));
         }
 

@@ -1,0 +1,21 @@
+ý
+"AW.Services.Customer.Domain.Personobject7
+Person()+AW.Services.Customer.Domain.Person.Person()3
+Id.get)AW.Services.Customer.Domain.Person.Id.get3
+Id.set)AW.Services.Customer.Domain.Person.Id.set9
+	Title.get,AW.Services.Customer.Domain.Person.Title.get9
+	Title.set,AW.Services.Customer.Domain.Person.Title.setA
+FirstName.get0AW.Services.Customer.Domain.Person.FirstName.getA
+FirstName.set0AW.Services.Customer.Domain.Person.FirstName.setC
+MiddleName.get1AW.Services.Customer.Domain.Person.MiddleName.getC
+MiddleName.set1AW.Services.Customer.Domain.Person.MiddleName.set?
+LastName.get/AW.Services.Customer.Domain.Person.LastName.get?
+LastName.set/AW.Services.Customer.Domain.Person.LastName.set;
+
+Suffix.get-AW.Services.Customer.Domain.Person.Suffix.get;
+
+Suffix.set-AW.Services.Customer.Domain.Person.Suffix.setK
+EmailAddresses.get5AW.Services.Customer.Domain.Person.EmailAddresses.getK
+EmailAddresses.set5AW.Services.Customer.Domain.Person.EmailAddresses.setG
+PhoneNumbers.get3AW.Services.Customer.Domain.Person.PhoneNumbers.getG
+PhoneNumbers.set3AW.Services.Customer.Domain.Person.PhoneNumbers.set

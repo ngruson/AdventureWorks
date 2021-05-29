@@ -1,0 +1,45 @@
+
+ÐAW.Services.Customer.Persistence.EntityFrameworkCore.Configurations.SalesOrderConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.SalesOrder>)¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs ("0*Ü
+0¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs
+ (-í
+ê
+¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs
+ 
+()P
+%0JMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>"¨Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable<TEntity>(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>, string)*G"E
+CMicrosoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+
+SalesOrderÁ¾
+¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs (%@
+%1:Microsoft.EntityFrameworkCore.Metadata.Builders.KeyBuilder"“Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.HasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2HHasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)ñî
+¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs ('P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"£Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.Property<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2XProperty<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)î
+ë
+¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs (.P
+%3JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"®Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName<TProperty>(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>, string)*E"C
+AMicrosoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions*R
+P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>*
+SalesOrderID*
+1*‘
+1¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs	 (	"Ð
+¸
+­C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\SalesOrderConfiguration.cs (	
+implicit return:U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>B_]
+[AW.Services.Customer.Persistence.EntityFrameworkCore.Configurations.SalesOrderConfiguration

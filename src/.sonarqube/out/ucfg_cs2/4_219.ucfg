@@ -1,0 +1,31 @@
+
+bAW.Services.Customer.REST.API.Models.UpdateCustomer.IndividualCustomer.Mapping(AutoMapper.Profile)£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs ("0*¾
+0£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs (O½
+º
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs (J:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.ProfileÖÓ
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs (P:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"éAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2´ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)ôñ
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs (:
+%24AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%14AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()*
+1*ç
+1£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs	 (	"»
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Models\UpdateCustomer\IndividualCustomer.cs (	
+implicit return:
+profileAutoMapper.ProfileBJH
+FAW.Services.Customer.REST.API.Models.UpdateCustomer.IndividualCustomer

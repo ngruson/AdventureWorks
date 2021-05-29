@@ -1,0 +1,20 @@
+Š
+:AW.Services.Customer.REST.API.Models.UpdateCustomer.Personobjectu
+Mapping(AutoMapper.Profile)VAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Mapping(AutoMapper.Profile)O
+Person()CAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Person()Q
+	Title.getDAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Title.getQ
+	Title.setDAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Title.setY
+FirstName.getHAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.FirstName.getY
+FirstName.setHAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.FirstName.set[
+MiddleName.getIAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.MiddleName.get[
+MiddleName.setIAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.MiddleName.setW
+LastName.getGAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.LastName.getW
+LastName.setGAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.LastName.setS
+
+Suffix.getEAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Suffix.getS
+
+Suffix.setEAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.Suffix.setc
+EmailAddresses.getMAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.EmailAddresses.getc
+EmailAddresses.setMAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.EmailAddresses.set_
+PhoneNumbers.getKAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.PhoneNumbers.get_
+PhoneNumbers.setKAW.Services.Customer.REST.API.Models.UpdateCustomer.Person.PhoneNumbers.set

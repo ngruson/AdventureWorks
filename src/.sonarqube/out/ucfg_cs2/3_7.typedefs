@@ -1,0 +1,4 @@
+Ê
+[AW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonPhoneConfigurationobjectË
+uConfigure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.PersonPhone>)ÑAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonPhoneConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.PersonPhone>)”
+PersonPhoneConfiguration()vAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonPhoneConfiguration.PersonPhoneConfiguration()

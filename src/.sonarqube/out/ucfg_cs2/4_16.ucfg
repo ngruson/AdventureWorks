@@ -1,0 +1,13 @@
+
+jAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>.CustomerConverter()õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs	 	(""0*ﬂ
+0õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs4 4(Ö
+Ç
+
+%0void"?System.Text.Json.Serialization.JsonConverter<T>.JsonConverter()*31
+/System.Text.Json.Serialization.JsonConverter<T>"≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\JsonConverters\CustomerConverter.cs	 4(
+implicit returnBZX
+VAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>

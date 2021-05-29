@@ -1,0 +1,44 @@
+
+ÑAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonPhoneConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.PersonPhone>)¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs ("0*ã
+0¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs
+ (.ï
+ì
+¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs
+ 
+(*P
+%0JMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>"¨Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable<TEntity>(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>, string)*G"E
+CMicrosoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+PersonPhoneÂ¿
+¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs (%@
+%1:Microsoft.EntityFrameworkCore.Metadata.Builders.KeyBuilder"“Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.HasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2HHasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)òï
+¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs ('P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"£Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.Property<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2XProperty<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)ð
+í
+¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs (/P
+%3JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"®Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName<TProperty>(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>, string)*E"C
+AMicrosoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions*R
+P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>*
+PersonPhoneID*
+1*“
+1¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs	 (	"Ñ
+¹
+®C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\PersonPhoneConfiguration.cs (	
+implicit return:U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>B_]
+[AW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonPhoneConfiguration

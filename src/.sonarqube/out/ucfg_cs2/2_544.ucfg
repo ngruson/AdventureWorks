@@ -1,0 +1,33 @@
+
+eAW.Services.Customer.Application.UpdateCustomerAddress.CustomerAddressDto.Mapping(AutoMapper.Profile)¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs ("0*¬
+0¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs (@À
+½
+¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs (K:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.ProfileÙÖ
+¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs (::
+%14AutoMapper.IMappingExpression<TSource, TDestination>"éAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2´ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)ÙÖ
+¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs (A:
+%24AutoMapper.IMappingExpression<TSource, TDestination>"éAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*<
+:
+%14AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2´ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*
+1*í
+1¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs	 (	"¾
+¦
+›C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\CustomerAddressDto.cs (	
+implicit return:
+profileAutoMapper.ProfileBMK
+IAW.Services.Customer.Application.UpdateCustomerAddress.CustomerAddressDto

@@ -1,0 +1,29 @@
+
+–AW.Core.Application.Autofac.AutofacValidatorFactory.AutofacValidatorFactory(Autofac.Features.Indexed.IIndex<System.Type, FluentValidation.IValidator>)œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs (&"1* 
+1œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs	 (	w
+u
+
+%0void"<FluentValidation.ValidatorFactoryBase.ValidatorFactoryBase()*)'
+%FluentValidation.ValidatorFactoryBase*
+0*ˆ
+0œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs ($Þ
+Û
+œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs ($u5
+3AW.Core.Application.Autofac.AutofacValidatorFactory"<
+_validators-Autofac.Features.Indexed.IIndex<TKey, TValue>"__id*=
+;
+
+validators-Autofac.Features.Indexed.IIndex<TKey, TValue>*
+2*Ù
+2œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs	 (	"´
+œ
+‘C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\AutofacValidatorFactory.cs (	
+implicit return:;
+
+validators-Autofac.Features.Indexed.IIndex<TKey, TValue>B75
+3AW.Core.Application.Autofac.AutofacValidatorFactory

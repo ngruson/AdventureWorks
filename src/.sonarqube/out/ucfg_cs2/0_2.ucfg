@@ -1,0 +1,45 @@
+
+<AW.Common.AutoMapper.IMapFrom<T>.Mapping(AutoMapper.Profile)g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+ 
+("0*©
+0g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+) 
+(Où
+ö
+g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+F 
+(O
+%0System.Type"object.GetType()*
+
+objectá
+Ñ
+g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+) 
+(P#
+%1AutoMapper.IMappingExpression"6AutoMapper.Profile.CreateMap(System.Type, System.Type)*
+
+profileAutoMapper.Profile*
+""*
+
+%0System.Type"ê
+g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+) 
+(P%
+#
+%1AutoMapper.IMappingExpression*Ï
+1g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+Q 
+(Q"~
+g
+]C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AutoMapper\IMapFrom.cs
+P 
+(Q
+implicit return:
+profileAutoMapper.ProfileB$"
+ AW.Common.AutoMapper.IMapFrom<T>

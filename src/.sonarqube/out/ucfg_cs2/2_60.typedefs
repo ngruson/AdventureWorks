@@ -1,0 +1,8 @@
+Ä
+>AW.Services.Customer.Application.UpdateCustomer.PersonPhoneDtoobjecty
+Mapping(AutoMapper.Profile)ZAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.Mapping(AutoMapper.Profile)c
+PersonPhoneDto()OAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.PersonPhoneDto()i
+PhoneNumberType.getRAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.PhoneNumberType.geti
+PhoneNumberType.setRAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.PhoneNumberType.seta
+PhoneNumber.getNAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.PhoneNumber.geta
+PhoneNumber.setNAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.PhoneNumber.set

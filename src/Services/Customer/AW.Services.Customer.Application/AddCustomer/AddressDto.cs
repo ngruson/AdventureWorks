@@ -15,7 +15,9 @@ namespace AW.Services.Customer.Application.AddCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressDto>();
+            profile.CreateMap<AddressDto, Address>()
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

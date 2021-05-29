@@ -1,0 +1,41 @@
+
+®AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler.GetCustomersQueryHandler(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler>, AutoMapper.IMapper, Ardalis.Specification.IRepositoryBase<AW.Services.Customer.Domain.Customer>)£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs ('"1*®
+1£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.csX (X*
+0*ÿ
+
+0£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs (Vù
+ö
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*Œ*‰H
+FAW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>µ
+²
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs (&
+%1AutoMapper.IMapper"__id*j*hH
+FAW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler"
+mapperAutoMapper.IMapperç
+ä
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs( (7.
+%2(Ardalis.Specification.IRepositoryBase<T>"__id*…*‚H
+FAW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler"6
+
+repository(Ardalis.Specification.IRepositoryBase<T>"µ
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.cs (W
+	{unknown}*ç
+2£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.csX (X"»
+£
+˜C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\GetCustomers\GetCustomersQueryHandler.csW (X
+implicit return:=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>:
+mapperAutoMapper.IMapper:6
+
+repository(Ardalis.Specification.IRepositoryBase<T>BJH
+FAW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler

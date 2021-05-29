@@ -10,7 +10,12 @@ namespace AW.Services.Customer.Application.AddCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.StoreCustomerContact, StoreCustomerContactDto>();
+            profile.CreateMap<StoreCustomerContactDto, Domain.StoreCustomerContact>()
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.StoreCustomer, opt => opt.Ignore())
+                .ForMember(m => m.StoreCustomerId, opt => opt.Ignore())
+                .ForMember(m => m.ContactPersonId, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

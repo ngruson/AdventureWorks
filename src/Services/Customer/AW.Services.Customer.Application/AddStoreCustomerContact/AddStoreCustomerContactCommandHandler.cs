@@ -1,4 +1,5 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
 using MediatR;
@@ -25,16 +26,17 @@ namespace AW.Services.Customer.Application.AddStoreCustomerContact
             logger.LogInformation("Handle called");
             logger.LogInformation("Getting customer from database");
 
-            var store = await storeRepository.GetBySpecAsync(
+            var storeCustomer = await storeRepository.GetBySpecAsync(
                 new GetStoreCustomerSpecification(request.AccountNumber)
             );
+            Guard.Against.Null(storeCustomer, nameof(storeCustomer));
 
             logger.LogInformation("Adding contact to store");
             var contact = mapper.Map<Domain.StoreCustomerContact>(request.CustomerContact);
-            store.Contacts.Add(contact);
+            storeCustomer.Contacts.Add(contact);
 
             logger.LogInformation("Saving customer to database");
-            await storeRepository.UpdateAsync(store);
+            await storeRepository.UpdateAsync(storeCustomer);
 
             return Unit.Value;
         }

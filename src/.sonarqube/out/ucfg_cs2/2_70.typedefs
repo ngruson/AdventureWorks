@@ -1,0 +1,10 @@
+¥
+@AW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto;AW.Services.Customer.Application.UpdateCustomer.CustomerDtoobject{
+Mapping(AutoMapper.Profile)\AW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Mapping(AutoMapper.Profile)i
+StoreCustomerDto()SAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.StoreCustomerDto()U
+Name.getIAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Name.getU
+Name.setIAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Name.setc
+SalesPerson.getPAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.SalesPerson.getc
+SalesPerson.setPAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.SalesPerson.set]
+Contacts.getMAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Contacts.get]
+Contacts.setMAW.Services.Customer.Application.UpdateCustomer.StoreCustomerDto.Contacts.set

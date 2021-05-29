@@ -1,0 +1,31 @@
+
+­AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler.AddIndividualCustomerPhoneCommandHandler(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler>, AutoMapper.IMapper)Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (7"1*Ì
+1Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs; (;*
+0*Ë	
+0Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (9µ
+²
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ó
+ð
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (&
+%1AutoMapper.IMapper"__id*‰*†f
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler"
+mapperAutoMapper.IMapper"Ó
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs (:
+	{unknown}*£
+2Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs; (;"Ù
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddIndividualCustomerPhone\AddIndividualCustomerPhoneCommandHandler.cs: (;
+implicit return:=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>:
+mapperAutoMapper.IMapperBhf
+dAW.Services.Customer.Application.AddIndividualCustomerPhone.AddIndividualCustomerPhoneCommandHandler

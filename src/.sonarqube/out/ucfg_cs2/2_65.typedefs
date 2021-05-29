@@ -1,0 +1,3 @@
+­
+RAW.Services.Customer.Application.Specifications.GetCustomersPaginatedSpecification&Ardalis.Specification.Specification<T>object¦
+gGetCustomersPaginatedSpecification(int, int, AW.Services.Customer.Domain.CustomerType?, string, string)ºAW.Services.Customer.Application.Specifications.GetCustomersPaginatedSpecification.GetCustomersPaginatedSpecification(int, int, AW.Services.Customer.Domain.CustomerType?, string, string)

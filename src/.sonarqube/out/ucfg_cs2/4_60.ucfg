@@ -1,0 +1,33 @@
+
+4AW.Services.Customer.REST.API.Program.Main(string[])Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs ("0*⁄
+0Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs ("∫
+∑
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (#/
+%0)Microsoft.Extensions.Hosting.IHostBuilder"AAW.Services.Customer.REST.API.Program.CreateHostBuilder(string[])*)"'
+%AW.Services.Customer.REST.API.Program*
+
+argsstring[]†ù
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (+(
+%1"Microsoft.Extensions.Hosting.IHost"1Microsoft.Extensions.Hosting.IHostBuilder.Build()*1
+/
+%0)Microsoft.Extensions.Hosting.IHostBuilder2Build()Î
+Ë
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (1
+
+%2void"fMicrosoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(Microsoft.Extensions.Hosting.IHost)*B"@
+>Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions**
+(
+%1"Microsoft.Extensions.Hosting.IHost*
+1*£
+1Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs	 (	"ô
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (	
+implicit return:
+argsstring[]B)"'
+%AW.Services.Customer.REST.API.Program

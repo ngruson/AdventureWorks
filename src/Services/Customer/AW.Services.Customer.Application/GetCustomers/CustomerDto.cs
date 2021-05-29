@@ -1,5 +1,4 @@
-﻿using AW.Services.Customer.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AW.Services.Customer.Application.GetCustomers
 {

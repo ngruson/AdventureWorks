@@ -1,4 +1,5 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
 using MediatR;
@@ -16,8 +17,9 @@ namespace AW.Services.Customer.Application.AddIndividualCustomerPhone
 
         public AddIndividualCustomerPhoneCommandHandler(
             ILogger<AddIndividualCustomerPhoneCommandHandler> logger,
-            IMapper mapper
-        ) => (this.logger, this.mapper) = (logger, mapper);
+            IMapper mapper,
+            IRepositoryBase<Domain.IndividualCustomer> individualCustomerRepository
+        ) => (this.logger, this.mapper, this.individualCustomerRepository) = (logger, mapper, individualCustomerRepository);
 
         public async Task<Unit> Handle(AddIndividualCustomerPhoneCommand request, CancellationToken cancellationToken)
         {
@@ -27,6 +29,7 @@ namespace AW.Services.Customer.Application.AddIndividualCustomerPhone
             var individualCustomer = await individualCustomerRepository.GetBySpecAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber)
             );
+            Guard.Against.Null(individualCustomer, nameof(individualCustomer));
 
             logger.LogInformation("Adding phone to customer");
             var phone = mapper.Map<Domain.PersonPhone>(request.Phone);

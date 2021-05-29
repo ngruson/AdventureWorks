@@ -1,0 +1,189 @@
+
+ŒAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler.Handle(AW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand, System.Threading.CancellationToken)±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs  (&"0*ˇO
+0±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs +(ï
+í
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ö*óV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>À
+»
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""ï
+í
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ö*óV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>‹
+Ÿ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""ã
+à
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs! (3.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*õ*òV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>Ç
+ˇ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs- (B
+%5string"_AW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand.AccountNumber.get*Z
+X
+requestMAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand—Œ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (CN
+%6HAW.Services.Customer.Application.Specifications.GetCustomerSpecification"HAW.Services.Customer.Application.Specifications.GetCustomerSpecificationê
+ç
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs (,
+
+%7void"iAW.Services.Customer.Application.Specifications.GetCustomerSpecification.GetCustomerSpecification(string)*P
+N
+%6HAW.Services.Customer.Application.Specifications.GetCustomerSpecification*
+
+%5stringÇˇ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs!  (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*P
+N
+%6HAW.Services.Customer.Application.Specifications.GetCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)˜
+Ù
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs  (0
+customer$AW.Services.Customer.Domain.Customer"__id*
+""®
+•
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs" "('
+%9!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard›
+⁄
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs" "(:+
+%10$AW.Services.Customer.Domain.Customer"`Ardalis.GuardClauses.GuardClauseExtensions.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string)*.",
+*Ardalis.GuardClauses.GuardClauseExtensions*)
+'
+%9!Ardalis.GuardClauses.IGuardClause*2
+0
+customer$AW.Services.Customer.Domain.Customer*
+""ñ
+ì
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs$ $(:
+%113Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ö*óV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>⁄
+◊
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs$ $(?
+%12void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%113Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Adding address to customer*
+""“
+œ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs%" %((
+%13AutoMapper.IMapper"__id*x*vV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler"
+mapperAutoMapper.IMapper≈
+¬
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs%> %(UM
+%14FAW.Services.Customer.Application.AddCustomerAddress.CustomerAddressDto"aAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand.CustomerAddress.get*Z
+X
+requestMAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand¶£
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs%" %(V2
+%15+AW.Services.Customer.Domain.CustomerAddress"0AutoMapper.IMapperBase.Map<TDestination>(object)*
+
+%13AutoMapper.IMapper*O
+M
+%14FAW.Services.Customer.Application.AddCustomerAddress.CustomerAddressDto2Map<TDestination>(object)≥
+∞
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs% %(V>
+customerAddress+AW.Services.Customer.Domain.CustomerAddress"__id*4
+2
+%15+AW.Services.Customer.Domain.CustomerAddress 
+«
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs& &()
+%16"System.Collections.Generic.List<T>"2AW.Services.Customer.Domain.Customer.Addresses.get*2
+0
+customer$AW.Services.Customer.Domain.Customer√
+¿
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs& &(3
+%17void"
+__arrayAdd*+
+)
+%16"System.Collections.Generic.List<T>*: *@
+>
+customerAddress+AW.Services.Customer.Domain.CustomerAddressñ
+ì
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs( ((:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ö*óV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>€
+ÿ
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs( ((@
+%19void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Saving customer to database*
+""å
+â
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs) )($/
+%20(Ardalis.Specification.IRepositoryBase<T>"__id*õ*òV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>ãà
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs) )(:"
+%21System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%20(Ardalis.Specification.IRepositoryBase<T>*2
+0
+customer$AW.Services.Customer.Domain.Customer2UpdateAsync(T)˝
+˙
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs+ +(
+%22MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"À
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs+ +(
+
+%22MediatR.Unit*É
+1±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs,	 ,(	"…
+±
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AddCustomerAddress\AddCustomerAddressCommandHandler.cs, ,(	
+implicit return:X
+requestMAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommand:7
+cancellationToken"System.Threading.CancellationTokenBXV
+TAW.Services.Customer.Application.AddCustomerAddress.AddCustomerAddressCommandHandler

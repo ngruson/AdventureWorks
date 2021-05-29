@@ -1,0 +1,43 @@
+
+èAW.Services.Customer.Application.Specifications.GetAddressSpecification.GetAddressSpecification(string, string, string, string, string, string)§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs (&"1*Ø
+1§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs	 (	*
+0*ü
+
+0§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs
+ (<ö
+ó
+§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs
+ (
+
+%0void"6Ardalis.Specification.Specification<T>.Specification()**(
+&Ardalis.Specification.Specification<T>…∆
+§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs (4
+%1.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.getÑ
+Å
+§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs (4
+%2.Ardalis.Specification.ISpecificationBuilder<T>"ßArdalis.Specification.SpecificationBuilderExtensions.Where<T>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, bool>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%1.Ardalis.Specification.ISpecificationBuilder<T>*
+""*
+2*È
+2§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs	 (	"º
+§
+ôC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetAddressSpecification.cs (	
+implicit return:
+addressline1string:
+addressLine2string:
+
+postalCodestring:
+citystring:
+stateProvinceCodestring:
+countryRegionCodestringBKI
+GAW.Services.Customer.Application.Specifications.GetAddressSpecification

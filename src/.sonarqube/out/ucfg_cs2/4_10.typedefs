@@ -1,0 +1,16 @@
+•
+
+9AW.Services.Customer.REST.API.Models.GetCustomers.AddressobjectP
+	Address()CAW.Services.Customer.REST.API.Models.GetCustomers.Address.Address()^
+AddressLine1.getJAW.Services.Customer.REST.API.Models.GetCustomers.Address.AddressLine1.get^
+AddressLine1.setJAW.Services.Customer.REST.API.Models.GetCustomers.Address.AddressLine1.set^
+AddressLine2.getJAW.Services.Customer.REST.API.Models.GetCustomers.Address.AddressLine2.get^
+AddressLine2.setJAW.Services.Customer.REST.API.Models.GetCustomers.Address.AddressLine2.setZ
+PostalCode.getHAW.Services.Customer.REST.API.Models.GetCustomers.Address.PostalCode.getZ
+PostalCode.setHAW.Services.Customer.REST.API.Models.GetCustomers.Address.PostalCode.setN
+City.getBAW.Services.Customer.REST.API.Models.GetCustomers.Address.City.getN
+City.setBAW.Services.Customer.REST.API.Models.GetCustomers.Address.City.seth
+StateProvinceCode.getOAW.Services.Customer.REST.API.Models.GetCustomers.Address.StateProvinceCode.geth
+StateProvinceCode.setOAW.Services.Customer.REST.API.Models.GetCustomers.Address.StateProvinceCode.seth
+CountryRegionCode.getOAW.Services.Customer.REST.API.Models.GetCustomers.Address.CountryRegionCode.geth
+CountryRegionCode.setOAW.Services.Customer.REST.API.Models.GetCustomers.Address.CountryRegionCode.set

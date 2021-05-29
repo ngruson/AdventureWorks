@@ -1,0 +1,12 @@
+ç
+:AW.Services.Customer.REST.API.Models.GetCustomers.CustomerobjectS
+
+Customer()EAW.Services.Customer.REST.API.Models.GetCustomers.Customer.Customer()_
+CustomerType.getKAW.Services.Customer.REST.API.Models.GetCustomers.Customer.CustomerType.get_
+CustomerType.setKAW.Services.Customer.REST.API.Models.GetCustomers.Customer.CustomerType.seta
+AccountNumber.getLAW.Services.Customer.REST.API.Models.GetCustomers.Customer.AccountNumber.geta
+AccountNumber.setLAW.Services.Customer.REST.API.Models.GetCustomers.Customer.AccountNumber.setY
+Territory.getHAW.Services.Customer.REST.API.Models.GetCustomers.Customer.Territory.getY
+Territory.setHAW.Services.Customer.REST.API.Models.GetCustomers.Customer.Territory.setY
+Addresses.getHAW.Services.Customer.REST.API.Models.GetCustomers.Customer.Addresses.getY
+Addresses.setHAW.Services.Customer.REST.API.Models.GetCustomers.Customer.Addresses.set

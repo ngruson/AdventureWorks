@@ -10,7 +10,8 @@ namespace AW.Services.Customer.Application.UpdateStoreCustomerContact
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.StoreCustomerContact, StoreCustomerContactDto>();
+            profile.CreateMap<Domain.StoreCustomerContact, StoreCustomerContactDto>()
+                .ReverseMap();
         }
     }
 }

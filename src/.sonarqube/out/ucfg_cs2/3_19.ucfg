@@ -1,0 +1,26 @@
+
+zAW.Services.Customer.Persistence.EntityFrameworkCore.AWContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs  (/"0*Â
+0õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (Xñ
+ì
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs9 (X 
+%0System.Reflection.Assembly"1System.Reflection.Assembly.GetExecutingAssembly()*"
+System.Reflection.Assembly£†
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (Y0
+%1*Microsoft.EntityFrameworkCore.ModelBuilder"ÜMicrosoft.EntityFrameworkCore.ModelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly, System.Func<System.Type, bool>)*<
+:
+modelBuilder*Microsoft.EntityFrameworkCore.ModelBuilder*"
+ 
+%0System.Reflection.Assembly*
+""2[ApplyConfigurationsFromAssembly(System.Reflection.Assembly, System.Func<System.Type, bool>)*
+1*◊
+1õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs	 (	"≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (	
+implicit return::
+modelBuilder*Microsoft.EntityFrameworkCore.ModelBuilderBB@
+>AW.Services.Customer.Persistence.EntityFrameworkCore.AWContext

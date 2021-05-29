@@ -2,9 +2,9 @@
 
 namespace AW.Services.ReferenceData.Application.Specifications
 {
-    public class GetStateProvincesForCountrySpecification : Specification<Domain.StateProvince>
+    public class GetStatesProvincesForCountrySpecification : Specification<Domain.StateProvince>
     {
-        public GetStateProvincesForCountrySpecification(string countryRegionCode) : base()
+        public GetStatesProvincesForCountrySpecification(string countryRegionCode) : base()
         {
             Query
                 .Where(p => p.CountryRegionCode == countryRegionCode)

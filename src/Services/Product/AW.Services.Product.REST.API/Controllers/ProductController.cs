@@ -46,7 +46,7 @@ namespace AW.Services.Product.REST.API.Controllers
             logger.LogInformation("Sending the GetProducts query");
             var result = await mediator.Send(query);
 
-            if (!result.Products.Any())
+            if (result == null || !result.Products.Any())
             {
                 logger.LogInformation("No products were found");
                 return new NotFoundResult();
@@ -57,16 +57,11 @@ namespace AW.Services.Product.REST.API.Controllers
         }
 
         [HttpGet("{productNumber}")]
-        public async Task<ActionResult<Models.Product>> GetProduct(string productNumber)
+        public async Task<ActionResult> GetProduct([FromQuery] GetProductQuery query)
         {
             logger.LogInformation("GetProduct called with product number {ProductNumber}",
-                productNumber
+                query.ProductNumber
             );
-
-            var query = new GetProductQuery
-            {
-                ProductNumber = productNumber
-            };
 
             logger.LogInformation("Sending the GetProduct query");
             var product = await mediator.Send(query);

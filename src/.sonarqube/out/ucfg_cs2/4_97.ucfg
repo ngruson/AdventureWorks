@@ -1,0 +1,113 @@
+
+=AW.Services.Customer.REST.API.MappingProfile.MappingProfile()ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs	 	("1*“
+1ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs	 (	*
+0*„8
+0ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs	  (D…
+‚
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs	  	((
+
+%0void"<AW.Common.AutoMapper.BaseMappingProfile.BaseMappingProfile()*+)
+'AW.Common.AutoMapper.BaseMappingProfileƒ
+€
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs& (E 
+%1System.Reflection.Assembly"1System.Reflection.Assembly.GetExecutingAssembly()*"
+System.Reflection.AssemblyÊ
+Ç
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (F
+
+%2void"]AW.Common.AutoMapper.BaseMappingProfile.ApplyMappingsFromAssembly(System.Reflection.Assembly)*+)
+'AW.Common.AutoMapper.BaseMappingProfile*"
+ 
+%1System.Reflection.Assembly™
+–
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (S:
+%34AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+AutoMapper.Profile•’
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (j:
+%44AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*<
+:
+%34AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()•’
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (`:
+%54AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*<
+:
+%44AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()™
+–
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (Q:
+%64AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+AutoMapper.Profile•’
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (h:
+%74AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*<
+:
+%64AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()•’
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (^:
+%84AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*<
+:
+%74AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()™
+–
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (a:
+%94AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+AutoMapper.Profile¼¹
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (K;
+%104AutoMapper.IMappingExpression<TSource, TDestination>"éAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*<
+:
+%94AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2´ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)š
+—
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (W;
+%114AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+AutoMapper.Profile½º
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (E;
+%124AutoMapper.IMappingExpression<TSource, TDestination>"éAutoMapper.IMappingExpression<TSource, TDestination>.ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)*=
+;
+%114AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+""2´ForMember<TMember>(System.Linq.Expressions.Expression<System.Func<TDestination, TMember>>, System.Action<AutoMapper.IMemberConfigurationExpression<TSource, TDestination, TMember>>)—”
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (n;
+%134AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*=
+;
+%124AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()—”
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (d;
+%144AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*=
+;
+%134AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()ÛØ
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (;
+%154AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*=
+;
+%144AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()—”
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (n;
+%164AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*=
+;
+%154AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()—”
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (d;
+%174AutoMapper.IMappingExpression<TSource, TDestination>"_AutoMapper.IMappingExpression<TSource, TDestination>.Include<TOtherSource, TOtherDestination>()*=
+;
+%164AutoMapper.IMappingExpression<TSource, TDestination>2*Include<TOtherSource, TOtherDestination>()*
+2*±
+2ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs	 (	" 
+ˆ
+~C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\MappingProfile.cs (	
+implicit returnB0.
+,AW.Services.Customer.REST.API.MappingProfile

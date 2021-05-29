@@ -1,0 +1,65 @@
+
+}AW.Common.Extensions.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs	 	("0*x
+0k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (*
+1
+2*ï
+
+1k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (²¯
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (A"
+%0System.ArgumentNullException"System.ArgumentNullExceptionù
+ö
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (2
+
+%1void":System.ArgumentNullException.ArgumentNullException(string)*$
+"
+%0System.ArgumentNullException*
+
+parameterNamestringÀ
+½
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (A"
+exSystem.ArgumentNullException"__id*$
+"
+%0System.ArgumentNullException×Ô
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs$ (.
+%2string"$System.ArgumentException.Message.get*$
+"
+exSystem.ArgumentNullException2Message.get©
+¦
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (/
+
+%3void"‡Microsoft.Extensions.Logging.LoggerExtensions.LogError(Microsoft.Extensions.Logging.ILogger, System.Exception, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*0
+.
+logger$Microsoft.Extensions.Logging.ILogger*$
+"
+exSystem.ArgumentNullException*
+
+%2string*
+""*
+3*í
+2k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs ("{
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (
+
+
+inputT*õ
+3k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs	 (	"‚
+k
+aC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\Extensions\GuardClauses.cs (	
+implicit return:0
+guardClause!Ardalis.GuardClauses.IGuardClause:
+
+inputT:
+parameterNamestring:.
+logger$Microsoft.Extensions.Logging.ILoggerB%"#
+!AW.Common.Extensions.GuardClauses

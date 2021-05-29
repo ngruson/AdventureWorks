@@ -34,10 +34,10 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 {
                     TotalCustomers = 2,
                     Customers = new List<Application.GetCustomers.CustomerDto>
-                {
-                    new Application.GetCustomers.IndividualCustomerDto { AccountNumber = "AW00000001" },
-                    new Application.GetCustomers.StoreCustomerDto { AccountNumber = "AW00000002" }
-                }
+                    {
+                        new Application.GetCustomers.IndividualCustomerDto { AccountNumber = "AW00000001" },
+                        new Application.GetCustomers.StoreCustomerDto { AccountNumber = "AW00000002" }
+                    }
                 };
 
                 var mockLogger = new Mock<ILogger<CustomerController>>();

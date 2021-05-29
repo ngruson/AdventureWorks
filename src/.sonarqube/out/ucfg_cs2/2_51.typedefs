@@ -1,0 +1,6 @@
+”
+BAW.Services.Customer.Application.GetCustomer.PersonEmailAddressDtoobject}
+Mapping(AutoMapper.Profile)^AW.Services.Customer.Application.GetCustomer.PersonEmailAddressDto.Mapping(AutoMapper.Profile)u
+PersonEmailAddressDto()ZAW.Services.Customer.Application.GetCustomer.PersonEmailAddressDto.PersonEmailAddressDto()g
+EmailAddress.getSAW.Services.Customer.Application.GetCustomer.PersonEmailAddressDto.EmailAddress.getg
+EmailAddress.setSAW.Services.Customer.Application.GetCustomer.PersonEmailAddressDto.EmailAddress.set

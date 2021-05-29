@@ -1,0 +1,44 @@
+
+ÉAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.AddressConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Address>)µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs ("0*Ç
+0µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs
+ (*ç
+ä
+µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs
+ 
+(&P
+%0JMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>"¨Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable<TEntity>(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>, string)*G"E
+CMicrosoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*	
+Address¾»
+µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs (%@
+%1:Microsoft.EntityFrameworkCore.Metadata.Builders.KeyBuilder"“Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.HasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2HHasKey(System.Linq.Expressions.Expression<System.Func<TEntity, object>>)îë
+µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs ('P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"£Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>.Property<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+""2XProperty<TProperty>(System.Linq.Expressions.Expression<System.Func<TEntity, TProperty>>)è
+å
+µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs (+P
+%3JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>"®Microsoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions.HasColumnName<TProperty>(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>, string)*E"C
+AMicrosoft.EntityFrameworkCore.RelationalPropertyBuilderExtensions*R
+P
+%2JMicrosoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder<TProperty>*
+	AddressID*
+1*‹
+1µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs	 (	"Í
+µ
+ªC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\AddressConfiguration.cs (	
+implicit return:U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>B[Y
+WAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.AddressConfiguration

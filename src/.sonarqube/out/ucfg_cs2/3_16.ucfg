@@ -1,0 +1,25 @@
+
+ÕAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.StoreCustomerConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.StoreCustomer>)»
+°C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\StoreCustomerConfiguration.cs ("0*¼
+0»
+°C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\StoreCustomerConfiguration.cs
+ 
+(+ó
+ð
+»
+°C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\StoreCustomerConfiguration.cs
+ 
+(,P
+%0JMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>"¨Microsoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions.ToTable<TEntity>(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>, string)*G"E
+CMicrosoft.EntityFrameworkCore.RelationalEntityTypeBuilderExtensions*W
+U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>*
+StoreCustomer*
+1*—
+1»
+°C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\StoreCustomerConfiguration.cs	 (	"Ó
+»
+°C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\Configurations\StoreCustomerConfiguration.cs (	
+implicit return:U
+builderJMicrosoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<TEntity>Ba_
+]AW.Services.Product.Persistence.EntityFrameworkCore.Configurations.StoreCustomerConfiguration

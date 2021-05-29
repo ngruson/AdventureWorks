@@ -1,0 +1,32 @@
+
+^AW.Services.Customer.Application.UpdateCustomer.CustomerAddressDto.Mapping(AutoMapper.Profile)Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs ("0*¦
+0Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs (V¹
+¶
+Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs (K:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.Profileðí
+Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs (:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()Ê
+Ç
+Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs (W:
+%24AutoMapper.IMappingExpression<TSource, TDestination>"äAutoMapper.EquivalencyExpression.EquivalentExpressions.EqualityComparison<TSource, TDestination>(AutoMapper.IMappingExpression<TSource, TDestination>, System.Linq.Expressions.Expression<System.Func<TSource, TDestination, bool>>)*:"8
+6AutoMapper.EquivalencyExpression.EquivalentExpressions*<
+:
+%14AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+1*ß
+1Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs	 (	"·
+Ÿ
+”C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\CustomerAddressDto.cs (	
+implicit return:
+profileAutoMapper.ProfileBFD
+BAW.Services.Customer.Application.UpdateCustomer.CustomerAddressDto

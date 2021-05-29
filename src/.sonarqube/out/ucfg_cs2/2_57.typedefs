@@ -1,0 +1,20 @@
+Ì
+6AW.Services.Customer.Application.GetCustomer.PersonDtoobjectq
+Mapping(AutoMapper.Profile)RAW.Services.Customer.Application.GetCustomer.PersonDto.Mapping(AutoMapper.Profile)Q
+PersonDto()BAW.Services.Customer.Application.GetCustomer.PersonDto.PersonDto()M
+	Title.get@AW.Services.Customer.Application.GetCustomer.PersonDto.Title.getM
+	Title.set@AW.Services.Customer.Application.GetCustomer.PersonDto.Title.setU
+FirstName.getDAW.Services.Customer.Application.GetCustomer.PersonDto.FirstName.getU
+FirstName.setDAW.Services.Customer.Application.GetCustomer.PersonDto.FirstName.setW
+MiddleName.getEAW.Services.Customer.Application.GetCustomer.PersonDto.MiddleName.getW
+MiddleName.setEAW.Services.Customer.Application.GetCustomer.PersonDto.MiddleName.setS
+LastName.getCAW.Services.Customer.Application.GetCustomer.PersonDto.LastName.getS
+LastName.setCAW.Services.Customer.Application.GetCustomer.PersonDto.LastName.setO
+
+Suffix.getAAW.Services.Customer.Application.GetCustomer.PersonDto.Suffix.getO
+
+Suffix.setAAW.Services.Customer.Application.GetCustomer.PersonDto.Suffix.set_
+EmailAddresses.getIAW.Services.Customer.Application.GetCustomer.PersonDto.EmailAddresses.get_
+EmailAddresses.setIAW.Services.Customer.Application.GetCustomer.PersonDto.EmailAddresses.set[
+PhoneNumbers.getGAW.Services.Customer.Application.GetCustomer.PersonDto.PhoneNumbers.get[
+PhoneNumbers.setGAW.Services.Customer.Application.GetCustomer.PersonDto.PhoneNumbers.set

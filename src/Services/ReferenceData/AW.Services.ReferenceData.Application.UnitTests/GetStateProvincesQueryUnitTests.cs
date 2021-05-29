@@ -1,6 +1,6 @@
 using Ardalis.Specification;
 using AW.Services.ReferenceData.Application.Specifications;
-using AW.Services.ReferenceData.Application.StateProvince.GetStateProvinces;
+using AW.Services.ReferenceData.Application.StateProvince.GetStatesProvinces;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -18,7 +18,7 @@ namespace AW.Services.ReferenceData.Application.UnitTests
         public async void Handle_StateProvincesExists_ReturnStateProvinces()
         {
             var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStateProvincesQueryHandler>>();
+            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
             var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.StateProvince>>();
 
             stateProvinceRepoMock.Setup(x => x.ListAsync())
@@ -41,14 +41,14 @@ namespace AW.Services.ReferenceData.Application.UnitTests
                         .Build()
                 });
 
-            var handler = new GetStateProvincesQueryHandler(
+            var handler = new GetStatesProvincesQueryHandler(
                 loggerMock.Object,
                 stateProvinceRepoMock.Object,
                 mapper
             );
 
             //Act
-            var query = new GetStateProvincesQuery();
+            var query = new GetStatesProvincesQuery();
             var result = await handler.Handle(query, CancellationToken.None);
 
             //Assert
@@ -62,10 +62,10 @@ namespace AW.Services.ReferenceData.Application.UnitTests
         public async void Handle_StateProvincesExists_ReturnStateProvincesForCountry()
         {
             var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStateProvincesQueryHandler>>();
+            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
             var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.StateProvince>>();
 
-            stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<GetStateProvincesForCountrySpecification>()))
+            stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<GetStatesProvincesForCountrySpecification>()))
                 .ReturnsAsync(new List<Domain.StateProvince>
                 {
                     new TestBuilders.StateProvinceBuilder()
@@ -85,19 +85,19 @@ namespace AW.Services.ReferenceData.Application.UnitTests
                         .Build()
                 });
 
-            var handler = new GetStateProvincesQueryHandler(
+            var handler = new GetStatesProvincesQueryHandler(
                 loggerMock.Object,
                 stateProvinceRepoMock.Object,
                 mapper
             );
 
             //Act
-            var query = new GetStateProvincesQuery { CountryRegionCode = "CA" };
+            var query = new GetStatesProvincesQuery { CountryRegionCode = "CA" };
             var result = await handler.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
-            stateProvinceRepoMock.Verify(x => x.ListAsync(It.IsAny<GetStateProvincesForCountrySpecification>()));
+            stateProvinceRepoMock.Verify(x => x.ListAsync(It.IsAny<GetStatesProvincesForCountrySpecification>()));
             result[0].Name.Should().Be("Alberta");
             result[1].Name.Should().Be("British Columbia");
         }
@@ -106,17 +106,17 @@ namespace AW.Services.ReferenceData.Application.UnitTests
         public void Handle_NoStateProvincesExists_ThrowException()
         {
             var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStateProvincesQueryHandler>>();
+            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
             var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.StateProvince>>();
 
-            var handler = new GetStateProvincesQueryHandler(
+            var handler = new GetStatesProvincesQueryHandler(
                 loggerMock.Object,
                 contactTypeRepoMock.Object,
                 mapper
             );
 
             //Act
-            var query = new GetStateProvincesQuery();
+            var query = new GetStatesProvincesQuery();
             Func<Task> func = async () => await handler.Handle(query, CancellationToken.None);
 
             //Assert

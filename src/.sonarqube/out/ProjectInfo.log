@@ -1,0 +1,28 @@
+Product projects
+---------------------------------------
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\AW.Common\AW.Common.csproj
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Domain\AW.Services.Customer.Domain.csproj
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\AW.Services.Customer.Application.csproj
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AW.Services.Customer.Persistence.EntityFrameworkCore.csproj
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj
+
+
+Test projects
+---------------------------------------
+
+
+Invalid projects
+---------------------------------------
+{none}
+
+
+Skipped projects
+---------------------------------------
+{none}
+
+
+Excluded projects
+---------------------------------------
+{none}
+
+

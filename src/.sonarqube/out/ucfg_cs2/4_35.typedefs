@@ -1,0 +1,12 @@
+ù
+AAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer<AW.Services.Customer.REST.API.Models.UpdateCustomer.Customerobject|
+Mapping(AutoMapper.Profile)]AW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.Mapping(AutoMapper.Profile)d
+StoreCustomer()QAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.StoreCustomer()f
+CustomerType.getRAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.CustomerType.getf
+CustomerType.setRAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.CustomerType.setV
+Name.getJAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.Name.getV
+Name.setJAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.Name.setd
+SalesPerson.getQAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.SalesPerson.getd
+SalesPerson.setQAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.SalesPerson.set^
+Contacts.getNAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.Contacts.get^
+Contacts.setNAW.Services.Customer.REST.API.Models.UpdateCustomer.StoreCustomer.Contacts.set

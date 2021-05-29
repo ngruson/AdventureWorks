@@ -1,0 +1,31 @@
+
+RAW.Services.Customer.Persistence.EntityFrameworkCore.AWContext.SetModified(object)›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs ('"0*·
+0›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (6èå
+›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (>
+%08Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry"5Microsoft.EntityFrameworkCore.DbContext.Entry(object)*+)
+'Microsoft.EntityFrameworkCore.DbContext*
+
+entityobject2Entry(object)µ
+²
+›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs" (6
+%1"__id*
+""ëè
+›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (6/
+%2)Microsoft.EntityFrameworkCore.EntityState"BMicrosoft.EntityFrameworkCore.ChangeTracking.EntityEntry.State.set*@
+>
+%08Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry*
+
+%12	State.set*
+1*×
+1›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs	 (	"³
+›
+C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\AWContext.cs (	
+implicit return:
+entityobjectBB@
+>AW.Services.Customer.Persistence.EntityFrameworkCore.AWContext

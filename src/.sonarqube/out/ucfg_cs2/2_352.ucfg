@@ -1,0 +1,38 @@
+
+sAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification.GetStoreCustomerSpecification(string)ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs (,"1*µ
+1ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs	 (	*
+0*·
+
+0ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.csC (< 
+
+ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.csC (K
+
+%0void"6Ardalis.Specification.Specification<T>.Specification()**(
+&Ardalis.Specification.Specification<T>ÏÌ
+ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs
+ 
+(4
+%1.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.getŠ
+‡
+ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs
+ (=4
+%2.Ardalis.Specification.ISpecificationBuilder<T>"§Ardalis.Specification.SpecificationBuilderExtensions.Where<T>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, bool>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%1.Ardalis.Specification.ISpecificationBuilder<T>*
+""*
+2*õ
+2ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs	 (	"Â
+ª
+ŸC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetStoreCustomerSpecification.cs (	
+implicit return:
+accountNumberstringBQO
+MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification

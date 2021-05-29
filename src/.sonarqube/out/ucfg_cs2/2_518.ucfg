@@ -1,0 +1,95 @@
+
+iAW.Services.Customer.Application.Specifications.GetCustomerSpecification.GetCustomerSpecification(string)¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs ('"1*°
+1¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs	 (	*
+0*à*
+0¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs> (<›
+˜
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs> (F
+
+%0void"6Ardalis.Specification.Specification<T>.Specification()**(
+&Ardalis.Specification.Specification<T>ÊÇ
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs
+ 
+(4
+%1.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.get¬
+©
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs
+ 
+(+I
+%2CArdalis.Specification.IIncludableSpecificationBuilder<T, TProperty>"¹Ardalis.Specification.SpecificationBuilderExtensions.Include<T, TProperty>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%1.Ardalis.Specification.ISpecificationBuilder<T>*
+""³
+°
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs
+ (,I
+%3CArdalis.Specification.IIncludableSpecificationBuilder<T, TProperty>"®Ardalis.Specification.IncludableBuilderExtensions.ThenInclude<TEntity, TPreviousProperty, TProperty>(Ardalis.Specification.IIncludableSpecificationBuilder<TEntity, System.Collections.Generic.IEnumerable<TPreviousProperty>>, System.Linq.Expressions.Expression<System.Func<TPreviousProperty, TProperty>>)*5"3
+1Ardalis.Specification.IncludableBuilderExtensions*K
+I
+%2CArdalis.Specification.IIncludableSpecificationBuilder<T, TProperty>*
+""ÊÇ
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (4
+%4.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.get÷
+ô
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (B4
+%5.Ardalis.Specification.ISpecificationBuilder<T>"wArdalis.Specification.SpecificationBuilderExtensions.Include<T>(Ardalis.Specification.ISpecificationBuilder<T>, string)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%4.Ardalis.Specification.ISpecificationBuilder<T>*)'
+%Contacts.ContactPerson.EmailAddressesÊÇ
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (4
+%6.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.getõ
+ò
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (@4
+%7.Ardalis.Specification.ISpecificationBuilder<T>"wArdalis.Specification.SpecificationBuilderExtensions.Include<T>(Ardalis.Specification.ISpecificationBuilder<T>, string)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%6.Ardalis.Specification.ISpecificationBuilder<T>*'%
+#Contacts.ContactPerson.PhoneNumbersÊÇ
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (4
+%8.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.get¬
+©
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (-I
+%9CArdalis.Specification.IIncludableSpecificationBuilder<T, TProperty>"¹Ardalis.Specification.SpecificationBuilderExtensions.Include<T, TProperty>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%8.Ardalis.Specification.ISpecificationBuilder<T>*
+""ËÈ
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (5
+%10.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.get‡
+„
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (=5
+%11.Ardalis.Specification.ISpecificationBuilder<T>"§Ardalis.Specification.SpecificationBuilderExtensions.Where<T>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, bool>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*7
+5
+%10.Ardalis.Specification.ISpecificationBuilder<T>*
+""*
+2*ë
+2¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs	 (	"½
+¥
+šC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\GetCustomerSpecification.cs (	
+implicit return:
+accountNumberstringBLJ
+HAW.Services.Customer.Application.Specifications.GetCustomerSpecification

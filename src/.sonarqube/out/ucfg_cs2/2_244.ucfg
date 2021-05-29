@@ -1,0 +1,226 @@
+
+˙AW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler.Handle(AW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommand, System.Threading.CancellationToken)«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs  (&"0*úh
+0«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs +(¡
+æ
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>·
+ﬁ
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""¡
+æ
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ú
+Ô
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""¡
+æ
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs+ (G.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*ª*∏l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>ƒ
+¡
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs7 (L
+%5string"uAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommand.AccountNumber.get*p
+n
+requestcAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommand˚¯
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (MX
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification"RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecificationƒ
+¡
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (6
+
+%7void"}AW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification.GetIndividualCustomerSpecification(string)*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification*
+
+%5string¢ü
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs+ (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*Z
+X
+%6RAW.Services.Customer.Application.Specifications.GetIndividualCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)°
+û
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer"__id*
+""æ
+ª
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs ('
+%9!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard¬
+ø
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.csO (U:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>„
+‡
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs (V5
+%11.AW.Services.Customer.Domain.IndividualCustomer"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses*)
+'
+%9!Ardalis.GuardClauses.IGuardClause*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer*
+""*<
+:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>¬
+ø
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs   (:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Ú
+Ô
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs   (A
+%13void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>* 
+Removing phone from customer*
+""˚
+¯
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs! !(1)
+%14"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer⁄
+◊
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs! !(>)
+%15"System.Collections.Generic.List<T>"3AW.Services.Customer.Domain.Person.PhoneNumbers.get*+
+)
+%14"AW.Services.Customer.Domain.PersonÀ
+»
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs! $(.
+%16'AW.Services.Customer.Domain.PersonPhone"{System.Linq.Enumerable.FirstOrDefault<TSource>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, bool>)*"
+System.Linq.Enumerable*+
+)
+%15"System.Collections.Generic.List<T>*
+""∑
+¥
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs! $(0
+phone'AW.Services.Customer.Domain.PersonPhone"__id*0
+.
+%16'AW.Services.Customer.Domain.PersonPhoneø
+º
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs% %((
+%17!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard¬
+ø
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs%5 %(;:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>…
+∆
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs% %(<.
+%19'AW.Services.Customer.Domain.PersonPhone"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses**
+(
+%17!Ardalis.GuardClauses.IGuardClause*2
+0
+phone'AW.Services.Customer.Domain.PersonPhone*
+""*<
+:
+%183Microsoft.Extensions.Logging.ILogger<TCategoryName>˚
+¯
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs' '(%)
+%20"AW.Services.Customer.Domain.Person"9AW.Services.Customer.Domain.IndividualCustomer.Person.get*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer⁄
+◊
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs' '(2)
+%21"System.Collections.Generic.List<T>"3AW.Services.Customer.Domain.Person.PhoneNumbers.get*+
+)
+%20"AW.Services.Customer.Domain.PersonÈ
+Ê
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs' '(@
+%22bool",System.Collections.Generic.List<T>.Remove(T)*+
+)
+%21"System.Collections.Generic.List<T>*2
+0
+phone'AW.Services.Customer.Domain.PersonPhone¬
+ø
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs) )(:
+%233Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*∞*≠l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Û
+
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs) )(B
+%24void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%233Microsoft.Extensions.Logging.ILogger<TCategoryName>*!
+Updating customer to database*
+""¬
+ø
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs* *(./
+%25(Ardalis.Specification.IRepositoryBase<T>"__id*ª*∏l
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler"H
+individualCustomerRepository(Ardalis.Specification.IRepositoryBase<T>µ≤
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs* *(N"
+%26System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%25(Ardalis.Specification.IRepositoryBase<T>*F
+D
+individualCustomer.AW.Services.Customer.Domain.IndividualCustomer2UpdateAsync(T)ì
+ê
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs+ +(
+%27MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"·
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs+ +(
+
+%27MediatR.Unit*Ø
+1«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs,	 ,(	"ﬂ
+«
+ºC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteIndividualCustomerPhone\DeleteIndividualCustomerPhoneCommandHandler.cs, ,(	
+implicit return:n
+requestcAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommand:7
+cancellationToken"System.Threading.CancellationTokenBnl
+jAW.Services.Customer.Application.DeleteIndividualCustomerPhone.DeleteIndividualCustomerPhoneCommandHandler

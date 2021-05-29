@@ -1,0 +1,55 @@
+
+ÚAW.Services.Customer.REST.API.Controllers.CustomerController.CustomerController(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.REST.API.Controllers.CustomerController>, MediatR.IMediator, AutoMapper.IMapper)™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs (!"3*›
+1™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csS (Su
+s
+
+%0void"8Microsoft.AspNetCore.Mvc.ControllerBase.ControllerBase()*+)
+'Microsoft.AspNetCore.Mvc.ControllerBase*
+0*ü	
+0™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs (Qä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs (9
+%13Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs ('
+%2MediatR.IMediator"__id*a*_>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mediatorMediatR.IMediator¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs) (4
+%3AutoMapper.IMapper"__id*`*^>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mapperAutoMapper.IMapper"«
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs (R
+	{unknown}*Ó
+2™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csS (S"±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csR (S
+implicit return*Ü
+3™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csi (iµ
+²
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs (!
+%4"__entrypoint*?
+=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+
+mediatorMediatR.IMediator*
+
+mapperAutoMapper.IMapper*
+1:=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>:
+mediatorMediatR.IMediator:
+mapperAutoMapper.IMapperB@>
+<AW.Services.Customer.REST.API.Controllers.CustomerController

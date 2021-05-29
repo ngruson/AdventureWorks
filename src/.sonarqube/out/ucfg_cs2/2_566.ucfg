@@ -1,0 +1,37 @@
+
+¢AW.Services.Customer.Application.Specifications.CountCustomersSpecification.CountCustomersSpecification(AW.Services.Customer.Domain.CustomerType?, string, string)®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs	 	(*"1*≥
+1®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs	 (	*
+0*Ø
+
+0®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs	o (]û
+õ
+®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs	o 	(w
+
+%0void"6Ardalis.Specification.Specification<T>.Specification()**(
+&Ardalis.Specification.Specification<T>Õ 
+®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs (4
+%1.Ardalis.Specification.ISpecificationBuilder<T>"0Ardalis.Specification.Specification<T>.Query.get**(
+&Ardalis.Specification.Specification<T>2	Query.getà
+Ö
+®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs (4
+%2.Ardalis.Specification.ISpecificationBuilder<T>"ßArdalis.Specification.SpecificationBuilderExtensions.Where<T>(Ardalis.Specification.ISpecificationBuilder<T>, System.Linq.Expressions.Expression<System.Func<T, bool>>)*8"6
+4Ardalis.Specification.SpecificationBuilderExtensions*6
+4
+%1.Ardalis.Specification.ISpecificationBuilder<T>*
+""*
+2*Ò
+2®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs	 (	"¿
+®
+ùC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Specifications\CountCustomersSpecification.cs (	
+implicit return:"
+customerTypeSystem.Nullable<T>:
+	territorystring:
+accountNumberstringBOM
+KAW.Services.Customer.Application.Specifications.CountCustomersSpecification

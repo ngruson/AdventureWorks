@@ -1,0 +1,16 @@
+Ü
+>AW.Services.Customer.Application.AddCustomerAddress.AddressDtoobjecty
+Mapping(AutoMapper.Profile)ZAW.Services.Customer.Application.AddCustomerAddress.AddressDto.Mapping(AutoMapper.Profile)[
+AddressDto()KAW.Services.Customer.Application.AddCustomerAddress.AddressDto.AddressDto()c
+AddressLine1.getOAW.Services.Customer.Application.AddCustomerAddress.AddressDto.AddressLine1.getc
+AddressLine1.setOAW.Services.Customer.Application.AddCustomerAddress.AddressDto.AddressLine1.setc
+AddressLine2.getOAW.Services.Customer.Application.AddCustomerAddress.AddressDto.AddressLine2.getc
+AddressLine2.setOAW.Services.Customer.Application.AddCustomerAddress.AddressDto.AddressLine2.set_
+PostalCode.getMAW.Services.Customer.Application.AddCustomerAddress.AddressDto.PostalCode.get_
+PostalCode.setMAW.Services.Customer.Application.AddCustomerAddress.AddressDto.PostalCode.setS
+City.getGAW.Services.Customer.Application.AddCustomerAddress.AddressDto.City.getS
+City.setGAW.Services.Customer.Application.AddCustomerAddress.AddressDto.City.setm
+StateProvinceCode.getTAW.Services.Customer.Application.AddCustomerAddress.AddressDto.StateProvinceCode.getm
+StateProvinceCode.setTAW.Services.Customer.Application.AddCustomerAddress.AddressDto.StateProvinceCode.setm
+CountryRegionCode.getTAW.Services.Customer.Application.AddCustomerAddress.AddressDto.CountryRegionCode.getm
+CountryRegionCode.setTAW.Services.Customer.Application.AddCustomerAddress.AddressDto.CountryRegionCode.set

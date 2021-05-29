@@ -1,0 +1,117 @@
+
+‰AW.Services.Customer.REST.API.Controllers.CustomerController.AddCustomer(AW.Services.Customer.Application.AddCustomer.AddCustomerCommand)™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs?) ?(4"2*µ%
+0™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csA G(Aä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csA A(9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>¸
+µ
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csA A(7
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+AddCustomer called*
+""ä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csC C(9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Å
+Â
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csC C(D
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*#!
+Sending the AddCustomer command*
+""¡
+ž
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csD! D()
+%4MediatR.IMediator"__id*a*_>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"
+mediatorMediatR.IMediatorðí
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csD! D(7*
+%5$System.Threading.Tasks.Task<TResult>"`MediatR.ISender.Send<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)*
+
+%4MediatR.IMediator*L
+J
+command?AW.Services.Customer.Application.AddCustomer.AddCustomerCommand*
+""2PSend<TResponse>(MediatR.IRequest<TResponse>, System.Threading.CancellationToken)ó
+ð
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csD D(7D
+customer8AW.Services.Customer.Application.AddCustomer.CustomerDto"__id*
+""ä
+á
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csF F(9
+%63Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id**>
+<AW.Services.Customer.REST.API.Controllers.CustomerController"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>¸
+µ
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csF F(7
+
+%7void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%63Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Returning customer*
+""Á
+¾
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csG G(5
+%8string"JAW.Services.Customer.Application.AddCustomer.CustomerDto.AccountNumber.get*F
+D
+customer8AW.Services.Customer.Application.AddCustomer.CustomerDtoÏ
+Ì
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csG G(7
+%9string"__concat*
+""*
+
+%8string­ª
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csG G(B-
+%10&Microsoft.AspNetCore.Mvc.CreatedResult"?Microsoft.AspNetCore.Mvc.ControllerBase.Created(string, object)*+)
+'Microsoft.AspNetCore.Mvc.ControllerBase*
+
+%9string*F
+D
+customer8AW.Services.Customer.Application.AddCustomer.CustomerDto2Created(string, object)"Í
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csG G(C/
+-
+%10&Microsoft.AspNetCore.Mvc.CreatedResult*Ó
+1™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csH	 H(	"±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.csH H(	
+implicit return* 
+2™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs?P ?(PÂ
+¿
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs?) ?(4’
+J
+command?AW.Services.Customer.Application.AddCustomer.AddCustomerCommand"D
+Customer8AW.Services.Customer.Application.AddCustomer.CustomerDto"__entrypoint´
+±
+™
+ŽC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Controllers\CustomerController.cs?) ?(4
+%11"__entrypoint*
+0:J
+command?AW.Services.Customer.Application.AddCustomer.AddCustomerCommandB@>
+<AW.Services.Customer.REST.API.Controllers.CustomerController

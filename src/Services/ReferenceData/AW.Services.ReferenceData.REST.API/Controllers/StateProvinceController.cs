@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using AW.Services.ReferenceData.Application.StateProvince.GetStateProvinces;
+﻿using AW.Services.ReferenceData.Application.StateProvince.GetStatesProvinces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,21 +14,19 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
     {
         private readonly ILogger<StateProvinceController> logger;
         private readonly IMediator mediator;
-        private readonly IMapper mapper;
 
         public StateProvinceController(
             ILogger<StateProvinceController> logger,
-            IMediator mediator,
-            IMapper mapper
+            IMediator mediator
         ) =>
-            (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
+            (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StateProvince>>> GetStateProvinces(string countryRegionCode)
+        public async Task<ActionResult<IEnumerable<StateProvince>>> GetStatesProvinces(string countryRegionCode)
         {
             logger.LogInformation("GetStateProvinces called");
 
-            var query = new GetStateProvincesQuery { CountryRegionCode = countryRegionCode };
+            var query = new GetStatesProvincesQuery { CountryRegionCode = countryRegionCode };
             logger.LogInformation("Sending GetStateProvinces query");
             var stateProvinces = await mediator.Send(query);
 

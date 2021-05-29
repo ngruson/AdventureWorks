@@ -1,0 +1,5 @@
+ﬂ
+VAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>/System.Text.Json.Serialization.JsonConverter<T>,System.Text.Json.Serialization.JsonConverterobjectò
+^Read(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)µAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>.Read(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)˛
+QWrite(System.Text.Json.Utf8JsonWriter, T, System.Text.Json.JsonSerializerOptions)®AW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>.Write(System.Text.Json.Utf8JsonWriter, T, System.Text.Json.JsonSerializerOptions)Å
+CustomerConverter()jAW.Services.Customer.REST.API.JsonConverters.CustomerConverter<T, TStore, TIndividual>.CustomerConverter()

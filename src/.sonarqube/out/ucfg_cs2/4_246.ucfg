@@ -1,0 +1,115 @@
+
+tAW.Services.Customer.REST.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs   (%"0*û5
+0Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs" Y(9Ò
+Ó
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs" "(%:
+%04Microsoft.Extensions.DependencyInjection.IMvcBuilder"ìMicrosoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllers(Microsoft.Extensions.DependencyInjection.IServiceCollection)*K"I
+GMicrosoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollectionî
+ë
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs" <(:
+%14Microsoft.Extensions.DependencyInjection.IMvcBuilder"æMicrosoft.Extensions.DependencyInjection.MvcCoreMvcBuilderExtensions.AddJsonOptions(Microsoft.Extensions.DependencyInjection.IMvcBuilder, System.Action<Microsoft.AspNetCore.Mvc.JsonOptions>)*H"F
+DMicrosoft.Extensions.DependencyInjection.MvcCoreMvcBuilderExtensions*<
+:
+%04Microsoft.Extensions.DependencyInjection.IMvcBuilder*
+""˘
+ˆ
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs> >(!>
+%28Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder"ìMicrosoft.Extensions.DependencyInjection.MvcCoreServiceCollectionExtensions.AddMvcCore(Microsoft.Extensions.DependencyInjection.IServiceCollection)*O"M
+KMicrosoft.Extensions.DependencyInjection.MvcCoreServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection˘
+ˆ
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.cs> ?(!>
+%38Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder"òMicrosoft.Extensions.DependencyInjection.MvcApiExplorerMvcCoreBuilderExtensions.AddApiExplorer(Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder)*S"Q
+OMicrosoft.Extensions.DependencyInjection.MvcApiExplorerMvcCoreBuilderExtensions*@
+>
+%28Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder«
+ƒ
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csA A(RA
+%4;Microsoft.Extensions.DependencyInjection.IServiceCollection"‹Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.AddApiVersioning(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Microsoft.AspNetCore.Mvc.Versioning.ApiVersioningOptions>)*I"G
+EMicrosoft.Extensions.DependencyInjection.IServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""«
+ƒ
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csA H(A
+%5;Microsoft.Extensions.DependencyInjection.IServiceCollection"‚Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.AddVersionedApiExplorer(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Microsoft.AspNetCore.Mvc.ApiExplorer.ApiExplorerOptions>)*I"G
+EMicrosoft.Extensions.DependencyInjection.IServiceCollectionExtensions*C
+A
+%4;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""—
+Œ
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csJ O(A
+%6;Microsoft.Extensions.DependencyInjection.IServiceCollection"›Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions.AddSwaggerGen(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions>)*R"P
+NMicrosoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""Í
+Á
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csQ V(A
+%7;Microsoft.Extensions.DependencyInjection.IServiceCollection"·Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext<TContext>(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Microsoft.EntityFrameworkCore.DbContextOptionsBuilder>, Microsoft.Extensions.DependencyInjection.ServiceLifetime, Microsoft.Extensions.DependencyInjection.ServiceLifetime)*W"U
+SMicrosoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""*
+""*
+""•
+¢
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csW W(QA
+%8;Microsoft.Extensions.DependencyInjection.IServiceCollection"¨Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)*O"M
+KMicrosoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""*
+""À
+»
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csXB X(a 
+%9System.Reflection.Assembly"System.Type.Assembly.get*
+""Õ
+ 
+Ç
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csXc X(Ö!
+%10System.Reflection.Assembly"System.Type.Assembly.get*
+""£
+†
+Ç
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csX X(ÜB
+%11;Microsoft.Extensions.DependencyInjection.IServiceCollection"ÓMicrosoft.Extensions.DependencyInjection.ServiceCollectionExtensions.AddAutoMapper(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<AutoMapper.IMapperConfigurationExpression>, params System.Reflection.Assembly[])*H"F
+DMicrosoft.Extensions.DependencyInjection.ServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""*"
+ 
+%9System.Reflection.Assembly*#
+!
+%10System.Reflection.AssemblyÀ
+»
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csY Y(:B
+%12;Microsoft.Extensions.DependencyInjection.IServiceCollection"ÅMediatR.ServiceCollectionExtensions.AddMediatR(Microsoft.Extensions.DependencyInjection.IServiceCollection, params System.Type[])*'"%
+#MediatR.ServiceCollectionExtensions*I
+G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollection*
+""*
+1*£
+1Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csZ	 Z(	"ô
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Startup.csZ Z(	
+implicit return:G
+services;Microsoft.Extensions.DependencyInjection.IServiceCollectionB)'
+%AW.Services.Customer.REST.API.Startup

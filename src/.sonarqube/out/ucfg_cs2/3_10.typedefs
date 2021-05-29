@@ -1,0 +1,4 @@
+§
+VAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonConfigurationobject¼
+pConfigure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Person>)ÇAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Person>)…
+PersonConfiguration()lAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.PersonConfiguration.PersonConfiguration()

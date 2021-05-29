@@ -1,0 +1,8 @@
+Î
+PAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDtoobject‹
+Mapping(AutoMapper.Profile)lAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.Mapping(AutoMapper.Profile)‡
+StoreCustomerContactDto()jAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.StoreCustomerContactDto()s
+ContactType.get`AW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.ContactType.gets
+ContactType.set`AW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.ContactType.setw
+ContactPerson.getbAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.ContactPerson.getw
+ContactPerson.setbAW.Services.Customer.Application.AddStoreCustomerContact.StoreCustomerContactDto.ContactPerson.set

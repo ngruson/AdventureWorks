@@ -190,8 +190,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IStateProvinceService.cs" />
-    <Compile Include="Messages\ListStateProvinces\ListStateProvincesRequest.cs" />
-    <Compile Include="Messages\ListStateProvinces\ListStateProvincesResponse.cs" />
+    <Compile Include="Messages\ListStatesProvinces\ListStateProvincesRequest.cs" />
+    <Compile Include="Messages\ListStatesProvinces\ListStateProvincesResponse.cs" />
     <Compile Include="StateProvinceService.svc.cs">
       <DependentUpon>StateProvinceService.svc</DependentUpon>
     </Compile>

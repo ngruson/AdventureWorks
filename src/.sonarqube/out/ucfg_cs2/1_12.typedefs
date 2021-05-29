@@ -1,0 +1,11 @@
+ó
+)AW.Services.Customer.Domain.StoreCustomer$AW.Services.Customer.Domain.CustomerobjectL
+StoreCustomer()9AW.Services.Customer.Domain.StoreCustomer.StoreCustomer()N
+CustomerType.get:AW.Services.Customer.Domain.StoreCustomer.CustomerType.getN
+CustomerType.set:AW.Services.Customer.Domain.StoreCustomer.CustomerType.set>
+Name.get2AW.Services.Customer.Domain.StoreCustomer.Name.get>
+Name.set2AW.Services.Customer.Domain.StoreCustomer.Name.setL
+SalesPerson.get9AW.Services.Customer.Domain.StoreCustomer.SalesPerson.getL
+SalesPerson.set9AW.Services.Customer.Domain.StoreCustomer.SalesPerson.setF
+Contacts.get6AW.Services.Customer.Domain.StoreCustomer.Contacts.getF
+Contacts.set6AW.Services.Customer.Domain.StoreCustomer.Contacts.set

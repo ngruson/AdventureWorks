@@ -1,0 +1,214 @@
+
+îAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler.Handle(AW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommand, System.Threading.CancellationToken)Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs  (&"0*È`
+0Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs .(µ
+²
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Û
+Ø
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (2
+
+%1void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%03Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Handle called*
+""µ
+²
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ì
+é
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (C
+
+%3void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*;
+9
+%23Microsoft.Extensions.Logging.ILogger<TCategoryName>*" 
+Getting customer from database*
+""°
+­
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs& (=.
+%4(Ardalis.Specification.IRepositoryBase<T>"__id*°*­f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"C
+storeCustomerRepository(Ardalis.Specification.IRepositoryBase<T>²
+¯
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs2 (G
+%5string"oAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommand.AccountNumber.get*j
+h
+request]AW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandëè
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (HS
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification"MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification¯
+¬
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (1
+
+%7void"sAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification.GetStoreCustomerSpecification(string)*U
+S
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification*
+
+%5string—”
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs& (*
+%8$System.Threading.Tasks.Task<TResult>"`Ardalis.Specification.IRepositoryBase<T>.GetBySpecAsync(Ardalis.Specification.ISpecification<T>)*0
+.
+%4(Ardalis.Specification.IRepositoryBase<T>*U
+S
+%6MAW.Services.Customer.Application.Specifications.GetStoreCustomerSpecification27GetBySpecAsync(Ardalis.Specification.ISpecification<T>)‘
+Ž
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (:
+storeCustomer)AW.Services.Customer.Domain.StoreCustomer"__id*
+""¸
+µ
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs ('
+%9!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard¶
+³
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.csE (K:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>Î
+Ë
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs (L0
+%11)AW.Services.Customer.Domain.StoreCustomer"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses*)
+'
+%9!Ardalis.GuardClauses.IGuardClause*<
+:
+storeCustomer)AW.Services.Customer.Domain.StoreCustomer*
+""*<
+:
+%103Microsoft.Extensions.Logging.ILogger<TCategoryName>¶
+³
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs! !(:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>ë
+è
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs! !(@
+%13void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%123Microsoft.Extensions.Logging.ILogger<TCategoryName>*
+Removing phone from contact*
+""è
+å
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs" "(0)
+%14"System.Collections.Generic.List<T>"6AW.Services.Customer.Domain.StoreCustomer.Contacts.get*<
+:
+storeCustomer)AW.Services.Customer.Domain.StoreCustomerÎ
+Ë
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs" '(7
+%150AW.Services.Customer.Domain.StoreCustomerContact"{System.Linq.Enumerable.FirstOrDefault<TSource>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, bool>)*"
+System.Linq.Enumerable*+
+)
+%14"System.Collections.Generic.List<T>*
+""Å
+Â
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs" '(;
+contact0AW.Services.Customer.Domain.StoreCustomerContact"__id*9
+7
+%150AW.Services.Customer.Domain.StoreCustomerContact¹
+¶
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs( (((
+%16!Ardalis.GuardClauses.IGuardClause"&Ardalis.GuardClauses.Guard.Against.get*"
+Ardalis.GuardClauses.Guard¶
+³
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs(9 ((?:
+%173Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>×
+Ô
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs( ((@7
+%180AW.Services.Customer.Domain.StoreCustomerContact"}Ardalis.GuardClauses.GuardClauses.Null<T>(Ardalis.GuardClauses.IGuardClause, T, string, Microsoft.Extensions.Logging.ILogger)*%"#
+!Ardalis.GuardClauses.GuardClauses**
+(
+%16!Ardalis.GuardClauses.IGuardClause*=
+;
+contact0AW.Services.Customer.Domain.StoreCustomerContact*
+""*<
+:
+%173Microsoft.Extensions.Logging.ILogger<TCategoryName>è
+å
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs* *(")
+%19"System.Collections.Generic.List<T>"6AW.Services.Customer.Domain.StoreCustomer.Contacts.get*<
+:
+storeCustomer)AW.Services.Customer.Domain.StoreCustomerî
+ë
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs* *(2
+%20bool",System.Collections.Generic.List<T>.Remove(T)*+
+)
+%19"System.Collections.Generic.List<T>*=
+;
+contact0AW.Services.Customer.Domain.StoreCustomerContact¶
+³
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs, ,(:
+%213Microsoft.Extensions.Logging.ILogger<TCategoryName>"__id*ª*§f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"=
+logger3Microsoft.Extensions.Logging.ILogger<TCategoryName>í
+ê
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs, ,(B
+%22void"{Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger, string, params object[])*1"/
+-Microsoft.Extensions.Logging.LoggerExtensions*<
+:
+%213Microsoft.Extensions.Logging.ILogger<TCategoryName>*!
+Updating customer to database*
+""±
+®
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs- -()/
+%23(Ardalis.Specification.IRepositoryBase<T>"__id*°*­f
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler"C
+storeCustomerRepository(Ardalis.Specification.IRepositoryBase<T>¥¢
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs- -(D"
+%24System.Threading.Tasks.Task"7Ardalis.Specification.IRepositoryBase<T>.UpdateAsync(T)*1
+/
+%23(Ardalis.Specification.IRepositoryBase<T>*<
+:
+storeCustomer)AW.Services.Customer.Domain.StoreCustomer2UpdateAsync(T)
+Š
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs. .(
+%25MediatR.Unit"__id*)*'
+MediatR.Unit"
+ValueMediatR.Unit"Û
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs. .(
+
+%25MediatR.Unit*£
+1Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs/	 /(	"Ù
+Á
+¶C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\DeleteStoreCustomerContact\DeleteStoreCustomerContactCommandHandler.cs/ /(	
+implicit return:h
+request]AW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommand:7
+cancellationToken"System.Threading.CancellationTokenBhf
+dAW.Services.Customer.Application.DeleteStoreCustomerContact.DeleteStoreCustomerContactCommandHandler

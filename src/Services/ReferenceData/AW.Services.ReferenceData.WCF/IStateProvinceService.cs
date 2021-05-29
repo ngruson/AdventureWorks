@@ -1,4 +1,4 @@
-﻿using AW.Services.ReferenceData.WCF.Messages.ListStateProvinces;
+﻿using AW.Services.ReferenceData.WCF.Messages.ListStatesProvinces;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace AW.Services.ReferenceData.WCF
     [XmlSerializerFormat]
     public interface IStateProvinceService
     {
-        [OperationContract(Action = "ListStateProvinces", ReplyAction = "ListStateProvinces")]
-        Task<ListStateProvincesResponse> ListStateProvinces(ListStateProvincesRequest request);
+        [OperationContract(Action = "ListStatesProvinces", ReplyAction = "ListStatesProvinces")]
+        Task<ListStatesProvincesResponse> ListStatesProvinces(ListStatesProvincesRequest request);
     }
 }

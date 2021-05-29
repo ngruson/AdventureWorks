@@ -1,0 +1,402 @@
+
+œAW.Services.Customer.Application.UpdateCustomerAddress.UpdateCustomerAddressCommandValidator.UpdateCustomerAddressCommandValidator(Ardalis.Specification.IRepositoryBase<AW.Services.Customer.Domain.Customer>)π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (4"1*∫
+1π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs?	 ?(	t
+r
+
+%0void"9FluentValidation.AbstractValidator<T>.AbstractValidator()*)'
+%FluentValidation.AbstractValidator<T>*
+0*Ò∆
+0π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs >(8™
+ß
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (8†^
+\AW.Services.Customer.Application.UpdateCustomerAddress.UpdateCustomerAddressCommandValidator">
+customerRepository(Ardalis.Specification.IRepositoryBase<T>"__id*@
+>
+customerRepository(Ardalis.Specification.IRepositoryBase<T>•
+¢
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (-8
+%12FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""◊
+‘
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (8
+%22FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%12FluentValidation.IRuleBuilderInitial<T, TProperty>É
+Ä
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (E8
+%32FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%22FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Account number is requiredŸ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs ("8
+%42FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%32FluentValidation.IRuleBuilderOptions<T, TProperty>*2
+ï
+í
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (^8
+%52FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%42FluentValidation.IRuleBuilderOptions<T, TProperty>*0.
+,Account number must not exceed 10 characters¿
+Ω
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs ()8
+%62FluentValidation.IRuleBuilderOptions<T, TProperty>"œFluentValidation.DefaultValidatorExtensions.MustAsync<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>, System.Func<TProperty, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>>)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%52FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""Ä
+˝
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (P8
+%72FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%62FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Customer does not exist•
+¢
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (/8
+%82FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""÷
+”
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (8
+%92FluentValidation.IRuleBuilderOptions<T, TProperty>"nFluentValidation.DefaultValidatorExtensions.NotNull<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*:
+8
+%82FluentValidation.IRuleBuilderInitial<T, TProperty>Ü
+É
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (F9
+%102FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*:
+8
+%92FluentValidation.IRuleBuilderOptions<T, TProperty>* 
+Customer address is required¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (;9
+%112FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ÿ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (9
+%122FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%112FluentValidation.IRuleBuilderInitial<T, TProperty>É
+Ä
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (C9
+%132FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%122FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Address type is required†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs (99
+%142FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%132FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs   (79
+%152FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""ÿ
+’
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs  !(9
+%162FluentValidation.IRuleBuilderOptions<T, TProperty>"nFluentValidation.DefaultValidatorExtensions.NotNull<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%152FluentValidation.IRuleBuilderInitial<T, TProperty>˛
+˚
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs  !(=9
+%172FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%162FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Address is required†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs  "(99
+%182FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%172FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ $(D9
+%192FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ÿ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ %(9
+%202FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%192FluentValidation.IRuleBuilderInitial<T, TProperty>Ö
+Ç
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ %(E9
+%212FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%202FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Address line 1 is required€
+ÿ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ &("9
+%222FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%212FluentValidation.IRuleBuilderOptions<T, TProperty>*2<ó
+î
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ &(^9
+%232FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%222FluentValidation.IRuleBuilderOptions<T, TProperty>*0.
+,Address line 1 must not exceed 60 characters†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs$ '(`9
+%242FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%232FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs) )(D9
+%252FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""€
+ÿ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs) *("9
+%262FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%252FluentValidation.IRuleBuilderInitial<T, TProperty>*2<ó
+î
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs) *(^9
+%272FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%262FluentValidation.IRuleBuilderOptions<T, TProperty>*0.
+,Address line 2 must not exceed 60 characters†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs) +(`9
+%282FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%272FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- -(B9
+%292FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ÿ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- .(9
+%302FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%292FluentValidation.IRuleBuilderInitial<T, TProperty>Ç
+ˇ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- .(B9
+%312FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%302FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Postal code is required€
+ÿ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- /("9
+%322FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%312FluentValidation.IRuleBuilderOptions<T, TProperty>*2î
+ë
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- /([9
+%332FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%322FluentValidation.IRuleBuilderOptions<T, TProperty>*-+
+)Postal code must not exceed 15 characters†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs- 0(`9
+%342FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%332FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 2(<9
+%352FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ÿ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 3(9
+%362FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%352FluentValidation.IRuleBuilderInitial<T, TProperty>˚
+¯
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 3(;9
+%372FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%362FluentValidation.IRuleBuilderOptions<T, TProperty>*
+City is required€
+ÿ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 4("9
+%382FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%372FluentValidation.IRuleBuilderOptions<T, TProperty>*2ç
+ä
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 4(T9
+%392FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%382FluentValidation.IRuleBuilderOptions<T, TProperty>*&$
+"City must not exceed 30 characters†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs2 5(`9
+%402FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%392FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 7(I9
+%412FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""Ÿ
+÷
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 8(9
+%422FluentValidation.IRuleBuilderOptions<T, TProperty>"oFluentValidation.DefaultValidatorExtensions.NotEmpty<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%412FluentValidation.IRuleBuilderInitial<T, TProperty>Ö
+Ç
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 8(E9
+%432FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%422FluentValidation.IRuleBuilderOptions<T, TProperty>*
+State/province is required€
+ÿ
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 9(!9
+%442FluentValidation.IRuleBuilderOptions<T, TProperty>"kFluentValidation.DefaultValidatorExtensions.MaximumLength<T>(FluentValidation.IRuleBuilder<T, string>, int)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%432FluentValidation.IRuleBuilderOptions<T, TProperty>*2ñ
+ì
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 9(\9
+%452FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%442FluentValidation.IRuleBuilderOptions<T, TProperty>*/-
++State/province must not exceed 3 characters†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs7 :(`9
+%462FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%452FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""¶
+£
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs< <(9
+%472FluentValidation.IRuleBuilderInitial<T, TProperty>"wFluentValidation.AbstractValidator<T>.RuleFor<TProperty>(System.Linq.Expressions.Expression<System.Func<T, TProperty>>)*)'
+%FluentValidation.AbstractValidator<T>*
+""¬
+ø
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs< =()9
+%482FluentValidation.IRuleBuilderOptions<T, TProperty>"œFluentValidation.DefaultValidatorExtensions.MustAsync<T, TProperty>(FluentValidation.IRuleBuilder<T, TProperty>, System.Func<TProperty, System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>>)*/"-
++FluentValidation.DefaultValidatorExtensions*;
+9
+%472FluentValidation.IRuleBuilderInitial<T, TProperty>*
+""Å
+˛
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs< =(O9
+%492FluentValidation.IRuleBuilderOptions<T, TProperty>"~FluentValidation.DefaultValidatorOptions.WithMessage<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, string)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%482FluentValidation.IRuleBuilderOptions<T, TProperty>*
+Address must be unique†
+ù
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs< >(99
+%502FluentValidation.IRuleBuilderOptions<T, TProperty>"®FluentValidation.DefaultValidatorOptions.When<T, TProperty>(FluentValidation.IRuleBuilderOptions<T, TProperty>, System.Func<T, bool>, FluentValidation.ApplyConditionTo)*,"*
+(FluentValidation.DefaultValidatorOptions*;
+9
+%492FluentValidation.IRuleBuilderOptions<T, TProperty>*
+""*
+""*
+2*ì
+2π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs?	 ?(	"—
+π
+ÆC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomerAddress\UpdateCustomerAddressCommandValidator.cs? ?(	
+implicit return:>
+customerRepository(Ardalis.Specification.IRepositoryBase<T>B`^
+\AW.Services.Customer.Application.UpdateCustomerAddress.UpdateCustomerAddressCommandValidator

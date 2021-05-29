@@ -1,0 +1,31 @@
+
+AAW.Services.Customer.REST.API.Program.CreateHostBuilder(string[])Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs# (4"0*Î
+0Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (µ
+≤
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (+/
+%0)Microsoft.Extensions.Hosting.IHostBuilder"@Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])*%"#
+!Microsoft.Extensions.Hosting.Host*
+
+argsstring[]Ô
+Ï
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (/
+%1)Microsoft.Extensions.Hosting.IHostBuilder"∫Microsoft.Extensions.Hosting.GenericHostBuilderExtensions.ConfigureWebHostDefaults(Microsoft.Extensions.Hosting.IHostBuilder, System.Action<Microsoft.AspNetCore.Hosting.IWebHostBuilder>)*=";
+9Microsoft.Extensions.Hosting.GenericHostBuilderExtensions*1
+/
+%0)Microsoft.Extensions.Hosting.IHostBuilder*
+"""∑
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (1
+/
+%1)Microsoft.Extensions.Hosting.IHostBuilder*£
+1Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs ("ô
+Å
+wC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Program.cs (
+implicit return:
+argsstring[]B)"'
+%AW.Services.Customer.REST.API.Program

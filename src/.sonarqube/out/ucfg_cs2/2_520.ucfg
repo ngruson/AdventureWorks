@@ -1,0 +1,32 @@
+
+ZAW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto.Mapping(AutoMapper.Profile)õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs ("0*ñ
+0õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs (^µ
+≤
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs (C:
+%04AutoMapper.IMappingExpression<TSource, TDestination>"5AutoMapper.Profile.CreateMap<TSource, TDestination>()*
+
+profileAutoMapper.ProfileÏÈ
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs (:
+%14AutoMapper.IMappingExpression<TSource, TDestination>"AAutoMapper.IMappingExpression<TSource, TDestination>.ReverseMap()*<
+:
+%04AutoMapper.IMappingExpression<TSource, TDestination>2ReverseMap()∆
+√
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs (_:
+%24AutoMapper.IMappingExpression<TSource, TDestination>"‰AutoMapper.EquivalencyExpression.EquivalentExpressions.EqualityComparison<TSource, TDestination>(AutoMapper.IMappingExpression<TSource, TDestination>, System.Linq.Expressions.Expression<System.Func<TSource, TDestination, bool>>)*:"8
+6AutoMapper.EquivalencyExpression.EquivalentExpressions*<
+:
+%14AutoMapper.IMappingExpression<TSource, TDestination>*
+""*
+1*◊
+1õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs	 (	"≥
+õ
+êC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\UpdateCustomer\PersonPhoneDto.cs (	
+implicit return:
+profileAutoMapper.ProfileBB@
+>AW.Services.Customer.Application.UpdateCustomer.PersonPhoneDto

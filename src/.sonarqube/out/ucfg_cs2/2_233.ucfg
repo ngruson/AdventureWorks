@@ -1,0 +1,109 @@
+
+¡AW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>.Handle(TRequest, System.Threading.CancellationToken, MediatR.RequestHandlerDelegate<TResponse>)©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (%"0*™
+0©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (#ÉÄ
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (B+
+%0%FluentValidation.ValidationContext<T>"%FluentValidation.ValidationContext<T>Ω
+∫
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (9
+
+%1void":FluentValidation.ValidationContext<T>.ValidationContext(T)*-
++
+%0%FluentValidation.ValidationContext<T>*
+
+requestTRequestñ
+ì
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (B0
+context%FluentValidation.ValidationContext<T>"__id*-
++
+%0%FluentValidation.ValidationContext<T>ã
+à
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (&/
+%2)System.Collections.Generic.IEnumerable<T>"__id*¢*üc
+aAW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>"8
+_validators)System.Collections.Generic.IEnumerable<T>∏
+µ
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (1/
+%3)System.Collections.Generic.IEnumerable<T>"System.Linq.Enumerable.Select<TSource, TResult>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, TResult>)*"
+System.Linq.Enumerable*1
+/
+%2)System.Collections.Generic.IEnumerable<T>*
+""Â
+‚
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (4/
+%4)System.Collections.Generic.IEnumerable<T>"´System.Linq.Enumerable.SelectMany<TSource, TResult>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)*"
+System.Linq.Enumerable*1
+/
+%3)System.Collections.Generic.IEnumerable<T>*
+""´
+®
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (&/
+%5)System.Collections.Generic.IEnumerable<T>"rSystem.Linq.Enumerable.Where<TSource>(System.Collections.Generic.IEnumerable<TSource>, System.Func<TSource, bool>)*"
+System.Linq.Enumerable*1
+/
+%4)System.Collections.Generic.IEnumerable<T>*
+""Å
+˛
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs ((
+%6"System.Collections.Generic.List<T>"WSystem.Linq.Enumerable.ToList<TSource>(System.Collections.Generic.IEnumerable<TSource>)*"
+System.Linq.Enumerable*1
+/
+%5)System.Collections.Generic.IEnumerable<T>ë
+é
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (.
+failures"System.Collections.Generic.List<T>"__id**
+(
+%6"System.Collections.Generic.List<T>ö
+ó
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (	
+%7int",System.Collections.Generic.List<T>.Count.get*0
+.
+failures"System.Collections.Generic.List<T>*
+1
+2*Â
+1©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs   (6Å˛
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs   (7*
+%8$FluentValidation.ValidationException"$FluentValidation.ValidationException™
+ß
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs   (-
+
+%9void"åFluentValidation.ValidationException.ValidationException(System.Collections.Generic.IEnumerable<FluentValidation.Results.ValidationFailure>)*,
+*
+%8$FluentValidation.ValidationException*0
+.
+failures"System.Collections.Generic.List<T>*
+3*œ
+2©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs# #(ø
+º
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs# #(+
+%10$System.Threading.Tasks.Task<TResult>"2MediatR.RequestHandlerDelegate<TResponse>.Invoke()*-+
+)MediatR.RequestHandlerDelegate<TResponse>"€
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs# #(-
++
+%10$System.Threading.Tasks.Task<TResult>*Û
+3©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs$	 $(	"¡
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs$ $(	
+implicit return:
+requestTRequest:7
+cancellationToken"System.Threading.CancellationToken:1
+next)MediatR.RequestHandlerDelegate<TResponse>Bec
+aAW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>

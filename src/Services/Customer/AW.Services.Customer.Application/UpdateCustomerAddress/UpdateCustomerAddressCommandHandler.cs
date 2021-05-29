@@ -13,17 +13,17 @@ namespace AW.Services.Customer.Application.UpdateCustomerAddress
     public class UpdateCustomerAddressCommandHandler : IRequestHandler<UpdateCustomerAddressCommand, Unit>
     {
         private readonly ILogger<UpdateCustomerAddressCommandHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepositoryBase<Domain.Address> addressRepository;
+        private readonly IMapper mapper;        
         private readonly IRepositoryBase<Domain.Customer> customerRepository;
+        private readonly IRepositoryBase<Domain.Address> addressRepository;
 
         public UpdateCustomerAddressCommandHandler(
             ILogger<UpdateCustomerAddressCommandHandler> logger,
-            IMapper mapper,
-            IRepositoryBase<Domain.Address> addressRepository,
-            IRepositoryBase<Domain.Customer> customerRepository
-        ) => (this.logger, this.mapper, this.addressRepository, this.customerRepository) =
-                (logger, mapper, addressRepository, customerRepository);
+            IMapper mapper,            
+            IRepositoryBase<Domain.Customer> customerRepository,
+            IRepositoryBase<Domain.Address> addressRepository
+        ) => (this.logger, this.mapper, this.customerRepository, this.addressRepository) =
+                (logger, mapper, customerRepository, addressRepository);
 
         public async Task<Unit> Handle(UpdateCustomerAddressCommand request, CancellationToken cancellationToken)
         {

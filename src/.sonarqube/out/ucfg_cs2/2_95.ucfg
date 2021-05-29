@@ -1,0 +1,25 @@
+
+ AW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>.RequestValidationBehavior(System.Collections.Generic.IEnumerable<FluentValidation.IValidator<TRequest>>)©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (("1*¥
+1©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs	 (	*
+0*…
+0©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs ($í
+è
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs ($üc
+aAW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>"8
+_validators)System.Collections.Generic.IEnumerable<T>"__id*9
+7
+
+validators)System.Collections.Generic.IEnumerable<T>*
+2*Û
+2©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs	 (	"¡
+©
+ûC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Application\Common\Behaviours\RequestValidationBehavior.cs (	
+implicit return:7
+
+validators)System.Collections.Generic.IEnumerable<T>Bec
+aAW.Services.Customer.Application.Common.Behaviours.RequestValidationBehavior<TRequest, TResponse>

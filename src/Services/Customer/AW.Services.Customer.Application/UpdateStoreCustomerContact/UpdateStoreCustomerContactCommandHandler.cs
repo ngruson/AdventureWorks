@@ -2,14 +2,13 @@
 using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
-using AW.Services.Customer.Application.UpdateStoreCustomerContact;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AW.Services.Customer.Application.AddStoreCustomerContact
+namespace AW.Services.Customer.Application.UpdateStoreCustomerContact
 {
     public class UpdateStoreCustomerContactCommandHandler : IRequestHandler<UpdateStoreCustomerContactCommand, Unit>
     {
@@ -28,12 +27,12 @@ namespace AW.Services.Customer.Application.AddStoreCustomerContact
             logger.LogInformation("Handle called");
             logger.LogInformation("Getting customer from database");
 
-            var store = await storeRepository.GetBySpecAsync(
+            var storeCustomer = await storeRepository.GetBySpecAsync(
                 new GetStoreCustomerSpecification(request.AccountNumber)
             );
-            Guard.Against.Null(store, nameof(store));
+            Guard.Against.Null(storeCustomer, nameof(storeCustomer));
 
-            var contact = store.Contacts.FirstOrDefault(c =>
+            var contact = storeCustomer.Contacts.FirstOrDefault(c =>
                 c.ContactType == request.CustomerContact.ContactType
             );
             Guard.Against.Null(contact, nameof(contact));
@@ -42,7 +41,7 @@ namespace AW.Services.Customer.Application.AddStoreCustomerContact
             mapper.Map(request.CustomerContact, contact);
 
             logger.LogInformation("Saving customer to database");
-            await storeRepository.UpdateAsync(store);
+            await storeRepository.UpdateAsync(storeCustomer);
 
             return Unit.Value;
         }

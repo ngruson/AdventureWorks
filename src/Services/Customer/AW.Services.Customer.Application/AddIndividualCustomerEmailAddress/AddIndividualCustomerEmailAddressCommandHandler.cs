@@ -1,4 +1,5 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Specification;
 using AutoMapper;
 using AW.Services.Customer.Application.Specifications;
 using MediatR;
@@ -14,6 +15,12 @@ namespace AW.Services.Customer.Application.AddIndividualCustomerEmailAddress
         private readonly IMapper mapper;
         private readonly IRepositoryBase<Domain.IndividualCustomer> individualCustomerRepository;
 
+        public AddIndividualCustomerEmailAddressCommandHandler(
+            ILogger<AddIndividualCustomerEmailAddressCommandHandler> logger,
+            IMapper mapper,
+            IRepositoryBase<Domain.IndividualCustomer> individualCustomerRepository
+        ) => (this.logger, this.mapper, this.individualCustomerRepository) = (logger, mapper, individualCustomerRepository);
+
         public async Task<Unit> Handle(AddIndividualCustomerEmailAddressCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");
@@ -22,6 +29,7 @@ namespace AW.Services.Customer.Application.AddIndividualCustomerEmailAddress
             var individualCustomer = await individualCustomerRepository.GetBySpecAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber)
             );
+            Guard.Against.Null(individualCustomer, nameof(individualCustomer));
 
             logger.LogInformation("Adding email address to customer");
             var emailAddress = new Domain.PersonEmailAddress { EmailAddress = request.EmailAddress };

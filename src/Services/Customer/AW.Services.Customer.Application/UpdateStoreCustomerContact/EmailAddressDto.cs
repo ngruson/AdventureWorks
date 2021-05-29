@@ -9,7 +9,8 @@ namespace AW.Services.Customer.Application.UpdateStoreCustomerContact
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.PersonEmailAddress, EmailAddressDto>();
+            profile.CreateMap<Domain.PersonEmailAddress, EmailAddressDto>()
+                .ReverseMap();
         }
     }
 }

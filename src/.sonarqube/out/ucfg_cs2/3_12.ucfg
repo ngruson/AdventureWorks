@@ -1,0 +1,30 @@
+
+‘AW.Services.Customer.Persistence.EntityFrameworkCore.EfRepository<T>.EfRepository(AW.Services.Customer.Persistence.EntityFrameworkCore.AWContext)ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs ("1*©
+1ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs
+	 
+(	*
+0*á
+0ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs1 (Aµ
+²
+ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs1 (B
+
+%0void"sArdalis.Specification.EntityFrameworkCore.RepositoryBase<T>.RepositoryBase(Microsoft.EntityFrameworkCore.DbContext)*?=
+;Ardalis.Specification.EntityFrameworkCore.RepositoryBase<T>*M
+K
+	dbContext>AW.Services.Customer.Persistence.EntityFrameworkCore.AWContext*
+2*Ý
+2ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs
+	 
+(	"¶
+ž
+“C:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.Persistence.EntityFrameworkCore\EfRepository.cs
+ 
+(	
+implicit return:K
+	dbContext>AW.Services.Customer.Persistence.EntityFrameworkCore.AWContextBHF
+DAW.Services.Customer.Persistence.EntityFrameworkCore.EfRepository<T>

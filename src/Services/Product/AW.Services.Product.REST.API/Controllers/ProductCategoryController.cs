@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AW.Services.Product.REST.API.Controllers
@@ -20,7 +19,7 @@ namespace AW.Services.Product.REST.API.Controllers
         ) => (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductCategory>>> GetProductCategories()
+        public async Task<IActionResult> GetProductCategories()
         {
             logger.LogInformation("GetProductCategories called");
 

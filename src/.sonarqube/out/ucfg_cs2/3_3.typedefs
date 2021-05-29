@@ -1,0 +1,4 @@
+µ
+XAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.CustomerConfigurationobjectÂ
+rConfigure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Customer>)ËAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.CustomerConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.Customer>)‹
+CustomerConfiguration()pAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.CustomerConfiguration.CustomerConfiguration()

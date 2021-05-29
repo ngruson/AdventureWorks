@@ -1,0 +1,34 @@
+
+—AW.Services.Customer.REST.API.Extensions.SwaggerExtensions.UseSwaggerDocumentation(Microsoft.AspNetCore.Builder.IApplicationBuilder, string, Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs* (A"0*ê
+0ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs (Ü
+É
+ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs (6
+%00Microsoft.AspNetCore.Builder.IApplicationBuilder"∞Microsoft.AspNetCore.Builder.SwaggerBuilderExtensions.UseSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder, System.Action<Swashbuckle.AspNetCore.Swagger.SwaggerOptions>)*9"7
+5Microsoft.AspNetCore.Builder.SwaggerBuilderExtensions*9
+7
+app0Microsoft.AspNetCore.Builder.IApplicationBuilder*
+""è
+å
+ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs (6
+%10Microsoft.AspNetCore.Builder.IApplicationBuilder"∏Microsoft.AspNetCore.Builder.SwaggerUIBuilderExtensions.UseSwaggerUI(Microsoft.AspNetCore.Builder.IApplicationBuilder, System.Action<Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions>)*;"9
+7Microsoft.AspNetCore.Builder.SwaggerUIBuilderExtensions*8
+6
+%00Microsoft.AspNetCore.Builder.IApplicationBuilder*
+"""’
+ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs (9
+7
+app0Microsoft.AspNetCore.Builder.IApplicationBuilder*œ
+1ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs	 (	"Ø
+ó
+åC:\Users\ngrus\Google Drive\Repos\ngruson\AdventureWorks\src\Services\Customer\AW.Services.Customer.REST.API\Extensions\SwaggerExtensions.cs (	
+implicit return:7
+app0Microsoft.AspNetCore.Builder.IApplicationBuilder:
+virtualPathstring:O
+providerCMicrosoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProviderB>"<
+:AW.Services.Customer.REST.API.Extensions.SwaggerExtensions

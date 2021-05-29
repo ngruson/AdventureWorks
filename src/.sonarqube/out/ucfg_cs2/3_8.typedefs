@@ -1,0 +1,4 @@
+ü
+bAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.IndividualCustomerConfigurationobjectà
+|Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.IndividualCustomer>)ßAW.Services.Product.Persistence.EntityFrameworkCore.Configurations.IndividualCustomerConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.IndividualCustomer>)ª
+!IndividualCustomerConfiguration()„AW.Services.Product.Persistence.EntityFrameworkCore.Configurations.IndividualCustomerConfiguration.IndividualCustomerConfiguration()

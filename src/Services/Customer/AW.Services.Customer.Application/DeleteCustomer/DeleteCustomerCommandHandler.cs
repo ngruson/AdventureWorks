@@ -13,6 +13,11 @@ namespace AW.Services.Customer.Application.DeleteCustomer
         private readonly ILogger<DeleteCustomerCommandHandler> logger;
         private readonly IRepositoryBase<Domain.Customer> customerRepository;
 
+        public DeleteCustomerCommandHandler(
+            ILogger<DeleteCustomerCommandHandler> logger,
+            IRepositoryBase<Domain.Customer> customerRepository
+        ) => (this.logger, this.customerRepository) = (logger, customerRepository);
+
         public async Task<Unit> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");

@@ -1,0 +1,4 @@
+“
+FAW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandlerobject›
+çGetCustomersQueryHandler(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler>, AutoMapper.IMapper, Ardalis.Specification.IRepositoryBase<AW.Services.Customer.Domain.Customer>)®AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler.GetCustomersQueryHandler(Microsoft.Extensions.Logging.ILogger<AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler>, AutoMapper.IMapper, Ardalis.Specification.IRepositoryBase<AW.Services.Customer.Domain.Customer>)¢
+kHandle(AW.Services.Customer.Application.GetCustomers.GetCustomersQuery, System.Threading.CancellationToken)²AW.Services.Customer.Application.GetCustomers.GetCustomersQueryHandler.Handle(AW.Services.Customer.Application.GetCustomers.GetCustomersQuery, System.Threading.CancellationToken)

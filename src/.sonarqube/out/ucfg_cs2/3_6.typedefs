@@ -1,0 +1,4 @@
+Æ
+[AW.Services.Customer.Persistence.EntityFrameworkCore.Configurations.SalesOrderConfigurationobjectÉ
+tConfigure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.SalesOrder>)ÐAW.Services.Customer.Persistence.EntityFrameworkCore.Configurations.SalesOrderConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AW.Services.Customer.Domain.SalesOrder>)’
+SalesOrderConfiguration()uAW.Services.Customer.Persistence.EntityFrameworkCore.Configurations.SalesOrderConfiguration.SalesOrderConfiguration()
