@@ -35,13 +35,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-     
-      - name: Install Sonar global tool
-        run: dotnet tool install --global dotnet-sonarscanner
-
-      - name: Begin Sonar scan
-        run: dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url=https://sonarcloud.io
-
+   
       - name: Build and run unit tests
         run: |
           cd src
@@ -52,6 +46,3 @@ jobs:
           cd Services/Customer/AW.Services.Customer.REST.API.UnitTests
           dotnet build --no-restore
           dotnet test --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-      - name: End Sonar scan
-        run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
