@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props" Condition="Exists('..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props')" />
   <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
   <Import Project="..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -113,6 +114,9 @@
     <Error Condition="!Exists('..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props'))" />
     <Error Condition="!Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets'))" />
   </Target>
   <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
+  <Import Project="..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets" Condition="Exists('..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets')" />
 </Project>
