@@ -325,7 +325,7 @@ namespace AW.UI.Web.Internal.Services
             return vm;
         }
 
-        public async Task<IEnumerable<StateProvinceViewModel>> GetStateProvincesJson(string country)
+        public async Task<IEnumerable<StateProvinceViewModel>> GetStatesProvincesJson(string country)
         {
             var stateProvinces = await referenceDataApiClient.GetStateProvincesAsync(country);
             return mapper.Map<IEnumerable<StateProvinceViewModel>>(stateProvinces);

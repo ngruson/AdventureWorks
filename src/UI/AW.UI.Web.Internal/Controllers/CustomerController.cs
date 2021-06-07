@@ -153,10 +153,10 @@ namespace AW.UI.Web.Internal.Controllers
             return View(viewModel);
         }
 
-        public async Task<JsonResult> GetStateProvinces(string country)
+        public async Task<JsonResult> GetStatesProvinces(string country)
         {
-            var stateProvinces = await customerService.GetStateProvincesJson(country);
-            return Json(stateProvinces);
+            var statesProvinces = await customerService.GetStatesProvincesJson(country);
+            return Json(statesProvinces);
         }
 
         public async Task<IActionResult> DeleteAddress(string accountNumber, string addressType)
@@ -286,6 +286,18 @@ namespace AW.UI.Web.Internal.Controllers
         public async Task<IActionResult> DeleteContactEmailAddress(string accountNumber, string contactType, string contactName, string emailAddress)
         {
             var viewModel = await customerService.GetContactEmailAddressForDelete(accountNumber, contactType, contactName, emailAddress);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteContactEmailAddress(DeleteContactEmailAddressViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customerService.DeleteContactEmailAddress(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
             return View(viewModel);
         }
 

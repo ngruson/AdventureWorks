@@ -647,7 +647,7 @@ namespace AW.UI.Web.Internal.UnitTests
             );
 
             //Act
-            var viewModel = await svc.GetStateProvincesJson("US");
+            var viewModel = await svc.GetStatesProvincesJson("US");
 
             //Assert
             viewModel.Count().Should().Be(2);
