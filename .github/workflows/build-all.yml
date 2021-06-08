@@ -107,6 +107,7 @@ jobs:
           dotnet build src\UI\AW.UI.Web.Store.UnitTests\AW.UI.Web.Store.UnitTests.csproj --no-restore
           dotnet test src\UI\AW.UI.Web.Store.UnitTests\AW.UI.Web.Store.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
+          dotnet build src\UI\AW.UI.Web.Common.UnitTests\AW.UI.Web.Common.UnitTests.csproj --no-restore
           dotnet test src\UI\AW.UI.Web.Common.UnitTests\AW.UI.Web.Common.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
       - name: End Sonar scan
