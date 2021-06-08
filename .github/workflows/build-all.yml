@@ -45,6 +45,7 @@ jobs:
           dotnet build src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
           dotnet build src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-restore          
           dotnet test src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           msbuild src\Services\Customer\AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
@@ -105,6 +106,8 @@ jobs:
           dotnet build src\UI\AW.UI.Web.Store\AW.UI.Web.Store.csproj --no-restore
           dotnet build src\UI\AW.UI.Web.Store.UnitTests\AW.UI.Web.Store.UnitTests.csproj --no-restore
           dotnet test src\UI\AW.UI.Web.Store.UnitTests\AW.UI.Web.Store.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet test src\UI\AW.UI.Web.Common.UnitTests\AW.UI.Web.Common.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
       - name: End Sonar scan
         run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
