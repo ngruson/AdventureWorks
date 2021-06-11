@@ -80,6 +80,8 @@ jobs:
           dotnet build src\Services\SalesOrder\AW.Services.SalesOrder.REST.API\AW.Services.SalesOrder.REST.API.csproj --no-restore
           dotnet build src\Services\SalesOrder\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesOrder\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet build src\Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj --no-restore
+          dotnet test src\Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           nuget restore src\Services\SalesOrder\AW.Services.SalesOrder.WCF\packages.config
           msbuild src\Services\SalesOrder\AW.Services.SalesOrder.WCF\AW.Services.SalesOrder.WCF.csproj
