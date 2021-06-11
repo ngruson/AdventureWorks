@@ -11,5 +11,15 @@ namespace AW.Services.Customer.REST.API.UnitTests
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             config.AssertConfigurationIsValid();
         }
+
+        [Fact]
+        public void AutoMapper_Mapping_UpdateCustomerAddress_IsValid()
+        {
+            var profile = new TestProfile();
+            new Models.UpdateCustomer.Address().Mapping(profile);
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile(profile));
+            config.AssertConfigurationIsValid();
+        }
     }
 }

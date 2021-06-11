@@ -151,6 +151,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.Customer.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.ReferenceData.WCF.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.WCF.UnitTests\AW.Services.ReferenceData.WCF.UnitTests.csproj", "{011AD383-533B-4739-B9C9-11F604780105}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesOrder.Application.UnitTests", "Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj", "{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,6 +401,10 @@ Global
 		{011AD383-533B-4739-B9C9-11F604780105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011AD383-533B-4739-B9C9-11F604780105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{011AD383-533B-4739-B9C9-11F604780105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -465,6 +471,7 @@ Global
 		{99221F63-222C-407F-BA83-49D6E094732A} = {E79EA578-0E87-4901-B268-05A04EBB3149}
 		{4BE4F5D6-0FC7-409E-840A-5280549FB7DE} = {FA336443-2C59-4600-B219-3ED00A1A88E0}
 		{011AD383-533B-4739-B9C9-11F604780105} = {20EB3A40-8898-4F77-BCAD-9EA31B1A0DDE}
+		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7} = {9D3187C2-A72B-4AA1-ADE8-23F65D1777B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}
