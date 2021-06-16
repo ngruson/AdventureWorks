@@ -24,7 +24,7 @@ namespace AW.Services.SalesOrder.Application.GetSalesOrdersForCustomer
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerNumber { get; set; }
 
         public string SalesPerson { get; set; }
 
@@ -44,8 +44,7 @@ namespace AW.Services.SalesOrder.Application.GetSalesOrdersForCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.SalesOrder, SalesOrderDto>()
-                .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName));
+            profile.CreateMap<Domain.SalesOrder, SalesOrderDto>();
         }
     }
 }

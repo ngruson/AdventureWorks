@@ -61,12 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWContext.cs" />
-    <Compile Include="Configurations\CustomerAddressConfiguration.cs" />
-    <Compile Include="Configurations\CustomerConfiguration.cs" />
-    <Compile Include="Configurations\IndividualCustomerConfiguration.cs" />
-    <Compile Include="Configurations\PersonConfiguration.cs" />
-    <Compile Include="Configurations\PersonEmailAddressConfiguration.cs" />
-    <Compile Include="Configurations\PersonPhoneConfiguration.cs" />
     <Compile Include="Configurations\SpecialOfferProductConfiguration.cs" />
     <Compile Include="Configurations\SpecialOfferConfiguration.cs" />
     <Compile Include="Configurations\SalesReasonConfiguration.cs" />
@@ -75,7 +69,6 @@
     <Compile Include="Configurations\SalesOrderConfiguration.cs" />
     <Compile Include="Configurations\CreditCardConfiguration.cs" />
     <Compile Include="Configurations\AddressConfiguration.cs" />
-    <Compile Include="Configurations\StoreCustomerConfiguration.cs" />
     <Compile Include="EfRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

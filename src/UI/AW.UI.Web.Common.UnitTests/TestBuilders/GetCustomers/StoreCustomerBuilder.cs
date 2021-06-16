@@ -58,7 +58,7 @@ namespace AW.UI.Web.Common.UnitTests.TestBuilders.GetCustomers
         {
             customer = new StoreCustomer
             {
-                CustomerType = Common.ApiClients.CustomerApi.Models.GetCustomers.CustomerType.Store,
+                CustomerType = ApiClients.CustomerApi.Models.GetCustomers.CustomerType.Store,
                 AccountNumber = "AW00000001",
                 Name = "A Bike Store",
                 SalesPerson = "Pamela O Ansman-Wolfe",

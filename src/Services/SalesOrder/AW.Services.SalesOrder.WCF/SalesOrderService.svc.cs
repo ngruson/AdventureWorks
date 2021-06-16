@@ -22,7 +22,6 @@ namespace AW.Services.SalesOrder.WCF
             {
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
-                CustomerType = mapper.Map<Domain.CustomerType>(request.CustomerType),
                 Territory = request.Territory
             };
             var result = await mediator.Send(query);

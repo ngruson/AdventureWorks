@@ -1,4 +1,5 @@
 ﻿using AW.Common.AutoMapper;
+using AW.Services.SalesOrder.Application.GetSalesOrders;
 using System.Reflection;
 
 namespace AW.Services.SalesOrder.REST.API
@@ -8,6 +9,7 @@ namespace AW.Services.SalesOrder.REST.API
         public MappingProfile() : base()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+            ApplyMappingsFromAssembly(typeof(GetSalesOrdersQuery).Assembly);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AW.UI.Web.Common.ApiClients.SalesOrderApi;
+using AW.UI.Web.Common.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Common.UnitTests.TestBuilders.GetSalesOrders;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -71,6 +72,19 @@ namespace AW.UI.Web.Common.UnitTests
                 response.Should().NotBeNull();
                 response.TotalSalesOrders.Should().Be(1);
                 response.Should().BeEquivalentTo(salesOrders);
+
+                var salesOrder = response.SalesOrders[0];
+                var address = new Address
+                {
+                    AddressLine1 = "42525 Austell Road",
+                    PostalCode = "30106",
+                    City = "Austell",
+                    StateProvinceCode = "GA",
+                    CountryRegionCode = "US"
+                };
+
+                salesOrder.BillToAddress.Should().BeEquivalentTo(address);
+                salesOrder.ShipToAddress.Should().BeEquivalentTo(address);
             }
 
             [Fact]

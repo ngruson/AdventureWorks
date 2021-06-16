@@ -24,7 +24,7 @@ namespace AW.Services.SalesOrder.REST.API.Models
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerNumber { get; set; }
 
         public string SalesPerson { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using AW.Services.SalesOrder.Domain;
-using MediatR;
+﻿using MediatR;
 
 namespace AW.Services.SalesOrder.Application.GetSalesOrders
 {
@@ -7,7 +6,6 @@ namespace AW.Services.SalesOrder.Application.GetSalesOrders
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public CustomerType? CustomerType { get; set; }
         public string Territory { get; set; }
     }
 }

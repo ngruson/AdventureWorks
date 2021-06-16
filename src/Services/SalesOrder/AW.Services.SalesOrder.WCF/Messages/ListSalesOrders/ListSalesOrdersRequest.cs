@@ -8,9 +8,6 @@ namespace AW.Services.SalesOrder.WCF.Messages.ListSalesOrders
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public string Territory { get; set; }
-        public CustomerType? CustomerType { get; set; }
-        [XmlIgnore]
-        public bool CustomerTypeSpecified { get; set; }
+        public string Territory { get; set; }        
     }
 }

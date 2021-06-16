@@ -29,11 +29,9 @@ namespace AW.Services.SalesOrder.Application.GetSalesOrders
             var spec = new GetSalesOrdersPaginatedSpecification(
                 request.PageIndex,
                 request.PageSize,
-                request.CustomerType,
                 request.Territory
             );
             var countSpec = new CountSalesOrdersSpecification(
-                request.CustomerType,
                 request.Territory
             );
 

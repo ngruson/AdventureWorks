@@ -9,7 +9,7 @@
 	[SalesOrderNumber] [nvarchar](25) NOT NULL,
 	[PurchaseOrderNumber] [nvarchar](50) NULL,
 	[AccountNumber] [nvarchar](50) NULL,
-	[CustomerID] [int] NOT NULL,
+	[CustomerNumber] [varchar](10) NOT NULL,
 	[SalesPerson] [nvarchar](50) NULL,
 	[Territory] [nvarchar](50) NULL,
 	[BillToAddressID] [int] NOT NULL,

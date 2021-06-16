@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AW.Services.Product.Persistence.EntityFrameworkCore.Configurations
+namespace AW.Services.Customer.Persistence.EntityFrameworkCore.Configurations
 {
     public class AddressConfiguration : IEntityTypeConfiguration<Customer.Domain.Address>
     {

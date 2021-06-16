@@ -6,8 +6,13 @@ namespace AW.Services.SalesOrder.Application.Specifications
     {
         public GetSalesOrdersForCustomerSpecification(string customerNumber)
         {
+            Query.Include(sp => sp.BillToAddress);
+            Query.Include(sp => sp.ShipToAddress);
+            Query.Include(so => so.OrderLines);
+            Query.Include(so => so.SalesReasons);
+
             Query
-                .Where(so => so.Customer.AccountNumber == customerNumber);
+                .Where(so => so.CustomerNumber == customerNumber);
         }
     }
 }

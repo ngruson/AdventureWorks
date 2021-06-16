@@ -24,7 +24,7 @@ namespace AW.Services.SalesOrder.Domain
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public Customer Customer { get; set; }
+        public string CustomerNumber { get; set; }
 
         public string SalesPerson { get; set; }
 

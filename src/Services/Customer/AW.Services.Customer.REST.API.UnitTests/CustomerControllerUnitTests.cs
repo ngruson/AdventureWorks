@@ -35,8 +35,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     TotalCustomers = 2,
                     Customers = new List<Application.GetCustomers.CustomerDto>
                     {
-                        new Application.GetCustomers.IndividualCustomerDto { AccountNumber = "AW00000001" },
-                        new Application.GetCustomers.StoreCustomerDto { AccountNumber = "AW00000002" }
+                        new TestBuilders.GetCustomers.StoreCustomerBuilder().WithTestValues().Build(),
+                        new TestBuilders.GetCustomers.IndividualCustomerBuilder().WithTestValues().Build()
                     }
                 };
 
@@ -63,7 +63,25 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 response.TotalCustomers.Should().Be(2);
                 response.Customers.Count.Should().Be(2);
                 response.Customers[0].AccountNumber.Should().Be("AW00000001");
-                response.Customers[1].AccountNumber.Should().Be("AW00000002");
+                response.Customers[1].AccountNumber.Should().Be("AW00011000");
+
+                var address = response.Customers[0].Addresses[0];
+                address.AddressType.Should().Be("Main Office");
+                address.Address.AddressLine1.Should().Be("2251 Elliot Avenue");
+                address.Address.AddressLine2.Should().BeNullOrEmpty();
+                address.Address.PostalCode.Should().Be("98104");
+                address.Address.City.Should().Be("Seattle");
+                address.Address.StateProvinceCode.Should().Be("WA");
+                address.Address.CountryRegionCode.Should().Be("US");
+
+                address = response.Customers[1].Addresses[0];
+                address.AddressType.Should().Be("Home");
+                address.Address.AddressLine1.Should().Be("3761 N. 14th St");
+                address.Address.AddressLine2.Should().BeNullOrEmpty();
+                address.Address.PostalCode.Should().Be("4700");
+                address.Address.City.Should().Be("Rockhampton");
+                address.Address.StateProvinceCode.Should().Be("QLD");
+                address.Address.CountryRegionCode.Should().Be("AU");
             }
 
             [Fact]
@@ -105,7 +123,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     opts.AddProfile<MappingProfile>();
                 }).CreateMapper();
 
-                var dto = new Application.GetCustomer.IndividualCustomerDto { AccountNumber = "AW00000001" };
+                var dto = new TestBuilders.GetCustomer.IndividualCustomerBuilder()
+                    .WithTestValues().
+                    Build();
 
                 var mockLogger = new Mock<ILogger<CustomerController>>();
                 var mockMediator = new Mock<IMediator>();
@@ -128,6 +148,15 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 var customer = okObjectResult.Value as Models.GetCustomer.Customer;
                 customer.Should().NotBeNull();
+
+                var address = customer.Addresses[0];
+                address.AddressType.Should().Be("Home");
+                address.Address.AddressLine1.Should().Be("3761 N. 14th St");
+                address.Address.AddressLine2.Should().BeNullOrEmpty();
+                address.Address.PostalCode.Should().Be("4700");
+                address.Address.City.Should().Be("Rockhampton");
+                address.Address.StateProvinceCode.Should().Be("QLD");
+                address.Address.CountryRegionCode.Should().Be("AU");
             }
 
             [Fact]

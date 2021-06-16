@@ -176,7 +176,6 @@
     <Compile Include="Messages\GetSalesOrder\SalesReason.cs" />
     <Compile Include="Messages\ListSalesOrders\Address.cs" />
     <Compile Include="Messages\ListSalesOrders\CreditCard.cs" />
-    <Compile Include="Messages\ListSalesOrders\CustomerType.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrders.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrdersRequest.cs" />
     <Compile Include="Messages\ListSalesOrders\ListSalesOrdersResponse.cs" />

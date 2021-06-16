@@ -75,8 +75,16 @@ namespace AW.UI.Web.Common.UnitTests
                 //Assert
                 response.Should().NotBeNull();
                 response.TotalCustomers.Should().Be(1);
-                response.Customers[0].AccountNumber.Should().Be("AW00000001");
-                response.Customers[0].Addresses.Count.Should().Be(1);
+                var customer = response.Customers[0];
+                customer.AccountNumber.Should().Be("AW00000001");
+                customer.Addresses.Count.Should().Be(1);
+                var address = customer.Addresses[0];
+                address.AddressType.Should().Be("Main Office");
+                address.Address.AddressLine1.Should().Be("2251 Elliot Avenue");
+                address.Address.PostalCode.Should().Be("98104");
+                address.Address.City.Should().Be("Seattle");
+                address.Address.StateProvinceCode.Should().Be("WA");
+                address.Address.CountryRegionCode.Should().Be("US");
 
                 (response.Customers[0] as StoreCustomer).Name.Should().Be("A Bike Store");
                 (response.Customers[0] as StoreCustomer).SalesPerson.Should().Be("Pamela O Ansman-Wolfe");

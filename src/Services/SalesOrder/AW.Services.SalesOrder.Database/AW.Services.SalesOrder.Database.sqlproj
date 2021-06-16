@@ -78,16 +78,5 @@
     <None Include="Scripts\PostDeployment\InsertSalesOrderLine.sql" />
     <None Include="Scripts\PostDeployment\InsertSalesOrderSalesReason.sql" />
     <Build Include="Schema Objects\Customer.sql" />
-    <None Include="Scripts\PostDeployment\InsertCustomer.sql" />
-    <Build Include="Schema Objects\Person.sql" />
-    <None Include="Scripts\PostDeployment\InsertPerson.sql" />
-    <Build Include="Schema Objects\IndividualCustomer.sql" />
-    <None Include="Scripts\PostDeployment\InsertIndividualCustomer.sql" />
-    <Build Include="Schema Objects\CustomerAddress.sql" />
-    <None Include="Scripts\PostDeployment\InsertCustomerAddress.sql" />
-    <Build Include="Schema Objects\PersonEmailAddress.sql" />
-    <None Include="Scripts\PostDeployment\InsertPersonEmailAddress.sql" />
-    <Build Include="Schema Objects\StoreCustomer.sql" />
-    <None Include="Scripts\PostDeployment\InsertStoreCustomer.sql" />
   </ItemGroup>
 </Project>
