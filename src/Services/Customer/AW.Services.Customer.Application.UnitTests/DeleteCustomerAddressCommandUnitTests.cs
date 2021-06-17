@@ -39,7 +39,15 @@ namespace AW.Services.Customer.Application.UnitTests
                 CustomerAddress = new CustomerAddressDto
                 {
                     AddressType = "Home",
-                    Address = new AddressDto()
+                    Address = new AddressDto
+                    {
+                        AddressLine1 = "3761 N. 14th St",
+                        AddressLine2 = null,
+                        PostalCode = "4700",
+                        City = "Rockhampton",
+                        StateProvinceCode = "QLD",
+                        CountryRegionCode = "AU"
+                    }
                 }
             };
             var result = await handler.Handle(command, CancellationToken.None);

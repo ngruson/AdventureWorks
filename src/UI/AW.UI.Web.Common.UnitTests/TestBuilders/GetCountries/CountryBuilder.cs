@@ -6,6 +6,12 @@ namespace AW.UI.Web.Common.UnitTests.TestBuilders.GetCountries
     {
         private CountryRegion country = new CountryRegion();
 
+        public CountryBuilder CountryRegionCode(string countryRegionCode)
+        {
+            country.CountryRegionCode = countryRegionCode;
+            return this;
+        }
+
         public CountryBuilder Name(string name)
         {
             country.Name = name;

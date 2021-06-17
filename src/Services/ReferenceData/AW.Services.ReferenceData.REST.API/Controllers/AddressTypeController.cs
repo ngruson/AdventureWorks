@@ -20,7 +20,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
         ) => (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<ActionResult<List<AddressType>>> GetAddressTypes()
+        public async Task<IActionResult> GetAddressTypes()
         {
             logger.LogInformation("GetAddressTypes called");
 

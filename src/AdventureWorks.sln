@@ -155,6 +155,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesOrder.Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.Product.Persistence.EFCore.UnitTests", "Services\Product\AW.Services.Product.Persistence.EFCore.UnitTests\AW.Services.Product.Persistence.EFCore.UnitTests.csproj", "{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.ReferenceData.REST.API.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj", "{CAABDC27-694E-4D26-87D1-AF437FF94EB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -411,6 +413,10 @@ Global
 		{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAABDC27-694E-4D26-87D1-AF437FF94EB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAABDC27-694E-4D26-87D1-AF437FF94EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAABDC27-694E-4D26-87D1-AF437FF94EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAABDC27-694E-4D26-87D1-AF437FF94EB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -479,6 +485,7 @@ Global
 		{011AD383-533B-4739-B9C9-11F604780105} = {20EB3A40-8898-4F77-BCAD-9EA31B1A0DDE}
 		{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7} = {9D3187C2-A72B-4AA1-ADE8-23F65D1777B8}
 		{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD} = {FD5FE5A9-ABC5-4A90-B73B-11CFF0DF8099}
+		{CAABDC27-694E-4D26-87D1-AF437FF94EB7} = {20EB3A40-8898-4F77-BCAD-9EA31B1A0DDE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}
