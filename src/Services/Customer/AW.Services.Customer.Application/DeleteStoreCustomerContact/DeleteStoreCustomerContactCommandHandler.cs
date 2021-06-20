@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Specification;
+using AW.Common.Extensions;
 using AW.Services.Customer.Application.Specifications;
 using MediatR;
 using Microsoft.Extensions.Logging;

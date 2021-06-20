@@ -1,18 +1,21 @@
-﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFramework;
+﻿using Ardalis.Specification.EntityFramework;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AW.Services.SalesOrder.Persistence.EntityFramework
 {
     public class EfRepository<T> : RepositoryBase<T> where T : class
     {
-        public EfRepository(AWContext context) : base(context) { }
-        public EfRepository(AWContext context, ISpecificationEvaluator<T> specificationEvaluator)
-            : base(context, specificationEvaluator) { }
+        private readonly AWContext context;
 
-        public override async Task UpdateAsync(T entity)
+        public EfRepository(AWContext context) : base(context)
         {
-            ((AWContext)DbContext).SetModified(entity);
+            this.context = context;
+        }
+
+        public override async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
+        {
+            context.SetModified(entity);
             await SaveChangesAsync();
         }
     }

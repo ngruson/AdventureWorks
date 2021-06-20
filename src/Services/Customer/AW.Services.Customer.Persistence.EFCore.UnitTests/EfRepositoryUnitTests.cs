@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-namespace AW.Persistence.EntityFrameworkCore.UnitTests
+namespace AW.Services.Customer.Persistence.EFCore.UnitTests
 {
     public class EfRepositoryUnitTests
     {
@@ -18,13 +18,8 @@ namespace AW.Persistence.EntityFrameworkCore.UnitTests
         public async void GetByIdAsync_ReturnsObject()
         {
             //Arrange
-            var persons = new List<Person>
-            {
-                new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" },
-                new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" }
-            };
             var mockSet = new Mock<DbSet<Person>>();
-            mockSet.Setup(x => x.FindAsync(It.IsAny<int>()))
+            mockSet.Setup(x => x.FindAsync(It.IsAny<object[]>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
                     new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" }
                 );
@@ -112,6 +107,9 @@ namespace AW.Persistence.EntityFrameworkCore.UnitTests
 
             //Assert
             list.Count.Should().Be(3);
+            list[0].Should().Be("Sánchez");
+            list[1].Should().Be("Duffy");
+            list[2].Should().Be("Sánchez");
         }
 
         [Fact]
@@ -166,7 +164,7 @@ namespace AW.Persistence.EntityFrameworkCore.UnitTests
         }
 
         [Fact]
-        public async void FirstOrDefaultAsync_ReturnsObject()
+        public async void GetBySpecAsync_ReturnsObject()
         {
             //Arrange
             var persons = new List<Person>

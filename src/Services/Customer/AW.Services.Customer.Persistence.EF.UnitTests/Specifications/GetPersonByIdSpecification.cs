@@ -3,7 +3,7 @@ using AW.Services.Customer.Domain;
 
 namespace AW.Services.Customer.Persistence.EF.UnitTests.Specifications
 {
-    public class GetPersonByIdSpecification : Specification<Person>
+    public class GetPersonByIdSpecification : Specification<Person>, ISingleResultSpecification
     {
         public GetPersonByIdSpecification(int id)
         {

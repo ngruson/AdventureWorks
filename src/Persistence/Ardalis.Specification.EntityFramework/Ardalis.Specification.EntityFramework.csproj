@@ -34,11 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ardalis.GuardClauses, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Ardalis.GuardClauses.1.5.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
+    <Reference Include="Ardalis.GuardClauses, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ardalis.GuardClauses.3.1.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Ardalis.Specification.4.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    <Reference Include="Ardalis.Specification, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ardalis.Specification.5.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -60,9 +60,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evaluators\AsNoTrackingEvaluator.cs" />
+    <Compile Include="Evaluators\IncludeEvaluator.cs" />
+    <Compile Include="Evaluators\OrderEvaluator.cs" />
+    <Compile Include="Evaluators\SearchEvaluator.cs" />
+    <Compile Include="Extensions\DbSetExtensions.cs" />
+    <Compile Include="Extensions\IncludeExtensions.cs" />
+    <Compile Include="Extensions\ParameterReplacerVisitor.cs" />
+    <Compile Include="Extensions\SearchExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />
-    <Compile Include="SpecificationEvaluator.cs" />
+    <Compile Include="Evaluators\SpecificationEvaluator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

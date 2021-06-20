@@ -2,7 +2,7 @@
 using FluentValidation;
 using System;
 
-namespace AW.Core.Application.Autofac
+namespace AW.Common.Validation
 {
     public class AutofacValidatorFactory : ValidatorFactoryBase
     {

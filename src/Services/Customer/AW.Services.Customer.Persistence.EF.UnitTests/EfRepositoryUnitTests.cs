@@ -1,3 +1,4 @@
+using Ardalis.Specification;
 using AW.Services.Customer.Domain;
 using AW.Services.Customer.Persistence.EF.UnitTests.Mocking;
 using AW.Services.Customer.Persistence.EF.UnitTests.Specifications;
@@ -9,10 +10,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.Persistence.EntityFramework.UnitTests
+namespace AW.Services.Customer.Persistence.EF.UnitTests
 {
     public class EfRepositoryUnitTests
     {
@@ -40,10 +42,13 @@ namespace AW.Persistence.EntityFramework.UnitTests
         {
             //Arrange
             var mockSet = new Mock<DbSet<Person>>();
-            mockSet.Setup(x => x.FindAsync(It.IsAny<int>()))
-                .ReturnsAsync(
-                    new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" }
-                );
+            mockSet.Setup(x => x.FindAsync(
+                It.IsAny<CancellationToken>(),
+                It.IsAny<int>()
+            ))
+            .ReturnsAsync(
+                new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" }
+            );
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Person>())
@@ -169,7 +174,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
         }
 
         [Fact]
-        public void ListAsync_WithResultSpecWithoutSelector_ThrowsArgumentNullException()
+        public void ListAsync_WithResultSpecWithoutSelector_ThrowsSelectorNotFoundException()
         {
             //Arrange
             var mockContext = new Mock<AWContext>();
@@ -180,7 +185,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
             Func<Task> func = async () => await repository.ListAsync<string>(spec);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>();
+            func.Should().Throw<SelectorNotFoundException>();
         }
 
         [Fact]
@@ -230,7 +235,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
 
             //Assert
             mockSet.Verify(x => x.Add(It.IsAny<Person>()));
-            mockContext.Verify(x => x.SaveChangesAsync());
+            mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
             newPerson.Should().BeEquivalentTo(savedPerson);
         }
 
@@ -256,7 +261,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
             await repository.UpdateAsync(existingPerson);
 
             //Assert
-            mockContext.Verify(x => x.SaveChangesAsync());
+            mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
         [Fact]
@@ -305,7 +310,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
             await repository.DeleteAsync(person1);
 
             //Assert
-            mockContext.Verify(x => x.SaveChangesAsync());
+            mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
         [Fact]
@@ -330,7 +335,7 @@ namespace AW.Persistence.EntityFramework.UnitTests
             await repository.DeleteRangeAsync(persons);
 
             //Assert
-            mockContext.Verify(x => x.SaveChangesAsync());
+            mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
     }
 }

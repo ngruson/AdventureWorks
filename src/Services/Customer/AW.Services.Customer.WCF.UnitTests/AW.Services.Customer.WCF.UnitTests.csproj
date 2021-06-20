@@ -92,8 +92,8 @@
     <Analyzer Include="..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AW.Common\AW.Common.csproj">
-      <Project>{356bc875-3a1a-4dd4-80e1-65b66f8764c8}</Project>
+    <ProjectReference Include="..\..\..\Common\AW.Common\AW.Common.csproj">
+      <Project>{3C5E174A-4F0C-4B18-9254-E2F07B0A89BF}</Project>
       <Name>AW.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Services.Customer.Application\AW.Services.Customer.Application.csproj">

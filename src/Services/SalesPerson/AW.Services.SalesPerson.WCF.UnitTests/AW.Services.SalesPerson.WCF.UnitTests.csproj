@@ -45,6 +45,9 @@
     <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\FluentAssertions.5.10.3\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\FluentValidation.10.2.3\lib\netstandard2.0\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="MediatR, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MediatR.9.0.0\lib\net461\MediatR.dll</HintPath>
     </Reference>
@@ -93,8 +96,8 @@
     <Analyzer Include="..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AW.Common\AW.Common.csproj">
-      <Project>{356bc875-3a1a-4dd4-80e1-65b66f8764c8}</Project>
+    <ProjectReference Include="..\..\..\Common\AW.Common\AW.Common.csproj">
+      <Project>{3C5E174A-4F0C-4B18-9254-E2F07B0A89BF}</Project>
       <Name>AW.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Services.SalesPerson.Application\AW.Services.SalesPerson.Application.csproj">
