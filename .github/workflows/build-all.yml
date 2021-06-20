@@ -56,6 +56,7 @@ jobs:
       - name: Build Product services and run unit tests
         run: |
           dotnet build src\Services\Product\AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj --no-restore
+          dotnet build src\Services\Product\AW.Services.Product.Persistence.EFCore.UnitTests\AW.Services.Product.Persistence.EFCore.UnitTests.csproj --no-restore          
           dotnet test src\Services\Product\AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test src\Services\Product\AW.Services.Product.REST.API.UnitTests\AW.Services.Product.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
@@ -67,8 +68,10 @@ jobs:
 
       - name: Build ReferenceData services and run unit tests
         run: |
+          dotnet build src\Services\ReferenceData\AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-restore
           dotnet build src\Services\ReferenceData\AW.Services.ReferenceData.REST.API\AW.Services.ReferenceData.REST.API.csproj --no-restore
           dotnet test src\Services\ReferenceData\AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           nuget restore src\Services\ReferenceData\AW.Services.ReferenceData.WCF\packages.config
           msbuild src\Services\ReferenceData\AW.Services.ReferenceData.WCF\AW.Services.ReferenceData.WCF.csproj
