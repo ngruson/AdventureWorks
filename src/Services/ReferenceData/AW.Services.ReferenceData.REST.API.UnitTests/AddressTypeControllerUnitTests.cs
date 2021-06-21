@@ -15,7 +15,7 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
     public class AddressTypeControllerUnitTests
     {
         [Fact]
-        public async Task GetSalesOrders_ShouldReturnSalesOrders_WhenGivenSalesOrders()
+        public async Task GetAddressTypes_AddressTypesExists_ReturnAddressTypes()
         {
             //Arrange
             var dto = new List<AddressType>

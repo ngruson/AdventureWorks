@@ -25,7 +25,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
             (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<IActionResult> GetCountries()
         {
             logger.LogInformation("GetCountries called");
 
