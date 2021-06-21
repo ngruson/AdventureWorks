@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
             (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Territory>>> GetTerritories()
+        public async Task<IActionResult> GetTerritories()
         {
             logger.LogInformation("GetTerritories called");
 

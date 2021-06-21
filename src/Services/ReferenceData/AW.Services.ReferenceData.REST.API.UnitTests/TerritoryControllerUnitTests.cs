@@ -1,5 +1,5 @@
 using AutoMapper;
-using AW.Services.ReferenceData.Application.StateProvince.GetStatesProvinces;
+using AW.Services.ReferenceData.Application.Territory.GetTerritories;
 using AW.Services.ReferenceData.REST.API.Controllers;
 using FluentAssertions;
 using MediatR;
@@ -19,35 +19,35 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
         public async Task GetTerritories_TerritoriesExists_ReturnTerritories()
         {
             //Arrange
-            var dto = new List<StateProvince>
+            var dto = new List<Territory>
             {
-                new StateProvince { Name = "Texas" },
-                new StateProvince { Name = "Georgia" }
+                new Territory { Name = "Northwest" },
+                new Territory { Name = "Northeast" }
             };
 
-            var mockLogger = new Mock<ILogger<StateProvinceController>>();
+            var mockLogger = new Mock<ILogger<TerritoryController>>();
             var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetStatesProvincesQuery>(), It.IsAny<CancellationToken>()))
+            mockMediator.Setup(x => x.Send(It.IsAny<GetTerritoriesQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dto);
 
             var mapper = new MapperConfiguration(opts => 
                     opts.AddProfile<MappingProfile>())
                 .CreateMapper();
 
-            var controller = new StateProvinceController(
+            var controller = new TerritoryController(
                 mockLogger.Object,
                 mockMediator.Object
             );
 
             //Act
-            var actionResult = await controller.GetStatesProvinces("US");
+            var actionResult = await controller.GetTerritories();
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var statesProvinces = okObjectResult.Value as List<StateProvince>;
-            statesProvinces.Count.Should().Be(2);
+            var territories = okObjectResult.Value as List<Territory>;
+            territories.Count.Should().Be(2);
         }
     }
 }
