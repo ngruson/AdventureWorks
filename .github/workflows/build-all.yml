@@ -70,6 +70,7 @@ jobs:
         run: |
           dotnet build src\Services\ReferenceData\AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-restore
           dotnet build src\Services\ReferenceData\AW.Services.ReferenceData.REST.API\AW.Services.ReferenceData.REST.API.csproj --no-restore
+          dotnet build src\Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\ReferenceData\AW.Services.ReferenceData.Application.UnitTests\AW.Services.ReferenceData.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test src\Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
