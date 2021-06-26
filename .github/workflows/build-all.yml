@@ -111,6 +111,11 @@ jobs:
           dotnet build src\Services\SalesPerson\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesPerson\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
+          dotnet build src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj --no-restore
+          dotnet build src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EFCore.UnitTests\AW.Services.SalesPerson.Persistence.EFCore.UnitTests.csproj --no-restore
+          dotnet test src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EFCore.UnitTests\AW.Services.SalesPerson.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
           nuget restore src\Services\SalesPerson\AW.Services.SalesPerson.WCF\packages.config
           msbuild src\Services\SalesPerson\AW.Services.SalesPerson.WCF\AW.Services.SalesPerson.WCF.csproj
           msbuild src\Services\SalesPerson\AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj
