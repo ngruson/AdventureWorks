@@ -39,8 +39,8 @@ namespace AW.Services.Customer.WCF.UnitTests
             {
                 Customers = new List<Application.GetCustomers.CustomerDto>
                 {
-                    new Application.GetCustomers.IndividualCustomerDto { AccountNumber = "AW00000001" },
-                    new Application.GetCustomers.StoreCustomerDto { AccountNumber = "AW00000002" }
+                    new TestBuilders.GetCustomers.IndividualCustomerBuilder().WithTestValues().Build(),
+                    new TestBuilders.GetCustomers.StoreCustomerBuilder().WithTestValues().Build()
                 },
                 TotalCustomers = 2
             };
@@ -60,6 +60,8 @@ namespace AW.Services.Customer.WCF.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.Customers.Customer.Count().Should().Be(2);
+            result.Customers.Customer[0].AccountNumber.Should().Be("AW00011000"); 
+            result.Customers.Customer[1].AccountNumber.Should().Be("AW00000001");
         }
 
         [Fact]
