@@ -37,7 +37,12 @@ jobs:
         run: |
           dotnet tool install --global dotnet-sonarscanner
           dotnet sonarscanner begin /o:ngruson /k:ngruson_AdventureWorks /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url=https://sonarcloud.io
-          
+         
+      - name: Build Common and run unit tests
+        run: |
+          dotnet build src\Common\AW.Common.UnitTests\AW.Common.UnitTests.csproj --no-restore
+          dotnet test src\Common\AW.Common.UnitTests\AW.Common.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+      
       - name: Build Customer services and run unit tests
         run: |
           dotnet build src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
