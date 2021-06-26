@@ -42,15 +42,17 @@ jobs:
         run: |
           dotnet build src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
           dotnet build src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-restore
-          dotnet build src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore
-          dotnet build src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-restore          
+          dotnet build src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
           dotnet test src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          dotnet test src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover      
+          
+          msbuild src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj
+          dotnet build src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-restore          
+          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           msbuild src\Services\Customer\AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
           msbuild src\Services\Customer\AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
-          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           dotnet test src\Services\Customer\AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
       - name: Build Product services and run unit tests
