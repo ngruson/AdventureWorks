@@ -18,5 +18,10 @@ namespace AW.Services.Customer.Persistence.EntityFrameworkCore
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public virtual void SetModified(object entity)
+        {
+            Entry(entity).State = EntityState.Modified;
+        }
     }
 }

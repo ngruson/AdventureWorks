@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AW.Common.Interfaces;
+using System.Collections.Generic;
 
 namespace AW.Services.SalesPerson.Domain
 {
-    public class SalesPerson
+    public class SalesPerson : IPerson
     {
         public int Id { get; set; }
         public string Title { get; set; }

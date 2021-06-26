@@ -3,7 +3,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AW.Services.Product.Persistence.EF.UnitTests.Mocking
+namespace AW.Common.UnitTesting
 {
     public class TestDbAsyncEnumerator<T> : IDbAsyncEnumerator<T>
     {

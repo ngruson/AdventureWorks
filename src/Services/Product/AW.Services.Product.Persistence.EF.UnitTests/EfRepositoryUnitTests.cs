@@ -1,5 +1,5 @@
 using Ardalis.Specification;
-using AW.Services.Product.Persistence.EF.UnitTests.Mocking;
+using AW.Common.UnitTesting;
 using AW.Services.Product.Persistence.EF.UnitTests.Specifications;
 using AW.Services.Product.Persistence.EntityFramework;
 using FluentAssertions;

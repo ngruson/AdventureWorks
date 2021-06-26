@@ -4,13 +4,13 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AW.Services.Customer.Persistence.EF.UnitTests.Mocking
+namespace AW.Common.UnitTesting
 {
     public class TestDbAsyncQueryProvider<T> : IDbAsyncQueryProvider
     {
         private readonly IQueryProvider _inner;
 
-        internal TestDbAsyncQueryProvider(IQueryProvider inner)
+        public TestDbAsyncQueryProvider(IQueryProvider inner)
         {
             _inner = inner;
         }

@@ -2,7 +2,7 @@
 
 namespace AW.Services.ReferenceData.Persistence.EntityFramework.Configurations
 {
-    public class AddressTypeConfiguration : EntityTypeConfiguration<Domain.ContactType>
+    public class AddressTypeConfiguration : EntityTypeConfiguration<Domain.AddressType>
     {
         public AddressTypeConfiguration()
         {

@@ -45,6 +45,9 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Effort, Version=2.2.13.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Effort.EF6.2.2.13\lib\net45\Effort.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -59,6 +62,9 @@
     </Reference>
     <Reference Include="Moq, Version=4.16.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Moq.4.16.1\lib\net45\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NMemory, Version=3.0.0.0, Culture=neutral, PublicKeyToken=afc61983f100d280, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NMemory.3.1.2\lib\net45\NMemory.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -91,10 +97,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AWContextUnitTests.cs" />
     <Compile Include="EfRepositoryUnitTests.cs" />
-    <Compile Include="Mocking\TestDbAsyncEnumerable.cs" />
-    <Compile Include="Mocking\TestDbAsyncEnumerator.cs" />
-    <Compile Include="Mocking\TestDbAsyncQueryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\GetPersonByIdSpecification.cs" />
     <Compile Include="Specifications\GetPersonsByLastNameSpecification.cs" />
@@ -108,6 +112,10 @@
     <Analyzer Include="..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\AW.Common.UnitTesting\AW.Common.UnitTesting.csproj">
+      <Project>{97c605dc-e9e7-4aea-9e31-0ce7f803262b}</Project>
+      <Name>AW.Common.UnitTesting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Persistence\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
       <Project>{83EC1015-DF12-445D-B644-B316F1AEDB3A}</Project>
       <Name>Ardalis.Specification.EntityFramework</Name>

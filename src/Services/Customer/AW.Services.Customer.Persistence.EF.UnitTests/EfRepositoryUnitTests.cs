@@ -1,6 +1,6 @@
 using Ardalis.Specification;
+using AW.Common.UnitTesting;
 using AW.Services.Customer.Domain;
-using AW.Services.Customer.Persistence.EF.UnitTests.Mocking;
 using AW.Services.Customer.Persistence.EF.UnitTests.Specifications;
 using AW.Services.Customer.Persistence.EntityFramework;
 using FluentAssertions;
@@ -262,30 +262,6 @@ namespace AW.Services.Customer.Persistence.EF.UnitTests
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [Fact]
-        public async void FirstOrDefaultAsync_ReturnsObject()
-        {
-            //Arrange
-            var persons = new List<Person>
-            {
-                new Person { Id = 1, FirstName = "Ken", MiddleName = "J", LastName = "Sánchez" },
-                new Person { Id = 2, FirstName = "Terri", MiddleName = "Lee", LastName = "Duffy" }
-            };
-            var mockSet = GetQueryableMockDbSet(persons);
-
-            var mockContext = new Mock<AWContext>();
-            mockContext.Setup(x => x.Set<Person>())
-                .Returns(mockSet.Object);
-            var repository = new EfRepository<Person>(mockContext.Object);
-
-            //Act
-            var spec = new GetPersonByIdSpecification(1);
-            var person = await repository.GetBySpecAsync(spec);
-
-            //Assert
-            person.FirstName.Should().Be("Ken");
         }
 
         [Fact]

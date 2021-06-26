@@ -61,11 +61,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWContext.cs" />
+    <Compile Include="Configurations\BillOfMaterialsConfiguration.cs" />
+    <Compile Include="Configurations\DocumentConfiguration.cs" />
+    <Compile Include="Configurations\IllustrationConfiguration.cs" />
+    <Compile Include="Configurations\LocationConfiguration.cs" />
     <Compile Include="Configurations\ProductCategoryConfiguration.cs" />
     <Compile Include="Configurations\ProductConfiguration.cs" />
+    <Compile Include="Configurations\ProductCostHistoryConfiguration.cs" />
+    <Compile Include="Configurations\ProductDescriptionConfiguration.cs" />
+    <Compile Include="Configurations\ProductDocumentConfiguration.cs" />
+    <Compile Include="Configurations\ProductInventoryConfiguration.cs" />
+    <Compile Include="Configurations\ProductListPriceHistoryConfiguration.cs" />
+    <Compile Include="Configurations\ProductModelConfiguration.cs" />
+    <Compile Include="Configurations\ProductModelIllustrationConfiguration.cs" />
+    <Compile Include="Configurations\ProductModelProductDescriptionCultureConfiguration.cs" />
     <Compile Include="Configurations\ProductPhotoConfiguration.cs" />
     <Compile Include="Configurations\ProductProductPhotoConfiguration.cs" />
     <Compile Include="Configurations\ProductSubcategoryConfiguration.cs" />
+    <Compile Include="Configurations\UnitMeasureConfiguration.cs" />
     <Compile Include="EfRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AW.Services.Customer.Persistence.EntityFrameworkCore.Configurations
 {
-    public class StoreCustomerContactConfiguration : IEntityTypeConfiguration<Customer.Domain.StoreCustomerContact>
+    public class StoreCustomerContactConfiguration : IEntityTypeConfiguration<Domain.StoreCustomerContact>
     {
-        public void Configure(EntityTypeBuilder<Customer.Domain.StoreCustomerContact> builder)
+        public void Configure(EntityTypeBuilder<Domain.StoreCustomerContact> builder)
         {
             builder.ToTable("StoreCustomerContact");
             builder.HasKey(p => p.Id);

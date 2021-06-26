@@ -148,19 +148,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.Customer.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.ReferenceData.WCF.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.WCF.UnitTests\AW.Services.ReferenceData.WCF.UnitTests.csproj", "{011AD383-533B-4739-B9C9-11F604780105}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesOrder.Application.UnitTests", "Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj", "{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.SalesOrder.Application.UnitTests", "Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj", "{8EBA52F4-6FCB-4A8F-AFCC-08BD76E1CAE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.Product.Persistence.EFCore.UnitTests", "Services\Product\AW.Services.Product.Persistence.EFCore.UnitTests\AW.Services.Product.Persistence.EFCore.UnitTests.csproj", "{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.Product.Persistence.EFCore.UnitTests", "Services\Product\AW.Services.Product.Persistence.EFCore.UnitTests\AW.Services.Product.Persistence.EFCore.UnitTests.csproj", "{1B6FBAD0-A9E2-4F92-9AB0-40DFD206BDAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.ReferenceData.REST.API.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj", "{CAABDC27-694E-4D26-87D1-AF437FF94EB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.ReferenceData.REST.API.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj", "{CAABDC27-694E-4D26-87D1-AF437FF94EB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{EC7C6321-E239-4541-B07F-77E223B8996B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Common", "Common\AW.Common\AW.Common.csproj", "{3C5E174A-4F0C-4B18-9254-E2F07B0A89BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Common.UnitTests", "Common\AW.Common.UnitTests\AW.Common.UnitTests.csproj", "{DF9342B3-9C36-41CB-8F48-984C0E3921A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Common.UnitTests", "Common\AW.Common.UnitTests\AW.Common.UnitTests.csproj", "{DF9342B3-9C36-41CB-8F48-984C0E3921A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.Product.Persistence.EF.UnitTests", "Services\Product\AW.Services.Product.Persistence.EF.UnitTests\AW.Services.Product.Persistence.EF.UnitTests.csproj", "{04AD59FF-9A43-4F06-97CA-77D15715203B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.ReferenceData.Persistence.EF.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.Persistence.EF.UnitTests\AW.Services.ReferenceData.Persistence.EF.UnitTests.csproj", "{29376747-49BA-481B-B8B1-D7A015B540D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Common.UnitTesting", "Common\AW.Common.UnitTesting\AW.Common.UnitTesting.csproj", "{97C605DC-E9E7-4AEA-9E31-0CE7F803262B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.ReferenceData.Persistence.EFCore.UnitTests", "Services\ReferenceData\AW.Services.ReferenceData.Persistence.EFCore.UnitTests\AW.Services.ReferenceData.Persistence.EFCore.UnitTests.csproj", "{377DA919-A3CC-4F26-9728-8CE05A0FA457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesOrder.Persistence.EF.UnitTests", "Services\SalesOrder\AW.Services.SalesOrder.Persistence.EF.UnitTests\AW.Services.SalesOrder.Persistence.EF.UnitTests.csproj", "{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.SalesOrder.Persistence.EFCore.UnitTests", "Services\SalesOrder\AW.Services.SalesOrder.Persistence.EFCore.UnitTests\AW.Services.SalesOrder.Persistence.EFCore.UnitTests.csproj", "{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesPerson.Persistence.EF.UnitTests", "Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj", "{943A847A-1FD5-49C1-82F6-C280D58D7CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SalesPerson.Persistence.EFCore.UnitTests", "Services\SalesPerson\AW.Services.SalesPerson.Persistence.EFCore.UnitTests\AW.Services.SalesPerson.Persistence.EFCore.UnitTests.csproj", "{5F1D370D-76E1-40AF-AAC3-529E607EEF9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -430,6 +444,34 @@ Global
 		{04AD59FF-9A43-4F06-97CA-77D15715203B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04AD59FF-9A43-4F06-97CA-77D15715203B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04AD59FF-9A43-4F06-97CA-77D15715203B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29376747-49BA-481B-B8B1-D7A015B540D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29376747-49BA-481B-B8B1-D7A015B540D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29376747-49BA-481B-B8B1-D7A015B540D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29376747-49BA-481B-B8B1-D7A015B540D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C605DC-E9E7-4AEA-9E31-0CE7F803262B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C605DC-E9E7-4AEA-9E31-0CE7F803262B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C605DC-E9E7-4AEA-9E31-0CE7F803262B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C605DC-E9E7-4AEA-9E31-0CE7F803262B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377DA919-A3CC-4F26-9728-8CE05A0FA457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377DA919-A3CC-4F26-9728-8CE05A0FA457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377DA919-A3CC-4F26-9728-8CE05A0FA457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377DA919-A3CC-4F26-9728-8CE05A0FA457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943A847A-1FD5-49C1-82F6-C280D58D7CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943A847A-1FD5-49C1-82F6-C280D58D7CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943A847A-1FD5-49C1-82F6-C280D58D7CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943A847A-1FD5-49C1-82F6-C280D58D7CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1D370D-76E1-40AF-AAC3-529E607EEF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1D370D-76E1-40AF-AAC3-529E607EEF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1D370D-76E1-40AF-AAC3-529E607EEF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1D370D-76E1-40AF-AAC3-529E607EEF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -502,6 +544,13 @@ Global
 		{3C5E174A-4F0C-4B18-9254-E2F07B0A89BF} = {EC7C6321-E239-4541-B07F-77E223B8996B}
 		{DF9342B3-9C36-41CB-8F48-984C0E3921A5} = {EC7C6321-E239-4541-B07F-77E223B8996B}
 		{04AD59FF-9A43-4F06-97CA-77D15715203B} = {FD5FE5A9-ABC5-4A90-B73B-11CFF0DF8099}
+		{29376747-49BA-481B-B8B1-D7A015B540D5} = {20EB3A40-8898-4F77-BCAD-9EA31B1A0DDE}
+		{97C605DC-E9E7-4AEA-9E31-0CE7F803262B} = {EC7C6321-E239-4541-B07F-77E223B8996B}
+		{377DA919-A3CC-4F26-9728-8CE05A0FA457} = {20EB3A40-8898-4F77-BCAD-9EA31B1A0DDE}
+		{DC8C9378-B3E6-4A50-8EEF-2F93FD9175AF} = {9D3187C2-A72B-4AA1-ADE8-23F65D1777B8}
+		{66B9E17C-DCDF-4E0D-8DE8-60ADAA2A39D7} = {9D3187C2-A72B-4AA1-ADE8-23F65D1777B8}
+		{943A847A-1FD5-49C1-82F6-C280D58D7CDA} = {B4330C9F-8168-4AD7-88BA-7EB463347F36}
+		{5F1D370D-76E1-40AF-AAC3-529E607EEF9B} = {B4330C9F-8168-4AD7-88BA-7EB463347F36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}
