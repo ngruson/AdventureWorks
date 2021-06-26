@@ -1,7 +1,7 @@
 ﻿using AW.Services.Product.Persistence.EntityFramework;
 using Xunit;
 
-namespace AW.Services.Customer.Persistence.EF.UnitTests
+namespace AW.Services.Product.Persistence.EF.UnitTests
 {
     public class AWContextUnitTests
     {

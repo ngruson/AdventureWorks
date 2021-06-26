@@ -1,0 +1,2731 @@
+{
+  "Ardalis.Specification.EntityFramework.dll": {
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Evaluators\\AsNoTrackingEvaluator.cs": {
+      "Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator": {
+        "Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator::get_Instance()": {
+          "Lines": {
+            "9": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator::get_IsCriteriaEvaluator()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`1<T>)": {
+          "Lines": {
+            "14": 4,
+            "15": 4,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 4,
+            "21": 4
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 9,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.AsNoTrackingEvaluator::.ctor()": {
+          "Lines": {
+            "8": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Evaluators\\IncludeEvaluator.cs": {
+      "Ardalis.Specification.EntityFramework.IncludeEvaluator": {
+        "Ardalis.Specification.EntityFramework.IncludeEvaluator Ardalis.Specification.EntityFramework.IncludeEvaluator::get_Instance()": {
+          "Lines": {
+            "9": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean Ardalis.Specification.EntityFramework.IncludeEvaluator::get_IsCriteriaEvaluator()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.IncludeEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`1<T>)": {
+          "Lines": {
+            "14": 3,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 3,
+            "33": 3
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 40,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 40,
+              "EndOffset": 42,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 20,
+              "Offset": 139,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 91,
+              "EndOffset": 93,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 91,
+              "EndOffset": 106,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 119,
+              "EndOffset": 121,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 119,
+              "EndOffset": 132,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 139,
+              "EndOffset": 141,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.IncludeEvaluator::.ctor()": {
+          "Lines": {
+            "8": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Evaluators\\OrderEvaluator.cs": {
+      "Ardalis.Specification.EntityFramework.OrderEvaluator": {
+        "Ardalis.Specification.EntityFramework.OrderEvaluator Ardalis.Specification.EntityFramework.OrderEvaluator::get_Instance()": {
+          "Lines": {
+            "10": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean Ardalis.Specification.EntityFramework.OrderEvaluator::get_IsCriteriaEvaluator()": {
+          "Lines": {
+            "12": 2
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.OrderEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`1<T>)": {
+          "Lines": {
+            "15": 3,
+            "16": 3,
+            "17": 3,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "24": 3,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "45": 3,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 3,
+            "51": 3,
+            "52": 3
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 12,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 18,
+              "Offset": 30,
+              "EndOffset": 32,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 18,
+              "Offset": 30,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 18,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 70,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            },
+            {
+              "Line": 25,
+              "Offset": 966,
+              "EndOffset": 99,
+              "Path": 1,
+              "Ordinal": 31,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 122,
+              "EndOffset": 127,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 133,
+              "EndOffset": 137,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 133,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 193,
+              "EndOffset": 197,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 193,
+              "EndOffset": 266,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 122,
+              "EndOffset": 322,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 336,
+              "EndOffset": 341,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 347,
+              "EndOffset": 351,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 347,
+              "EndOffset": 387,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 407,
+              "EndOffset": 411,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 407,
+              "EndOffset": 480,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 336,
+              "EndOffset": 536,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 550,
+              "EndOffset": 555,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 561,
+              "EndOffset": 565,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 561,
+              "EndOffset": 601,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 621,
+              "EndOffset": 625,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 621,
+              "EndOffset": 694,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 550,
+              "EndOffset": 750,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 764,
+              "EndOffset": 769,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 775,
+              "EndOffset": 779,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 775,
+              "EndOffset": 815,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 835,
+              "EndOffset": 839,
+              "Path": 1,
+              "Ordinal": 29,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 835,
+              "EndOffset": 908,
+              "Path": 0,
+              "Ordinal": 28,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 764,
+              "EndOffset": 959,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 966,
+              "EndOffset": 971,
+              "Path": 0,
+              "Ordinal": 30,
+              "Hits": 3
+            },
+            {
+              "Line": 45,
+              "Offset": 992,
+              "EndOffset": 994,
+              "Path": 0,
+              "Ordinal": 32,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 992,
+              "EndOffset": 999,
+              "Path": 1,
+              "Ordinal": 33,
+              "Hits": 3
+            },
+            {
+              "Line": 16,
+              "Offset": 12,
+              "EndOffset": 1000,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 18,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 18,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Collections.Generic.IEnumerable`1<T> Ardalis.Specification.EntityFramework.OrderEvaluator::Evaluate(System.Collections.Generic.IEnumerable`1<T>,Ardalis.Specification.ISpecification`1<T>)": {
+          "Lines": {
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0,
+            "91": 0,
+            "92": 0
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 12,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 30,
+              "EndOffset": 32,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 30,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 70,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 966,
+              "EndOffset": 99,
+              "Path": 1,
+              "Ordinal": 31,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 122,
+              "EndOffset": 127,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 133,
+              "EndOffset": 137,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 133,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 193,
+              "EndOffset": 197,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 193,
+              "EndOffset": 266,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 122,
+              "EndOffset": 322,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 336,
+              "EndOffset": 341,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 347,
+              "EndOffset": 351,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 347,
+              "EndOffset": 387,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 407,
+              "EndOffset": 411,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 407,
+              "EndOffset": 480,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 336,
+              "EndOffset": 536,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 75,
+              "Offset": 550,
+              "EndOffset": 555,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 561,
+              "EndOffset": 565,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 561,
+              "EndOffset": 601,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 621,
+              "EndOffset": 625,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 77,
+              "Offset": 621,
+              "EndOffset": 694,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 75,
+              "Offset": 550,
+              "EndOffset": 750,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 764,
+              "EndOffset": 769,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 775,
+              "EndOffset": 779,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 775,
+              "EndOffset": 815,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 835,
+              "EndOffset": 839,
+              "Path": 1,
+              "Ordinal": 29,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 835,
+              "EndOffset": 908,
+              "Path": 0,
+              "Ordinal": 28,
+              "Hits": 0
+            },
+            {
+              "Line": 79,
+              "Offset": 764,
+              "EndOffset": 959,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 966,
+              "EndOffset": 971,
+              "Path": 0,
+              "Ordinal": 30,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 992,
+              "EndOffset": 994,
+              "Path": 0,
+              "Ordinal": 32,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 992,
+              "EndOffset": 999,
+              "Path": 1,
+              "Ordinal": 33,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 12,
+              "EndOffset": 1000,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 58,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Linq.Expressions.LambdaExpression Ardalis.Specification.EntityFramework.OrderEvaluator::RemoveConvert(System.Linq.Expressions.LambdaExpression)": {
+          "Lines": {
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "100": 0,
+            "101": 0
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 34,
+              "EndOffset": 10,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 97,
+              "Offset": 34,
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.OrderEvaluator::.ctor()": {
+          "Lines": {
+            "9": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Evaluators\\SearchEvaluator.cs": {
+      "Ardalis.Specification.EntityFramework.SearchEvaluator": {
+        "Ardalis.Specification.EntityFramework.SearchEvaluator Ardalis.Specification.EntityFramework.SearchEvaluator::get_Instance()": {
+          "Lines": {
+            "8": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean Ardalis.Specification.EntityFramework.SearchEvaluator::get_IsCriteriaEvaluator()": {
+          "Lines": {
+            "10": 2
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.SearchEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`1<T>)": {
+          "Lines": {
+            "13": 4,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 4,
+            "21": 4
+          },
+          "Branches": [
+            {
+              "Line": 14,
+              "Offset": 14,
+              "EndOffset": 16,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 14,
+              "Offset": 14,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 14,
+              "Offset": 114,
+              "EndOffset": 52,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 67,
+              "EndOffset": 69,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 67,
+              "EndOffset": 92,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 114,
+              "EndOffset": 116,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 4
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.SearchEvaluator::.ctor()": {
+          "Lines": {
+            "7": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Extensions\\DbSetExtensions.cs": {
+      "Ardalis.Specification.EntityFramework.DbSetExtensions": {
+        "System.Linq.IQueryable`1<TSource> Ardalis.Specification.EntityFramework.DbSetExtensions::WithSpecification(System.Linq.IQueryable`1<TSource>,Ardalis.Specification.ISpecification`1<TSource>,Ardalis.Specification.ISpecificationEvaluator)": {
+          "Lines": {
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 3,
+              "EndOffset": 5,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 31,
+              "Offset": 3,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.DbSetExtensions/<ToListAsync>d__0`1": {
+        "System.Void Ardalis.Specification.EntityFramework.DbSetExtensions/<ToListAsync>d__0`1::MoveNext()": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 62,
+              "EndOffset": 131,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 174,
+              "EndOffset": 205,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.DbSetExtensions/<ToEnumerableAsync>d__1`1": {
+        "System.Void Ardalis.Specification.EntityFramework.DbSetExtensions/<ToEnumerableAsync>d__1`1::MoveNext()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 62,
+              "EndOffset": 131,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 174,
+              "EndOffset": 200,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Extensions\\IncludeExtensions.cs": {
+      "Ardalis.Specification.EntityFramework.IncludeExtensions": {
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.IncludeExtensions::Include(System.Linq.IQueryable`1<T>,Ardalis.Specification.IncludeExpressionInfo)": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": [
+            {
+              "Line": 14,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 2,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.IncludeExtensions::ThenInclude(System.Linq.IQueryable`1<T>,Ardalis.Specification.IncludeExpressionInfo)": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "34": 0,
+            "37": 0,
+            "38": 0,
+            "41": 0,
+            "42": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 22,
+              "Offset": 2,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 21,
+              "EndOffset": 23,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 21,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 82,
+              "EndOffset": 84,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 82,
+              "EndOffset": 103,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Ardalis.Specification.EntityFramework.IncludeExtensions::GetPropertyName(System.Linq.Expressions.Expression,System.Char,System.Char)": {
+          "Lines": {
+            "55": 0,
+            "57": 0,
+            "58": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0
+          },
+          "Branches": [
+            {
+              "Line": 60,
+              "Offset": 18,
+              "EndOffset": 20,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 60,
+              "Offset": 18,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Extensions\\ParameterReplacerVisitor.cs": {
+      "Ardalis.Specification.EntityFramework.ParameterReplacerVisitor": {
+        "System.Linq.Expressions.Expression Ardalis.Specification.EntityFramework.ParameterReplacerVisitor::Replace(System.Linq.Expressions.Expression,System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Linq.Expressions.Expression Ardalis.Specification.EntityFramework.ParameterReplacerVisitor::VisitParameter(System.Linq.Expressions.ParameterExpression)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 12,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.ParameterReplacerVisitor::.ctor(System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Extensions\\SearchExtension.cs": {
+      "Ardalis.Specification.EntityFramework.SearchExtension": {
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.SearchExtension::Search(System.Linq.IQueryable`1<T>,System.Collections.Generic.IEnumerable`1<System.ValueTuple`2<System.Linq.Expressions.Expression`1<System.Func`2<T,System.String>>,System.String>>)": {
+          "Lines": {
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "35": 0,
+            "37": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0,
+            "46": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 216,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 59,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 75,
+              "EndOffset": 82,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 168,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 194,
+              "EndOffset": 196,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 194,
+              "EndOffset": 206,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 75,
+              "EndOffset": 210,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 216,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 235,
+              "EndOffset": 237,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 235,
+              "EndOffset": 261,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\RepositoryBase.cs": {
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1": {
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.RepositoryBase`1::ApplySpecification(Ardalis.Specification.ISpecification`1<T>,System.Boolean)": {
+          "Lines": {
+            "112": 3,
+            "113": 3,
+            "114": 3
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<TResult> Ardalis.Specification.EntityFramework.RepositoryBase`1::ApplySpecification(Ardalis.Specification.ISpecification`2<T,TResult>)": {
+          "Lines": {
+            "126": 3,
+            "127": 4,
+            "128": 3,
+            "130": 1,
+            "131": 1
+          },
+          "Branches": [
+            {
+              "Line": 127,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 127,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 128,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 128,
+              "Offset": 31,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1::.ctor(System.Data.Entity.DbContext)": {
+          "Lines": {
+            "16": 12,
+            "17": 12,
+            "18": 12
+          },
+          "Branches": []
+        },
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1::.ctor(System.Data.Entity.DbContext,Ardalis.Specification.ISpecificationEvaluator)": {
+          "Lines": {
+            "21": 12,
+            "22": 12,
+            "23": 12,
+            "24": 12,
+            "25": 12
+          },
+          "Branches": []
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<AddAsync>d__4": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<AddAsync>d__4::MoveNext()": {
+          "Lines": {
+            "29": 1,
+            "30": 1,
+            "32": 1,
+            "34": 1,
+            "35": 1
+          },
+          "Branches": [
+            {
+              "Line": 32,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 76,
+              "EndOffset": 143,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<UpdateAsync>d__5": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<UpdateAsync>d__5::MoveNext()": {
+          "Lines": {
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0
+          },
+          "Branches": [
+            {
+              "Line": 41,
+              "Offset": 78,
+              "EndOffset": 80,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 78,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<DeleteAsync>d__6": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<DeleteAsync>d__6::MoveNext()": {
+          "Lines": {
+            "45": 1,
+            "46": 1,
+            "48": 1,
+            "49": 1
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 76,
+              "EndOffset": 142,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<DeleteRangeAsync>d__7": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<DeleteRangeAsync>d__7::MoveNext()": {
+          "Lines": {
+            "52": 1,
+            "53": 1,
+            "55": 1,
+            "56": 1
+          },
+          "Branches": [
+            {
+              "Line": 55,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 55,
+              "Offset": 76,
+              "EndOffset": 142,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<SaveChangesAsync>d__8": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<SaveChangesAsync>d__8::MoveNext()": {
+          "Lines": {
+            "59": 4,
+            "60": 4,
+            "61": 4
+          },
+          "Branches": [
+            {
+              "Line": 60,
+              "Offset": 50,
+              "EndOffset": 52,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 60,
+              "Offset": 50,
+              "EndOffset": 116,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetByIdAsync>d__9`1": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetByIdAsync>d__9`1::MoveNext()": {
+          "Lines": {
+            "65": 1,
+            "66": 1,
+            "67": 1
+          },
+          "Branches": [
+            {
+              "Line": 66,
+              "Offset": 75,
+              "EndOffset": 77,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 75,
+              "EndOffset": 141,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetBySpecAsync>d__10`1": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetBySpecAsync>d__10`1::MoveNext()": {
+          "Lines": {
+            "70": 1,
+            "71": 1,
+            "72": 1
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 62,
+              "EndOffset": 128,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetBySpecAsync>d__11`1": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<GetBySpecAsync>d__11`1::MoveNext()": {
+          "Lines": {
+            "75": 0,
+            "76": 0,
+            "77": 0
+          },
+          "Branches": [
+            {
+              "Line": 76,
+              "Offset": 56,
+              "EndOffset": 58,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 76,
+              "Offset": 56,
+              "EndOffset": 122,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__12": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__12::MoveNext()": {
+          "Lines": {
+            "81": 1,
+            "82": 1,
+            "83": 1
+          },
+          "Branches": [
+            {
+              "Line": 82,
+              "Offset": 55,
+              "EndOffset": 57,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 82,
+              "Offset": 55,
+              "EndOffset": 121,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__13": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__13::MoveNext()": {
+          "Lines": {
+            "86": 1,
+            "87": 1,
+            "89": 1,
+            "90": 1
+          },
+          "Branches": [
+            {
+              "Line": 87,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 57,
+              "EndOffset": 126,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 89,
+              "Offset": 169,
+              "EndOffset": 171,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 89,
+              "Offset": 169,
+              "EndOffset": 200,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__14`1": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<ListAsync>d__14`1::MoveNext()": {
+          "Lines": {
+            "93": 3,
+            "94": 3,
+            "96": 1,
+            "97": 1
+          },
+          "Branches": [
+            {
+              "Line": 94,
+              "Offset": 56,
+              "EndOffset": 58,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 94,
+              "Offset": 56,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 96,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 168,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "Ardalis.Specification.EntityFramework.RepositoryBase`1/<CountAsync>d__15": {
+        "System.Void Ardalis.Specification.EntityFramework.RepositoryBase`1/<CountAsync>d__15::MoveNext()": {
+          "Lines": {
+            "101": 1,
+            "102": 1,
+            "103": 1
+          },
+          "Branches": [
+            {
+              "Line": 102,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 102,
+              "Offset": 57,
+              "EndOffset": 123,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Persistence\\Ardalis.Specification.EntityFramework\\Evaluators\\SpecificationEvaluator.cs": {
+      "Ardalis.Specification.EntityFramework.SpecificationEvaluator": {
+        "Ardalis.Specification.EntityFramework.SpecificationEvaluator Ardalis.Specification.EntityFramework.SpecificationEvaluator::get_Default()": {
+          "Lines": {
+            "11": 13
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<TResult> Ardalis.Specification.EntityFramework.SpecificationEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`2<T,TResult>)": {
+          "Lines": {
+            "34": 1,
+            "35": 1,
+            "37": 1,
+            "38": 1
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<T> Ardalis.Specification.EntityFramework.SpecificationEvaluator::GetQuery(System.Linq.IQueryable`1<T>,Ardalis.Specification.ISpecification`1<T>,System.Boolean)": {
+          "Lines": {
+            "42": 4,
+            "43": 10,
+            "45": 54,
+            "46": 21,
+            "47": 21,
+            "48": 21,
+            "50": 4,
+            "51": 4
+          },
+          "Branches": [
+            {
+              "Line": 43,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 43,
+              "Offset": 2,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 43,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 43,
+              "Offset": 26,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 45,
+              "Offset": 92,
+              "EndOffset": 67,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 21
+            },
+            {
+              "Line": 45,
+              "Offset": 92,
+              "EndOffset": 94,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 4
+            }
+          ]
+        },
+        "System.Void Ardalis.Specification.EntityFramework.SpecificationEvaluator::.ctor()": {
+          "Lines": {
+            "13": 0,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "25": 1,
+            "26": 1
+          },
+          "Branches": []
+        },
+        "System.Void Ardalis.Specification.EntityFramework.SpecificationEvaluator::.ctor(System.Collections.Generic.IEnumerable`1<Ardalis.Specification.IEvaluator>)": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "AW.Common.UnitTesting.dll": {
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Common\\AW.Common.UnitTesting\\TestDbAsyncEnumerable.cs": {
+      "AW.Common.UnitTesting.TestDbAsyncEnumerable`1": {
+        "System.Data.Entity.Infrastructure.IDbAsyncEnumerator`1<T> AW.Common.UnitTesting.TestDbAsyncEnumerable`1::GetAsyncEnumerator()": {
+          "Lines": {
+            "19": 2,
+            "20": 2,
+            "21": 2
+          },
+          "Branches": []
+        },
+        "System.Data.Entity.Infrastructure.IDbAsyncEnumerator AW.Common.UnitTesting.TestDbAsyncEnumerable`1::System.Data.Entity.Infrastructure.IDbAsyncEnumerable.GetAsyncEnumerator()": {
+          "Lines": {
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryProvider AW.Common.UnitTesting.TestDbAsyncEnumerable`1::System.Linq.IQueryable.get_Provider()": {
+          "Lines": {
+            "30": 6
+          },
+          "Branches": []
+        },
+        "System.Void AW.Common.UnitTesting.TestDbAsyncEnumerable`1::.ctor(System.Collections.Generic.IEnumerable`1<T>)": {
+          "Lines": {
+            "11": 0,
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Void AW.Common.UnitTesting.TestDbAsyncEnumerable`1::.ctor(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "15": 4,
+            "16": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Common\\AW.Common.UnitTesting\\TestDbAsyncEnumerator.cs": {
+      "AW.Common.UnitTesting.TestDbAsyncEnumerator`1": {
+        "System.Void AW.Common.UnitTesting.TestDbAsyncEnumerator`1::Dispose()": {
+          "Lines": {
+            "18": 3,
+            "19": 3,
+            "20": 3
+          },
+          "Branches": []
+        },
+        "System.Threading.Tasks.Task`1<System.Boolean> AW.Common.UnitTesting.TestDbAsyncEnumerator`1::MoveNextAsync(System.Threading.CancellationToken)": {
+          "Lines": {
+            "23": 10,
+            "24": 10,
+            "25": 10
+          },
+          "Branches": []
+        },
+        "T AW.Common.UnitTesting.TestDbAsyncEnumerator`1::get_Current()": {
+          "Lines": {
+            "29": 21
+          },
+          "Branches": []
+        },
+        "System.Object AW.Common.UnitTesting.TestDbAsyncEnumerator`1::System.Data.Entity.Infrastructure.IDbAsyncEnumerator.get_Current()": {
+          "Lines": {
+            "34": 0
+          },
+          "Branches": []
+        },
+        "System.Void AW.Common.UnitTesting.TestDbAsyncEnumerator`1::.ctor(System.Collections.Generic.IEnumerator`1<T>)": {
+          "Lines": {
+            "12": 11,
+            "13": 11,
+            "14": 11,
+            "15": 11
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Common\\AW.Common.UnitTesting\\TestDbAsyncQueryProvider.cs": {
+      "AW.Common.UnitTesting.TestDbAsyncQueryProvider`1": {
+        "System.Linq.IQueryable AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::CreateQuery(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0
+          },
+          "Branches": []
+        },
+        "System.Linq.IQueryable`1<TElement> AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::CreateQuery(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "24": 4,
+            "25": 4,
+            "26": 4
+          },
+          "Branches": []
+        },
+        "System.Object AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::Execute(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0
+          },
+          "Branches": []
+        },
+        "TResult AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::Execute(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "34": 2,
+            "35": 2,
+            "36": 2
+          },
+          "Branches": []
+        },
+        "System.Threading.Tasks.Task`1<System.Object> AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::ExecuteAsync(System.Linq.Expressions.Expression,System.Threading.CancellationToken)": {
+          "Lines": {
+            "39": 0,
+            "40": 0,
+            "41": 0
+          },
+          "Branches": []
+        },
+        "System.Threading.Tasks.Task`1<TResult> AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::ExecuteAsync(System.Linq.Expressions.Expression,System.Threading.CancellationToken)": {
+          "Lines": {
+            "44": 2,
+            "45": 2,
+            "46": 2
+          },
+          "Branches": []
+        },
+        "System.Void AW.Common.UnitTesting.TestDbAsyncQueryProvider`1::.ctor(System.Linq.IQueryProvider)": {
+          "Lines": {
+            "13": 11,
+            "14": 11,
+            "15": 11,
+            "16": 11
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "AW.Services.Customer.Domain.dll": {
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\Address.cs": {
+      "AW.Services.Customer.Domain.Address": {
+        "System.Int32 AW.Services.Customer.Domain.Address::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_AddressLine1()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_AddressLine2()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_PostalCode()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_City()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_StateProvinceCode()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Address::get_CountryRegionCode()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\Customer.cs": {
+      "AW.Services.Customer.Domain.Customer": {
+        "System.Int32 AW.Services.Customer.Domain.Customer::get_Id()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Customer::get_AccountNumber()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Customer::get_Territory()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<AW.Services.Customer.Domain.CustomerAddress> AW.Services.Customer.Domain.Customer::get_Addresses()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<AW.Services.Customer.Domain.SalesOrder> AW.Services.Customer.Domain.Customer::get_SalesOrders()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\CustomerAddress.cs": {
+      "AW.Services.Customer.Domain.CustomerAddress": {
+        "System.Int32 AW.Services.Customer.Domain.CustomerAddress::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.CustomerAddress::get_AddressType()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "AW.Services.Customer.Domain.Address AW.Services.Customer.Domain.CustomerAddress::get_Address()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 AW.Services.Customer.Domain.CustomerAddress::get_AddressID()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\IndividualCustomer.cs": {
+      "AW.Services.Customer.Domain.IndividualCustomer": {
+        "AW.Services.Customer.Domain.Person AW.Services.Customer.Domain.IndividualCustomer::get_Person()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "AW.Services.Customer.Domain.CustomerType AW.Services.Customer.Domain.IndividualCustomer::get_CustomerType()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\Person.cs": {
+      "AW.Services.Customer.Domain.Person": {
+        "System.Int32 AW.Services.Customer.Domain.Person::get_Id()": {
+          "Lines": {
+            "7": 24
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Person::get_Title()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Person::get_FirstName()": {
+          "Lines": {
+            "9": 26
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Person::get_MiddleName()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Person::get_LastName()": {
+          "Lines": {
+            "11": 33
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.Person::get_Suffix()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<AW.Services.Customer.Domain.PersonEmailAddress> AW.Services.Customer.Domain.Person::get_EmailAddresses()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<AW.Services.Customer.Domain.PersonPhone> AW.Services.Customer.Domain.Person::get_PhoneNumbers()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\PersonEmailAddress.cs": {
+      "AW.Services.Customer.Domain.PersonEmailAddress": {
+        "System.Int32 AW.Services.Customer.Domain.PersonEmailAddress::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.PersonEmailAddress::get_EmailAddress()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\PersonPhone.cs": {
+      "AW.Services.Customer.Domain.PersonPhone": {
+        "System.Int32 AW.Services.Customer.Domain.PersonPhone::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.PersonPhone::get_PhoneNumberType()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.PersonPhone::get_PhoneNumber()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\SalesOrder.cs": {
+      "AW.Services.Customer.Domain.SalesOrder": {
+        "System.Int32 AW.Services.Customer.Domain.SalesOrder::get_Id()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime AW.Services.Customer.Domain.SalesOrder::get_OrderDate()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.DateTime AW.Services.Customer.Domain.SalesOrder::get_DueDate()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.DateTime> AW.Services.Customer.Domain.SalesOrder::get_ShipDate()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "AW.Services.Customer.Domain.SalesOrderStatus AW.Services.Customer.Domain.SalesOrder::get_Status()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean AW.Services.Customer.Domain.SalesOrder::get_OnlineOrderFlag()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.SalesOrder::get_SalesOrderNumber()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.SalesOrder::get_PurchaseOrderNumber()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.SalesOrder::get_AccountNumber()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "System.Decimal AW.Services.Customer.Domain.SalesOrder::get_TotalDue()": {
+          "Lines": {
+            "24": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\StoreCustomer.cs": {
+      "AW.Services.Customer.Domain.StoreCustomer": {
+        "AW.Services.Customer.Domain.CustomerType AW.Services.Customer.Domain.StoreCustomer::get_CustomerType()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.StoreCustomer::get_Name()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.StoreCustomer::get_SalesPerson()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<AW.Services.Customer.Domain.StoreCustomerContact> AW.Services.Customer.Domain.StoreCustomer::get_Contacts()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Domain\\StoreCustomerContact.cs": {
+      "AW.Services.Customer.Domain.StoreCustomerContact": {
+        "System.Int32 AW.Services.Customer.Domain.StoreCustomerContact::get_Id()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.String AW.Services.Customer.Domain.StoreCustomerContact::get_ContactType()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "AW.Services.Customer.Domain.StoreCustomer AW.Services.Customer.Domain.StoreCustomerContact::get_StoreCustomer()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 AW.Services.Customer.Domain.StoreCustomerContact::get_StoreCustomerId()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "AW.Services.Customer.Domain.Person AW.Services.Customer.Domain.StoreCustomerContact::get_ContactPerson()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 AW.Services.Customer.Domain.StoreCustomerContact::get_ContactPersonId()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "AW.Services.Customer.Persistence.EntityFramework.dll": {
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\AWContext.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.AWContext": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.AWContext::SetModified(System.Object)": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0
+          },
+          "Branches": []
+        },
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.AWContext::OnModelCreating(System.Data.Entity.DbModelBuilder)": {
+          "Lines": {
+            "28": 1,
+            "29": 1,
+            "30": 27,
+            "31": 27,
+            "32": 27,
+            "33": 23,
+            "34": 10,
+            "35": 10,
+            "36": 10,
+            "37": 10,
+            "39": 1,
+            "40": 1
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 215,
+              "EndOffset": 94,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 10
+            },
+            {
+              "Line": 36,
+              "Offset": 114,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 36,
+              "Offset": 114,
+              "EndOffset": 180,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 33,
+              "Offset": 215,
+              "EndOffset": 217,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 31,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 26
+            },
+            {
+              "Line": 31,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 11
+            },
+            {
+              "Line": 31,
+              "Offset": 12,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 15
+            },
+            {
+              "Line": 31,
+              "Offset": 25,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 15
+            }
+          ]
+        },
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.AWContext::.ctor()": {
+          "Lines": {
+            "13": 12,
+            "14": 12,
+            "15": 12
+          },
+          "Branches": []
+        },
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.AWContext::.ctor(System.Data.Common.DbConnection,System.Boolean)": {
+          "Lines": {
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\EfRepository.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.EfRepository`1": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.EfRepository`1::.ctor(AW.Services.Customer.Persistence.EntityFramework.AWContext)": {
+          "Lines": {
+            "11": 12,
+            "12": 12,
+            "13": 12,
+            "14": 12
+          },
+          "Branches": []
+        }
+      },
+      "AW.Services.Customer.Persistence.EntityFramework.EfRepository`1/<UpdateAsync>d__2": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.EfRepository`1/<UpdateAsync>d__2::MoveNext()": {
+          "Lines": {
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 76,
+              "EndOffset": 142,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\AddressConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.AddressConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.AddressConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\CustomerAddressConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.CustomerAddressConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.CustomerAddressConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\CustomerConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.CustomerConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.CustomerConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\IndividualCustomerConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.IndividualCustomerConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.IndividualCustomerConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\PersonConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\PersonEmailAddressConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonEmailAddressConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonEmailAddressConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\PersonPhoneConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonPhoneConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.PersonPhoneConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\SalesOrderConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.SalesOrderConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.SalesOrderConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\StoreCustomerConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.StoreCustomerConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.StoreCustomerConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\ngrus\\Google Drive\\Repos\\ngruson\\AdventureWorks\\src\\Services\\Customer\\AW.Services.Customer.Persistence.EntityFramework\\Configurations\\StoreCustomerContactConfiguration.cs": {
+      "AW.Services.Customer.Persistence.EntityFramework.Configurations.StoreCustomerContactConfiguration": {
+        "System.Void AW.Services.Customer.Persistence.EntityFramework.Configurations.StoreCustomerContactConfiguration::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}
