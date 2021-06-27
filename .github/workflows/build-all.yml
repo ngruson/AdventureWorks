@@ -64,7 +64,7 @@ jobs:
 
       - name: Build Product services and run unit tests
         run: |
-          dotnet build src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-restore
+          dotnet build src\Services\Product\AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-restore
           dotnet test src\Services\Product\AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           msbuild src\Services\Product\AW.Services.Product.Persistence.EF.UnitTests\AW.Services.Product.Persistence.EF.UnitTests.csproj
