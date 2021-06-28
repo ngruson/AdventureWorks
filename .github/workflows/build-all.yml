@@ -48,11 +48,11 @@ jobs:
           dotnet build src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-restore
           dotnet test src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-                    
           msbuild src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj
+          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EF.UnitTests\AW.Services.Customer.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
           dotnet build src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-restore
+          dotnet test src\Services\Customer\AW.Services.Customer.Persistence.EFCore.UnitTests\AW.Services.Customer.Persistence.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\Customer\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
           dotnet build src\Services\Customer\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
@@ -64,7 +64,7 @@ jobs:
 
       - name: Build Product services and run unit tests
         run: |
-          dotnet build src\Services\Customer\AW.Services.Customer.Application.UnitTests\AW.Services.Customer.Application.UnitTests.csproj --no-restore
+          dotnet build src\Services\Product\AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-restore
           dotnet test src\Services\Product\AW.Services.Product.Application.UnitTests\AW.Services.Product.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           msbuild src\Services\Product\AW.Services.Product.Persistence.EF.UnitTests\AW.Services.Product.Persistence.EF.UnitTests.csproj
@@ -106,7 +106,7 @@ jobs:
           dotnet build src\Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesOrder\AW.Services.SalesOrder.Application.UnitTests\AW.Services.SalesOrder.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          msbuild src\Services\SalesOrder\AW.Services.SalesOrder.Persistence.EF.UnitTests\AW.Services.SalesOrder.Persistence.EF.UnitTests.csproj --no-restore
+          msbuild src\Services\SalesOrder\AW.Services.SalesOrder.Persistence.EF.UnitTests\AW.Services.SalesOrder.Persistence.EF.UnitTests.csproj
           dotnet test src\Services\SalesOrder\AW.Services.SalesOrder.Persistence.EF.UnitTests\AW.Services.SalesOrder.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\SalesOrder\AW.Services.SalesOrder.Persistence.EFCore.UnitTests\AW.Services.SalesOrder.Persistence.EFCore.UnitTests.csproj --no-restore
@@ -126,7 +126,7 @@ jobs:
           dotnet build src\Services\SalesPerson\AW.Services.SalesPerson.Application.UnitTests\AW.Services.SalesPerson.Application.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesPerson\AW.Services.SalesPerson.Application.UnitTests\AW.Services.SalesPerson.Application.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          msbuild src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj --no-restore
+          msbuild src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj
           dotnet test src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EF.UnitTests\AW.Services.SalesPerson.Persistence.EF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\SalesPerson\AW.Services.SalesPerson.Persistence.EFCore.UnitTests\AW.Services.SalesPerson.Persistence.EFCore.UnitTests.csproj --no-restore
