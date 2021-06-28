@@ -32,7 +32,7 @@ namespace AW.Services.Product.Application.UnitTests
             );
 
             //Act
-            var query = new GetProductQuery();
+            var query = new GetProductQuery { ProductNumber = "FR-R92B-58" };
             var result = await handler.Handle(query, CancellationToken.None);
 
             //Assert

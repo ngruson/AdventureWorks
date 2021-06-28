@@ -32,7 +32,7 @@ namespace AW.Services.Customer.Application.UnitTests
             );
 
             //Act
-            var command = new DeleteCustomerCommand();
+            var command = new DeleteCustomerCommand { AccountNumber = "AW00011000" };
             var result = await handler.Handle(command, CancellationToken.None);
 
             //Assert

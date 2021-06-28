@@ -26,8 +26,6 @@ namespace AW.Services.Product.Application.CountProducts
             var spec = new GetProductsCountSpecification();
             var count = await repository.CountAsync(spec);
 
-            Guard.Against.Null(count, nameof(count));
-
             logger.LogInformation("Returning product count");
             return count;
         }
