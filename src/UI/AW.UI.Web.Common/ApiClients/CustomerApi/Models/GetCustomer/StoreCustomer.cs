@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AW.Common.Interfaces;
+using System.Collections.Generic;
 
 namespace AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomer
 {

@@ -1,6 +1,6 @@
-﻿using AW.UI.Web.Common.ApiClients.CustomerApi;
+﻿using AW.Common.JsonConverters;
+using AW.UI.Web.Common.ApiClients.CustomerApi;
 using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
-using AW.UI.Web.Common.JsonConverters;
 using AW.UI.Web.Common.UnitTests.TestBuilders.GetCustomers;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;

@@ -7,7 +7,6 @@ namespace AW.Services.Customer.REST.API.Models.UpdateCustomer
 {
     public class StoreCustomer : Customer, IMapFrom<StoreCustomerDto>
     {
-        public override CustomerType CustomerType => CustomerType.Store;
         public string Name { get; set; }
         public string SalesPerson { get; set; }
         public List<StoreCustomerContact> Contacts { get; set; }

@@ -1,4 +1,5 @@
-﻿using AW.Services.Customer.REST.API.JsonConverters;
+﻿using AW.Common.Interfaces;
+using AW.Common.JsonConverters;
 using FluentAssertions;
 using System.Linq;
 using System.Text.Json;
@@ -192,7 +193,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 storeCustomer.AccountNumber.Should().Be("AW00000001");
-                storeCustomer.CustomerType.Should().Be(Models.CustomerType.Store);
+                storeCustomer.CustomerType.Should().Be(CustomerType.Store);
                 storeCustomer.Name.Should().Be("A Bike Store");
                 storeCustomer.SalesPerson.Should().Be("Pamela O Ansman-Wolfe");
                 storeCustomer.Territory.Should().Be("Northwest");
@@ -278,7 +279,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 individualCustomer.AccountNumber.Should().Be("AW00011000");
-                individualCustomer.CustomerType.Should().Be(Models.CustomerType.Individual);
+                individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
                 individualCustomer.Person.FirstName.Should().Be("Jon");
@@ -484,7 +485,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 storeCustomer.AccountNumber.Should().Be("AW00000001");
-                storeCustomer.CustomerType.Should().Be(Models.CustomerType.Store);
+                storeCustomer.CustomerType.Should().Be(CustomerType.Store);
                 storeCustomer.Name.Should().Be("A Bike Store");
                 storeCustomer.SalesPerson.Should().Be("Pamela O Ansman-Wolfe");
                 storeCustomer.Territory.Should().Be("Northwest");
@@ -570,7 +571,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 individualCustomer.AccountNumber.Should().Be("AW00011000");
-                individualCustomer.CustomerType.Should().Be(Models.CustomerType.Individual);
+                individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
                 individualCustomer.Person.FirstName.Should().Be("Jon");

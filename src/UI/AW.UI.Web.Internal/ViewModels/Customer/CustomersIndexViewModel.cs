@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 

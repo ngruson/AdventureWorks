@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AW.Common.Interfaces;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers
 {
-    public abstract class Customer
+    public abstract class Customer : ICustomer
     {
         public CustomerType CustomerType { get; set; }
         public string AccountNumber { get; set; }

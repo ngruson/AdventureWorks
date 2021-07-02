@@ -1,13 +1,14 @@
 ﻿using Ardalis.GuardClauses;
-using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+using AW.Common.Extensions;
+using AW.Common.Interfaces;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AW.UI.Web.Common.JsonConverters
+namespace AW.Common.JsonConverters
 {
     public class CustomerConverter<T, TStore, TIndividual> : JsonConverter<T>
-        where T : class
+        where T : class, ICustomer
         where TStore : class, T
         where TIndividual : class, T
     {
@@ -25,10 +26,10 @@ namespace AW.UI.Web.Common.JsonConverters
 
             if (!string.IsNullOrEmpty(customerType.GetString()))
             {
-                if (Enum.Parse<CustomerType>(customerType.GetString()) == CustomerType.Store)
+                if (Enum<CustomerType>.Parse(customerType.GetString()) == CustomerType.Store)
                     return JsonSerializer.Deserialize(ref reader, typeof(TStore), options) as TStore;
 
-                if (Enum.Parse<CustomerType>(customerType.GetString()) == CustomerType.Individual)
+                if (Enum<CustomerType>.Parse(customerType.GetString()) == CustomerType.Individual)
                     return JsonSerializer.Deserialize(ref reader, typeof(TIndividual), options) as TIndividual;
             }
 

@@ -1,4 +1,5 @@
-﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.Common.Interfaces;
+using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
@@ -58,7 +59,7 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
         {
             customer = new StoreCustomer
             {
-                CustomerType = Common.ApiClients.CustomerApi.Models.GetCustomers.CustomerType.Store,
+                CustomerType = AW.Common.Interfaces.CustomerType.Store,
                 AccountNumber = "AW00000001",
                 Name = "A Bike Store",
                 SalesPerson = "Pamela O Ansman-Wolfe",

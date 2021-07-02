@@ -13,6 +13,7 @@ using AW.UI.Web.Internal.Services;
 using Microsoft.Extensions.Logging;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
+using AW.Common.Interfaces;
 
 namespace AW.UI.Web.Internal.UnitTests
 {
@@ -41,7 +42,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<string>(),
-                It.IsAny<customerApi.Models.GetCustomers.CustomerType>(),
+                It.IsAny<CustomerType>(),
                 It.IsAny<string>()
             ))
             .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
@@ -67,7 +68,7 @@ namespace AW.UI.Web.Internal.UnitTests
             );
 
             //Act
-            var viewModel = await svc.GetCustomers(0, 10, null, customerApi.Models.GetCustomers.CustomerType.Store, null);
+            var viewModel = await svc.GetCustomers(0, 10, null, CustomerType.Store, null);
 
             //Assert
             viewModel.Customers.Count.Should().Be(10);

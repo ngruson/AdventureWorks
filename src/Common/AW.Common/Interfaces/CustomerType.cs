@@ -1,4 +1,4 @@
-﻿namespace AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers
+﻿namespace AW.Common.Interfaces
 {
     public enum CustomerType
     {

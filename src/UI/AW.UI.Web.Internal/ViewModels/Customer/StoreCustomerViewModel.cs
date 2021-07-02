@@ -3,12 +3,13 @@ using AW.Common.AutoMapper;
 using customerApi = AW.UI.Web.Common.ApiClients.CustomerApi.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AW.Common.Interfaces;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
     public class StoreCustomerViewModel : CustomerViewModel, IMapFrom<customerApi.GetCustomers.StoreCustomer>
     {
-        public override customerApi.GetCustomers.CustomerType CustomerType => customerApi.GetCustomers.CustomerType.Store;
+        public override CustomerType CustomerType => CustomerType.Store;
         public string Name { get; set; }
 
         [Display(Name = "Sales person")]

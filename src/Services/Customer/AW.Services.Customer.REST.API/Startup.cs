@@ -16,6 +16,7 @@ using System.Text.Json;
 using System;
 using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
+using AW.Common.JsonConverters;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -38,21 +39,21 @@ namespace AW.Services.Customer.REST.API
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
                     options.JsonSerializerOptions.Converters.Add(
-                        new JsonConverters.CustomerConverter<
+                        new CustomerConverter<
                             Models.GetCustomers.Customer,
                             Models.GetCustomers.StoreCustomer,
                             Models.GetCustomers.IndividualCustomer>()
                     );
 
                     options.JsonSerializerOptions.Converters.Add(
-                        new JsonConverters.CustomerConverter<
+                        new CustomerConverter<
                             Models.GetCustomer.Customer,
                             Models.GetCustomer.StoreCustomer,
                             Models.GetCustomer.IndividualCustomer>()
                     );
 
                     options.JsonSerializerOptions.Converters.Add(
-                        new JsonConverters.CustomerConverter<
+                        new CustomerConverter<
                             Models.UpdateCustomer.Customer,
                             Models.UpdateCustomer.StoreCustomer,
                             Models.UpdateCustomer.IndividualCustomer>()

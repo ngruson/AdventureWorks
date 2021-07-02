@@ -107,11 +107,11 @@ namespace AW.Services.ReferenceData.Application.UnitTests
         {
             var mapper = Mapper.CreateMapper();
             var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
-            var contactTypeRepoMock = new Mock<IRepositoryBase<Domain.StateProvince>>();
+            var stateProvinceRepoMock = new Mock<IRepositoryBase<Domain.StateProvince>>();
 
             var handler = new GetStatesProvincesQueryHandler(
                 loggerMock.Object,
-                contactTypeRepoMock.Object,
+                stateProvinceRepoMock.Object,
                 mapper
             );
 
@@ -121,7 +121,7 @@ namespace AW.Services.ReferenceData.Application.UnitTests
 
             //Assert
             func.Should().Throw<ArgumentNullException>();
-            contactTypeRepoMock.Verify(x => x.ListAsync());
+            stateProvinceRepoMock.Verify(x => x.ListAsync());
         }
     }
 }

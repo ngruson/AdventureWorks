@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.Common.Interfaces;
 using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
 using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetCountries;
 using AW.UI.Web.Common.ApiClients.ReferenceDataApi.Models.GetStateProvinces;

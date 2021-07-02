@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AW.UI.Web.Internal.ViewModels.Customer;
-using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.Extensions;
+using AW.Common.Interfaces;
 
 namespace AW.UI.Web.Internal.Controllers
 {

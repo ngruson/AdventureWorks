@@ -1,4 +1,5 @@
-﻿using AW.UI.Web.Common.JsonConverters;
+﻿using AW.Common.Interfaces;
+using AW.Common.JsonConverters;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -21,7 +22,7 @@ namespace AW.UI.Web.Common.ApiClients.CustomerApi
             int pageIndex, 
             int pageSize, 
             string territory, 
-            Models.GetCustomers.CustomerType? customerType,
+            CustomerType? customerType,
             string accountNumber
         )
         {
@@ -38,7 +39,7 @@ namespace AW.UI.Web.Common.ApiClients.CustomerApi
             };
             if (customerType.HasValue)
             {
-                var customerTypeValue = customerType.Value == Models.GetCustomers.CustomerType.Individual ? 0 : 1;
+                var customerTypeValue = customerType.Value == CustomerType.Individual ? 0 : 1;
                 logMessage += ", customer type {CustomerType}";
                 args.Add(customerType);
                 requestUri += $"&customerType={customerTypeValue}";

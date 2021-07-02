@@ -1,4 +1,5 @@
-﻿using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.Common.Interfaces;
+using AW.UI.Web.Common.ApiClients.CustomerApi.Models.GetCustomers;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Common.ApiClients.CustomerApi
