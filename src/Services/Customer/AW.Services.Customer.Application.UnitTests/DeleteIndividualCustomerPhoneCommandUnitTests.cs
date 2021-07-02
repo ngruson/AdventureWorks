@@ -21,11 +21,14 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteIndividualCustomerPhoneCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetIndividualCustomerSpecification>()))
-                .ReturnsAsync(new IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new IndividualCustomerBuilder()
+                .WithTestValues()
+                .Build()
+            );
 
             var handler = new DeleteIndividualCustomerPhoneCommandHandler(
                 loggerMock.Object,
@@ -46,7 +49,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.IndividualCustomer>()));
+            customerRepoMock.Verify(x => x.UpdateAsync(
+                It.IsAny<Domain.IndividualCustomer>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
 
         [Fact]
@@ -84,16 +90,19 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteIndividualCustomerPhoneCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetIndividualCustomerSpecification>()))
-                .ReturnsAsync(new IndividualCustomerBuilder()
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new IndividualCustomerBuilder()
+                .WithTestValues()
+                .Person(new PersonBuilder()
                     .WithTestValues()
-                    .Person(new PersonBuilder()
-                        .WithTestValues()
-                        .PhoneNumbers(new List<Domain.PersonPhone>())
-                        .Build()
-                    )
+                    .PhoneNumbers(new List<Domain.PersonPhone>())
                     .Build()
-                );
+                )
+                .Build()
+            );
 
             var handler = new DeleteIndividualCustomerPhoneCommandHandler(
                 loggerMock.Object,

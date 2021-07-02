@@ -36,7 +36,7 @@ namespace AW.Services.Customer.REST.API
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    
+
                     options.JsonSerializerOptions.Converters.Add(
                         new JsonConverters.CustomerConverter<
                             Models.GetCustomers.Customer,

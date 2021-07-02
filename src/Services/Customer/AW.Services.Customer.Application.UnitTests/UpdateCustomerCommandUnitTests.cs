@@ -21,11 +21,14 @@ namespace AW.Services.Customer.Application.UnitTests
             var mapper = Mapper.CreateMapper();
             var loggerMock = new Mock<ILogger<UpdateCustomerCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.Customer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
-                .ReturnsAsync(new IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new IndividualCustomerBuilder()
+                .WithTestValues()
+                .Build()
+            );
 
             var handler = new UpdateCustomerCommandHandler(
                 loggerMock.Object,
@@ -42,7 +45,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.Customer>()));
+            customerRepoMock.Verify(x => x.UpdateAsync(
+                It.IsAny<Domain.Customer>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
 
         [Fact]

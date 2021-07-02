@@ -21,26 +21,29 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteStoreCustomerContactCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.StoreCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStoreCustomerSpecification>()))
-                .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Contacts(new List<Domain.StoreCustomerContact> 
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetStoreCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new StoreCustomerBuilder()
+                .WithTestValues()
+                .Contacts(new List<Domain.StoreCustomerContact> 
+                    {
+                        new Domain.StoreCustomerContact
                         {
-                            new Domain.StoreCustomerContact
+                            ContactType = "Owner",
+                            ContactPerson = new Domain.Person
                             {
-                                ContactType = "Owner",
-                                ContactPerson = new Domain.Person
-                                {
-                                    Title = "Mr.",
-                                    FirstName = "Orlando",
-                                    MiddleName = "N.",
-                                    LastName = "Gee"
-                                }
+                                Title = "Mr.",
+                                FirstName = "Orlando",
+                                MiddleName = "N.",
+                                LastName = "Gee"
                             }
                         }
-                    )
-                    .Build()
-                );
+                    }
+                )
+                .Build()
+            );
 
             var handler = new DeleteStoreCustomerContactCommandHandler(
                 loggerMock.Object,
@@ -67,7 +70,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.StoreCustomer>()));
+            customerRepoMock.Verify(x => x.UpdateAsync(
+                It.IsAny<Domain.StoreCustomer>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
 
         [Fact]
@@ -111,12 +117,15 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteStoreCustomerContactCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.StoreCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetStoreCustomerSpecification>()))
-                .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Contacts(new List<Domain.StoreCustomerContact>())
-                    .Build()
-                );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetStoreCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new StoreCustomerBuilder()
+                .WithTestValues()
+                .Contacts(new List<Domain.StoreCustomerContact>())
+                .Build()
+            );
 
             var handler = new DeleteStoreCustomerContactCommandHandler(
                 loggerMock.Object,

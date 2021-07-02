@@ -7,11 +7,11 @@ namespace AW.Services.Customer.Application.GetCustomers
     {
         public GetCustomersQueryValidator()
         {
-            RuleFor(cmd => cmd.PageIndex)
-                .NotEmpty().WithMessage("Page index is required");
+            RuleFor(query => query.PageIndex)
+                .GreaterThanOrEqualTo(0).WithMessage("Page index is required");
 
-            RuleFor(cmd => cmd.PageSize)
-                .NotEmpty().WithMessage("Page size is required");
+            RuleFor(query => query.PageSize)
+                .GreaterThan(0).WithMessage("Page size is required");
         }
     }
 }

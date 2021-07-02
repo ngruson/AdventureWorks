@@ -2,7 +2,7 @@
 {
     public class ProductCategoryBuilder
     {
-        private Domain.ProductCategory category = new Domain.ProductCategory();
+        private Domain.ProductCategory category = new();
 
         public ProductCategoryBuilder Id(int id)
         {

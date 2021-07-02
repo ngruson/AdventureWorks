@@ -21,11 +21,14 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteIndividualCustomerEmailAddressCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetIndividualCustomerSpecification>()))
-                .ReturnsAsync(new IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new IndividualCustomerBuilder()
+                .WithTestValues()
+                .Build()
+            );
 
             var handler = new DeleteIndividualCustomerEmailAddressCommandHandler(
                 loggerMock.Object,
@@ -42,7 +45,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.UpdateAsync(It.IsAny<Domain.IndividualCustomer>()));
+            customerRepoMock.Verify(x => x.UpdateAsync(
+                It.IsAny<Domain.IndividualCustomer>(),
+                It.IsAny<CancellationToken>()    
+            ));
         }
 
         [Fact]
@@ -76,16 +82,19 @@ namespace AW.Services.Customer.Application.UnitTests
             // Arrange
             var loggerMock = new Mock<ILogger<DeleteIndividualCustomerEmailAddressCommandHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetIndividualCustomerSpecification>()))
-                .ReturnsAsync(new IndividualCustomerBuilder()
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new IndividualCustomerBuilder()
+                .WithTestValues()
+                .Person(new PersonBuilder()
                     .WithTestValues()
-                    .Person(new PersonBuilder()
-                        .WithTestValues()
-                        .EmailAddresses(new List<Domain.PersonEmailAddress>())
-                        .Build()
-                    )
+                    .EmailAddresses(new List<Domain.PersonEmailAddress>())
                     .Build()
-                );
+                )
+                .Build()
+            );
 
             var handler = new DeleteIndividualCustomerEmailAddressCommandHandler(
                 loggerMock.Object,

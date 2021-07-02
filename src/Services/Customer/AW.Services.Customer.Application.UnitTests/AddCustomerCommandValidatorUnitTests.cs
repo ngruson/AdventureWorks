@@ -3,6 +3,7 @@ using AW.Services.Customer.Application.AddCustomer;
 using AW.Services.Customer.Application.Specifications;
 using FluentValidation.TestHelper;
 using Moq;
+using System.Threading;
 using Xunit;
 
 namespace AW.Services.Customer.Application.UnitTests
@@ -106,11 +107,14 @@ namespace AW.Services.Customer.Application.UnitTests
         {
             //Arrange
             var mockRepository = new Mock<IRepositoryBase<Domain.Customer>>();
-            mockRepository.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
-                .ReturnsAsync(new Domain.StoreCustomer
-                {
-                    AccountNumber = "AW00000001"
-                });
+            mockRepository.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Domain.StoreCustomer
+            {
+                AccountNumber = "AW00000001"
+            });
 
             var sut = new AddCustomerCommandValidator(mockRepository.Object);
             var command = new AddCustomerCommand

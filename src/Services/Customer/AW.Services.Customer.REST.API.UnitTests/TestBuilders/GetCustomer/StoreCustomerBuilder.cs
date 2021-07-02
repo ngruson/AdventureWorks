@@ -62,6 +62,20 @@ namespace AW.Services.Customer.REST.API.UnitTests.TestBuilders.GetCustomer
                 Territory = "Northwest",
                 Name = "A Bike Store",
                 SalesPerson = "Pamela O Ansman-Wolfe",
+                Addresses = new List<CustomerAddressDto>
+                {
+                    new CustomerAddressBuilder()
+                        .AddressType("Main Office")
+                        .Address(new AddressBuilder()
+                            .AddressLine1("2251 Elliot Avenue")
+                            .PostalCode("98104")
+                            .City("Seattle")
+                            .StateProvinceCode("WA")
+                            .CountryRegionCode("US")
+                            .Build()
+                         )
+                        .Build()
+                },
                 Contacts = new List<StoreCustomerContactDto>
                 {
                     new StoreCustomerContactBuilder()

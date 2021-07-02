@@ -33,7 +33,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.AddAsync(It.IsAny<Domain.Customer>()));
+            customerRepoMock.Verify(x => x.AddAsync(
+                It.IsAny<Domain.Customer>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
     }
 }

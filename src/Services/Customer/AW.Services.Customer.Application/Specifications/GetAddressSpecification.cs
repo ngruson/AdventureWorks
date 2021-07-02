@@ -2,7 +2,11 @@
 
 namespace AW.Services.Customer.Application.Specifications
 {
+    #if NETSTANDARD2_0
     public class GetAddressSpecification : Specification<Domain.Address>
+    #elif NETSTANDARD2_1_OR_GREATER
+    public class GetAddressSpecification : Specification<Domain.Address>, ISingleResultSpecification
+    #endif
     {
         public GetAddressSpecification(
             string addressline1,

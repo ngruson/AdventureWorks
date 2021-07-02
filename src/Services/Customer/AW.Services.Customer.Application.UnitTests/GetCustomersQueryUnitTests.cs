@@ -28,14 +28,20 @@ namespace AW.Services.Customer.Application.UnitTests
 
             var loggerMock = new Mock<ILogger<GetCustomersQueryHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.Customer>>();
-            customerRepoMock.Setup(x => x.ListAsync(It.IsAny<GetCustomersPaginatedSpecification>()))
-                .ReturnsAsync(new List<Domain.Customer>
-                {
-                    customer1,
-                    customer2
-                });
-            customerRepoMock.Setup(x => x.CountAsync(It.IsAny<CountCustomersSpecification>()))
-                .ReturnsAsync(2);
+            customerRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetCustomersPaginatedSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new List<Domain.Customer>
+            {
+                customer1,
+                customer2
+            });
+            customerRepoMock.Setup(x => x.CountAsync(
+                It.IsAny<CountCustomersSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(2);
 
             var handler = new GetCustomersQueryHandler(
                 loggerMock.Object,
@@ -44,12 +50,22 @@ namespace AW.Services.Customer.Application.UnitTests
             );
 
             //Act
-            var query = new GetCustomersQuery();
+            var query = new GetCustomersQuery
+            {
+                PageIndex = 0,
+                PageSize = 10,
+                CustomerType = null,
+                Territory = "",
+                AccountNumber = ""
+            };
             var result = await handler.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.ListAsync(It.IsAny<ISpecification<Domain.Customer>>()));
+            customerRepoMock.Verify(x => x.ListAsync(
+                It.IsAny<ISpecification<Domain.Customer>>(),
+                It.IsAny<CancellationToken>()
+            ));
             result.TotalCustomers.Should().Be(2);
             result.Customers[0].Should().BeAssignableTo<StoreCustomerDto>();
             result.Customers[1].Should().BeAssignableTo<IndividualCustomerDto>();

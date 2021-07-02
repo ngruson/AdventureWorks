@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests
@@ -1194,6 +1193,5 @@ namespace AW.UI.Web.Internal.UnitTests
                 viewResult.Model.Should().BeAssignableTo<DeleteContactEmailAddressViewModel>();
             }
         }
-
     }
 }

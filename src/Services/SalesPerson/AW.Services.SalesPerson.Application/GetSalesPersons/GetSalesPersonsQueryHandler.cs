@@ -17,8 +17,8 @@ namespace AW.Services.SalesPerson.Application.GetSalesPersons
         private readonly IMapper mapper;
         private readonly IRepositoryBase<Domain.SalesPerson> repository;
 
-        public GetSalesPersonsQueryHandler(ILogger<GetSalesPersonsQueryHandler> logger, IMapper mapper, IRepositoryBase<Domain.SalesPerson> repository) =>
-            (this.logger, this.mapper, this.repository) = (logger, mapper, repository);
+        public GetSalesPersonsQueryHandler(ILogger<GetSalesPersonsQueryHandler> logger, IRepositoryBase<Domain.SalesPerson> repository, IMapper mapper) =>
+            (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
         
         public async Task<List<SalesPersonDto>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
         {

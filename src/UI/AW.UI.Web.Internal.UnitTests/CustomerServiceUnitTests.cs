@@ -1020,5 +1020,79 @@ namespace AW.UI.Web.Internal.UnitTests
                 It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
             ));
         }
+
+        [Fact]
+        public void AddContactPhoneNumber_ReturnsViewModel()
+        {
+            //Arrange
+            var mockLogger = new Mock<ILogger<CustomerService>>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
+
+            mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
+                .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
+                    {
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
+                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
+                    });
+
+            var svc = new CustomerService(
+                mockLogger.Object,
+                Mapper.CreateMapper(),
+                mockCustomerApi.Object,
+                mockReferenceDataApi.Object,
+                mockSalesPersonApi.Object
+            );
+
+            //Act
+            var viewModel = svc.AddPhoneNumber("AW00000001", "Orlando N. Gee");
+
+            //Assert
+            viewModel.IsNewPhoneNumber.Should().Be(true);
+        }
+
+        [Fact]
+        public async void AddContactPhoneNumber_OK()
+        {
+            //Arrange
+            var mockLogger = new Mock<ILogger<CustomerService>>();
+            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
+            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
+            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
+
+            mockCustomerApi
+                .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
+                .ReturnsAsync(new StoreCustomerBuilder()
+                    .WithTestValues()
+                    .Build()
+                );
+
+            var svc = new CustomerService(
+                mockLogger.Object,
+                Mapper.CreateMapper(),
+                mockCustomerApi.Object,
+                mockReferenceDataApi.Object,
+                mockSalesPersonApi.Object
+            );
+
+            //Act
+            var viewModel = new EditPhoneNumberViewModel
+            {
+                IsNewPhoneNumber = true,
+                AccountNumber = "AW00000001",
+                PersonName = "Orlando N. Gee",
+                PhoneNumberType = "Cell",
+                PhoneNumber = "245-555-0173"
+            };
+            await svc.AddContactPhoneNumber(viewModel);
+
+            //Assert
+            mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                It.IsAny<string>(),
+                It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
+            ));
+        }
     }
 }

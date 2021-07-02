@@ -12,17 +12,15 @@ namespace AW.Services.Product.Application.GetProductCategories
 {
     public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQuery, List<ProductCategory>>
     {
-        private readonly IMediator mediator;
         private readonly ILogger<GetProductCategoriesQueryHandler> logger;
         private readonly IRepositoryBase<Domain.ProductCategory> repository;
         private readonly IMapper mapper;
 
         public GetProductCategoriesQueryHandler(
-            IMediator mediator,
             ILogger<GetProductCategoriesQueryHandler> logger,
             IRepositoryBase<Domain.ProductCategory> repository,
             IMapper mapper)
-            => (this.mediator, this.logger, this.repository, this.mapper) = (mediator, logger, repository, mapper);
+            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
 
         public async Task<List<ProductCategory>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
         {

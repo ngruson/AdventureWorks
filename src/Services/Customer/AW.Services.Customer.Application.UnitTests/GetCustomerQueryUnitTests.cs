@@ -28,11 +28,14 @@ namespace AW.Services.Customer.Application.UnitTests
 
             var loggerMock = new Mock<ILogger<GetCustomerQueryHandler>>();
             var customerRepoMock = new Mock<IRepositoryBase<Domain.Customer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()))
-                .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new StoreCustomerBuilder()
+                .WithTestValues()
+                .Build()
+            );
 
             var handler = new GetCustomerQueryHandler(
                 loggerMock.Object,
@@ -46,7 +49,10 @@ namespace AW.Services.Customer.Application.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.GetBySpecAsync(It.IsAny<GetCustomerSpecification>()));
+            customerRepoMock.Verify(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
 
         [Fact]

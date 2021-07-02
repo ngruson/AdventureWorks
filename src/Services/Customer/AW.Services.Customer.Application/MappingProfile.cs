@@ -1,7 +1,7 @@
 ﻿using AW.Common.AutoMapper;
 using AW.Services.Customer.Application.GetCustomers;
 
-namespace AW.Services.Customer.Application.UnitTests
+namespace AW.Services.Customer.Application
 {
     public class MappingProfile : BaseMappingProfile
     {
