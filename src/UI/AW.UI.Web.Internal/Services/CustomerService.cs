@@ -143,7 +143,7 @@ namespace AW.UI.Web.Internal.Services
             foreach (EmailPromotionViewModel emailPromotion in (EmailPromotionViewModel[])Enum.GetValues(typeof(EmailPromotionViewModel)))
             {
                 items.Add(new SelectListItem(
-                        EnumHelper<EmailPromotionViewModel>.GetDisplayValue(emailPromotion),
+                        Enum<EmailPromotionViewModel>.GetDisplayValue(emailPromotion),
                         emailPromotion.ToString()
                     )
                 );

@@ -1,3 +1,4 @@
+using AW.Common.Extensions;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using FluentAssertions;
 using Xunit;
@@ -10,7 +11,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void GetValues_ReturnsEnumList()
         {
             //Act
-            var list = EnumHelper<EmailPromotionViewModel>.GetValues();
+            var list = Enum<EmailPromotionViewModel>.GetValues();
 
             //Assert
             list.Count.Should().Be(3);
@@ -23,7 +24,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void GetValuesWithEnum_ReturnsEnumList()
         {
             //Act
-            var list = EnumHelper<EmailPromotionViewModel>.GetValues(
+            var list = Enum<EmailPromotionViewModel>.GetValues(
                 EmailPromotionViewModel.AWAndPartnerPromotions
             );
 
@@ -38,7 +39,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void Parse_ReturnsEnumList()
         {
             //Act
-            var result = EnumHelper<EmailPromotionViewModel>.Parse(
+            var result = Enum<EmailPromotionViewModel>.Parse(
                 "AWPromotions"
             );
 
@@ -50,7 +51,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void GetNames_ReturnsList()
         {
             //Act
-            var list = EnumHelper<EmailPromotionViewModel>.GetNames(
+            var list = Enum<EmailPromotionViewModel>.GetNames(
                 EmailPromotionViewModel.AWAndPartnerPromotions
             );
 
@@ -65,7 +66,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void GetDisplayValues_ReturnsList()
         {
             //Act
-            var list = EnumHelper<EmailPromotionViewModel>.GetDisplayValues(
+            var list = Enum<EmailPromotionViewModel>.GetDisplayValues(
                 EmailPromotionViewModel.AWAndPartnerPromotions
             );
 
@@ -80,7 +81,7 @@ namespace AW.UI.Web.Internal.UnitTests
         public void GetDisplayValue_ReturnsList()
         {
             //Act
-            var result = EnumHelper<EmailPromotionViewModel>.GetDisplayValue(
+            var result = Enum<EmailPromotionViewModel>.GetDisplayValue(
                 EmailPromotionViewModel.AWPromotions
             );
 
