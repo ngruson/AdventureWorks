@@ -1,0 +1,13 @@
+﻿using Ardalis.Specification;
+
+namespace AW.Services.Product.Core.Specifications
+{
+    public class GetProductByProductNumberSpecification : Specification<Entities.Product>, ISingleResultSpecification
+    {
+        public GetProductByProductNumberSpecification(string productNumber)
+        {
+            Query
+                .Where(p => p.ProductNumber == productNumber);
+        }
+    }
+}

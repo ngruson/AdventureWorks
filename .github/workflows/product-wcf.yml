@@ -35,6 +35,3 @@ jobs:
           nuget restore AdventureWorks.sln
           cd Services/Product/AW.Services.Product.WCF
           msbuild.exe AW.Services.Product.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
-          cd -
-          cd Services/Product/AW.Services.Product.WCF.UnitTests
-          msbuild.exe AW.Services.Product.WCF.UnitTests.csproj /p:Platform=AnyCPU /p:Configuration=Release

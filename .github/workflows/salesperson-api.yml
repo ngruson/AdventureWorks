@@ -37,7 +37,3 @@ jobs:
           dotnet restore "AdventureWorks.sln"
           cd Services/SalesPerson/AW.Services.SalesPerson.REST.API
           dotnet build --no-restore
-          cd -
-          cd Services/SalesPerson/AW.Services.SalesPerson.REST.API.UnitTests
-          dotnet build --no-restore
-          dotnet test --no-build -v=normal
