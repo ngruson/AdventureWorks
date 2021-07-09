@@ -33,5 +33,5 @@ jobs:
         run: |
           cd src
           nuget restore AdventureWorks.sln
-          cd Services/SalesPerson/AW.Services.SalesPerson.WCF
+          cd Services/SalesPerson/src/AW.Services.SalesPerson.WCF
           msbuild.exe AW.Services.SalesPerson.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release

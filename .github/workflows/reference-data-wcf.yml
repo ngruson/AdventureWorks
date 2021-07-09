@@ -33,5 +33,5 @@ jobs:
         run: |
           cd src
           nuget restore AdventureWorks.sln
-          cd Services/ReferenceData/AW.Services.ReferenceData.WCF
+          cd Services/ReferenceData/src/AW.Services.ReferenceData.WCF
           msbuild.exe AW.Services.ReferenceData.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release

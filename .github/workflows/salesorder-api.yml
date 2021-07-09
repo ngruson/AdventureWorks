@@ -35,5 +35,5 @@ jobs:
         run: |
           cd src
           dotnet restore "AdventureWorks.sln"
-          cd Services/SalesOrder/AW.Services.SalesOrder.REST.API
+          cd Services/SalesOrder/src/AW.Services.SalesOrder.REST.API
           dotnet build --no-restore

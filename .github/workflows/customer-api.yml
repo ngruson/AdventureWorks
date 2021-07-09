@@ -40,9 +40,5 @@ jobs:
         run: |
           cd src
           dotnet restore "AdventureWorks.sln"
-          cd Services/Customer/AW.Services.Customer.REST.API
-          dotnet build --no-restore
-          cd -
-          cd Services/Customer/AW.Services.Customer.REST.API.UnitTests
-          dotnet build --no-restore
-          dotnet test --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          cd Services/Customer/src/AW.Services.Customer.REST.API
+          dotnet build --no-restore          
