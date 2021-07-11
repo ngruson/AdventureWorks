@@ -12,6 +12,8 @@ using AW.Services.SalesPerson.Core.Specifications;
 using Ardalis.Specification;
 using AW.SharedKernel.UnitTesting.EF6;
 using AW.SharedKernel.Extensions;
+using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
 
 namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
 {
@@ -36,67 +38,66 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             return mockSet;
         }
 
-        [Fact]
-        public async void GetByIdAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetByIdAsync_ReturnsObject(
+            Core.Entities.SalesPerson salesPerson,
+            [Frozen] Mock<DbSet<Core.Entities.SalesPerson>> mockSet,
+            [Frozen] Mock<AWContext> mockContext
+        )
         {
             //Arrange
-            var mockSet = new Mock<DbSet<Core.Entities.SalesPerson>>();
             mockSet.Setup(x => x.FindAsync(
                 It.IsAny<CancellationToken>(),
                 It.IsAny<int>()
             ))
-            .ReturnsAsync(
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" }
-            );
+            .ReturnsAsync(salesPerson);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var salesPerson = await repository.GetByIdAsync(1);
+            var result = await repository.GetByIdAsync(1);
 
             //Assert
-            salesPerson.FullName().Should().Be("Stephen Y Jiang");
+            result.FullName().Should().Be(salesPerson.FullName());
         }
 
-        [Fact]
-        public async void GetBySpecAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetBySpecAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesPersonSpecification("Stephen", "Y", "Jiang");
+            var spec = new GetSalesPersonSpecification(
+                salesPersons[0].FirstName,
+                salesPersons[0].MiddleName,
+                salesPersons[0].LastName
+            );
+
             var salesPerson = await repository.GetBySpecAsync(spec);
 
             //Assert
-            salesPerson.FullName().Should().Be("Stephen Y Jiang");
+            salesPerson.FullName().Should().Be(salesPersons[0].FullName());
         }
 
-        [Fact]
-        public async void ListAsync_WithoutSpec_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_WithoutSpec_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
@@ -105,50 +106,44 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync();
 
             //Assert
-            list.Count.Should().Be(2);
-            list[0].FullName().Should().Be("Stephen Y Jiang");
-            list[1].FullName().Should().Be("Michael G Blythe");
+            list.Count.Should().Be(salesPersons.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].FullName().Should().Be(salesPersons[i].FullName());
+            }
         }
 
-        [Fact]
-        public async void ListAsync_WithSpec_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_WithSpec_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Linda", MiddleName = "C", LastName = "Mitchell", Territory = "Southwest" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Shu", MiddleName = "K", LastName = "Ito", Territory = "Southwest" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesPersonsForTerritorySpecification("Southwest");
+            var spec = new GetSalesPersonsForTerritorySpecification(salesPersons[0].Territory);
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
-            list[0].FullName().Should().Be("Linda C Mitchell");
-            list[1].FullName().Should().Be("Shu K Ito");
+            list.Count.Should().Be(1);
+            list[0].FullName().Should().Be(salesPersons[0].FullName());
         }
 
-        [Fact]
-        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_WithResultSpec_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
@@ -158,9 +153,11 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
-            list[0].Should().Be("Stephen Y Jiang");
-            list[1].Should().Be("Michael G Blythe");
+            list.Count.Should().Be(salesPersons.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Should().Be(salesPersons[i].FullName());
+            }
         }
 
         [Fact]
@@ -192,49 +189,42 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             func.Should().Throw<SelectorNotFoundException>();
         }
 
-        [Fact]
-        public async void CountAsync_ReturnsCount()
+        [Theory, OmitOnRecursion]
+        public async void CountAsync_ReturnsCount(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Linda", MiddleName = "C", LastName = "Mitchell", Territory = "Southwest" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Shu", MiddleName = "K", LastName = "Ito", Territory = "Southwest" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesPersonsForTerritorySpecification("Southwest");
+            var spec = new GetSalesPersonsForTerritorySpecification(salesPersons[0].Territory);
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(2);
+            count.Should().Be(1);
         }
 
-        [Fact]
-        public async void AddAsync_SavesObject()
+        [Theory, OmitOnRecursion]
+        public async void AddAsync_SavesObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons,
+            Core.Entities.SalesPerson newSalesPerson
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var newSalesPerson = new Core.Entities.SalesPerson { FirstName = "Linda", MiddleName = "C", LastName = "Mitchell" };
             var savedSalesPerson = await repository.AddAsync(newSalesPerson);
 
             //Assert
@@ -243,70 +233,56 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             newSalesPerson.Should().BeEquivalentTo(savedSalesPerson);
         }
 
-        [Fact]
-        public async void UpdateAsync_SavesObject()
+        [Theory, OmitOnRecursion]
+        public async void UpdateAsync_SavesObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" },
-                new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" }
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             mockContext.Setup(x => x.SetModified(It.IsAny<Core.Entities.SalesPerson>()));
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            var existingSalesPerson = new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" };
-            await repository.UpdateAsync(existingSalesPerson);
+            await repository.UpdateAsync(salesPersons[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void DeleteAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPerson1 = new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" };
-            var salesPerson2 = new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" };
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                salesPerson1,
-                salesPerson2
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);
 
             //Act
-            await repository.DeleteAsync(salesPerson1);
+            await repository.DeleteAsync(salesPersons[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteRangeAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void DeleteRangeAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesPerson> salesPersons
+        )
         {
             //Arrange
-            var salesPerson1 = new Core.Entities.SalesPerson { Id = 1, FirstName = "Stephen", MiddleName = "Y", LastName = "Jiang" };
-            var salesPerson2 = new Core.Entities.SalesPerson { Id = 2, FirstName = "Michael", MiddleName = "G", LastName = "Blythe" };
-            var salesPersons = new List<Core.Entities.SalesPerson>
-            {
-                salesPerson1,
-                salesPerson2
-            };
             var mockSet = GetQueryableMockDbSet(salesPersons);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesPerson>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesPerson>(mockContext.Object);

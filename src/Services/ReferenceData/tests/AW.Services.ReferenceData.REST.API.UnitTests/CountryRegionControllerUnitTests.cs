@@ -1,10 +1,10 @@
-using AutoMapper;
+using AutoFixture.Xunit2;
 using AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries;
 using AW.Services.ReferenceData.REST.API.Controllers;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,40 +15,29 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
 {
     public class CountryRegionControllerUnitTests
     {
-        [Fact]
-        public async Task GetCountries_CountriesExists_ReturnCountries()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetCountries_CountriesExists_ReturnCountries(
+            [Frozen] List<Country> dto,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] CountryRegionController sut
+        )
         {
             //Arrange
-            var dto = new List<Country>
-            {
-                new Country { Name = "United States" },
-                new Country { Name = "United Kingdom" }
-            };
-
-            var mockLogger = new Mock<ILogger<CountryRegionController>>();
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetCountriesQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-
-            var mapper = new MapperConfiguration(opts => 
-                    opts.AddProfile<MappingProfile>())
-                .CreateMapper();
-
-            var controller = new CountryRegionController(
-                mockLogger.Object,
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetCountriesQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await controller.GetCountries();
+            var actionResult = await sut.GetCountries();
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
             var countries = okObjectResult.Value as List<Country>;
-            countries.Count.Should().Be(2);
+            countries.Count.Should().Be(dto.Count);
         }
     }
 }

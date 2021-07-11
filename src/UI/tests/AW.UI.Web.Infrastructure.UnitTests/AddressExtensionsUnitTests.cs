@@ -1,88 +1,70 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
+﻿using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using AW.UI.Web.Infrastructure.Extensions;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetCountries;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetStateProvinces;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
 {
     public class AddressExtensionsUnitTests
     {
-        [Fact]
-        public void StateProvinceName_StateProvinceFound_ReturnsName()
+        [Theory, AutoMoqData]
+        public void StateProvinceName_StateProvinceFound_ReturnsName(
+            List<StateProvince> statesProvinces
+        )
         {
-            //Arrange
-            var list = new List<StateProvince>
-            {
-                new StateProvinceBuilder()
-                    .StateProvinceCode("CA")
-                    .Name("California")
-                    .Build(),
-
-                new StateProvinceBuilder()
-                    .StateProvinceCode("TX")
-                    .Name("Texas")
-                    .Build()
-            };
-
             //Act
-            string name = AddressExtensions.StateProvinceName("TX", list);
+            string result = AddressExtensions.StateProvinceName(
+                statesProvinces[0].StateProvinceCode,
+                statesProvinces
+            );
 
             //Assert
-            name.Should().Be("Texas");
+            result.Should().Be(statesProvinces[0].Name);
         }
 
-        [Fact]
-        public void StateProvinceName_StateProvinceNotFound_ThrowArgumentNullException()
+        [Theory, AutoMoqData]
+        public void StateProvinceName_StateProvinceNotFound_ThrowArgumentNullException(
+            StateProvince stateProvince
+            )
         {
-            //Arrange
-            var list = new List<StateProvince>();
-
             //Act
-            Func<string> func = () => AddressExtensions.StateProvinceName("TX", list);
+            Func<string> func = () => AddressExtensions.StateProvinceName(
+                stateProvince.StateProvinceCode,
+                new List<StateProvince>()
+            );
 
             //Assert
             func.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'stateProvince')");
         }
 
-        [Fact]
-        public void CountryRegionName_CountryRegionFound_ReturnsName()
+        [Theory, AutoMoqData]
+        public void CountryRegionName_CountryRegionFound_ReturnsName(
+            List<CountryRegion> list
+        )
         {
-            //Arrange
-            var list = new List<CountryRegion>
-            {
-                new CountryBuilder()
-                    .CountryRegionCode("US")
-                    .Name("United States")
-                    .Build(),
-
-                new CountryBuilder()
-                    .CountryRegionCode("GB")
-                    .Name("United Kingdom")
-                    .Build()
-            };
-
             //Act
-            string name = AddressExtensions.CountryRegionName("US", list);
+            string result = AddressExtensions.CountryRegionName(
+                list[0].CountryRegionCode, list);
 
             //Assert
-            name.Should().Be("United States");
+            result.Should().Be(list[0].Name);
         }
 
-        [Fact]
-        public void CountryRegionName_CountryRegionNotFound_ThrowArgumentNullException()
+        [Theory, AutoMoqData]
+        public void CountryRegionName_CountryRegionNotFound_ThrowArgumentNullException(
+            CountryRegion countryRegion
+            )
         {
-            //Arrange
-            var list = new List<CountryRegion>();
-
             //Act
-            Func<string> func = () => AddressExtensions.CountryRegionName("US", list);
+            Func<string> func = () => AddressExtensions.CountryRegionName(
+                countryRegion.CountryRegionCode,
+                new List<CountryRegion>()
+            );
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

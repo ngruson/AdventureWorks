@@ -1,6 +1,9 @@
-﻿using AW.Services.Product.Core.Handlers.GetProduct;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Product.Core;
+using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.WCF.Messages;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -14,61 +17,57 @@ namespace AW.Services.Product.WCF.UnitTests
 {
     public class ProductServiceUnitTests
     {
-        [Fact]
-        public async Task ListProducts_ReturnsProducts()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListProducts_ReturnsProducts(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetProducts.Product> products,
+            ProductService sut,
+            ListProductsRequest request
+        )
         {
             //Arrange
-            var products = new GetProductsDto
+            var dto = new GetProductsDto
             {
-                Products = new List<Core.Handlers.GetProducts.Product>
-                {
-                    new Core.Handlers.GetProducts.Product { ProductNumber = "1" },
-                    new Core.Handlers.GetProducts.Product { ProductNumber = "2" }
-                },
-                TotalProducts = 2
+                Products = products,
+                TotalProducts = products.Count
             };
 
-            var mockMediator = new Mock<IMediator>();
-
-            mockMediator.Setup(x => x.Send(It.IsAny<GetProductsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(products);
-            var productService = new ProductService(
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetProductsQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var request = new ListProductsRequest();
-            var result = await productService.ListProducts(request);
+            var result = await sut.ListProducts(request);
 
             //Assert
             result.Should().NotBeNull();
-            result.Products.Product.Count().Should().Be(2);
+            result.Products.Product.Count().Should().Be(products.Count);
         }
 
-        [Fact]
-        public async Task GetProduct_ReturnsProduct()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetProduct_ReturnsProduct(
+            [Frozen] Core.Handlers.GetProduct.Product product,
+            [Frozen] Mock<IMediator> mockMediator,
+            ProductService sut,
+            GetProductRequest request
+        )
         {
             //Arrange
-            var product = new Core.Handlers.GetProduct.Product { ProductNumber = "AR-5381" };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetProductQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(product);
-            var productService = new ProductService(
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetProductQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(product);
 
             //Act
-            var request = new GetProductRequest
-            {
-                ProductNumber = "AR-5381"
-            };
-            var result = await productService.GetProduct(request);
+            var result = await sut.GetProduct(request);
 
             //Assert
             result.Should().NotBeNull();
             result.Product.Should().NotBeNull();
-            result.Product.ProductNumber.Should().Be("AR-5381");
+            result.Product.ProductNumber.Should().Be(product.ProductNumber);
         }
     }
 }

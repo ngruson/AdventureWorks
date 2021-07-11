@@ -1,12 +1,11 @@
-﻿using AW.Services.ReferenceData.Domain;
-using AW.Services.ReferenceData.Persistence.EntityFrameworkCore;
+﻿using AW.Services.ReferenceData.Core.Entities;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using Xunit;
 
-namespace AW.Services.ReferenceData.Persistence.EFCore.UnitTests
+namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
 {
     public class AWContextUnitTests
     {

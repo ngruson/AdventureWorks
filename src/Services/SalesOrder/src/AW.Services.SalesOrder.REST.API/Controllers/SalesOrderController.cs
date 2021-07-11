@@ -31,7 +31,7 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
             logger.LogInformation("Sending the GetSalesOrders query");
             var salesOrders = await mediator.Send(query);
 
-            if (salesOrders == null || !salesOrders.SalesOrders.Any())
+            if (salesOrders == null || salesOrders.SalesOrders == null || !salesOrders.SalesOrders.Any())
             {
                 logger.LogInformation("No sales orders found");
                 return new NotFoundResult();
@@ -60,12 +60,11 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
         }
 
         [HttpGet("{salesOrderNumber}")]
-        public async Task<IActionResult> GetSalesOrder(string salesOrderNumber)
+        public async Task<IActionResult> GetSalesOrder([FromRoute] GetSalesOrderQuery query)
         {
             logger.LogInformation("GetSalesOrder called");
 
             logger.LogInformation("Sending the GetSalesOrder query");
-            var query = new GetSalesOrderQuery { SalesOrderNumber = salesOrderNumber };
             var salesOrder = await mediator.Send(query);
 
             if (salesOrder == null)

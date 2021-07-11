@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.SalesOrder.REST.API\AW.Services.SalesOrder.REST.API.csproj" />
   </ItemGroup>

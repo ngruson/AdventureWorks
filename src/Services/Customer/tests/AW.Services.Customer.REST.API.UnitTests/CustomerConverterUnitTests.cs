@@ -1,5 +1,6 @@
 ﻿using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.SharedKernel.JsonConverters;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using System.Linq;
 using System.Text.Json;
@@ -12,14 +13,13 @@ namespace AW.Services.Customer.REST.API.UnitTests
     {
         public class GetCustomers
         {
-            [Fact]
-            public void Serialize_WithGetCustomersStore_ReturnsStoreCustomer()
+            [Theory]
+            [AutoMoqData]
+            public void Serialize_WithGetCustomersStore_ReturnsStoreCustomer(
+                Core.Handlers.GetCustomers.StoreCustomerDto storeCustomer
+            )
             {
                 //Arrange
-                var storeCustomer = new TestBuilders.GetCustomers.StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build();
-
                 var serializeOptions = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -38,47 +38,82 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var jsonString = JsonSerializer.Serialize(storeCustomer, serializeOptions);
                 var jsonDocument = JsonDocument.Parse(jsonString);
                 var root = jsonDocument.RootElement;
-                var contacts = root.GetProperty("contacts").EnumerateArray().ToList();
-                var contactPerson = contacts[0].GetProperty("contactPerson");
-                var emailAddresses = contactPerson.GetProperty("emailAddresses").EnumerateArray().ToList();
-                var phoneNumbers = contactPerson.GetProperty("phoneNumbers").EnumerateArray().ToList();
+                var contacts = root.GetProperty("contacts").EnumerateArray().ToList();                                
                 var addresses = root.GetProperty("addresses").EnumerateArray().ToList();
-                var address = addresses[0].GetProperty("address");
 
                 //Assert
-                root.GetProperty("customerType").GetString().Should().Be("Store");
-                root.GetProperty("name").GetString().Should().Be("A Bike Store");
-                root.GetProperty("salesPerson").GetString().Should().Be("Pamela O Ansman-Wolfe");
-                root.GetProperty("accountNumber").GetString().Should().Be("AW00000001");
-                root.GetProperty("territory").GetString().Should().Be("Northwest");
+                root.GetProperty("customerType").GetString().Should().Be(storeCustomer.CustomerType.ToString());
+                root.GetProperty("name").GetString().Should().Be(storeCustomer.Name);
+                root.GetProperty("salesPerson").GetString().Should().Be(storeCustomer.SalesPerson);
+                root.GetProperty("accountNumber").GetString().Should().Be(storeCustomer.AccountNumber);
+                root.GetProperty("territory").GetString().Should().Be(storeCustomer.Territory);
 
-                contacts[0].GetProperty("contactType").GetString().Should().Be("Owner");
-                contactPerson.GetProperty("title").GetString().Should().BeNull();
-                contactPerson.GetProperty("firstName").GetString().Should().Be("Jon");
-                contactPerson.GetProperty("middleName").GetString().Should().Be("V");
-                contactPerson.GetProperty("lastName").GetString().Should().Be("Yang");
-                contactPerson.GetProperty("suffix").GetString().Should().BeNull();
-                emailAddresses[0].GetProperty("emailAddress").GetString().Should().Be("jon24@adventure-works.com");
-                phoneNumbers[0].GetProperty("phoneNumberType").GetString().Should().Be("Cell");
-                phoneNumbers[0].GetProperty("phoneNumber").GetString().Should().Be("398-555-0132");
+                for (int i = 0; i < contacts.Count; i++)
+                {
+                    var contact = contacts[i];
+                    var contactPerson = contacts[i].GetProperty("contactPerson");
+                    contact.GetProperty("contactType").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactType);
+                    contactPerson.GetProperty("title").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Title);
+                    contactPerson.GetProperty("firstName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.FirstName);
+                    contactPerson.GetProperty("middleName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.MiddleName);
+                    contactPerson.GetProperty("lastName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.LastName);
+                    contactPerson.GetProperty("suffix").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Suffix);
 
-                addresses[0].GetProperty("addressType").GetString().Should().Be("Main Office");
-                address.GetProperty("addressLine1").GetString().Should().Be("2251 Elliot Avenue");
-                address.GetProperty("addressLine2").GetString().Should().BeNull();
-                address.GetProperty("postalCode").GetString().Should().Be("98104");
-                address.GetProperty("city").GetString().Should().Be("Seattle");
-                address.GetProperty("stateProvinceCode").GetString().Should().Be("WA");
-                address.GetProperty("countryRegionCode").GetString().Should().Be("US");
+                    var emailAddresses = contactPerson.GetProperty("emailAddresses").EnumerateArray().ToList();
+
+                    for (int j = 0; j < emailAddresses.Count; j++)
+                    {
+                        var emailAddress = emailAddresses[j];
+                        emailAddress.GetProperty("emailAddress").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.EmailAddresses[j].EmailAddress);
+                    }
+
+                    var phoneNumbers = contactPerson.GetProperty("phoneNumbers").EnumerateArray().ToList();
+
+                    for (int j = 0; j < phoneNumbers.Count; j++)
+                    {
+                        var phoneNumber = phoneNumbers[j];
+                        phoneNumber.GetProperty("phoneNumberType").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.PhoneNumbers[j].PhoneNumberType);
+                        phoneNumber.GetProperty("phoneNumber").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.PhoneNumbers[j].PhoneNumber);
+                    }
+                }
+
+                for (int i = 0; i < addresses.Count; i++)
+                {
+                    var addressItem = addresses[i];
+                    var address = addressItem.GetProperty("address");
+                    addressItem.GetProperty("addressType").GetString().Should().Be(
+                        storeCustomer.Addresses[i].AddressType);
+                    address.GetProperty("addressLine1").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.AddressLine1);
+                    address.GetProperty("addressLine2").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.AddressLine2);
+                    address.GetProperty("postalCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.PostalCode);
+                    address.GetProperty("city").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.City);
+                    address.GetProperty("stateProvinceCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.StateProvinceCode);
+                    address.GetProperty("countryRegionCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.CountryRegionCode);
+                }
             }
 
-            [Fact]
-            public void Serialize_WithGetCustomersIndividual_ReturnsIndividualCustomer()
+            [Theory]
+            [AutoMoqData]
+            public void Serialize_WithGetCustomersIndividual_ReturnsIndividualCustomer(
+                Core.Handlers.GetCustomer.IndividualCustomerDto individualCustomer
+            )
             {
                 //Arrange
-                var individualCustomer = new TestBuilders.GetCustomers.IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build();
-
                 var serializeOptions = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -101,29 +136,53 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var emailAddresses = person.GetProperty("emailAddresses").EnumerateArray().ToList();
                 var phoneNumbers = person.GetProperty("phoneNumbers").EnumerateArray().ToList();
                 var addresses = root.GetProperty("addresses").EnumerateArray().ToList();
-                var address = addresses[0].GetProperty("address");
 
                 //Assert
                 root.GetProperty("customerType").GetString().Should().Be("Individual");
-                root.GetProperty("accountNumber").GetString().Should().Be("AW00011000");
-                root.GetProperty("territory").GetString().Should().Be("Australia");
+                root.GetProperty("accountNumber").GetString().Should().Be(individualCustomer.AccountNumber);
+                root.GetProperty("territory").GetString().Should().Be(individualCustomer.Territory);
 
-                person.GetProperty("title").GetString().Should().BeNull();
-                person.GetProperty("firstName").GetString().Should().Be("Jon");
-                person.GetProperty("middleName").GetString().Should().Be("V");
-                person.GetProperty("lastName").GetString().Should().Be("Yang");
-                person.GetProperty("suffix").GetString().Should().BeNull();
-                emailAddresses[0].GetProperty("emailAddress").GetString().Should().Be("jon24@adventure-works.com");
-                phoneNumbers[0].GetProperty("phoneNumberType").GetString().Should().Be("Cell");
-                phoneNumbers[0].GetProperty("phoneNumber").GetString().Should().Be("398-555-0132");
+                person.GetProperty("title").GetString().Should().Be(individualCustomer.Person.Title);
+                person.GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.FirstName);
+                person.GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.MiddleName);
+                person.GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.LastName);
+                person.GetProperty("suffix").GetString().Should().Be(individualCustomer.Person.Suffix);
 
-                addresses[0].GetProperty("addressType").GetString().Should().Be("Home");
-                address.GetProperty("addressLine1").GetString().Should().Be("3761 N. 14th St");
-                address.GetProperty("addressLine2").GetString().Should().BeNull();
-                address.GetProperty("postalCode").GetString().Should().Be("4700");
-                address.GetProperty("city").GetString().Should().Be("Rockhampton");
-                address.GetProperty("stateProvinceCode").GetString().Should().Be("QLD");
-                address.GetProperty("countryRegionCode").GetString().Should().Be("AU");
+                for (int i = 0; i < emailAddresses.Count; i++)
+                {
+                    var emailAddress = emailAddresses[i];
+                    emailAddress.GetProperty("emailAddress").GetString().Should().Be(
+                        individualCustomer.Person.EmailAddresses[i].EmailAddress);
+                }
+
+                for (int i = 0; i < phoneNumbers.Count; i++)
+                {
+                    var phoneNumber = phoneNumbers[i];
+                    phoneNumber.GetProperty("phoneNumberType").GetString().Should().Be(
+                        individualCustomer.Person.PhoneNumbers[i].PhoneNumberType);
+                    phoneNumber.GetProperty("phoneNumber").GetString().Should().Be(
+                        individualCustomer.Person.PhoneNumbers[i].PhoneNumber);
+                }
+
+                for (int i = 0; i < addresses.Count; i++)
+                {
+                    var addressItem = addresses[i];
+                    var address = addressItem.GetProperty("address");
+                    addressItem.GetProperty("addressType").GetString().Should().Be(
+                        individualCustomer.Addresses[i].AddressType);
+                    address.GetProperty("addressLine1").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.AddressLine1);
+                    address.GetProperty("addressLine2").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.AddressLine2);
+                    address.GetProperty("postalCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.PostalCode);
+                    address.GetProperty("city").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.City);
+                    address.GetProperty("stateProvinceCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.StateProvinceCode);
+                    address.GetProperty("countryRegionCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.CountryRegionCode);
+                }
             }
 
             [Fact]
@@ -304,14 +363,13 @@ namespace AW.Services.Customer.REST.API.UnitTests
         
         public class GetCustomer
         {
-            [Fact]
-            public void Serialize_WithGetCustomerStore_ReturnsStoreCustomer()
+            [Theory]
+            [AutoMoqData]
+            public void Serialize_WithGetCustomerStore_ReturnsStoreCustomer(
+                Core.Handlers.GetCustomer.StoreCustomerDto storeCustomer
+            )
             {
                 //Arrange
-                var storeCustomer = new TestBuilders.GetCustomer.StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build();
-
                 var serializeOptions = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -331,46 +389,81 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var jsonDocument = JsonDocument.Parse(jsonString);
                 var root = jsonDocument.RootElement;
                 var contacts = root.GetProperty("contacts").EnumerateArray().ToList();
-                var contactPerson = contacts[0].GetProperty("contactPerson");
-                var emailAddresses = contactPerson.GetProperty("emailAddresses").EnumerateArray().ToList();
-                var phoneNumbers = contactPerson.GetProperty("phoneNumbers").EnumerateArray().ToList();
                 var addresses = root.GetProperty("addresses").EnumerateArray().ToList();
-                var address = addresses[0].GetProperty("address");
 
                 //Assert
-                root.GetProperty("customerType").GetString().Should().Be("Store");
-                root.GetProperty("name").GetString().Should().Be("A Bike Store");
-                root.GetProperty("salesPerson").GetString().Should().Be("Pamela O Ansman-Wolfe");
-                root.GetProperty("accountNumber").GetString().Should().Be("AW00000001");
-                root.GetProperty("territory").GetString().Should().Be("Northwest");
+                root.GetProperty("customerType").GetString().Should().Be(storeCustomer.CustomerType.ToString());
+                root.GetProperty("name").GetString().Should().Be(storeCustomer.Name);
+                root.GetProperty("salesPerson").GetString().Should().Be(storeCustomer.SalesPerson);
+                root.GetProperty("accountNumber").GetString().Should().Be(storeCustomer.AccountNumber);
+                root.GetProperty("territory").GetString().Should().Be(storeCustomer.Territory);
 
-                contacts[0].GetProperty("contactType").GetString().Should().Be("Owner");
-                contactPerson.GetProperty("title").GetString().Should().BeNull();
-                contactPerson.GetProperty("firstName").GetString().Should().Be("Jon");
-                contactPerson.GetProperty("middleName").GetString().Should().Be("V");
-                contactPerson.GetProperty("lastName").GetString().Should().Be("Yang");
-                contactPerson.GetProperty("suffix").GetString().Should().BeNull();
-                emailAddresses[0].GetProperty("emailAddress").GetString().Should().Be("jon24@adventure-works.com");
-                phoneNumbers[0].GetProperty("phoneNumberType").GetString().Should().Be("Cell");
-                phoneNumbers[0].GetProperty("phoneNumber").GetString().Should().Be("398-555-0132");
+                for (int i = 0; i < contacts.Count; i++)
+                {
+                    var contact = contacts[i];
+                    var contactPerson = contacts[i].GetProperty("contactPerson");
+                    contact.GetProperty("contactType").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactType);
+                    contactPerson.GetProperty("title").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Title);
+                    contactPerson.GetProperty("firstName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.FirstName);
+                    contactPerson.GetProperty("middleName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.MiddleName);
+                    contactPerson.GetProperty("lastName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.LastName);
+                    contactPerson.GetProperty("suffix").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Suffix);
 
-                addresses[0].GetProperty("addressType").GetString().Should().Be("Main Office");
-                address.GetProperty("addressLine1").GetString().Should().Be("2251 Elliot Avenue");
-                address.GetProperty("addressLine2").GetString().Should().BeNull();
-                address.GetProperty("postalCode").GetString().Should().Be("98104");
-                address.GetProperty("city").GetString().Should().Be("Seattle");
-                address.GetProperty("stateProvinceCode").GetString().Should().Be("WA");
-                address.GetProperty("countryRegionCode").GetString().Should().Be("US");
+                    var emailAddresses = contactPerson.GetProperty("emailAddresses").EnumerateArray().ToList();
+
+                    for (int j = 0; j < emailAddresses.Count; j++)
+                    {
+                        var emailAddress = emailAddresses[j];
+                        emailAddress.GetProperty("emailAddress").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.EmailAddresses[j].EmailAddress);
+                    }
+
+                    var phoneNumbers = contactPerson.GetProperty("phoneNumbers").EnumerateArray().ToList();
+
+                    for (int j = 0; j < phoneNumbers.Count; j++)
+                    {
+                        var phoneNumber = phoneNumbers[j];
+                        phoneNumber.GetProperty("phoneNumberType").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.PhoneNumbers[j].PhoneNumberType);
+                        phoneNumber.GetProperty("phoneNumber").GetString().Should().Be(
+                            storeCustomer.Contacts[i].ContactPerson.PhoneNumbers[j].PhoneNumber);
+                    }
+                }
+
+                for (int i = 0; i < addresses.Count; i++)
+                {
+                    var addressItem = addresses[i];
+                    var address = addressItem.GetProperty("address");
+                    addressItem.GetProperty("addressType").GetString().Should().Be(
+                        storeCustomer.Addresses[i].AddressType);
+                    address.GetProperty("addressLine1").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.AddressLine1);
+                    address.GetProperty("addressLine2").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.AddressLine2);
+                    address.GetProperty("postalCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.PostalCode);
+                    address.GetProperty("city").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.City);
+                    address.GetProperty("stateProvinceCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.StateProvinceCode);
+                    address.GetProperty("countryRegionCode").GetString().Should().Be(
+                        storeCustomer.Addresses[i].Address.CountryRegionCode);
+                }
             }
 
-            [Fact]
-            public void Serialize_WithGetCustomerIndividual_ReturnsIndividualCustomer()
+            [Theory]
+            [AutoMoqData]
+            public void Serialize_WithGetCustomerIndividual_ReturnsIndividualCustomer(
+                Core.Handlers.GetCustomer.IndividualCustomerDto individualCustomer
+            )
             {
                 //Arrange
-                var individualCustomer = new TestBuilders.GetCustomer.IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build();
-
                 var serializeOptions = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -393,29 +486,53 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var emailAddresses = person.GetProperty("emailAddresses").EnumerateArray().ToList();
                 var phoneNumbers = person.GetProperty("phoneNumbers").EnumerateArray().ToList();
                 var addresses = root.GetProperty("addresses").EnumerateArray().ToList();
-                var address = addresses[0].GetProperty("address");
 
                 //Assert
                 root.GetProperty("customerType").GetString().Should().Be("Individual");
-                root.GetProperty("accountNumber").GetString().Should().Be("AW00011000");
-                root.GetProperty("territory").GetString().Should().Be("Australia");
+                root.GetProperty("accountNumber").GetString().Should().Be(individualCustomer.AccountNumber);
+                root.GetProperty("territory").GetString().Should().Be(individualCustomer.Territory);
 
-                person.GetProperty("title").GetString().Should().BeNull();
-                person.GetProperty("firstName").GetString().Should().Be("Jon");
-                person.GetProperty("middleName").GetString().Should().Be("V");
-                person.GetProperty("lastName").GetString().Should().Be("Yang");
-                person.GetProperty("suffix").GetString().Should().BeNull();
-                emailAddresses[0].GetProperty("emailAddress").GetString().Should().Be("jon24@adventure-works.com");
-                phoneNumbers[0].GetProperty("phoneNumberType").GetString().Should().Be("Cell");
-                phoneNumbers[0].GetProperty("phoneNumber").GetString().Should().Be("398-555-0132");
+                person.GetProperty("title").GetString().Should().Be(individualCustomer.Person.Title);
+                person.GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.FirstName);
+                person.GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.MiddleName);
+                person.GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.LastName);
+                person.GetProperty("suffix").GetString().Should().Be(individualCustomer.Person.Suffix);
 
-                addresses[0].GetProperty("addressType").GetString().Should().Be("Home");
-                address.GetProperty("addressLine1").GetString().Should().Be("3761 N. 14th St");
-                address.GetProperty("addressLine2").GetString().Should().BeNull();
-                address.GetProperty("postalCode").GetString().Should().Be("4700");
-                address.GetProperty("city").GetString().Should().Be("Rockhampton");
-                address.GetProperty("stateProvinceCode").GetString().Should().Be("QLD");
-                address.GetProperty("countryRegionCode").GetString().Should().Be("AU");
+                for (int i = 0; i < emailAddresses.Count; i++)
+                {
+                    var emailAddress = emailAddresses[i];
+                    emailAddress.GetProperty("emailAddress").GetString().Should().Be(
+                        individualCustomer.Person.EmailAddresses[i].EmailAddress);
+                }
+
+                for (int i = 0; i < phoneNumbers.Count; i++)
+                {
+                    var phoneNumber = phoneNumbers[i];
+                    phoneNumber.GetProperty("phoneNumberType").GetString().Should().Be(
+                        individualCustomer.Person.PhoneNumbers[i].PhoneNumberType);
+                    phoneNumber.GetProperty("phoneNumber").GetString().Should().Be(
+                        individualCustomer.Person.PhoneNumbers[i].PhoneNumber);
+                }
+
+                for (int i = 0; i < addresses.Count; i++)
+                {
+                    var addressItem = addresses[i];
+                    var address = addressItem.GetProperty("address");
+                    addressItem.GetProperty("addressType").GetString().Should().Be(
+                        individualCustomer.Addresses[i].AddressType);
+                    address.GetProperty("addressLine1").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.AddressLine1);
+                    address.GetProperty("addressLine2").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.AddressLine2);
+                    address.GetProperty("postalCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.PostalCode);
+                    address.GetProperty("city").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.City);
+                    address.GetProperty("stateProvinceCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.StateProvinceCode);
+                    address.GetProperty("countryRegionCode").GetString().Should().Be(
+                        individualCustomer.Addresses[i].Address.CountryRegionCode);
+                }
             }
 
             [Fact]

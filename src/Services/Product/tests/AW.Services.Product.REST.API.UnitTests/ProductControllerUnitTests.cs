@@ -1,7 +1,9 @@
+using AutoFixture.Xunit2;
 using AutoMapper;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.REST.API.Controllers;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,72 +21,49 @@ namespace AW.Services.Product.REST.API.UnitTests
     {
         public class GetProducts
         {
-            [Fact]
-            public async Task GetProducts_ShouldReturnProducts_WhenProductsExist()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetProducts_ShouldReturnProducts_WhenProductsExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                List<Core.Handlers.GetProducts.Product> products,
+                [Greedy] ProductController sut,
+                GetProductsQuery query
+            )
             {
                 //Arrange
-                var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                }).CreateMapper();
-
                 var dto = new GetProductsDto
                 {
-                    TotalProducts = 2,
-                    Products = new List<Core.Handlers.GetProducts.Product>
-                    {
-                        new Core.Handlers.GetProducts.Product { ProductNumber = "BB-7421" },
-                        new Core.Handlers.GetProducts.Product { ProductNumber = "BB-8107" }
-                    }
+                    TotalProducts = products.Count,
+                    Products = products
                 };
 
-                var mockLogger = new Mock<ILogger<ProductController>>();
-                var mockMediator = new Mock<IMediator>();
                 mockMediator.Setup(x => x.Send(It.IsAny<GetProductsQuery>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(dto);
 
-                var controller = new ProductController(
-                    mockLogger.Object,
-                    mockMediator.Object,
-                    mapper
-                );
-
                 //Act
-                var request = new GetProductsQuery();
-                var actionResult = await controller.GetProducts(request);
+                var actionResult = await sut.GetProducts(query);
 
                 //Assert
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
                 var response = okObjectResult.Value as Models.GetProductsResult;
-                response.TotalProducts.Should().Be(2);
-                response.Products.Count.Should().Be(2);
-                response.Products[0].ProductNumber.Should().Be("BB-7421");
-                response.Products[1].ProductNumber.Should().Be("BB-8107");
+                response.TotalProducts.Should().Be(products.Count);
+                response.Products.Count.Should().Be(products.Count);
+
+                for (int i = 0; i < products.Count; i++)
+                {
+                    response.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
+                }
             }
 
-            [Fact]
-            public async Task GetProducts_ShouldReturnNotFound_WhenNoProductsFound()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetProducts_ShouldReturnNotFound_WhenNoProductsFound(
+                [Greedy] ProductController sut,
+                GetProductsQuery query
+            )
             {
-                //Arrange
-                var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                }).CreateMapper();
-
-                var mockLogger = new Mock<ILogger<ProductController>>();
-                var mockMediator = new Mock<IMediator>();
-
-                var controller = new ProductController(
-                    mockLogger.Object,
-                    mockMediator.Object,
-                    mapper
-                );
-
                 //Act
-                var request = new GetProductsQuery();
-                var actionResult = await controller.GetProducts(request);
+                var actionResult = await sut.GetProducts(query);
 
                 //Assert
                 var okObjectResult = actionResult as NotFoundResult;
@@ -94,67 +73,42 @@ namespace AW.Services.Product.REST.API.UnitTests
 
         public class GetProduct
         {
-            [Fact]
-            public async Task GetProduct_ShouldReturnProduct_WhenProductExist()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetProduct_ShouldReturnProduct_WhenProductExist(
+                [Frozen] Core.Handlers.GetProduct.Product product,
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                GetProductQuery query
+            )
             {
                 //Arrange
-                var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                }).CreateMapper();
-
-                var dto = new Core.Handlers.GetProduct.Product
-                {
-                    ProductNumber = "BB-7421"
-                };
-
-                var mockLogger = new Mock<ILogger<ProductController>>();
-                var mockMediator = new Mock<IMediator>();
                 mockMediator.Setup(x => x.Send(It.IsAny<GetProductQuery>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync(dto);
-
-                var controller = new ProductController(
-                    mockLogger.Object,
-                    mockMediator.Object,
-                    mapper
-                );
+                    .ReturnsAsync(product);
 
                 //Act
-                var query = new GetProductQuery
-                {
-                    ProductNumber = "BB-7421"
-                };
-                var actionResult = await controller.GetProduct(query);
+                var actionResult = await sut.GetProduct(query);
 
                 //Assert
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
                 var response = okObjectResult.Value as Models.Product;
-                response.ProductNumber.Should().Be("BB-7421");
+                response.ProductNumber.Should().Be(product.ProductNumber);
             }
 
-            [Fact]
-            public async Task GetProduct_ShouldReturnNotFound_WhenProductNotFound()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetProduct_ShouldReturnNotFound_WhenProductNotFound(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                GetProductQuery query
+            )
             {
                 //Arrange
-                var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                }).CreateMapper();
-
-                var mockLogger = new Mock<ILogger<ProductController>>();
-                var mockMediator = new Mock<IMediator>();
-
-                var controller = new ProductController(
-                    mockLogger.Object,
-                    mockMediator.Object,
-                    mapper
-                );
+                mockMediator.Setup(x => x.Send(It.IsAny<GetProductQuery>(), It.IsAny<CancellationToken>()))
+                    .ReturnsAsync((Core.Handlers.GetProduct.Product)null);
 
                 //Act
-                var query = new GetProductQuery();
-                var actionResult = await controller.GetProduct(query);
+                var actionResult = await sut.GetProduct(query);
 
                 //Assert
                 var okObjectResult = actionResult as NotFoundResult;

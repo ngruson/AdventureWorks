@@ -1,5 +1,7 @@
 using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.SalesOrder.Core.Specifications;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
@@ -15,64 +17,58 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
 {
     public class EfRepositoryUnitTests
     {
-        [Fact]
-        public async void GetByIdAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetByIdAsync_ReturnsObject(
+            [Frozen] Mock<DbSet<Core.Entities.SalesOrder>> mockSet,
+            [Frozen] Mock<AWContext> mockContext,
+            Core.Entities.SalesOrder salesOrder
+        )
         {
             //Arrange
-            var mockSet = new Mock<DbSet<Core.Entities.SalesOrder>>();
             mockSet.Setup(x => x.FindAsync(It.IsAny<object[]>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" }
-                );
+                .ReturnsAsync(salesOrder);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var salesOrder = await repository.GetByIdAsync(1);
+            var result = await repository.GetByIdAsync(1);
 
             //Assert
-            salesOrder.SalesOrderNumber.Should().Be("SO43659");
+            result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
 
-        [Fact]
-        public async void GetBySpecAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetBySpecAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrderSpecification("SO43659");
-            var salesOrder = await repository.GetBySpecAsync(spec);
+            var spec = new GetSalesOrderSpecification(salesOrders[0].SalesOrderNumber);
+            var result = await repository.GetBySpecAsync(spec);
 
             //Assert
-            salesOrder.SalesOrderNumber.Should().Be("SO43659");
+            result.SalesOrderNumber.Should().Be(salesOrders[0].SalesOrderNumber);
         }
 
-        [Fact]
-        public async void ListAllAsync_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAllAsync_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
@@ -81,46 +77,39 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var list = await repository.ListAsync();
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(salesOrders.Count);
         }
 
-        [Fact]
-        public async void ListAsync_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659", CustomerNumber = "AW00029825" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660", CustomerNumber = "AW00029672" },
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO44305", CustomerNumber = "AW00029825" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrdersForCustomerSpecification("AW00029825");
+            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].CustomerNumber);
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(1);
         }
 
-        [Fact]
-        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_WithResultSpec_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
@@ -130,9 +119,11 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
-            list[0].Should().Be("SO43659");
-            list[1].Should().Be("SO43660");
+            list.Count.Should().Be(salesOrders.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Should().Be(salesOrders[i].SalesOrderNumber);
+            }
         }
 
         [Fact]
@@ -164,40 +155,34 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             func.Should().Throw<SelectorNotFoundException>();
         }
 
-        [Fact]
-        public async void CountAsync_ReturnsCount()
+        [Theory, OmitOnRecursion]
+        public async void CountAsync_ReturnsCount(
+            [Frozen] Mock<AWContext> mockContext,
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659", CustomerNumber = "AW00029825" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660", CustomerNumber = "AW00029672" },
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO44305", CustomerNumber = "AW00029825" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrdersForCustomerSpecification("AW00029825");
+            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].CustomerNumber);
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(2);
+            count.Should().Be(1);
         }
 
-        [Fact]
-        public async void AddAsync_SavesObject()
+        [Theory, OmitOnRecursion]
+        public async void AddAsync_SavesObject(
+            List<Core.Entities.SalesOrder> salesOrders,
+            Core.Entities.SalesOrder newSalesOrder
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -206,7 +191,6 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var newSalesOrder = new Core.Entities.SalesOrder { SalesOrderNumber = "SO43661" };
             var savedSalesOrder = await repository.AddAsync(newSalesOrder);
 
             //Assert
@@ -215,15 +199,12 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             newSalesOrder.Should().BeEquivalentTo(savedSalesOrder);
         }
 
-        [Fact]
-        public async void UpdateAsync_SavesObject()
+        [Theory, OmitOnRecursion]
+        public async void UpdateAsync_SavesObject(
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" },
-                new Core.Entities.SalesOrder { Id = 2, SalesOrderNumber = "SO43660" }
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -233,24 +214,18 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var existingSalesOrder = new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" };
-            await repository.UpdateAsync(existingSalesOrder);
+            await repository.UpdateAsync(salesOrders[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void DeleteAsync_ReturnsObject(
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrder1 = new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" };
-            var salesOrder2 = new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43660" };
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                salesOrder1,
-                salesOrder2
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -259,23 +234,18 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            await repository.DeleteAsync(salesOrder1);
+            await repository.DeleteAsync(salesOrders[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteRangeAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void DeleteRangeAsync_ReturnsObject(
+            List<Core.Entities.SalesOrder> salesOrders
+        )
         {
             //Arrange
-            var salesOrder1 = new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43659" };
-            var salesOrder2 = new Core.Entities.SalesOrder { Id = 1, SalesOrderNumber = "SO43660" };
-            var salesOrders = new List<Core.Entities.SalesOrder>
-            {
-                salesOrder1,
-                salesOrder2
-            };
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();

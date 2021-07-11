@@ -1,7 +1,8 @@
-﻿using AW.Services.Customer.Core.Handlers.AddCustomerAddress;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.AddCustomerAddress;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.Customer.Core.UnitTests.TestBuilders;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,46 +15,18 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class AddCustomerAddressCommandUnitTests
     {
-        [Fact]
-        public async void Handle_CustomerExist_AddCustomerAddress()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_CustomerExist_AddCustomerAddress(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            AddCustomerAddressCommandHandler sut,
+            AddCustomerAddressCommand command
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<AddCustomerAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetCustomerSpecification>(), 
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new AddCustomerAddressCommandHandler(
-                loggerMock.Object,
-                mapper,
-                customerRepoMock.Object
-            );
-
+            
             //Act
-            var command = new AddCustomerAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                CustomerAddress = new CustomerAddressDto
-                {
-                    AddressType = "Home",
-                    Address = new AddressDto
-                    {
-                        AddressLine1 = "3761 N. 14th St",
-                        PostalCode = "4700",
-                        City = "Rockhampton",
-                        StateProvinceCode = "QLD",
-                        CountryRegionCode = "AU"
-                    }
-                }
-            };
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -63,38 +36,23 @@ namespace AW.Services.Customer.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            AddCustomerAddressCommandHandler sut,
+            AddCustomerAddressCommand command
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<AddCustomerAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-
-            var handler = new AddCustomerAddressCommandHandler(
-                loggerMock.Object,
-                mapper,
-                customerRepoMock.Object
-            );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.Customer)null);
 
             //Act
-            var command = new AddCustomerAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                CustomerAddress = new CustomerAddressDto
-                {
-                    AddressType = "Home",
-                    Address = new AddressDto
-                    {
-                        AddressLine1 = "3761 N. 14th St",
-                        PostalCode = "4700",
-                        City = "Rockhampton",
-                        StateProvinceCode = "QLD",
-                        CountryRegionCode = "AU"
-                    }
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

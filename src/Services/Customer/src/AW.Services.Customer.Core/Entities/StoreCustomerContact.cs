@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string ContactType { get; set; }
 
-        public StoreCustomer StoreCustomer { get; set; }
         public int StoreCustomerId { get; set; }
 
         public Person ContactPerson { get; set; }

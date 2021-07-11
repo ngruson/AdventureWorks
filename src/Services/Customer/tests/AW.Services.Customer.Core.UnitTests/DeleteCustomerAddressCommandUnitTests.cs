@@ -1,9 +1,9 @@
-﻿using AW.Services.Customer.Core.Handlers.DeleteCustomerAddress;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.DeleteCustomerAddress;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.Customer.Core.UnitTests.TestBuilders;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,45 +15,32 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class DeleteCustomerAddressCommandUnitTests
     {
-        [Fact]
-        public async void Handle_ExistingCustomerAndAddress_DeleteCustomerAddress()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_ExistingCustomerAndAddress_DeleteCustomerAddress(
+            [Frozen] Entities.Customer customer,
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            DeleteCustomerAddressCommandHandler sut,
+            DeleteCustomerAddressCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<DeleteCustomerAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetCustomerSpecification>(),
-                It.IsAny<CancellationToken>()    
-            ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new DeleteCustomerAddressCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
-
-            //Act
-            var command = new DeleteCustomerAddressCommand
+            //Arrange
+            customer.Addresses = new List<Entities.CustomerAddress>
             {
-                AccountNumber = "AW00011000",
-                CustomerAddress = new CustomerAddressDto
+                new Entities.CustomerAddress
                 {
-                    AddressType = "Home",
-                    Address = new AddressDto
-                    {
-                        AddressLine1 = "3761 N. 14th St",
-                        AddressLine2 = null,
-                        PostalCode = "4700",
-                        City = "Rockhampton",
-                        StateProvinceCode = "QLD",
-                        CountryRegionCode = "AU"
-                    }
+                    AddressType = command.CustomerAddress.AddressType
                 }
             };
-            var result = await handler.Handle(command, CancellationToken.None);
+
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(customer);
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -63,67 +50,38 @@ namespace AW.Services.Customer.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,            
+            DeleteCustomerAddressCommandHandler sut,
+            DeleteCustomerAddressCommand command
+        )
         {
             // Arrange
-            var loggerMock = new Mock<ILogger<DeleteCustomerAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-
-            var handler = new DeleteCustomerAddressCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.Customer)null);
 
             //Act
-            var command = new DeleteCustomerAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                CustomerAddress = new CustomerAddressDto
-                {
-                    AddressType = "Home",
-                    Address = new AddressDto()
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'customer')");
         }
 
-        [Fact]
-        public void Handle_AddressDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_AddressDoesNotExist_ThrowArgumentNullException(
+            DeleteCustomerAddressCommandHandler sut,
+            DeleteCustomerAddressCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<DeleteCustomerAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetCustomerSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Addresses(new List<Entities.CustomerAddress>())
-                .Build()
-            );
-
-            var handler = new DeleteCustomerAddressCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
-
             //Act
-            var command = new DeleteCustomerAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                CustomerAddress = new CustomerAddressDto
-                {
-                    AddressType = "Home",
-                    Address = new AddressDto()
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

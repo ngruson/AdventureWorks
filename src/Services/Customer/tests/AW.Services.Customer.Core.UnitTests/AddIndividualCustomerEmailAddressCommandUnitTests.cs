@@ -1,9 +1,9 @@
-﻿using AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.Customer.Core.UnitTests.TestBuilders;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Threading;
@@ -14,33 +14,16 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class AddIndividualCustomerEmailAddressCommandUnitTests
     {
-        [Fact]
-        public async void Handle_CustomerExist_AddIndividualCustomerEmailAddress()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_CustomerExist_AddIndividualCustomerEmailAddress(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
+            AddIndividualCustomerEmailAddressCommandHandler sut,
+            AddIndividualCustomerEmailAddressCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<AddIndividualCustomerEmailAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetIndividualCustomerSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new AddIndividualCustomerEmailAddressCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
-
             //Act
-            var command = new AddIndividualCustomerEmailAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                EmailAddress = "jon24@adventure-works.com"
-            };
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -50,26 +33,23 @@ namespace AW.Services.Customer.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
+            AddIndividualCustomerEmailAddressCommandHandler sut,
+            AddIndividualCustomerEmailAddressCommand command
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<AddIndividualCustomerEmailAddressCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.IndividualCustomer>>();
-
-            var handler = new AddIndividualCustomerEmailAddressCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.IndividualCustomer)null);
 
             //Act
-            var command = new AddIndividualCustomerEmailAddressCommand
-            {
-                AccountNumber = "AW00011000",
-                EmailAddress = "jon24@adventure-works.com"
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

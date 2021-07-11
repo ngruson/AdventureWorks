@@ -1,9 +1,9 @@
-﻿using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.Customer.Core.UnitTests.TestBuilders;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,37 +15,33 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class DeleteIndividualCustomerPhoneCommandUnitTests
     {
-        [Fact]
-        public async void Handle_ExistingCustomerAndAddress_DeleteCustomerAddress()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_ExistingCustomerAndAddress_DeleteCustomerAddress(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
+            Entities.IndividualCustomer customer,
+            DeleteIndividualCustomerPhoneCommandHandler sut,
+            DeleteIndividualCustomerPhoneCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<DeleteIndividualCustomerPhoneCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.IndividualCustomer>>();
+            //Arrange
+            customer.Person.PhoneNumbers = new List<Entities.PersonPhone>
+            {
+                new Entities.PersonPhone
+                {
+                    PhoneNumberType = command.Phone.PhoneNumberType,
+                    PhoneNumber = command.Phone.PhoneNumber
+                }
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new DeleteIndividualCustomerPhoneCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            .ReturnsAsync(customer);
 
             //Act
-            var command = new DeleteIndividualCustomerPhoneCommand
-            {
-                AccountNumber = "AW00011000",
-                Phone = new PhoneDto
-                {
-                    PhoneNumberType = "Cell",
-                    PhoneNumber = "398-555-0132"
-                }
-            };
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -55,71 +51,38 @@ namespace AW.Services.Customer.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
+            DeleteIndividualCustomerPhoneCommandHandler sut,
+            DeleteIndividualCustomerPhoneCommand command
+        )
         {
             // Arrange
-            var loggerMock = new Mock<ILogger<DeleteIndividualCustomerPhoneCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.IndividualCustomer>>();
-
-            var handler = new DeleteIndividualCustomerPhoneCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.IndividualCustomer)null);
 
             //Act
-            var command = new DeleteIndividualCustomerPhoneCommand
-            {
-                AccountNumber = "AW00011000",
-                Phone = new PhoneDto
-                {
-                    PhoneNumberType = "Cell",
-                    PhoneNumber = "398-555-0132"
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'individualCustomer')");
         }
 
-        [Fact]
-        public void Handle_PhoneNumberDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_PhoneNumberDoesNotExist_ThrowArgumentNullException(
+            DeleteIndividualCustomerPhoneCommandHandler sut,
+            DeleteIndividualCustomerPhoneCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<DeleteIndividualCustomerPhoneCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.IndividualCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetIndividualCustomerSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new IndividualCustomerBuilder()
-                .WithTestValues()
-                .Person(new PersonBuilder()
-                    .WithTestValues()
-                    .PhoneNumbers(new List<Entities.PersonPhone>())
-                    .Build()
-                )
-                .Build()
-            );
-
-            var handler = new DeleteIndividualCustomerPhoneCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
-
             //Act
-            var command = new DeleteIndividualCustomerPhoneCommand
-            {
-                AccountNumber = "AW00011000",
-                Phone = new PhoneDto
-                {
-                    PhoneNumberType = "Cell",
-                    PhoneNumber = "398-555-0132"
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

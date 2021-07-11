@@ -1,5 +1,6 @@
-using AW.Services.Product.Infrastructure.EFCore;
+using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Specifications;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
@@ -9,41 +10,41 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 
-namespace AW.Services.Product.Persistence.EFCore.UnitTests
+namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
 {
     public class EfRepositoryUnitTests
     {
-        [Fact]
-        public async void GetByIdAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetByIdAsync_ReturnsObject(
+            [Frozen] Mock<DbSet<Core.Entities.Product>> mockSet,
+            [Frozen] Mock<AWContext> mockContext,
+            Core.Entities.Product product
+        )
         {
             //Arrange
-            var mockSet = new Mock<DbSet<Core.Entities.Product>>();
-            mockSet.Setup(x => x.FindAsync(It.IsAny<object[]>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(
-                    new Core.Entities.Product { Id = 1, ProductNumber = "AR-5381" }
-                );
+            mockSet.Setup(x => x.FindAsync(
+                It.IsAny<object[]>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(product);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Core.Entities.Product>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var product = await repository.GetByIdAsync(1);
+            var result = await repository.GetByIdAsync(product.Id);
 
             //Assert
-            product.ProductNumber.Should().Be("AR-5381");
+            result.ProductNumber.Should().Be(product.ProductNumber);
         }
 
-        [Fact]
-        public async void ListAllAsync_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAllAsync_ReturnsObjects(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "AR-5381" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "BA-8327" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -55,19 +56,15 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             var list = await repository.ListAsync();
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(products.Count);
         }
 
-        [Fact]
-        public async void ListAsync_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_ReturnsObjects(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "CA-5965", Color = "Black" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "CA-6738", Color = "Black" },
-                new Core.Entities.Product { Id = 3, ProductNumber = "CB-2903", Color = "Silver" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -76,23 +73,20 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductsByColorSpecification("Black");
+            var spec = new GetProductsByColorSpecification(products[0].Color);
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(1);
+            list[0].Should().BeEquivalentTo(products[0]);
         }
 
-        [Fact]
-        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_WithResultSpec_ReturnsObjects(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "AR-5381", Name = "Adjustable Race" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "BA-8327", Name = "Bearing Ball" },
-                new Core.Entities.Product { Id = 3, ProductNumber = "BE-2349", Name = "BB Ball Bearing" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -106,21 +100,17 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
 
             //Assert
             list.Count.Should().Be(3);
-            list[0].Should().Be("Adjustable Race");
-            list[1].Should().Be("Bearing Ball");
-            list[2].Should().Be("BB Ball Bearing");
+            list[0].Should().Be(products[0].Name);
+            list[1].Should().Be(products[1].Name);
+            list[2].Should().Be(products[2].Name);
         }
 
-        [Fact]
-        public async void CountAsync_ReturnsCount()
+        [Theory, OmitOnRecursion]
+        public async void CountAsync_ReturnsCount(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "CA-5965", Color = "Black" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "CA-6738", Color = "Black" },
-                new Core.Entities.Product { Id = 3, ProductNumber = "CB-2903", Color = "Silver" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -129,22 +119,19 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductsByColorSpecification("Black");
+            var spec = new GetProductsByColorSpecification(products[0].Color);
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(2);
+            count.Should().Be(1);
         }
 
-        [Fact]
-        public async void AddAsync_SavesObject()
+        [Theory, OmitOnRecursion]
+        public async void AddAsync_SavesObject(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "AR-5381" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "BA-8327" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -153,7 +140,10 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var newProduct = new Core.Entities.Product { ProductNumber = "BE-2349" };
+            var newProduct = new Core.Entities.Product 
+            { 
+                ProductNumber = products[0].ProductNumber 
+            };
             var savedProduct = await repository.AddAsync(newProduct);
 
             //Assert
@@ -162,15 +152,12 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             newProduct.Should().BeEquivalentTo(savedProduct);
         }
 
-        [Fact]
-        public async void GetBySpecAsync_ReturnsObject()
+        [Theory, OmitOnRecursion]
+        public async void GetBySpecAsync_ReturnsObject(
+            List<Core.Entities.Product> products
+        )
         {
             //Arrange
-            var products = new List<Core.Entities.Product>
-            {
-                new Core.Entities.Product { Id = 1, ProductNumber = "AR-5381" },
-                new Core.Entities.Product { Id = 2, ProductNumber = "BA-8327" }
-            };
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -179,11 +166,11 @@ namespace AW.Services.Product.Persistence.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductByProductNumberSpecification("BA-8327");
+            var spec = new GetProductByProductNumberSpecification(products[0].ProductNumber);
             var product = await repository.GetBySpecAsync(spec);
 
             //Assert
-            product.ProductNumber.Should().Be("BA-8327");
+            product.ProductNumber.Should().Be(products[0].ProductNumber);
         }
     }
 }

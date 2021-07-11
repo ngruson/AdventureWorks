@@ -1,4 +1,5 @@
 ﻿using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
+using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Xunit;
 
@@ -6,60 +7,50 @@ namespace AW.Services.SalesOrder.Core.UnitTests
 {
     public class GetSalesOrdersQueryValidatorUnitTests
     {
-        [Fact]
-        public void TestValidate_WithValidPageSize_NoValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithValidPageSize_NoValidationError(
+            GetSalesOrdersQueryValidator sut,
+            GetSalesOrdersQuery query
+        )
         {
-            //Arrange
-            var sut = new GetSalesOrdersQueryValidator();
-            var query = new GetSalesOrdersQuery
-            {
-                PageSize = 1
-            };
-
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldNotHaveValidationErrorFor(query => query.PageSize);
+            result.ShouldNotHaveValidationErrorFor(query => query.PageIndex);
         }
 
-        [Fact]
-        public void TestValidate_WithInvalidPageSize_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithInvalidPageSize_ValidationError(
+            GetSalesOrdersQueryValidator sut,
+            GetSalesOrdersQuery query
+        )
         {
             //Arrange
-            var sut = new GetSalesOrdersQueryValidator();
-            var query = new GetSalesOrdersQuery
-            {
-                PageSize = 0
-            };
+            query.PageSize = 0;
 
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldHaveValidationErrorFor(query => query.PageSize)
                 .WithErrorMessage("Page size must be positive");
         }
 
-        [Fact]
-        public void TestValidate_WithValidPageIndex_NoValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithInvalidPageIndex_ValidationError(
+            GetSalesOrdersQueryValidator sut,
+            GetSalesOrdersQuery query
+        )
         {
             //Arrange
-            var sut = new GetSalesOrdersQueryValidator();
-            var query = new GetSalesOrdersQuery
-            {
-                PageIndex = 0
-            };
+            query.PageIndex = -1;
 
+            //Act
             var result = sut.TestValidate(query);
-            result.ShouldNotHaveValidationErrorFor(query => query.PageIndex);
-        }
 
-        [Fact]
-        public void TestValidate_WithInvalidPageIndex_ValidationError()
-        {
-            //Arrange
-            var sut = new GetSalesOrdersQueryValidator();
-            var query = new GetSalesOrdersQuery
-            {
-                PageIndex = -1
-            };
-
-            var result = sut.TestValidate(query);
+            //Assert
             result.ShouldHaveValidationErrorFor(query => query.PageIndex)
                 .WithErrorMessage("Page index must be 0 or positive");
         }

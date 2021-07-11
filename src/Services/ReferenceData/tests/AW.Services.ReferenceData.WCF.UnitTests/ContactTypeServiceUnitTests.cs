@@ -1,4 +1,7 @@
-﻿using AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes;
+﻿using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core;
+using AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -12,30 +15,26 @@ namespace AW.Services.ReferenceData.WCF.UnitTests
 {
     public class ContactTypeServiceUnitTests
     {
-        [Fact]
-        public async Task ListContactTypes_ReturnsContactTypes()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListContactTypes_ReturnsContactTypes(
+            List<ContactType> contactTypes,
+            [Frozen] Mock<IMediator> mockMediator,
+            ContactTypeService sut
+        )
         {
             //Arrange
-            var contactTypes = new List<ContactType>
-            {
-                new ContactType { Name = "Owner" },
-                new ContactType { Name = "Order Administrator" }
-            };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetContactTypesQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(contactTypes);
-
-            var contactTypeService = new ContactTypeService(
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetContactTypesQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(contactTypes);
 
             //Act
-            var result = await contactTypeService.ListContactTypes();
+            var result = await sut.ListContactTypes();
 
             //Assert
             result.Should().NotBeNull();
-            result.ContactTypes.Count().Should().Be(2);
+            result.ContactTypes.Count().Should().Be(contactTypes.Count);
         }
     }
 }

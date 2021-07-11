@@ -1,7 +1,9 @@
 ﻿using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
 using System.Threading;
@@ -11,22 +13,14 @@ namespace AW.Services.SalesOrder.Core.UnitTests
 {
     public class GetSalesOrderQueryValidatorUnitTests
     {
-        [Fact]
-        public void TestValidate_WithValidSalesOrderNumber_NoValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithValidSalesOrderNumber_NoValidationError(            
+            GetSalesOrderQueryValidator sut,
+            GetSalesOrderQuery query
+        )
         {
             //Arrange
-            var mockRepository = new Mock<IRepository<Entities.SalesOrder>>();
-            mockRepository.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetSalesOrderSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new Entities.SalesOrder { SalesOrderNumber = "SO43659" });
-
-            var sut = new GetSalesOrderQueryValidator(mockRepository.Object);
-            var query = new GetSalesOrderQuery
-            {
-                SalesOrderNumber = "SO43659"
-            };
+            query.SalesOrderNumber = query.SalesOrderNumber.Substring(0, 25);
 
             //Act
             var result = sut.TestValidate(query);
@@ -35,13 +29,14 @@ namespace AW.Services.SalesOrder.Core.UnitTests
             result.ShouldNotHaveValidationErrorFor(query => query.SalesOrderNumber);
         }
 
-        [Fact]
-        public void TestValidate_WithoutSalesOrderNumber_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithoutSalesOrderNumber_ValidationError(
+            GetSalesOrderQueryValidator sut,
+            GetSalesOrderQuery query
+        )
         {
             //Arrange
-            var mockRepository = new Mock<IRepository<Entities.SalesOrder>>();
-            var sut = new GetSalesOrderQueryValidator(mockRepository.Object);
-            var query = new GetSalesOrderQuery();
+            query.SalesOrderNumber = "";
            
             //Act
             var result = sut.TestValidate(query);
@@ -51,40 +46,38 @@ namespace AW.Services.SalesOrder.Core.UnitTests
                 .WithErrorMessage("Sales order number is required");
         }
 
-        [Fact]
-        public void TestValidate_WithSalesOrderNumberTooLong_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithSalesOrderNumberTooLong_ValidationError(
+            GetSalesOrderQueryValidator sut,
+            GetSalesOrderQuery query
+        )
         {
-            //Arrange
-            var mockRepository = new Mock<IRepository<Entities.SalesOrder>>();
-            mockRepository.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetSalesOrderSpecification>(), 
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new Entities.SalesOrder { SalesOrderNumber = "SO43659" });
-
-            var sut = new GetSalesOrderQueryValidator(mockRepository.Object);
-            var query = new GetSalesOrderQuery
-            {
-                SalesOrderNumber = "1".PadRight(26)
-            };
-
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldHaveValidationErrorFor(query => query.SalesOrderNumber)
                 .WithErrorMessage("Sales order number must not exceed 25 characters");
         }
 
-        [Fact]
-        public void TestValidate_WithSalesOrderNumberDoesNotExist_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_WithSalesOrderNumberDoesNotExist_ValidationError(
+            [Frozen] Mock<IRepository<Entities.SalesOrder>> salesOrderRepoMock,
+            GetSalesOrderQueryValidator sut,
+            GetSalesOrderQuery query
+        )
         {
             //Arrange
-            var mockRepository = new Mock<IRepository<Core.Entities.SalesOrder>>();
-            var sut = new GetSalesOrderQueryValidator(mockRepository.Object);
-            var query = new GetSalesOrderQuery
-            {
-                SalesOrderNumber = "SO43659"
-            };
+            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetSalesOrderSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.SalesOrder)null);
 
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldHaveValidationErrorFor(query => query.SalesOrderNumber)
                 .WithErrorMessage("Sales order does not exist");
         }

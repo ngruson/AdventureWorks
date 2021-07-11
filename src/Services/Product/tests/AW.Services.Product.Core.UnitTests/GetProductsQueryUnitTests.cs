@@ -1,7 +1,9 @@
 using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,93 +18,33 @@ namespace AW.Services.Product.Core.UnitTests
 {
     public class GetProductsQueryUnitTests
     {
-        [Fact]
-        public async void Handle_ProductsExists_ReturnProducts()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_ProductsExists_ReturnProducts(
+            List<Entities.Product> products,
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductsQueryHandler sut,
+            GetProductsQuery query
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
+            products.ForEach(product =>
+            {
+                for (int i = 0; i < product.ProductProductPhotos.Count; i++)
+                {
+                    product.ProductProductPhotos[0].Primary = i == 0;
+                }
+            });
 
-            #region Product 1
-            var product1 = new TestBuilders.ProductBuilder().WithTestValues().Build();
-            #endregion
-
-            #region Product 2
-            var product2 = new TestBuilders.ProductBuilder()
-                .WithTestValues()
-                .Id(718)
-                .Name("HL Road Frame - Red, 44")
-                .ProductNumber("FR-R92R-44")
-                .MakeFlag(true)
-                .FinishedGoodsFlag(true)
-                .Color("Red")
-                .SafetyStockLevel(500)
-                .ReorderPoint(375)
-                .StandardCost(868.6342M)
-                .ListPrice(1431.50M)
-                .Size("44")
-                .SizeUnitMeasureCode("CM")
-                .SizeUnitMeasure(new TestBuilders.UnitMeasureBuilder()
-                    .UnitMeasureCode("CM")
-                    .Name("Centimeter")
-                    .Build()
-                )
-                .Weight(2.12M)
-                .WeightUnitMeasureCode("LB")
-                .WeightUnitMeasure(new TestBuilders.UnitMeasureBuilder()
-                    .UnitMeasureCode("LB")
-                    .Name("US pound")
-                    .Build()
-                )
-                .DaysToManufacture(1)
-                .ProductLine("R")
-                .Class("H")
-                .Style("U")
-                .ProductSubcategoryId(14)
-                .ProductSubcategory(new TestBuilders.ProductSubcategoryBuilder()
-                    .WithTestValues()
-                    .Id(14)
-                    .Name("Road Frames")
-                    .ProductCategoryId(2)
-                    .ProductCategory(new TestBuilders.ProductCategoryBuilder()
-                        .WithTestValues()
-                        .Id(2)
-                        .Name("Components")
-                        .Build()
-                    )
-                    .Build()
-                )
-                .ProductModelId(6)
-                .ProductModel(new TestBuilders.ProductModelBuilder()
-                    .WithTestValues()
-                    .Id(6)
-                    .Name("HL Road Frame")
-                    .Build()
-                )
-                .SellStartDate(new DateTime(2011, 05, 31))
-                .Build();
-            #endregion
-
-            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
             productRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetProductsPaginatedSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.Product>
-            {
-                product1,
-                product2
-            });
+            .ReturnsAsync(products);
 
-            var handler = new GetProductsQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                mapper
-            );
+            query.OrderBy = null;
 
             //Act
-            var query = new GetProductsQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -110,28 +52,31 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<ISpecification<Entities.Product>>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
-            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
+
+            for (int i = 0; i < result.Products.Count; i++)
+            {
+                result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
+            }
         }
 
-        [Fact]
-        public void Handle_NoProductsExists_ThrowArgumentNullException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_NoProductsExists_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductsQueryHandler sut,
+            GetProductsQuery query
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
+            query.OrderBy = "";
 
-            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
-
-            var handler = new GetProductsQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                mapper
-            );
+            productRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((List<Entities.Product>)null);
 
             //Act
-            var query = new GetProductsQuery();
-            Func<Task> func = async() => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>();
@@ -141,30 +86,33 @@ namespace AW.Services.Product.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public async void Handle_ValidAscOrderBy_ReturnProducts()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_ValidAscOrderBy_ReturnProducts(
+            List<Entities.Product> products,
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductsQueryHandler sut,
+            GetProductsQuery query
+        )
         {
-            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
+            //Arrange
+            products.ForEach(product =>
+            {
+                for (int i = 0; i < product.ProductProductPhotos.Count; i++)
+                {
+                    product.ProductProductPhotos[i].Primary = i == 0;
+                }
+            });
+
             productRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetProductsPaginatedSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.Product>
-            {
-                new Entities.Product { ProductNumber = "FR-R92B-58" },
-                new Entities.Product { ProductNumber = "FR-R92R-44" },
-            });
+            .ReturnsAsync(products);
 
-            var handler = new GetProductsQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                Mapper.CreateMapper()
-            );
+            query.OrderBy = "asc(name)";
 
             //Act
-            var query = new GetProductsQuery { OrderBy = "asc(name)" };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -172,34 +120,40 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<ISpecification<Entities.Product>>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
-            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
+
+            for (int i = 0; i < result.Products.Count; i++)
+            {
+                result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
+            }
         }
 
-        [Fact]
-        public async void Handle_ValidDescOrderBy_ReturnProducts()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_ValidDescOrderBy_ReturnProducts(
+            List<Entities.Product> products,
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductsQueryHandler sut,
+            GetProductsQuery query
+        )
         {
-            var loggerMock = new Mock<ILogger<GetProductsQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
+            //Arrange
+            products.ForEach(product =>
+            {
+                for (int i = 0; i < product.ProductProductPhotos.Count; i++)
+                {
+                    product.ProductProductPhotos[i].Primary = i == 0;
+                }
+            });
+
             productRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetProductsPaginatedSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.Product>
-            {
-                new Entities.Product { ProductNumber = "FR-R92B-58" },
-                new Entities.Product { ProductNumber = "FR-R92R-44" },
-            });
+            .ReturnsAsync(products);
 
-            var handler = new GetProductsQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                Mapper.CreateMapper()
-            );
+            query.OrderBy = "desc(name)";
 
             //Act
-            var query = new GetProductsQuery { OrderBy = "desc(name)" };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -207,8 +161,11 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<ISpecification<Entities.Product>>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.Products[0].ProductNumber.Should().Be("FR-R92B-58");
-            result.Products[1].ProductNumber.Should().Be("FR-R92R-44");
+
+            for (int i = 0; i < result.Products.Count; i++)
+            {
+                result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
+using AutoFixture.Xunit2;
 using AutoMapper;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using AW.Services.SalesPerson.Core.Specifications;
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,44 +18,25 @@ namespace AW.Services.SalesPerson.Core.UnitTests
 {
     public class GetSalesPersonsQueryUnitTests
     {
-        [Fact]
-        public async void Handle_SalesPersonsExists_ReturnSalesPersons()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_SalesPersonsExists_ReturnSalesPersons(
+            List<Entities.SalesPerson> salesPersons,
+            [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
+            GetSalesPersonsQueryHandler sut,
+            GetSalesPersonsQuery query
+        )
         {
-            var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                })
-                .CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetSalesPersonsQueryHandler>>();
-            var salesPersonRepoMock = new Mock<IRepository<Entities.SalesPerson>>();
-
+            //Arrange
             salesPersonRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetSalesPersonsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.SalesPerson>
-            {
-                new TestBuilders.SalesPersonBuilder()
-                    .WithTestValues()
-                    .Build(),
+            .ReturnsAsync(salesPersons);
 
-                new TestBuilders.SalesPersonBuilder()
-                    .FirstName("Michael")
-                    .MiddleName("G")
-                    .LastName("Blythe")
-                    .Build(),
-            });
-
-            var handler = new GetSalesPersonsQueryHandler(
-                loggerMock.Object,
-                salesPersonRepoMock.Object,
-                mapper
-            );
+            query.Territory = "";
 
             //Act
-            var query = new GetSalesPersonsQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -62,51 +45,29 @@ namespace AW.Services.SalesPerson.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result[0].FullName().Should().Be("Stephen Y Jiang");
-            result[1].FullName().Should().Be("Michael G Blythe");
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].FullName().Should().Be(salesPersons[i].FullName());
+            }
         }
 
-        [Fact]
-        public async void Handle_TerritoryFilter_ReturnSalesPersons()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_TerritoryFilter_ReturnSalesPersons(
+            List<Entities.SalesPerson> salesPersons,
+            [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
+            GetSalesPersonsQueryHandler sut,
+            GetSalesPersonsQuery query
+        )
         {
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            })
-                .CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetSalesPersonsQueryHandler>>();
-            var salesPersonRepoMock = new Mock<IRepository<Entities.SalesPerson>>();
-
+            //Arrange
             salesPersonRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetSalesPersonsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.SalesPerson>
-            {
-                new TestBuilders.SalesPersonBuilder()
-                    .WithTestValues()
-                    .Build(),
-
-                new TestBuilders.SalesPersonBuilder()
-                    .FirstName("Michael")
-                    .MiddleName("G")
-                    .LastName("Blythe")
-                    .Build(),
-            });
-
-            var handler = new GetSalesPersonsQueryHandler(
-                loggerMock.Object,
-                salesPersonRepoMock.Object,
-                mapper
-            );
+            .ReturnsAsync(salesPersons);
 
             //Act
-            var query = new GetSalesPersonsQuery
-            {
-                Territory = "Northeast"
-            };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -115,31 +76,28 @@ namespace AW.Services.SalesPerson.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result[0].FullName().Should().Be("Stephen Y Jiang");
-            result[1].FullName().Should().Be("Michael G Blythe");
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].FullName().Should().Be(salesPersons[i].FullName());
+            }
         }
 
-        [Fact]
-        public void Handle_SalesPersonsNull_ThrowsArgumentNullException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_SalesPersonsNull_ThrowsArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
+            GetSalesPersonsQueryHandler sut,
+            GetSalesPersonsQuery query
+        )
         {
-            var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                })
-                .CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetSalesPersonsQueryHandler>>();
-            var salesPersonRepoMock = new Mock<IRepository<Entities.SalesPerson>>();
-
-            var handler = new GetSalesPersonsQueryHandler(
-                loggerMock.Object,
-                salesPersonRepoMock.Object,
-                mapper
-            );
+            //Arrange
+            salesPersonRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetSalesPersonsSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((List<Entities.SalesPerson>)null);
 
             //Act
-            var query = new GetSalesPersonsQuery();
-            Func<Task> func = async () => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

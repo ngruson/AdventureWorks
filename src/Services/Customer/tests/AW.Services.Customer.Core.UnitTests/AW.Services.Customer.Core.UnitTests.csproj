@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.9.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
   </ItemGroup>
 </Project>

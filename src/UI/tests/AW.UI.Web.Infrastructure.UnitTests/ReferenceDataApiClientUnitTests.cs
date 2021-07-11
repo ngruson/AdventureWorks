@@ -1,19 +1,15 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetAddressTypes;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetContactTypes;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetCountries;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetStateProvinces;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetTerritories;
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Moq;
+using RichardSzalay.MockHttp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,65 +19,59 @@ namespace AW.UI.Web.Infrastructure.UnitTests
     {
         public class GetAddressTypes
         {
-            [Fact]
-            public async void GetAddressTypes_AddressTypesFound_ReturnsAddressTypes()
+            [Theory, MockHttpData]
+            public async void GetAddressTypes_AddressTypesFound_ReturnsAddressTypes(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<ApiClients.ReferenceDataApi.Models.GetAddressTypes.AddressType> addressTypes,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
-
-                var addressTypes = (new string[] { "Billing", "Home", "Main Office", "Primary", "Shipping", "Archive" })
-                    .Select(addressType => new AddressTypeBuilder()
-                     .Name(addressType)
-                     .Build()
-                );
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(addressTypes, new JsonSerializerOptions
-                            {
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                addressTypes, 
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetAddressTypesAsync();
 
                 //Assert
-                response.Should().NotBeNull();
-                response.Count.Should().Be(6);
+                response.Should().BeEquivalentTo(addressTypes);
             }
 
-            [Fact]
-            public void GetAddressTypes_NoAddressTypesFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetAddressTypes_NoAddressTypesFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
+                httpClient.BaseAddress = uri;
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetAddressTypesAsync();
 
                 //Assert
@@ -92,65 +82,59 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
         public class GetContactTypes
         {
-            [Fact]
-            public async void GetContactTypes_ContactTypesFound_ReturnsContactTypes()
+            [Theory, MockHttpData]
+            public async void GetContactTypes_ContactTypesFound_ReturnsContactTypes(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<ApiClients.ReferenceDataApi.Models.GetContactTypes.ContactType> contactTypes,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
-
-                var contactTypes = (new string[] { "Account Manager", "Owner", "Order Administrator" })
-                    .Select(contactType => new ContactTypeBuilder()
-                     .Name(contactType)
-                     .Build()
-                );
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(contactTypes, new JsonSerializerOptions
-                            {
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                contactTypes,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetContactTypesAsync();
 
                 //Assert
-                response.Should().NotBeNull();
-                response.Count.Should().Be(3);
+                response.Should().BeEquivalentTo(contactTypes);
             }
 
-            [Fact]
-            public void GetContactTypes_NoContactTypesFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetContactTypes_NoContactTypesFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
+                httpClient.BaseAddress = uri;
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetContactTypesAsync();
 
                 //Assert
@@ -161,65 +145,59 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
         public class GetCountries
         {
-            [Fact]
-            public async void GetCountries_CountriesFound_ReturnsCountries()
+            [Theory, MockHttpData]
+            public async void GetCountries_CountriesFound_ReturnsCountries(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<ApiClients.ReferenceDataApi.Models.GetCountries.CountryRegion> countries,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
-
-                var countries = (new string[] { "United States", "United Kingdom" })
-                    .Select(country => new CountryBuilder()
-                     .Name(country)
-                     .Build()
-                );
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(countries, new JsonSerializerOptions
-                            {
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                countries,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetCountriesAsync();
 
                 //Assert
-                response.Should().NotBeNull();
-                response.Count.Should().Be(2);
+                response.Should().BeEquivalentTo(countries);
             }
 
-            [Fact]
-            public void GetCountries_NoCountriesFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetCountries_NoCountriesFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
+                httpClient.BaseAddress = uri;
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetCountriesAsync();
 
                 //Assert
@@ -230,65 +208,59 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
         public class GetStateProvinces
         {
-            [Fact]
-            public async void GetStateProvinces_StateProvincesFound_ReturnsStateProvinces()
+            [Theory, MockHttpData]
+            public async void GetStateProvinces_StateProvincesFound_ReturnsStateProvinces(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<ApiClients.ReferenceDataApi.Models.GetStateProvinces.StateProvince> statesProvinces,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
-
-                var stateProvinces = (new string[] { "California", "Washington" })
-                    .Select(country => new StateProvinceBuilder()
-                     .Name(country)
-                     .Build()
-                );
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(stateProvinces, new JsonSerializerOptions
-                            {
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                statesProvinces,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetStateProvincesAsync();
 
                 //Assert
-                response.Should().NotBeNull();
-                response.Count.Should().Be(2);
+                response.Should().BeEquivalentTo(statesProvinces);
             }
 
-            [Fact]
-            public void GetStateProvinces_NoStateProvincesFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetStateProvinces_NoStateProvincesFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
+                httpClient.BaseAddress = uri;
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetStateProvincesAsync();
 
                 //Assert
@@ -299,65 +271,60 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
         public class GetTerritories
         {
-            [Fact]
-            public async void GetTerritories_TerritoriesFound_ReturnsTerritories()
+            [Theory, MockHttpData]
+            public async void GetTerritories_TerritoriesFound_ReturnsTerritories(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<ApiClients.ReferenceDataApi.Models.GetTerritories.Territory> territories,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
-
-                var territories = (new string[] { "Northwest", "Northeast" })
-                    .Select(country => new SalesTerritoryBuilder()
-                     .Name(country)
-                     .Build()
-                );
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(territories, new JsonSerializerOptions
-                            {
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                territories,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetTerritoriesAsync();
 
                 //Assert
                 response.Should().NotBeNull();
-                response.Count.Should().Be(2);
+                response.Should().BeEquivalentTo(territories);
             }
 
-            [Fact]
-            public void GetTerritories_NoTerritoriesFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetTerritories_NoTerritoriesFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ReferenceDataApiClient sut
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<ReferenceDataApiClient>>();
+                httpClient.BaseAddress = uri;
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new ReferenceDataApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetTerritoriesAsync();
 
                 //Assert

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
@@ -13,6 +13,7 @@ using AW.Services.Customer.WCF.Messages.ListCustomers;
 using AW.Services.Customer.WCF.Messages.UpdateCustomer;
 using AW.Services.Customer.WCF.Messages.UpdateCustomerAddress;
 using AW.Services.Customer.WCF.Messages.UpdateStoreCustomerContact;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -26,293 +27,188 @@ namespace AW.Services.Customer.WCF.UnitTests
 {
     public class CustomerServiceUnitTests
     {
-        [Fact]
-        public async Task ListCustomers_ReturnsCustomers()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListCustomers_ReturnsCustomers(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetCustomers.StoreCustomerDto> customers,
+            CustomerService sut,
+            ListCustomersRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
             var dto = new GetCustomersDto
             {
-                Customers = new List<Core.Handlers.GetCustomers.CustomerDto>
-                {
-                    new TestBuilders.GetCustomers.IndividualCustomerBuilder().WithTestValues().Build(),
-                    new TestBuilders.GetCustomers.StoreCustomerBuilder().WithTestValues().Build()
-                },
-                TotalCustomers = 2
+                Customers = customers.ToList<Core.Handlers.GetCustomers.CustomerDto>(),
+                TotalCustomers = customers.Count
             };
 
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetCustomersQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetCustomersQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var request = new ListCustomersRequest();
-            var result = await customerService.ListCustomers(request);
+            var result = await sut.ListCustomers(request);
 
             //Assert
             result.Should().NotBeNull();
-            result.Customers.Customer.Count().Should().Be(2);
-            result.Customers.Customer[0].AccountNumber.Should().Be("AW00011000"); 
-            result.Customers.Customer[1].AccountNumber.Should().Be("AW00000001");
+            result.Customers.Customer.Count().Should().Be(customers.Count);
+
+            for (int i = 0; i < result.Customers.Customer.Count; i++)
+            {
+                var customer = result.Customers.Customer[i];
+                customer.AccountNumber.Should().Be(customers[i].AccountNumber);
+            }
         }
 
-        [Fact]
-        public async Task GetCustomer_ReturnsCustomer()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetCustomer_ReturnsCustomer(
+            [Frozen] Mock<IMediator> mockMediator,
+            [Frozen] Core.Handlers.GetCustomer.StoreCustomerDto dto,
+            CustomerService sut,
+            GetCustomerRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var dto = new Core.Handlers.GetCustomer.IndividualCustomerDto
-            {
-                AccountNumber = "AW00000001"
-            };
-
-            var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(x => x.Send(It.IsAny<GetCustomerQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dto);
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
 
             //Act
-            var request = new GetCustomerRequest();
-            var result = await customerService.GetCustomer(request);
+            var result = await sut.GetCustomer(request);
 
             //Assert
             result.Should().NotBeNull();
             result.Customer.Should().NotBeNull();
-            result.Customer.AccountNumber.Should().Be("AW00000001");
+            result.Customer.AccountNumber.Should().Be(dto.AccountNumber);
         }
 
-        [Fact]
-        public async Task UpdateCustomer_ReturnsCustomer()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task UpdateCustomer_ReturnsCustomer(
+            [Frozen] Mock<IMediator> mockMediator,
+            [Frozen] Core.Handlers.UpdateCustomer.StoreCustomerDto dto,
+            CustomerService sut,
+            Messages.UpdateCustomer.StoreCustomer customer
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var customer = new Core.Handlers.UpdateCustomer.IndividualCustomerDto
-            {
-                AccountNumber = "AW00000001"
-            };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<UpdateCustomerCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(customer);
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<UpdateCustomerCommand>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var request = new UpdateCustomerRequest
-            {
-                Customer = new Messages.UpdateCustomer.IndividualCustomer
+            var result = await sut.UpdateCustomer(new UpdateCustomerRequest
                 {
-                    AccountNumber = "AW00000001"
-                }
-            };
-            var result = await customerService.UpdateCustomer(request);
+                    Customer = customer
+                });
 
             //Assert
             result.Should().NotBeNull();
             result.Customer.Should().NotBeNull();
-            result.Customer.AccountNumber.Should().Be("AW00000001");
+            result.Customer.AccountNumber.Should().Be(dto.AccountNumber);
         }
 
-        [Fact]
-        public async Task AddCustomerAddress_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task AddCustomerAddress_ReturnsResponse(
+            CustomerService sut,
+            AddCustomerAddressRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new AddCustomerAddressRequest();
-            var result = await customerService.AddCustomerAddress(request);
+            var result = await sut.AddCustomerAddress(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task UpdateCustomerAddress_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task UpdateCustomerAddress_ReturnsResponse(
+            CustomerService sut,
+            UpdateCustomerAddressRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new UpdateCustomerAddressRequest();
-            var result = await customerService.UpdateCustomerAddress(request);
+            var result = await sut.UpdateCustomerAddress(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task DeleteCustomerAddress_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task DeleteCustomerAddress_ReturnsResponse(
+            CustomerService sut,
+            DeleteCustomerAddressRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new DeleteCustomerAddressRequest();
-            var result = await customerService.DeleteCustomerAddress(request);
+            var result = await sut.DeleteCustomerAddress(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task AddCustomerContact_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task AddCustomerContact_ReturnsResponse(
+            CustomerService sut,
+            AddStoreCustomerContactRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new AddStoreCustomerContactRequest();
-            var result = await customerService.AddStoreCustomerContact(request);
+            var result = await sut.AddStoreCustomerContact(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task UpdateCustomerContact_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task UpdateCustomerContact_ReturnsResponse(
+            CustomerService sut,
+            UpdateStoreCustomerContactRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new UpdateStoreCustomerContactRequest();
-            var result = await customerService.UpdateStoreCustomerContact(request);
+            var result = await sut.UpdateStoreCustomerContact(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task DeleteCustomerContact_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task DeleteCustomerContact_ReturnsResponse(
+            CustomerService sut,
+            DeleteStoreCustomerContactRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new DeleteStoreCustomerContactRequest();
-            var result = await customerService.DeleteStoreCustomerContact(request);
+            var result = await sut.DeleteStoreCustomerContact(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task AddIndividualCustomerEmailAddress_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task AddIndividualCustomerEmailAddress_ReturnsResponse(
+            CustomerService sut,
+            AddIndividualCustomerEmailAddressRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new AddIndividualCustomerEmailAddressRequest();
-            var result = await customerService.AddIndividualCustomerEmailAddress(request);
+            var result = await sut.AddIndividualCustomerEmailAddress(request);
 
             //Assert
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task DeleteIndividualCustomerEmailAddress_ReturnsResponse()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task DeleteIndividualCustomerEmailAddress_ReturnsResponse(
+            CustomerService sut,
+            DeleteIndividualCustomerEmailAddressRequest request
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockMediator = new Mock<IMediator>();
-            var customerService = new CustomerService(
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new DeleteIndividualCustomerEmailAddressRequest();
-            var result = await customerService.DeleteIndividualCustomerEmailAddress(request);
+            var result = await sut.DeleteIndividualCustomerEmailAddress(request);
 
             //Assert
             result.Should().NotBeNull();

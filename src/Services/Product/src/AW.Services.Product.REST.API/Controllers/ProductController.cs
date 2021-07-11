@@ -46,7 +46,7 @@ namespace AW.Services.Product.REST.API.Controllers
             logger.LogInformation("Sending the GetProducts query");
             var result = await mediator.Send(query);
 
-            if (result == null || !result.Products.Any())
+            if (result == null || result.Products == null || !result.Products.Any())
             {
                 logger.LogInformation("No products were found");
                 return new NotFoundResult();

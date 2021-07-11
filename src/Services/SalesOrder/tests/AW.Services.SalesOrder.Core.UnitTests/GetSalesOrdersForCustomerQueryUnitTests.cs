@@ -1,8 +1,9 @@
+using AutoFixture.Xunit2;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer;
 using AW.Services.SalesOrder.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,37 +13,23 @@ namespace AW.Services.SalesOrder.Core.UnitTests
 {
     public class GetSalesOrdersForCustomerQueryUnitTests
     {
-        [Fact]
-        public async void Handle_SalesOrderExists_ReturnSalesOrder()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_SalesOrderExists_ReturnSalesOrder(
+            List<Entities.SalesOrder> salesOrders,
+            [Frozen] Mock<IRepository<Entities.SalesOrder>> salesOrderRepoMock,
+            GetSalesOrdersForCustomerQueryHandler sut,
+            GetSalesOrdersForCustomerQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetSalesOrdersForCustomerQueryHandler>>();
-            var salesOrderRepoMock = new Mock<IRepository<Entities.SalesOrder>>();
-
+            //Arrange
             salesOrderRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetSalesOrdersForCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Core.Entities.SalesOrder>
-            {
-                new TestBuilders.SalesOrderBuilder()
-                    .WithTestValues()
-                    .Build(),
-
-                new TestBuilders.SalesOrderBuilder()
-                    .SalesOrderNumber("SO43660")
-                    .Build()
-            });
-
-            var handler = new GetSalesOrdersForCustomerQueryHandler(
-                loggerMock.Object,
-                salesOrderRepoMock.Object,
-                mapper
-            );
+            .ReturnsAsync(salesOrders);
 
             //Act
-            var query = new GetSalesOrdersForCustomerQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -50,8 +37,11 @@ namespace AW.Services.SalesOrder.Core.UnitTests
                 It.IsAny<GetSalesOrdersForCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result[0].SalesOrderNumber.Should().Be("SO43659");
-            result[1].SalesOrderNumber.Should().Be("SO43660");
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].SalesOrderNumber.Should().Be(salesOrders[i].SalesOrderNumber);
+            }
         }
     }
 }

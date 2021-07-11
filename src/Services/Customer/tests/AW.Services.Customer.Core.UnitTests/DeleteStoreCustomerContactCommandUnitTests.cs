@@ -1,9 +1,9 @@
-﻿using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.Customer.Core.UnitTests.TestBuilders;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,58 +15,38 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class DeleteStoreCustomerContactCommandUnitTests
     {
-        [Fact]
-        public async void Handle_ExistingCustomerAndContact_DeleteContact()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_ExistingCustomerAndContact_DeleteContact(
+            [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
+            Entities.StoreCustomer customer,
+            DeleteStoreCustomerContactCommandHandler sut,
+            DeleteStoreCustomerContactCommand command
+        )
         {
             // Arrange
-            var loggerMock = new Mock<ILogger<DeleteStoreCustomerContactCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.StoreCustomer>>();
+            customer.Contacts = new List<Entities.StoreCustomerContact>
+            {
+                new Entities.StoreCustomerContact
+                {
+                    ContactType = command.CustomerContact.ContactType,
+                    ContactPerson = new Entities.Person
+                    {
+                        FirstName = command.CustomerContact.ContactPerson.FirstName,
+                        MiddleName = command.CustomerContact.ContactPerson.MiddleName,
+                        LastName = command.CustomerContact.ContactPerson.LastName
+                    }
+                }
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new StoreCustomerBuilder()
-                .WithTestValues()
-                .Contacts(new List<Entities.StoreCustomerContact> 
-                    {
-                        new Entities.StoreCustomerContact
-                        {
-                            ContactType = "Owner",
-                            ContactPerson = new Entities.Person
-                            {
-                                Title = "Mr.",
-                                FirstName = "Orlando",
-                                MiddleName = "N.",
-                                LastName = "Gee"
-                            }
-                        }
-                    }
-                )
-                .Build()
-            );
-
-            var handler = new DeleteStoreCustomerContactCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            .ReturnsAsync(customer);
 
             //Act
-            var command = new DeleteStoreCustomerContactCommand
-            {
-                AccountNumber = "AW00000001",
-                CustomerContact = new StoreCustomerContactDto
-                {
-                    ContactType = "Owner",
-                    ContactPerson = new PersonDto
-                    {
-                        Title = "Mr.",
-                        FirstName = "Orlando",
-                        MiddleName = "N.",
-                        LastName = "Gee"
-                    }
-                }
-            };
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -76,79 +56,38 @@ namespace AW.Services.Customer.Core.UnitTests
             ));
         }
 
-        [Fact]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
+            DeleteStoreCustomerContactCommandHandler sut,
+            DeleteStoreCustomerContactCommand command
+        )
         {
             // Arrange
-            var loggerMock = new Mock<ILogger<DeleteStoreCustomerContactCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.StoreCustomer>>();
-
-            var handler = new DeleteStoreCustomerContactCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetStoreCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.StoreCustomer)null);
 
             //Act
-            var command = new DeleteStoreCustomerContactCommand
-            {
-                AccountNumber = "AW00000001",
-                CustomerContact = new StoreCustomerContactDto
-                {
-                    ContactType = "Owner",
-                    ContactPerson = new PersonDto
-                    {
-                        Title = "Mr.",
-                        FirstName = "Orlando",
-                        MiddleName = "N.",
-                        LastName = "Gee"
-                    }
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'storeCustomer')");
         }
 
-        [Fact]
-        public void Handle_ContactPersonDoesNotExist_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_ContactPersonDoesNotExist_ThrowArgumentNullException(
+            DeleteStoreCustomerContactCommandHandler sut,
+            DeleteStoreCustomerContactCommand command
+        )
         {
-            // Arrange
-            var loggerMock = new Mock<ILogger<DeleteStoreCustomerContactCommandHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.StoreCustomer>>();
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetStoreCustomerSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new StoreCustomerBuilder()
-                .WithTestValues()
-                .Contacts(new List<Entities.StoreCustomerContact>())
-                .Build()
-            );
-
-            var handler = new DeleteStoreCustomerContactCommandHandler(
-                loggerMock.Object,
-                customerRepoMock.Object
-            );
-
             //Act
-            var command = new DeleteStoreCustomerContactCommand
-            {
-                AccountNumber = "AW00000001",
-                CustomerContact = new StoreCustomerContactDto
-                {
-                    ContactType = "Owner",
-                    ContactPerson = new PersonDto
-                    {
-                        Title = "Mr.",
-                        FirstName = "Orlando",
-                        MiddleName = "N.",
-                        LastName = "Gee"
-                    }
-                }
-            };
-            Func<Task> func = async () => await handler.Handle(command, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+﻿using AutoFixture.Xunit2;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.WCF.Messages.GetSalesOrder;
 using AW.Services.SalesOrder.WCF.Messages.ListSalesOrders;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -16,68 +17,53 @@ namespace AW.Services.SalesOrder.WCF.UnitTests
 {
     public class SalesOrderServiceUnitTests
     {
-        [Fact]
-        public async Task ListSalesOrders_ReturnsSalesOrders()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListSalesOrders_ReturnsSalesOrders(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
+            SalesOrderService sut,
+            ListSalesOrdersRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
             var dto = new GetSalesOrdersDto
             {
-                SalesOrders = new List<Core.Handlers.GetSalesOrders.SalesOrderDto>
-                {
-                    new Core.Handlers.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "1" },
-                    new Core.Handlers.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "2" }
-                },
-                TotalSalesOrders = 2
+                SalesOrders = salesOrders,
+                TotalSalesOrders = salesOrders.Count
             };
 
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrdersQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-            var salesOrderService = new SalesOrderService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetSalesOrdersQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var request = new ListSalesOrdersRequest();
-            var result = await salesOrderService.ListSalesOrders(request);
+            var result = await sut.ListSalesOrders(request);
 
             //Assert
             result.Should().NotBeNull();
-            result.SalesOrders.SalesOrder.Count().Should().Be(2);
-            result.TotalSalesOrders.Should().Be(2);
+            result.SalesOrders.SalesOrder.Count().Should().Be(salesOrders.Count);
+            result.TotalSalesOrders.Should().Be(salesOrders.Count);
         }
 
-        [Fact]
-        public async Task GetSalesOrder_ReturnSalesOrder()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesOrder_ReturnSalesOrder(
+            [Frozen] Mock<IMediator> mockMediator,
+            Core.Handlers.GetSalesOrder.SalesOrderDto salesOrder,
+            SalesOrderService sut,
+            GetSalesOrderRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var dto = new Core.Handlers.GetSalesOrder.SalesOrderDto();
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-            var salesOrderService = new SalesOrderService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetSalesOrderQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(salesOrder);
 
             //Act
-            var request = new GetSalesOrderRequest
-            {
-                SalesOrderNumber = "SO43659"
-            };
-            var result = await salesOrderService.GetSalesOrder(request);
+            var result = await sut.GetSalesOrder(request);
 
             //Assert
             result.Should().NotBeNull();

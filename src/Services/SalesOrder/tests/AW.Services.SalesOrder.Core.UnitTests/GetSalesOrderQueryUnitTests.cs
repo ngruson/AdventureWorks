@@ -1,9 +1,9 @@
-using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Threading;
 using Xunit;
@@ -12,31 +12,23 @@ namespace AW.Services.SalesOrder.Core.UnitTests
 {
     public class GetSalesOrderQueryUnitTests
     {
-        [Fact]
-        public async void Handle_SalesOrderExists_ReturnSalesOrder()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_SalesOrderExists_ReturnSalesOrder(
+            Entities.SalesOrder salesOrder,
+            [Frozen] Mock<IRepository<Entities.SalesOrder>> salesOrderRepoMock,
+            GetSalesOrderQueryHandler sut,
+            GetSalesOrderQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetSalesOrderQueryHandler>>();
-            var salesOrderRepoMock = new Mock<IRepository<Entities.SalesOrder>>();
-
+            //Arrange
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new TestBuilders.SalesOrderBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new GetSalesOrderQueryHandler(
-                loggerMock.Object,
-                salesOrderRepoMock.Object,
-                mapper
-            );
+            .ReturnsAsync(salesOrder);
 
             //Act
-            var query = new GetSalesOrderQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -44,7 +36,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests
                 It.IsAny<GetSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.SalesOrderNumber.Should().Be("SO43659");
+            result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
     }
 }

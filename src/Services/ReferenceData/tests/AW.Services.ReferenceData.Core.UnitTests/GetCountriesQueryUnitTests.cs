@@ -1,5 +1,7 @@
+using AutoFixture.Xunit2;
 using AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -13,59 +15,44 @@ namespace AW.Services.ReferenceData.Core.UnitTests
 {
     public class GetCountriesQueryUnitTests
     {
-        [Fact]
-        public async void Handle_CountriesExists_ReturnCountries()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_CountriesExists_ReturnCountries(
+            List<Entities.CountryRegion> countries,
+            [Frozen] Mock<IRepository<Entities.CountryRegion>> countryRegionRepoMock,
+            GetCountriesQueryHandler sut,
+            GetCountriesQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetCountriesQueryHandler>>();
-            var countryRegionRepoMock = new Mock<IRepository<Entities.CountryRegion>>();
-
+            //Arrange
             countryRegionRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<Entities.CountryRegion>
-                {
-                    new TestBuilders.CountryRegionBuilder()
-                        .WithTestValues()
-                        .Build(),
-
-                    new TestBuilders.CountryRegionBuilder()
-                        .CountryRegionCode("GB")
-                        .Name("United Kingdom")
-                        .Build()
-                });
-
-            var handler = new GetCountriesQueryHandler(
-                loggerMock.Object,
-                countryRegionRepoMock.Object,
-                mapper
-            );
+                .ReturnsAsync(countries);
 
             //Act
-            var query = new GetCountriesQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
             countryRegionRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
-            result[0].CountryRegionCode.Should().Be("US");
-            result[1].CountryRegionCode.Should().Be("GB");
+            
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].Name.Should().Be(countries[i].Name);
+            }
         }
 
-        [Fact]
-        public void Handle_NoCountriesExists_ThrowException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_NoCountriesExists_ThrowException(
+            [Frozen] Mock<IRepository<Entities.CountryRegion>> countryRegionRepoMock,
+            GetCountriesQueryHandler sut,
+            GetCountriesQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetCountriesQueryHandler>>();
-            var countryRegionRepoMock = new Mock<IRepository<Entities.CountryRegion>>();
-
-            var handler = new GetCountriesQueryHandler(
-                loggerMock.Object,
-                countryRegionRepoMock.Object,
-                mapper
-            );
+            //Arrange
+            countryRegionRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync((List<Entities.CountryRegion>)null);
 
             //Act
-            var query = new GetCountriesQuery();
-            Func<Task> func = async () => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>();

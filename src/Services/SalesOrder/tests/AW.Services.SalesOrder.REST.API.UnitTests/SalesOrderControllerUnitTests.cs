@@ -1,7 +1,9 @@
+using AutoFixture.Xunit2;
 using AutoMapper;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.REST.API.Controllers;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,128 +18,88 @@ namespace AW.Services.SalesOrder.REST.API.UnitTests
 {
     public class SalesOrderControllerUnitTests
     {
-        [Fact]
-        public async Task GetSalesOrders_ShouldReturnSalesOrders_WhenGivenSalesOrders()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesOrders_ShouldReturnSalesOrders_WhenGivenSalesOrders(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
+            [Greedy] SalesOrderController sut,
+            GetSalesOrdersQuery query
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
             var dto = new GetSalesOrdersDto
             {
-                SalesOrders = new List<Core.Handlers.GetSalesOrders.SalesOrderDto>
-                {
-                    new Core.Handlers.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "1" },
-                    new Core.Handlers.GetSalesOrders.SalesOrderDto { SalesOrderNumber = "2" }
-                },
-                TotalSalesOrders = 2
+                SalesOrders = salesOrders,
+                TotalSalesOrders = salesOrders.Count
             };
 
-            var mockLogger = new Mock<ILogger<SalesOrderController>>();
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrdersQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-
-            var controller = new SalesOrderController(
-                mockLogger.Object,
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetSalesOrdersQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var request = new GetSalesOrdersQuery();
-            var actionResult = await controller.GetSalesOrders(request);
+            var actionResult = await sut.GetSalesOrders(query);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var salesPersons = okObjectResult.Value as Models.SalesOrdersResult;
-            salesPersons.SalesOrders.Count.Should().Be(2);
+            var result = okObjectResult.Value as Models.SalesOrdersResult;
+            result.SalesOrders.Count.Should().Be(salesOrders.Count);
         }
 
-        [Fact]
-        public async Task GetSalesOrders_ShouldReturnNotFound_WhenGivenNoSalesOrders()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesOrders_ShouldReturnNotFound_WhenGivenNoSalesOrders(
+            [Greedy] SalesOrderController sut,
+            GetSalesOrdersQuery query
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();            
-            
-            var mockLogger = new Mock<ILogger<SalesOrderController>>();
-            var mockMediator = new Mock<IMediator>();
-
-            var controller = new SalesOrderController(
-                mockLogger.Object,
-                mockMediator.Object,
-                mapper
-            );
-
             //Act
-            var request = new GetSalesOrdersQuery();
-            var actionResult = await controller.GetSalesOrders(request);
+            var actionResult = await sut.GetSalesOrders(query);
 
             //Assert
             var notFoundResult = actionResult as NotFoundResult;
             notFoundResult.Should().NotBeNull();
         }
 
-        [Fact]
-        public async Task GetSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder(
+            Core.Handlers.GetSalesOrder.SalesOrderDto salesOrder,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] SalesOrderController sut,
+            GetSalesOrderQuery query
+            )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var dto = new Core.Handlers.GetSalesOrder.SalesOrderDto { SalesOrderNumber = "1" };
-
-            var mockLogger = new Mock<ILogger<SalesOrderController>>();
-            var mockMediator = new Mock<IMediator>();
             mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-
-            var controller = new SalesOrderController(
-                mockLogger.Object,
-                mockMediator.Object,
-                mapper
-            );
+                .ReturnsAsync(salesOrder);
 
             //Act
-            var actionResult = await controller.GetSalesOrder("1");
+            var actionResult = await sut.GetSalesOrder(query);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var salesPerson = okObjectResult.Value as Models.SalesOrder;
-            salesPerson.Should().NotBeNull();
+            var result = okObjectResult.Value as Models.SalesOrder;
+            result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
 
-        [Fact]
-        public async Task GetSalesOrder_ShouldReturnNotFound_GivenNoSalesOrder()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesOrder_ShouldReturnNotFound_GivenNoSalesOrder(
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] SalesOrderController sut,
+            GetSalesOrderQuery query
+        )
         {
-            //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var mockLogger = new Mock<ILogger<SalesOrderController>>();
-            var mockMediator = new Mock<IMediator>();
-
-            var controller = new SalesOrderController(
-                mockLogger.Object,
-                mockMediator.Object,
-                mapper
-            );
+            //Arrange            
+            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Core.Handlers.GetSalesOrder.SalesOrderDto)null);
 
             //Act
-            var actionResult = await controller.GetSalesOrder("1");
+            var actionResult = await sut.GetSalesOrder(query);
 
             //Assert
             var notFoundResult = actionResult as NotFoundResult;

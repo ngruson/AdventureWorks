@@ -11,7 +11,8 @@ namespace AW.Services.Customer.WCF.Messages.UpdateCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerAddress, CustomerAddressDto>();
+            profile.CreateMap<CustomerAddress, CustomerAddressDto>()
+                .ReverseMap();
         }
     }
 }

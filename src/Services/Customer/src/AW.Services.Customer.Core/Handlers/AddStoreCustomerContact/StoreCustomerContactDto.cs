@@ -12,7 +12,6 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
         {
             profile.CreateMap<StoreCustomerContactDto, Entities.StoreCustomerContact>()
                 .ForMember(m => m.Id, opt => opt.Ignore())
-                .ForMember(m => m.StoreCustomer, opt => opt.Ignore())
                 .ForMember(m => m.StoreCustomerId, opt => opt.Ignore())
                 .ForMember(m => m.ContactPersonId, opt => opt.Ignore());
         }

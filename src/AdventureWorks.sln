@@ -192,6 +192,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.UI.Web.Internal.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.UI.Web.Store.UnitTests", "UI\tests\AW.UI.Web.Store.UnitTests\AW.UI.Web.Store.UnitTests.csproj", "{5FF9897D-4FE5-4341-97D9-9CC97D6615DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.SharedKernel.UnitTesting", "SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj", "{41F39CAE-50F1-4018-8256-6BE40FE0A768}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -472,6 +474,10 @@ Global
 		{5FF9897D-4FE5-4341-97D9-9CC97D6615DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF9897D-4FE5-4341-97D9-9CC97D6615DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF9897D-4FE5-4341-97D9-9CC97D6615DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F39CAE-50F1-4018-8256-6BE40FE0A768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F39CAE-50F1-4018-8256-6BE40FE0A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F39CAE-50F1-4018-8256-6BE40FE0A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F39CAE-50F1-4018-8256-6BE40FE0A768}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -559,6 +565,7 @@ Global
 		{BF110874-A5F4-4B07-92C1-C8E2FB55F1AA} = {8EC1E34E-0250-4AEA-A5DC-E4B33BD339C6}
 		{F2138473-3398-409C-8B3B-9315E40CAE36} = {8EC1E34E-0250-4AEA-A5DC-E4B33BD339C6}
 		{5FF9897D-4FE5-4341-97D9-9CC97D6615DE} = {8EC1E34E-0250-4AEA-A5DC-E4B33BD339C6}
+		{41F39CAE-50F1-4018-8256-6BE40FE0A768} = {957228D9-53D5-4C1C-A8B3-1A355150E39A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}

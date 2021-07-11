@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿using AutoFixture.Xunit2;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using AW.Services.SalesPerson.WCF.Messages.GetSalesPerson;
 using AW.Services.SalesPerson.WCF.Messages.ListSalesPersons;
+using AW.SharedKernel.Extensions;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -16,64 +18,48 @@ namespace AW.Services.SalesPerson.WCF.UnitTests
 {
     public class SalesPersonServiceUnitTests
     {
-        [Fact]
-        public async Task ListCustomers_ReturnsCustomers()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListCustomers_ReturnsCustomers(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetSalesPersons.SalesPersonDto> salesPersons,
+            SalesPersonService sut,
+            ListSalesPersonsRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var dto = new List<Core.Handlers.GetSalesPersons.SalesPersonDto>
-            {
-                new Core.Handlers.GetSalesPersons.SalesPersonDto { FirstName = "Stephen" },
-                new Core.Handlers.GetSalesPersons.SalesPersonDto { FirstName = "Michael" }
-            };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesPersonsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-            var salesPersonService = new SalesPersonService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetSalesPersonsQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(salesPersons);
 
             //Act
-            var request = new ListSalesPersonsRequest();
-            var result = await salesPersonService.ListSalesPersons(request);
+            var result = await sut.ListSalesPersons(request);
 
             //Assert
-            result.Should().NotBeNull();
-            result.SalesPersons.Count().Should().Be(2);
+            result.SalesPersons.Count().Should().Be(salesPersons.Count);
         }
 
-        [Fact]
-        public async Task GetSalesPerson_ReturnsSalesPerson()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetSalesPerson_ReturnsSalesPerson(
+            [Frozen] Core.Handlers.GetSalesPerson.SalesPersonDto salesPerson,
+            [Frozen] Mock<IMediator> mockMediator,            
+            SalesPersonService sut,
+            GetSalesPersonRequest request
+        )
         {
             //Arrange
-            var mapper = new MapperConfiguration(opts =>
-            {
-                opts.AddProfile<MappingProfile>();
-            }).CreateMapper();
-
-            var dto = new Core.Handlers.GetSalesPerson.SalesPersonDto { FirstName = "Stephen" };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetSalesPersonQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-            var salesPersonService = new SalesPersonService(
-                mockMediator.Object,
-                mapper
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetSalesPersonQuery>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(salesPerson);
 
             //Act
-            var request = new GetSalesPersonRequest();
-            var result = await salesPersonService.GetSalesPerson(request);
+            var result = await sut.GetSalesPerson(request);
 
             //Assert
-            result.Should().NotBeNull();
-            result.SalesPerson.Should().NotBeNull();
+            result.SalesPerson.FullName().Should().Be(salesPerson.FullName());
         }
     }
 }

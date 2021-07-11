@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.Interfaces;
 using System.Collections.Generic;
 
 namespace AW.Services.SalesPerson.REST.API.Models
 {
-    public class SalesPerson : IMapFrom<Core.Handlers.GetSalesPersons.SalesPersonDto>
+    public class SalesPerson : IMapFrom<Core.Handlers.GetSalesPersons.SalesPersonDto>, IPerson
     {
         public string Title { get; set; }
         public string FirstName { get; set; }

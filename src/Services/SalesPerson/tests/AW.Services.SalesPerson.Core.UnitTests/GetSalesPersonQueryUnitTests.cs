@@ -1,8 +1,10 @@
+using AutoFixture.Xunit2;
 using AutoMapper;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.Services.SalesPerson.Core.Specifications;
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -15,42 +17,23 @@ namespace AW.Services.SalesPerson.Core.UnitTests
 {
     public class GetSalesPersonQueryUnitTests
     {
-        [Fact]
-        public async void Handle_SalesPersonExists_ReturnSalesPerson()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_SalesPersonExists_ReturnSalesPerson(
+            Entities.SalesPerson salesPerson,
+            [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
+            GetSalesPersonQueryHandler sut,
+            GetSalesPersonQuery query
+        )
         {
-            var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                })
-                .CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetSalesPersonQueryHandler>>();
-            var salesPersonRepoMock = new Mock<IRepository<Entities.SalesPerson>>();
-
+            //Arrange            
             salesPersonRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetSalesPersonSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(
-                new TestBuilders.SalesPersonBuilder()
-                .WithTestValues()
-                .Build()
-            );
-
-            var handler = new GetSalesPersonQueryHandler(
-                loggerMock.Object,
-                salesPersonRepoMock.Object,
-                mapper
-            );
+            .ReturnsAsync(salesPerson);
 
             //Act
-            var query = new GetSalesPersonQuery
-            {
-                FirstName = "Stephen",
-                MiddleName = "Y",
-                LastName = "Jiang"
-            };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -59,30 +42,25 @@ namespace AW.Services.SalesPerson.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result.FullName().Should().Be("Stephen Y Jiang");
+            result.FullName().Should().Be(salesPerson.FullName());
         }
 
-        [Fact]
-        public void Handle_SalesPersonsNull_ThrowsArgumentNullException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_SalesPersonsNull_ThrowsArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
+            GetSalesPersonQueryHandler sut,
+            GetSalesPersonQuery query
+        )
         {
-            var mapper = new MapperConfiguration(opts =>
-                {
-                    opts.AddProfile<MappingProfile>();
-                })
-                .CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetSalesPersonQueryHandler>>();
-            var salesPersonRepoMock = new Mock<IRepository<Entities.SalesPerson>>();
-
-            var handler = new GetSalesPersonQueryHandler(
-                loggerMock.Object,
-                salesPersonRepoMock.Object,
-                mapper
-            );
+            //Arrange
+            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetSalesPersonSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.SalesPerson)null);
 
             //Act
-            var query = new GetSalesPersonQuery();
-            Func<Task> func = async () => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

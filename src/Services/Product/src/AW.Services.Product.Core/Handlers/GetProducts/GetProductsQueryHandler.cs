@@ -43,7 +43,6 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             );
 
             var products = await repository.ListAsync(spec);
-
             Guard.Against.Null(products, nameof(products));
 
             logger.LogInformation("Returning products");

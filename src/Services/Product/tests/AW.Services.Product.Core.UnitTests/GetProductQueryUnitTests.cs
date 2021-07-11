@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -13,30 +15,28 @@ namespace AW.Services.Product.Core.UnitTests
 {
     public class GetProductQueryUnitTests
     {
-        [Fact]
-        public async void Handle_ProductExists_ReturnProduct()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_ProductExists_ReturnProduct(
+            Entities.Product product,
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductQueryHandler sut,
+            GetProductQuery query
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
-            var product = new TestBuilders.ProductBuilder().WithTestValues().Build();
+            for (int i = 0; i < product.ProductProductPhotos.Count; i++)
+            {
+                product.ProductProductPhotos[0].Primary = i == 0;
+            }
 
-            var loggerMock = new Mock<ILogger<GetProductQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
             productRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(product);
 
-            var handler = new GetProductQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                mapper
-            );
-
             //Act
-            var query = new GetProductQuery { ProductNumber = "FR-R92B-58" };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -44,27 +44,26 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.ProductNumber.Should().Be("FR-R92B-58");
+            result.ProductNumber.Should().Be(product.ProductNumber);
         }
 
-        [Fact]
-        public void Handle_ProductDoesNotExists_ThrowArgumentNullException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_ProductDoesNotExists_ThrowArgumentNullException(
+            //Entities.Product product,
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            GetProductQueryHandler sut,
+            GetProductQuery query
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetProductQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
-
-            var handler = new GetProductQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object,
-                mapper
-            );
+            productRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetProductSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.Product)null);
 
             //Act
-            var query = new GetProductQuery();
-            Func<Task> func = async() => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>();

@@ -1,10 +1,10 @@
-using AutoMapper;
+using AutoFixture.Xunit2;
 using AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
 using AW.Services.ReferenceData.REST.API.Controllers;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,39 +15,29 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
 {
     public class TerritoryControllerUnitTests
     {
-        [Fact]
-        public async Task GetTerritories_TerritoriesExists_ReturnTerritories()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetTerritories_TerritoriesExists_ReturnTerritories(
+            [Frozen] List<Territory> dto,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] TerritoryController sut
+        )
         {
             //Arrange
-            var dto = new List<Territory>
-            {
-                new Territory { Name = "Northwest" },
-                new Territory { Name = "Northeast" }
-            };
-
-            var mockLogger = new Mock<ILogger<TerritoryController>>();
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetTerritoriesQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-
-            var mapper = new MapperConfiguration(opts => 
-                    opts.AddProfile<MappingProfile>())
-                .CreateMapper();
-
-            var controller = new TerritoryController(
-                mockLogger.Object,
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetTerritoriesQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await controller.GetTerritories();
+            var actionResult = await sut.GetTerritories();
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
             var territories = okObjectResult.Value as List<Territory>;
-            territories.Count.Should().Be(2);
+            territories.Count.Should().Be(dto.Count);
         }
     }
 }

@@ -1,6 +1,8 @@
 using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Handlers.CountProducts;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -11,31 +13,26 @@ namespace AW.Services.Product.Core.UnitTests
 {
     public class CountProductsQueryUnitTests
     {
-        [Fact]
-        public async void Handle_ProductExists_ReturnProduct()
+        [Theory, AutoMoqData()]
+        public async void Handle_ProductExists_ReturnProduct(
+            [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
+            CountProductsQueryHandler sut,
+            CountProductsQuery query,
+            [Frozen] int count
+        )
         {
             // Arrange
-            var product = new TestBuilders.ProductBuilder().WithTestValues().Build();
-
-            var loggerMock = new Mock<ILogger<CountProductsQueryHandler>>();
-            var productRepoMock = new Mock<IRepository<Entities.Product>>();
             productRepoMock.Setup(x => x.CountAsync(
                 It.IsAny<ISpecification<Entities.Product>>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(10);
-
-            var handler = new CountProductsQueryHandler(
-                loggerMock.Object,
-                productRepoMock.Object
-            );
+            .ReturnsAsync(count);
 
             //Act
-            var query = new CountProductsQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            result.Should().Be(10);
+            result.Should().Be(count);
             productRepoMock.Verify(x => x.CountAsync(
                 It.IsAny<ISpecification<Entities.Product>>(),
                 It.IsAny<CancellationToken>()

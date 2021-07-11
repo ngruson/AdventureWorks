@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.Interfaces;
 using System.Collections.Generic;
 
 namespace AW.Services.SalesPerson.WCF.Messages.GetSalesPerson
 {
-    public class SalesPerson : IMapFrom<SalesPersonDto>
+    public class SalesPerson : IMapFrom<SalesPersonDto>, IPerson
     {
         public string Title { get; set; }
         public string FirstName { get; set; }

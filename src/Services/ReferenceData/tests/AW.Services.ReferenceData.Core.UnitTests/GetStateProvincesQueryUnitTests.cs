@@ -1,4 +1,3 @@
-using Ardalis.Specification;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.SharedKernel.Interfaces;
@@ -10,94 +9,57 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using AW.SharedKernel.UnitTesting;
+using AutoFixture.Xunit2;
 
 namespace AW.Services.ReferenceData.Core.UnitTests
 {
     public class GetStateProvincesQueryUnitTests
     {
-        [Fact]
-        public async void Handle_StateProvincesExists_ReturnStateProvinces()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_NoFilter_ReturnAllStateProvinces(
+            List<Entities.StateProvince> statesProvinces,
+            [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
+            GetStatesProvincesQueryHandler sut,
+            GetStatesProvincesQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
-            var stateProvinceRepoMock = new Mock<IRepository<Entities.StateProvince>>();
-
+            //Arrange
             stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<Entities.StateProvince>
-                {
-                    new TestBuilders.StateProvinceBuilder()
-                        .WithTestValues()
-                        .Build(),
+                .ReturnsAsync(statesProvinces);
 
-                    new TestBuilders.StateProvinceBuilder()
-                        .StateProvinceCode("BC")
-                        .Name("British Columbia")
-                        .CountryRegionCode("CA")
-                        .CountryRegion(new Entities.CountryRegion 
-                            { 
-                                CountryRegionCode = "CA",
-                                Name = "Canada"
-                            }
-                        )
-                        .Build()
-                });
-
-            var handler = new GetStatesProvincesQueryHandler(
-                loggerMock.Object,
-                stateProvinceRepoMock.Object,
-                mapper
-            );
+            query.CountryRegionCode = "";
 
             //Act
-            var query = new GetStatesProvincesQuery();
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
             stateProvinceRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
-            result[0].Name.Should().Be("Alberta");
-            result[1].Name.Should().Be("British Columbia");
+            
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].Name.Should().Be(statesProvinces[i].Name);
+            }
         }
 
-        [Fact]
-        public async void Handle_StateProvincesExists_ReturnStateProvincesForCountry()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async void Handle_StateProvincesExists_ReturnStateProvincesForCountry(
+            List<Entities.StateProvince> statesProvinces,
+            [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
+            GetStatesProvincesQueryHandler sut,
+            GetStatesProvincesQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
-            var stateProvinceRepoMock = new Mock<IRepository<Entities.StateProvince>>();
-
+            //Arrange
             stateProvinceRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetStatesProvincesForCountrySpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new List<Entities.StateProvince>
-            {
-                new TestBuilders.StateProvinceBuilder()
-                    .WithTestValues()
-                    .Build(),
-
-                new TestBuilders.StateProvinceBuilder()
-                    .StateProvinceCode("BC")
-                    .Name("British Columbia")
-                    .CountryRegionCode("CA")
-                    .CountryRegion(new Entities.CountryRegion
-                        {
-                            CountryRegionCode = "CA",
-                            Name = "Canada"
-                        }
-                    )
-                    .Build()
-            });
-
-            var handler = new GetStatesProvincesQueryHandler(
-                loggerMock.Object,
-                stateProvinceRepoMock.Object,
-                mapper
-            );
+            .ReturnsAsync(statesProvinces);
 
             //Act
-            var query = new GetStatesProvincesQuery { CountryRegionCode = "CA" };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -105,26 +67,28 @@ namespace AW.Services.ReferenceData.Core.UnitTests
                 It.IsAny<GetStatesProvincesForCountrySpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result[0].Name.Should().Be("Alberta");
-            result[1].Name.Should().Be("British Columbia");
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].Name.Should().Be(statesProvinces[i].Name);
+            }
         }
 
-        [Fact]
-        public void Handle_NoStateProvincesExists_ThrowException()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void Handle_NoStateProvincesExists_ThrowException(
+            [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
+            GetStatesProvincesQueryHandler sut,
+            GetStatesProvincesQuery query
+        )
         {
-            var mapper = Mapper.CreateMapper();
-            var loggerMock = new Mock<ILogger<GetStatesProvincesQueryHandler>>();
-            var stateProvinceRepoMock = new Mock<IRepository<Entities.StateProvince>>();
+            //Arrange
+            stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync((List<Entities.StateProvince>)null);
 
-            var handler = new GetStatesProvincesQueryHandler(
-                loggerMock.Object,
-                stateProvinceRepoMock.Object,
-                mapper
-            );
+            query.CountryRegionCode = "";
 
             //Act
-            var query = new GetStatesProvincesQuery();
-            Func<Task> func = async () => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>();

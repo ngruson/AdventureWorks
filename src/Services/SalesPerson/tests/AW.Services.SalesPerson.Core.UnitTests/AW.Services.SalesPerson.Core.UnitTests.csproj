@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="coverlet.msbuild" Version="2.9.0">
       <PrivateAssets>all</PrivateAssets>
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.SalesPerson.Core\AW.Services.SalesPerson.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using AutoMapper;
 using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.Services.ReferenceData.REST.API.Controllers;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,39 +17,29 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
 {
     public class StateProvinceControllerUnitTests
     {
-        [Fact]
-        public async Task GetStatesProvinces_StatesProvincesExists_ReturnStatesProvinces()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetStatesProvinces_StatesProvincesExists_ReturnStatesProvinces(
+            [Frozen] List<StateProvince> dto,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] StateProvinceController sut
+        )
         {
             //Arrange
-            var dto = new List<StateProvince>
-            {
-                new StateProvince { Name = "Texas" },
-                new StateProvince { Name = "Georgia" }
-            };
-
-            var mockLogger = new Mock<ILogger<StateProvinceController>>();
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetStatesProvincesQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(dto);
-
-            var mapper = new MapperConfiguration(opts => 
-                    opts.AddProfile<MappingProfile>())
-                .CreateMapper();
-
-            var controller = new StateProvinceController(
-                mockLogger.Object,
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetStatesProvincesQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await controller.GetStatesProvinces("US");
+            var actionResult = await sut.GetStatesProvinces(dto[0].CountryRegionCode);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
             var statesProvinces = okObjectResult.Value as List<StateProvince>;
-            statesProvinces.Count.Should().Be(2);
+            statesProvinces.Count.Should().Be(dto.Count);
         }
     }
 }

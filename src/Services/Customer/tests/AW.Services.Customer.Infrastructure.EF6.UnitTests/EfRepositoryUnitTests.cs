@@ -12,6 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using AW.Services.Customer.Core.Specifications;
+using AW.SharedKernel.UnitTesting;
+using AutoFixture.Xunit2;
 
 namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
 {
@@ -36,72 +38,61 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             return mockSet;
         }
 
-        [Fact]
-        public async void GetByIdAsync_ReturnsObject()
+        [Theory]
+        [AutoMoqData]
+        public async void GetByIdAsync_ReturnsObject(
+            [Frozen] Mock<DbSet<Entities.StoreCustomer>> mockSet,
+            [Frozen] Mock<AWContext> mockContext,
+            Entities.StoreCustomer customer
+        )
         {
             //Arrange
-            var mockSet = new Mock<DbSet<Entities.StoreCustomer>>();
             mockSet.Setup(x => x.FindAsync(
                 It.IsAny<CancellationToken>(),
                 It.IsAny<int>()
             ))
-            .ReturnsAsync(
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store" }
-            );
+            .ReturnsAsync(customer);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.StoreCustomer>())
                 .Returns(mockSet.Object);
+
+            //Act
             var repository = new EfRepository<Entities.StoreCustomer>(mockContext.Object);
-
-            //Act
-            var person = await repository.GetByIdAsync(1);
+            var result = await repository.GetByIdAsync(customer.Id);
 
             //Assert
-            person.Name.Should().Be("A Bike Store");
+            result.Name.Should().Be(customer.Name);
         }
 
-        [Fact]
-        public async void GetBySpecAsync_ReturnsObject()
+        [Theory]
+        [AutoMoqData]
+        public async void GetBySpecAsync_ReturnsObject(
+            List<Entities.StoreCustomer> customers,
+            [Frozen] Mock<AWContext> mockContext
+        )
         {
             //Arrange
-            var address1 = new Entities.Address { AddressLine1 = "2251 Elliot Avenue", PostalCode = "98104", City = "Seattle", StateProvinceCode = "WA", CountryRegionCode = "US" };
-            var address2 = new Entities.Address { AddressLine1 = "3207 S Grady Way", PostalCode = "98055", City = "Renton", StateProvinceCode = "WA", CountryRegionCode = "US" };
-            var addresses = new List<Entities.Address>
-            {
-                address1, address2
-            };
-            var mockSet = GetQueryableMockDbSet(addresses);
+            var mockSet = GetQueryableMockDbSet(customers.ToList<Entities.Customer>());
 
-            var mockContext = new Mock<AWContext>();
-            mockContext.Setup(x => x.Set<Entities.Address>())
+            mockContext.Setup(x => x.Set<Entities.Customer>())
                 .Returns(mockSet.Object);
-            var repository = new EfRepository<Entities.Address>(mockContext.Object);
+            var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var spec = new GetAddressSpecification(
-                "2251 Elliot Avenue",
-                null,
-                "98104",
-                "Seattle",
-                "WA",
-                "US"
-            );
-            var address = await repository.GetBySpecAsync(spec);
+            var spec = new GetCustomerByIdSpecification(customers[0].Id);
+            var result = await repository.GetBySpecAsync(spec);
 
             //Assert
-            address.Should().BeEquivalentTo(address1);
+            result.Should().BeEquivalentTo(customers[0]);
         }
 
-        [Fact]
-        public async void ListAllAsync_ReturnsObjects()
+        [Theory]
+        [AutoMoqData]
+        public async void ListAllAsync_ReturnsObjects(
+            List<Entities.Customer> customers
+        )
         {
             //Arrange
-            var customers = new List<Entities.Customer>
-            {
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" },
-                new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" }
-            };
             var mockSet = GetQueryableMockDbSet(customers);
 
             var mockContext = new Mock<AWContext>();
@@ -113,19 +104,16 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync();
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(3);
         }
 
-        [Fact]
-        public async void ListAsync_ReturnsObjects()
+        [Theory]
+        [AutoMoqData]
+        public async void ListAsync_ReturnsObjects(
+            List<Entities.Address> addresses
+        )
         {
             //Arrange
-            var address1 = new Entities.Address { AddressLine1 = "2251 Elliot Avenue", PostalCode = "98104", City = "Seattle", StateProvinceCode = "WA", CountryRegionCode = "US" };
-            var address2 = new Entities.Address { AddressLine1 = "3207 S Grady Way", PostalCode = "98055", City = "Renton", StateProvinceCode = "WA", CountryRegionCode = "US" };
-            var addresses = new List<Entities.Address>
-            {
-                address1, address2
-            };
             var mockSet = GetQueryableMockDbSet(addresses);
 
             var mockContext = new Mock<AWContext>();
@@ -134,23 +122,23 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var repository = new EfRepository<Entities.Address>(mockContext.Object);
 
             //Act
-            var spec = new GetAddressesByPostalCodeSpecification("98104");
+            var spec = new GetAddressesByPostalCodeSpecification(
+                addresses[0].PostalCode
+            );
             var list = await repository.ListAsync(spec);
 
             //Assert
             list.Count.Should().Be(1);
-            list[0].Should().BeEquivalentTo(address1);
+            list[0].Should().BeEquivalentTo(addresses[0]);
         }
 
-        [Fact]
-        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        [Theory]
+        [AutoMoqData]
+        public async void ListAsync_WithResultSpec_ReturnsObjects(
+            List<Entities.Customer> customers
+        )
         {
             //Arrange
-            var customers = new List<Entities.Customer>
-            {
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" },
-                new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" }
-            };
             var mockSet = GetQueryableMockDbSet(customers);
 
             var mockContext = new Mock<AWContext>();
@@ -163,7 +151,7 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(3);
         }
 
         [Fact]
@@ -195,16 +183,14 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             func.Should().Throw<SelectorNotFoundException>();
         }
 
-        [Fact]
-        public async void CountAsync_ReturnsCount()
+        [Theory]
+        [AutoMoqData]
+        public async void CountAsync_ReturnsCount(
+            List<Entities.StoreCustomer> customers
+        )
         {
             //Arrange
-            var customers = new List<Entities.Customer>
-            {
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" },
-                new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" }
-            };
-            var mockSet = GetQueryableMockDbSet(customers);
+            var mockSet = GetQueryableMockDbSet(customers.Cast<Entities.Customer>().ToList());
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -216,19 +202,18 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(2);
+            count.Should().Be(3);
         }
 
-        [Fact]
-        public async void AddAsync_SavesObject()
+        [Theory]
+        [AutoMoqData]
+        public async void AddAsync_SavesObject(
+            List<Entities.StoreCustomer> customers,
+            Entities.StoreCustomer newCustomer
+        )
         {
             //Arrange
-            var customers = new List<Entities.Customer>
-            {
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" },
-                new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" }
-            };
-            var mockSet = GetQueryableMockDbSet(customers);
+            var mockSet = GetQueryableMockDbSet(customers.Cast<Entities.Customer>().ToList());
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -236,7 +221,6 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var newCustomer = new Entities.StoreCustomer { Name = "Advanced Bike Components", AccountNumber = "AW00000003" };
             var savedCustomer = await repository.AddAsync(newCustomer);
 
             //Assert
@@ -245,16 +229,14 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             newCustomer.Should().BeEquivalentTo(savedCustomer);
         }
 
-        [Fact]
-        public async void UpdateAsync_SavesObject()
+        [Theory]
+        [AutoMoqData]
+        public async void UpdateAsync_SavesObject(
+            List<Entities.StoreCustomer> customers
+        )
         {
             //Arrange
-            var customers = new List<Entities.Customer>
-            {
-                new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" },
-                new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" }
-            };
-            var mockSet = GetQueryableMockDbSet(customers);
+            var mockSet = GetQueryableMockDbSet(customers.Cast<Entities.Customer>().ToList());
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -263,25 +245,20 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var existingCustomer = new Entities.StoreCustomer { Name = "A Bike Store", AccountNumber = "AW00000001" };
-            await repository.UpdateAsync(existingCustomer);
+            await repository.UpdateAsync(customers[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteAsync_ReturnsObject()
+        [Theory]
+        [AutoMoqData]
+        public async void DeleteAsync_ReturnsObject(
+            List<Entities.StoreCustomer> customers
+        )
         {
             //Arrange
-            var customer1 = new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" };
-            var customer2 = new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" };
-            var customers = new List<Entities.Customer>
-            {
-                customer1,
-                customer2
-            };
-            var mockSet = GetQueryableMockDbSet(customers);
+            var mockSet = GetQueryableMockDbSet(customers.Cast<Entities.Customer>().ToList());
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -289,24 +266,20 @@ namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            await repository.DeleteAsync(customer1);
+            await repository.DeleteAsync(customers[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteRangeAsync_ReturnsObject()
+        [Theory]
+        [AutoMoqData]
+        public async void DeleteRangeAsync_ReturnsObject(
+            List<Entities.StoreCustomer> customers
+        )
         {
             //Arrange
-            var customer1 = new Entities.StoreCustomer { Id = 1, Name = "A Bike Store", AccountNumber = "AW00000001" };
-            var customer2 = new Entities.StoreCustomer { Id = 2, Name = "Progressive Sports", AccountNumber = "AW00000002" };
-            var customers = new List<Entities.Customer>
-            {
-                customer1,
-                customer2
-            };
-            var mockSet = GetQueryableMockDbSet(customers);
+            var mockSet = GetQueryableMockDbSet(customers.Cast<Entities.Customer>().ToList());
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())

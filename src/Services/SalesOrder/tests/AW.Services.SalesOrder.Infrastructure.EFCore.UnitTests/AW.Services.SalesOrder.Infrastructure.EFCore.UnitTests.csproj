@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.9.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.SalesOrder.Core\AW.Services.SalesOrder.Core.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.SalesOrder.Infrastructure.EFCore\AW.Services.SalesOrder.Infrastructure.EFCore.csproj" />
   </ItemGroup>

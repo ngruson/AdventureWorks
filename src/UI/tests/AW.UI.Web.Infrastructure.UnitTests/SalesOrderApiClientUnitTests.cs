@@ -1,12 +1,11 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
 using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
-using AW.UI.Web.Infrastructure.UnitTests.TestBuilders.GetSalesOrders;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Moq;
+using RichardSzalay.MockHttp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -21,90 +20,65 @@ namespace AW.UI.Web.Infrastructure.UnitTests
     {
         public class GetSalesOrders
         {
-            [Fact]
-            public async void GetSalesOrders_SalesOrdersFound_ReturnsSalesOrders()
+            [Theory, MockHttpData]
+            public async void GetSalesOrders_SalesOrdersFound_ReturnsSalesOrders(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<SalesOrder> salesOrders,
+                SalesOrderApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<SalesOrderApiClient>>();
-
-                var salesOrders = new Infrastructure.ApiClients.SalesOrderApi.Models.SalesOrdersResult
+                var salesOrdersResult = new SalesOrdersResult
                 {
-                    SalesOrders = new List<Infrastructure.ApiClients.SalesOrderApi.Models.SalesOrder>
-                    {
-                        new SalesOrderBuilder()
-                            .WithTestValues()
-                            .Build()
-                    },
-                    TotalSalesOrders = 1
+                    SalesOrders = salesOrders,
+                    TotalSalesOrders = salesOrders.Count
                 };
 
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(salesOrders, new JsonSerializerOptions
-                            {
-                                Converters =
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                salesOrdersResult,
+                                new JsonSerializerOptions
                                 {
-                                    new JsonStringEnumConverter()
-                                },
-                                IgnoreReadOnlyProperties = true,
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new SalesOrderApiClient(httpClient, mockLogger.Object);
                 var response = await sut.GetSalesOrdersAsync(0, 10, null, null);
 
                 //Assert
-                response.Should().NotBeNull();
-                response.TotalSalesOrders.Should().Be(1);
-                response.Should().BeEquivalentTo(salesOrders);
-
-                var salesOrder = response.SalesOrders[0];
-                var address = new Address
-                {
-                    AddressLine1 = "42525 Austell Road",
-                    PostalCode = "30106",
-                    City = "Austell",
-                    StateProvinceCode = "GA",
-                    CountryRegionCode = "US"
-                };
-
-                salesOrder.BillToAddress.Should().BeEquivalentTo(address);
-                salesOrder.ShipToAddress.Should().BeEquivalentTo(address);
+                response.Should().BeEquivalentTo(salesOrdersResult);
             }
 
-            [Fact]
-            public void GetSalesOrders_NoSalesOrdersFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetSalesOrders_NoSalesOrdersFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                SalesOrderApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<SalesOrderApiClient>>();
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new SalesOrderApiClient(httpClient, mockLogger.Object);
                 Func<Task> func = async () => await sut.GetSalesOrdersAsync(0, 10, null, null);
 
                 //Assert
@@ -115,70 +89,60 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
         public class GetSalesOrder
         {
-            [Fact]
-            public async void GetSalesOrder_SalesOrderFound_ReturnsSalesOrder()
+            [Theory, MockHttpData]
+            public async void GetSalesOrder_SalesOrderFound_ReturnsSalesOrder(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                SalesOrder salesOrder,
+                SalesOrderApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<SalesOrderApiClient>>();
-
-                var salesOrder = new SalesOrderBuilder()
-                    .WithTestValues()
-                    .Build();
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(
-                            JsonSerializer.Serialize(salesOrder, new JsonSerializerOptions
-                            {
-                                Converters =
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(
+                                salesOrder,
+                                new JsonSerializerOptions
                                 {
-                                    new JsonStringEnumConverter()
-                                },
-                                IgnoreReadOnlyProperties = true,
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                            }),
-                            Encoding.UTF8,
-                            "application/json"
-                        )
-                    };
-
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
 
                 //Act
-                var sut = new SalesOrderApiClient(httpClient, mockLogger.Object);
-                var response = await sut.GetSalesOrderAsync("SO43659");
+                var response = await sut.GetSalesOrderAsync(salesOrder.SalesOrderNumber);
 
                 //Assert
-                response.Should().NotBeNull();
                 response.Should().BeEquivalentTo(salesOrder);
             }
 
-            [Fact]
-            public void GetSalesOrder_NoSalesOrderFound_ThrowsHttpRequestException()
+            [Theory, MockHttpData]
+            public void GetSalesOrder_NoSalesOrderFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                SalesOrderApiClient sut
+            )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
 
-                var mockLogger = new Mock<ILogger<SalesOrderApiClient>>();
-
-                var httpClient = new HttpClient(new HttpMessageHandlerStub(async (request, cancellationToken) =>
-                {
-                    var responseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
-                    return await Task.FromResult(responseMessage);
-                }))
-                {
-                    BaseAddress = new Uri("http://baseaddress")
-                };
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                var sut = new SalesOrderApiClient(httpClient, mockLogger.Object);
-                Func<Task> func = async () => await sut.GetSalesOrderAsync("SO43659");
+                Func<Task> func = async () => await sut.GetSalesOrderAsync("123");
 
                 //Assert
                 func.Should().Throw<HttpRequestException>()

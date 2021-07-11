@@ -1,9 +1,10 @@
 using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,51 +16,24 @@ namespace AW.Services.Customer.Core.UnitTests
 {
     public class GetCustomersQueryUnitTests
     {
-        [Fact]
-        public async void Handle_CustomersExists_ReturnCustomers()
+        [Theory]
+        [AutoMoqData]
+        public async void Handle_CustomersExists_ReturnCustomers(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            GetCustomersQueryHandler sut,
+            List<Entities.Customer> customers,
+            GetCustomersQuery query
+        )
         {
             // Arrange
-            var mapper = Mapper.CreateMapper();            
-            var customer1 = new TestBuilders.StoreCustomerBuilder()
-                .WithTestValues()
-                .Build();
-            var customer2 = new TestBuilders.IndividualCustomerBuilder()
-                .WithTestValues()
-                .Build();
-
-            var loggerMock = new Mock<ILogger<GetCustomersQueryHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-            customerRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetCustomersPaginatedSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new List<Entities.Customer>
-            {
-                customer1,
-                customer2
-            });
             customerRepoMock.Setup(x => x.CountAsync(
                 It.IsAny<CountCustomersSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(2);
-
-            var handler = new GetCustomersQueryHandler(
-                loggerMock.Object,
-                mapper,
-                customerRepoMock.Object
-            );
+            .ReturnsAsync(customers.Count);
 
             //Act
-            var query = new GetCustomersQuery
-            {
-                PageIndex = 0,
-                PageSize = 10,
-                CustomerType = null,
-                Territory = "",
-                AccountNumber = ""
-            };
-            var result = await handler.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
             result.Should().NotBeNull();
@@ -67,29 +41,30 @@ namespace AW.Services.Customer.Core.UnitTests
                 It.IsAny<ISpecification<Entities.Customer>>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.TotalCustomers.Should().Be(2);
-            result.Customers[0].Should().BeAssignableTo<StoreCustomerDto>();
-            result.Customers[1].Should().BeAssignableTo<IndividualCustomerDto>();
+            customerRepoMock.Verify(x => x.CountAsync(
+                It.IsAny<ISpecification<Entities.Customer>>(),
+                It.IsAny<CancellationToken>()
+            ));
+            result.TotalCustomers.Should().Be(customers.Count);
         }
 
-        [Fact]
-        public void Handle_NoCustomersExists_ThrowArgumentNullException()
+        [Theory]
+        [AutoMoqData]
+        public void Handle_NoCustomersExists_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            GetCustomersQueryHandler sut,
+            GetCustomersQuery query
+        )
         {
-            // Arrange
-            var mapper = Mapper.CreateMapper();
-
-            var loggerMock = new Mock<ILogger<GetCustomersQueryHandler>>();
-            var customerRepoMock = new Mock<IRepository<Entities.Customer>>();
-
-            var handler = new GetCustomersQueryHandler(
-                loggerMock.Object,
-                mapper,
-                customerRepoMock.Object
-            );
+            // Arrange            
+            customerRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetCustomersPaginatedSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((List<Entities.Customer>)null);
 
             //Act
-            var query = new GetCustomersQuery();
-            Func<Task> func = async() => await handler.Handle(query, CancellationToken.None);
+            Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().Throw<ArgumentNullException>()

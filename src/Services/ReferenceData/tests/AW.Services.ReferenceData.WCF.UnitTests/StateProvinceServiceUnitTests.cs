@@ -1,5 +1,8 @@
-﻿using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
+﻿using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core;
+using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.Services.ReferenceData.WCF.Messages.ListStatesProvinces;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -13,34 +16,27 @@ namespace AW.Services.ReferenceData.WCF.UnitTests
 {
     public class StateProvinceServiceUnitTests
     {
-        [Fact]
-        public async Task ListStateProvinces_ReturnsStateProvinces()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ListStateProvinces_ReturnsStateProvinces(
+            List<StateProvince> statesProvinces,
+            [Frozen] Mock<IMediator> mockMediator,
+            StateProvinceService sut,
+            ListStatesProvincesRequest request
+        )
         {
             //Arrange
-            var countries = new List<StateProvince>
-            {
-                new StateProvince { CountryRegionCode = "US", StateProvinceCode = "NY", Name = "New York" },
-                new StateProvince { CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California" }
-            };
-
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<GetStatesProvincesQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(countries);
-
-            var stateProvinceService = new StateProvinceService(
-                mockMediator.Object
-            );
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetStatesProvincesQuery>(), 
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(statesProvinces);
 
             //Act
-            var request = new ListStatesProvincesRequest
-            {
-                CountryRegionCode = "US"
-            };
-            var result = await stateProvinceService.ListStatesProvinces(request);
+            var result = await sut.ListStatesProvinces(request);
 
             //Assert
             result.Should().NotBeNull();
-            result.StateProvinces.Count().Should().Be(2);
+            result.StateProvinces.Count().Should().Be(statesProvinces.Count);
         }
     }
 }

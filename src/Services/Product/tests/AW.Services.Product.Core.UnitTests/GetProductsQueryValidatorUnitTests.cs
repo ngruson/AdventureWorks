@@ -1,4 +1,6 @@
-﻿using AW.Services.Product.Core.Handlers.GetProducts;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Product.Core.Handlers.GetProducts;
+using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Xunit;
 
@@ -6,69 +8,87 @@ namespace AW.Services.Product.Core.UnitTests
 {
     public class GetProductsQueryValidatorUnitTests
     {
-        [Fact]
-        public void TestValidate_ValidAscOrderBy_NoValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_ValidAscOrderBy_NoValidationError(
+            GetProductsQueryValidator sut,
+            GetProductsQuery query
+        )
         {
-            var sut = new GetProductsQueryValidator();
-            var query = new GetProductsQuery
-            {
-                OrderBy = "asc(name)"
-            };
-
+            //Arrange
+            query.OrderBy = "asc(name)";
+            
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldNotHaveValidationErrorFor(query => query.OrderBy);
         }
 
-        [Fact]
-        public void TestValidate_ValidDescOrderBy_NoValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_ValidDescOrderBy_NoValidationError(
+            GetProductsQueryValidator sut,
+            GetProductsQuery query
+        )
         {
-            var sut = new GetProductsQueryValidator();
-            var query = new GetProductsQuery
-            {
-                OrderBy = "desc(name)"
-            };
+            //Arrange
+            query.OrderBy = "desc(name)";
 
+            //Act
             var result = sut.TestValidate(query);
+
+            //Assert
             result.ShouldNotHaveValidationErrorFor(query => query.OrderBy);
         }
 
-        [Fact]
-        public void TestValidate_InvalidDirectionOrderBy_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_InvalidDirectionOrderBy_ValidationError(
+            GetProductsQueryValidator sut,
+            GetProductsQuery query
+        )
         {
-            var sut = new GetProductsQueryValidator();
-            var query = new GetProductsQuery
-            {
-                OrderBy = "fail(name)"
-            };
+            //Arrange
+            query.OrderBy = "fail(name)";
 
+            //Act
             var result = sut.TestValidate(query);
-            result.ShouldHaveValidationErrorFor(query => query.OrderBy);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(query => query.OrderBy)
+                .WithErrorMessage("Order by is not valid");
         }
 
-        [Fact]
-        public void TestValidate_NoOpeningBracketOrderBy_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_NoOpeningBracketOrderBy_ValidationError(
+            GetProductsQueryValidator sut,
+            GetProductsQuery query
+        )
         {
-            var sut = new GetProductsQueryValidator();
-            var query = new GetProductsQuery
-            {
-                OrderBy = "fail_name)"
-            };
+            //Arrange
+            query.OrderBy = "asc_name)";
 
+            //Act
             var result = sut.TestValidate(query);
-            result.ShouldHaveValidationErrorFor(query => query.OrderBy);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(query => query.OrderBy)
+                .WithErrorMessage("Order by is not valid");
         }
 
-        [Fact]
-        public void TestValidate_NoClosingBracketOrderBy_ValidationError()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public void TestValidate_NoClosingBracketOrderBy_ValidationError(
+            GetProductsQueryValidator sut,
+            GetProductsQuery query
+        )
         {
-            var sut = new GetProductsQueryValidator();
-            var query = new GetProductsQuery
-            {
-                OrderBy = "fail(name"
-            };
+            //Arrange
+            query.OrderBy = "asc(name";
 
+            //Act
             var result = sut.TestValidate(query);
-            result.ShouldHaveValidationErrorFor(query => query.OrderBy);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(query => query.OrderBy)
+                .WithErrorMessage("Order by is not valid");
         }
     }
 }

@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
 
 namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
 {
@@ -36,67 +38,61 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
             return mockSet;
         }
 
-        [Fact]
-        public async void GetByIdAsync_ReturnsObject()
+        [Theory, AutoMoqData]
+        public async void GetByIdAsync_ReturnsObject(
+            [Frozen] Mock<DbSet<AddressType>> mockSet,
+            [Frozen] Mock<AWContext> mockContext,
+            AddressType addressType
+        )
         {
             //Arrange
-            var mockSet = new Mock<DbSet<AddressType>>();
             mockSet.Setup(x => x.FindAsync(
                 It.IsAny<CancellationToken>(),
                 It.IsAny<int>()
             ))
-            .ReturnsAsync(
-                new AddressType { Id = 1, Name = "Main Office" }
-            );
+            .ReturnsAsync(addressType);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            var addressType = await repository.GetByIdAsync(1);
+            var result = await repository.GetByIdAsync(1);
 
             //Assert
-            addressType.Name.Should().Be("Main Office");
+            result.Name.Should().Be(addressType.Name);
         }
 
-        [Fact]
-        public async void GetBySpecAsync_ReturnsObject()
+        [Theory, AutoMoqData]
+        public async void GetBySpecAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressTypes = new List<AddressType>
-            {
-                new AddressType { Id = 1, Name = "Main Office" },
-                new AddressType { Id = 2, Name = "Home" }
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            var spec = new GetAddressTypeByIdSpecification(1);
+            var spec = new GetAddressTypeByIdSpecification(addressTypes[0].Id);
             var addressType = await repository.GetBySpecAsync(spec);
 
             //Assert
-            addressType.Name.Should().Be("Main Office");
+            addressType.Name.Should().Be(addressTypes[0].Name);
         }
 
-        [Fact]
-        public async void ListAllAsync_ReturnsObjects()
+        [Theory, AutoMoqData]
+        public async void ListAllAsync_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressTypes = new List<AddressType>
-            {
-                new AddressType { Id = 1, Name = "Main Office" },
-                new AddressType { Id = 2, Name = "Home" }
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
@@ -105,46 +101,40 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync();
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(addressTypes.Count);
         }
 
-        [Fact]
-        public async void ListAsync_ReturnsObjects()
+        [Theory, OmitOnRecursion]
+        public async void ListAsync_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<StateProvince> statesProvinces
+        )
         {
             //Arrange
-            var statesProvinces = new List<StateProvince>
-            {
-                new StateProvince { Name = "Georgia", CountryRegionCode = "US" },
-                new StateProvince { Name = "Texas", CountryRegionCode = "US" },
-                new StateProvince { Name = "Alberta", CountryRegionCode = "CA" }
-            };
             var mockSet = GetQueryableMockDbSet(statesProvinces);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<StateProvince>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<StateProvince>(mockContext.Object);
 
             //Act
-            var spec = new GetStatesProvincesForCountrySpecification("US");
+            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegionCode);
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
+            list.Count.Should().Be(1);
+            list[0].Should().BeEquivalentTo(statesProvinces[0]);
         }
 
-        [Fact]
-        public async void ListAsync_WithResultSpec_ReturnsObjects()
+        [Theory, AutoMoqData]
+        public async void ListAsync_WithResultSpec_ReturnsObjects(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressTypes = new List<AddressType>
-            {
-                new AddressType { Id = 1, Name = "Main Office" },
-                new AddressType { Id = 2, Name = "Home" }
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
@@ -154,9 +144,12 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(2);
-            list[0].Should().Be("Main Office");
-            list[1].Should().Be("Home");
+            list.Count.Should().Be(addressTypes.Count);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Should().Be(addressTypes[i].Name);
+            }
         }
 
         [Fact]
@@ -188,49 +181,42 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
             func.Should().Throw<SelectorNotFoundException>();
         }
 
-        [Fact]
-        public async void CountAsync_ReturnsCount()
+        [Theory, OmitOnRecursion]
+        public async void CountAsync_ReturnsCount(
+            [Frozen] Mock<AWContext> mockContext,
+            List<StateProvince> statesProvinces
+        )
         {
             //Arrange
-            var statesProvinces = new List<StateProvince>
-            {
-                new StateProvince { Name = "Georgia", CountryRegionCode = "US" },
-                new StateProvince { Name = "Texas", CountryRegionCode = "US" },
-                new StateProvince { Name = "Alberta", CountryRegionCode = "CA" }
-            };
             var mockSet = GetQueryableMockDbSet(statesProvinces);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<StateProvince>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<StateProvince>(mockContext.Object);
 
             //Act
-            var spec = new GetStatesProvincesForCountrySpecification("US");
+            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegionCode);
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(2);
+            count.Should().Be(1);
         }
 
-        [Fact]
-        public async void AddAsync_SavesObject()
+        [Theory, AutoMoqData]
+        public async void AddAsync_SavesObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes,
+            AddressType newAddressType
+        )
         {
             //Arrange
-            var addressTypes = new List<AddressType>
-            {
-                new AddressType { Id = 1, Name = "Main Office" },
-                new AddressType { Id = 2, Name = "Home" }
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            var newAddressType = new AddressType { Name = "Billing" };
             var savedAddressType = await repository.AddAsync(newAddressType);
 
             //Assert
@@ -239,70 +225,56 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
             newAddressType.Should().BeEquivalentTo(savedAddressType);
         }
 
-        [Fact]
-        public async void UpdateAsync_SavesObject()
+        [Theory, AutoMoqData]
+        public async void UpdateAsync_SavesObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressTypes = new List<AddressType>
-            {
-                new AddressType { Id = 1, Name = "Main Office" },
-                new AddressType { Id = 2, Name = "Home" }
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             mockContext.Setup(x => x.SetModified(It.IsAny<AddressType>()));
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            var existingAddressType = new AddressType { Id = 1, Name = "Main Office changed" };
-            await repository.UpdateAsync(existingAddressType);
+            await repository.UpdateAsync(addressTypes[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteAsync_ReturnsObject()
+        [Theory, AutoMoqData]
+        public async void DeleteAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressType1 = new AddressType { Id = 1, Name = "Main Office" };
-            var addressType2 = new AddressType { Id = 1, Name = "Home" };
-            var addressTypes = new List<AddressType>
-            {
-                addressType1,
-                addressType2
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            await repository.DeleteAsync(addressType1);
+            await repository.DeleteAsync(addressTypes[0]);
 
             //Assert
             mockContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
 
-        [Fact]
-        public async void DeleteRangeAsync_ReturnsObject()
+        [Theory, AutoMoqData]
+        public async void DeleteRangeAsync_ReturnsObject(
+            [Frozen] Mock<AWContext> mockContext,
+            List<AddressType> addressTypes
+        )
         {
             //Arrange
-            var addressType1 = new AddressType { Id = 1, Name = "Main Office" };
-            var addressType2 = new AddressType { Id = 1, Name = "Home" };
-            var addressTypes = new List<AddressType>
-            {
-                addressType1,
-                addressType2
-            };
             var mockSet = GetQueryableMockDbSet(addressTypes);
 
-            var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<AddressType>())
                 .Returns(mockSet.Object);
             var repository = new EfRepository<AddressType>(mockContext.Object);

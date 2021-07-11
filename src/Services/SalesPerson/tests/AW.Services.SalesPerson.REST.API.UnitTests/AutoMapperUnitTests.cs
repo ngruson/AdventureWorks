@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using AW.Services.SalesPerson.REST.API;
 using Xunit;
 
-namespace AW.Services.SalesPerson.WCF.UnitTests
+namespace AW.Services.SalesPerson.REST.API.UnitTests
 {
     public class AutoMapperUnitTests
     {

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AW.Services.Customer.REST.API.Controllers
 {
-    [ApiController]
+    [ApiController]    
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {

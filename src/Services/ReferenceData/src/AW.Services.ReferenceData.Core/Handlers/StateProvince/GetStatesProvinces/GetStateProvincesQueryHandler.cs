@@ -26,7 +26,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
         {
             logger.LogInformation("Handle called");
 
-            List<Core.Entities.StateProvince> statesProvinces;
+            List<Entities.StateProvince> statesProvinces;
             if (string.IsNullOrEmpty(request.CountryRegionCode))
             {
                 logger.LogInformation("Getting all state/provinces from database");
