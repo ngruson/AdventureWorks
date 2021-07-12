@@ -5,10 +5,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["Services/ReferenceData/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj", "Services/ReferenceData/AW.Services.ReferenceData.REST.API/"]
-RUN dotnet restore "Services/ReferenceData/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj"
+COPY ["Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj", "Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/"]
+RUN dotnet restore "Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj"
 COPY . .
-WORKDIR "/src/Services/ReferenceData/AW.Services.ReferenceData.REST.API"
+WORKDIR "/src/Services/ReferenceData/src/AW.Services.ReferenceData.REST.API"
 RUN dotnet build "AW.Services.ReferenceData.REST.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

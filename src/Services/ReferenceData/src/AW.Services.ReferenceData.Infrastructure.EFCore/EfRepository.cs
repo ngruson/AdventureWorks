@@ -1,10 +1,11 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using AW.SharedKernel.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AW.Services.ReferenceData.Infrastructure.EFCore
 {
-    public class EfRepository<T> : RepositoryBase<T> where T : class
+    public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
     {
         private readonly AWContext dbContext;
 
