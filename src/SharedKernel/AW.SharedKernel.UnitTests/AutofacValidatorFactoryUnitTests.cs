@@ -1,4 +1,5 @@
 using Autofac.Features.Indexed;
+using AW.SharedKernel.UnitTests.Validators;
 using AW.SharedKernel.Validation;
 using FluentAssertions;
 using FluentValidation;
@@ -14,7 +15,7 @@ namespace AW.SharedKernel.UnitTests
         public void CreateInstance_ReturnValidator()
         {
             //Arrange
-            var validator = new TestValidator();
+            var validator = new GetCustomerQueryValidator();
             var indexMock = new Mock<IIndex<Type, IValidator>>();
             indexMock.Setup(x => x[It.IsAny<Type>()])
                 .Returns(validator);
