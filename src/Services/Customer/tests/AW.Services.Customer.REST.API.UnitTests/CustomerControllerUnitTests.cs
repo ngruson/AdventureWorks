@@ -84,10 +84,19 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public async Task GetCustomer_ShouldReturnCustomer_GivenCustomer(
+                [Frozen] Mock<IMediator> mockMediator,
+                Core.Handlers.GetCustomer.StoreCustomerDto customer,
                 [Greedy] CustomerController sut,
                 GetCustomerQuery query
             )
             {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<GetCustomerQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(customer);
+
                 //Act
                 var actionResult = await sut.GetCustomer(query);
 
@@ -95,8 +104,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var customer = okObjectResult.Value as Models.GetCustomer.Customer;
-                customer.Should().NotBeNull();
+                var result = okObjectResult.Value as Models.GetCustomer.Customer;
+                result.Should().NotBeNull();
             }
 
             [Theory]

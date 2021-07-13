@@ -57,6 +57,11 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
                 .MaximumLength(3).WithMessage("State/province must not exceed 3 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
+            RuleFor(cmd => cmd.CustomerAddress.Address.CountryRegionCode)
+                .NotEmpty().WithMessage("Country is required")
+                .MaximumLength(3).WithMessage("Country must not exceed 3 characters")
+                .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
+
             RuleFor(cmd => cmd)
                 .MustAsync(UniqueAddress).WithMessage("Address must be unique")
                 .When(cmd => cmd.CustomerAddress != null);
@@ -65,6 +70,8 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
         private async Task<bool> UniqueAddress(UpdateCustomerAddressCommand command, CancellationToken cancellationToken)
         {
             var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(command.AccountNumber));
+            if (customer == null)
+                return true;
 
             var address = customer.Addresses.FirstOrDefault(a =>
                 a.AddressType == command.CustomerAddress.AddressType &&

@@ -4,8 +4,6 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomers;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Moq;
 using RichardSzalay.MockHttp;
 using System;
 using System.Collections.Generic;
@@ -168,6 +166,50 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 //Assert
                 func.Should().Throw<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class UpdateCustomer
+        {
+            [Theory, MockHttpData]
+            public async void GetCustomer_CustomerFound_ReturnCustomer(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer customer,
+                CustomerApiClient sut
+            )
+            {
+                //Arrange
+                customer.CustomerType = SharedKernel.Interfaces.CustomerType.Store;
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Put, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(customer, new JsonSerializerOptions
+                            {
+                                Converters =
+                                    {
+                                        new JsonStringEnumConverter(),
+                                        new CustomerConverter<
+                                            Customer,
+                                            StoreCustomer,
+                                            IndividualCustomer>()
+                                    },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            }),
+                            Encoding.UTF8,
+                            "application/json"
+                        )
+                    );
+
+                //Act
+                var response = await sut.UpdateCustomerAsync("1", customer);
+
+                //Assert
+                response.Should().BeEquivalentTo(customer);
             }
         }
     }
