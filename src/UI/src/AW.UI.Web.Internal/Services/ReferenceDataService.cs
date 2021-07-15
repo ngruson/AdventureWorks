@@ -4,6 +4,7 @@ using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetAddressType
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetContactTypes;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,9 +21,9 @@ namespace AW.UI.Web.Internal.Services
             IReferenceDataApiClient referenceDataApiClient
         ) => (this.logger, this.referenceDataApiClient) = (logger, referenceDataApiClient);
 
-        public async Task<List<AddressType>> GetAddressTypes()
+        public async Task<List<AddressType>> GetAddressTypesAsync()
         {
-            logger.LogInformation("GetAddressTypes called");
+            logger.LogInformation("GetAddressTypesAsync called");
 
             logger.LogInformation("Getting address types from Reference Data API");
             var addressTypes = await referenceDataApiClient.GetAddressTypesAsync();
@@ -32,9 +33,9 @@ namespace AW.UI.Web.Internal.Services
             return addressTypes;
         }
 
-        public async Task<List<ContactType>> GetContactTypes()
+        public async Task<List<ContactType>> GetContactTypesAsync()
         {
-            logger.LogInformation("GetContactTypes called");
+            logger.LogInformation("GetContactTypesAsync called");
 
             logger.LogInformation("Getting contact types from Reference Data API");
             var contactTypes = await referenceDataApiClient.GetContactTypesAsync();
@@ -44,9 +45,9 @@ namespace AW.UI.Web.Internal.Services
             return contactTypes;
         }
 
-        public async Task<List<CountryRegion>> GetCountries()
+        public async Task<List<CountryRegion>> GetCountriesAsync()
         {
-            logger.LogInformation("GetCountries called");
+            logger.LogInformation("GetCountriesAsync called");
 
             logger.LogInformation("Getting countries from Reference Data API");
             var countries = await referenceDataApiClient.GetCountriesAsync();
@@ -56,16 +57,28 @@ namespace AW.UI.Web.Internal.Services
             return countries;
         }
 
-        public async Task<List<StateProvince>> GetStatesProvinces(string countryRegionCode = null)
+        public async Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null)
         {
-            logger.LogInformation("GetStateProvinces called");
+            logger.LogInformation("GetStatesProvincesAsync called");
 
             logger.LogInformation("Getting states/provinces from Reference Data API");
-            var statesProvinces = await referenceDataApiClient.GetStateProvincesAsync(countryRegionCode);
+            var statesProvinces = await referenceDataApiClient.GetStatesProvincesAsync(countryRegionCode);
             Guard.Against.Null(statesProvinces, nameof(statesProvinces));
 
             logger.LogInformation("Returning states/provinces from Reference Data API");
             return statesProvinces;
+        }
+
+        public async Task<List<Territory>> GetTerritoriesAsync()
+        {
+            logger.LogInformation("GetTerritoriesAsync called");
+
+            logger.LogInformation("Getting territories from Reference Data API");
+            var territories = await referenceDataApiClient.GetTerritoriesAsync();
+            Guard.Against.Null(territories, nameof(territories));
+
+            logger.LogInformation("Returning territories from Reference Data API");
+            return territories;
         }
     }
 }

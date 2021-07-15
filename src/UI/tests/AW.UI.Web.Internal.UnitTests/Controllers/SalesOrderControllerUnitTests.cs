@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace AW.UI.Web.Internal.UnitTests
+namespace AW.UI.Web.Internal.UnitTests.Controllers
 {
     public class SalesOrderControllerUnitTests
     {

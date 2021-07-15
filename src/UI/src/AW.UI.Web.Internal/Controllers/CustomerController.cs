@@ -37,8 +37,8 @@ namespace AW.UI.Web.Internal.Controllers
             var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
             ViewData["customerName"] = viewModel.Customer.CustomerName;
-            ViewData["countries"] = await referenceDataService.GetCountries();
-            ViewData["statesProvinces"] = await referenceDataService.GetStatesProvinces();
+            ViewData["countries"] = await referenceDataService.GetCountriesAsync();
+            ViewData["statesProvinces"] = await referenceDataService.GetStatesProvincesAsync();
             return View(viewModel);
         }
 
@@ -88,17 +88,17 @@ namespace AW.UI.Web.Internal.Controllers
         {
             var vm = customerService.AddAddress(accountNumber, customerName);
 
-            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypes())
+            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypesAsync())
                 .OrderBy(a => a.Name)
                 .ToList()
                 .ToSelectList(a => a.Name, a => a.Name);
 
-            ViewData["countries"] = (await referenceDataService.GetCountries())
+            ViewData["countries"] = (await referenceDataService.GetCountriesAsync())
                 .OrderBy(c => c.Name)
                 .ToList()
                 .ToSelectList(x => x.CountryRegionCode, x => x.Name);
 
-            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvinces("US"))
+            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvincesAsync("US"))
                 .OrderBy(s => s.Name)
                 .ToList()
                 .ToSelectList(x => x.StateProvinceCode, x => x.Name);
@@ -123,17 +123,17 @@ namespace AW.UI.Web.Internal.Controllers
             var vm = await customerService.GetCustomerAddress(accountNumber, addressType);
             var countryRegionCode = vm.CustomerAddress.Address.CountryRegionCode;
 
-            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypes())
+            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypesAsync())
                 .OrderBy(a => a.Name)
                 .ToList()
                 .ToSelectList(a => a.Name, a => a.Name);
 
-            ViewData["countries"] = (await referenceDataService.GetCountries())
+            ViewData["countries"] = (await referenceDataService.GetCountriesAsync())
                 .OrderBy(c => c.Name)
                 .ToList()
                 .ToSelectList(c => c.CountryRegionCode, c => c.Name);
                
-            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvinces(countryRegionCode))
+            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvincesAsync(countryRegionCode))
                 .OrderBy(s => s.Name)
                 .ToList()
                 .ToSelectList(s => s.StateProvinceCode, s => s.Name);

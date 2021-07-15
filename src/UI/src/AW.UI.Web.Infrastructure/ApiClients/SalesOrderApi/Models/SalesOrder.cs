@@ -5,7 +5,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models
 {
     public class SalesOrder
     {
-        public byte RevisionNumber { get; set; }
+        public string RevisionNumber { get; set; }
 
         public DateTime OrderDate { get; set; }
 

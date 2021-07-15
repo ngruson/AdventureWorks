@@ -13,7 +13,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
         Task<List<AddressType>> GetAddressTypesAsync();
         Task<List<ContactType>> GetContactTypesAsync();
         Task<List<CountryRegion>> GetCountriesAsync();
-        Task<List<StateProvince>> GetStateProvincesAsync(string countryRegionCode = null);
+        Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null);
         Task<List<Territory>> GetTerritoriesAsync();
     }
 }

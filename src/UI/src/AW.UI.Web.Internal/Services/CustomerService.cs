@@ -295,10 +295,10 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetStateProvinces(string country)
+        public async Task<IEnumerable<SelectListItem>> GetStatesProvinces(string country)
         {
             logger.LogInformation("GetStateProvinces called.");
-            var response = await referenceDataApiClient.GetStateProvincesAsync(country);
+            var response = await referenceDataApiClient.GetStatesProvincesAsync(country);
 
             var items = response
                 .OrderBy(c => c.Name)
@@ -326,7 +326,7 @@ namespace AW.UI.Web.Internal.Services
 
         public async Task<IEnumerable<StateProvinceViewModel>> GetStatesProvincesJson(string country)
         {
-            var stateProvinces = await referenceDataApiClient.GetStateProvincesAsync(country);
+            var stateProvinces = await referenceDataApiClient.GetStatesProvincesAsync(country);
             return mapper.Map<IEnumerable<StateProvinceViewModel>>(stateProvinces);
         }
 

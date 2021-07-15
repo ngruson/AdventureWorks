@@ -1,5 +1,4 @@
 ﻿using AW.UI.Web.Internal.UnitTests.AutoMapper;
-using AW.UI.Web.Internal.UnitTests.TestBuilders;
 using FluentAssertions;
 using Moq;
 using System.Linq;
@@ -15,7 +14,7 @@ using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
 using AW.SharedKernel.Interfaces;
 
-namespace AW.UI.Web.Internal.UnitTests
+namespace AW.UI.Web.Internal.UnitTests.Services
 {
     public class CustomerServiceUnitTests
     {
@@ -342,7 +341,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 }
             });
 
-            mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(
+            mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(
                 It.IsAny<string>()
             ))
             .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>()
@@ -451,7 +450,7 @@ namespace AW.UI.Web.Internal.UnitTests
                 new referenceDataApi.Models.GetCountries.CountryRegion { CountryRegionCode = "GB", Name = "United Kingdom" }
             });
 
-            mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(It.IsAny<string>()))
+            mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
             .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
             {
                 new referenceDataApi.Models.GetStateProvinces.StateProvince 
@@ -626,7 +625,7 @@ namespace AW.UI.Web.Internal.UnitTests
             var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
             var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
 
-            mockReferenceDataApi.Setup(x => x.GetStateProvincesAsync(It.IsAny<string>()))
+            mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
                 .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
                 {
                     new referenceDataApi.Models.GetStateProvinces.StateProvince

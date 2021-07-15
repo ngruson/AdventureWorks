@@ -240,7 +240,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                         );
 
                 //Act
-                var response = await sut.GetStateProvincesAsync();
+                var response = await sut.GetStatesProvincesAsync();
 
                 //Assert
                 response.Should().BeEquivalentTo(statesProvinces);
@@ -261,7 +261,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetStateProvincesAsync();
+                Func<Task> func = async () => await sut.GetStatesProvincesAsync();
 
                 //Assert
                 func.Should().Throw<HttpRequestException>()

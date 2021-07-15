@@ -83,7 +83,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
             });
         }
 
-        public async Task<List<StateProvince>> GetStateProvincesAsync(string countryRegionCode = null)
+        public async Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null)
         {
             string requestUri = "reference-data-api/StateProvince?api-version=1.0";
             logger.LogInformation("Getting states/provinces");

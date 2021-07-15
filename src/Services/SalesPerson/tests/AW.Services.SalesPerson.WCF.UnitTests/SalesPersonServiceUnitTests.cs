@@ -59,7 +59,7 @@ namespace AW.Services.SalesPerson.WCF.UnitTests
             var result = await sut.GetSalesPerson(request);
 
             //Assert
-            result.SalesPerson.FullName().Should().Be(salesPerson.FullName());
+            result.SalesPerson.Should().BeEquivalentTo(salesPerson);
         }
     }
 }
