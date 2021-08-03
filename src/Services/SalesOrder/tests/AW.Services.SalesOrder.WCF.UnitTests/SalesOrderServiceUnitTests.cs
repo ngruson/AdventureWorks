@@ -68,6 +68,7 @@ namespace AW.Services.SalesOrder.WCF.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.SalesOrder.Should().NotBeNull();
+            result.SalesOrder.Should().BeEquivalentTo(salesOrder);
         }
     }
 }
