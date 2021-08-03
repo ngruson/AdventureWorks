@@ -20,6 +20,14 @@
                number: 5000
 
        - pathType: Prefix
+         path: /identityserver/
+         backend:
+           service:
+             name: identityserver-service
+             port:
+               number: 5000
+
+       - pathType: Prefix
          path: /customer-api/
          backend:
            service:
@@ -34,7 +42,15 @@
              name: product-api-service
              port:
                number: 5000
-            
+
+       - pathType: Prefix
+         path: /salesorder-api/
+         backend:
+           service:
+             name: salesorder-api-service
+             port:
+               number: 5000
+
        - pathType: Prefix
          path: /salesperson-api/
          backend:

@@ -1,8 +1,9 @@
-using AW.Services.Product.REST.API.Extensions;
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using AW.Services.ReferenceData.Infrastructure.EFCore;
+using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -39,7 +40,14 @@ namespace AW.Services.ReferenceData.REST.API
                     }
                 );
 
-            services.AddSwaggerGen();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration.GetValue<string>("AuthN:Authority");
+                    options.Audience = "referencedata-api";
+                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                });
+            services.AddSwaggerDocumentation("Reference Data API");
 
             services.AddDbContext<AWContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
@@ -65,8 +73,9 @@ namespace AW.Services.ReferenceData.REST.API
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
 
-                builder.UseSwaggerDocumentation(virtualPath, provider);
+                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Reference Data API");
                 builder.UseRouting();
+                builder.UseAuthentication();
                 builder.UseAuthorization();
                 builder.UseEndpoints(endpoints =>
                 {

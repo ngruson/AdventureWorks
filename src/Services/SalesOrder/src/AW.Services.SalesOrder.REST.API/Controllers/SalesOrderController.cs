@@ -4,6 +4,7 @@ using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer;
 using AW.Services.SalesOrder.REST.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class SalesOrderController : ControllerBase
     {
         private readonly ILogger<SalesOrderController> logger;

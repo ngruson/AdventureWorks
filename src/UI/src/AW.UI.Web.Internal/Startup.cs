@@ -6,10 +6,12 @@ using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AW.UI.Web.Internal
 {
@@ -26,32 +28,71 @@ namespace AW.UI.Web.Internal
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddHttpClient();
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISalesOrderViewModelService, SalesOrderViewModelService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
             services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
-
             services.AddScoped<IReferenceDataService, ReferenceDataService>();
+
+            services.AddAccessTokenManagement();
 
             services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["CustomerAPI:Uri"]);
-            });
+            })
+            .AddUserAccessTokenHandler();
+
             services.AddHttpClient<IReferenceDataApiClient, ReferenceDataApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["ReferenceDataAPI:Uri"]);
-            });
+            })
+            .AddUserAccessTokenHandler();
+
             services.AddHttpClient<ISalesOrderApiClient, SalesOrderApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["SalesOrderAPI:Uri"]);
-            });
+            })
+            .AddUserAccessTokenHandler();
+
             services.AddHttpClient<ISalesPersonApiClient, SalesPersonApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["SalesPersonAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler();
+
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "Cookies";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                    {
+                        options.Authority = Configuration["AuthN:Authority"];
+                        options.ClientId = Configuration["AuthN:ClientId"];
+                        options.ClientSecret = Configuration["AuthN:ClientSecret"];
+                        options.ResponseType = "code";
+                        options.UsePkce = true;
+                        options.GetClaimsFromUserInfoEndpoint = true;
+                        options.SaveTokens = true;
+                        options.Scope.Clear();
+                        options.Scope.Add("openid");
+                        options.Scope.Add("profile");
+                        options.Scope.Add("email");
+                        options.Scope.Add("offline_access");
+                        options.Scope.Add("customer-api.read");
+                        options.Scope.Add("salesorder-api.read");
+                        options.Scope.Add("salesperson-api.read");
+                        options.Scope.Add("referencedata-api.read");
+                    });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always;
             });
         }
 
@@ -65,16 +106,18 @@ namespace AW.UI.Web.Internal
             else
             {
                 app.UseExceptionHandler("/Error");
-            }
+            }            
 
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapDefaultControllerRoute()
+                //    .RequireAuthorization();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Customer}/{action=Index}/{id?}");

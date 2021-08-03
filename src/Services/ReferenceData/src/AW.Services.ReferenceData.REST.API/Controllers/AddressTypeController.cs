@@ -1,14 +1,15 @@
 ﻿using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AW.Services.ReferenceData.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class AddressTypeController : ControllerBase
     {
         private readonly ILogger<AddressTypeController> logger;

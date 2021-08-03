@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "AW.Services.IdentityServer": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "identityserver",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}

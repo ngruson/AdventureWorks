@@ -2,6 +2,7 @@
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace AW.Services.SalesPerson.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class SalesPersonController : ControllerBase
     {
         private readonly ILogger<SalesPersonController> logger;

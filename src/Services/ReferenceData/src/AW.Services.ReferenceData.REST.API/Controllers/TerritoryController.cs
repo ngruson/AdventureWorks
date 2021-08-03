@@ -1,5 +1,6 @@
 ﻿using AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class TerritoryController : ControllerBase
     {
         private readonly ILogger<TerritoryController> logger;

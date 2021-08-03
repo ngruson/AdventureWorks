@@ -1,5 +1,6 @@
 ﻿using AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class ContactTypeController : ControllerBase
     {
         private readonly ILogger<ContactTypeController> logger;

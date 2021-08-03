@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-using AW.Services.Customer.REST.API.Extensions;
 using AW.Services.Customer.Infrastructure.EFCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -10,13 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using System;
 using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
 using AW.SharedKernel.JsonConverters;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
+using AW.SharedKernel.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Logging;
+using AW.SharedKernel.Api;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -70,14 +71,16 @@ namespace AW.Services.Customer.REST.API
                         options.GroupNameFormat = "'v'VVV";
                         options.SubstituteApiVersionInUrl = true;
                     }
-                );
+                );            
 
-            services.AddSwaggerGen(c =>
-            {
-                c.CustomSchemaIds(x => x.FullName);
-                c.DescribeAllParametersInCamelCase();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Customer API", Version = "v1" });
-            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration.GetValue<string>("AuthN:Authority");
+                    options.Audience = "customer-api";
+                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                });
+            services.AddSwaggerDocumentation("Customer API");
 
             services.AddDbContext<AWContext>(c =>
             {
@@ -85,15 +88,16 @@ namespace AW.Services.Customer.REST.API
                 c.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
                 c.EnableSensitiveDataLogging();
             });
-            services.AddScoped(typeof(IRepositoryBase<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(c => c.AddCollectionMappers(), typeof(MappingProfile).Assembly, typeof(GetCustomersQuery).Assembly);
             services.AddMediatR(typeof(GetCustomersQuery));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider, ILoggerFactory loggerFactory)
         {
             var virtualPath = "/customer-api";
+
             app.Map(virtualPath, builder =>
             {
                 if (env.IsDevelopment())
@@ -106,8 +110,9 @@ namespace AW.Services.Customer.REST.API
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
 
-                builder.UseSwaggerDocumentation(virtualPath, provider);
+                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Customer API");
                 builder.UseRouting();
+                builder.UseAuthentication();
                 builder.UseAuthorization();
                 builder.UseEndpoints(endpoints =>
                 {

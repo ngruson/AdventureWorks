@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class CountryRegionController : ControllerBase
     {
         private readonly ILogger<CountryRegionController> logger;

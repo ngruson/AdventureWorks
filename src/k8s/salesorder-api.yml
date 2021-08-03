@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-salesorder-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-salesorder-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-salesorder-api
+    spec:
+      containers:
+      - name: salesorder-api
+        image: ngruson/adventureworks_salesorderapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-salesorder-api-config
+          - secretRef:
+              name: adventureworks-salesorder-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: salesorder-api-service
+spec:
+  selector:
+    app: adventureworks-salesorder-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

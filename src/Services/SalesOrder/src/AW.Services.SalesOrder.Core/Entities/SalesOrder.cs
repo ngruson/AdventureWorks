@@ -51,7 +51,13 @@ namespace AW.Services.SalesOrder.Core.Entities
 
         public decimal Freight { get; set; }
 
-        public decimal TotalDue { get; }
+        public decimal TotalDue
+        {
+            get
+            {
+                return SubTotal + TaxAmt + Freight;
+            }
+        }
 
         public string Comment { get; set; }
 

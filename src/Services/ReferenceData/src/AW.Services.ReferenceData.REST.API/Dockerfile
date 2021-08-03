@@ -6,6 +6,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj", "Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/"]
+COPY k8s/aw-ca.pem .
 RUN dotnet restore "Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj"
 COPY . .
 WORKDIR "/src/Services/ReferenceData/src/AW.Services.ReferenceData.REST.API"
@@ -17,4 +18,5 @@ RUN dotnet publish "AW.Services.ReferenceData.REST.API.csproj" -c Release -o /ap
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=build /src/aw-ca.pem /etc/ssl/certs/aw-ca.pem
 ENTRYPOINT ["dotnet", "AW.Services.ReferenceData.REST.API.dll"]

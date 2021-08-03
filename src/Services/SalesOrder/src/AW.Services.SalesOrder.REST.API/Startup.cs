@@ -1,8 +1,9 @@
-using Ardalis.Specification;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.Infrastructure.EFCore;
-using AW.Services.SalesOrder.REST.API.Extensions;
+using AW.SharedKernel.Api;
+using AW.SharedKernel.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -11,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -48,16 +48,19 @@ namespace AW.Services.SalesOrder.REST.API
                     }
                 );
 
-            services.AddSwaggerGen(c =>
-            {
-                c.DescribeAllParametersInCamelCase();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sales Order API", Version = "v1" });
-            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration.GetValue<string>("AuthN:Authority");
+                    options.Audience = "salesorder-api";
+                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                });
+            services.AddSwaggerDocumentation("Sales Order API");
 
             services.AddDbContext<AWContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
             );
-            services.AddScoped(typeof(IRepositoryBase<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetSalesOrdersQuery).Assembly);
             services.AddMediatR(typeof(GetSalesOrdersQuery));
         }
@@ -78,8 +81,9 @@ namespace AW.Services.SalesOrder.REST.API
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
 
-                builder.UseSwaggerDocumentation(virtualPath, provider);
+                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Sales Order API");
                 builder.UseRouting();
+                builder.UseAuthentication();
                 builder.UseAuthorization();
                 builder.UseEndpoints(endpoints =>
                 {

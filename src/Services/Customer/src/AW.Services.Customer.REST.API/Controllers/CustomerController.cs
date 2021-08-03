@@ -5,6 +5,7 @@ using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace AW.Services.Customer.REST.API.Controllers
 {
-    [ApiController]    
+    [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ILogger<CustomerController> logger;

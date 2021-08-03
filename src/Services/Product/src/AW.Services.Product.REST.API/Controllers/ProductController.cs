@@ -2,6 +2,7 @@
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace AW.Services.Product.REST.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> logger;

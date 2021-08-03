@@ -3,10 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>7c64d416-80fd-4102-9ef1-6dd29ac58a5b</ProjectGuid>
+    <ProjectGuid>6e312887-2c0f-48e9-bac3-cceda90dbaaf</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>aw.services.countryregion.rest.api</DockerServiceName>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/customer-api/index.html</DockerServiceUrl>
+    <DockerServiceName>aw.services.customer.rest.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />

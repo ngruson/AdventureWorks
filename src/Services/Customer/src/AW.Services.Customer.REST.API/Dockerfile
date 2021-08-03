@@ -5,10 +5,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["Services/Customer/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj", "Services/Customer/AW.Services.Customer.REST.API/"]
-RUN dotnet restore "Services/Customer/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj"
+COPY ["Services/Customer/src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj", "Services/Customer/src/AW.Services.Customer.REST.API/"]
+COPY k8s/aw-ca.pem .
+RUN dotnet restore "Services/Customer/src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Customer/AW.Services.Customer.REST.API"
+WORKDIR "/src/Services/Customer/src/AW.Services.Customer.REST.API"
 RUN dotnet build "AW.Services.Customer.REST.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -17,4 +18,5 @@ RUN dotnet publish "AW.Services.Customer.REST.API.csproj" -c Release -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=build /src/aw-ca.pem /etc/ssl/certs/aw-ca.pem
 ENTRYPOINT ["dotnet", "AW.Services.Customer.REST.API.dll"]

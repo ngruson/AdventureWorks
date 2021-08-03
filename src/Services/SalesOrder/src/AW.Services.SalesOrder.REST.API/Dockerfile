@@ -6,10 +6,11 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Services/SalesOrder/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj", "Services/SalesOrder/AW.Services.SalesOrder.REST.API/"]
-RUN dotnet restore "Services/SalesOrder/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj"
+COPY ["Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj", "Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/"]
+COPY k8s/aw-ca.pem .
+RUN dotnet restore "Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj"
 COPY . .
-WORKDIR "/src/Services/SalesOrder/AW.Services.SalesOrder.REST.API"
+WORKDIR "/src/Services/SalesOrder/src/AW.Services.SalesOrder.REST.API"
 RUN dotnet build "AW.Services.SalesOrder.REST.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -18,4 +19,5 @@ RUN dotnet publish "AW.Services.SalesOrder.REST.API.csproj" -c Release -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=build /src/aw-ca.pem /etc/ssl/certs/aw-ca.pem
 ENTRYPOINT ["dotnet", "AW.Services.SalesOrder.REST.API.dll"]

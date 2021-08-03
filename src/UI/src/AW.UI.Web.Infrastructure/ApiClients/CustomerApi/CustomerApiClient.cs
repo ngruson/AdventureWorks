@@ -15,8 +15,8 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
         private readonly HttpClient client;
         private readonly ILogger<CustomerApiClient> logger;
 
-        public CustomerApiClient(HttpClient client, ILogger<CustomerApiClient> logger) =>
-            (this.client, this.logger) = (client, logger);
+        public CustomerApiClient(HttpClient client, ILogger<CustomerApiClient> logger)
+            => (this.client, this.logger) = (client, logger);
 
         public async Task<Models.GetCustomers.GetCustomersResponse> GetCustomersAsync(
             int pageIndex, 

@@ -5,9 +5,11 @@ using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.Extensions;
 using AW.SharedKernel.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AW.UI.Web.Internal.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private readonly ICustomerService customerService;

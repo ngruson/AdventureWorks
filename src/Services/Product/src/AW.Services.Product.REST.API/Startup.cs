@@ -1,9 +1,10 @@
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Infrastructure.EFCore;
-using AW.Services.Product.REST.API.Extensions;
+using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -12,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace AW.Services.Product.REST.API
 {
@@ -44,11 +44,14 @@ namespace AW.Services.Product.REST.API
                     }
                 );
 
-            services.AddSwaggerGen(c =>
-            {
-                c.DescribeAllParametersInCamelCase();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product API", Version = "v1" });
-            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration.GetValue<string>("AuthN:Authority");
+                    options.Audience = "product-api";
+                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                });
+            services.AddSwaggerDocumentation("Product API");
 
             services.AddDbContext<AWContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
@@ -74,8 +77,9 @@ namespace AW.Services.Product.REST.API
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
 
-                builder.UseSwaggerDocumentation(virtualPath, provider);
+                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Product API");
                 builder.UseRouting();
+                builder.UseAuthentication();
                 builder.UseAuthorization();
                 builder.UseEndpoints(endpoints =>
                 {

@@ -18,7 +18,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi
 
         public async Task<SalesOrdersResult> GetSalesOrdersAsync(int pageIndex, int pageSize, string territory, CustomerType? customerType)
         {
-            string requestUri = $"SalesOrder?&api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
+            string requestUri = $"/salesorder-api/SalesOrder?&api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting sales orders with page index {PageIndex}, page size {PageSize}";
 
             List<object> args = new List<object> { pageIndex, pageSize };
@@ -37,9 +37,9 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi
                 requestUri += $"&customerType={customerTypeValue}";
             }
 
-            logger.LogInformation(logMessage, args);
+            logger.LogInformation(logMessage, args.ToArray());
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", requestUri);
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
