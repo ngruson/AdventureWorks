@@ -28,7 +28,7 @@ namespace AW.Services.Customer.WCF.UnitTests
     public class CustomerServiceUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task ListCustomers_ReturnsCustomers(
+        public async Task ListCustomers_Store_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetCustomers.StoreCustomerDto> customers,
             CustomerService sut,
@@ -52,18 +52,44 @@ namespace AW.Services.Customer.WCF.UnitTests
             var result = await sut.ListCustomers(request);
 
             //Assert
-            result.Should().NotBeNull();
-            result.Customers.Customer.Count().Should().Be(customers.Count);
-
-            for (int i = 0; i < result.Customers.Customer.Count; i++)
-            {
-                var customer = result.Customers.Customer[i];
-                customer.AccountNumber.Should().Be(customers[i].AccountNumber);
-            }
+            result.Customers.Customer.Should().BeEquivalentTo(dto.Customers, options => options
+                .Excluding(c => c.CustomerType)
+            );
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task GetCustomer_ReturnsCustomer(
+        public async Task ListCustomers_Individual_ReturnsCustomers(
+            [Frozen] Mock<IMediator> mockMediator,
+            List<Core.Handlers.GetCustomers.IndividualCustomerDto> customers,
+            CustomerService sut,
+            ListCustomersRequest request
+        )
+        {
+            //Arrange
+            var dto = new GetCustomersDto
+            {
+                Customers = customers.ToList<Core.Handlers.GetCustomers.CustomerDto>(),
+                TotalCustomers = customers.Count
+            };
+
+            mockMediator.Setup(x => x.Send(
+                It.IsAny<GetCustomersQuery>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(dto);
+
+            //Act
+            var result = await sut.ListCustomers(request);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Customers.Customer.Should().BeEquivalentTo(dto.Customers, options => options
+                .Excluding(c => c.CustomerType)
+            );
+        }
+
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetCustomer_Store_ReturnsCustomer(
             [Frozen] Mock<IMediator> mockMediator,
             [Frozen] Core.Handlers.GetCustomer.StoreCustomerDto dto,
             CustomerService sut,
@@ -79,8 +105,33 @@ namespace AW.Services.Customer.WCF.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            result.Customer.Should().NotBeNull();
-            result.Customer.AccountNumber.Should().Be(dto.AccountNumber);
+            result.Customer.Should().BeEquivalentTo(dto, options => options
+                .Excluding(c => c.CustomerType)
+                .Excluding(c => c.SalesOrders)
+            );
+        }
+
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task GetCustomer_Individual_ReturnsCustomer(
+            [Frozen] Mock<IMediator> mockMediator,
+            [Frozen] Core.Handlers.GetCustomer.IndividualCustomerDto dto,
+            CustomerService sut,
+            GetCustomerRequest request
+        )
+        {
+            //Arrange
+            mockMediator.Setup(x => x.Send(It.IsAny<GetCustomerQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(dto);
+
+            //Act
+            var result = await sut.GetCustomer(request);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Customer.Should().BeEquivalentTo(dto, options => options
+                .Excluding(c => c.CustomerType)
+                .Excluding(c => c.SalesOrders)
+            );
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]

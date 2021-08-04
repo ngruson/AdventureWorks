@@ -23,6 +23,7 @@ namespace AW.Services.SalesOrder.WCF.Messages.ListSalesOrders
         public string SalesOrderNumber { get; set; }
 
         public string PurchaseOrderNumber { get; set; }
+        public string CustomerNumber { get; set; }
 
         public string AccountNumber { get; set; }
 

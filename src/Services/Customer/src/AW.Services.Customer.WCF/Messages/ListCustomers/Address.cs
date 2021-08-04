@@ -15,6 +15,7 @@ namespace AW.Services.Customer.WCF.Messages.ListCustomers
         public string City { get; set; }
 
         public string StateProvinceCode { get; set; }
+        public string CountryRegionCode { get; set; }
 
         public void Mapping(Profile profile)
         {

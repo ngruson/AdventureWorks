@@ -43,6 +43,7 @@ namespace AW.Services.SalesOrder.WCF.UnitTests
 
             //Assert
             result.Should().NotBeNull();
+            result.SalesOrders.SalesOrder.Should().BeEquivalentTo(salesOrders);
             result.SalesOrders.SalesOrder.Count().Should().Be(salesOrders.Count);
             result.TotalSalesOrders.Should().Be(salesOrders.Count);
         }

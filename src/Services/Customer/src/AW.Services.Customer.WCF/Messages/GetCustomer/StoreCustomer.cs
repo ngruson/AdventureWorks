@@ -8,6 +8,7 @@ namespace AW.Services.Customer.WCF.Messages.GetCustomer
     public class StoreCustomer : Customer, IMapFrom<StoreCustomerDto>
     {
         public string Name { get; set; }
+        public string SalesPerson { get; set; }
         public List<StoreCustomerContact> Contacts { get; set; }
 
         public void Mapping(Profile profile)

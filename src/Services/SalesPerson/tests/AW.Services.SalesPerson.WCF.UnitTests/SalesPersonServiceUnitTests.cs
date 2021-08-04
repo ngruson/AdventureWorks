@@ -37,7 +37,7 @@ namespace AW.Services.SalesPerson.WCF.UnitTests
             var result = await sut.ListSalesPersons(request);
 
             //Assert
-            result.SalesPersons.Count().Should().Be(salesPersons.Count);
+            result.SalesPersons.Should().BeEquivalentTo(salesPersons);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
