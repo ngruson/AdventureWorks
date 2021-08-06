@@ -41,9 +41,9 @@ namespace AW.Services.Customer.REST.API
 
                     options.JsonSerializerOptions.Converters.Add(
                         new CustomerConverter<
-                            Models.GetCustomers.Customer,
-                            Models.GetCustomers.StoreCustomer,
-                            Models.GetCustomers.IndividualCustomer>()
+                            Core.Models.GetCustomers.Customer,
+                            Core.Models.GetCustomers.StoreCustomer,
+                            Core.Models.GetCustomers.IndividualCustomer>()
                     );
 
                     options.JsonSerializerOptions.Converters.Add(
@@ -55,9 +55,9 @@ namespace AW.Services.Customer.REST.API
 
                     options.JsonSerializerOptions.Converters.Add(
                         new CustomerConverter<
-                            Models.UpdateCustomer.Customer,
-                            Models.UpdateCustomer.StoreCustomer,
-                            Models.UpdateCustomer.IndividualCustomer>()
+                            Core.Models.UpdateCustomer.Customer,
+                            Core.Models.UpdateCustomer.StoreCustomer,
+                            Core.Models.UpdateCustomer.IndividualCustomer>()
                     );
                 });
 

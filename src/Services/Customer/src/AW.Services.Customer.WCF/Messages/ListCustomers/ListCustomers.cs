@@ -9,7 +9,7 @@ namespace AW.Services.Customer.WCF.Messages.ListCustomers
     public class ListCustomers : IMapFrom<GetCustomersDto>
     {
         [XmlElement(Namespace = "http://services.aw.com/CustomerService/1.0/ListCustomers")]
-        public List<Customer> Customer { get; set; } = new List<Customer>();
+        public List<Core.Models.GetCustomers.Customer> Customer { get; set; } = new List<Core.Models.GetCustomers.Customer>();
 
         public void Mapping(Profile profile)
         {

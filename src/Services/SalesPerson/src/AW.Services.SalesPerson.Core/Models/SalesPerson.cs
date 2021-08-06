@@ -1,0 +1,25 @@
+﻿using AutoMapper;
+using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.Interfaces;
+using System.Collections.Generic;
+
+namespace AW.Services.SalesPerson.Core.Models
+{
+    public class SalesPerson : IMapFrom<Handlers.GetSalesPersons.SalesPersonDto>, IPerson
+    {
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
+        public string Territory { get; set; }
+        public List<SalesPersonEmailAddress> EmailAddresses { get; set; }
+        public List<SalesPersonPhone> PhoneNumbers { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Core.Handlers.GetSalesPersons.SalesPersonDto, SalesPerson>();
+            profile.CreateMap<Core.Handlers.GetSalesPerson.SalesPersonDto, SalesPerson>();
+        }
+    }
+}

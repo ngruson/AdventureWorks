@@ -25,7 +25,7 @@ namespace AW.Services.SalesPerson.WCF
 
             var response = new ListSalesPersonsResponse
             {
-                SalesPersons = mapper.Map<List<Messages.ListSalesPersons.SalesPerson>>(salesPersons)
+                SalesPersons = mapper.Map<List<Core.Models.SalesPerson>>(salesPersons)
             };
 
             return response;
@@ -42,7 +42,7 @@ namespace AW.Services.SalesPerson.WCF
 
             return new GetSalesPersonResponse
             {
-                SalesPerson = mapper.Map<Messages.GetSalesPerson.SalesPerson>(salesPerson)
+                SalesPerson = mapper.Map<Core.Models.SalesPerson>(salesPerson)
             };
         }
     }

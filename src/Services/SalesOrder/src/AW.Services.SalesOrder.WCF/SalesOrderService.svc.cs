@@ -37,7 +37,7 @@ namespace AW.Services.SalesOrder.WCF
 
             var response = new GetSalesOrderResponse
             {
-                SalesOrder = mapper.Map<Messages.GetSalesOrder.SalesOrder>(salesOrder)
+                SalesOrder = mapper.Map<Core.Models.SalesOrder>(salesOrder)
             };
 
             return response;

@@ -38,7 +38,7 @@ namespace AW.Services.SalesPerson.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales persons");
-            return new OkObjectResult(mapper.Map<List<Models.SalesPerson>>(salesPersons));
+            return new OkObjectResult(mapper.Map<List<Core.Models.SalesPerson>>(salesPersons));
         }
 
         [HttpGet("GetSalesPerson")]
@@ -56,7 +56,7 @@ namespace AW.Services.SalesPerson.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales person");
-            return new OkObjectResult(mapper.Map<Models.SalesPerson>(salesPerson));
+            return new OkObjectResult(mapper.Map<Core.Models.SalesPerson>(salesPerson));
         }
     }
 }

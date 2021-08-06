@@ -6,6 +6,6 @@ namespace AW.Services.Customer.WCF.Messages.UpdateCustomer
     [XmlRoot(Namespace = "http://services.aw.com/CustomerService/1.0", IsNullable = false)]
     public class UpdateCustomerRequest
     {
-        public Customer Customer { get; set; }
+        public Core.Models.UpdateCustomer.Customer Customer { get; set; }
     }
 }

@@ -57,7 +57,7 @@ namespace AW.Services.Customer.WCF
 
             var response = new GetCustomerResponse
             {
-                Customer = mapper.Map<Messages.GetCustomer.Customer>(customer)
+                Customer = mapper.Map<Core.Models.GetCustomer.Customer>(customer)
             };
 
             return response;
@@ -74,7 +74,7 @@ namespace AW.Services.Customer.WCF
 
             return new UpdateCustomerResponse
             {
-                Customer = mapper.Map<Messages.UpdateCustomer.Customer>(customer)
+                Customer = mapper.Map<Core.Models.UpdateCustomer.Customer>(customer)
             };
         }
 

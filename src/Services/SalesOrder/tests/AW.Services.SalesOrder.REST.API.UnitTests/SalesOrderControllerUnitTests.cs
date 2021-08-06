@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.REST.API.Controllers;
@@ -7,7 +6,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -46,7 +44,7 @@ namespace AW.Services.SalesOrder.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as Models.SalesOrdersResult;
+            var result = okObjectResult.Value as Core.Models.SalesOrdersResult;
             result.SalesOrders.Count.Should().Be(salesOrders.Count);
         }
 
@@ -83,7 +81,7 @@ namespace AW.Services.SalesOrder.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as Models.SalesOrder;
+            var result = okObjectResult.Value as Core.Models.SalesOrder;
             result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
 

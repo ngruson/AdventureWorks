@@ -29,6 +29,25 @@ namespace AW.Services.Customer.Core
                 .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
+
+            CreateMap<Handlers.GetCustomers.CustomerDto, Models.GetCustomers.Customer>()
+                .Include<Handlers.GetCustomers.IndividualCustomerDto, Models.GetCustomers.IndividualCustomer>()
+                .Include<Handlers.GetCustomers.StoreCustomerDto, Models.GetCustomers.StoreCustomer>();
+
+            CreateMap<Handlers.GetCustomer.CustomerDto, Models.GetCustomer.Customer>()
+                .Include<Handlers.GetCustomer.IndividualCustomerDto, Models.GetCustomer.IndividualCustomer>()
+                .Include<Handlers.GetCustomer.StoreCustomerDto, Models.GetCustomer.StoreCustomer>();
+
+            CreateMap<Models.UpdateCustomer.Customer, Handlers.UpdateCustomer.UpdateCustomerCommand>()
+                .ForMember(m => m.Customer, opt => opt.MapFrom(src => src));
+
+            CreateMap<Models.UpdateCustomer.Customer, Handlers.UpdateCustomer.CustomerDto>()
+                .ForMember(m => m.AccountNumber, opt => opt.Ignore())
+                .Include<Models.UpdateCustomer.IndividualCustomer, Handlers.UpdateCustomer.IndividualCustomerDto>()
+                .Include<Models.UpdateCustomer.StoreCustomer, Handlers.UpdateCustomer.StoreCustomerDto>()
+                .ReverseMap()
+                .Include<Handlers.UpdateCustomer.IndividualCustomerDto, Models.UpdateCustomer.IndividualCustomer>()
+                .Include<Handlers.UpdateCustomer.StoreCustomerDto, Models.UpdateCustomer.StoreCustomer>();
         }
     }
 }

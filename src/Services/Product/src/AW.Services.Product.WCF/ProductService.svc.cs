@@ -6,6 +6,8 @@ using AW.Services.Product.WCF.Messages;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Core.Handlers.CountProducts;
 using AW.Services.Product.Core.Handlers.GetProduct;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace AW.Services.Product.WCF
 {
@@ -13,8 +15,9 @@ namespace AW.Services.Product.WCF
     public class ProductService : IProductService
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public ProductService(IMediator mediator) => (this.mediator) = (mediator);
+        public ProductService(IMediator mediator, IMapper mapper) => (this.mediator, this.mapper) = (mediator, mapper);
 
         public async Task<ListProductsResponse> ListProducts(ListProductsRequest request)
         {
@@ -30,7 +33,7 @@ namespace AW.Services.Product.WCF
                 TotalProducts = await mediator.Send(new CountProductsQuery()),
                 Products = new ListProducts
                 {
-                    Product = products.Products.ToList()
+                    Product = mapper.Map<List<Core.Models.Product>>(products.Products)
                 }
             };
 

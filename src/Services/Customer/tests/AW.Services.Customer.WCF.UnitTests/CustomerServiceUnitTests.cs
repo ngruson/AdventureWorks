@@ -27,7 +27,7 @@ namespace AW.Services.Customer.WCF.UnitTests
 {
     public class CustomerServiceUnitTests
     {
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListCustomers_Store_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetCustomers.StoreCustomerDto> customers,
@@ -57,7 +57,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             );
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListCustomers_Individual_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetCustomers.IndividualCustomerDto> customers,
@@ -88,7 +88,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             );
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetCustomer_Store_ReturnsCustomer(
             [Frozen] Mock<IMediator> mockMediator,
             [Frozen] Core.Handlers.GetCustomer.StoreCustomerDto dto,
@@ -111,7 +111,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             );
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetCustomer_Individual_ReturnsCustomer(
             [Frozen] Mock<IMediator> mockMediator,
             [Frozen] Core.Handlers.GetCustomer.IndividualCustomerDto dto,
@@ -134,12 +134,12 @@ namespace AW.Services.Customer.WCF.UnitTests
             );
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task UpdateCustomer_ReturnsCustomer(
             [Frozen] Mock<IMediator> mockMediator,
             [Frozen] Core.Handlers.UpdateCustomer.StoreCustomerDto dto,
             CustomerService sut,
-            Messages.UpdateCustomer.StoreCustomer customer
+            Core.Models.UpdateCustomer.StoreCustomer customer
         )
         {
             //Arrange
@@ -161,7 +161,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Customer.AccountNumber.Should().Be(dto.AccountNumber);
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task AddCustomerAddress_ReturnsResponse(
             CustomerService sut,
             AddCustomerAddressRequest request
@@ -174,7 +174,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task UpdateCustomerAddress_ReturnsResponse(
             CustomerService sut,
             UpdateCustomerAddressRequest request
@@ -187,7 +187,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task DeleteCustomerAddress_ReturnsResponse(
             CustomerService sut,
             DeleteCustomerAddressRequest request
@@ -200,7 +200,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task AddCustomerContact_ReturnsResponse(
             CustomerService sut,
             AddStoreCustomerContactRequest request
@@ -213,7 +213,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task UpdateCustomerContact_ReturnsResponse(
             CustomerService sut,
             UpdateStoreCustomerContactRequest request
@@ -226,7 +226,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task DeleteCustomerContact_ReturnsResponse(
             CustomerService sut,
             DeleteStoreCustomerContactRequest request
@@ -239,7 +239,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task AddIndividualCustomerEmailAddress_ReturnsResponse(
             CustomerService sut,
             AddIndividualCustomerEmailAddressRequest request
@@ -252,7 +252,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             result.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task DeleteIndividualCustomerEmailAddress_ReturnsResponse(
             CustomerService sut,
             DeleteIndividualCustomerEmailAddressRequest request

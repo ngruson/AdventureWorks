@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesOrder.REST.API.Models;
+using AW.Services.SalesOrder.Core.Models;
 using Xunit;
 
 namespace AW.Services.SalesOrder.REST.API.UnitTests

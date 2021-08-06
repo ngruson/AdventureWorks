@@ -22,7 +22,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
     {
         public class GetCustomers
         {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
             public async Task GetCustomers_ShouldReturnCustomers_WhenGivenCustomers(
                 
                 [Frozen] Mock<IMediator> mockMediator,
@@ -155,12 +155,12 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
         public class UpdateCustomer
         {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
             public async Task UpdateCustomer_ShouldReturnCustomer_GivenCustomer(
                 Core.Handlers.UpdateCustomer.StoreCustomerDto dto,
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] CustomerController sut,
-                Models.UpdateCustomer.StoreCustomer customer
+                Core.Models.UpdateCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -177,7 +177,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okResult = actionResult as OkObjectResult;
                 okResult.Should().NotBeNull();
 
-                var updatedCustomer = okResult.Value as Models.UpdateCustomer.Customer;
+                var updatedCustomer = okResult.Value as Core.Models.UpdateCustomer.Customer;
                 updatedCustomer.Should().NotBeNull();
             }
         }

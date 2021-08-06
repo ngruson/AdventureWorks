@@ -8,7 +8,10 @@ namespace AW.Services.Customer.REST.API.UnitTests
         [Fact]
         public void AutoMapper_Configuration_IsValid()
         {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<MappingProfile>();
+                cfg.AddProfile<Core.MappingProfile>();
+            });
             config.AssertConfigurationIsValid();
         }
 
@@ -16,7 +19,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
         public void AutoMapper_Mapping_UpdateCustomerAddress_IsValid()
         {
             var profile = new TestProfile();
-            new Models.UpdateCustomer.Address().Mapping(profile);
+            new Core.Models.UpdateCustomer.Address().Mapping(profile);
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile(profile));
             config.AssertConfigurationIsValid();

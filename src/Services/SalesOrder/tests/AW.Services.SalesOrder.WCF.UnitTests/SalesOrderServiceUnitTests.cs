@@ -17,7 +17,7 @@ namespace AW.Services.SalesOrder.WCF.UnitTests
 {
     public class SalesOrderServiceUnitTests
     {
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListSalesOrders_ReturnsSalesOrders(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
@@ -48,7 +48,7 @@ namespace AW.Services.SalesOrder.WCF.UnitTests
             result.TotalSalesOrders.Should().Be(salesOrders.Count);
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetSalesOrder_ReturnSalesOrder(
             [Frozen] Mock<IMediator> mockMediator,
             Core.Handlers.GetSalesOrder.SalesOrderDto salesOrder,

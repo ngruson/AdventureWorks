@@ -2,6 +2,7 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
 using System.Xml.Serialization;
+using AW.Services.Customer.Core.Models.DeleteStoreCustomerContact;
 
 namespace AW.Services.Customer.WCF.Messages.DeleteStoreCustomerContact
 {

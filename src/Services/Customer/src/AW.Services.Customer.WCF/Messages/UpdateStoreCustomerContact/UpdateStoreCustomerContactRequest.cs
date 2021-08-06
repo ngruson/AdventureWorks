@@ -2,6 +2,7 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using System.Xml.Serialization;
+using AW.Services.Customer.Core.Models.UpdateStoreCustomerContact;
 
 namespace AW.Services.Customer.WCF.Messages.UpdateStoreCustomerContact
 {

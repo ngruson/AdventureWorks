@@ -2,6 +2,6 @@
 {
     public class UpdateCustomerResponse
     {
-        public Customer Customer { get; set; }
+        public Core.Models.UpdateCustomer.Customer Customer { get; set; }
     }
 }

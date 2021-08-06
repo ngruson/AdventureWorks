@@ -28,9 +28,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Models.GetCustomers.Customer,
-                            Models.GetCustomers.StoreCustomer,
-                            Models.GetCustomers.IndividualCustomer>()
+                            Core.Models.GetCustomers.Customer,
+                            Core.Models.GetCustomers.StoreCustomer,
+                            Core.Models.GetCustomers.IndividualCustomer>()
                     }
                 };
 
@@ -122,9 +122,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Models.GetCustomers.Customer,
-                            Models.GetCustomers.StoreCustomer,
-                            Models.GetCustomers.IndividualCustomer>()
+                            Core.Models.GetCustomers.Customer,
+                            Core.Models.GetCustomers.StoreCustomer,
+                            Core.Models.GetCustomers.IndividualCustomer>()
                     }
                 };
 
@@ -241,14 +241,14 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Models.GetCustomers.Customer,
-                            Models.GetCustomers.StoreCustomer,
-                            Models.GetCustomers.IndividualCustomer>()
+                            Core.Models.GetCustomers.Customer,
+                            Core.Models.GetCustomers.StoreCustomer,
+                            Core.Models.GetCustomers.IndividualCustomer>()
                     }
                 };
 
                 //Act
-                var storeCustomer = JsonSerializer.Deserialize<Models.GetCustomers.StoreCustomer>(json, serializeOptions);
+                var storeCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomers.StoreCustomer>(json, serializeOptions);
 
                 //Assert
                 storeCustomer.AccountNumber.Should().Be("AW00000001");
@@ -327,14 +327,14 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Models.GetCustomers.Customer,
-                            Models.GetCustomers.StoreCustomer,
-                            Models.GetCustomers.IndividualCustomer>()
+                            Core.Models.GetCustomers.Customer,
+                            Core.Models.GetCustomers.StoreCustomer,
+                            Core.Models.GetCustomers.IndividualCustomer>()
                     }
                 };
 
                 //Act
-                var individualCustomer = JsonSerializer.Deserialize<Models.GetCustomers.IndividualCustomer>(json, serializeOptions);
+                var individualCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomers.IndividualCustomer>(json, serializeOptions);
 
                 //Assert
                 individualCustomer.AccountNumber.Should().Be("AW00011000");

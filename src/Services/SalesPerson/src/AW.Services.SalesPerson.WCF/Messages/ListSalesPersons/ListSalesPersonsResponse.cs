@@ -7,6 +7,6 @@ namespace AW.Services.SalesPerson.WCF.Messages.ListSalesPersons
     [XmlRoot(Namespace = "http://services.aw.com/SalesPersonService/1.0", IsNullable = false)]
     public class ListSalesPersonsResponse
     {
-        public List<SalesPerson> SalesPersons { get; set; } = new List<SalesPerson>();
+        public List<Core.Models.SalesPerson> SalesPersons { get; set; } = new List<Core.Models.SalesPerson>();
     }
 }

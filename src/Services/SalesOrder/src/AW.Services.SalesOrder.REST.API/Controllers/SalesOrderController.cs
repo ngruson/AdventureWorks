@@ -2,7 +2,7 @@
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer;
-using AW.Services.SalesOrder.REST.API.Models;
+using AW.Services.SalesOrder.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +58,7 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales orders");
-            return new OkObjectResult(mapper.Map<List<Models.SalesOrder>>(salesOrders));
+            return new OkObjectResult(mapper.Map<List<Core.Models.SalesOrder>>(salesOrders));
         }
 
         [HttpGet("{salesOrderNumber}")]
@@ -76,7 +76,7 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales order");
-            return new OkObjectResult(mapper.Map<Models.SalesOrder>(salesOrder));
+            return new OkObjectResult(mapper.Map<Core.Models.SalesOrder>(salesOrder));
         }
     }
 }

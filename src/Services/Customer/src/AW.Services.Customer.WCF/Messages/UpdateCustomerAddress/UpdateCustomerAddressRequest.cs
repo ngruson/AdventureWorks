@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateCustomerAddress;
+using AW.Services.Customer.Core.Models.UpdateCustomerAddress;
 using System.Xml.Serialization;
 
 namespace AW.Services.Customer.WCF.Messages.UpdateCustomerAddress

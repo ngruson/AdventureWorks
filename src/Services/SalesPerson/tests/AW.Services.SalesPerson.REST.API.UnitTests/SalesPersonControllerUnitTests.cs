@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using AW.Services.SalesPerson.REST.API.Controllers;
@@ -8,7 +7,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -19,7 +17,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
 {
     public class SalesPersonControllerUnitTests
     {
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetSalesPersons_ShouldReturnSalesPersons_WhenGivenSalesPersons(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetSalesPersons.SalesPersonDto> salesPersons,
@@ -41,7 +39,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as List<Models.SalesPerson>;
+            var result = okObjectResult.Value as List<Core.Models.SalesPerson>;
             result.Count.Should().Be(salesPersons.Count);
         }
 
@@ -59,7 +57,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
             notFoundResult.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetSalesPerson_ShouldReturnSalesPerson_GivenSalesPerson(
             [Frozen] Mock<IMediator> mockMediator,
             Core.Handlers.GetSalesPerson.SalesPersonDto salesPerson,
@@ -81,7 +79,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as Models.SalesPerson;
+            var result = okObjectResult.Value as Core.Models.SalesPerson;
             result.FullName().Should().Be(salesPerson.FullName());
         }
 

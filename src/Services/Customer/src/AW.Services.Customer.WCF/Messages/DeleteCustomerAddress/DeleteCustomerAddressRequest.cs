@@ -2,6 +2,7 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.DeleteCustomerAddress;
 using System.Xml.Serialization;
+using AW.Services.Customer.Core.Models.DeleteCustomerAddress;
 
 namespace AW.Services.Customer.WCF.Messages.DeleteCustomerAddress
 {

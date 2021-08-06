@@ -75,7 +75,7 @@ namespace AW.Services.Product.REST.API.Controllers
             }
 
             logger.LogInformation("Returning product");
-            return new OkObjectResult(mapper.Map<Models.Product>(product));
+            return new OkObjectResult(mapper.Map<Core.Models.Product>(product));
         }
     }
 }

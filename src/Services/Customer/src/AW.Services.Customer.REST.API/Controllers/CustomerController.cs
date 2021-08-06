@@ -74,7 +74,7 @@ namespace AW.Services.Customer.REST.API.Controllers
         }
 
         [HttpPut("{accountNumber}")]
-        public async Task<IActionResult> UpdateCustomer(string accountNumber, Models.UpdateCustomer.Customer customer)
+        public async Task<IActionResult> UpdateCustomer(string accountNumber, Core.Models.UpdateCustomer.Customer customer)
         {
             logger.LogInformation("UpdateCustomer called");
 
@@ -84,7 +84,7 @@ namespace AW.Services.Customer.REST.API.Controllers
             var updatedCustomer = await mediator.Send(command);
 
             logger.LogInformation("Returning customer");
-            return Ok(mapper.Map<Models.UpdateCustomer.Customer>(updatedCustomer));
+            return Ok(mapper.Map<Core.Models.UpdateCustomer.Customer>(updatedCustomer));
         }
 
         [HttpDelete]

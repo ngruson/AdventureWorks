@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddCustomerAddress;
+using AW.Services.Customer.Core.Models.AddCustomerAddress;
 using AW.SharedKernel.AutoMapper;
 using System.Xml.Serialization;
 

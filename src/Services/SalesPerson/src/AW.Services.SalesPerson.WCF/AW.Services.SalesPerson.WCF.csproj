@@ -179,14 +179,8 @@
     <Compile Include="MappingProfile.cs" />
     <Compile Include="Messages\GetSalesPerson\GetSalesPersonRequest.cs" />
     <Compile Include="Messages\GetSalesPerson\GetSalesPersonResponse.cs" />
-    <Compile Include="Messages\GetSalesPerson\SalesPerson.cs" />
-    <Compile Include="Messages\GetSalesPerson\SalesPersonEmailAddress.cs" />
-    <Compile Include="Messages\GetSalesPerson\SalesPersonPhone.cs" />
     <Compile Include="Messages\ListSalesPersons\ListSalesPersonsResponse.cs" />
     <Compile Include="Messages\ListSalesPersons\ListSalesPersonsRequest.cs" />
-    <Compile Include="Messages\ListSalesPersons\SalesPerson.cs" />
-    <Compile Include="Messages\ListSalesPersons\SalesPersonEmailAddress.cs" />
-    <Compile Include="Messages\ListSalesPersons\SalesPersonPhone.cs" />
     <Compile Include="SalesPersonService.svc.cs">
       <DependentUpon>SalesPersonService.svc</DependentUpon>
     </Compile>

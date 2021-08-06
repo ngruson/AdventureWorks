@@ -6,7 +6,7 @@ namespace AW.Services.Customer.REST.API.Models.GetCustomers
 {
     public class GetCustomersResult : IMapFrom<GetCustomersDto>
     {
-        public List<Customer> Customers { get; set; }
+        public List<Core.Models.GetCustomers.Customer> Customers { get; set; }
         public int TotalCustomers { get; set; }
     }
 }

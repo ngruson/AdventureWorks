@@ -9,15 +9,15 @@ namespace AW.SharedKernel.UnitTesting
 {
     public class AutoMapperDataAttribute : AutoDataAttribute
     {
-        public AutoMapperDataAttribute(Type type)
-          : base(() => CreateFixture(type))
+        public AutoMapperDataAttribute(params Type[] profileTypes)
+          : base(() => CreateFixture(profileTypes))
         {
         }
 
-        private static IFixture CreateFixture(Type type)
+        private static IFixture CreateFixture(params Type[] profileTypes)
         {
             var fixture = new Fixture()
-                .Customize(new AutoMapperCustomization(CreateMapper(type)))
+                .Customize(new AutoMapperCustomization(CreateMapper(profileTypes)))
                 .Customize(new AutoMoqCustomization());
             
             fixture.Behaviors
@@ -30,11 +30,14 @@ namespace AW.SharedKernel.UnitTesting
             return fixture;
         }
 
-        private static IMapper CreateMapper(Type profileType)
+        private static IMapper CreateMapper(params Type[] profileTypes)
         {
             return new MapperConfiguration(opts =>
             {
-                opts.AddProfile(profileType);
+                foreach (var profileType in profileTypes)
+                {
+                    opts.AddProfile(profileType);
+                }
             })
             .CreateMapper();
         }

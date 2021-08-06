@@ -7,6 +7,6 @@ namespace AW.Services.SalesPerson.WCF.Messages.GetSalesPerson
     public class GetSalesPersonResponse
     {
         [XmlElement(Namespace = "http://services.aw.com/SalesPersonService/1.0/GetSalesPerson")]
-        public SalesPerson SalesPerson { get; set; } = new SalesPerson();
+        public Core.Models.SalesPerson SalesPerson { get; set; } = new Core.Models.SalesPerson();
     }
 }

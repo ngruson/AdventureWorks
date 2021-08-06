@@ -9,7 +9,7 @@ namespace AW.Services.SalesOrder.WCF.Messages.ListSalesOrders
     public class ListSalesOrders : IMapFrom<IEnumerable<SalesOrderDto>>
     {
         [XmlElement(Namespace = "http://services.aw.com/SalesOrderService/1.0/ListSalesOrders")]
-        public List<SalesOrder> SalesOrder { get; set; } = new List<SalesOrder>();
+        public List<Core.Models.SalesOrder> SalesOrder { get; set; } = new List<Core.Models.SalesOrder>();
 
         public void Mapping(Profile profile)
         {
