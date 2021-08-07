@@ -211,13 +211,21 @@
       <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
       <Name>Ardalis.Specification.EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Customer\src\AW.Services.Customer.Infrastructure.EF6\AW.Services.Customer.Infrastructure.EF6.csproj">
-      <Project>{71C5B0C1-9DFE-4761-9285-B24EA65EC712}</Project>
-      <Name>AW.Services.Customer.Infrastructure.EF6</Name>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
+      <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
+      <Name>AW.SharedKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Services.Product.Core\AW.Services.Product.Core.csproj">
       <Project>{6a681e00-6e8f-4155-901b-8f27f967c962}</Project>
       <Name>AW.Services.Product.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Services.Product.Infrastructure.EF6\AW.Services.Product.Infrastructure.EF6.csproj">
+      <Project>{d6ae29a3-d890-4bea-88d0-a5bc34279000}</Project>
+      <Name>AW.Services.Product.Infrastructure.EF6</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

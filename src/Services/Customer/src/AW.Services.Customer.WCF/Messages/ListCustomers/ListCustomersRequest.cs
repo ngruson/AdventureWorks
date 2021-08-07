@@ -1,4 +1,4 @@
-﻿using AW.Services.Customer.Core.Handlers.GetCustomers;
+﻿using AW.Services.Customer.Core.Handlers.GetCustomer;
 using System.Xml.Serialization;
 
 namespace AW.Services.Customer.WCF.Messages.ListCustomers

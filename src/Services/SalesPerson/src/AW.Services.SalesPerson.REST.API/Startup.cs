@@ -1,6 +1,7 @@
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using AW.Services.SalesPerson.Infrastructure.EFCore;
 using AW.Services.SalesPerson.REST.API.Extensions;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using MediatR;
@@ -51,9 +52,16 @@ namespace AW.Services.SalesPerson.REST.API
                 });
             services.AddSwaggerDocumentation("Sales Person API");
 
-            services.AddDbContext<AWContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
-            );
+            services.AddTransient(provider =>
+            {
+                var builder = new DbContextOptionsBuilder<AWContext>();
+                builder.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
+
+                return new AWContext(
+                    builder.Options,
+                    typeof(EfRepository<>).Assembly
+                );
+            });
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetSalesPersonsQuery).Assembly);
             services.AddMediatR(typeof(GetSalesPersonsQuery));

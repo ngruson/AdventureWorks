@@ -1,5 +1,6 @@
 using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Specifications;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

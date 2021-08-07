@@ -40,7 +40,7 @@ namespace AW.Services.Customer.WCF
             {
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
-                CustomerType = mapper.Map<Core.Handlers.GetCustomers.CustomerType>(request.CustomerType),
+                CustomerType = mapper.Map<CustomerType>(request.CustomerType),
                 Territory = request.Territory
             };
             var customers = await mediator.Send(query);

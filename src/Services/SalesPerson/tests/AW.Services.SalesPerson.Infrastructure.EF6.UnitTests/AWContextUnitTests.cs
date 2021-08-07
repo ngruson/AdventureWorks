@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using AW.Services.SharedKernel.EF6;
+using Xunit;
 
 namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
 {
@@ -9,7 +10,11 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
         {
             //Arrange
             var connection = Effort.DbConnectionFactory.CreateTransient();
-            var context = new AWContext(connection, true);
+            var context = new AWContext(
+                connection, 
+                true,
+                typeof(EfRepository<>).Assembly
+            );
 
             //Act
             context.Database.Create();

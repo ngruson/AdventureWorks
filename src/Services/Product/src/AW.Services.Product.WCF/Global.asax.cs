@@ -1,5 +1,4 @@
-﻿using Ardalis.Specification;
-using Autofac;
+﻿using Autofac;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using System;
 using System.Configuration;
@@ -7,7 +6,9 @@ using System.Data.SqlClient;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Autofac.Integration.Wcf;
-using AW.Services.Customer.Infrastructure.EF6;
+using AW.Services.SharedKernel.EF6;
+using AW.Services.Product.Infrastructure.EF6;
+using AW.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.WCF
 {
@@ -25,10 +26,14 @@ namespace AW.Services.Product.WCF
                 //    .GetAccessTokenAsync("https://database.windows.net").Result,
                 ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
             };
-            builder.RegisterInstance(new AWContext(sqlConnection, true));
+            builder.RegisterInstance(new AWContext(
+                sqlConnection,                 
+                true,
+                typeof(EfRepository<>).Assembly
+            ));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
-                .As(typeof(IRepositoryBase<>))
+                .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
             builder.RegisterMediatR(typeof(GetProductsQuery).Assembly);

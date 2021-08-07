@@ -1,4 +1,5 @@
 ﻿using AW.Services.Product.Core.Entities;
+using AW.Services.SharedKernel.EFCore;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,8 +17,11 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var contextOptions = new DbContextOptionsBuilder<AWContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
-                
-            var context = new AWContext(contextOptions);
+
+            var context = new AWContext(
+                contextOptions,
+                typeof(EfRepository<>).Assembly
+            );
 
             //Act
             context.Database.EnsureCreated();

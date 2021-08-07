@@ -200,6 +200,10 @@
       <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Services.SalesOrder.Core\AW.Services.SalesOrder.Core.csproj">
       <Project>{a5a9f308-b92e-4ed5-b285-3643709ee5d0}</Project>
       <Name>AW.Services.SalesOrder.Core</Name>

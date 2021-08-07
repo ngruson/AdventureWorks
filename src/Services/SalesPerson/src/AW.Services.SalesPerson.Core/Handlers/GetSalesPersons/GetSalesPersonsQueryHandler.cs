@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AW.Services.SalesPerson.Core.Handlers.GetSalesPersons
 {
-    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<SalesPersonDto>>
+    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<GetSalesPerson.SalesPersonDto>>
     {
         private readonly ILogger<GetSalesPersonsQueryHandler> logger;
         private readonly IMapper mapper;
@@ -20,7 +20,7 @@ namespace AW.Services.SalesPerson.Core.Handlers.GetSalesPersons
         public GetSalesPersonsQueryHandler(ILogger<GetSalesPersonsQueryHandler> logger, IRepository<Entities.SalesPerson> repository, IMapper mapper) =>
             (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
         
-        public async Task<List<SalesPersonDto>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetSalesPerson.SalesPersonDto>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");            
 
@@ -47,7 +47,7 @@ namespace AW.Services.SalesPerson.Core.Handlers.GetSalesPersons
 
             logger.LogInformation("Returning sales persons");
 
-            return mapper.Map<List<SalesPersonDto>>(salesPersons);
+            return mapper.Map<List<GetSalesPerson.SalesPersonDto>>(salesPersons);
         }
     }
 }

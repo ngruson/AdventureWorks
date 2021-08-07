@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AW.Services.Customer.Core.Handlers.GetCustomer;
+using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomers
 {

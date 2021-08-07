@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using MediatR;

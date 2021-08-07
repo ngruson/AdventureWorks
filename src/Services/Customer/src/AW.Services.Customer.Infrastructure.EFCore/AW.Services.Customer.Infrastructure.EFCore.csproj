@@ -7,11 +7,12 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="5.1.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="5.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
     <ProjectReference Include="..\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
   </ItemGroup>
 

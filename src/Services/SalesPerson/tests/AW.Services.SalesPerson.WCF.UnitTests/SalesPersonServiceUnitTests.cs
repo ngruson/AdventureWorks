@@ -19,7 +19,7 @@ namespace AW.Services.SalesPerson.WCF.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListCustomers_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetSalesPersons.SalesPersonDto> salesPersons,
+            List<SalesPersonDto> salesPersons,
             SalesPersonService sut,
             ListSalesPersonsRequest request
         )

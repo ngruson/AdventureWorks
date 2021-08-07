@@ -48,7 +48,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             logger.LogInformation("Returning products");
             return new GetProductsDto
             {
-                Products = mapper.Map<List<Product>>(products),
+                Products = mapper.Map<List<GetProduct.Product>>(products),
                 TotalProducts = await repository.CountAsync(countSpec)
             };
         }

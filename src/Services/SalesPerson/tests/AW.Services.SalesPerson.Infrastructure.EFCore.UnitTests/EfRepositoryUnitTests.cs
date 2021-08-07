@@ -1,6 +1,7 @@
 using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.SalesPerson.Core.Specifications;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;

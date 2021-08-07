@@ -20,7 +20,7 @@ namespace AW.Services.Product.WCF.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task ListProducts_ReturnsProducts(
             [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetProducts.Product> products,
+            List<Core.Handlers.GetProduct.Product> products,
             ProductService sut,
             ListProductsRequest request
         )

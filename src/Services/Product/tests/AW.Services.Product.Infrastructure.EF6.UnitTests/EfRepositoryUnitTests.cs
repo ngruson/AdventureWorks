@@ -13,6 +13,7 @@ using AW.SharedKernel.UnitTesting.EF6;
 using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
+using AW.Services.SharedKernel.EF6;
 
 namespace AW.Services.Product.Infrastructure.EF6.UnitTests
 {

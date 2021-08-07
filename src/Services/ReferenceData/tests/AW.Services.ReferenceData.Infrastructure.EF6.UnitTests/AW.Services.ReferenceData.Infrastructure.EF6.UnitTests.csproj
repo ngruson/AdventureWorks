@@ -114,7 +114,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +135,10 @@
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
       <Project>{aae8419b-3ce8-4a8c-8a2f-4c19e46b0f42}</Project>
       <Name>AW.SharedKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\AW.Services.ReferenceData.Core\AW.Services.ReferenceData.Core.csproj">
       <Project>{4cdb5487-379c-4fda-af1d-85b33b3a101d}</Project>

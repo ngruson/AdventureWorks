@@ -14,6 +14,7 @@ using Xunit;
 using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
+using AW.Services.SharedKernel.EF6;
 
 namespace AW.Services.Customer.Infrastructure.EF6.UnitTests
 {

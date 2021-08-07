@@ -26,7 +26,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             public async Task GetCustomers_ShouldReturnCustomers_WhenGivenCustomers(
                 
                 [Frozen] Mock<IMediator> mockMediator,
-                List<Core.Handlers.GetCustomers.StoreCustomerDto> customers,
+                List<Core.Handlers.GetCustomer.StoreCustomerDto> customers,
                 [Greedy] CustomerController sut,
                 GetCustomersQuery query
             )
@@ -35,7 +35,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var dto = new GetCustomersDto
                 {
                     TotalCustomers = customers.Count,
-                    Customers = customers.ToList<Core.Handlers.GetCustomers.CustomerDto>()
+                    Customers = customers.ToList<Core.Handlers.GetCustomer.CustomerDto>()
                 };
 
                 mockMediator.Setup(x => x.Send(It.IsAny<GetCustomersQuery>(), It.IsAny<CancellationToken>()))

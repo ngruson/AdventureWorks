@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
+using AW.Services.SharedKernel.EFCore;
 
 namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
 {

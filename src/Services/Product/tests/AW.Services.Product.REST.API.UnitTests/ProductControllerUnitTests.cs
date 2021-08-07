@@ -24,7 +24,7 @@ namespace AW.Services.Product.REST.API.UnitTests
             [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
             public async Task GetProducts_ShouldReturnProducts_WhenProductsExist(
                 [Frozen] Mock<IMediator> mockMediator,
-                List<Core.Handlers.GetProducts.Product> products,
+                List<Core.Handlers.GetProduct.Product> products,
                 [Greedy] ProductController sut,
                 GetProductsQuery query
             )

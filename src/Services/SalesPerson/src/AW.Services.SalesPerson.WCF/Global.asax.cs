@@ -4,6 +4,7 @@ using Autofac.Integration.Wcf;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPersons;
 using AW.Services.SalesPerson.Infrastructure.EF6;
+using AW.Services.SharedKernel.EF6;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;
 using System;
@@ -27,7 +28,11 @@ namespace AW.Services.SalesPerson.WCF
                     .GetAccessTokenAsync("https://database.windows.net").Result,
                 ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
             };
-            builder.RegisterInstance(new AWContext(sqlConnection, true));
+            builder.RegisterInstance(new AWContext(
+                sqlConnection, 
+                true,
+                typeof(EfRepository<>).Assembly    
+            ));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
                 .As(typeof(IRepositoryBase<>))

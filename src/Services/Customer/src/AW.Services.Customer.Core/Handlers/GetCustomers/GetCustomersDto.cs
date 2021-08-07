@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AW.Services.Customer.Core.Handlers.GetCustomer;
+using System.Collections.Generic;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomers
 {

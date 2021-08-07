@@ -1,10 +1,13 @@
-﻿using Ardalis.Specification;
-using Autofac;
+﻿using Autofac;
 using Autofac.Integration.Wcf;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using AW.Services.ReferenceData.Infrastructure.EF6;
+using AW.Services.SharedKernel.EF6;
+using AW.SharedKernel.Interfaces;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -25,13 +28,24 @@ namespace AW.Services.ReferenceData.WCF
                     .GetAccessTokenAsync("https://database.windows.net").Result,
                 ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
             };
-            builder.RegisterInstance(new AWContext(sqlConnection, true));
+            builder.RegisterInstance(new AWContext(
+                sqlConnection, 
+                true,
+                typeof(EfRepository<>).Assembly
+            ));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
-                .As(typeof(IRepositoryBase<>))
+                .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
             builder.RegisterMediatR(typeof(GetAddressTypesQuery).Assembly);
+            builder.RegisterAutoMapper(typeof(Global).Assembly, typeof(GetAddressTypesQuery).Assembly);
+            builder.RegisterType<LoggerFactory>()
+                .As<ILoggerFactory>()
+                .SingleInstance();
+            builder.RegisterGeneric(typeof(Logger<>))
+                .As(typeof(ILogger<>))
+                .SingleInstance();
 
             // Set the dependency resolver.
             var container = builder.Build();

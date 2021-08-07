@@ -56,11 +56,20 @@
     <Reference Include="Autofac.Integration.Wcf, Version=6.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Autofac.Wcf.6.0.0\lib\net472\Autofac.Integration.Wcf.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Contrib.Autofac.DependencyInjection, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\AutoMapper.Contrib.Autofac.DependencyInjection.5.4.0\lib\netstandard2.0\AutoMapper.Contrib.Autofac.DependencyInjection.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\FluentValidation.10.2.3\lib\netstandard2.0\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=2021.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\JetBrains.Annotations.2021.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -155,6 +164,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -216,6 +231,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
+      <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
+      <Name>AW.SharedKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Services.ReferenceData.Core\AW.Services.ReferenceData.Core.csproj">
       <Project>{4cdb5487-379c-4fda-af1d-85b33b3a101d}</Project>
       <Name>AW.Services.ReferenceData.Core</Name>

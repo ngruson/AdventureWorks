@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.Product.Core.Models
 {
-    public class Product : IMapFrom<Handlers.GetProducts.Product>
+    public class Product : IMapFrom<Handlers.GetProduct.Product>
     {
         public string Name { get; set; }
         public string ProductNumber { get; set; }
@@ -23,11 +23,6 @@ namespace AW.Services.Product.Core.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Handlers.GetProducts.Product, Product>()
-                .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode.Trim()))
-                .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => src.ProductLine.Trim()))
-                .ForMember(m => m.Style, opt => opt.MapFrom(src => src.Style.Trim()));
-
             profile.CreateMap<Handlers.GetProduct.Product, Product>()
                 .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode.Trim()))
                 .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => src.ProductLine.Trim()))

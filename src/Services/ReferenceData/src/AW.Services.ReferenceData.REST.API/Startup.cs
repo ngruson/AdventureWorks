@@ -1,5 +1,6 @@
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using AW.Services.ReferenceData.Infrastructure.EFCore;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using MediatR;
@@ -49,9 +50,17 @@ namespace AW.Services.ReferenceData.REST.API
                 });
             services.AddSwaggerDocumentation("Reference Data API");
 
-            services.AddDbContext<AWContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
-            );
+            services.AddTransient(provider =>
+            {
+                var builder = new DbContextOptionsBuilder<AWContext>();
+                builder.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
+
+                return new AWContext(
+                    builder.Options,
+                    typeof(EfRepository<>).Assembly
+                );
+            });
+
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddMediatR(typeof(GetAddressTypesQuery));

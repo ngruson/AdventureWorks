@@ -30,7 +30,7 @@ namespace AW.Services.Customer.WCF.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListCustomers_Store_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetCustomers.StoreCustomerDto> customers,
+            List<Core.Handlers.GetCustomer.StoreCustomerDto> customers,
             CustomerService sut,
             ListCustomersRequest request
         )
@@ -38,7 +38,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             //Arrange
             var dto = new GetCustomersDto
             {
-                Customers = customers.ToList<Core.Handlers.GetCustomers.CustomerDto>(),
+                Customers = customers.ToList<Core.Handlers.GetCustomer.CustomerDto>(),
                 TotalCustomers = customers.Count
             };
 
@@ -60,7 +60,7 @@ namespace AW.Services.Customer.WCF.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task ListCustomers_Individual_ReturnsCustomers(
             [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetCustomers.IndividualCustomerDto> customers,
+            List<Core.Handlers.GetCustomer.IndividualCustomerDto> customers,
             CustomerService sut,
             ListCustomersRequest request
         )
@@ -68,7 +68,7 @@ namespace AW.Services.Customer.WCF.UnitTests
             //Arrange
             var dto = new GetCustomersDto
             {
-                Customers = customers.ToList<Core.Handlers.GetCustomers.CustomerDto>(),
+                Customers = customers.ToList<Core.Handlers.GetCustomer.CustomerDto>(),
                 TotalCustomers = customers.Count
             };
 

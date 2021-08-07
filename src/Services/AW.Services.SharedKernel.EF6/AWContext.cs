@@ -5,18 +5,21 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
 
-namespace AW.Services.SalesOrder.Infrastructure.EF6
+namespace AW.Services.SharedKernel.EF6
 {
     public partial class AWContext : DbContext
     {
+        private readonly Assembly configurationAssembly;
+
         public AWContext()
             : base("AWContext")
         {
         }
 
-        public AWContext(DbConnection existingConnection, bool contextOwnsConnection) 
+        public AWContext(DbConnection existingConnection, bool contextOwnsConnection, Assembly configurationAssembly)
             : base(existingConnection, contextOwnsConnection)
         {
+            this.configurationAssembly = configurationAssembly;
         }
 
         public virtual void SetModified(object entity)
@@ -26,7 +29,7 @@ namespace AW.Services.SalesOrder.Infrastructure.EF6
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+            var typesToRegister = configurationAssembly.GetTypes()
               .Where(type => !string.IsNullOrEmpty(type.Namespace))
               .Where(type => type.BaseType != null && type.BaseType.IsGenericType
                    && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));

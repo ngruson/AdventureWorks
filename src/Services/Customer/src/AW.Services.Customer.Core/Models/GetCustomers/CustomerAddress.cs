@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.Services.Customer.Core.Handlers.GetCustomers;
+using AW.Services.Customer.Core.Handlers.GetCustomer;
 
 namespace AW.Services.Customer.Core.Models.GetCustomers
 {

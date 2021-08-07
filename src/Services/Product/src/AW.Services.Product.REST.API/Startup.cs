@@ -1,5 +1,6 @@
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Infrastructure.EFCore;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using FluentValidation.AspNetCore;
@@ -53,9 +54,16 @@ namespace AW.Services.Product.REST.API
                 });
             services.AddSwaggerDocumentation("Product API");
 
-            services.AddDbContext<AWContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
-            );
+            services.AddTransient(provider =>
+            {
+                var builder = new DbContextOptionsBuilder<AWContext>();
+                builder.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
+
+                return new AWContext(
+                    builder.Options,
+                    typeof(EfRepository<>).Assembly
+                );
+            });
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetProductsQuery).Assembly);
             services.AddMediatR(typeof(GetProductsQuery));

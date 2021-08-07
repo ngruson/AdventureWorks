@@ -1,4 +1,4 @@
-﻿using AW.Services.Customer.Core.Handlers.GetCustomers;
+﻿using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -16,7 +16,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Serialize_WithGetCustomersStore_ReturnsStoreCustomer(
-                Core.Handlers.GetCustomers.StoreCustomerDto storeCustomer
+                Core.Handlers.GetCustomer.StoreCustomerDto storeCustomer
             )
             {
                 //Arrange

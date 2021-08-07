@@ -20,7 +20,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
         public async Task GetSalesPersons_ShouldReturnSalesPersons_WhenGivenSalesPersons(
             [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetSalesPersons.SalesPersonDto> salesPersons,
+            List<Core.Handlers.GetSalesPerson.SalesPersonDto> salesPersons,
             [Greedy] SalesPersonController sut,
             GetSalesPersonsQuery query
         )

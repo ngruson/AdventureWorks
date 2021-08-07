@@ -12,5 +12,6 @@ namespace AW.Services.Customer.Core.Models.GetCustomers
         public string Territory { get; set; }
 
         public List<CustomerAddress> Addresses { get; set; }
+        public List<GetCustomer.SalesOrder> SalesOrders { get; set; }
     }
 }

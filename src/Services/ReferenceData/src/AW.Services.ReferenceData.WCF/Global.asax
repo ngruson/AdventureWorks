@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="AW.AddressTypeService.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="AW.Services.ReferenceData.WCF.Global" Language="C#" %>

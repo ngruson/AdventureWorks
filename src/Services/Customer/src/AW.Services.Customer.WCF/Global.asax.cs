@@ -5,6 +5,7 @@ using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AutoMapper.EquivalencyExpression;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Infrastructure.EF6;
+using AW.Services.SharedKernel.EF6;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.Validation;
 using FluentValidation;
@@ -32,7 +33,11 @@ namespace AW.Services.Customer.WCF
                     .GetAccessTokenAsync("https://database.windows.net").Result,
                 ConnectionString = ConfigurationManager.ConnectionStrings["AWContext"].ConnectionString
             };
-            builder.RegisterInstance(new AWContext(sqlConnection, true));
+            builder.RegisterInstance(new AWContext(
+                sqlConnection, 
+                true,
+                typeof(EfRepository<>).Assembly
+            ));
 
             builder.RegisterGeneric(typeof(EfRepository<>))
                 .As(typeof(IRepository<>))

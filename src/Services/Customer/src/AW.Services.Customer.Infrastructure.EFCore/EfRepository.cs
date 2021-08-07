@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;

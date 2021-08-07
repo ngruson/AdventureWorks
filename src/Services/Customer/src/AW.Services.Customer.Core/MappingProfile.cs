@@ -8,10 +8,6 @@ namespace AW.Services.Customer.Core
         {
             ApplyMappingsFromAssembly(typeof(Handlers.GetCustomers.GetCustomersQuery).Assembly);
 
-            CreateMap<Entities.Customer, Handlers.GetCustomers.CustomerDto>()
-                .Include<Entities.IndividualCustomer, Handlers.GetCustomers.IndividualCustomerDto>()
-                .Include<Entities.StoreCustomer, Handlers.GetCustomers.StoreCustomerDto>();
-
             CreateMap<Entities.Customer, Handlers.GetCustomer.CustomerDto>()
                 .Include<Entities.IndividualCustomer, Handlers.GetCustomer.IndividualCustomerDto>()
                 .Include<Entities.StoreCustomer, Handlers.GetCustomer.StoreCustomerDto>();
@@ -30,9 +26,9 @@ namespace AW.Services.Customer.Core
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<Handlers.GetCustomers.CustomerDto, Models.GetCustomers.Customer>()
-                .Include<Handlers.GetCustomers.IndividualCustomerDto, Models.GetCustomers.IndividualCustomer>()
-                .Include<Handlers.GetCustomers.StoreCustomerDto, Models.GetCustomers.StoreCustomer>();
+            CreateMap<Handlers.GetCustomer.CustomerDto, Models.GetCustomers.Customer>()
+                .Include<Handlers.GetCustomer.IndividualCustomerDto, Models.GetCustomers.IndividualCustomer>()
+                .Include<Handlers.GetCustomer.StoreCustomerDto, Models.GetCustomers.StoreCustomer>();
 
             CreateMap<Handlers.GetCustomer.CustomerDto, Models.GetCustomer.Customer>()
                 .Include<Handlers.GetCustomer.IndividualCustomerDto, Models.GetCustomer.IndividualCustomer>()

@@ -13,14 +13,15 @@
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
     <ProjectReference Include="..\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
     <ProjectReference Include="..\AW.Services.Customer.Infrastructure.EFCore\AW.Services.Customer.Infrastructure.EFCore.csproj" />
   </ItemGroup>

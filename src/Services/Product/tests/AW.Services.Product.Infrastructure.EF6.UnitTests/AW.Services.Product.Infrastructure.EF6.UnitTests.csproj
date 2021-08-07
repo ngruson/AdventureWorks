@@ -136,6 +136,10 @@
       <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
       <Name>Ardalis.Specification.EntityFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\AW.Services.Product.Core\AW.Services.Product.Core.csproj">
       <Project>{6a681e00-6e8f-4155-901b-8f27f967c962}</Project>
       <Name>AW.Services.Product.Core</Name>

@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AWContext.cs" />
     <Compile Include="Configurations\BillOfMaterialsConfiguration.cs" />
     <Compile Include="Configurations\DocumentConfiguration.cs" />
     <Compile Include="Configurations\IllustrationConfiguration.cs" />
@@ -85,6 +84,10 @@
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
       <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
       <Name>AW.SharedKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
+      <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Services.Product.Core\AW.Services.Product.Core.csproj">
       <Project>{6A681E00-6E8F-4155-901B-8F27F967C962}</Project>

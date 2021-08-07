@@ -200,7 +200,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4CA4DA3B-15E
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6E312887-2C0F-48E9-BAC3-CCEDA90DBAAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.SharedKernel.Api", "SharedKernel\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj", "{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.SharedKernel.Api", "SharedKernel\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj", "{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SharedKernel.EF6", "Services\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj", "{D47934B0-2301-4F55-86FD-197FEDCC26B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.SharedKernel.EFCore", "Services\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj", "{7A57817C-6F33-433F-A350-076E0C0A7FCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -494,6 +498,14 @@ Global
 		{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47934B0-2301-4F55-86FD-197FEDCC26B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47934B0-2301-4F55-86FD-197FEDCC26B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47934B0-2301-4F55-86FD-197FEDCC26B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47934B0-2301-4F55-86FD-197FEDCC26B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A57817C-6F33-433F-A350-076E0C0A7FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A57817C-6F33-433F-A350-076E0C0A7FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A57817C-6F33-433F-A350-076E0C0A7FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A57817C-6F33-433F-A350-076E0C0A7FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -586,6 +598,8 @@ Global
 		{94EEB5A7-4064-4F0A-B180-A06A74BA1F76} = {26F739B7-1475-403F-941D-5D3DFCF4364F}
 		{4CA4DA3B-15EC-4E55-91D8-86EDE3AF6AD4} = {94EEB5A7-4064-4F0A-B180-A06A74BA1F76}
 		{8AB8C5A2-0A80-4F21-8F30-EDD12F48B33F} = {957228D9-53D5-4C1C-A8B3-1A355150E39A}
+		{D47934B0-2301-4F55-86FD-197FEDCC26B0} = {26F739B7-1475-403F-941D-5D3DFCF4364F}
+		{7A57817C-6F33-433F-A350-076E0C0A7FCD} = {26F739B7-1475-403F-941D-5D3DFCF4364F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using Xunit;
+using AW.Services.SharedKernel.EFCore;
 
 namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 {
@@ -17,7 +18,10 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
                 
-            var context = new AWContext(contextOptions);
+            var context = new AWContext(
+                contextOptions,
+                typeof(EfRepository<>).Assembly
+            );
 
             //Act
             context.Database.EnsureCreated();

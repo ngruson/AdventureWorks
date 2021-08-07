@@ -8,7 +8,9 @@ namespace AW.Services.Customer.Core.UnitTests
         [Fact]
         public void AutoMapper_Configuration_IsValid()
         {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<MappingProfile>();
+            });
             config.AssertConfigurationIsValid();
         }
     }

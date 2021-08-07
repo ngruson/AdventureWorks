@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
     <ProjectReference Include="..\AW.Services.ReferenceData.Core\AW.Services.ReferenceData.Core.csproj" />
   </ItemGroup>
 </Project>

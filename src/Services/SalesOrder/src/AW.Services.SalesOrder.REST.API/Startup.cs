@@ -1,5 +1,6 @@
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.Infrastructure.EFCore;
+using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using MediatR;
@@ -57,9 +58,16 @@ namespace AW.Services.SalesOrder.REST.API
                 });
             services.AddSwaggerDocumentation("Sales Order API");
 
-            services.AddDbContext<AWContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
-            );
+            services.AddTransient(provider =>
+            {
+                var builder = new DbContextOptionsBuilder<AWContext>();
+                builder.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
+
+                return new AWContext(
+                    builder.Options,
+                    typeof(EfRepository<>).Assembly
+                );
+            });
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetSalesOrdersQuery).Assembly);
             services.AddMediatR(typeof(GetSalesOrdersQuery));

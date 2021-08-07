@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
+using AW.Services.SharedKernel.EF6;
 
 namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
 {

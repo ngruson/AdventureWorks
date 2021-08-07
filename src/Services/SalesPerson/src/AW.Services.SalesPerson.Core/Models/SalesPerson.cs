@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AW.Services.SalesPerson.Core.Models
 {
-    public class SalesPerson : IMapFrom<Handlers.GetSalesPersons.SalesPersonDto>, IPerson
+    public class SalesPerson : IMapFrom<Handlers.GetSalesPerson.SalesPersonDto>, IPerson
     {
         public string Title { get; set; }
         public string FirstName { get; set; }
@@ -18,8 +18,7 @@ namespace AW.Services.SalesPerson.Core.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Core.Handlers.GetSalesPersons.SalesPersonDto, SalesPerson>();
-            profile.CreateMap<Core.Handlers.GetSalesPerson.SalesPersonDto, SalesPerson>();
+            profile.CreateMap<Handlers.GetSalesPerson.SalesPersonDto, SalesPerson>();
         }
     }
 }

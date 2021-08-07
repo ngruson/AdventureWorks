@@ -18,6 +18,7 @@ using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using AW.SharedKernel.Api;
+using AW.Services.SharedKernel.EFCore;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -61,6 +62,16 @@ namespace AW.Services.Customer.REST.API
                     );
                 });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:58093/")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddMvcCore()
                 .AddApiExplorer();
 
@@ -82,12 +93,17 @@ namespace AW.Services.Customer.REST.API
                 });
             services.AddSwaggerDocumentation("Customer API");
 
-            services.AddDbContext<AWContext>(c =>
+            services.AddTransient(provider =>
             {
-                c.LogTo(Console.WriteLine);
-                c.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
-                c.EnableSensitiveDataLogging();
+                var builder = new DbContextOptionsBuilder<AWContext>();
+                builder.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
+
+                return new AWContext(
+                    builder.Options,
+                    typeof(EfRepository<>).Assembly
+                );
             });
+            
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(c => c.AddCollectionMappers(), typeof(MappingProfile).Assembly, typeof(GetCustomersQuery).Assembly);
             services.AddMediatR(typeof(GetCustomersQuery));
@@ -110,6 +126,7 @@ namespace AW.Services.Customer.REST.API
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 });
 
+                builder.UseCors("default");
                 builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Customer API");
                 builder.UseRouting();
                 builder.UseAuthentication();
