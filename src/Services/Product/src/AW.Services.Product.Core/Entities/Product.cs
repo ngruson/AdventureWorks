@@ -51,8 +51,6 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime? DiscontinuedDate { get; set; }
 
-        //public virtual ICollection<BillOfMaterials> BillOfMaterials { get; set; } = new List<BillOfMaterials>();
-
         public virtual ProductModel ProductModel { get; set; }
 
         public virtual ProductSubcategory ProductSubcategory { get; set; }
@@ -61,16 +59,7 @@ namespace AW.Services.Product.Core.Entities
 
         public virtual UnitMeasure WeightUnitMeasure { get; set; }
         
-        //public virtual ICollection<ProductCostHistory> ProductCostHistory { get; set; } = new List<ProductCostHistory>();
-
-        //public virtual ICollection<ProductDocument> ProductDocuments { get; set; } = new List<ProductDocument>();
-
-        //public virtual ICollection<ProductInventory> ProductInventory { get; set; } = new List<ProductInventory>();
-
-        //public virtual ICollection<ProductListPriceHistory> ProductListPriceHistory { get; set; } = new List<ProductListPriceHistory>();
 
         public List<ProductProductPhoto> ProductProductPhotos { get; set; } = new List<ProductProductPhoto>();
-
-        //public virtual ICollection<ProductReview> ProductReview { get; set; } = new List<ProductReview>();
     }
 }

@@ -4,7 +4,6 @@ using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Threading;
@@ -16,7 +15,7 @@ namespace AW.Services.Product.Core.UnitTests
     public class GetProductQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ProductExists_ReturnProduct(
+        public async Task Handle_ProductExists_ReturnProduct(
             Entities.Product product,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductQueryHandler sut,

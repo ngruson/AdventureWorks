@@ -17,7 +17,7 @@ namespace AW.Services.Customer.Core.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void Handle_ExistingCustomerAndAddress_DeleteCustomerAddress(
+        public async Task Handle_ExistingCustomerAndAddress_DeleteCustomerAddress(
             [Frozen] Entities.Customer customer,
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             DeleteCustomerAddressCommandHandler sut,

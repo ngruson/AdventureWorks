@@ -9,6 +9,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
@@ -16,7 +17,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
     public class EfRepositoryUnitTests
     {
         [Theory, OmitOnRecursion]
-        public async void GetByIdAsync_ReturnsObject(
+        public async Task GetByIdAsync_ReturnsObject(
             [Frozen] Mock<DbSet<Core.Entities.Product>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
             Core.Entities.Product product
@@ -41,7 +42,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAllAsync_ReturnsObjects(
+        public async Task ListAllAsync_ReturnsObjects(
             List<Core.Entities.Product> products
         )
         {
@@ -61,7 +62,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_ReturnsObjects(
+        public async Task ListAsync_ReturnsObjects(
             List<Core.Entities.Product> products
         )
         {
@@ -83,7 +84,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_WithResultSpec_ReturnsObjects(
+        public async Task ListAsync_WithResultSpec_ReturnsObjects(
             List<Core.Entities.Product> products
         )
         {
@@ -107,7 +108,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void CountAsync_ReturnsCount(
+        public async Task CountAsync_ReturnsCount(
             List<Core.Entities.Product> products
         )
         {
@@ -128,7 +129,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void AddAsync_SavesObject(
+        public async Task AddAsync_SavesObject(
             List<Core.Entities.Product> products
         )
         {
@@ -154,7 +155,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void GetBySpecAsync_ReturnsObject(
+        public async Task GetBySpecAsync_ReturnsObject(
             List<Core.Entities.Product> products
         )
         {

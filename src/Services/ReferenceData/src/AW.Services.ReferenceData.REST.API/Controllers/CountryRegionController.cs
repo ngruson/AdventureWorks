@@ -41,7 +41,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
                 return new NotFoundResult();
             }
 
-            logger.LogInformation("Returning {Count} countries", countries.Count());
+            logger.LogInformation("Returning {Count} countries", countries.Count);
             return new OkObjectResult(mapper.Map<IEnumerable<Country>>(countries));
         }
     }

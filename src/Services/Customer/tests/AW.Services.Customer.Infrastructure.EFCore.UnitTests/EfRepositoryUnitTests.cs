@@ -21,7 +21,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void GetByIdAsync_ReturnsObject(
+        public async Task GetByIdAsync_ReturnsObject(
             [Frozen] Mock<DbSet<Entities.StoreCustomer>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
             Entities.StoreCustomer customer
@@ -44,7 +44,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void GetBySpecAsync_ReturnsObject(
+        public async Task GetBySpecAsync_ReturnsObject(
             List<Entities.Customer> customers,
             [Frozen] Mock<AWContext> mockContext
         )
@@ -66,7 +66,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void ListAllAsync_ReturnsObjects(
+        public async Task ListAllAsync_ReturnsObjects(
             List<Entities.Customer> customers
         )
         {
@@ -87,7 +87,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void ListAsync_ReturnsObjects(
+        public async Task ListAsync_ReturnsObjects(
             List<Entities.StoreCustomer> customers
         )
         {
@@ -109,7 +109,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void ListAsync_WithResultSpec_ReturnsObjects(
+        public async Task ListAsync_WithResultSpec_ReturnsObjects(
             List<Entities.StoreCustomer> customers
         )
         {
@@ -163,7 +163,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void CountAsync_ReturnsCount(
+        public async Task CountAsync_ReturnsCount(
             List<Entities.StoreCustomer> customers
         )
         {
@@ -185,7 +185,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void AddAsync_SavesObject(
+        public async Task AddAsync_SavesObject(
             List<Entities.StoreCustomer> customers,
             Entities.StoreCustomer newCustomer
         )
@@ -209,7 +209,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void UpdateAsync_SavesObject(
+        public async Task UpdateAsync_SavesObject(
             List<Entities.StoreCustomer> customers
         )
         {
@@ -232,7 +232,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void DeleteAsync_ReturnsObject(
+        public async Task DeleteAsync_ReturnsObject(
             List<Entities.Customer> customers
         )
         {
@@ -253,7 +253,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async void DeleteRangeAsync_ReturnsObject(
+        public async Task DeleteRangeAsync_ReturnsObject(
             List<Entities.Customer> customers
         )
         {

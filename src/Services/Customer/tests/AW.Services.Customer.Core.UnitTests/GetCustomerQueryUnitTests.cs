@@ -4,7 +4,6 @@ using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Threading;
@@ -17,7 +16,7 @@ namespace AW.Services.Customer.Core.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void Handle_CustomerExists_ReturnCustomer(
+        public async Task Handle_CustomerExists_ReturnCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomerQueryHandler sut,
             GetCustomerQuery query

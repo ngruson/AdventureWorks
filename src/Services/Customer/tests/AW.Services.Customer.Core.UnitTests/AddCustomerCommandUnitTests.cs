@@ -5,6 +5,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests
@@ -13,7 +14,7 @@ namespace AW.Services.Customer.Core.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void Handle_NewCustomer_ReturnCustomer(
+        public async Task Handle_NewCustomer_ReturnCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             AddCustomerCommandHandler sut,
             AddCustomerCommand command

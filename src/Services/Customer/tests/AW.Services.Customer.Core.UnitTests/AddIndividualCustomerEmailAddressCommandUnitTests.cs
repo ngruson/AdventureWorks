@@ -16,7 +16,7 @@ namespace AW.Services.Customer.Core.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void Handle_CustomerExist_AddIndividualCustomerEmailAddress(
+        public async Task Handle_CustomerExist_AddIndividualCustomerEmailAddress(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             AddIndividualCustomerEmailAddressCommandHandler sut,
             AddIndividualCustomerEmailAddressCommand command

@@ -16,7 +16,7 @@ namespace AW.Services.Customer.Core.UnitTests
     {
         [Theory]
         [AutoMoqData]
-        public async void Handle_ExistingCustomer_ReturnUpdatedCustomer(
+        public async Task Handle_ExistingCustomer_ReturnUpdatedCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandHandler sut,
             UpdateCustomerCommand command

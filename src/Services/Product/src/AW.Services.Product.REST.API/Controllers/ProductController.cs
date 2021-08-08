@@ -36,12 +36,12 @@ namespace AW.Services.Product.REST.API.Controllers
             {
                 logMessage += ", category {Category}";
                 args.Add(query.Category);
-            };
+            }
             if (!string.IsNullOrEmpty(query.Subcategory))
             {
                 logMessage += ", subcategory {Subcategory}";
                 args.Add(query.Subcategory);
-            };
+            }
 
             logger.LogInformation(logMessage, args.ToArray());
 
@@ -54,7 +54,7 @@ namespace AW.Services.Product.REST.API.Controllers
                 return new NotFoundResult();
             }
 
-            logger.LogInformation("Returning {Count} products", result.Products.Count());
+            logger.LogInformation("Returning {Count} products", result.Products.Count);
             return Ok(mapper.Map<Models.GetProductsResult>(result));
         }
 

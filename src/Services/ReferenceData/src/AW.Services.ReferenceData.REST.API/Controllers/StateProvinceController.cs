@@ -37,7 +37,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
                 return new NotFoundResult();
             }
 
-            logger.LogInformation("Returning {Count} state/provinces", stateProvinces.Count());
+            logger.LogInformation("Returning {Count} state/provinces", stateProvinces.Count);
             return new OkObjectResult(stateProvinces);
         }
     }

@@ -4,9 +4,9 @@ using AW.Services.Product.Core.Handlers.CountProducts;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Core.UnitTests
@@ -14,7 +14,7 @@ namespace AW.Services.Product.Core.UnitTests
     public class CountProductsQueryUnitTests
     {
         [Theory, AutoMoqData()]
-        public async void Handle_ProductExists_ReturnProduct(
+        public async Task Handle_ProductExists_ReturnProduct(
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             CountProductsQueryHandler sut,
             CountProductsQuery query,

@@ -11,8 +11,6 @@ namespace AW.Services.Customer.Core.Specifications
             Query.Include(c => c.Addresses)
                 .ThenInclude(a => a.Address);
 
-            //Query.Include(c => (c as IndividualCustomer).Person)
-            //    .ThenInclude(p => p.PhoneNumbers);
             Query.Include("Person");
             Query.Include("Contacts.ContactPerson.EmailAddresses");
             Query.Include("Contacts.ContactPerson.PhoneNumbers");

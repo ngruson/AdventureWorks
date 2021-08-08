@@ -17,7 +17,7 @@ namespace AW.Services.Product.Core.UnitTests
     public class GetProductCategoriesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ProductCategoriesExists_ReturnProductCategories(
+        public async Task Handle_ProductCategoriesExists_ReturnProductCategories(
             List<Entities.ProductCategory> productCategories,
             [Frozen] Mock<IRepository<Entities.ProductCategory>> categoriesRepoMock,
             GetProductCategoriesQueryHandler sut,

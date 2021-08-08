@@ -5,11 +5,9 @@ using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,7 +17,7 @@ namespace AW.Services.Product.Core.UnitTests
     public class GetProductsQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ProductsExists_ReturnProducts(
+        public async Task Handle_ProductsExists_ReturnProducts(
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
@@ -87,7 +85,7 @@ namespace AW.Services.Product.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ValidAscOrderBy_ReturnProducts(
+        public async Task Handle_ValidAscOrderBy_ReturnProducts(
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
@@ -128,7 +126,7 @@ namespace AW.Services.Product.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ValidDescOrderBy_ReturnProducts(
+        public async Task Handle_ValidDescOrderBy_ReturnProducts(
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,

@@ -60,16 +60,6 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
 
             builder.Property(e => e.Style)
                 .HasMaxLength(2);
-
-            //builder.HasMany(e => e.BillOfMaterials);
-
-            //builder.HasMany(e => e.ProductReview)
-            //    .WithOne(e => e.Product)
-            //    .OnDelete(DeleteBehavior.SetNull);
-
-            //builder.HasMany(e => e.ProductVendor)
-            //    .WithOne(e => e.Product)
-            //    .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

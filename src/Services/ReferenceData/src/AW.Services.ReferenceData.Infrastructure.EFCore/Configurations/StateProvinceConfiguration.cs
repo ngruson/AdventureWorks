@@ -15,8 +15,8 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
                 .HasColumnName("StateProvinceID");
 
             builder.Property(sp => sp.StateProvinceCode)
-                .IsRequired();
-                //.HasMaxLength(3);
+                .IsRequired()
+                .HasMaxLength(3);
 
             builder.Property(sp => sp.CountryRegionCode)
                 .IsRequired()
