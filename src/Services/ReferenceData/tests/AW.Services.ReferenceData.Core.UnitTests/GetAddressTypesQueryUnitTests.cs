@@ -16,7 +16,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
     public class GetAddressTypesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_AddressTypesExists_ReturnAddressTypes(
+        public async Task Handle_AddressTypesExists_ReturnAddressTypes(
             List<Entities.AddressType> addressTypes,
             [Frozen] Mock<IRepository<Entities.AddressType>> addressTypeRepoMock,
             GetAddressTypesQueryHandler sut,

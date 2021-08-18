@@ -1,12 +1,10 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.SalesPerson.Core.Handlers.GetSalesPerson;
 using AW.Services.SalesPerson.Core.Specifications;
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Threading;
@@ -18,7 +16,7 @@ namespace AW.Services.SalesPerson.Core.UnitTests
     public class GetSalesPersonQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_SalesPersonExists_ReturnSalesPerson(
+        public async Task Handle_SalesPersonExists_ReturnSalesPerson(
             Entities.SalesPerson salesPerson,
             [Frozen] Mock<IRepository<Entities.SalesPerson>> salesPersonRepoMock,
             GetSalesPersonQueryHandler sut,

@@ -17,7 +17,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
     public class GetContactTypesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_ContactTypesExists_ReturnContactTypes(
+        public async Task Handle_ContactTypesExists_ReturnContactTypes(
             List<Entities.ContactType> contactTypes,
             [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
             GetContactTypesQueryHandler sut,

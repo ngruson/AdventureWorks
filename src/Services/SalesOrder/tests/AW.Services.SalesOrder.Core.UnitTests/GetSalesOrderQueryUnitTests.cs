@@ -13,7 +13,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests
     public class GetSalesOrderQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_SalesOrderExists_ReturnSalesOrder(
+        public async Task Handle_SalesOrderExists_ReturnSalesOrder(
             Entities.SalesOrder salesOrder,
             [Frozen] Mock<IRepository<Entities.SalesOrder>> salesOrderRepoMock,
             GetSalesOrderQueryHandler sut,

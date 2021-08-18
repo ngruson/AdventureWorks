@@ -2,7 +2,6 @@ using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.SharedKernel.Interfaces;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
     public class GetStateProvincesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_NoFilter_ReturnAllStateProvinces(
+        public async Task Handle_NoFilter_ReturnAllStateProvinces(
             List<Entities.StateProvince> statesProvinces,
             [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
             GetStatesProvincesQueryHandler sut,
@@ -44,7 +43,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_StateProvincesExists_ReturnStateProvincesForCountry(
+        public async Task Handle_StateProvincesExists_ReturnStateProvincesForCountry(
             List<Entities.StateProvince> statesProvinces,
             [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
             GetStatesProvincesQueryHandler sut,

@@ -3,7 +3,6 @@ using AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
     public class GetTerritoriesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_TerritoriesExists_ReturnTerritories(
+        public async Task Handle_TerritoriesExists_ReturnTerritories(
             List<Entities.Territory> territories,
             [Frozen] Mock<IRepository<Entities.Territory>> territoryRepoMock,
             GetTerritoriesQueryHandler sut,

@@ -16,7 +16,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
     public class GetCountriesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_CountriesExists_ReturnCountries(
+        public async Task Handle_CountriesExists_ReturnCountries(
             List<Entities.CountryRegion> countries,
             [Frozen] Mock<IRepository<Entities.CountryRegion>> countryRegionRepoMock,
             GetCountriesQueryHandler sut,

@@ -7,6 +7,7 @@ using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.SalesOrder.Core.UnitTests
@@ -14,7 +15,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests
     public class GetSalesOrdersQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void Handle_SalesOrdersExists_ReturnSalesOrders(
+        public async Task Handle_SalesOrdersExists_ReturnSalesOrders(
             List<Entities.SalesOrder> salesOrders,
             [Frozen] Mock<IRepository<Entities.SalesOrder>> salesOrderRepoMock,
             GetSalesOrdersQueryHandler sut,

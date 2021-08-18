@@ -20,7 +20,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
     public class EfRepositoryUnitTests
     {
         [Theory, OmitOnRecursion]
-        public async void GetByIdAsync_ReturnsObject(
+        public async Task GetByIdAsync_ReturnsObject(
             [Frozen] Mock<DbSet<Core.Entities.SalesPerson>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
             Core.Entities.SalesPerson salesPerson
@@ -42,7 +42,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void GetBySpecAsync_ReturnsObject(
+        public async Task GetBySpecAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
             List<Core.Entities.SalesPerson> salesPersons
         )
@@ -68,7 +68,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_WithoutSpec_ReturnsObjects(
+        public async Task ListAsync_WithoutSpec_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<Core.Entities.SalesPerson> salesPersons
         )
@@ -92,7 +92,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_WithSpec_ReturnsObjects(
+        public async Task ListAsync_WithSpec_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<Core.Entities.SalesPerson> salesPersons
         )
@@ -114,7 +114,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_WithResultSpec_ReturnsObjects(
+        public async Task ListAsync_WithResultSpec_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<Core.Entities.SalesPerson> salesPersons
         )
@@ -168,7 +168,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void CountAsync_ReturnsCount(
+        public async Task CountAsync_ReturnsCount(
             [Frozen] Mock<AWContext> mockContext,
             List<Core.Entities.SalesPerson> salesPersons
         )
@@ -189,7 +189,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void AddAsync_SavesObject(
+        public async Task AddAsync_SavesObject(
             List<Core.Entities.SalesPerson> salesPersons,
             Core.Entities.SalesPerson newSalesPerson
         )
@@ -212,7 +212,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void UpdateAsync_SavesObject(
+        public async Task UpdateAsync_SavesObject(
             List<Core.Entities.SalesPerson> salesPersons
         )
         {
@@ -233,7 +233,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void DeleteAsync_ReturnsObject(
+        public async Task DeleteAsync_ReturnsObject(
             List<Core.Entities.SalesPerson> salesPersons
         )
         {
@@ -253,7 +253,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void DeleteRangeAsync_ReturnsObject(
+        public async Task DeleteRangeAsync_ReturnsObject(
             List<Core.Entities.SalesPerson> salesPersons
         )
         {

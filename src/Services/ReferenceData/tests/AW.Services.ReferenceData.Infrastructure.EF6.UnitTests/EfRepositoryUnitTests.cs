@@ -40,7 +40,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void GetByIdAsync_ReturnsObject(
+        public async Task GetByIdAsync_ReturnsObject(
             [Frozen] Mock<DbSet<AddressType>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
             AddressType addressType
@@ -65,7 +65,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void GetBySpecAsync_ReturnsObject(
+        public async Task GetBySpecAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )
@@ -86,7 +86,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void ListAllAsync_ReturnsObjects(
+        public async Task ListAllAsync_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )
@@ -106,7 +106,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void ListAsync_ReturnsObjects(
+        public async Task ListAsync_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<StateProvince> statesProvinces
         )
@@ -128,7 +128,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void ListAsync_WithResultSpec_ReturnsObjects(
+        public async Task ListAsync_WithResultSpec_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )
@@ -183,7 +183,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async void CountAsync_ReturnsCount(
+        public async Task CountAsync_ReturnsCount(
             [Frozen] Mock<AWContext> mockContext,
             List<StateProvince> statesProvinces
         )
@@ -204,7 +204,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void AddAsync_SavesObject(
+        public async Task AddAsync_SavesObject(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes,
             AddressType newAddressType
@@ -227,7 +227,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void UpdateAsync_SavesObject(
+        public async Task UpdateAsync_SavesObject(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )
@@ -248,7 +248,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void DeleteAsync_ReturnsObject(
+        public async Task DeleteAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )
@@ -268,7 +268,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EF6.UnitTests
         }
 
         [Theory, AutoMoqData]
-        public async void DeleteRangeAsync_ReturnsObject(
+        public async Task DeleteRangeAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
             List<AddressType> addressTypes
         )

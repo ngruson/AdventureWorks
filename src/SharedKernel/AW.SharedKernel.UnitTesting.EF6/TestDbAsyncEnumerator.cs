@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace AW.SharedKernel.UnitTesting.EF6
         public void Dispose()
         {
             _inner.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public Task<bool> MoveNextAsync(CancellationToken cancellationToken)

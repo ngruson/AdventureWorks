@@ -13,8 +13,6 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.Configurations
                 .HasColumnName("SalesOrderID");
 
             builder.Ignore(p => p.SubTotal);
-            //builder.Ignore(p => p.TaxAmt);
-            //builder.Ignore(p => p.Freight);
             builder.Ignore(p => p.TotalDue);
         }
     }
