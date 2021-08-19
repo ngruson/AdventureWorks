@@ -116,8 +116,6 @@ namespace AW.UI.Web.Internal
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapDefaultControllerRoute()
-                //    .RequireAuthorization();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Customer}/{action=Index}/{id?}");

@@ -115,7 +115,6 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            var str = await response.Content.ReadAsStringAsync();
             var stream = await response.Content.ReadAsStreamAsync();
 
             return await stream.DeserializeAsync<List<Territory>>(new JsonSerializerOptions

@@ -31,7 +31,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
         }
 
-        private string MapPurchaseOrderNumber(string purchaseOrderNumber)
+        private static string MapPurchaseOrderNumber(string purchaseOrderNumber)
         {
             if (!string.IsNullOrEmpty(purchaseOrderNumber))
                 return purchaseOrderNumber;

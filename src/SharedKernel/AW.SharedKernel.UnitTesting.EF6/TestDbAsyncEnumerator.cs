@@ -15,9 +15,14 @@ namespace AW.SharedKernel.UnitTesting.EF6
             _inner = inner;
         }
 
-        public void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
             _inner.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 

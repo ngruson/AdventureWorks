@@ -16,7 +16,7 @@ namespace AW.SharedKernel.UnitTests
     public class RequestValidationBehaviorUnitTests
     {
         [Theory, AutoMoqData]
-        public async void Handle_ValidValidator_ReturnsResponse(
+        public async Task Handle_ValidValidator_ReturnsResponse(
             Customer customer
         )
         {

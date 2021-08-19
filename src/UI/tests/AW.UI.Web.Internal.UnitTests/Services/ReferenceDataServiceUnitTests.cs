@@ -19,7 +19,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
     public class ReferenceDataServiceUnitTests
     {
         [Theory, AutoMoqData]
-        public async void GetAddressTypes_AddressTypesFound_ReturnsAddressTypes(
+        public async Task GetAddressTypes_AddressTypesFound_ReturnsAddressTypes(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 List<AddressType> addressTypes,
                 ReferenceDataService sut
@@ -55,7 +55,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public async void GetContactTypes_ContactTypesFound_ReturnsContactTypes(
+        public async Task GetContactTypes_ContactTypesFound_ReturnsContactTypes(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 List<ContactType> contactTypes,
                 ReferenceDataService sut
@@ -91,7 +91,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public async void GetCountries_CountriesFound_ReturnsCountries(
+        public async Task GetCountries_CountriesFound_ReturnsCountries(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 List<CountryRegion> countries,
                 ReferenceDataService sut
@@ -127,7 +127,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public async void GetStatesProvinces_StatesProvincesFound_ReturnsStatesProvinces(
+        public async Task GetStatesProvinces_StatesProvincesFound_ReturnsStatesProvinces(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 List<StateProvince> statesProvinces,
                 ReferenceDataService sut
@@ -167,7 +167,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public async void GetTerritories_TerritoriesFound_ReturnsTerritories(
+        public async Task GetTerritories_TerritoriesFound_ReturnsTerritories(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 List<Territory> territories,
                 ReferenceDataService sut

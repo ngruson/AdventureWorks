@@ -21,7 +21,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetSalesOrders
         {
             [Theory, MockHttpData]
-            public async void GetSalesOrders_SalesOrdersFound_ReturnsSalesOrders(
+            public async Task GetSalesOrders_SalesOrdersFound_ReturnsSalesOrders(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -90,7 +90,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetSalesOrder
         {
             [Theory, MockHttpData]
-            public async void GetSalesOrder_SalesOrderFound_ReturnsSalesOrder(
+            public async Task GetSalesOrder_SalesOrderFound_ReturnsSalesOrder(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,

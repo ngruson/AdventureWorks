@@ -23,7 +23,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetCustomers
         {
             [Theory, MockHttpData]
-            public async void GetCustomers_CustomersFound_ReturnsCustomer(
+            public async Task GetCustomers_CustomersFound_ReturnsCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -106,7 +106,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetCustomer
         {
             [Theory, MockHttpData]
-            public async void GetCustomer_CustomerFound_ReturnCustomer(
+            public async Task GetCustomer_CustomerFound_ReturnCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -172,7 +172,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class UpdateCustomer
         {
             [Theory, MockHttpData]
-            public async void GetCustomer_CustomerFound_ReturnCustomer(
+            public async Task GetCustomer_CustomerFound_ReturnCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,

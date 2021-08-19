@@ -8,7 +8,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,7 +16,7 @@ namespace AW.UI.Web.Store.UnitTests
     public class ProductControllerUnitTests
     {
         [Fact]
-        public async void Index_WithProductCategoryFilter_ReturnsProductsViewModel()
+        public async Task Index_WithProductCategoryFilter_ReturnsProductsViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -62,7 +61,7 @@ namespace AW.UI.Web.Store.UnitTests
             viewModel.ProductSubcategory.Should().BeNull();
             viewModel.ProductCategories.Should().NotBeNull();
             viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count().Should().Be(5);
+            viewModel.Products.Count.Should().Be(5);
             viewModel.PaginationInfo.ActualPage.Should().Be(0);
             viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
@@ -72,7 +71,7 @@ namespace AW.UI.Web.Store.UnitTests
         }
 
         [Fact]
-        public async void Index_WithOddProductCount_ReturnsProductsViewModel()
+        public async Task Index_WithOddProductCount_ReturnsProductsViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -119,7 +118,7 @@ namespace AW.UI.Web.Store.UnitTests
         }
 
         [Fact]
-        public async void Index_FirstPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        public async Task Index_FirstPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -164,7 +163,7 @@ namespace AW.UI.Web.Store.UnitTests
             viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
             viewModel.ProductCategories.Should().NotBeNull();
             viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count().Should().Be(5);
+            viewModel.Products.Count.Should().Be(5);
             viewModel.PaginationInfo.ActualPage.Should().Be(0);
             viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
@@ -174,7 +173,7 @@ namespace AW.UI.Web.Store.UnitTests
         }
 
         [Fact]
-        public async void Index_SecondPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        public async Task Index_SecondPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -219,7 +218,7 @@ namespace AW.UI.Web.Store.UnitTests
             viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
             viewModel.ProductCategories.Should().NotBeNull();
             viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count().Should().Be(5);
+            viewModel.Products.Count.Should().Be(5);
             viewModel.PaginationInfo.ActualPage.Should().Be(1);
             viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
@@ -229,7 +228,7 @@ namespace AW.UI.Web.Store.UnitTests
         }
 
         [Fact]
-        public async void Index_LastPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        public async Task Index_LastPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -274,7 +273,7 @@ namespace AW.UI.Web.Store.UnitTests
             viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
             viewModel.ProductCategories.Should().NotBeNull();
             viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count().Should().Be(5);
+            viewModel.Products.Count.Should().Be(5);
             viewModel.PaginationInfo.ActualPage.Should().Be(3);
             viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);

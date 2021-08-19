@@ -2,7 +2,6 @@
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using AW.UI.Web.Internal.Controllers;
@@ -10,9 +9,9 @@ using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests.Controllers
@@ -22,7 +21,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class Index
         {
             [Theory, AutoMoqData]
-            public async void Index_ReturnsViewModel(
+            public async Task Index_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 CustomersIndexViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -52,7 +51,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class Detail
         {
             [Theory, AutoMoqData]
-            public async void Detail_ReturnsViewModel(
+            public async Task Detail_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 CustomerDetailViewModel viewModel,
                 [Frozen] Mock<IReferenceDataService> referenceDataService,
@@ -89,7 +88,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class EditStore
         {
             [Theory, AutoMoqData]
-            public async void EditStoreGet_ReturnsViewModel(
+            public async Task EditStoreGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditStoreCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -110,7 +109,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditStorePost_ValidModelState_ReturnsRedirect(
+            public async Task EditStorePost_ValidModelState_ReturnsRedirect(
                 EditStoreCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -127,7 +126,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditStorePost_InvalidModelState_ReturnsViewModel(
+            public async Task EditStorePost_InvalidModelState_ReturnsViewModel(
                 EditStoreCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -147,7 +146,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class EditIndividual
         {
             [Theory, AutoMoqData]
-            public async void EditIndividualGet_ReturnsViewModel(
+            public async Task EditIndividualGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditIndividualCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -168,7 +167,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditIndividualPost_ValidModelState_ReturnsRedirect(
+            public async Task EditIndividualPost_ValidModelState_ReturnsRedirect(
                 EditIndividualCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -185,7 +184,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditIndividualPost_InvalidModelState_ReturnsViewModel(
+            public async Task EditIndividualPost_InvalidModelState_ReturnsViewModel(
                 EditIndividualCustomerViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -205,7 +204,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class AddAddress
         {
             [Theory, AutoMoqData]
-            public async void AddAddressGet_ReturnsViewModel(
+            public async Task AddAddressGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -234,7 +233,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task AddAddressPost_ValidModelState_ReturnsRedirect(
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -251,7 +250,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task AddAddressPost_InvalidModelState_ReturnsViewModel(
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -271,7 +270,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class EditAddress
         {
             [Theory, AutoMoqData]
-            public async void EditAddress_ReturnsViewModel(
+            public async Task EditAddress_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -298,7 +297,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task EditAddressPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -318,7 +317,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task EditAddressPost_InvalidModelState_ReturnsViewModel(
                 EditCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -338,7 +337,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class GetStatesProvinces
         {
             [Theory, AutoMoqData]
-            public async void GetStatesProvinces_ReturnsJsonResult(
+            public async Task GetStatesProvinces_ReturnsJsonResult(
                 [Frozen] Mock<ICustomerService> customerService,
                 List<StateProvinceViewModel> statesProvinces,
                 [Greedy] CustomerController sut
@@ -359,7 +358,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class DeleteAddress
         {
             [Theory, AutoMoqData]
-            public async void DeleteAddressGet_ReturnsViewModel(
+            public async Task DeleteAddressGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -387,7 +386,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task DeleteAddressPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -409,7 +408,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task DeleteAddressPost_InvalidModelState_ReturnsViewModel(
                 DeleteCustomerAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -429,7 +428,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class AddContact
         {
             [Theory, AutoMoqData]
-            public async void AddContactGet_ReturnsViewModel(
+            public async Task AddContactGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -457,7 +456,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddContactPost_ValidModelState_ReturnsRedirect(
+            public async Task AddContactPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -479,7 +478,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddContactPost_InvalidModelState_ReturnsViewModel(
+            public async Task AddContactPost_InvalidModelState_ReturnsViewModel(
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -499,7 +498,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class EditContact
         {
             [Theory, AutoMoqData]
-            public async void EditContactGet_ReturnsViewModel(
+            public async Task EditContactGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -528,7 +527,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditContactPost_ValidModelState_ReturnsRedirect(
+            public async Task EditContactPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -554,7 +553,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void EditContactPost_InvalidModelState_ReturnsViewModel(
+            public async Task EditContactPost_InvalidModelState_ReturnsViewModel(
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -574,7 +573,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class DeleteContact
         {
             [Theory, AutoMoqData]
-            public async void DeleteContactGet_ReturnsViewModel(
+            public async Task DeleteContactGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -603,7 +602,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteContactPost_ValidModelState_ReturnsRedirect(
+            public async Task DeleteContactPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -625,7 +624,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteContactPost_InvalidModelState_ReturnsViewModel(
+            public async Task DeleteContactPost_InvalidModelState_ReturnsViewModel(
                 DeleteCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -673,7 +672,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddContactEmailAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task AddContactEmailAddressPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditCustomerContactViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -695,7 +694,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void AddContactEmailAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task AddContactEmailAddressPost_InvalidModelState_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 EditEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -721,7 +720,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class DeleteIndividualCustomerEmailAddress
         {
             [Theory, AutoMoqData]
-            public async void DeleteIndividualCustomerEmailAddressGet_ReturnsViewModel(
+            public async Task DeleteIndividualCustomerEmailAddressGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteIndividualCustomerEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -749,7 +748,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteIndividualCustomerEmailAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task DeleteIndividualCustomerEmailAddressPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteIndividualCustomerEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -771,7 +770,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteIndividualCustomerEmailAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task DeleteIndividualCustomerEmailAddressPost_InvalidModelState_ReturnsViewModel(
                 DeleteIndividualCustomerEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )
@@ -791,7 +790,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class DeleteContactEmailAddress
         {
             [Theory, AutoMoqData]
-            public async void DeleteContactEmailAddressGet_ReturnsViewModel(
+            public async Task DeleteContactEmailAddressGet_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteContactEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -821,7 +820,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteContactEmailAddressPost_ValidModelState_ReturnsRedirect(
+            public async Task DeleteContactEmailAddressPost_ValidModelState_ReturnsRedirect(
                 [Frozen] Mock<ICustomerService> customerService,
                 DeleteContactEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
@@ -843,7 +842,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             }
 
             [Theory, AutoMoqData]
-            public async void DeleteContactEmailAddressPost_InvalidModelState_ReturnsViewModel(
+            public async Task DeleteContactEmailAddressPost_InvalidModelState_ReturnsViewModel(
                 DeleteContactEmailAddressViewModel viewModel,
                 [Greedy] CustomerController sut
             )

@@ -14,7 +14,6 @@ namespace AW.SharedKernel.AutoMapper
 
         protected void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            //var types = assembly.GetExportedTypes().Where(x => !x.IsAbstract);
             var types = assembly.GetExportedTypes()
                 .Where(t => t.GetInterfaces().Any(i =>
                     i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>))

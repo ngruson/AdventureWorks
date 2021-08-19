@@ -20,7 +20,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetAddressTypes
         {
             [Theory, MockHttpData]
-            public async void GetAddressTypes_AddressTypesFound_ReturnsAddressTypes(
+            public async Task GetAddressTypes_AddressTypesFound_ReturnsAddressTypes(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -83,7 +83,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetContactTypes
         {
             [Theory, MockHttpData]
-            public async void GetContactTypes_ContactTypesFound_ReturnsContactTypes(
+            public async Task GetContactTypes_ContactTypesFound_ReturnsContactTypes(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -146,7 +146,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetCountries
         {
             [Theory, MockHttpData]
-            public async void GetCountries_CountriesFound_ReturnsCountries(
+            public async Task GetCountries_CountriesFound_ReturnsCountries(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -209,7 +209,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetStateProvinces
         {
             [Theory, MockHttpData]
-            public async void GetStateProvinces_StateProvincesFound_ReturnsStateProvinces(
+            public async Task GetStateProvinces_StateProvincesFound_ReturnsStateProvinces(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -272,7 +272,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetTerritories
         {
             [Theory, MockHttpData]
-            public async void GetTerritories_TerritoriesFound_ReturnsTerritories(
+            public async Task GetTerritories_TerritoriesFound_ReturnsTerritories(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,

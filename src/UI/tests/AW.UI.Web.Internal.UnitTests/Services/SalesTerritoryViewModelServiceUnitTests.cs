@@ -6,6 +6,7 @@ using AW.UI.Web.Internal.Services;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
@@ -13,7 +14,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
     public class SalesTerritoryViewModelServiceUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void GetSalesOrders_ReturnsViewModel(
+        public async Task GetSalesOrders_ReturnsViewModel(
             [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
             List<Territory> territories,
             SalesTerritoryViewModelService sut

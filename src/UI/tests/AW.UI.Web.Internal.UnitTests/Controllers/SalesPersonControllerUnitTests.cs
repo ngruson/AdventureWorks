@@ -4,6 +4,7 @@ using AW.UI.Web.Internal.ViewModels.SalesPerson;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests.Controllers
@@ -13,7 +14,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class Index
         {
             [Fact]
-            public async void Index_ReturnsViewModel()
+            public async Task Index_ReturnsViewModel()
             {
                 //Arrange
                 var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();

@@ -13,13 +13,14 @@ using Microsoft.Extensions.Logging;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
 using AW.SharedKernel.Interfaces;
+using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
 {
     public class CustomerServiceUnitTests
     {
         [Fact]
-        public async void GetCustomers_ReturnsViewModel()
+        public async Task GetCustomers_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -84,7 +85,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomer_ReturnsViewModel()
+        public async Task GetCustomer_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -114,7 +115,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetIndividualCustomerForEdit_ReturnsViewModel()
+        public async Task GetIndividualCustomerForEdit_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -156,7 +157,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateStore_ReturnsViewModel()
+        public async Task UpdateStore_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -193,7 +194,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateStore_OK()
+        public async Task UpdateStore_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -231,7 +232,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateStore_WithSalesPerson_OK()
+        public async Task UpdateStore_WithSalesPerson_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -277,7 +278,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateIndividual_OK()
+        public async Task UpdateIndividual_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -379,7 +380,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void AddAddress_OK()
+        public async Task AddAddress_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -427,7 +428,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomerAddress_ReturnsViewModel()
+        public async Task GetCustomerAddress_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -493,7 +494,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateAddress_OK()
+        public async Task UpdateAddress_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -543,7 +544,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomerAddressForDelete_Store_ReturnsViewModel()
+        public async Task GetCustomerAddressForDelete_Store_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -586,7 +587,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomerAddressForDelete_Person_ReturnsViewModel()
+        public async Task GetCustomerAddressForDelete_Person_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -617,7 +618,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetStateProvincesJson_ReturnsViewModel()
+        public async Task GetStateProvincesJson_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -654,7 +655,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void DeleteAddress_OK()
+        public async Task DeleteAddress_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -688,7 +689,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void AddContact_ReturnsViewModel()
+        public async Task AddContact_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -722,7 +723,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void AddContact_OK()
+        public async Task AddContact_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -777,7 +778,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomerContact_ReturnsViewModel()
+        public async Task GetCustomerContact_ReturnsViewModel()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -824,7 +825,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void UpdateContact_OK()
+        public async Task UpdateContact_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -871,7 +872,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void GetCustomerContactForDelete_OK()
+        public async Task GetCustomerContactForDelete_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -903,7 +904,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void DeleteContact_OK()
+        public async Task DeleteContact_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -981,7 +982,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void AddContactEmailAddress_OK()
+        public async Task AddContactEmailAddress_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();
@@ -1054,7 +1055,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Fact]
-        public async void AddContactPhoneNumber_OK()
+        public async Task AddContactPhoneNumber_OK()
         {
             //Arrange
             var mockLogger = new Mock<ILogger<CustomerService>>();

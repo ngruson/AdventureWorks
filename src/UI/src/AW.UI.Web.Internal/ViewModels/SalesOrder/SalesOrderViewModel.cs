@@ -58,7 +58,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));
         }
 
-        private string MapOnlineOrderFlag(bool onlineOrderFlag)
+        private static string MapOnlineOrderFlag(bool onlineOrderFlag)
         {
             if (onlineOrderFlag)
                 return "Yes";
@@ -66,7 +66,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
             return "No";
         }
 
-        private string MapPurchaseOrderNumber(string purchaseOrderNumber)
+        private static string MapPurchaseOrderNumber(string purchaseOrderNumber)
         {
             if (!string.IsNullOrEmpty(purchaseOrderNumber))
                 return purchaseOrderNumber;
@@ -74,7 +74,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
             return "-";
         }
 
-        private string MapSalesPerson(string salesPerson)
+        private static string MapSalesPerson(string salesPerson)
         {
             if (!string.IsNullOrEmpty(salesPerson))
                 return salesPerson;

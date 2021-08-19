@@ -9,6 +9,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
@@ -16,7 +17,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
     public class SalesOrderViewModelServiceUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void GetSalesOrders_ReturnsViewModel(
+        public async Task GetSalesOrders_ReturnsViewModel(
             [Frozen] Mock<ISalesOrderApiClient> salesOrderApiClient,
             SalesOrdersResult salesOrdersResult,
             [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
@@ -60,7 +61,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async void GetSalesOrder_ReturnsViewModel(
+        public async Task GetSalesOrder_ReturnsViewModel(
             [Frozen] Mock<ISalesOrderApiClient> salesOrderApiClient,
             SalesOrder salesOrder,
             SalesOrderViewModelService sut

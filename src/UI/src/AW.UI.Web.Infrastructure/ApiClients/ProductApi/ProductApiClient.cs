@@ -45,7 +45,6 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ProductApi
             string orderBy
         )
         {
-            //pageIndex=0&pageSize=10&category=Bikes&orderBy=asc%28productNumber%29&api-version=1.0"
             string requestUri = $"/product-api/Product?api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
 
@@ -56,19 +55,19 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ProductApi
                 logMessage += ", category {Category}";
                 args.Add(category);
                 requestUri += $"&category={category}";
-            };
+            }
             if (!string.IsNullOrEmpty(subcategory))
             {
                 logMessage += ", subcategory {Subcategory}";
                 args.Add(subcategory);
                 requestUri += $"&subcategory={subcategory}";
-            };
+            }
             if (!string.IsNullOrEmpty(orderBy))
             {
                 logMessage += ", orderBy {OrderBy}";
                 args.Add(orderBy);
                 requestUri += $"&orderBy={orderBy}";
-            };
+            }
 
             logger.LogInformation(logMessage, args.ToArray());
 

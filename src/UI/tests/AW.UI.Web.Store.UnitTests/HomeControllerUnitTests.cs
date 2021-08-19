@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Store.UnitTests
@@ -13,7 +14,7 @@ namespace AW.UI.Web.Store.UnitTests
     public class HomeControllerUnitTests
     {
         [Fact]
-        public async void Index_ReturnsHomeViewModel()
+        public async Task Index_ReturnsHomeViewModel()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();

@@ -28,7 +28,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi
                 logMessage += ", territory {Territory}";
                 args.Add(territory);
                 requestUri += $"&territory={territory}";
-            };
+            }
             if (customerType.HasValue)
             {
                 var customerTypeValue = customerType.Value == CustomerType.Individual ? 0 : 1;

@@ -19,7 +19,7 @@ namespace AW.UI.Web.Store.Controllers
         public ProductController(IMapper mapper, IProductService productService) =>
             (this.mapper, this.productService) = (mapper, productService);
 
-        private List<SelectListItem> GetPageSizeList()
+        private static List<SelectListItem> GetPageSizeList()
         {
             return new List<SelectListItem>
             {

@@ -135,7 +135,7 @@ namespace AW.UI.Web.Internal.Services
             return items;
         }
 
-        private IEnumerable<SelectListItem> GetEmailPromotions()
+        private static IEnumerable<SelectListItem> GetEmailPromotions()
         {
             var items = new List<SelectListItem>();
 
@@ -495,7 +495,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Customer updated successfully");
         }
 
-        public EditEmailAddressViewModel AddEmailAddress(string accountNumber, string personName)
+        public EditEmailAddressViewModel AddEmailAddress(string accountNumber, string customerName)
         {
             logger.LogInformation("AddEmailAddress called");
 
@@ -503,7 +503,7 @@ namespace AW.UI.Web.Internal.Services
             {
                 IsNewEmailAddress = true,
                 AccountNumber = accountNumber,
-                PersonName = personName
+                PersonName = customerName
             };
 
             return vm;

@@ -5,6 +5,7 @@ using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Internal.UnitTests.Controllers
@@ -14,7 +15,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class Index
         {
             [Fact]
-            public async void Index_ReturnsViewModel()
+            public async Task Index_ReturnsViewModel()
             {
                 //Arrange
                 var mockSalesOrderViewModelService = new Mock<ISalesOrderViewModelService>();
@@ -51,7 +52,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
         public class Detail
         {
             [Fact]
-            public async void Detail_ReturnsViewModel()
+            public async Task Detail_ReturnsViewModel()
             {
                 //Arrange
                 var mockSalesOrderViewModelService = new Mock<ISalesOrderViewModelService>();
