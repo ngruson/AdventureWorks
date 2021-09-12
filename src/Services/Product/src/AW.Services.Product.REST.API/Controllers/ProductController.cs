@@ -59,7 +59,7 @@ namespace AW.Services.Product.REST.API.Controllers
         }
 
         [HttpGet("{productNumber}")]
-        public async Task<ActionResult> GetProduct([FromQuery] GetProductQuery query)
+        public async Task<ActionResult> GetProduct([FromRoute] GetProductQuery query)
         {
             logger.LogInformation("GetProduct called with product number {ProductNumber}",
                 query.ProductNumber

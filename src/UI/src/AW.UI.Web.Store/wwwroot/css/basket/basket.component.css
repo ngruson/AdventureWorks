@@ -1,0 +1,68 @@
+﻿.basket {
+    min-height: 80vh;
+}
+
+.basket-titles {
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+
+.basket-titles--clean {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.basket-title {
+    text-transform: uppercase;
+}
+
+.basket-items--border {
+    border-bottom: 1px solid #EEEEEE;
+    padding: .5rem 0;
+}
+
+.basket-items--border:last-of-type {
+    border-color: transparent;
+}
+
+.basket-items-margin-left1 {
+    margin-left: 1px;
+}
+
+.basket-item--middle {
+    line-height: 8rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .basket-item--middle {
+        line-height: 1rem;
+    }
+}
+
+.basket-item--mark {
+    color: #00A69C;
+}
+
+.basket-image {
+    height: 4rem;
+}
+
+.basket-input {
+    line-height: 1rem;
+    width: 100%;
+}
+
+.basket-checkout {
+    background-color: #00A69C;
+    border: 0;
+    border-radius: 0;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 1rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.35s;
+}

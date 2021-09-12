@@ -86,5 +86,28 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ProductApi
                 }
             );
         }
+
+        public async Task<Models.Product> GetProductAsync(string productNumber)
+        {
+            string requestUri = $"/product-api/Product/{productNumber}?api-version=1.0";
+            string logMessage = "Getting product with product number {ProductNumber}";
+
+            logger.LogInformation(logMessage, productNumber);
+
+            using var response = await client.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            return await stream.DeserializeAsync<Models.Product>(
+                new JsonSerializerOptions
+                {
+                    Converters =
+                    {
+                        new JsonStringEnumConverter()
+                    },
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }
+            );
+        }
     }
 }

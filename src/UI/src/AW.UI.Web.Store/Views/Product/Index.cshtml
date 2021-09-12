@@ -116,74 +116,7 @@
                     <div class="row">
                         @foreach (var product in Model.Products)
                         {
-                            <div class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                <div class="product-thumb">
-                                    <div class="image">
-                                        <!--image -->
-                                        <a href="#">
-                                            <img src="@product.ThumbnailPhoto" alt="@product.Name" title="@product.Name" class="img-responsive">
-                                        </a>
-                                        <div class="hover-button button-group ">
-                                            <button type="button" class="addtocart" data-toggle="tooltip" data-placement="left" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
-                                            <div class="custom-button-group">
-                                                <a class="quickviewopen" href="product.html" data-toggle="tooltip" data-placement="left" data-original-title="Quick View"><i class="fa fa-eye"></i></a>
-                                            </div>
-                                            <button type="button" title="" class="wishlist" data-toggle="tooltip" data-placement="left" data-original-title="wishlist"><i class="fa fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                    <!--products text matter -->
-                                    <div class="caption">
-                                        <div class="grid_products_section">
-                                            <div class="rate-and-title">
-                                                <div class="rating">
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <h4><a href="product-header.html">@product.Name</a></h4>
-                                                <p class="price">
-                                                    @product.ListPrice
-                                                    <!--  <span class="price-tax">Ex Tax: $100.00</span> -->
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <!-- list-view style section -->
-                                        <div class="second_products_design list_products_section" style="display: none;">
-                                            <div class="rate-and-title">
-                                                <!--review_status -->
-                                                <div class="rating">
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-
-                                                </div>
-                                                <h4><a href="product-header.html">Kids Bicycle</a></h4>
-                                                <p class="price">$122.00</p>
-                                                <p>Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Mon..</p>
-                                                <button type="button" class="addtocart"><i class="fa fa-shopping-cart"></i> Add to Cart </button>
-
-                                                <div class="second_button_desgin">
-                                                    <div class="button-group custom-button-group">
-
-                                                        <button type="button" title="Add to Wish List" class="products_wishlist"><i class="fa fa-heart-o"></i></button>
-                                                        <div class="custom-button-group">
-                                                            <a class="quickviewopen" href="product.html"><i class="fa fa-eye"></i></a>
-                                                        </div>
-
-                                                        <button type="button" title="Compare this Product" class="products_wishlist"><i class="fa fa-signal"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <partial name="_product" model="product" />
                         }
                     </div>
                     <div class="row">

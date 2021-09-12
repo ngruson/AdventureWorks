@@ -1,5 +1,7 @@
+using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Store.Services;
+using AW.UI.Web.Store.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,42 +25,12 @@ namespace AW.UI.Web.Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IProductService, ProductService>();
-
-            services.AddAccessTokenManagement();
-
-            services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
-            {
-                client.BaseAddress = new Uri(Configuration["ProductAPI:Uri"]);
-            })
-            .AddClientAccessTokenHandler();
-
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = Configuration["AuthN:Authority"];
-                    options.ClientId = Configuration["AuthN:ClientId"];
-                    options.ClientSecret = Configuration["AuthN:ClientSecret"];
-                    options.ResponseType = "code";
-                    options.UsePkce = true;
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.SaveTokens = true;
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("email");
-                    options.Scope.Add("offline_access");
-                    options.Scope.Add("product-api.read");
-                });
+            services.AddControllersWithViews()
+                .Services
+                .AddAutoMapper(typeof(Startup))
+                .AddApplicationServices()
+                .AddHttpClientServices(Configuration)
+                .AddCustomAuthentication(Configuration);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -91,6 +63,69 @@ namespace AW.UI.Web.Store
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapFallbackToFile("index.html");
             });
+        }
+    }
+
+    static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAccessTokenManagement();
+
+            services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["BasketAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler();
+
+            services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["ProductAPI:Uri"]);
+            })
+            .AddClientAccessTokenHandler();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "cookie";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("cookie")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority = configuration["AuthN:Authority"];
+                options.ClientId = configuration["AuthN:ClientId"];
+                options.ClientSecret = configuration["AuthN:ClientSecret"];
+                options.ResponseType = "code";
+                options.UsePkce = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.SaveTokens = true;
+                options.Scope.Clear();
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.Scope.Add("email");
+                options.Scope.Add("offline_access");
+                options.Scope.Add("basket-api.read");
+                options.Scope.Add("basket-api.write");
+                options.Scope.Add("product-api.read");
+            });
+
+            return services;
         }
     }
 }

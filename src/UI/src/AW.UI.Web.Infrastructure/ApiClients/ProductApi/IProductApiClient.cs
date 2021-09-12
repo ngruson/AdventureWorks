@@ -7,5 +7,6 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ProductApi
     {
         Task<List<Models.ProductCategory>> GetCategoriesAsync();
         Task<Models.GetProductsResult> GetProductsAsync(int pageIndex, int pageSize, string category, string subcategory, string orderBy);
+        Task<Models.Product> GetProductAsync(string productNumber);
     }
 }

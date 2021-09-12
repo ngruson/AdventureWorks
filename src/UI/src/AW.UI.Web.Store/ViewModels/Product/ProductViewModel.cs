@@ -28,9 +28,9 @@ namespace AW.UI.Web.Store.ViewModels.Product
             profile.CreateMap<m.Product, ProductViewModel>()
                 .ForMember(m => m.ListPrice, opt => opt.MapFrom(src => src.ListPrice.ToString("C")))
                 .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom(src => src.ThumbnailPhoto != null ?
-                    $"data:image/gif;base64,{Convert.ToBase64String(src.ThumbnailPhoto)}" : null))
+                    $"data:image;base64,{Convert.ToBase64String(src.ThumbnailPhoto)}" : null))
                 .ForMember(m => m.LargePhoto, opt => opt.MapFrom(src => src.LargePhoto != null ?
-                    $"data:image/gif;base64,{Convert.ToBase64String(src.LargePhoto)}" : null));
+                    $"data:image;base64,{Convert.ToBase64String(src.LargePhoto)}" : null));
         }
     }
 }

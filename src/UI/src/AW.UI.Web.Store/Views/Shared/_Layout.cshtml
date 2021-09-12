@@ -21,6 +21,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,800&display=swap" rel="stylesheet">
     <link href="~/css/responsive.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/pager.css" />
+    <link rel="stylesheet" href="~/css/basket/basket-status/basket-status.component.css" />
+    <link rel="stylesheet" href="~/css/basket/basket.component.css" />
 </head>
 <body>
     <!-- top section-->
@@ -43,55 +45,7 @@
                             <a href="/"><img src="image/logo1.png" title="AdventureWorks Store" alt="AdventureWorks Store" class="img-fluid" /></a>
                         </div>
                     </div>
-                    <!-- my account -->
-                    <div class="col-sm-8">
-                        <div class="text_account_wrapper pull-right">
-                            <div class="header_transaction header_account">
-                                <a href="#" title="My Account" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-o faicons"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> <span class="caret"></span></a>
-                                <ul class="dropdown-menu dropdown-menu-right megamenu">
-                                    <li>
-                                        <a href="register.html">Register</a>
-                                    </li>
-                                    <li>
-                                        <a href="login.html">Login</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- wishlist -->
-                            <div class="header_transaction header_wishlist">
-                                <a href="wish-list.html" id="wishlist-total" title="Wish List (0)"><i class="fa fa-heart faicons"></i> <span class="hidden-xs hidden-sm hidden-md">Wish List (0)</span></a>
-                            </div>
-                            <!-- cart -->
-                            <div class="header_transaction heder_cart">
-                                <div id="cart" class="btn-group btn-block">
-                                    <button type="button" data-toggle="dropdown" data-loading-text="Loading..." class="btn btn-inverse btn-block btn-lg"><p class="cart_data_p"><i class="fa fa-shopping-cart faicons"></i> My Cart <span class="cart_qut">0</span></p> </button>
-                                    <ul class="dropdown-menu pull-right cheekout_weap">
-                                        <li>
-                                            <p class="text-center">Your shopping cart is empty!</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- search -->
-                            <div class=" search_and_cart_wrapper_header">
-                                <div class="text-right cart-menu">
-                                    <div class="search_wrapper">
-                                        <a class="ebsearch"><i class="fa fa-search"></i></a>
-                                    </div>
-                                </div>
-                                <div id="search" class="input-group">
-                                    <span class="close">x</span>
-                                    <div class="bikes_search">
-                                        <p>Find Your Desire</p>
-                                    </div>
-                                    <input value="" class="esearch" name="search" type="search" placeholder="Search here">
-                                    <span class="input-group-btn searchicon">
-                                        <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </div>

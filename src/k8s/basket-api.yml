@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventureworks-basket-api
+spec:
+  selector:
+    matchLabels:
+      app: adventureworks-basket-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: adventureworks-basket-api
+    spec:
+      containers:
+      - name: basket-api
+        image: ngruson/adventureworks_basketapi:latest
+        envFrom:
+          - configMapRef: 
+              name: adventureworks-basket-api-config
+          - secretRef:
+              name: adventureworks-basket-api-secrets
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: basket-api-service
+spec:
+  selector:
+    app: adventureworks-basket-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
