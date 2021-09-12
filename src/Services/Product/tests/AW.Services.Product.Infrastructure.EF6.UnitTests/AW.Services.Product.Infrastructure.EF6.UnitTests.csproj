@@ -40,8 +40,11 @@
     <Reference Include="Ardalis.GuardClauses, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Ardalis.GuardClauses.3.1.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    <Reference Include="Ardalis.Specification, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.2.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    </Reference>
+    <Reference Include="Ardalis.Specification.EntityFramework6, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.EntityFramework6.5.2.0\lib\net472\Ardalis.Specification.EntityFramework6.dll</HintPath>
     </Reference>
     <Reference Include="AutoFixture, Version=4.17.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\AutoFixture.4.17.0\lib\net452\AutoFixture.dll</HintPath>
@@ -131,10 +134,6 @@
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
       <Project>{aae8419b-3ce8-4a8c-8a2f-4c19e46b0f42}</Project>
       <Name>AW.SharedKernel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Persistence\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
-      <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
-      <Name>Ardalis.Specification.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
       <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>

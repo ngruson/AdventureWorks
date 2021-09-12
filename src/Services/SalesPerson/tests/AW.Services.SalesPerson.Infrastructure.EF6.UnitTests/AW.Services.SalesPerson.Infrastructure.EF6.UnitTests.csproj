@@ -40,8 +40,11 @@
     <Reference Include="Ardalis.GuardClauses, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Ardalis.GuardClauses.3.1.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    <Reference Include="Ardalis.Specification, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.2.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    </Reference>
+    <Reference Include="Ardalis.Specification.EntityFramework6, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.EntityFramework6.5.2.0\lib\net472\Ardalis.Specification.EntityFramework6.dll</HintPath>
     </Reference>
     <Reference Include="AutoFixture, Version=4.17.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\AutoFixture.4.17.0\lib\net452\AutoFixture.dll</HintPath>
@@ -120,10 +123,6 @@
     <Analyzer Include="..\..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Persistence\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
-      <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
-      <Name>Ardalis.Specification.EntityFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting.EF6\AW.SharedKernel.UnitTesting.EF6.csproj">
       <Project>{E4EEEFC6-B831-402A-8409-58D926F693B3}</Project>
       <Name>AW.SharedKernel.UnitTesting.EF6</Name>

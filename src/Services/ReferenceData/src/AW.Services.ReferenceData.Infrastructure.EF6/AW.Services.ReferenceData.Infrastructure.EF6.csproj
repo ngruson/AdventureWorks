@@ -37,8 +37,11 @@
     <Reference Include="Ardalis.GuardClauses, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Ardalis.GuardClauses.3.2.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    <Reference Include="Ardalis.Specification, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.2.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    </Reference>
+    <Reference Include="Ardalis.Specification.EntityFramework6, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.EntityFramework6.5.2.0\lib\net472\Ardalis.Specification.EntityFramework6.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -46,8 +49,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=2021.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\JetBrains.Annotations.2021.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=2021.2.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\JetBrains.Annotations.2021.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -69,13 +72,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Persistence\Ardalis.Specification.EntityFramework\Ardalis.Specification.EntityFramework.csproj">
-      <Project>{83ec1015-df12-445d-b644-b316f1aedb3a}</Project>
-      <Name>Ardalis.Specification.EntityFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
       <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
       <Name>AW.SharedKernel</Name>

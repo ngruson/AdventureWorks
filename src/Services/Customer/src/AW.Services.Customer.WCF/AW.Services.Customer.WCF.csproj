@@ -46,8 +46,8 @@
     <Reference Include="Ardalis.GuardClauses, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Ardalis.GuardClauses.3.2.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
     </Reference>
-    <Reference Include="Ardalis.Specification, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.1.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
+    <Reference Include="Ardalis.Specification, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.2.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
     </Reference>
     <Reference Include="Autofac, Version=6.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Autofac.6.2.0\lib\netstandard2.0\Autofac.dll</HintPath>

@@ -24,6 +24,7 @@ namespace AW.SharedKernel.Extensions
             {
                 enumValues.Add((T)Enum.Parse(value.GetType(), fi.Name, false));
             }
+            enumValues.Sort();
             return enumValues;
         }
         public static T Parse(string value)
