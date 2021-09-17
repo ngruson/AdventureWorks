@@ -40,7 +40,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result.Should().BeEquivalentTo(salesOrders, 
+            result.SalesOrders.Should().BeEquivalentTo(salesOrders, 
                 opt => opt
                     .Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                     .Excluding(_ => _.SelectedMemberPath.EndsWith("SpecialOfferProduct"))

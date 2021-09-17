@@ -24,9 +24,6 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
                 .ReturnsAsync(territories);
 
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
-                .ReturnsAsync(territories);
-
             //Act
             var result = await sut.GetSalesTerritories();
 

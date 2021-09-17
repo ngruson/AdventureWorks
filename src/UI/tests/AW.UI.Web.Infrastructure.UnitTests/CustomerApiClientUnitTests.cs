@@ -24,7 +24,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class GetCustomers
         {
             [Theory, MockHttpData]
-            public async Task GetCustomers_CustomersFound_ReturnsCustomer(
+            public async Task GetCustomers_StoreCustomersFound_ReturnsStoreCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -35,7 +35,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 //Arrange
                 foreach (var item in list)
                 {
-                    item.CustomerType = SharedKernel.Interfaces.CustomerType.Store;
+                    item.CustomerType = CustomerType.Store;
                 }
 
                 var customers = new GetCustomersResponse
@@ -73,6 +73,64 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     10, 
                     "territory", 
                     CustomerType.Individual, 
+                    "accountNumber"
+                );
+
+                //Assert
+                response.TotalCustomers.Should().Be(list.Count);
+                response.Customers.Should().BeEquivalentTo(list);
+            }
+
+            [Theory, MockHttpData]
+            public async Task GetCustomers_IndividualCustomersFound_ReturnsIndividualCustomer(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<IndividualCustomer> list,
+                CustomerApiClient sut
+            )
+            {
+                //Arrange
+                foreach (var item in list)
+                {
+                    item.CustomerType = CustomerType.Individual;
+                }
+
+                var customers = new GetCustomersResponse
+                {
+                    Customers = list.ToList<Customer>(),
+                    TotalCustomers = list.Count
+                };
+
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(customers, new JsonSerializerOptions
+                            {
+                                Converters =
+                                    {
+                                        new JsonStringEnumConverter(),
+                                        new CustomerConverter<
+                                            Customer,
+                                            StoreCustomer,
+                                            IndividualCustomer>()
+                                    },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            }),
+                            Encoding.UTF8,
+                            "application/json"
+                        )
+                    );
+
+                //Act
+                var response = await sut.GetCustomersAsync(
+                    0,
+                    10,
+                    "territory",
+                    CustomerType.Individual,
                     "accountNumber"
                 );
 
@@ -179,7 +237,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class UpdateCustomer
         {
             [Theory, MockHttpData]
-            public async Task GetCustomer_CustomerFound_ReturnCustomer(
+            public async Task GetCustomer_StoreCustomerFound_ReturnStoreCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -188,7 +246,48 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             )
             {
                 //Arrange
-                customer.CustomerType = SharedKernel.Interfaces.CustomerType.Store;
+                customer.CustomerType = CustomerType.Store;
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Put, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(customer, new JsonSerializerOptions
+                            {
+                                Converters =
+                                    {
+                                        new JsonStringEnumConverter(),
+                                        new CustomerConverter<
+                                            Customer,
+                                            StoreCustomer,
+                                            IndividualCustomer>()
+                                    },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            }),
+                            Encoding.UTF8,
+                            "application/json"
+                        )
+                    );
+
+                //Act
+                var response = await sut.UpdateCustomerAsync("1", customer);
+
+                //Assert
+                response.Should().BeEquivalentTo(customer);
+            }
+
+            [Theory, MockHttpData]
+            public async Task GetCustomer_IndividualCustomerFound_ReturnIndividualCustomer(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer customer,
+                CustomerApiClient sut
+            )
+            {
+                //Arrange
+                customer.CustomerType = CustomerType.Individual;
                 httpClient.BaseAddress = uri;
 
                 handler.When(HttpMethod.Put, $"{uri}*")
