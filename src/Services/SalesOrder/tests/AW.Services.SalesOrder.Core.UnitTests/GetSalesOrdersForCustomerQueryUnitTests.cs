@@ -5,6 +5,7 @@ using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,10 +40,12 @@ namespace AW.Services.SalesOrder.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Count; i++)
-            {
-                result[i].SalesOrderNumber.Should().Be(salesOrders[i].SalesOrderNumber);
-            }
+            result.Should().BeEquivalentTo(salesOrders, 
+                opt => opt
+                    .Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SpecialOfferProduct"))
+                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SalesReason"))
+            );
         }
     }
 }

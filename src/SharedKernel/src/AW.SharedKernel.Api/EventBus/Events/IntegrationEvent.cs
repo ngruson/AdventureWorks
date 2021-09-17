@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AW.SharedKernel.Api.EventBus.Events
 {
-    public record IntegrationEvent
+    public abstract record IntegrationEvent
     {
         public IntegrationEvent()
         {

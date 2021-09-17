@@ -166,7 +166,16 @@ namespace AW.Services.Basket.REST.API
             {
                 services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
                 {
-                    return new EventBusServiceBus(sp);
+                    var serviceBusPersisterConnection = sp.GetRequiredService<IServiceBusPersisterConnection>();
+                    var logger = sp.GetRequiredService<ILogger<EventBusServiceBus>>();
+                    var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+                    
+                    return new EventBusServiceBus(
+                        sp,
+                        serviceBusPersisterConnection,
+                        logger,
+                        eventBusSubcriptionsManager
+                    );
                 });
             }
             else

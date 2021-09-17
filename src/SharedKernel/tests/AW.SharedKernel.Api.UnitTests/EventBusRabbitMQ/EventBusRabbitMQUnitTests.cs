@@ -1,6 +1,5 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.Api.EventBus;
-using AW.SharedKernel.Api.EventBus.Events;
 using AW.SharedKernel.Api.EventBusRabbitMQ;
 using AW.SharedKernel.UnitTesting;
 using Moq;
@@ -19,7 +18,7 @@ namespace AW.SharedKernel.Api.UnitTests.EventBusRabbitMQ
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
             [Greedy] mq.EventBusRabbitMQ sut,
-            IntegrationEvent integrationEvent
+            TestIntegrationEvent integrationEvent
         )
         {
             //Arrange            

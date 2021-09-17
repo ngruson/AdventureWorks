@@ -26,7 +26,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 List<SalesOrder> salesOrders,
-                SalesOrderApiClient sut
+                SalesOrderApiClient sut,
+                int pageIndex,
+                int pageSize,
+                string territory,
+                CustomerType customerType
             )
             {
                 //Arrange
@@ -58,7 +62,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                         );
 
                 //Act
-                var response = await sut.GetSalesOrdersAsync(0, 10, null, null);
+                var response = await sut.GetSalesOrdersAsync(pageIndex, pageSize, territory, customerType);
 
                 //Assert
                 response.Should().BeEquivalentTo(salesOrdersResult);

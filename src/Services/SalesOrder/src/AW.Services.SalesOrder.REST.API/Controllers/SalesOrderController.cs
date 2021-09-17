@@ -51,14 +51,14 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
             logger.LogInformation("Sending the GetSalesOrdersForCustomer query");
             var salesOrders = await mediator.Send(query);
 
-            if (salesOrders == null || salesOrders.Count == 0)
+            if (salesOrders == null || salesOrders.SalesOrders.Count == 0)
             {
                 logger.LogInformation("No sales orders found");
                 return new NotFoundResult();
             }
 
             logger.LogInformation("Returning sales orders");
-            return new OkObjectResult(mapper.Map<List<Core.Models.SalesOrder>>(salesOrders));
+            return new OkObjectResult(mapper.Map<SalesOrdersResult>(salesOrders));
         }
 
         [HttpGet("{salesOrderNumber}")]

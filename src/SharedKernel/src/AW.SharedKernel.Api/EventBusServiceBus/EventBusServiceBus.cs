@@ -2,7 +2,6 @@
 using AW.SharedKernel.Api.EventBus.Abstractions;
 using AW.SharedKernel.Api.EventBus.Events;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Text;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AW.SharedKernel.Api.EventBusServiceBus
 {
-    public class EventBusServiceBus : IEventBus
+    public class EventBusServiceBus : IEventBus, IDisposable
     {
         private readonly IServiceBusPersisterConnection serviceBusPersisterConnection;
         private readonly ILogger<EventBusServiceBus> logger;
@@ -19,12 +18,17 @@ namespace AW.SharedKernel.Api.EventBusServiceBus
         private readonly IServiceProvider serviceProvider;
         private const string INTEGRATION_EVENT_SUFFIX = "IntegrationEvent";
 
-        public EventBusServiceBus(IServiceProvider serviceProvider)
+        public EventBusServiceBus(
+            IServiceProvider serviceProvider,
+            IServiceBusPersisterConnection serviceBusPersisterConnection,
+            ILogger<EventBusServiceBus> logger,
+            IEventBusSubscriptionsManager subsManager
+        )
         {
             this.serviceProvider = serviceProvider;
-            serviceBusPersisterConnection = serviceProvider.GetRequiredService<IServiceBusPersisterConnection>();
-            logger = serviceProvider.GetRequiredService<ILogger<EventBusServiceBus>>();
-            subsManager = serviceProvider.GetRequiredService<IEventBusSubscriptionsManager>();
+            this.serviceBusPersisterConnection = serviceBusPersisterConnection;
+            this.logger = logger;
+            this.subsManager = subsManager;
 
             RemoveDefaultRule();
             RegisterSubscriptionClientMessageHandler();
@@ -119,6 +123,7 @@ namespace AW.SharedKernel.Api.EventBusServiceBus
         public void Dispose()
         {
             subsManager.Clear();
+            GC.SuppressFinalize(this);
         }
 
         private void RegisterSubscriptionClientMessageHandler()

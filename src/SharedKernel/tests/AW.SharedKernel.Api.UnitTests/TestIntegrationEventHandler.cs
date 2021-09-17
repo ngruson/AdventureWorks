@@ -1,7 +1,7 @@
 ﻿using AW.SharedKernel.Api.EventBus.Abstractions;
 using System.Threading.Tasks;
 
-namespace AW.SharedKernel.Api.UnitTests.EventBusRabbitMQ
+namespace AW.SharedKernel.Api.UnitTests
 {
     public class TestIntegrationEventHandler : IIntegrationEventHandler<TestIntegrationEvent>
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
 {
-    public class GetSalesOrdersForCustomerQueryHandler : IRequestHandler<GetSalesOrdersForCustomerQuery, List<SalesOrderDto>>
+    public class GetSalesOrdersForCustomerQueryHandler : IRequestHandler<GetSalesOrdersForCustomerQuery, GetSalesOrdersDto>
     {
         private readonly ILogger<GetSalesOrdersForCustomerQueryHandler> logger;
         private readonly IRepository<Entities.SalesOrder> repository;
@@ -20,7 +20,7 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
             IRepository<Entities.SalesOrder> repository, IMapper mapper) =>
             (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
 
-        public async Task<List<SalesOrderDto>> Handle(GetSalesOrdersForCustomerQuery request, CancellationToken cancellationToken)
+        public async Task<GetSalesOrdersDto> Handle(GetSalesOrdersForCustomerQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");
 
@@ -28,11 +28,18 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
             var spec = new GetSalesOrdersForCustomerSpecification(
                 request.CustomerNumber
             );
+            var countSpec = new CountSalesOrdersForCustomerSpecification(
+                request.CustomerNumber
+            );
 
             var orders = await repository.ListAsync(spec);
 
             logger.LogInformation("Returning sales orders");
-            return mapper.Map<List<SalesOrderDto>>(orders);
+            return new GetSalesOrdersDto
+            {
+                SalesOrders = mapper.Map<List<SalesOrderDto>>(orders),
+                TotalSalesOrders = await repository.CountAsync(countSpec)
+            };
         }
     }
 }

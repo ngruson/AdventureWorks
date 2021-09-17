@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
@@ -67,7 +68,13 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.GetCustomersAsync(0, 10, null, null, null);
+                var response = await sut.GetCustomersAsync(
+                    0, 
+                    10, 
+                    "territory", 
+                    CustomerType.Individual, 
+                    "accountNumber"
+                );
 
                 //Assert
                 response.TotalCustomers.Should().Be(list.Count);

@@ -2,6 +2,8 @@
 using AW.Services.SalesOrder.Core.Entities;
 using AW.SharedKernel.AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
 {
@@ -30,7 +32,13 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
 
         public string Territory { get; set; }
 
+        public AddressDto BillToAddress { get; set; }
+
+        public AddressDto ShipToAddress { get; set; }
+
         public string ShipMethod { get; set; }
+
+        public CreditCardDto CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 
@@ -42,9 +50,15 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
 
         public string Comment { get; set; }
 
+        public List<SalesOrderLineDto> OrderLines { get; set; }
+
+        public List<SalesReasonDto> SalesReasons { get; set; }
+
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entities.SalesOrder, SalesOrderDto>();
+            profile.CreateMap<Entities.SalesOrder, SalesOrderDto>()
+                .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
+                    .Select(r => r.SalesReason)));
         }
     }
 }

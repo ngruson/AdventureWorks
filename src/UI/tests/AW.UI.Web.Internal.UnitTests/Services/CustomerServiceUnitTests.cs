@@ -14,74 +14,141 @@ using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
 using AW.SharedKernel.Interfaces;
 using System.Threading.Tasks;
+using AW.SharedKernel.UnitTesting;
+using AutoFixture.Xunit2;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
 {
     public class CustomerServiceUnitTests
     {
-        [Fact]
-        public async Task GetCustomers_ReturnsViewModel()
-        {
-            //Arrange
-            var mockLogger = new Mock<ILogger<CustomerService>>();
-            var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-            var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-            var mockSalesPersonApi = new Mock<salesPersonApi.ISalesPersonApiClient>();
-
-            var customers = new List<customerApi.Models.GetCustomers.Customer>();
-            for (int i = 1; i <= 10; i++)
+        public class GetCustomers
+        {            
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetCustomers_FirstPage_ReturnsViewModel(
+                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
+                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApi,
+                CustomerService sut,                
+                List<Territory> territories
+            )
             {
-                string accountNumber = "AW" + (i.ToString().PadLeft(8, '0'));
-                customers.Add(
-                    new TestBuilders.GetCustomers.StoreCustomerBuilder()
-                        .AccountNumber(accountNumber).Build()
-                );
+                //Arrange
+                var customers = Enumerable.Repeat(new customerApi.Models.GetCustomers.StoreCustomer(), 10).ToList();
+
+                mockCustomerApi.Setup(x => x.GetCustomersAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CustomerType>(),
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
+                {
+                    Customers = customers.Cast<customerApi.Models.GetCustomers.Customer>().ToList(),
+                    TotalCustomers = customers.Count * 10
+                });
+
+                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync())
+                    .ReturnsAsync(territories);
+
+                //Act
+                var viewModel = await sut.GetCustomers(0, 10, null, CustomerType.Store, null);
+
+                //Assert
+                viewModel.Customers.Count.Should().Be(10);
+                viewModel.Territories.ToList().Count.Should().Be(4);
+                viewModel.Territories.ToList()[0].Text.Should().Be("All");
+                viewModel.CustomerTypes.Count().Should().Be(3);
+                viewModel.PaginationInfo.Should().NotBeNull();
+                viewModel.PaginationInfo.ActualPage.Should().Be(0);
+                viewModel.PaginationInfo.ItemsPerPage.Should().Be(10);
+                viewModel.PaginationInfo.TotalItems.Should().Be(100);
+                viewModel.PaginationInfo.TotalPages.Should().Be(10);
+                viewModel.PaginationInfo.Next.Should().Be("");
+                viewModel.PaginationInfo.Previous.Should().Be("disabled");
             }
 
-            mockCustomerApi.Setup(x => x.GetCustomersAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<CustomerType>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
-            {
-                Customers = customers,
-                TotalCustomers = 100
-            });
-
-            mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetCustomers_LastPage_ReturnsViewModel(
+                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
+                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApi,
+                CustomerService sut,
+                List<Territory> territories
             )
-            .ReturnsAsync(new List<referenceDataApi.Models.GetTerritories.Territory>
             {
-                new SalesTerritoryBuilder().CountryRegion("US").Name("Northwest").Build(),
-                new SalesTerritoryBuilder().CountryRegion("US").Name("Northeast").Build()
-            });
+                //Arrange
+                var customers = Enumerable.Repeat(new customerApi.Models.GetCustomers.StoreCustomer(), 10).ToList();
 
-            var svc = new CustomerService(
-                mockLogger.Object,
-                Mapper.CreateMapper(),
-                mockCustomerApi.Object,
-                mockReferenceDataApi.Object,
-                mockSalesPersonApi.Object
-            );
+                mockCustomerApi.Setup(x => x.GetCustomersAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CustomerType>(),
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
+                {
+                    Customers = customers.Cast<customerApi.Models.GetCustomers.Customer>().ToList(),
+                    TotalCustomers = customers.Count * 10
+                });
 
-            //Act
-            var viewModel = await svc.GetCustomers(0, 10, null, CustomerType.Store, null);
+                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync())
+                    .ReturnsAsync(territories);
 
-            //Assert
-            viewModel.Customers.Count.Should().Be(10);
-            viewModel.Territories.ToList().Count.Should().Be(3);
-            viewModel.Territories.ToList()[0].Text.Should().Be("All");
-            viewModel.CustomerTypes.Count().Should().Be(3);
-            viewModel.PaginationInfo.Should().NotBeNull();
-            viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(10);
-            viewModel.PaginationInfo.TotalItems.Should().Be(100);
-            viewModel.PaginationInfo.TotalPages.Should().Be(10);
-            viewModel.PaginationInfo.Next.Should().Be("");
-            viewModel.PaginationInfo.Previous.Should().Be("disabled");
+                //Act
+                var viewModel = await sut.GetCustomers(9, 10, null, CustomerType.Store, null);
+
+                //Assert
+                viewModel.Customers.Count.Should().Be(10);
+                viewModel.Territories.ToList().Count.Should().Be(4);
+                viewModel.Territories.ToList()[0].Text.Should().Be("All");
+                viewModel.CustomerTypes.Count().Should().Be(3);
+                viewModel.PaginationInfo.Should().NotBeNull();
+                viewModel.PaginationInfo.ActualPage.Should().Be(9);
+                viewModel.PaginationInfo.ItemsPerPage.Should().Be(10);
+                viewModel.PaginationInfo.TotalItems.Should().Be(100);
+                viewModel.PaginationInfo.TotalPages.Should().Be(10);
+                viewModel.PaginationInfo.Next.Should().Be("disabled");
+                viewModel.PaginationInfo.Previous.Should().Be("");
+            }
+        }
+
+        public class GetStoreCustomerForEdit
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetStoreCustomerForEdit_ReturnsViewModel(
+                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApiClient,
+                [Frozen] Mock<salesPersonApi.ISalesPersonApiClient> mockSalesPersonApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer,
+                List<Territory> territories,
+                List<salesPersonApi.Models.SalesPerson> salesPersons
+            )
+            {
+                //Arrange
+                mockCustomerApiClient.Setup(x => x
+                    .GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                ))
+               .ReturnsAsync(customer);
+
+                mockReferenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+                    .ReturnsAsync(territories);
+
+                mockSalesPersonApiClient.Setup(_ => _.GetSalesPersonsAsync(It.IsAny<string>()))
+                    .ReturnsAsync(salesPersons);
+
+                //Act
+                var viewModel = await sut.GetStoreCustomerForEdit(customer.AccountNumber);
+
+                //Assert
+                viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
+                viewModel.Territories.ToList().Count.Should().Be(4);
+                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.SalesPersons.ToList().Count.Should().Be(4);
+                viewModel.SalesPersons.ToList()[0].Text.Should().Be("All");
+            }
         }
 
         [Fact]
