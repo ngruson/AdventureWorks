@@ -123,16 +123,16 @@
     <Analyzer Include="..\..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting.EF6\AW.SharedKernel.UnitTesting.EF6.csproj">
-      <Project>{e4eeefc6-b831-402a-8409-58d926f693b3}</Project>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting.EF6\AW.SharedKernel.UnitTesting.EF6.csproj">
+      <Project>{E4EEEFC6-B831-402A-8409-58D926F693B3}</Project>
       <Name>AW.SharedKernel.UnitTesting.EF6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj">
-      <Project>{41F39CAE-50F1-4018-8256-6BE40FE0A768}</Project>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj">
+      <Project>{693ef9c0-ca4f-44ed-a3c8-d2c5f21c09a2}</Project>
       <Name>AW.SharedKernel.UnitTesting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
-      <Project>{aae8419b-3ce8-4a8c-8a2f-4c19e46b0f42}</Project>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj">
+      <Project>{1590bb85-9e79-4538-bd8b-834ba50d4a6c}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">

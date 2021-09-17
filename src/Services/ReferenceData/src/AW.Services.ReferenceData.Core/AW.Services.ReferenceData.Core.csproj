@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

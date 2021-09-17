@@ -50,12 +50,7 @@ namespace AW.SharedKernel.Api.EventBusServiceBus
 
         public ITopicClient CreateModel()
         {
-            if (topicClient.IsClosedOrClosing)
-            {
-                topicClient = new TopicClient(serviceBusConnectionStringBuilder, RetryPolicy.Default);
-            }
-
-            return topicClient;
+            return TopicClient;
         }
 
         public void Dispose()
@@ -63,6 +58,8 @@ namespace AW.SharedKernel.Api.EventBusServiceBus
             if (disposed) return;
 
             disposed = true;
+
+            GC.SuppressFinalize(this);
         }
     }
 }

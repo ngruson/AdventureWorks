@@ -7,10 +7,10 @@ using api = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels
 {
-    public record Basket : IMapFrom<api.Basket>
+    public class Basket : IMapFrom<api.Basket>
     {
-        public List<BasketItem> Items { get; init; } = new List<BasketItem>();
-        public string BuyerId { get; init; }
+        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
+        public string BuyerId { get; set; }
 
         public decimal Total()
         {

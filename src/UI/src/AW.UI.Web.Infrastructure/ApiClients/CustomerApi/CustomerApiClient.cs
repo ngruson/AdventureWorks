@@ -1,5 +1,6 @@
-﻿using AW.SharedKernel.Interfaces;
+﻿using sh_int = AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
+using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -22,7 +23,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
             int pageIndex, 
             int pageSize, 
             string territory, 
-            CustomerType? customerType,
+            sh_int.CustomerType? customerType,
             string accountNumber
         )
         {
@@ -39,7 +40,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
             }
             if (customerType.HasValue)
             {
-                var customerTypeValue = customerType.Value == CustomerType.Individual ? 0 : 1;
+                var customerTypeValue = customerType.Value == sh_int.CustomerType.Individual ? 0 : 1;
                 logMessage += ", customer type {CustomerType}";
                 args.Add(customerType);
                 requestUri += $"&customerType={customerTypeValue}";

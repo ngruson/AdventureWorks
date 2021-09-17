@@ -173,6 +173,10 @@ namespace AW.Services.Basket.REST.API
             {
                 services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
                 {
+                    var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
+                    var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
+                    var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+
                     var subscriptionClientName = Configuration["SubscriptionClientName"];                    
                     var retryCount = 5;
                     if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
@@ -180,7 +184,12 @@ namespace AW.Services.Basket.REST.API
                         retryCount = int.Parse(Configuration["EventBusRetryCount"]);
                     }
 
-                    return new EventBusRabbitMQ(sp, subscriptionClientName, retryCount);
+                    return new EventBusRabbitMQ(sp, 
+                        rabbitMQPersistentConnection,
+                        logger,
+                        eventBusSubcriptionsManager,
+                        subscriptionClientName, retryCount
+                    );
                 });
             }
 

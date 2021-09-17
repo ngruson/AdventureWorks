@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.Customer.Infrastructure.EFCore\AW.Services.Customer.Infrastructure.EFCore.csproj" />
   </ItemGroup>
 

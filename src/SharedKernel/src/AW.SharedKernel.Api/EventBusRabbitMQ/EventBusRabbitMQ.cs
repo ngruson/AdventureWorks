@@ -29,15 +29,19 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
         private IModel consumerChannel;
         private string queueName;
 
-        public EventBusRabbitMQ(IServiceProvider serviceProvider, string queueName = null, int retryCount = 5)
+        public EventBusRabbitMQ(IServiceProvider serviceProvider,
+            IRabbitMQPersistentConnection persistentConnection,
+            ILogger<EventBusRabbitMQ> logger,
+            IEventBusSubscriptionsManager subsManager,
+            string queueName = null, 
+            int retryCount = 5)
         {
             this.serviceProvider = serviceProvider;
-            persistentConnection = serviceProvider.GetRequiredService<IRabbitMQPersistentConnection>();
-            logger = serviceProvider.GetRequiredService<ILogger<EventBusRabbitMQ>>();
-            subsManager = serviceProvider.GetRequiredService<IEventBusSubscriptionsManager>();
+            this.persistentConnection = persistentConnection;
+            this.logger = logger;
+            this.subsManager = subsManager;
 
             this.queueName = queueName;
-            consumerChannel = CreateConsumerChannel();
             this.retryCount = retryCount;
             subsManager.OnEventRemoved += SubsManager_OnEventRemoved;
         }
@@ -49,17 +53,15 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
                 persistentConnection.TryConnect();
             }
 
-            using (var channel = persistentConnection.CreateModel())
-            {
-                channel.QueueUnbind(queue: queueName,
-                    exchange: BROKER_NAME,
-                    routingKey: eventName);
+            using var channel = persistentConnection.CreateModel();
+            channel.QueueUnbind(queue: queueName,
+                exchange: BROKER_NAME,
+                routingKey: eventName);
 
-                if (subsManager.IsEmpty)
-                {
-                    queueName = string.Empty;
-                    consumerChannel.Close();
-                }
+            if (subsManager.IsEmpty)
+            {
+                queueName = string.Empty;
+                consumerChannel.Close();
             }
         }
 
@@ -81,32 +83,30 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
 
             logger.LogTrace("Creating RabbitMQ channel to publish event: {EventId} ({EventName})", @event.Id, eventName);
 
-            using (var channel = persistentConnection.CreateModel())
+            using var channel = persistentConnection.CreateModel();
+            logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventId}", @event.Id);
+
+            channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
+
+            var body = JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType(), new JsonSerializerOptions
             {
-                logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventId}", @event.Id);
+                WriteIndented = true
+            });
 
-                channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
-
-                var body = JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType(), new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                });
-
-                policy.Execute(() =>
-                {
-                    var properties = channel.CreateBasicProperties();
-                    properties.DeliveryMode = 2; // persistent
+            policy.Execute(() =>
+            {
+                var properties = channel.CreateBasicProperties();
+                properties.DeliveryMode = 2; // persistent
 
                     logger.LogTrace("Publishing event to RabbitMQ: {EventId}", @event.Id);
 
-                    channel.BasicPublish(
-                        exchange: BROKER_NAME,
-                        routingKey: eventName,
-                        mandatory: true,
-                        basicProperties: properties,
-                        body: body);
-                });
-            }
+                channel.BasicPublish(
+                    exchange: BROKER_NAME,
+                    routingKey: eventName,
+                    mandatory: true,
+                    basicProperties: properties,
+                    body: body);
+            });
         }
 
         public void SubscribeDynamic<TH>(string eventName)
@@ -141,6 +141,9 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
                 {
                     persistentConnection.TryConnect();
                 }
+
+                if (consumerChannel == null)
+                    consumerChannel = CreateConsumerChannel();
 
                 consumerChannel.QueueBind(queue: queueName,
                                     exchange: BROKER_NAME,

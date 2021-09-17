@@ -6,6 +6,6 @@ namespace AW.UI.Web.Store.Services
     public interface IBasketService
     {
         Task<Basket> GetBasketAsync(string userID);
-        Task AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
+        Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
     }
 }

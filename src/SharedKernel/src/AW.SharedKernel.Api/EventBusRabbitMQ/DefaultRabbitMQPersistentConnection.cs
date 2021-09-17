@@ -52,12 +52,14 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
 
             try
             {
-                connection.Dispose();
+                connection?.Dispose();
             }
             catch (IOException ex)
             {
                 logger.LogCritical(ex.ToString());
             }
+
+            GC.SuppressFinalize(this);
         }
 
         public bool TryConnect()

@@ -95,7 +95,7 @@ namespace AW.Services.SalesPerson.REST.API.UnitTests
                 It.IsAny<GetSalesPersonQuery>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Handlers.GetSalesPerson.SalesPersonDto)null);
+            .ReturnsAsync((SalesPersonDto)null);
 
             //Act
             var actionResult = await sut.GetSalesPerson(query);

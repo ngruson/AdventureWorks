@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
     <ProjectReference Include="..\AW.Services.SalesPerson.Core\AW.Services.SalesPerson.Core.csproj" />
     <ProjectReference Include="..\AW.Services.SalesPerson.Infrastructure.EFCore\AW.Services.SalesPerson.Infrastructure.EFCore.csproj" />
   </ItemGroup>

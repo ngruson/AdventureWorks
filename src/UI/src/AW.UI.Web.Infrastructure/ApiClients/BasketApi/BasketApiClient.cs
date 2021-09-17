@@ -1,7 +1,6 @@
 ﻿using AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;

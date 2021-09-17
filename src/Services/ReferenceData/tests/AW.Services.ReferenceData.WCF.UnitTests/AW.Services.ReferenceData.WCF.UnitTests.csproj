@@ -131,8 +131,8 @@
     <Analyzer Include="..\..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj">
-      <Project>{41F39CAE-50F1-4018-8256-6BE40FE0A768}</Project>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj">
+      <Project>{693EF9C0-CA4F-44ED-A3C8-D2C5F21C09A2}</Project>
       <Name>AW.SharedKernel.UnitTesting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\AW.Services.ReferenceData.Core\AW.Services.ReferenceData.Core.csproj">

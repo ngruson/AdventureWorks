@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.UI.Web.Store.UnitTests
+namespace AW.UI.Web.Store.UnitTests.Controllers
 {
     public class ProductControllerUnitTests
     {

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Controllers
@@ -17,10 +16,9 @@ namespace AW.UI.Web.Store.Controllers
         [Authorize]
         public async Task<IActionResult> SignIn(string returnUrl)
         {
-            var user = User as ClaimsPrincipal;
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            logger.LogInformation("----- User {@User} authenticated into {AppName}", user, Program.AppName);
+            logger.LogInformation("----- User {@User} authenticated into {AppName}", User, Program.AppName);
 
             if (token != null)
             {

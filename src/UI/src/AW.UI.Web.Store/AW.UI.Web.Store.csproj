@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj" />
     <ProjectReference Include="..\AW.UI.Web.Infrastructure\AW.UI.Web.Infrastructure.csproj" />
   </ItemGroup>
 

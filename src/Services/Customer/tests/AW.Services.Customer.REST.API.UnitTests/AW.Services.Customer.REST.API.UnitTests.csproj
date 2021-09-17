@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
     <ProjectReference Include="..\..\src\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj" />
   </ItemGroup>

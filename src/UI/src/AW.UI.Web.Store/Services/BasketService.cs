@@ -34,7 +34,7 @@ namespace AW.UI.Web.Store.Services
             return response;
         }
 
-        public async Task AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity)
+        public async Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity)
         {
             var item = await productApiClient.GetProductAsync(productNumber);
             var currentBasket = (mapper.Map<Basket>(await basketApiClient.GetBasket(user.Id))) ?? new Basket { BuyerId = user.Id };
@@ -58,8 +58,8 @@ namespace AW.UI.Web.Store.Services
             }
 
             // Step 5: Update basket
-            var test = mapper.Map<api.Basket>(currentBasket);
             await basketApiClient.UpdateBasket(mapper.Map<api.Basket>(currentBasket));
+            return currentBasket;
         }
     }
 }

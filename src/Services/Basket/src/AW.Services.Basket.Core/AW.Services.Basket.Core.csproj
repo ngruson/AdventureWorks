@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
   </ItemGroup>
 
 </Project>

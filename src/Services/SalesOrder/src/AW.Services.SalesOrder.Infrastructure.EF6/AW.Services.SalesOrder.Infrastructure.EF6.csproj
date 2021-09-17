@@ -75,8 +75,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\AW.SharedKernel\AW.SharedKernel.csproj">
-      <Project>{AAE8419B-3CE8-4A8C-8A2F-4C19E46B0F42}</Project>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj">
+      <Project>{1590BB85-9E79-4538-BD8B-834BA50D4A6C}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
