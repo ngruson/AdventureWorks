@@ -15,7 +15,8 @@ namespace AW.Services.Customer.WCF.Messages.DeleteCustomerAddress
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<DeleteCustomerAddressRequest, DeleteCustomerAddressCommand>();
+            profile.CreateMap<DeleteCustomerAddressRequest, DeleteCustomerAddressCommand>()
+                .ForMember(m => m.AddressType, opt => opt.MapFrom(src => src.CustomerAddress.AddressType));
         }
     }
 }
