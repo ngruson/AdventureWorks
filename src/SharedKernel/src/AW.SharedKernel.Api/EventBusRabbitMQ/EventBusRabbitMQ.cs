@@ -176,6 +176,7 @@ namespace AW.SharedKernel.Api.EventBusRabbitMQ
             }
 
             subsManager.Clear();
+            GC.SuppressFinalize(this);
         }
 
         private void StartBasicConsume()

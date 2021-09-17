@@ -5,14 +5,14 @@ namespace AW.SharedKernel.Api.EventBus.Events
 {
     public abstract record IntegrationEvent
     {
-        public IntegrationEvent()
+        protected IntegrationEvent()
         {
             Id = Guid.NewGuid();
             CreationDate = DateTime.UtcNow;
         }
 
         [JsonConstructor]
-        public IntegrationEvent(Guid id, DateTime createDate)
+        protected IntegrationEvent(Guid id, DateTime createDate)
         {
             Id = id;
             CreationDate = createDate;

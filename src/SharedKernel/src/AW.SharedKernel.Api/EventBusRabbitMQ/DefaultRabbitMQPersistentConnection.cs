@@ -10,7 +10,7 @@ using System.Net.Sockets;
 
 namespace AW.SharedKernel.Api.EventBusRabbitMQ
 {
-    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
+    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection, IDisposable
     {
         private readonly IConnectionFactory connectionFactory;
         private readonly ILogger<DefaultRabbitMQPersistentConnection> logger;

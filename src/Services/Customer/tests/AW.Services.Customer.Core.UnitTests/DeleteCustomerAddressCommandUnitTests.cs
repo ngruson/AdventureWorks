@@ -29,7 +29,7 @@ namespace AW.Services.Customer.Core.UnitTests
             {
                 new Entities.CustomerAddress
                 {
-                    AddressType = command.CustomerAddress.AddressType
+                    AddressType = command.AddressType
                 }
             };
 

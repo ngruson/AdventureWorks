@@ -13,17 +13,20 @@ namespace AW.Services.Customer.Core.UnitTests
     public class AddCustomerCommandUnitTests
     {
         [Theory]
-        [AutoMoqData]
+        [AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_NewCustomer_ReturnCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             AddCustomerCommandHandler sut,
-            AddCustomerCommand command
+            StoreCustomerDto customer
         )
         {
             // Arrange
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(
+                new AddCustomerCommand { Customer = customer }, 
+                CancellationToken.None
+            );
 
             //Assert
             result.Should().NotBeNull();
@@ -31,6 +34,8 @@ namespace AW.Services.Customer.Core.UnitTests
                 It.IsAny<Entities.Customer>(),
                 It.IsAny<CancellationToken>()
             ));
+
+            result.Should().BeEquivalentTo(customer);
         }
     }
 }

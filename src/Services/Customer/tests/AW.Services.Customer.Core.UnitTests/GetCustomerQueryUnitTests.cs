@@ -15,13 +15,21 @@ namespace AW.Services.Customer.Core.UnitTests
     public class GetCustomerQueryUnitTests
     {
         [Theory]
-        [AutoMoqData]
+        [AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_CustomerExists_ReturnCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomerQueryHandler sut,
-            GetCustomerQuery query
+            GetCustomerQuery query,
+            Entities.StoreCustomer customer
         )
         {
+            //Arrange
+            customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(customer);
+
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
@@ -31,6 +39,10 @@ namespace AW.Services.Customer.Core.UnitTests
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
+
+            result.Should().BeEquivalentTo(customer, opt => opt
+                .Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+            );
         }
 
         [Theory]

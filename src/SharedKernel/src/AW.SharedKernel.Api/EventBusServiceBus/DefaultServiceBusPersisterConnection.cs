@@ -3,7 +3,7 @@ using System;
 
 namespace AW.SharedKernel.Api.EventBusServiceBus
 {
-    public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection
+    public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection, IDisposable
     {
         private readonly ServiceBusConnectionStringBuilder serviceBusConnectionStringBuilder;
         private readonly string subscriptionClientName;
