@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="~/css/pager.css" />
     <link rel="stylesheet" href="~/css/basket/basket-status/basket-status.component.css" />
     <link rel="stylesheet" href="~/css/basket/basket.component.css" />
+    <link rel="stylesheet" href="~/css/shared/components/header/header.css" />
 </head>
 <body>
     <!-- top section-->
@@ -59,26 +60,7 @@
                     <li class="nav-item">
                         @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
-                    @foreach (var category in Model.ProductCategories)
-                    {
-                        <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarCategory" role="button" data-toggle="dropdown">@category.Name</a>
-
-                            <div class="dropdown-menu megamenu" aria-labelledby="navbarCategory">
-                                <div class="dropdown-inner">
-                                    <ul class="list-unstyled">
-                                        @foreach (var subcategory in category.Subcategories)
-                                        {
-                                            string linkText = $"{subcategory.Name} ({subcategory.ProductCount})";
-                                            <li>
-                                                @Html.ActionLink(linkText, "Index", "Product", new { productCategory = category.Name, productSubcategory = subcategory.Name }, new { @class = "dropdown-item" })
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    }
+                    @await Component.InvokeAsync("ProductMenu")
                 </ul>
             </div>
         </div>

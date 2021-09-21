@@ -1,7 +1,8 @@
-﻿namespace AW.Services.Basket.REST.API.Services
+﻿namespace AW.Services.Basket.Core
 {
     public interface IIdentityService
     {
         string GetUserIdentity();
+        string GetUserName();
     }
 }

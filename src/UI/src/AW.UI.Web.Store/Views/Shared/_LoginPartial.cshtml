@@ -26,7 +26,7 @@
             </div>
             <!-- cart -->
             <div class="header_transaction header_cart">
-                @await Component.InvokeAsync("Cart", new { user = UserManager.Parse(User) })        
+                @await Component.InvokeAsync("Cart", new { user = UserManager.Parse(User) })
             </div>
         }
         else

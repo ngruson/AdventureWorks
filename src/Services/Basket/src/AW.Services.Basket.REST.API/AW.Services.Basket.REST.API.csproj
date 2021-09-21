@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
     <ProjectReference Include="..\AW.Services.Basket.Core\AW.Services.Basket.Core.csproj" />
     <ProjectReference Include="..\AW.Services.Basket.Infrastructure\AW.Services.Basket.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,14 +1,14 @@
-﻿using AW.Services.Basket.Core;
-using AW.Services.Basket.Core.IntegrationEvents.Events;
+﻿using AW.Services.Basket.Core.Handlers.Checkout;
+using AW.Services.Basket.Core.Handlers.DeleteBasket;
+using AW.Services.Basket.Core.Handlers.GetBasket;
+using AW.Services.Basket.Core.Handlers.UpdateBasket;
 using AW.Services.Basket.Core.Model;
-using AW.Services.Basket.REST.API.Services;
-using AW.SharedKernel.Api.EventBus.Abstractions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AW.Services.Basket.REST.API.Controllers
@@ -19,71 +19,59 @@ namespace AW.Services.Basket.REST.API.Controllers
     public class BasketController : ControllerBase
     {
         private readonly ILogger<BasketController> logger;
-        private readonly IBasketRepository repository;
-        private readonly IIdentityService identityService;
-        private readonly IEventBus eventBus;
+        private readonly IMediator mediator;
 
         public BasketController(
             ILogger<BasketController> logger,
-            IBasketRepository repository,
-            IIdentityService identityService,
-            IEventBus eventBus
-        ) => (this.logger, this.repository, this.identityService, this.eventBus) = (logger, repository, identityService, eventBus);
+            IMediator mediator
+        ) => (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CustomerBasket>> GetBasketByIdAsync(string id)
+        public async Task<IActionResult> GetBasketByIdAsync(string id)
         {
-            var basket = await repository.GetBasketAsync(id);
+            logger.LogInformation("Sending GetBasket query for {UserId}", id);
+            var basket = await mediator.Send(new GetBasketQuery { Id = id });
 
+            logger.LogInformation("Returning HTTP 200 (OK) with basket");
             return Ok(basket ?? new CustomerBasket(id));
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CustomerBasket>> UpdateBasketAsync([FromBody] CustomerBasket value)
+        public async Task<IActionResult> UpdateBasketAsync([FromBody] CustomerBasket value)
         {
-            return Ok(await repository.UpdateBasketAsync(value));
+            logger.LogInformation("Sending UpdateBasket command for {UserId}", value.BuyerId);
+            var basket = await mediator.Send(new UpdateBasketCommand { Basket = value });
+
+            logger.LogInformation("Returning HTTP 200 (OK) with basket");
+            return Ok(basket);
         }
 
         [Route("checkout")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult> CheckoutAsync([FromBody] BasketCheckout basketCheckout, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> CheckoutAsync([FromBody] BasketCheckout basketCheckout, [FromHeader(Name = "x-requestid")] string requestId)
         {
-            var userId = identityService.GetUserIdentity();
-
             basketCheckout.RequestId = (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty) ?
                 guid : basketCheckout.RequestId;
 
-            var basket = await repository.GetBasketAsync(userId);
+            logger.LogInformation("Sending Checkout command for {UserId}", basketCheckout.Buyer);
+            var basket = await mediator.Send(
+                new CheckoutCommand 
+                {
+                    BasketCheckout = basketCheckout 
+                }
+            );
 
             if (basket == null)
             {
+                logger.LogError("Basket not found for {UserId}", basketCheckout.Buyer);
                 return BadRequest();
             }
 
-            var userName = this.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Name).Value;
-
-            var eventMessage = new UserCheckoutAcceptedIntegrationEvent(userId, userName, basketCheckout.City, basketCheckout.Street,
-                basketCheckout.State, basketCheckout.Country, basketCheckout.ZipCode, basketCheckout.CardNumber, basketCheckout.CardHolderName,
-                basketCheckout.CardExpiration, basketCheckout.CardSecurityNumber, basketCheckout.CardTypeId, basketCheckout.Buyer, basketCheckout.RequestId, basket);
-
-            // Once basket is checkout, sends an integration event to
-            // ordering.api to convert basket to order and proceeds with
-            // order creation process
-            try
-            {
-                eventBus.Publish(eventMessage);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
-
-                throw;
-            }
-
+            logger.LogInformation("Returning HTTP 202 (Accepted)");
             return Accepted();
         }
 
@@ -91,7 +79,8 @@ namespace AW.Services.Basket.REST.API.Controllers
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task DeleteBasketByIdAsync(string id)
         {
-            await repository.DeleteBasketAsync(id);
+            logger.LogInformation("Deleting basket for {UserId}", id);
+            await mediator.Send(new DeleteBasketCommand { Id = id });
         }
     }
 }

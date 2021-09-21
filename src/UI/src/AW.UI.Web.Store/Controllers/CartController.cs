@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Controllers
@@ -32,6 +33,26 @@ namespace AW.UI.Web.Store.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(Dictionary<string, int> quantities, string action)
+        {
+            try
+            {
+                var user = appUserParser.Parse(HttpContext.User);
+                var basket = await basketService.SetQuantities(user, quantities);
+                if (action == "[ Checkout ]")
+                {
+                    return RedirectToAction("Create", "Order");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> AddToCart(string productNumber)

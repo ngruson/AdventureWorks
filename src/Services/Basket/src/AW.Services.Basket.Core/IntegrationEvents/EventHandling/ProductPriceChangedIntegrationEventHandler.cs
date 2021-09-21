@@ -42,7 +42,7 @@ namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
         {
             var itemsToUpdate = basket?.Items?.Where(x => x.ProductNumber == productNumber).ToList();
 
-            if (itemsToUpdate != null)
+            if (itemsToUpdate?.Count > 0)
             {
                 logger.LogInformation("----- ProductPriceChangedIntegrationEventHandler - Updating items in basket for user: {BuyerId} ({@Items})", basket.BuyerId, itemsToUpdate);
 

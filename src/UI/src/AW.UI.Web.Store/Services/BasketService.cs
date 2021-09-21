@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Ardalis.GuardClauses;
 
 namespace AW.UI.Web.Store.Services
 {
@@ -36,29 +38,60 @@ namespace AW.UI.Web.Store.Services
 
         public async Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity)
         {
-            var item = await productApiClient.GetProductAsync(productNumber);
-            var currentBasket = (mapper.Map<Basket>(await basketApiClient.GetBasket(user.Id))) ?? new Basket { BuyerId = user.Id };
+            logger.LogInformation("Getting product for {ProductNumber}", productNumber);
+            var product = await productApiClient.GetProductAsync(productNumber);
+            Guard.Against.Null(product, nameof(product));
 
-            var product = currentBasket.Items.SingleOrDefault(i => i.ProductNumber == item.ProductNumber);
-            if (product != null)
+            logger.LogInformation("Getting basket for {UserId}", user.Id);
+            var currentBasket = (mapper.Map<Basket>(await basketApiClient.GetBasket(user.Id))) ?? new Basket { BuyerId = user.Id };
+            Guard.Against.Null(currentBasket, nameof(currentBasket));
+
+            var basketItem = currentBasket.Items.SingleOrDefault(i => i.ProductNumber == product.ProductNumber);
+            if (basketItem != null)
             {
-                product.Quantity += quantity;
+                logger.LogInformation("Updating basket item with {Quantity}", quantity);
+                basketItem.Quantity += quantity;
             }
             else
             {
-                currentBasket.Items.Add(new BasketItem
+                basketItem = new BasketItem
                 {
-                    UnitPrice = item.ListPrice,
-                    ThumbnailPhoto = item.ThumbnailPhoto,
-                    ProductNumber = item.ProductNumber,
-                    ProductName = item.Name,
+                    UnitPrice = product.ListPrice,
+                    ThumbnailPhoto = product.ThumbnailPhoto,
+                    ProductNumber = product.ProductNumber,
+                    ProductName = product.Name,
                     Quantity = quantity,
                     Id = Guid.NewGuid().ToString()
-                });
+                };
+
+                logger.LogInformation("Creating new basket item : {BasketItem}", basketItem);
+                currentBasket.Items.Add(basketItem);
             }
 
-            // Step 5: Update basket
+            logger.LogInformation("Updating basket");
             await basketApiClient.UpdateBasket(mapper.Map<api.Basket>(currentBasket));
+
+            logger.LogInformation("Returning basket");
+            return currentBasket;
+        }
+
+        public async Task<Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities)
+        {
+            var currentBasket = mapper.Map<Basket>(await basketApiClient.GetBasket(user.Id));
+
+            currentBasket.Items.ForEach(item => 
+                {
+                    if (quantities.ContainsKey(item.Id))
+                    {
+                        logger.LogInformation("Updating quantity for {BasketItemId}", item.Id);
+                        item.Quantity = quantities[item.Id];
+                    }
+                });
+
+            logger.LogInformation("Updating basket");
+            await basketApiClient.UpdateBasket(mapper.Map<api.Basket>(currentBasket));
+
+            logger.LogInformation("Returning basket");
             return currentBasket;
         }
     }
