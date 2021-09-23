@@ -1,4 +1,4 @@
-name: customer-api
+name: basket-api
 
 on:
   workflow_dispatch:
@@ -6,17 +6,17 @@ on:
   push:
     branches: [ master ]
     paths:
-    - src/Services/Customer/**
-    - .github/workflows/customer-api.yml
+    - src/Services/Basket/**
+    - .github/workflows/basket-api.yml
   pull_request:
     branches: [ master ]
     paths:
-    - src/Services/Customer/**
-    - .github/workflows/customer-api.yml
+    - src/Services/Basket/**
+    - .github/workflows/basket-api.yml
 
 env:
-  SERVICE: customer-api
-  IMAGE: customer.api
+  SERVICE: basket-api
+  IMAGE: basket.api
   DOTNET_VERSION: 5.0.x
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -38,11 +38,6 @@ jobs:
    
       - name: Build and run unit tests
         run: |
-          cd src
-          dotnet restore "AdventureWorks.sln"
-          cd Services/Customer/src/AW.Services.Customer.REST.API
-          dotnet build --no-restore     
-
           dotnet build src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal
           
