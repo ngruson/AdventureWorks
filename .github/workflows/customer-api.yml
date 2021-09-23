@@ -38,17 +38,14 @@ jobs:
    
       - name: Build and run unit tests
         run: |
-          cd src
-          dotnet restore "AdventureWorks.sln"
-          cd Services/Customer/src/AW.Services.Customer.REST.API
-          dotnet build --no-restore
+          cd src/Services/Customer
 
-          dotnet build src/Services/Customer/tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj
-          dotnet test src/Services/Customer/tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal
           
-          dotnet build src/Services/Customer/tests/AW.Services.Customer.Infrastructure.EFCore.UnitTests/AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-restore
-          dotnet test src/Services/Customer/tests/AW.Services.Customer.Infrastructure.EFCore.UnitTests/AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build tests/AW.Services.Customer.Infrastructure.EFCore.UnitTests/AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj
+          dotnet test tests/AW.Services.Customer.Infrastructure.EFCore.UnitTests/AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal
           
-          dotnet build src/Services/Customer/src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj --no-restore
-          dotnet build src/Services/Customer/tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
-          dotnet test src/Services/Customer/tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj
+          dotnet build tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj
+          dotnet test tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal
