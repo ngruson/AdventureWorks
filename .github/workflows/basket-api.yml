@@ -41,10 +41,10 @@ jobs:
 
           cd src/Services/Basket
 
-          dotnet build src\AW.Services.Basket.Core\AW.Services.Basket.Core.csproj
-          dotnet build tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj
-          dotnet test tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj --no-build --no-restore
+          dotnet build src/AW.Services.Basket.Core/AW.Services.Basket.Core.csproj
+          dotnet build tests/AW.Services.Basket.Core.UnitTests/AW.Services.Basket.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.Basket.Core.UnitTests/AW.Services.Basket.Core.UnitTests.csproj --no-build --no-restore
 
-          dotnet build src\AW.Services.Basket.REST.API\AW.Services.Basket.REST.API.csproj
-          dotnet build tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj
-          dotnet test tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj --no-build --no-restore
+          dotnet build src/AW.Services.Basket.REST.API/AW.Services.Basket.REST.API.csproj
+          dotnet build tests/AW.Services.Basket.REST.API.UnitTests/AW.Services.Basket.REST.API.UnitTests.csproj
+          dotnet test tests/AW.Services.Basket.REST.API.UnitTests/AW.Services.Basket.REST.API.UnitTests.csproj --no-build --no-restore
