@@ -38,12 +38,9 @@ jobs:
    
       - name: Build and run unit tests
         run: |
-          dotnet build src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-restore
-          dotnet test src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build src\Services\Basket\tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj
+          dotnet test src\Services\Basket\tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj --no-build --verbosity normal
           
-          dotnet build src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EFCore.UnitTests\AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-restore
-          dotnet test src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EFCore.UnitTests\AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal
-          
-          dotnet build src\Services\Customer\src\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
-          dotnet build src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
-          dotnet test src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build src\Services\Basket\src\AW.Services.Basket.REST.API\AW.Services.Basket.REST.API.csproj
+          dotnet build src\Services\Basket\tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj
+          dotnet test src\Services\Basket\tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj --no-build --verbosity normal
