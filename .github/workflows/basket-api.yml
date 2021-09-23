@@ -38,7 +38,13 @@ jobs:
    
       - name: Build and run unit tests
         run: |
-          dotnet restore src\AdventureWorks.sln
 
-          dotnet build src\Services\Basket\src\AW.Services.Basket.Core\AW.Services.Basket.Core.csproj
-          dotnet build src\Services\Basket\tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj          
+          cd src/Services/Basket
+
+          dotnet build src\AW.Services.Basket.Core\AW.Services.Basket.Core.csproj
+          dotnet build tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj
+          dotnet test tests\AW.Services.Basket.Core.UnitTests\AW.Services.Basket.Core.UnitTests.csproj --no-build --no-restore
+
+          dotnet build src\AW.Services.Basket.REST.API\AW.Services.Basket.REST.API.csproj
+          dotnet build tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj
+          dotnet test tests\AW.Services.Basket.REST.API.UnitTests\AW.Services.Basket.REST.API.UnitTests.csproj --no-build --no-restore
