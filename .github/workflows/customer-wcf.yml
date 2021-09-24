@@ -31,5 +31,5 @@ jobs:
           cd src/Services/Customer
           nuget restore src/AW.Services.Customer.Core/AW.Services.Customer.Core.csproj
           nuget restore src/AW.Services.Customer.Infrastructure.EF6/AW.Services.Customer.Infrastructure.EF6.csproj -SolutionDirectory ..\..
-          nuget restore src/AW.Services.Customer.WCF/AW.Services.Customer.WCF.csproj
+          nuget restore src/AW.Services.Customer.WCF/AW.Services.Customer.WCF.csproj -SolutionDirectory ..\..
           msbuild.exe src/AW.Services.Customer.WCF/AW.Services.Customer.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
