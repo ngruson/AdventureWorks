@@ -26,6 +26,7 @@ jobs:
 
       - name: Build and run unit tests
         run: |
+          nuget restore src/AdventureWorks.sln
           cd src/Services/Customer
 
           dotnet build tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj
