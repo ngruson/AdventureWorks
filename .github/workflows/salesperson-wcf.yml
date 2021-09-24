@@ -23,22 +23,13 @@ jobs:
         
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
-        
-      - name: Restore Packages
-        run: |
-          cd src
-          nuget restore AdventureWorks.sln
 
       - name: Build and run unit tests
         run: |
-          cd src/Services/SalesPerson
-          
-          dotnet build tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj
-          dotnet test tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj --no-build --no-restore
-          
-          dotnet build tests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj
-          dotnet test tests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore
+          nuget restore src/SharedKernel/src/AW.SharedKernel/AW.SharedKernel.csproj
 
+          cd src/Services/SalesPerson
+          nuget restore src/AW.Services.SalesPerson.Core/AW.Services.SalesPerson.Core.csproj
+          nuget restore src/AW.Services.SalesPerson.Infrastructure.EF6/AW.Services.SalesPerson.Infrastructure.EF6.csproj -SolutionDirectory ..\..
+          nuget restore src/AW.Services.SalesPerson.WCF/AW.Services.SalesPerson.WCF.csproj -SolutionDirectory ..\..
           msbuild.exe src/AW.Services.SalesPerson.WCF/AW.Services.SalesPerson.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
-          dotnet build tests/AW.Services.SalesPerson.WCF.UnitTests/AW.Services.SalesPerson.WCF.UnitTests.csproj
-          dotnet test tests/AW.Services.SalesPerson.WCF.UnitTests/AW.Services.SalesPerson.WCF.UnitTests.csproj --no-build --no-restore
