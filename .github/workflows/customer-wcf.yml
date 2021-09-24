@@ -23,15 +23,10 @@ jobs:
         
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
-        
-      - name: Restore Packages
-        run: |
-          cd src
-          nuget restore AdventureWorks.sln
 
       - name: Build and run unit tests
         run: |
-          cd Services/Customer
+          cd src/Services/Customer
 
           dotnet build tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj
           dotnet test tests/AW.Services.Customer.Core.UnitTests/AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore
