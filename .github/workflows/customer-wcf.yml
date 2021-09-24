@@ -26,7 +26,6 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          nuget restore src/AdventureWorks.sln
-
           cd src/Services/Customer
+          nuget restore src/AW.Services.Customer.WCF/AW.Services.Customer.WCF.csproj
           msbuild.exe src/AW.Services.Customer.WCF/AW.Services.Customer.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
