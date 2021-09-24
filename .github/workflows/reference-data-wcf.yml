@@ -31,7 +31,14 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          cd src
-          nuget restore AdventureWorks.sln
-          cd Services/ReferenceData/src/AW.Services.ReferenceData.WCF
-          msbuild.exe AW.Services.ReferenceData.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          cd src/Services/ReferenceData
+          
+          dotnet build tests/AW.Services.ReferenceData.Core.UnitTests/AW.Services.ReferenceData.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.ReferenceData.Core.UnitTests/AW.Services.ReferenceData.Core.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build tests/AW.Services.ReferenceData.Infrastructure.EF6.UnitTests/AW.Services.ReferenceData.Infrastructure.EF6.UnitTests.csproj
+          dotnet test tests/AW.Services.ReferenceData.Infrastructure.EF6.UnitTests/AW.Services.ReferenceData.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore
+
+          msbuild.exe src/AW.Services.ReferenceData.WCF/AW.Services.ReferenceData.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          dotnet build tests/AW.Services.ReferenceData.WCF.UnitTests/AW.Services.ReferenceData.WCF.UnitTests.csproj
+          dotnet test tests/AW.Services.ReferenceData.WCF.UnitTests/AW.Services.ReferenceData.WCF.UnitTests.csproj --no-build --no-restore

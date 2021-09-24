@@ -31,7 +31,14 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          cd src
-          nuget restore AdventureWorks.sln
-          cd Services/SalesPerson/src/AW.Services.SalesPerson.WCF
-          msbuild.exe AW.Services.SalesPerson.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          cd src/Services/SalesPerson
+          
+          dotnet build tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build tests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests/AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore
+
+          msbuild.exe src/AW.Services.SalesPerson.WCF/AW.Services.SalesPerson.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          dotnet build tests/AW.Services.SalesPerson.WCF.UnitTests/AW.Services.SalesPerson.WCF.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.WCF.UnitTests/AW.Services.SalesPerson.WCF.UnitTests.csproj --no-build --no-restore

@@ -30,8 +30,15 @@ jobs:
           nuget restore AdventureWorks.sln
 
       - name: Build and run unit tests
-        run: |
-          cd src
-          nuget restore AdventureWorks.sln
-          cd Services/Product/src/AW.Services.Product.WCF
-          msbuild.exe AW.Services.Product.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+        run: |          
+          cd src/Services/Product
+          
+          dotnet build tests/AW.Services.Product.Core.UnitTests/AW.Services.Product.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.Product.Core.UnitTests/AW.Services.Product.Core.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build tests/AW.Services.Product.Infrastructure.EF6.UnitTests/AW.Services.Product.Infrastructure.EF6.UnitTests.csproj
+          dotnet test tests/AW.Services.Product.Infrastructure.EF6.UnitTests/AW.Services.Product.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore
+
+          msbuild.exe src/AW.Services.Product.WCF/AW.Services.Product.WCF.csproj /p:Platform=AnyCPU /p:Configuration=Release
+          dotnet build tests/AW.Services.Product.WCF.UnitTests/AW.Services.Product.WCF.UnitTests.csproj
+          dotnet test tests/AW.Services.Product.WCF.UnitTests/AW.Services.Product.WCF.UnitTests.csproj --no-build --no-restore

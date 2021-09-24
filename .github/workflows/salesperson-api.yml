@@ -33,7 +33,14 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          cd src
-          dotnet restore "AdventureWorks.sln"
-          cd Services/SalesPerson/src/AW.Services.SalesPerson.REST.API
-          dotnet build --no-restore
+          cd src/Services/SalesPerson
+          
+          dotnet build tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.Core.UnitTests/AW.Services.SalesPerson.Core.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build tests/AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests/AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests/AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build src/AW.Services.SalesPerson.REST.API/AW.Services.SalesPerson.REST.API.csproj
+          dotnet build tests/AW.Services.SalesPerson.REST.API.UnitTests/AW.Services.SalesPerson.REST.API.UnitTests.csproj
+          dotnet test tests/AW.Services.SalesPerson.REST.API.UnitTests/AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore
