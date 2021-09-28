@@ -1,4 +1,5 @@
 using AW.Services.Basket.Core;
+using AW.Services.Basket.Core.Handlers.GetBasket;
 using AW.Services.Basket.Core.IntegrationEvents.EventHandling;
 using AW.Services.Basket.Infrastructure.Repositories;
 using AW.Services.Basket.REST.API.Services;
@@ -8,6 +9,7 @@ using AW.SharedKernel.Api.EventBus.Abstractions;
 using AW.SharedKernel.Api.EventBusRabbitMQ;
 using AW.SharedKernel.Api.EventBusServiceBus;
 using HealthChecks.UI.Client;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -24,6 +26,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using StackExchange.Redis;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AW.Services.Basket.REST.API
 {
@@ -51,6 +54,9 @@ namespace AW.Services.Basket.REST.API
                     }
                 );
 
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -67,6 +73,7 @@ namespace AW.Services.Basket.REST.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IBasketRepository, RedisBasketRepository>();
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddMediatR(typeof(GetBasketQuery));
 
             services.AddOptions();
 

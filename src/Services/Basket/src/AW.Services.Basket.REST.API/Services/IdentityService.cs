@@ -1,6 +1,8 @@
 ﻿using AW.Services.Basket.Core;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace AW.Services.Basket.REST.API.Services
@@ -15,13 +17,13 @@ namespace AW.Services.Basket.REST.API.Services
         }
 
         public string GetUserIdentity()
-        {
+        {            
             return context.HttpContext.User.FindFirst("sub").Value;
         }
 
         public string GetUserName()
         {
-            return context.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.Name).Value;
+            return context.HttpContext.User.FindFirst(x => x.Type == "name").Value;
         }
     }
 }
