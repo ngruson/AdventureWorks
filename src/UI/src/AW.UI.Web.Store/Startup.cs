@@ -5,6 +5,7 @@ using AW.UI.Web.Store.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,27 +42,42 @@ namespace AW.UI.Web.Store
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            var virtualPath = "/mvc-store";
 
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.Map(virtualPath, builder =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapFallbackToFile("index.html");
+                if (env.IsDevelopment())
+                {
+                    builder.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    builder.UseExceptionHandler("/Error");
+                }
+
+                builder.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+
+                builder.Use(async (context, next) =>
+                {
+                    context.Request.Scheme = "https";
+                    await next();
+                });
+
+                builder.UseStaticFiles();
+                builder.UseCookiePolicy();
+                builder.UseRouting();
+                builder.UseAuthentication();
+                builder.UseAuthorization();
+
+                builder.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
             });
         }
     }

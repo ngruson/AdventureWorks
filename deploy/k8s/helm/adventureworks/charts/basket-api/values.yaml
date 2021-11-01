@@ -1,0 +1,13 @@
+replicaCount: 1
+pathBase: /basket-api/
+serviceName: basket-api
+authority: k8s-local.adventureworks.com/identityserver
+
+image:
+  repository: ngruson/adventureworks_basketapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80

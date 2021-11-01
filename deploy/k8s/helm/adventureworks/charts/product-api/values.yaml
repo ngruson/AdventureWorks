@@ -1,0 +1,15 @@
+replicaCount: 1
+pathBase: /product-api/
+serviceName: product-api
+authority: k8s-local.adventureworks.com/identityserver
+
+image:
+  repository: ngruson/adventureworks_productapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+db: sqldb-adv-product
+
+service:
+  type: ClusterIP
+  port: 80

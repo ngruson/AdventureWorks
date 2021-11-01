@@ -1,0 +1,15 @@
+replicaCount: 1
+pathBase: /customer-api/
+serviceName: customer-api
+authority: k8s-local.adventureworks.com/identityserver
+
+image:
+  repository: ngruson/adventureworks_customerapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+db: sqldb-adv-customer
+
+service:
+  type: ClusterIP
+  port: 80

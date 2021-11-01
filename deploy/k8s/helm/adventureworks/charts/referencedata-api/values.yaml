@@ -1,0 +1,15 @@
+replicaCount: 1
+pathBase: /referencedata-api/
+serviceName: referencedata-api
+authority: k8s-local.adventureworks.com/identityserver
+
+image:
+  repository: ngruson/adventureworks_referencedataapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+db: sqldb-adv-referencedata
+
+service:
+  type: ClusterIP
+  port: 80

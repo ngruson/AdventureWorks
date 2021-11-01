@@ -1,0 +1,50 @@
+{{- $name := include "customer-db.fullname" . -}}
+{{- $cfgname := printf "%s-%s" $name "config" -}}
+{{- $secretsname := printf "%s-%s" $name "secrets" -}}
+{{- $dataPath := .Values.global.inf.sql.common.dataPath -}}
+
+
+{{- if .Values.global.app.db.customer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "customer-db.fullname" . }}
+  labels:
+    ufo: {{ $cfgname}}
+    app: {{ include "customer-db.name" . }}
+    chart: {{ include "customer-db.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "customer-db.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "customer-db.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        #- name: {{ include "customer-db.fullname" . }}-pv
+        #  persistentVolumeClaim:
+        #    claimName: {{ include "customer-db.fullname" . }}-pvc
+        - name: {{ include "customer-db.fullname" . }}-data
+          hostPath:
+            path: {{ $dataPath }}
+            type: Directory
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+          - name: {{ include "customer-db.fullname" . }}-data
+            mountPath: data
+        envFrom:
+          - configMapRef: 
+              name: {{ $cfgname}}
+          - secretRef:
+              name: {{ $secretsname}}
+{{- end }}

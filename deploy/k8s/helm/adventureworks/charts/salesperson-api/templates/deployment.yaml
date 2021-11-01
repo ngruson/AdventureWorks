@@ -1,0 +1,43 @@
+{{- $name := include "salesperson-api.fullname" . -}}
+{{- $cfgname := printf "%s-%s" $name "config" -}}
+{{- $secretsname := printf "%s-%s" $name "secrets" -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "salesperson-api.fullname" . }}
+  labels:
+    ufo: {{ $cfgname}}
+    app: {{ include "salesperson-api.name" . }}
+    chart: {{ include "salesperson-api.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "salesperson-api.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "salesperson-api.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - configMapRef: 
+              name: {{ $cfgname}}
+          - secretRef:
+              name: {{ $secretsname}}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP

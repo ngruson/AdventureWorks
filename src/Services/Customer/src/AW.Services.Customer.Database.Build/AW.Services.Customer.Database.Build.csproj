@@ -1,0 +1,21 @@
+<Project Sdk="MSBuild.Sdk.SqlProj/1.17.0">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\AW.Services.Customer.Database\**\Tables\*.sql" />
+    <None Include="..\AW.Services.Customer.Database\**\Data\*.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\Script.PostDeployment.sql" />
+    <!--<PostDeploy Include="..\AW.Services.Customer.Database\**\InsertCustomerAddress.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertIndividualCustomer.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertPerson.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertPersonEmailAddress.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertPersonPhone.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertSalesOrder.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertStoreCustomer.sql" />
+    <PostDeploy Include="..\AW.Services.Customer.Database\**\InsertStoreCustomerContact.sql" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="..\AW.Services.Customer.Database\obj\Debug\**" />
+  </ItemGroup>
+</Project>

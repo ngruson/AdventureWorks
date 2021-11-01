@@ -1,0 +1,15 @@
+replicaCount: 1
+pathBase: /salesperson-api/
+serviceName: salesperson-api
+authority: k8s-local.adventureworks.com/identityserver
+
+image:
+  repository: ngruson/adventureworks_salespersonapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+db: sqldb-adv-salesperson
+
+service:
+  type: ClusterIP
+  port: 80

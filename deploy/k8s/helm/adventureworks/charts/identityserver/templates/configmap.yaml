@@ -1,0 +1,14 @@
+{{- $name := include "identityserver.fullname" . -}}
+{{- $db := .Values.db -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $name }}-config"
+  labels:
+    app: {{ template "customer-api.name" . }}
+    chart: {{ template "customer-api.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"

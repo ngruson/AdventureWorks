@@ -1,0 +1,23 @@
+# escape=`
+FROM ngruson/dotnet-framework-4.8-ssdt AS builder
+
+WORKDIR /src
+COPY Services/Customer/src/AW.Services.Customer.Database .
+RUN msbuild AW.Services.Customer.Database.sqlproj `
+	/p:SQLDBExtensionsRefPath="C:\Microsoft.Data.Tools.Msbuild.10.0.61804.210\lib\net46" `
+	/p:SqlServerRedistPath="C:\Microsoft.Data.Tools.Msbuild.10.0.61804.210\lib\net46"
+
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+ENV ACCEPT_EULA="Y" `
+  DATA_PATH="C:\data" `
+  sa_password="Welkom01!"
+
+VOLUME ${DATA_PATH}
+WORKDIR C:\init
+
+COPY Services/Customer/src/AW.Services.Customer.Database/Initialize-Database.ps1 .
+RUN DIR 'C:\\Program Files\\Microsoft SQL Server\\140'
+CMD powershell ./Initialize-Database.ps1 -sa_password $env:sa_password -data_path $env:DATA_PATH -Verbose
+
+COPY --from=builder C:\src\bin\debug\AW.Services.Customer.Database.dacpac .

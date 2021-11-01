@@ -1,0 +1,16 @@
+{{- $name := include "mvc-store.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $name }}-config"
+  labels:
+    app: {{ template "mvc-store.name" . }}
+    chart: {{ template "mvc-store.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+  AuthN__Authority: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.authority }}
+  BasketAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.basket_api }}
+  ProductAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.product_api }}

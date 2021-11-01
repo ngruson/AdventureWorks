@@ -4,14 +4,17 @@ using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
 using AW.UI.Web.Infrastructure.ApiClients.SalesPersonApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.Services;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal
 {
@@ -71,24 +74,34 @@ namespace AW.UI.Web.Internal
                 })
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = Configuration["AuthN:Authority"];
+                    options.ClientId = Configuration["AuthN:ClientId"];
+                    options.ClientSecret = Configuration["AuthN:ClientSecret"];
+                    options.ResponseType = "code";
+                    options.UsePkce = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.SaveTokens = true;
+                    options.Scope.Clear();
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.Scope.Add("email");
+                    options.Scope.Add("offline_access");
+                    options.Scope.Add("customer-api.read");
+                    options.Scope.Add("salesorder-api.read");
+                    options.Scope.Add("salesperson-api.read");
+                    options.Scope.Add("referencedata-api.read");
+
+                    options.Events = new OpenIdConnectEvents
                     {
-                        options.Authority = Configuration["AuthN:Authority"];
-                        options.ClientId = Configuration["AuthN:ClientId"];
-                        options.ClientSecret = Configuration["AuthN:ClientSecret"];
-                        options.ResponseType = "code";
-                        options.UsePkce = true;
-                        options.GetClaimsFromUserInfoEndpoint = true;
-                        options.SaveTokens = true;
-                        options.Scope.Clear();
-                        options.Scope.Add("openid");
-                        options.Scope.Add("profile");
-                        options.Scope.Add("email");
-                        options.Scope.Add("offline_access");
-                        options.Scope.Add("customer-api.read");
-                        options.Scope.Add("salesorder-api.read");
-                        options.Scope.Add("salesperson-api.read");
-                        options.Scope.Add("referencedata-api.read");
-                    });
+                        OnTicketReceived = ctx =>
+                        {
+                            var p = ctx.Principal;
+                            var x = ctx.ReturnUri;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -99,27 +112,42 @@ namespace AW.UI.Web.Internal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }            
+            var virtualPath = "/mvc-internal";
 
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.Map(virtualPath, builder =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Customer}/{action=Index}/{id?}");
-                endpoints.MapFallbackToFile("index.html");
+                if (env.IsDevelopment())
+                {
+                    builder.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    builder.UseExceptionHandler("/Error");
+                }
+
+                builder.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+
+                builder.Use(async (context, next) =>
+                {
+                    context.Request.Scheme = "https";
+                    await next();
+                });
+
+                builder.UseStaticFiles();
+                builder.UseCookiePolicy();
+                builder.UseRouting();
+                builder.UseAuthentication();
+                builder.UseAuthorization();
+
+                builder.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Customer}/{action=Index}/{id?}");
+                });
             });
         }
     }

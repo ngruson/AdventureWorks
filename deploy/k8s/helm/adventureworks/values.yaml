@@ -1,0 +1,55 @@
+global: 
+  app:
+    svc:
+      customer: customer-api
+    db:
+      customer:
+        enabled: false
+
+ingress:
+  className: nginx
+  enabled: true
+  annotations: {}
+  tls:
+    - hosts: 
+        - k8s-local.adventureworks.com
+      secretName: wildcard-local-tls
+  hosts:
+    - host: k8s-local.adventureworks.com
+      paths:
+        - path:
+            value: /basket-api/
+            serviceName: basket-api
+            servicePort: 80
+        - path:
+            value: /customer-api/
+            serviceName: customer-api
+            servicePort: 80
+        - path:
+            value: /identityserver/
+            serviceName: identityserver
+            servicePort: 80
+        - path:
+            value: /product-api/
+            serviceName: product-api
+            servicePort: 80
+        - path:
+            value: /referencedata-api/
+            serviceName: referencedata-api
+            servicePort: 80
+        - path:
+            value: /salesorder-api/
+            serviceName: salesorder-api
+            servicePort: 80
+        - path:
+            value: /salesperson-api/
+            serviceName: salesperson-api
+            servicePort: 80
+        - path:
+            value: /mvc-internal/
+            serviceName: mvc-internal
+            servicePort: 80
+        - path:
+            value: /mvc-store/
+            serviceName: mvc-store
+            servicePort: 80

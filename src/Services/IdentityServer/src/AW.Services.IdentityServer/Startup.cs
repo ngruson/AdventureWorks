@@ -57,6 +57,7 @@ namespace AW.Services.IdentityServer
                         options => options.MigrationsAssembly(migrationsAssembly)
                     );
                 });
+
             //.AddInMemoryClients(InMemoryConfiguration.Clients())
             //.AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
             //.AddInMemoryApiScopes(InMemoryConfiguration.ApiScopes())
@@ -108,69 +109,67 @@ namespace AW.Services.IdentityServer
 
         public void MigrateInMemoryDataToSqlServer(IApplicationBuilder app)
         {
-            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+            var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            context.Database.Migrate();
+
+            if (!context.Clients.Any())
             {
-                scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-
-                var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-                context.Database.Migrate();
-
-                if (!context.Clients.Any())
+                foreach (var client in InMemoryConfiguration.Clients())
                 {
-                    foreach (var client in InMemoryConfiguration.Clients())
-                    {
-                        context.Clients.Add(client.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.Clients.Add(client.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                if (!context.IdentityResources.Any())
+            if (!context.IdentityResources.Any())
+            {
+                foreach (var resource in InMemoryConfiguration.IdentityResources())
                 {
-                    foreach (var resource in InMemoryConfiguration.IdentityResources())
-                    {
-                        context.IdentityResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.IdentityResources.Add(resource.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                if (!context.ApiResources.Any())
+            if (!context.ApiResources.Any())
+            {
+                foreach (var resource in InMemoryConfiguration.ApiResources())
                 {
-                    foreach (var resource in InMemoryConfiguration.ApiResources())
-                    {
-                        context.ApiResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.ApiResources.Add(resource.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                if (!context.ApiScopes.Any())
+            if (!context.ApiScopes.Any())
+            {
+                foreach (var apiScope in InMemoryConfiguration.ApiScopes())
                 {
-                    foreach (var apiScope in InMemoryConfiguration.ApiScopes())
-                    {
-                        context.ApiScopes.Add(apiScope.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.ApiScopes.Add(apiScope.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                foreach (var user in InMemoryConfiguration.Users())
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            foreach (var user in InMemoryConfiguration.Users())
+            {
+                var appUser = userManager.FindByNameAsync(user.Username).Result;
+                if (appUser == null)
                 {
-                    var appUser = userManager.FindByNameAsync(user.Username).Result;
-                    if (appUser == null)
+                    appUser = new ApplicationUser
                     {
-                        appUser = new ApplicationUser
-                        {
-                            UserName = user.Username,
-                            Email = user.Claims.Single(c => c.Type == "email").Value,
-                            EmailConfirmed = true
-                        };
-                        var result = userManager.CreateAsync(appUser, user.Password).Result;
-                        result = userManager.AddClaimsAsync(appUser, new Claim[]{
+                        UserName = user.Username,
+                        Email = user.Claims.Single(c => c.Type == "email").Value,
+                        EmailConfirmed = true
+                    };
+                    var result = userManager.CreateAsync(appUser, user.Password).Result;
+                    result = userManager.AddClaimsAsync(appUser, new Claim[]{
                             new Claim(JwtClaimTypes.Name, "Nils Gruson"),
                             new Claim(JwtClaimTypes.GivenName, "Nils"),
                             new Claim(JwtClaimTypes.FamilyName, "Gruson")
                         }).Result;
-                    };
-                }
+                };
             }
         }
     }

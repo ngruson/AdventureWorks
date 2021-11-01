@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -22,7 +23,8 @@ namespace AW.SharedKernel.Api
             {
                 var config = s.GetRequiredService<IConfiguration>();
                 var provider = s.GetRequiredService<IApiVersionDescriptionProvider>();
-                return new ConfigureSwaggerOptions(config, provider, apiName);
+                var logger = s.GetRequiredService<ILogger<ConfigureSwaggerOptions>>();
+                return new ConfigureSwaggerOptions(logger, config, provider, apiName);
             });
             services.AddSwaggerGen();
 
@@ -60,17 +62,28 @@ namespace AW.SharedKernel.Api
         private readonly IConfiguration config;
         private readonly IApiVersionDescriptionProvider provider;
         private readonly string apiName;
+        private readonly ILogger<ConfigureSwaggerOptions> logger;
 
-        public ConfigureSwaggerOptions(IConfiguration config, IApiVersionDescriptionProvider provider, string apiName)
+        public ConfigureSwaggerOptions(ILogger<ConfigureSwaggerOptions> logger, IConfiguration config, IApiVersionDescriptionProvider provider, string apiName)
         {
             this.config = config;
             this.provider = provider;
             this.apiName = apiName;
+            this.logger = logger;
         }
 
         public void Configure(SwaggerGenOptions options)
         {
-            var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
+            DiscoveryDocumentResponse disco = null;
+            try
+            {
+                disco = GetDiscoveryDocument().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                var str = ex.Message;
+            }
+            
             var apiScope = config.GetValue<string>("AuthN:ApiName");
             var scopes = apiScope.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
@@ -124,6 +137,7 @@ namespace AW.SharedKernel.Api
         {
             var client = new HttpClient();
             var authority = config.GetValue<string>("AuthN:Authority");
+            logger.LogInformation($"Authority = {authority}");
             return await client.GetDiscoveryDocumentAsync(authority);
         }
     }

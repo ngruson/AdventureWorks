@@ -1,0 +1,50 @@
+{{- $name := include "basket-api.fullname" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $cfgname := printf "%s-%s" $name "config" -}}
+{{- $secretsname := printf "%s-%s" $name "secrets" -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "basket-api.fullname" . }}
+  labels:
+    ufo: {{ $cfgname}}
+    app: {{ include "basket-api.name" . }}
+    chart: {{ include "basket-api.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "basket-api.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "basket-api.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - configMapRef: 
+              name: {{ $cfgname}}
+          - secretRef:
+              name: {{ $secretsname}}
+        env:
+         - name: RedisPassword
+           valueFrom:
+             secretKeyRef:
+               name: {{ $releaseName }}-redis
+               key: redis-password
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP

@@ -1,0 +1,20 @@
+{{- if .Values.global.app.db.customer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "customer-db.fullname" . }}
+  labels:
+    app: {{ include "customer-db.name" . }}
+    chart: {{ include "customer-db.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "customer-db.name" . }}
+    release: {{ .Release.Name }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      name: sqlserver
+  {{- end }}

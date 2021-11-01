@@ -22,7 +22,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<AddressType>> GetAddressTypesAsync()
         {
-            string requestUri = $"reference-data-api/AddressType?api-version=1.0";
+            string requestUri = $"referencedata-api/AddressType?api-version=1.0";
             logger.LogInformation("Getting address types");
 
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
@@ -43,7 +43,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<ContactType>> GetContactTypesAsync()
         {
-            string requestUri = "reference-data-api/ContactType?api-version=1.0";
+            string requestUri = "referencedata-api/ContactType?api-version=1.0";
             logger.LogInformation("Getting contact types");
 
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
@@ -64,7 +64,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<CountryRegion>> GetCountriesAsync()
         {
-            string requestUri = "reference-data-api/CountryRegion?api-version=1.0";
+            string requestUri = "referencedata-api/CountryRegion?api-version=1.0";
             logger.LogInformation("Getting countries");
 
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
@@ -85,7 +85,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null)
         {
-            string requestUri = "reference-data-api/StateProvince?api-version=1.0";
+            string requestUri = "referencedata-api/StateProvince?api-version=1.0";
             logger.LogInformation("Getting states/provinces");
 
             if (!string.IsNullOrEmpty(countryRegionCode))
@@ -109,7 +109,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<Territory>> GetTerritoriesAsync()
         {
-            string requestUri = "reference-data-api/Territory?api-version=1.0";
+            string requestUri = "referencedata-api/Territory?api-version=1.0";
             logger.LogInformation("Getting territories");
 
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);

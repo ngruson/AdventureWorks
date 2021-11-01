@@ -1,0 +1,15 @@
+{{- $name := include "customer-db.fullname" . -}}
+
+{{- if .Values.global.app.db.customer.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $name }}-config"
+  labels:
+    app: {{ template "customer-db.name" . }}
+    chart: {{ template "customer-db.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ACCEPT_EULA: "Y"
+{{- end }}

@@ -1,0 +1,40 @@
+{{- $name := include "mvc-store.fullname" . -}}
+{{- $cfgname := printf "%s-%s" $name "config" -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mvc-store.fullname" . }}
+  labels:
+    ufo: {{ $cfgname}}
+    app: {{ include "mvc-store.name" . }}
+    chart: {{ include "mvc-store.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "mvc-store.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "mvc-store.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - configMapRef: 
+              name: {{ $cfgname}}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP

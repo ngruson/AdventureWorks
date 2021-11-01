@@ -1,0 +1,14 @@
+{{- $name := include "product-api.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $name }}-config"
+  labels:
+    app: {{ template "product-api.name" . }}
+    chart: {{ template "product-api.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+  AuthN__Authority: {{ printf "https://%s.%s" .Release.Name .Values.authority }}

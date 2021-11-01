@@ -6,7 +6,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["Services/Customer/src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj", "Services/Customer/src/AW.Services.Customer.REST.API/"]
-COPY k8s/aw-ca.pem .
+COPY aw-ca.pem .
 RUN dotnet restore "Services/Customer/src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Customer/src/AW.Services.Customer.REST.API"

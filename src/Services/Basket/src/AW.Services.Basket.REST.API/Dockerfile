@@ -4,7 +4,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["Services/Basket/src/AW.Services.Basket.REST.API/AW.Services.Basket.REST.API.csproj", "Services/Basket/src/AW.Services.Basket.REST.API/"]
-COPY k8s/aw-ca.pem .
+COPY aw-ca.pem .
 RUN dotnet restore "Services/Basket/src/AW.Services.Basket.REST.API/AW.Services.Basket.REST.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Basket/src/AW.Services.Basket.REST.API"

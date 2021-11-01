@@ -1,0 +1,18 @@
+replicaCount: 1
+pathBase: /mvc-internal/
+serviceName: mvc-internal
+ingress: k8s-local.adventureworks.com
+authority: /identityserver
+customer_api: /customer-api
+referencedata_api: /referencedata-api
+salesorder_api: /salesorder-api
+salesperson_api: /salesperson-api
+
+image:
+  repository: ngruson/adventureworks_mvc_internal
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80

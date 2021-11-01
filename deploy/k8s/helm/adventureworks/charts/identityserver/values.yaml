@@ -1,0 +1,14 @@
+replicaCount: 1
+pathBase: /identityserver/
+serviceName: identityserver
+
+image:
+  repository: ngruson/adventureworks_identityserver
+  tag: latest
+  pullPolicy: IfNotPresent
+
+db: sqldb-adv-identityserver
+
+service:
+  type: ClusterIP
+  port: 80

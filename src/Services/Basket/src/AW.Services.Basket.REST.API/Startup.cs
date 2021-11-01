@@ -83,6 +83,7 @@ namespace AW.Services.Basket.REST.API
                 var configuration = ConfigurationOptions.Parse(settings.RedisConnectionString, true);
 
                 configuration.ResolveDns = true;
+                configuration.Password = Configuration["RedisPassword"];
 
                 return ConnectionMultiplexer.Connect(configuration);
             });
@@ -226,7 +227,7 @@ namespace AW.Services.Basket.REST.API
 
             hcBuilder
                 .AddRedis(
-                    configuration["RedisConnectionString"],
+                    $"{configuration["RedisConnectionString"]}, password={configuration["RedisPassword"]}",
                     name: "redis-check",
                     tags: new string[] { "redis" });
 
@@ -243,7 +244,7 @@ namespace AW.Services.Basket.REST.API
             {
                 hcBuilder
                     .AddRabbitMQ(
-                        $"amqp://{configuration["EventBusUserName"]}:{configuration["EventBusPassword"]}@{configuration["EventBusConnection"]}",
+                        $"amqp://{configuration["EventBusConnection"]}",
                         name: "basket-rabbitmqbus-check",
                         tags: new string[] { "rabbitmqbus" });
             }

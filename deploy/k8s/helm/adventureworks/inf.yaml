@@ -1,0 +1,7 @@
+global:
+  inf:  
+    sql:
+      common:
+        host: <host>      # SQL server
+        user: <sqluser>   # SQL user
+        pwd: <pwd>        # SQL password

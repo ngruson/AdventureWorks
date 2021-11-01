@@ -1,0 +1,2 @@
+﻿INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount)
+VALUES (NEWID(), 'nils', 'NILS', 'nils@congruent-it.nl', 'NILS@CONGRUENT-IT.NL', 1, 'AQAAAAEAACcQAAAAECrnyXGke4hu8nNlbCDY4paNgPDhlNpP1NIoiEMfBqCO64u04+LiQktgQwQrMohXbg==', 'DJ6XILZ52AMGDZIKXPB63TEL2UO6BMQA', NULL, NULL, 0, 0, NULL, 1, 0)

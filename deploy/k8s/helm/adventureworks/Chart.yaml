@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: "1.0"
+description: A Helm chart for Kubernetes
+name: adventureworks
+version: 0.1.0
+
+#dependencies:
+#  - name: redis
+#    version: 6.2.6
+#    repository: https://charts.bitnami.com/bitnami
+#   - name: rabbitmq
+#     version: 8.22.4
+#     repository: https://charts.bitnami.com/bitnami
