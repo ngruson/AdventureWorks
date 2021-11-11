@@ -10,119 +10,65 @@
     @Html.HiddenFor(m => m.ProductCategory)
     @Html.HiddenFor(m => m.ProductSubcategory)
 
-    <div class="main_breadcrumb">
-        <div class="row">
-            <h3>@Model.Title</h3>
-        </div>
-        <div class="row">
-            <ul class="breadcrumb">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink(Model.ProductCategory, "Index", new { productCategory = Model.ProductCategory })</li>
-                @if (!string.IsNullOrEmpty(Model.ProductSubcategory))
-                {
-                    <li>@Html.ActionLink(Model.ProductSubcategory, "Index", new { productCategory = Model.ProductCategory, productSubcategory = Model.ProductSubcategory })</li>
-                }
-            </ul>
-        </div>
-    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">@Html.ActionLink("Home", "Index", "Home")</li>
+            @if (!string.IsNullOrEmpty(Model.ProductSubcategory))
+            {
+                <li class="breadcrumb-item">@Html.ActionLink(Model.ProductCategory, "Index", new { productCategory = Model.ProductCategory })</li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.ProductSubcategory</li>
+            }
+            else
+            {
+                <li class="breadcrumb-item active" aria-current="page">@Model.ProductCategory</li>
+            }
+        </ol>
+    </nav>
+
     <div class="main_padding product_wrapper_sec product_wrapper">
-        <div id="product-category" class="container-fluid">
-            <div class="row">
-                <aside id="column-left" class="col-sm-3 hidden-xs">
-                    <style>
-                        .categories_wrapper_home ul li .head .collapsed .plus {
-                            display: block;
-                        }
-
-                        .categories_wrapper_home ul li .head .plus {
-                            display: none;
-                        }
-
-                        .categories_wrapper_home ul li .head .collapsed .minus {
-                            display: none;
-                        }
-                    </style>
-                    <div class="list-group categories_wrapper_home">
-                        <h4>Categories</h4>
-                        <ul class="accordion" id="accordion-category">
-                            @foreach (var category in Model.ProductCategories)
-                            {
-                                string categoryDisplay = $"{category.Name} ({category.Subcategories.Select(s => s.ProductCount).Sum()})";
-                                <li class="panel">
-                                    <a href="#" class="">@categoryDisplay</a>
-                                    <span class="head"><a style="float:right;padding-right:5px; font-size: 18px;" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category-@category.Name" aria-expanded="false"><span class="plus">+</span><span class="minus">-</span></a></span>
-                                    <div id="category-@category.Name" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
-                                        <ul>
-                                            @foreach (var subcategory in category.Subcategories)
-                                            {
-                                                string linkText = $"{subcategory.Name} ({subcategory.ProductCount})";
-                                                <li>
-                                                    @Html.ActionLink(linkText, "Index", "Product", new { productCategory = category.Name, productSubcategory = subcategory.Name })
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </li>
-
-                            }
-                        </ul>
+        <div id="product-category" class="container">
+            <div id="content">
+                <h3>@Model.ProductSubcategory</h3>
+                <div class="row">
+                    <div class="form-group mb-2 col">
+                        <label for="input-sort">Sort By:</label>
+                        <select id="input-sort" class="form-control mb-2" onchange="this.form.submit();">
+                            <option value="#" selected="selected">Default</option>
+                            <option value="#">Name (A - Z)</option>
+                            <option value="#">Name (Z - A)</option>
+                            <option value="#">Price (Low &gt; High)</option>
+                            <option value="#">Price (High &gt; Low)</option>
+                            <option value="#">Rating (Highest)</option>
+                            <option value="#">Rating (Lowest)</option>
+                            <option value="#">Model (A - Z)</option>
+                            <option value="#">Model (Z - A)</option>
+                        </select>
                     </div>
-                </aside>
-                <div id="content" class="col-sm-9">
-                    <h3>@Model.ProductSubcategory</h3>
-                    <div class="category_grid-wrapper row">
-                        <div class="col-md-4 col-xs-6">
-                            <div class="form-group input-group input-group-sm">
-                                <label class="input-group-addon" for="input-sort">Sort By:</label>
-                                <select id="input-sort" class="form-control" onchange="this.form.submit();">
-                                    <option value="#" selected="selected">Default</option>
-                                    <option value="#">Name (A - Z)</option>
-                                    <option value="#">Name (Z - A)</option>
-                                    <option value="#">Price (Low &gt; High)</option>
-                                    <option value="#">Price (High &gt; Low)</option>
-                                    <option value="#">Rating (Highest)</option>
-                                    <option value="#">Rating (Lowest)</option>
-                                    <option value="#">Model (A - Z)</option>
-                                    <option value="#">Model (Z - A)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-6">
-                            <div class="form-group input-group input-group-sm">
-                                @Html.LabelFor(m => m.PageSize, "Show:", new { @class = "input-group-addon" })
-                                @Html.DropDownListFor(m => m.PageSize, pageSizeList, new { @class = "form-control", onchange = "this.form.submit();" })
-                                @*<select id="input-limit" class="form-control" onchange="this.form.submit();">
-                        <option value="#" selected="selected">12</option>
-                        <option value="#">25</option>
-                        <option value="#">50</option>
-                        <option value="#">75</option>
-                        <option value="#">100</option>
-                    </select>*@
-                            </div>
-                        </div>
-                        <div class="col-md-2 offset-md-3 col-sm-6 hidden-xs">
-                            <div class="btn-group btn-group-sm">
-                                <button type="button" id="grid-view" class="btn btn-default active" data-toggle="tooltip" title="" data-original-title="Grid"><i class="fa fa-th-large"></i></button>
-                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="List"><i class="fa fa-list-ul"></i></button>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
+                    <div class="form-group mb-2 col">
+                        @Html.LabelFor(m => m.PageSize, "Show:")
+                        @Html.DropDownListFor(m => m.PageSize, pageSizeList, new { @class = "form-control", onchange = "this.form.submit();" })
                     </div>
-                    <div class="row">
-                        <div class="w-50 mx-auto">
-                            <partial name="_pagination" for="@Model.PaginationInfo" />
+                    <div class="col-2 offset-3">
+                        <div class="btn-group">
+                            <button type="button" id="grid-view" class="btn btn-default active" data-toggle="tooltip" title="" data-original-title="Grid"><i class="fa fa-th-large"></i></button>
+                            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="List"><i class="fa fa-list-ul"></i></button>
                         </div>
                     </div>
-                    <div class="row">
-                        @foreach (var product in Model.Products)
-                        {
-                            <partial name="_product" model="product" />
-                        }
+                </div>
+                <div class="row">
+                    <div class="w-50 mx-auto">
+                        <partial name="_pagination" for="@Model.PaginationInfo" />
                     </div>
-                    <div class="row">
-                        <div class="w-50 mx-auto">
-                            <partial name="_pagination" for="@Model.PaginationInfo" />
-                        </div>
+                </div>
+                <div class="row">
+                    @foreach (var product in Model.Products)
+                    {
+                        <partial name="_product" model="product" />
+                    }
+                </div>
+                <div class="row">
+                    <div class="w-50 mx-auto">
+                        <partial name="_pagination" for="@Model.PaginationInfo" />
                     </div>
                 </div>
             </div>

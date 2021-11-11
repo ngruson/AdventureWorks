@@ -11,7 +11,7 @@
 }
 
 <form method="post" id="cartForm">
-    <div class="esh-basket">
+    <div class="basket">
         <partial name="_Header" model="headerList" />
 
         @await Component.InvokeAsync("CartList", new { user = UserManager.Parse(User) })

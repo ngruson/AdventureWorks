@@ -63,23 +63,15 @@
                     <section class="basket-title col-2">Total</section>
                 </article>
 
-                <article class="basket-items row">
+                <article class="row">
                     <section class="basket-item col-10"></section>
                     <section class="basket-item basket-item--mark col-2">$ @Model.Total().ToString("N2")</section>
                 </article>
 
-                <article class="basket-items row">
-
-                    <section class="basket-item col-7"></section>
-                    <section class="basket-item col-2">
-                        <button class="btn basket-checkout" name="name" value="" type="submit">Update</button>
-                    </section>
-                    <section class="basket-item col-3">
-                        <input type="submit"
-                               class="btn basket-checkout"
-                               value="Checkout" name="action" />
-                    </section>
-                </article>
+                <div class="align-middle">
+                    <button class="btn btn-secondary basket-checkout" name="name" value="" type="submit">Update</button>
+                    <button type="submit" class="btn btn-primary basket-checkout" value="Checkout" name="action">Checkout</button>
+                </div>
             </div>
         </form>
     }

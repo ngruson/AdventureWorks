@@ -3,7 +3,7 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "font-awesome@5.15.2",
+      "library": "font-awesome@6.0.0-beta2",
       "destination": "wwwroot/lib/font-awesome/"
     }
   ]

@@ -1,10 +1,10 @@
 @model IEnumerable<AW.UI.Web.Store.ViewModels.Header>
 
-<div class="header">
+<div class="btn-primary header">
     <div class="container">
         @foreach (var header in @Model)
         {
-            <a class="header-back" asp-area="" asp-controller="@header.Controller" asp-action="Index">@header.Text</a>
+            <a class="header-back btn-primary" asp-area="" asp-controller="@header.Controller" asp-action="Index">@header.Text</a>
         }
     </div>
 </div>

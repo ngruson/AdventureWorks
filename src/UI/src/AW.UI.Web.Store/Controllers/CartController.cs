@@ -42,7 +42,7 @@ namespace AW.UI.Web.Store.Controllers
             {
                 var user = appUserParser.Parse(HttpContext.User);
                 var basket = await basketService.SetQuantities(user, quantities);
-                if (action == "[ Checkout ]")
+                if (action == "Checkout")
                 {
                     return RedirectToAction("Create", "Order");
                 }
@@ -52,7 +52,7 @@ namespace AW.UI.Web.Store.Controllers
                 HandleException(ex);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> AddToCart(string productNumber)

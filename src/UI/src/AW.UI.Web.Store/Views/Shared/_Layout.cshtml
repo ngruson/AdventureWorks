@@ -4,21 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Adventureworks Store</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script> -->
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+
     </environment>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&display=swap" rel="stylesheet">
-    <link href="~/css/stylesheet.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,800&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&display=swap" rel="stylesheet"> -->
+    <!--<link href="~/css/stylesheet.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet" /> -->
+    <link href="~/css/themes/flatly/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,800&display=swap" rel="stylesheet"> -->
+    <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/pager.css" />
     <link rel="stylesheet" href="~/css/basket/basket-status/basket-status.component.css" />
@@ -26,79 +28,132 @@
     <link rel="stylesheet" href="~/css/shared/components/header/header.css" />
 </head>
 <body>
+    
     <!-- top section-->
-    <nav id="top">
-        <div class="container-fluid">
-            <div class="row">
-                <a href="" class="phone_contact">Welcome to our online store!</a>
-            </div>
-        </div>
-    </nav>
-    <!-- end -->
-    <!-- header section-->
-    <header class="main-menu">
-        <div class="header_wrapper_home">
+    <div id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <!-- destop vergian -->
-                <div class="row header_sec destop_header">
-                    <div class="col-sm-4 rtl_logo">
-                        <div id="logo">
-                            <a href="/"><img src="image/logo1.png" title="AdventureWorks Store" alt="AdventureWorks Store" class="img-fluid" /></a>
+                <a class="navbar-brand" href="~/">AdventureWorks Store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="~/">Home</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <a href="#" class="m-2"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <div class="dropdown m-2">
+                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @User.Claims.Single(_ => _.Type == "given_name").Value
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-circle-user"></i>
+                                }
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg-end">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="dropdown-item"><i class="fa-solid fa-circle-user"></i> Your account</a>
+                                    <a class="dropdown-item"><i class="fa-solid fa-box"></i> Your orders</a>
+                                    <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="SignOut"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="SignIn">Sign in</a>
+                                }
+                            </div>
                         </div>
+                        <a class="m-2" asp-controller="Cart" asp-action="Index"><i class="fa-solid fa-cart-shopping"></i></a>
                     </div>
-                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
-        </div>
-    </header>
-    <!-- header section end-->
-    <!--menu-->
-    <nav id="menu" class="navbar navbar-expand-sm navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-                    </li>
-                    @await Component.InvokeAsync("ProductMenu")
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!--menu end-->
-
-    <div class="container-fluid">
-        @*<main role="main">*@
-            @RenderBody()
-        @*</main>*@
+        </nav>
     </div>
 
-    <footer id="footer">
+    <div id="content">
+        <!--menu-->
+        <nav id="menu" class="navbar navbar-expand-sm navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @await Component.InvokeAsync("ProductMenu")
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--menu end-->
+
         <div class="container-fluid">
-            <div class="row footer_links">
-                <div class="col-sm-3">
-                    <div class="footer-inner-matter">
-                        <h3 class="wow fadeInUp">Contact Us</h3>
-                        <ul>
-                            <li><img src="image/icon-phone.png"><p>Hotline Free 24/24:</p><span><i class="fa fa-volume-control-phone"></i>(+800) 123 456 789</span></li>
-                            <li><i class="fa fa-map-marker"></i> 622 Vernon Drive Flushing, NY 11354</li>
-                            <li class="email"><i class="fa fa-envelope"></i> company123@gmail.com</li>
-                        </ul>
-                        <div class="social_media_wrapper">
-                            <ul>
-                                <li class="facebook"><a href=""><i class="fab fa-facebook-square"></i></a></li>
-                                <li class="skype"><a href=""><i class="fab fa-skype"></i></a></li>
-                                <li class="youtube"><a href=""><i class="fab fa-youtube-square"></i></a></li>
-                                <li class="google"><a href=""><i class="fab fa-google-plus-square"></i></a></li>
-                                @*<li class="linkedin"><a href=""><i class="fab fa-linkedin-square"></i></a></li>*@
-                            </ul>
+            @RenderBody()
+        </div>
+    </div>
+
+    <div id="footer" class="bg-primary text-white p-2">
+        <div class="container-fluid">
+            <div class="row pt-4">
+                <div class="col">
+                    <div class="ms-2">
+                        <h4>Contact Us</h4>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img src="~/image/icon-phone.png">
+                                    </div>
+                                    <div class="col">
+                                        Hotline Free 24/24:<br /><span><i class="fa fa-phone"></i><strong> (+800) 123 456 789</strong></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <i class="fa fa-map-marker"></i> 622 Vernon Drive Flushing, NY 11354
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <i class="fa fa-envelope"></i> company123@gmail.com
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <i class="fab fa-facebook-square fa-2x"></i>
+                                    </div>
+                                    <div class="col-1">
+                                        <i class="fab fa-skype fa-2x"></i>
+                                    </div>
+                                    <div class="col-1">
+                                        <i class="fab fa-youtube fa-2x"></i>
+                                    </div>
+                                    <div class="col-1">
+                                        <i class="fab fa-google-plus fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<ul>
+                            <li><a href=""><i class="fab fa-facebook-square"</i></a></li>
+                            <li><a href=""><i class="fab fa-skype"</i></a></li>
+                            <li><a href=""><i class="fab fa-youtube-square"></i></a></li>
+                            <li><a href=""><i class="fab fa-google-plus-square"></i></a></li>
+                        </ul>*@
                         <div class="clear"></div>
                     </div>
                 </div>
-                <div class="col-sm-3 col_footer footer_padding">
+                <div class="col col_footer footer_padding">
                     <div class="footer-inner-matter">
-                        <h3 class="wow fadeInUp">Information</h3>
+                        <h4 class="wow fadeInUp">Information</h4>
                         <ul class="list-unstyled">
                             <li><a href="about.html" class="wow fadeInUp"> About Us</a></li>
                             <li><a href="#" class="wow fadeInUp"> Delivery Information</a></li>
@@ -109,9 +164,9 @@
                     </div>
                 </div>
                 <!-- extra -->
-                <div class="col-sm-3 col_footer footer_padding">
+                <div class="col col_footer footer_padding">
                     <div class="footer-inner-matter">
-                        <h3 class="wow fadeInUp">Extras</h3>
+                        <h4 class="wow fadeInUp">Extras</h4>
                         <ul class="list-unstyled">
                             <li><a href="contact.html" class="wow fadeInUp"> Contact Us</a></li>
                             <li><a href="brands.html" class="wow fadeInUp"> Brands</a></li>
@@ -124,103 +179,50 @@
                         <div class="clear"></div>
                     </div>
                 </div>
-                <!-- / extra end-->
-                <!-- play_store -->
-                <div class="col-sm-3 col_footer footer_padding Get_the_App">
-                    <div class="footer-inner-matter">
-                        <h3 class="wow fadeInUp">
-                            <!--{{ text_extra }}--->
-                            Get The App
-                        </h3>
-                        <h4>
-                            GreenLife App Is Now Available On Google
-                            Play &amp; App Store. Get It Now.
-                        </h4>
-                        <div class="images_dat_dec">
-                            <div class="img_1">
-                                <a href="#"><img src="image/icon1-app.jpg"></a>
-                            </div>
-                            <div class="img_2">
-                                <a href="#"><img src="image/icon-app.jpg"></a>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <!-- / play_store end -->
             </div>
-
+            <hr />
             <!-- newsletters -->
             <div class="row">
-                <div class="col-sm-12 col_footer new_bottom_newsletter">
-                    <div class="head_newsletter text-center">
-                        <div class="head_newsletter_one">
-                            <div class="footer-inner-matter news_letter_subscription wow fadeInUp">
-                                <div id="newsletterModule-footer" class="">
-                                    <div id="newsletterFooterModule0">
-                                        <div class="news_latter" id="news_latter">
-                                            <div class="">
-                                                <div class="row" id="subsribe">
-                                                    <div class="successmsg">
-                                                    </div>
-
-                                                    <div class="col-sm-4 text-left news_latte_text">
-                                                        <h3>Join Our<span> Newsletter Now</span></h3>
-                                                    </div>
-                                                    <div class="col-sm-3 newletter_desc text-left">
-                                                        <p>Join 10.000+ subscribers and get a new discount coupon.</p>
-                                                    </div>
-                                                    <!-- <p>Subscribe to our newsletter to receive special offers and latest news. </p> -->
-                                                    <div class="col-sm-5">
-                                                        <div class="form-group required text-right">
-                                                            <div class="news_latter_form">
-                                                                <div class="input-news">
-                                                                    <input type="text" id="input-newsletter-email" class="fem form-control" placeholder="Enter Your Email Address here" value="" name="email" />
-                                                                </div>
-                                                                <div class="subscribe-btn input-group-btn">
-                                                                    <a id="button-subsribe" class="btn btn-primary btn-xs">Subscribe</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col">
+                    <h4>Join Our<span> Newsletter Now</span></h4>
+                </div>
+                <div class="col">
+                    <p>Join 10.000+ subscribers and get a new discount coupon.</p>
+                </div>
+                <div class="col">
+                    <form class="d-flex">
+                        <input type="text" id="input-newsletter-email" class="form-control me-sm-2" placeholder="Enter Your Email Address here" value="" name="email" />
+                        <a id="button-subsribe" class="btn btn-secondary btn-xs">Subscribe</a>
+                    </form>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-8">
+                    <p>© Copyright 2021 by AdventureWorks</p>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fab fa-cc-mastercard fa-2x"></i>
+                        </div>
+                        <div class="col-1">
+                            <i class="fab fa-cc-discover fa-2x"></i>
+                        </div>
+                        <div class="col-1">
+                            <i class="fab fa-cc-visa fa-2x"></i>
+                        </div>
+                        <div class="col-1">
+                            <i class="fab fa-cc-paypal fa-2x"></i>
                         </div>
                     </div>
                 </div>
-                @*<div class="clear"> </div>*@
-                <!--- copy-right-area -->
-                <div class="col-sm-6 rtl_text social_footer copy_right_wrapper">
-                    <div class="copy-right">
-                        <p class="wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">© Copyright 2021 by AdventureWorks</p>
-                    </div>
-                </div>
-                <!-------/ end copyright----------->
-                <!--- payment_links -->
-                <div class="col-sm-6 rtl_text social_footer">
-                    <div class="payment_method_footer">
-                        <div class="payment_option_methods">
-                            <ul>
-                                <li><a href=""><img src="image/payment-1.png"></a></li>
-                                <li><a href=""><img src="image/payment-2.png"></a></li>
-                                <li><a href=""><img src="image/payment-3.png"></a></li>
-                                <li><a href=""><img src="image/payment-4.png"></a></li>
-                                <li><a href=""><img src="image/payment-5.png"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                @*<div class="clear"> </div>*@
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

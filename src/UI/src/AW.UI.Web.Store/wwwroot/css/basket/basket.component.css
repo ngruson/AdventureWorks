@@ -1,8 +1,4 @@
-﻿.basket {
-    min-height: 80vh;
-}
-
-.basket-titles {
+﻿.basket-titles {
     padding-bottom: 1rem;
     padding-top: 2rem;
 }
@@ -53,7 +49,6 @@
 }
 
 .basket-checkout {
-    background-color: #00A69C;
     border: 0;
     border-radius: 0;
     color: #FFFFFF;

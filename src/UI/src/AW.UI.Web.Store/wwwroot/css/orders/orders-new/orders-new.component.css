@@ -1,0 +1,95 @@
+﻿.orders_new {
+    min-height: 80vh;
+}
+
+.orders_new-header {
+    background-color: #00A69C;
+    height: 4rem;
+}
+
+.orders_new-back {
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 4rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.35s;
+}
+
+.orders_new-back:hover {
+    color: #FFFFFF;
+    transition: color 0.35s;
+}
+
+.orders_new-section {
+    padding: 1rem 0;
+}
+
+.orders_new-section--right {
+    text-align: right;
+}
+
+.orders_new-placeOrder {
+    background-color: #83D01B;
+    border: 0;
+    border-radius: 0;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 1rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.35s;
+}
+
+.orders_new-placeOrder:hover {
+    background-color: #4a760f;
+    transition: all 0.35s;
+}
+
+.orders_new-titles {
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+
+.orders_new-title {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+}
+
+.orders_new-items--border {
+    border-bottom: 1px solid #EEEEEE;
+    padding: .5rem 0;
+}
+
+.orders_new-items--border:last-of-type {
+    border-color: transparent;
+}
+
+.orders_new-item {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.orders_new-item--middle {
+    line-height: 8rem;
+}
+
+@media screen and (max-width: 768px) {
+    .orders_new-item--middle {
+        line-height: 1rem;
+    }
+}
+
+.orders_new-item--mark {
+    color: #83D01B;
+}
+
+.orders_new-image {
+    height: 8rem;
+}
+
+.orders_new-alert {
+    margin-top: 10px;
+}
