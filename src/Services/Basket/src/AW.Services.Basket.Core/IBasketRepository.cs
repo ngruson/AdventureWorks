@@ -1,4 +1,4 @@
-﻿using AW.Services.Basket.Core.Model;
+﻿using AW.Services.Basket.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

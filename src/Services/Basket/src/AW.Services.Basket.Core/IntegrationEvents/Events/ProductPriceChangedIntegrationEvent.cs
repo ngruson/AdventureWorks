@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Api.EventBus.Events;
+﻿using AW.SharedKernel.EventBus.Events;
 
 namespace AW.Services.Basket.Core.IntegrationEvents.Events
 {

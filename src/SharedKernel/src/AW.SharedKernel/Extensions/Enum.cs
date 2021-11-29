@@ -33,7 +33,11 @@ namespace AW.SharedKernel.Extensions
         }
         public static IList<string> GetNames(Enum value)
         {
-            return value.GetType().GetFields(BindingFlags.Static | BindingFlags.Public).Select(fi => fi.Name).ToList();
+            return value.GetType()
+                .GetFields(BindingFlags.Static | BindingFlags.Public)
+                .Select(fi => fi.Name)
+                .OrderBy(_ => _)
+                .ToList();
         }
         public static IList<string> GetDisplayValues(Enum value)
         {

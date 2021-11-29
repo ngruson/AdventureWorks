@@ -78,5 +78,7 @@
     <None Include="Scripts\PostDeployment\InsertSalesOrderLine.sql" />
     <None Include="Scripts\PostDeployment\InsertSalesOrderSalesReason.sql" />
     <Build Include="Schema Objects\Customer.sql" />
+    <Build Include="Schema Objects\IntegrationEventLog.sql" />
+    <Build Include="Schema Objects\ClientRequest.sql" />
   </ItemGroup>
 </Project>

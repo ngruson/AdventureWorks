@@ -1,12 +1,9 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
-using AW.Services.Basket.Core.Model;
-using AW.SharedKernel.Api.EventBus.Abstractions;
+using AW.Services.Basket.Core.Models;
+using AW.SharedKernel.EventBus.Abstractions;
 using Microsoft.Extensions.Logging;
-using Serilog.Context;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling

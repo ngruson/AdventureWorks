@@ -1,9 +1,11 @@
-﻿namespace AW.Services.SalesOrder.Core.Entities
+﻿using AW.SharedKernel.Interfaces;
+
+namespace AW.Services.SalesOrder.Core.Entities
 {
-    public partial class SpecialOfferProduct
+    public class SpecialOfferProduct : IAggregateRoot
     {
         public int Id { get; set; }
-        public int SpecialOfferID { get; set; }
+        public int SpecialOfferId { get; set; }
         public SpecialOffer SpecialOffer { get; set; }
         public string ProductNumber { get; set; }
         

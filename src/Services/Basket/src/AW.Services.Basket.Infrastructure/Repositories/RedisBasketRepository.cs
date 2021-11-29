@@ -1,5 +1,5 @@
 ﻿using AW.Services.Basket.Core;
-using AW.Services.Basket.Core.Model;
+using AW.Services.Basket.Core.Models;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System.Collections.Generic;

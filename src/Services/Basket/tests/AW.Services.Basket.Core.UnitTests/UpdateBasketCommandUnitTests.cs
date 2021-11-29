@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Basket.Core.Handlers.UpdateBasket;
-using AW.Services.Basket.Core.Model;
+using AW.Services.Basket.Core.Models;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

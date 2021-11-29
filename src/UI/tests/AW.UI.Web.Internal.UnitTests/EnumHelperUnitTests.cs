@@ -57,9 +57,9 @@ namespace AW.UI.Web.Internal.UnitTests
 
             //Assert
             list.Count.Should().Be(3);
-            list[0].Should().Be("NoPromotions");
-            list[1].Should().Be("AWPromotions");
-            list[2].Should().Be("AWAndPartnerPromotions");
+            list[0].Should().Be("AWAndPartnerPromotions");
+            list[1].Should().Be("AWPromotions");            
+            list[2].Should().Be("NoPromotions");
         }
 
         [Fact]

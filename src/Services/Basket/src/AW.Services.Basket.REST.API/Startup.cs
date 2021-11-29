@@ -4,10 +4,10 @@ using AW.Services.Basket.Core.IntegrationEvents.EventHandling;
 using AW.Services.Basket.Infrastructure.Repositories;
 using AW.Services.Basket.REST.API.Services;
 using AW.SharedKernel.Api;
-using AW.SharedKernel.Api.EventBus;
-using AW.SharedKernel.Api.EventBus.Abstractions;
-using AW.SharedKernel.Api.EventBusRabbitMQ;
-using AW.SharedKernel.Api.EventBusServiceBus;
+using AW.SharedKernel.EventBus;
+using AW.SharedKernel.EventBus.Abstractions;
+using AW.SharedKernel.EventBus.AzureServiceBus;
+using AW.SharedKernel.EventBus.RabbitMQ;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -93,10 +92,9 @@ namespace AW.Services.Basket.REST.API
                 services.AddSingleton<IServiceBusPersisterConnection>(sp =>
                 {
                     var serviceBusConnectionString = Configuration["EventBusConnection"];
-                    var serviceBusConnection = new ServiceBusConnectionStringBuilder(serviceBusConnectionString);
 
                     var subscriptionClientName = Configuration["SubscriptionClientName"];
-                    return new DefaultServiceBusPersisterConnection(serviceBusConnection, subscriptionClientName);
+                    return new DefaultServiceBusPersisterConnection(serviceBusConnectionString, subscriptionClientName);
                 });
             }
             else
@@ -177,12 +175,14 @@ namespace AW.Services.Basket.REST.API
                     var serviceBusPersisterConnection = sp.GetRequiredService<IServiceBusPersisterConnection>();
                     var logger = sp.GetRequiredService<ILogger<EventBusServiceBus>>();
                     var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
-                    
+                    var topicName = Configuration["EventBusTopic"];
+
                     return new EventBusServiceBus(
                         sp,
                         serviceBusPersisterConnection,
                         logger,
-                        eventBusSubcriptionsManager
+                        eventBusSubcriptionsManager,
+                        topicName
                     );
                 });
             }
@@ -194,7 +194,7 @@ namespace AW.Services.Basket.REST.API
                     var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
                     var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
-                    var subscriptionClientName = Configuration["SubscriptionClientName"];                    
+                    var queueName = Configuration["SubscriptionClientName"];                    
                     var retryCount = 5;
                     if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
                     {
@@ -205,7 +205,7 @@ namespace AW.Services.Basket.REST.API
                         rabbitMQPersistentConnection,
                         logger,
                         eventBusSubcriptionsManager,
-                        subscriptionClientName, retryCount
+                        queueName, retryCount
                     );
                 });
             }

@@ -2,7 +2,7 @@
 using AW.Services.Basket.Core.Handlers.DeleteBasket;
 using AW.Services.Basket.Core.Handlers.GetBasket;
 using AW.Services.Basket.Core.Handlers.UpdateBasket;
-using AW.Services.Basket.Core.Model;
+using AW.Services.Basket.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

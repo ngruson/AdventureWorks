@@ -9,11 +9,12 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore
     public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
     {
         private readonly AWContext dbContext;
+        public IUnitOfWork UnitOfWork => dbContext;
 
         public EfRepository(AWContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
-        }
+        }        
 
         public override async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {

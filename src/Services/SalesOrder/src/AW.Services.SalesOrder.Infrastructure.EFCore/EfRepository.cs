@@ -9,6 +9,8 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore
     public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
     {
         private readonly AWContext dbContext;
+        
+        public IUnitOfWork UnitOfWork => dbContext;
 
         public EfRepository(AWContext dbContext) : base(dbContext)
         {

@@ -8,16 +8,18 @@ namespace AW.Services.SalesOrder.Infrastructure.EF6
 {
     public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
     {
-        private readonly AWContext context;
+        private readonly AWContext dbContext;
 
-        public EfRepository(AWContext context) : base(context)
+        public EfRepository(AWContext dbContext) : base(dbContext)
         {
-            this.context = context;
+            this.dbContext = dbContext;
         }
+
+        public IUnitOfWork UnitOfWork => dbContext;
 
         public override async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
-            context.SetModified(entity);
+            dbContext.SetModified(entity);
             await SaveChangesAsync();
         }
     }

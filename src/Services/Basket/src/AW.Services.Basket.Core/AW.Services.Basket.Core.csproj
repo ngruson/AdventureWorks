@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.EventBus\AW.SharedKernel.EventBus.csproj" />
   </ItemGroup>
 
 </Project>

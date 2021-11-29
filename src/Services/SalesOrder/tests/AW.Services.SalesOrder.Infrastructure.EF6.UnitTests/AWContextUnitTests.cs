@@ -1,4 +1,5 @@
 ﻿using AW.Services.SharedKernel.EF6;
+using FluentAssertions;
 using Xunit;
 
 namespace AW.Services.SalesOrder.Infrastructure.EF6.UnitTests
@@ -8,19 +9,26 @@ namespace AW.Services.SalesOrder.Infrastructure.EF6.UnitTests
         [Fact]
         public void CreateDatabase_ModelConfigurationsAreApplied()
         {
-            //Arrange
-            var connection = Effort.DbConnectionFactory.CreateTransient();
-            var context = new AWContext(
-                connection,
-                true,
-                typeof(EfRepository<>).Assembly
-            );
+            using (var connection = Effort.DbConnectionFactory.CreateTransient())
+            {
+                //Arrange
+                var context = new AWContext(
+                    connection,
+                    true,
+                    typeof(EfRepository<>).Assembly
+                );
 
-            //Act
-            context.Database.Create();
+                //Act
+                context.Database.Delete();
+                context.Database.Create();
+                context.Database.Connection.Open();
 
-            //Assert
-            
+                //Assert
+                var state = context.Database.Connection.State == System.Data.ConnectionState.Open;
+                state.Should().Be(true);
+
+                
+            }
         }
     }
 }

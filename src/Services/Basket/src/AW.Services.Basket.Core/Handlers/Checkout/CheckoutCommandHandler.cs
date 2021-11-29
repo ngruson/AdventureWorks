@@ -1,6 +1,6 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
-using AW.Services.Basket.Core.Model;
-using AW.SharedKernel.Api.EventBus.Abstractions;
+using AW.Services.Basket.Core.Models;
+using AW.SharedKernel.EventBus.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -33,9 +33,15 @@ namespace AW.Services.Basket.Core.Handlers.Checkout
             var userName = identityService.GetUserName();
 
             var eventMessage = new UserCheckoutAcceptedIntegrationEvent(
-                userId, userName, request.BasketCheckout.City, request.BasketCheckout.Street,
-                request.BasketCheckout.State, request.BasketCheckout.Country, request.BasketCheckout.ZipCode, request.BasketCheckout.CardNumber, request.BasketCheckout.CardHolderName,
-                request.BasketCheckout.CardExpiration, request.BasketCheckout.CardSecurityNumber, request.BasketCheckout.CardTypeId, request.BasketCheckout.Buyer, request.BasketCheckout.RequestId, basket);
+                userId, userName,
+                request.BasketCheckout.CustomerNumber, request.BasketCheckout.ShipMethod,
+                request.BasketCheckout.BillToAddress,
+                request.BasketCheckout.ShipToAddress,
+                request.BasketCheckout.CardNumber, request.BasketCheckout.CardHolderName,
+                request.BasketCheckout.CardExpiration, request.BasketCheckout.CardSecurityNumber, request.BasketCheckout.CardType, 
+                request.BasketCheckout.Buyer, request.BasketCheckout.RequestId, 
+                basket.Items
+            );
 
             // Once basket is checkout, sends an integration event to
             // ordering.api to convert basket to order and proceeds with

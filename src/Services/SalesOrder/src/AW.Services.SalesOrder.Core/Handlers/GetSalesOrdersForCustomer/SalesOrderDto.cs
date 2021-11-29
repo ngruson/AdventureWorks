@@ -37,6 +37,7 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer
         public AddressDto ShipToAddress { get; set; }
 
         public string ShipMethod { get; set; }
+        public decimal TaxRate { get; set; }
 
         public CreditCardDto CreditCard { get; set; }
 

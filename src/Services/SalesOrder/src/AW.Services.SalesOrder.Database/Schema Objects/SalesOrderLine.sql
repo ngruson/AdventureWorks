@@ -5,7 +5,7 @@
 	[OrderQty] [smallint] NOT NULL,
 	[ProductNumber] [nvarchar](25) NOT NULL,
 	[ProductName] [nvarchar](50) NOT NULL,
-	[SpecialOfferID] [int] NOT NULL,
+	[SpecialOfferProductId] [int] NOT NULL,
 	[UnitPrice] [money] NOT NULL,
 	[UnitPriceDiscount] [money] NOT NULL,
  CONSTRAINT [PK_SalesOrderLine_SalesOrderLineID] PRIMARY KEY CLUSTERED

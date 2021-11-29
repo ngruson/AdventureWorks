@@ -250,11 +250,15 @@ namespace AW.Services.SalesOrder.Infrastructure.EF6.UnitTests
 
         [Theory, OmitOnRecursion]
         public async Task DeleteAsync_ReturnsObject(
-            [Frozen] Mock<AWContext> mockContext,
-            List<Core.Entities.SalesOrder> salesOrders
+            [Frozen] Mock<AWContext> mockContext
         )
         {
             //Arrange
+            var salesOrders = new List<Core.Entities.SalesOrder>
+            {
+                new Core.Entities.SalesOrder(),
+                new Core.Entities.SalesOrder()
+            };
             var mockSet = GetQueryableMockDbSet(salesOrders);
 
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())

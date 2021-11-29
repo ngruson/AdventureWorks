@@ -6,7 +6,7 @@
 	[ShipDate] [datetime] NULL,
 	[Status] [tinyint] NOT NULL,
 	[OnlineOrderFlag] [bit] NOT NULL,
-	[SalesOrderNumber] [nvarchar](25) NOT NULL,
+	[SalesOrderNumber]  AS (isnull(N'SO'+CONVERT([nvarchar](23),[SalesOrderID]),N'*** ERROR ***')),
 	[PurchaseOrderNumber] [nvarchar](50) NULL,
 	[AccountNumber] [nvarchar](50) NULL,
 	[CustomerNumber] [varchar](10) NOT NULL,
@@ -15,9 +15,8 @@
 	[BillToAddressID] [int] NOT NULL,
 	[ShipToAddressID] [int] NOT NULL,
 	[ShipMethod] [nvarchar](50) NOT NULL,
+	[TaxRate] [decimal] NULL,
 	[CreditCardID] [int] NULL,
-	[SubTotal] [money] NOT NULL,
-	[TaxAmt] [money] NOT NULL,
 	[Freight] [money] NOT NULL,
 	[Comment] [nvarchar](128) NULL
  CONSTRAINT [PK_SalesOrder_SalesOrderID] PRIMARY KEY CLUSTERED 

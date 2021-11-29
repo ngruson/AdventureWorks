@@ -1,6 +1,7 @@
-﻿using AW.Services.Basket.Core.Model;
-using AW.SharedKernel.Api.EventBus.Events;
+﻿using AW.Services.Basket.Core.Models;
+using AW.SharedKernel.EventBus.Events;
 using System;
+using System.Collections.Generic;
 
 namespace AW.Services.Basket.Core.IntegrationEvents.Events
 {
@@ -9,56 +10,39 @@ namespace AW.Services.Basket.Core.IntegrationEvents.Events
         public string UserId { get; }
 
         public string UserName { get; }
+        public string CustomerNumber { get; set; }
+        public string ShipMethod { get; set; }
+        public Address BillToAddress { get; set; }
+        public Address ShipToAddress { get; set; }
+        public string CardNumber { get; set; }
+        public string CardHolderName { get; set; }
+        public DateTime CardExpiration { get; set; }
+        public string CardSecurityNumber { get; set; }
+        public string CardType { get; set; }
+        public string Buyer { get; set; }
+        public Guid RequestId { get; set; }
+        public List<BasketItem> BasketItems { get; }
 
-        public int OrderNumber { get; init; }
-
-        public string City { get; init; }
-
-        public string Street { get; init; }
-
-        public string State { get; init; }
-
-        public string Country { get; init; }
-
-        public string ZipCode { get; init; }
-
-        public string CardNumber { get; init; }
-
-        public string CardHolderName { get; init; }
-
-        public DateTime CardExpiration { get; init; }
-
-        public string CardSecurityNumber { get; init; }
-
-        public int CardTypeId { get; init; }
-
-        public string Buyer { get; init; }
-
-        public Guid RequestId { get; init; }
-
-        public CustomerBasket Basket { get; }
-
-        public UserCheckoutAcceptedIntegrationEvent(string userId, string userName, string city, string street,
-            string state, string country, string zipCode, string cardNumber, string cardHolderName,
-            DateTime cardExpiration, string cardSecurityNumber, int cardTypeId, string buyer, Guid requestId,
-            CustomerBasket basket)
+        public UserCheckoutAcceptedIntegrationEvent(string userId, string userName,
+            string customerNumber, string shipMethod,
+            Address billToAddress, Address shipToAddress, string cardNumber, string cardHolderName,
+            DateTime cardExpiration, string cardSecurityNumber, string cardType, string buyer, Guid requestId,
+            List<BasketItem> basketItems)
         {
             UserId = userId;
             UserName = userName;
-            City = city;
-            Street = street;
-            State = state;
-            Country = country;
-            ZipCode = zipCode;
+            CustomerNumber = customerNumber;
+            ShipMethod = shipMethod;
+            BillToAddress = billToAddress;
+            ShipToAddress = shipToAddress;
             CardNumber = cardNumber;
             CardHolderName = cardHolderName;
             CardExpiration = cardExpiration;
             CardSecurityNumber = cardSecurityNumber;
-            CardTypeId = cardTypeId;
+            CardType = cardType;
             Buyer = buyer;
-            Basket = basket;
+            BasketItems = basketItems;
             RequestId = requestId;
         }
-
     }
 }

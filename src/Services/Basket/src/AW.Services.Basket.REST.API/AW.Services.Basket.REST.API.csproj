@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.EventBus\AW.SharedKernel.EventBus.csproj" />
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
     <ProjectReference Include="..\..\..\Customer\src\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
     <ProjectReference Include="..\AW.Services.Basket.Core\AW.Services.Basket.Core.csproj" />

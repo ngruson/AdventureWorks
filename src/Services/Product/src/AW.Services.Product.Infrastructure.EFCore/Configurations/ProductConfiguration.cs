@@ -43,14 +43,14 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
                 .HasForeignKey(p => p.SizeUnitMeasureCode);
 
             builder.Property(e => e.WeightUnitMeasureCode)
-            .HasMaxLength(3);
+                .HasMaxLength(3);
 
             builder.HasOne(p => p.WeightUnitMeasure)
                 .WithMany()
                 .HasForeignKey(p => p.WeightUnitMeasureCode);
 
             builder.Property(e => e.Weight)
-            .HasColumnType("decimal(8,2)");
+                .HasColumnType("decimal(8,2)");
 
             builder.Property(e => e.ProductLine)
                 .HasMaxLength(2);

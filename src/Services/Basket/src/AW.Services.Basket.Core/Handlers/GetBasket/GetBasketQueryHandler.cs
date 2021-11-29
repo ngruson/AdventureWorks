@@ -1,4 +1,4 @@
-﻿using AW.Services.Basket.Core.Model;
+﻿using AW.Services.Basket.Core.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;

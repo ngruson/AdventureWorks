@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj", "Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/"]
-COPY k8s/aw-ca.pem .
+COPY aw-ca.pem .
 RUN dotnet restore "Services/SalesOrder/src/AW.Services.SalesOrder.REST.API/AW.Services.SalesOrder.REST.API.csproj"
 COPY . .
 WORKDIR "/src/Services/SalesOrder/src/AW.Services.SalesOrder.REST.API"

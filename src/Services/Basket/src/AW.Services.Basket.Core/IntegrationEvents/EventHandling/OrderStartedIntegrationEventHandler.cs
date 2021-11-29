@@ -1,5 +1,5 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
-using AW.SharedKernel.Api.EventBus.Abstractions;
+using AW.SharedKernel.EventBus.Abstractions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;

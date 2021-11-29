@@ -11,8 +11,11 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.Configurations
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)
                 .HasColumnName("SalesOrderID");
+            builder.Property(p => p.SalesOrderNumber)
+                .HasComputedColumnSql();
 
             builder.Ignore(p => p.SubTotal);
+            builder.Ignore(p => p.TaxAmt);
             builder.Ignore(p => p.TotalDue);
         }
     }
