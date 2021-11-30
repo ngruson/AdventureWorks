@@ -37,8 +37,7 @@ namespace AW.Services.SalesOrder.Core.IntegrationEvents
             logger.LogInformation("----- Enqueuing integration event {IntegrationEventId} to repository ({@IntegrationEvent})", evt.Id, evt);
 
             await eventLogService.SaveEventAsync(
-                evt, 
-                dbContext.CurrentTransaction,
+                evt,
                 dbContext.CurrentTransactionId
             );
         }

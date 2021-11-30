@@ -46,13 +46,10 @@ namespace AW.SharedKernel.EventBus.EFCore
             return new List<IntegrationEventLogEntry>();
         }
 
-        public async Task SaveEventAsync(IntegrationEvent @event, DbTransaction transaction, Guid transactionId)
+        public async Task SaveEventAsync(IntegrationEvent @event, Guid transactionId)
         {
-            if (transaction == null) throw new ArgumentNullException(nameof(transaction));
-
             var eventLogEntry = new IntegrationEventLogEntry(@event, transactionId);
 
-            //dbContext.Database.UseTransaction(transaction);
             await dbContext.Set<IntegrationEventLogEntry>().AddAsync(eventLogEntry);
 
             await dbContext.SaveChangesAsync();

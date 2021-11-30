@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
 {
-    public class CreateSalesOrderUnitTests
+    public class CreateSalesOrderCommandUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_SalesOrderExists_ReturnSalesOrder(
