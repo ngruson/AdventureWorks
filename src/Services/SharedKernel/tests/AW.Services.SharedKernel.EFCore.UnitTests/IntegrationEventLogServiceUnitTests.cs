@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.SharedKernel.EventBus.EFCore.UnitTests
+namespace AW.Services.SharedKernel.EFCore.UnitTests
 {
     public class IntegrationEventLogServiceUnitTests
     {

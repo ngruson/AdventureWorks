@@ -10,7 +10,7 @@ namespace AW.SharedKernel.Domain
 
         public void AddDomainEvent(INotification eventItem)
         {
-            domainEvents = domainEvents ?? new List<INotification>();
+            domainEvents ??= new List<INotification>();
             domainEvents.Add(eventItem);
         }
 

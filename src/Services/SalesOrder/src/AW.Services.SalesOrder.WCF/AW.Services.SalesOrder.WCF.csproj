@@ -200,7 +200,7 @@
       <Project>{1590BB85-9E79-4538-BD8B-834BA50D4A6C}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
       <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
       <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>

@@ -5,13 +5,18 @@ using System;
 using System.Linq;
 using Xunit;
 using AW.Services.SharedKernel.EFCore;
+using AW.SharedKernel.UnitTesting;
+using Moq;
+using MediatR;
 
 namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 {
     public class AWContextUnitTests
     {
-        [Fact]
-        public void CreateDatabase_ModelConfigurationsAreApplied()
+        [Theory, AutoMoqData]
+        public void CreateDatabase_ModelConfigurationsAreApplied(
+            Mock<IMediator> mockMediator
+        )
         {
             //Arrange
             var contextOptions = new DbContextOptionsBuilder<AWContext>()
@@ -20,7 +25,8 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
                 
             var context = new AWContext(
                 contextOptions,
-                typeof(EfRepository<>).Assembly
+                typeof(EfRepository<>).Assembly,
+                mockMediator.Object
             );
 
             //Act

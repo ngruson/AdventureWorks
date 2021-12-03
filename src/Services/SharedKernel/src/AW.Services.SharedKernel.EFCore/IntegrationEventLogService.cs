@@ -4,7 +4,6 @@ using AW.SharedKernel.EventBus.IntegrationEventLog;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AW.Services.SharedKernel.EFCore
 {
-    static class MediatorExtensions
+    public static class MediatorExtensions
     {
         public static async Task DispatchDomainEventsAsync(this IMediator mediator, AWContext ctx)
         {

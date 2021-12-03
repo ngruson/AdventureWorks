@@ -118,14 +118,18 @@ namespace AW.Services.SharedKernel.EF6
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var typesToRegister = configurationAssembly.GetTypes()
-              .Where(type => !string.IsNullOrEmpty(type.Namespace))
-              .Where(type => type.BaseType != null && type.BaseType.IsGenericType
-                   && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
-            foreach (var type in typesToRegister)
+            if (configurationAssembly != null)
             {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.Configurations.Add(configurationInstance);
+                var typesToRegister = configurationAssembly.GetTypes()
+                  .Where(type => !string.IsNullOrEmpty(type.Namespace))
+                  .Where(type => type.BaseType != null && type.BaseType.IsGenericType
+                       && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+
+                foreach (var type in typesToRegister)
+                {
+                    dynamic configurationInstance = Activator.CreateInstance(type);
+                    modelBuilder.Configurations.Add(configurationInstance);
+                }
             }
 
             base.OnModelCreating(modelBuilder);

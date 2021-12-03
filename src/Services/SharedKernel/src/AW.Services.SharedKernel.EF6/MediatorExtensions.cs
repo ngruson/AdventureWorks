@@ -1,13 +1,14 @@
 ﻿using AW.SharedKernel.Domain;
 using MediatR;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AW.Services.SharedKernel.EF6
 {
-    static class MediatorExtensions
+    public static class MediatorExtensions
     {
-        public static async Task DispatchDomainEventsAsync(this IMediator mediator, AWContext ctx)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, AWContext ctx, CancellationToken cancellationToken = default)
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()
@@ -21,7 +22,7 @@ namespace AW.Services.SharedKernel.EF6
                 .ForEach(entity => entity.Entity.ClearDomainEvents());
 
             foreach (var domainEvent in domainEvents)
-                await mediator.Publish(domainEvent);
+                await mediator.Publish(domainEvent, cancellationToken);
         }
     }
 }

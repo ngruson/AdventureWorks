@@ -57,7 +57,8 @@ namespace AW.Services.ReferenceData.REST.API
 
                 return new AWContext(
                     builder.Options,
-                    typeof(EfRepository<>).Assembly
+                    typeof(EfRepository<>).Assembly,
+                    provider.GetService<IMediator>()
                 );
             });
 

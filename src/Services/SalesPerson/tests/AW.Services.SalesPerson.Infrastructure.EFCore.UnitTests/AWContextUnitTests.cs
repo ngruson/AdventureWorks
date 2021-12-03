@@ -1,7 +1,10 @@
 ﻿using AW.Services.SalesPerson.Core.Entities;
 using AW.Services.SharedKernel.EFCore;
+using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System;
 using System.Linq;
 using Xunit;
@@ -10,8 +13,10 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
 {
     public class AWContextUnitTests
     {
-        [Fact]
-        public void CreateDatabase_ModelConfigurationsAreApplied()
+        [Theory, AutoMoqData]
+        public void CreateDatabase_ModelConfigurationsAreApplied(
+            Mock<IMediator> mockMediator
+        )
         {
             //Arrange
             var contextOptions = new DbContextOptionsBuilder<AWContext>()
@@ -20,7 +25,8 @@ namespace AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests
                 
             var context = new AWContext(
                 contextOptions,
-                typeof(EfRepository<>).Assembly
+                typeof(EfRepository<>).Assembly,
+                mockMediator.Object
             );
 
             //Act

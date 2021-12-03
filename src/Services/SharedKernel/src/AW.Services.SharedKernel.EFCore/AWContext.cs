@@ -19,15 +19,23 @@ namespace AW.Services.SharedKernel.EFCore
         private IDbContextTransaction currentTransaction;
 
         public AWContext() { }
-        public AWContext(IMediator mediator)
-            : base()
+
+        public AWContext(
+            DbContextOptions<AWContext> options,
+            IMediator mediator
+        ) : base(options)
         {
             this.mediator = mediator;
         }
 
-        public AWContext(DbContextOptions<AWContext> options, Assembly configurationsAssembly) : base(options)
+        public AWContext(
+            DbContextOptions<AWContext> options, 
+            Assembly configurationsAssembly,
+            IMediator mediator
+        ) : base(options)
         {
             this.configurationsAssembly = configurationsAssembly;
+            this.mediator = mediator;
         }
 
         public DbTransaction CurrentTransaction => currentTransaction.GetDbTransaction();
@@ -37,7 +45,8 @@ namespace AW.Services.SharedKernel.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
+            if (configurationsAssembly != null)
+                modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
         }
 
         public virtual void SetModified(object entity)

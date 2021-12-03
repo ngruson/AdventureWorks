@@ -61,7 +61,8 @@ namespace AW.Services.Product.REST.API
 
                 return new AWContext(
                     builder.Options,
-                    typeof(EfRepository<>).Assembly
+                    typeof(EfRepository<>).Assembly,
+                    provider.GetService<IMediator>()
                 );
             });
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

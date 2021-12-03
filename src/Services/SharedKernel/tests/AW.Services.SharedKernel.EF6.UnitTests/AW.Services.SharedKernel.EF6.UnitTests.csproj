@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props')" />
   <Import Project="..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props" Condition="Exists('..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props')" />
   <Import Project="..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
-  <Import Project="..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{13F67C91-9B4D-41C9-A0F9-4D62703DEB38}</ProjectGuid>
+    <ProjectGuid>{7E08422A-125A-40EF-9A07-38D677C9D7D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AW.Services.SalesPerson.Persistence.EF.UnitTests</RootNamespace>
-    <AssemblyName>AW.Services.SalesPerson.Persistence.EF.UnitTests</AssemblyName>
+    <RootNamespace>AW.Services.SharedKernel.EF6.UnitTests</RootNamespace>
+    <AssemblyName>AW.Services.SharedKernel.EF6.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -37,15 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ardalis.GuardClauses, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.GuardClauses.3.1.0\lib\net40\Ardalis.GuardClauses.dll</HintPath>
-    </Reference>
-    <Reference Include="Ardalis.Specification, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.5.2.0\lib\netstandard2.0\Ardalis.Specification.dll</HintPath>
-    </Reference>
-    <Reference Include="Ardalis.Specification.EntityFramework6, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Ardalis.Specification.EntityFramework6.5.2.0\lib\net472\Ardalis.Specification.EntityFramework6.dll</HintPath>
-    </Reference>
     <Reference Include="AutoFixture, Version=4.17.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\AutoFixture.4.17.0\lib\net452\AutoFixture.dll</HintPath>
     </Reference>
@@ -56,10 +47,10 @@
       <HintPath>..\..\..\..\packages\AutoFixture.Xunit2.4.17.0\lib\net452\AutoFixture.Xunit2.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Effort, Version=2.2.13.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Effort.EF6.2.2.13\lib\net45\Effort.dll</HintPath>
+    <Reference Include="Effort, Version=2.2.15.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Effort.EF6.2.2.15\lib\net45\Effort.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -70,36 +61,34 @@
     <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Fare.2.1.1\lib\net35\Fare.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\FluentAssertions.5.10.3\lib\net47\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=6.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\FluentAssertions.6.2.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=2019.1.3.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\JetBrains.Annotations.2019.1.3\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="MediatR, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MediatR.9.0.0\lib\net461\MediatR.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.16.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Moq.4.16.1\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="NMemory, Version=3.0.0.0, Culture=neutral, PublicKeyToken=afc61983f100d280, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\NMemory.3.1.2\lib\net45\NMemory.dll</HintPath>
+      <HintPath>..\..\..\..\packages\NMemory.3.1.3\lib\net45\NMemory.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="xunit.assert, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\xunit.assert.2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
@@ -112,57 +101,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AWContextUnitTests.cs" />
-    <Compile Include="EfRepositoryUnitTests.cs" />
+    <Compile Include="MediatorExtensionsUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <Compile Include="TestData\Item.cs" />
+    <Compile Include="TestData\ItemsContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting.EF6\AW.SharedKernel.UnitTesting.EF6.csproj">
-      <Project>{E4EEEFC6-B831-402A-8409-58D926F693B3}</Project>
-      <Name>AW.SharedKernel.UnitTesting.EF6</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.UnitTesting\AW.SharedKernel.UnitTesting.csproj">
-      <Project>{693ef9c0-ca4f-44ed-a3c8-d2c5f21c09a2}</Project>
+      <Project>{693EF9C0-CA4F-44ED-A3C8-D2C5F21C09A2}</Project>
       <Name>AW.SharedKernel.UnitTesting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj">
-      <Project>{1590bb85-9e79-4538-bd8b-834ba50d4a6c}</Project>
+      <Project>{1590BB85-9E79-4538-BD8B-834BA50D4A6C}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
-      <Project>{D47934B0-2301-4F55-86FD-197FEDCC26B0}</Project>
+    <ProjectReference Include="..\..\src\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+      <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
       <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\AW.Services.SalesPerson.Core\AW.Services.SalesPerson.Core.csproj">
-      <Project>{d473a446-4cea-4002-babc-11c27761506f}</Project>
-      <Name>AW.Services.SalesPerson.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\AW.Services.SalesPerson.Infrastructure.EF6\AW.Services.SalesPerson.Infrastructure.EF6.csproj">
-      <Project>{62a6b35f-0b51-4f26-b9e8-c1dae5f21c40}</Project>
-      <Name>AW.Services.SalesPerson.Infrastructure.EF6</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.props'))" />
     <Error Condition="!Exists('..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\xunit.runner.visualstudio.2.4.3\build\net452\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
   <Import Project="..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets" Condition="Exists('..\..\..\..\packages\coverlet.msbuild.2.9.0\build\coverlet.msbuild.targets')" />
+  <Import Project="..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

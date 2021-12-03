@@ -79,12 +79,12 @@
       <Project>{1590BB85-9E79-4538-BD8B-834BA50D4A6C}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
+    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EF6\AW.Services.SharedKernel.EF6.csproj">
       <Project>{d47934b0-2301-4f55-86fd-197fedcc26b0}</Project>
       <Name>AW.Services.SharedKernel.EF6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\AW.Services.SharedKernel\AW.Services.SharedKernel.csproj">
-      <Project>{a1d08563-c53e-473a-8bd3-d5ec92fd6133}</Project>
+    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel\AW.Services.SharedKernel.csproj">
+      <Project>{55a8788b-6000-4c26-a950-e7adb460bcc1}</Project>
       <Name>AW.Services.SharedKernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Services.SalesOrder.Core\AW.Services.SalesOrder.Core.csproj">
