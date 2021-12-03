@@ -27,6 +27,7 @@ jobs:
       - name: Build and run unit tests
         run: |          
           nuget restore src/SharedKernel/src/AW.SharedKernel/AW.SharedKernel.csproj
+          nuget restore src/Services/SharedKernel/src/AW.Services.SharedKernel/AW.Services.SharedKernel.csproj
 
           cd src/Services/Product
           nuget restore src/AW.Services.Product.Core/AW.Services.Product.Core.csproj
