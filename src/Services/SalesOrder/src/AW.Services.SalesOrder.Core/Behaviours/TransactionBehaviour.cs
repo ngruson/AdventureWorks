@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace AW.Services.SalesOrder.Core.Behaviors
 {
-    public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> logger;
+        private readonly ILogger<TransactionBehavior<TRequest, TResponse>> logger;
         private readonly IDbContext dbContext;
         private readonly ISalesOrderIntegrationEventService salesOrderIntegrationEventService;
 
-        public TransactionBehaviour(IDbContext dbContext,
+        public TransactionBehavior(IDbContext dbContext,
             ISalesOrderIntegrationEventService salesOrderIntegrationEventService,
-            ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
+            ILogger<TransactionBehavior<TRequest, TResponse>> logger)
         {
             this.dbContext = dbContext ?? throw new ArgumentException(nameof(IDbContext));
             this.salesOrderIntegrationEventService = salesOrderIntegrationEventService ?? throw new ArgumentException(nameof(ISalesOrderIntegrationEventService));

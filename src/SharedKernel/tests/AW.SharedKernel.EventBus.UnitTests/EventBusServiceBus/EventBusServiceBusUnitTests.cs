@@ -139,7 +139,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.EventBusServiceBus
             }
 
             [Theory, AutoMoqData]
-            public void Subscribe_ServiceBusException_AddSubscription(
+            public void Subscribe_ServiceBusException_AddSubscriptionIsCalled(
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
@@ -151,7 +151,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.EventBusServiceBus
                     .Throws<Exception>();
 
                 mockSubsManager.Setup(_ => _.HasSubscriptionsForEvent<TestIntegrationEvent>())
-                    .Returns(true);
+                    .Returns(false);
 
                 //Act
                 sut.Subscribe<TestIntegrationEvent, TestIntegrationEventHandler>();

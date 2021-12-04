@@ -11,6 +11,7 @@ using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using System.Collections.Generic;
 
 namespace AW.UI.Web.Store.UnitTests.Services
 {
@@ -108,6 +109,42 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 response.Items.Where(_ => _.ProductNumber == product.ProductNumber)
                     .ToList()[0].Quantity.Should().Be(10 + quantity);
 
+                mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
+            }
+        }
+
+        public class SetQuantities
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddBasketItem_ProductExistsInBasket_ReturnsBasket(
+                [Frozen] Mock<IBasketApiClient> mockBasketApiClient,
+                [Greedy] BasketService sut,
+                ApplicationUser user,
+                bm.Basket basket,
+                List<int> quantityValues
+            )
+            {
+                //Arrange
+                Dictionary<string, int> quantities = new();
+                for (int i = 0; i < basket.Items.Count; i++)
+                {
+                    quantities.Add(basket.Items[i].Id, quantityValues[i]);
+                }
+
+                mockBasketApiClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
+                    .ReturnsAsync(basket);
+
+                //Act
+                var resultBasket = await sut.SetQuantities(
+                    user,
+                    quantities
+                );
+
+                //Assert
+                for (int i = 0; i < basket.Items.Count; i++)
+                {
+                    resultBasket.Items[i].Quantity.Should().Be(quantityValues[i]);
+                }
                 mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
             }
         }

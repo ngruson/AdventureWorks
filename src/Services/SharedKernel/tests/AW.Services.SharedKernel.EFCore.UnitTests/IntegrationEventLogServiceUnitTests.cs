@@ -27,11 +27,11 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
             {
                 //Arrange
                 var entries = new List<IntegrationEventLogEntry> {
-                new IntegrationEventLogEntry(
-                    new TestIntegrationEvent(),
-                    Guid.NewGuid()
-                )
-            };
+                    new IntegrationEventLogEntry(
+                        new TestIntegrationEvent(),
+                        Guid.NewGuid()
+                    )
+                };
 
                 var mockSet = entries.AsQueryable().BuildMockDbSet();
 

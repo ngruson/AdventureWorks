@@ -8,7 +8,7 @@ namespace AW.SharedKernel.EventBus.AzureServiceBus
     public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection, IDisposable
     {
         private readonly string connectionString;
-        private ServiceBusAdministrationClient subscriptionClient;
+        private ServiceBusAdministrationClient adminClient;
         private ServiceBusClient serviceBusClient;
         private ServiceBusProcessor processor;
 
@@ -17,7 +17,7 @@ namespace AW.SharedKernel.EventBus.AzureServiceBus
         public DefaultServiceBusPersisterConnection(string connectionString, string topicName)
         {
             this.connectionString = connectionString;            
-            subscriptionClient = new ServiceBusAdministrationClient(connectionString);
+            adminClient = new ServiceBusAdministrationClient(connectionString);
             serviceBusClient = new ServiceBusClient(connectionString);
             
             processor = serviceBusClient.CreateProcessor(
@@ -46,7 +46,7 @@ namespace AW.SharedKernel.EventBus.AzureServiceBus
         {
             get
             {
-                return subscriptionClient;
+                return adminClient;
             }
         }
 
@@ -71,11 +71,14 @@ namespace AW.SharedKernel.EventBus.AzureServiceBus
 
         public void Dispose()
         {
-            if (disposed) return;
-
-            disposed = true;
-
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            serviceBusClient?.DisposeAsync().GetAwaiter().GetResult();
+            processor?.DisposeAsync().GetAwaiter().GetResult();
         }
     }
 }

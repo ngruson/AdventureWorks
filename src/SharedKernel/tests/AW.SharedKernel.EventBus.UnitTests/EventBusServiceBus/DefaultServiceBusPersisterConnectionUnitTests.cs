@@ -1,5 +1,6 @@
 ﻿using AW.SharedKernel.EventBus.AzureServiceBus;
 using FluentAssertions;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.SharedKernel.Api.UnitTests.EventBusServiceBus
@@ -21,6 +22,30 @@ namespace AW.SharedKernel.Api.UnitTests.EventBusServiceBus
         }
 
         [Fact]
+        public void AdminClient_ReturnAdminClient()
+        {
+            //Arrange
+            var sut = new DefaultServiceBusPersisterConnection(connectionString, "my-subscription");
+
+            //Act
+
+            //Assert
+            sut.AdminClient.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Processor_ReturnProcessor()
+        {
+            //Arrange
+            var sut = new DefaultServiceBusPersisterConnection(connectionString, "my-subscription");
+
+            //Act
+
+            //Assert
+            sut.Processor.Should().NotBeNull();
+        }
+
+        [Fact]
         public void CreateModel_ReturnServiceBusClient()
         {
             //Arrange
@@ -31,6 +56,37 @@ namespace AW.SharedKernel.Api.UnitTests.EventBusServiceBus
 
             //Assert
             result.Should().Be(sut.ServiceBusClient);
+        }
+
+        [Fact]
+        public async Task StartReceiving_ProcessorIsStarted()
+        {
+            //Arrange
+            var sut = new DefaultServiceBusPersisterConnection(connectionString, "my-subscription");
+            sut.Processor.ProcessMessageAsync += (args) => { return Task.CompletedTask; };
+            sut.Processor.ProcessErrorAsync += (args) => { return Task.CompletedTask; };
+
+            //Act
+            await sut.StartReceiving();
+
+            //Assert
+            sut.Processor.IsProcessing.Should().Be(true);
+        }
+
+        [Fact]
+        public async Task StopReceiving_ProcessorIsStopped()
+        {
+            //Arrange
+            var sut = new DefaultServiceBusPersisterConnection(connectionString, "my-subscription");
+            sut.Processor.ProcessMessageAsync += (args) => { return Task.CompletedTask; };
+            sut.Processor.ProcessErrorAsync += (args) => { return Task.CompletedTask; };
+
+            //Act
+            await sut.StartReceiving();
+            await sut.StopReceiving();
+
+            //Assert
+            sut.Processor.IsProcessing.Should().Be(false);
         }
 
         [Fact]

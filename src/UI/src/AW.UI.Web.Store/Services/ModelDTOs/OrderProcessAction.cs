@@ -5,7 +5,8 @@
         public string Code { get; }
         public string Name { get; }
 
-        public static OrderProcessAction Ship = new(nameof(Ship).ToLowerInvariant(), "Ship");
+        private static readonly OrderProcessAction orderProcessAction = new(nameof(Ship).ToLowerInvariant(), "Ship");
+        public static OrderProcessAction Ship = orderProcessAction;
 
         protected OrderProcessAction()
         {

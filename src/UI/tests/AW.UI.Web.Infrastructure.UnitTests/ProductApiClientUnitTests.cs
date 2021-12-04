@@ -26,7 +26,10 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 List<Product> list,
-                ProductApiClient sut
+                ProductApiClient sut,
+                string category, 
+                string subCategory,
+                string orderBy
             )
             {
                 //Arrange
@@ -53,7 +56,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.GetProductsAsync(0, 10, null, null, null);
+                var response = await sut.GetProductsAsync(0, 10, category, subCategory, orderBy);
 
                 //Assert
                 response.Should().NotBeNull();
@@ -77,6 +80,69 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
                 //Act
                 Func<Task> func = async () => await sut.GetProductsAsync(0, 10, null, null, null);
+
+                //Assert
+                func.Should().Throw<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class GetProduct
+        {
+            [Theory, MockHttpData]
+            public async Task GetProduct_ProductFound_ReturnsProduct(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                Product product,
+                ProductApiClient sut,
+                string category,
+                string subCategory,
+                string orderBy
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(product, new JsonSerializerOptions
+                            {
+                                Converters =
+                                {
+                                    new JsonStringEnumConverter()
+                                },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            })
+                        )
+                    );
+
+                //Act
+                var response = await sut.GetProductAsync(product.ProductNumber);
+
+                //Assert
+                response.Should().NotBeNull();
+                response.Should().BeEquivalentTo(product);
+            }
+
+            [Theory, MockHttpData]
+            public void GetProduct_NoProductFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                string productNumber
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.GetProductAsync(productNumber);
 
                 //Assert
                 func.Should().Throw<HttpRequestException>()

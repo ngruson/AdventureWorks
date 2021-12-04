@@ -190,7 +190,7 @@ namespace AW.Services.SalesOrder.REST.API
                 typeof(IdentifiedCommandHandler<CreateSalesOrderCommand, bool>)
             );
             services.AddMediatR(typeof(GetSalesOrdersQuery));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
             if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
             {

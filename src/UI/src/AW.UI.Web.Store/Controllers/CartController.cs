@@ -41,7 +41,7 @@ namespace AW.UI.Web.Store.Controllers
             try
             {
                 var user = appUserParser.Parse(HttpContext.User);
-                var basket = await basketService.SetQuantities(user, quantities);
+                await basketService.SetQuantities(user, quantities);
                 if (action == "Checkout")
                 {
                     return RedirectToAction("Create", "Order");

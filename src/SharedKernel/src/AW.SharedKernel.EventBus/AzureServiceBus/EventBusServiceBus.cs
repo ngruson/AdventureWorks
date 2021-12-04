@@ -143,8 +143,13 @@ namespace AW.SharedKernel.EventBus.AzureServiceBus
 
         public void Dispose()
         {
-            subsManager.Clear();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            subsManager.Clear();
         }
 
         private void RegisterSubscriptionClientMessageHandler()

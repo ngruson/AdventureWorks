@@ -11,7 +11,7 @@ namespace AW.Services.SalesOrder.Core.Idempotency
 
         public RequestManager(IRepository<ClientRequest> repository)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(IRepository<ClientRequest>));
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public async Task<bool> ExistAsync(Guid id)
