@@ -51,6 +51,12 @@ jobs:
           
           dotnet build src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-restore
           dotnet test src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.EF6.UnitTests\AW.Services.SharedKernel.EF6.UnitTests.csproj --no-restore
+          dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.EF6.UnitTests\AW.Services.SharedKernel.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-restore
+          dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
       
       - name: Build Customer services and run unit tests
         run: |
