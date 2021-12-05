@@ -95,10 +95,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 Product product,
-                ProductApiClient sut,
-                string category,
-                string subCategory,
-                string orderBy
+                ProductApiClient sut
             )
             {
                 //Arrange

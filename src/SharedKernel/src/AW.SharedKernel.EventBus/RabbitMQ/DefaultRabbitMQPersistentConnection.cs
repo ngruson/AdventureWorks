@@ -9,7 +9,7 @@ using System.Net.Sockets;
 
 namespace AW.SharedKernel.EventBus.RabbitMQ
 {
-    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection, IDisposable
+    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
     {
         private readonly IConnectionFactory connectionFactory;
         private readonly ILogger<DefaultRabbitMQPersistentConnection> logger;
@@ -43,12 +43,8 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
             return connection.CreateModel();
         }
 
-        public void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
-            if (disposed) return;
-
-            disposed = true;
-
             try
             {
                 connection?.Dispose();
@@ -57,7 +53,11 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
             {
                 logger.LogCritical(ex.ToString());
             }
+        }
 
+        public void Dispose()
+        {
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 

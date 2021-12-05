@@ -5,11 +5,15 @@
         public string Code { get; }
         public string Name { get; }
 
-        private static readonly OrderProcessAction orderProcessAction = new(nameof(Ship).ToLowerInvariant(), "Ship");
-        public static OrderProcessAction Ship = orderProcessAction;
+        public static OrderProcessAction Ship { get; private set; }
 
         protected OrderProcessAction()
         {
+        }
+
+        static OrderProcessAction()
+        {
+            Ship = new(nameof(Ship).ToLowerInvariant(), "Ship");
         }
 
         public OrderProcessAction(string code, string name)

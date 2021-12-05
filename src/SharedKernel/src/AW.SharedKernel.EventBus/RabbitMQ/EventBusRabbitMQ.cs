@@ -7,7 +7,6 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 using System;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace AW.SharedKernel.EventBus.RabbitMQ
 {
-    public class EventBusRabbitMQ : IEventBus, IDisposable
+    public class EventBusRabbitMQ : IEventBus
     {
         const string BROKER_NAME = "event_bus";
 

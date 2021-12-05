@@ -64,9 +64,6 @@ namespace AW.Services.SalesOrder.Core.Handlers.CreateSalesOrder
 
             await salesOrderRepository.AddAsync(salesOrder);
 
-            //var result = await salesOrderRepository.UnitOfWork
-                //.SaveEntitiesAsync(cancellationToken);
-
             logger.LogInformation("Sales order was created succesfully");
 
             return true;

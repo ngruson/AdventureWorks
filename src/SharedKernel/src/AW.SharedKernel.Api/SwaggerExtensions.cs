@@ -42,9 +42,9 @@ namespace AW.SharedKernel.Api
                 .UseSwagger()
                 .UseSwaggerUI(options =>
                 {
-                    foreach (var description in provider.ApiVersionDescriptions)
+                    foreach (var groupName in provider.ApiVersionDescriptions.Select(_ => _.GroupName))
                     {
-                        options.SwaggerEndpoint($"{virtualPath}/swagger/{description.GroupName}/swagger.json", $"{apiName} {description.GroupName.ToUpperInvariant()}");
+                        options.SwaggerEndpoint($"{virtualPath}/swagger/{groupName}/swagger.json", $"{apiName} {groupName.ToUpperInvariant()}");
                         options.RoutePrefix = string.Empty;
                     }
                     options.DocumentTitle = $"{apiName} Documentation";
@@ -74,15 +74,7 @@ namespace AW.SharedKernel.Api
 
         public void Configure(SwaggerGenOptions options)
         {
-            DiscoveryDocumentResponse disco = null;
-            try
-            {
-                disco = GetDiscoveryDocument().GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                var str = ex.Message;
-            }
+            var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
             
             var apiScope = config.GetValue<string>("AuthN:ApiName");
             var scopes = apiScope.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();

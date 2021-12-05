@@ -33,7 +33,7 @@ namespace AW.SharedKernel.EventBus.EFCore
             var tid = transactionId.ToString();
 
             var result = await dbContext.Set<IntegrationEventLogEntry>()
-                .Where(e => e.TransactionId == tid && e.State == EventStateEnum.NotPublished)
+                .Where(e => e.TransactionId == tid && e.State == EventState.NotPublished)
                 .ToListAsync();
 
             if (result != null && result.Any())
@@ -56,26 +56,26 @@ namespace AW.SharedKernel.EventBus.EFCore
 
         public Task MarkEventAsPublishedAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.Published);
+            return UpdateEventStatus(eventId, EventState.Published);
         }
 
         public Task MarkEventAsInProgressAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.InProgress);
+            return UpdateEventStatus(eventId, EventState.InProgress);
         }
 
         public Task MarkEventAsFailedAsync(Guid eventId)
         {
-            return UpdateEventStatus(eventId, EventStateEnum.PublishedFailed);
+            return UpdateEventStatus(eventId, EventState.PublishedFailed);
         }
 
-        private async Task UpdateEventStatus(Guid eventId, EventStateEnum status)
+        private async Task UpdateEventStatus(Guid eventId, EventState status)
         {
             var eventLogEntry = dbContext.Set<IntegrationEventLogEntry>()
                 .Single(ie => ie.EventId == eventId);
             eventLogEntry.State = status;
 
-            if (status == EventStateEnum.InProgress)
+            if (status == EventState.InProgress)
                 eventLogEntry.TimesSent++;
 
             dbContext.Set<IntegrationEventLogEntry>().Update(eventLogEntry);

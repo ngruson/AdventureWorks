@@ -26,10 +26,10 @@ namespace AW.Services.SalesOrder.Core.IntegrationEvents.EventHandling
             IMapper mapper,
             ILogger<UserCheckoutAcceptedIntegrationEventHandler> logger)
         {
-            this.application = application ?? throw new ArgumentNullException(nameof(IApplication));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(IMediator));
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(IMapper));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(ILogger< UserCheckoutAcceptedIntegrationEventHandler>));
+            this.application = application ?? throw new ArgumentNullException(nameof(application));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>

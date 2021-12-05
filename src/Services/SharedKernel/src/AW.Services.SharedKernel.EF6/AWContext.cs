@@ -23,12 +23,7 @@ namespace AW.Services.SharedKernel.EF6
         public AWContext()
             : base("AWContext")
         {
-        }
-        public AWContext(IMediator mediator)
-            : base()
-        {
-            this.mediator = mediator;
-        }
+        }        
 
         public AWContext(DbConnection existingConnection, bool contextOwnsConnection, Assembly configurationAssembly)
             : base(existingConnection, contextOwnsConnection)
@@ -59,7 +54,8 @@ namespace AW.Services.SharedKernel.EF6
 
         public Task<DbTransaction> BeginTransactionAsync()
         {
-            if (currentTransaction != null) return null;
+            if (currentTransaction != null) 
+                return Task.FromResult<DbTransaction>(null);
 
             var transaction = Database.BeginTransaction(IsolationLevel.ReadCommitted);
             currentTransaction = transaction.UnderlyingTransaction;

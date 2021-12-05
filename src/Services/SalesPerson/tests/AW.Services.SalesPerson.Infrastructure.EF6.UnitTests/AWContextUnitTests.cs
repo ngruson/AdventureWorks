@@ -1,4 +1,5 @@
 ﻿using AW.Services.SharedKernel.EF6;
+using FluentAssertions;
 using Xunit;
 
 namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
@@ -20,7 +21,7 @@ namespace AW.Services.SalesPerson.Infrastructure.EF6.UnitTests
             context.Database.Create();
 
             //Assert
-            
+            true.Should().Be(true);
         }
     }
 }

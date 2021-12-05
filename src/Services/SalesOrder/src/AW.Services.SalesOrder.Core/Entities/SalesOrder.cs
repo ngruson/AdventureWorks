@@ -101,8 +101,8 @@ namespace AW.Services.SalesOrder.Core.Entities
 
         public void AddOrderLine(string productNumber, string productName, decimal unitPrice, decimal unitPriceDiscount, SpecialOfferProduct specialOfferProduct, short quantity = 1)
         {
-            var existingOrderLineForProduct = OrderLines.Where(o => o.ProductNumber == productNumber)
-                .SingleOrDefault();
+            var existingOrderLineForProduct = OrderLines
+                .SingleOrDefault(o => o.ProductNumber == productNumber);
 
             if (existingOrderLineForProduct != null)
             {

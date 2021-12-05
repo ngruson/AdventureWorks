@@ -91,16 +91,6 @@ namespace AW.UI.Web.Internal
                     options.Scope.Add("salesorder-api.read");
                     options.Scope.Add("salesperson-api.read");
                     options.Scope.Add("referencedata-api.read");
-
-                    options.Events = new OpenIdConnectEvents
-                    {
-                        OnTicketReceived = ctx =>
-                        {
-                            var p = ctx.Principal;
-                            var x = ctx.ReturnUri;
-                            return Task.CompletedTask;
-                        }
-                    };
                 });
 
             services.Configure<CookiePolicyOptions>(options =>

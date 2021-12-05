@@ -19,7 +19,7 @@ namespace AW.SharedKernel.EventBus.IntegrationEventLog
             {
                 WriteIndented = true
             });
-            State = EventStateEnum.NotPublished;
+            State = EventState.NotPublished;
             TimesSent = 0;
             TransactionId = transactionId.ToString();
         }
@@ -29,7 +29,7 @@ namespace AW.SharedKernel.EventBus.IntegrationEventLog
         public string EventTypeShortName => EventTypeName.Split('.')?.Last();
         [NotMapped]
         public IntegrationEvent IntegrationEvent { get; private set; }
-        public EventStateEnum State { get; set; }
+        public EventState State { get; set; }
         public int TimesSent { get; set; }
         public DateTime CreationTime { get; private set; }
         public string Content { get; private set; }

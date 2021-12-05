@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 
 namespace AW.SharedKernel.EventBus.AzureServiceBus
 {
-    public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection, IDisposable
+    public class DefaultServiceBusPersisterConnection : IServiceBusPersisterConnection
     {
         private readonly string connectionString;
-        private ServiceBusAdministrationClient adminClient;
+        private readonly ServiceBusAdministrationClient adminClient;
         private ServiceBusClient serviceBusClient;
-        private ServiceBusProcessor processor;
-
-        bool disposed;
+        private readonly ServiceBusProcessor processor;
 
         public DefaultServiceBusPersisterConnection(string connectionString, string topicName)
         {
