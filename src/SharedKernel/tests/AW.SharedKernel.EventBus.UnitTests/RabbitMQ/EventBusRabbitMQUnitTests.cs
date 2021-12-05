@@ -1,5 +1,4 @@
 ﻿using AutoFixture.Xunit2;
-using AW.SharedKernel.EventBus;
 using AW.SharedKernel.EventBus.RabbitMQ;
 using AW.SharedKernel.UnitTesting;
 using Moq;
@@ -7,7 +6,6 @@ using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using mq = AW.SharedKernel.EventBus.RabbitMQ;
 
 namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
 {
@@ -17,7 +15,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         public void Publish(
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             TestIntegrationEvent integrationEvent
         )
         {
@@ -42,7 +40,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         public void SubscribeDynamic(
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             Mock<QueueDeclareOk> mockQueueDeclareOk
         )
         {
@@ -76,7 +74,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             Mock<QueueDeclareOk> mockQueueDeclareOk
         )
         {
@@ -116,7 +114,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         public void Subscribe(
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             Mock<QueueDeclareOk> mockQueueDeclareOk
         )
         {
@@ -150,7 +148,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             Mock<QueueDeclareOk> mockQueueDeclareOk
         )
         {
@@ -189,7 +187,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         [Theory, AutoMoqData]
         public void UnsubscribeDynamic(
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut
+            [Greedy] EventBusRabbitMQ sut
         )
         {
             //Arrange
@@ -208,7 +206,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         [Theory, AutoMoqData]
         public void Unsubscribe(
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut
+            [Greedy] EventBusRabbitMQ sut
         )
         {
             //Arrange
@@ -231,7 +229,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
             [Frozen] Mock<IRabbitMQPersistentConnection> mockConnection,
             [Frozen] Mock<IModel> mockChannel,
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut,
+            [Greedy] EventBusRabbitMQ sut,
             Mock<QueueDeclareOk> mockQueueDeclareOk
         )
         {
@@ -263,7 +261,7 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
         [Theory, AutoMoqData]
         public void Dispose_ConsumerChannelIsNull_ClearSubscription(
             [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-            [Greedy] mq.EventBusRabbitMQ sut
+            [Greedy] EventBusRabbitMQ sut
         )
         {
             //Arrange

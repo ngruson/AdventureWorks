@@ -31,7 +31,8 @@ namespace AW.Services.SalesOrder.WCF
             builder.RegisterInstance(new AWContext(
                 sqlConnection, 
                 true,
-                typeof(EfRepository<>).Assembly
+                typeof(EfRepository<>).Assembly,
+                null
             ));
 
             builder.RegisterGeneric(typeof(EfRepository<>))

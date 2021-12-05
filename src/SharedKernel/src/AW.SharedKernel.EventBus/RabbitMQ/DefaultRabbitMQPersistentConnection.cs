@@ -43,21 +43,22 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
             return connection.CreateModel();
         }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            try
-            {
-                connection?.Dispose();
-            }
-            catch (IOException ex)
-            {
-                logger.LogCritical(ex.ToString());
-            }
-        }
-
         public void Dispose()
         {
-            Dispose(true);
+            if (!disposed)
+            {
+                try
+                {
+                    connection?.Dispose();
+                }
+                catch (IOException ex)
+                {
+                    logger.LogCritical(ex.ToString());
+                }
+
+                disposed = true;
+            }
+
             GC.SuppressFinalize(this);
         }
 

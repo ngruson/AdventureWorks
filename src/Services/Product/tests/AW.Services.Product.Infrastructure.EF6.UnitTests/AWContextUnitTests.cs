@@ -14,7 +14,8 @@ namespace AW.Services.Product.Infrastructure.EF6.UnitTests
             var context = new AWContext(
                 connection, 
                 true,
-                typeof(EfRepository<>).Assembly
+                typeof(EfRepository<>).Assembly,
+                null
             );
 
             //Act

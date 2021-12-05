@@ -68,10 +68,9 @@ namespace AW.SharedKernel.EventBus.UnitTests.RabbitMQ
                 //Act
                 sut.TryConnect();
                 sut.Dispose();
-                var result = sut.IsConnected;
 
                 //Assert
-                result.Should().BeFalse();
+                mockConnection.Verify(_ => _.Dispose());
             }
         }
 

@@ -15,7 +15,8 @@ namespace AW.Services.SalesOrder.Infrastructure.EF6.UnitTests
                 var context = new AWContext(
                     connection,
                     true,
-                    typeof(EfRepository<>).Assembly
+                    typeof(EfRepository<>).Assembly,
+                    null
                 );
 
                 //Act

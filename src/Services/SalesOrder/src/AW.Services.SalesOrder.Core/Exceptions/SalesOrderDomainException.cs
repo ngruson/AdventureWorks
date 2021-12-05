@@ -9,7 +9,7 @@ namespace AW.Services.SalesOrder.Core.Exceptions
         public SalesOrderDomainException()
         { }
 
-        public SalesOrderDomainException(SerializationInfo info, StreamingContext context)
+        protected SalesOrderDomainException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
 

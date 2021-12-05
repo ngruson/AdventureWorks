@@ -25,10 +25,11 @@ namespace AW.Services.SharedKernel.EF6
         {
         }        
 
-        public AWContext(DbConnection existingConnection, bool contextOwnsConnection, Assembly configurationAssembly)
+        public AWContext(DbConnection existingConnection, bool contextOwnsConnection, Assembly configurationAssembly, IMediator mediator)
             : base(existingConnection, contextOwnsConnection)
         {
             this.configurationAssembly = configurationAssembly;
+            this.mediator = mediator;
         }
 
         public DbTransaction CurrentTransaction => currentTransaction;

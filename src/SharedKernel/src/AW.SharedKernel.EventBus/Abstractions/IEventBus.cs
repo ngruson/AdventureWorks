@@ -1,9 +1,9 @@
 ﻿using AW.SharedKernel.EventBus.Events;
-using System.Threading.Tasks;
+using System;
 
 namespace AW.SharedKernel.EventBus.Abstractions
 {
-    public interface IEventBus
+    public interface IEventBus : IDisposable
     {
         void Publish(IntegrationEvent @event);
 

@@ -8,7 +8,7 @@ namespace AW.Services.SharedKernel.EF6.UnitTests.TestData
     public class ItemsContext : AWContext
     {
         public ItemsContext(DbConnection existingConnection, bool contextOwnsConnection, Assembly configurationAssembly)
-            : base(existingConnection, contextOwnsConnection, configurationAssembly)
+            : base(existingConnection, contextOwnsConnection, configurationAssembly, null)
         {
         }
 
