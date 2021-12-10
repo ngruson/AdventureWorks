@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace AW.Services.SalesOrder.REST.API.UnitTests
+namespace AW.Services.Basket.REST.API.UnitTests
 {
     public class ApplicationUnitTests
     {
@@ -17,7 +17,7 @@ namespace AW.Services.SalesOrder.REST.API.UnitTests
             var ns = app.Namespace;
 
             //Assert
-            ns.Should().Be("AW.Services.SalesOrder.REST.API");
+            ns.Should().Be("AW.Services.Basket.REST.API");
         }
 
         [Theory, AutoMoqData]
@@ -31,7 +31,7 @@ namespace AW.Services.SalesOrder.REST.API.UnitTests
             var appName = app.AppName;
 
             //Assert
-            appName.Should().Be("SalesOrder.REST.API");
+            appName.Should().Be("Basket.REST.API");
         }
     }
 }
