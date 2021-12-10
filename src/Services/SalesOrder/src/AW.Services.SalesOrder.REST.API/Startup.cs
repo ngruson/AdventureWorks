@@ -194,7 +194,7 @@ namespace AW.Services.SalesOrder.REST.API
 
             if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
             {
-                services.AddScoped<IServiceBusPersisterConnection>(sp =>
+                services.AddSingleton<IServiceBusPersisterConnection>(sp =>
                 {
                     var serviceBusConnectionString = configuration["EventBusConnection"];
 
@@ -207,7 +207,7 @@ namespace AW.Services.SalesOrder.REST.API
             }
             else
             {
-                services.AddScoped<IRabbitMQPersistentConnection>(sp =>
+                services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
                 {
                     var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
 
@@ -244,7 +244,7 @@ namespace AW.Services.SalesOrder.REST.API
         {
             if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
             {
-                services.AddScoped<IEventBus, EventBusServiceBus>(sp =>
+                services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
                 {
                     var serviceBusPersisterConnection = sp.GetRequiredService<IServiceBusPersisterConnection>();
                     var logger = sp.GetRequiredService<ILogger<EventBusServiceBus>>();
@@ -262,7 +262,7 @@ namespace AW.Services.SalesOrder.REST.API
             }
             else
             {
-                services.AddScoped<IEventBus, EventBusRabbitMQ>(sp =>
+                services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
                 {
                     var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                     var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
@@ -275,7 +275,7 @@ namespace AW.Services.SalesOrder.REST.API
                         retryCount = int.Parse(configuration["EventBusRetryCount"]);
                     }
 
-                    return new EventBusRabbitMQ(sp,
+                    return new EventBusRabbitMQ(sp.GetService<IServiceScopeFactory>(),
                         rabbitMQPersistentConnection,
                         logger,
                         eventBusSubcriptionsManager,
@@ -284,7 +284,7 @@ namespace AW.Services.SalesOrder.REST.API
                 });
             }
 
-            services.AddScoped<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
 
             return services;
         }

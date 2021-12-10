@@ -16,7 +16,7 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
         private readonly int retryCount;
         private IConnection connection;
         private bool disposed;
-        private readonly object sync_root = new object();
+        private readonly object sync_root = new();
 
         public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, ILogger<DefaultRabbitMQPersistentConnection> logger, int retryCount = 5)
         {

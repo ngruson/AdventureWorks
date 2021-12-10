@@ -2,6 +2,7 @@
 using AW.SharedKernel.EventBus.Events;
 using AW.SharedKernel.EventBus.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -18,7 +19,7 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
     {
         const string BROKER_NAME = "event_bus";
 
-        private readonly IServiceProvider serviceProvider;
+        private readonly IServiceScopeFactory serviceScopeFactory;
         private readonly IRabbitMQPersistentConnection persistentConnection;
         private readonly ILogger<EventBusRabbitMQ> logger;
         private readonly IEventBusSubscriptionsManager subsManager;
@@ -27,14 +28,14 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
         private IModel consumerChannel;
         private string queueName;
 
-        public EventBusRabbitMQ(IServiceProvider serviceProvider,
+        public EventBusRabbitMQ(IServiceScopeFactory serviceScopeFactory,
             IRabbitMQPersistentConnection persistentConnection,
             ILogger<EventBusRabbitMQ> logger,
             IEventBusSubscriptionsManager subsManager,
             string queueName = null, 
             int retryCount = 5)
         {
-            this.serviceProvider = serviceProvider;
+            this.serviceScopeFactory = serviceScopeFactory;
             this.persistentConnection = persistentConnection;
             this.logger = logger;
             this.subsManager = subsManager;
@@ -265,7 +266,8 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
                 {
                     if (subscription.IsDynamic)
                     {
-                        var handler = serviceProvider.GetService(subscription.HandlerType) as IDynamicIntegrationEventHandler;                        
+                        using var scope = serviceScopeFactory.CreateScope();
+                        var handler = scope.ServiceProvider.GetService(subscription.HandlerType) as IDynamicIntegrationEventHandler;
                         if (handler == null) continue;
                         using dynamic eventData = JsonDocument.Parse(message);
                         await Task.Yield();
@@ -273,7 +275,8 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
                     }
                     else
                     {
-                        var handler = serviceProvider.GetService(subscription.HandlerType);
+                        using var scope = serviceScopeFactory.CreateScope();
+                        var handler = scope.ServiceProvider.GetService(subscription.HandlerType);
                         if (handler == null) continue;
                         var eventType = subsManager.GetEventTypeByName(eventName);
                         var integrationEvent = JsonSerializer.Deserialize(message, eventType, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });

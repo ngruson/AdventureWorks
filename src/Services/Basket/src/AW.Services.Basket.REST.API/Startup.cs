@@ -1,6 +1,7 @@
 using AW.Services.Basket.Core;
 using AW.Services.Basket.Core.Handlers.GetBasket;
 using AW.Services.Basket.Core.IntegrationEvents.EventHandling;
+using AW.Services.Basket.Core.IntegrationEvents.Events;
 using AW.Services.Basket.Infrastructure.Repositories;
 using AW.Services.Basket.REST.API.Services;
 using AW.SharedKernel.Api;
@@ -8,6 +9,7 @@ using AW.SharedKernel.EventBus;
 using AW.SharedKernel.EventBus.Abstractions;
 using AW.SharedKernel.EventBus.AzureServiceBus;
 using AW.SharedKernel.EventBus.RabbitMQ;
+using AW.SharedKernel.Interfaces;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,6 +28,7 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using StackExchange.Redis;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace AW.Services.Basket.REST.API
 {
@@ -41,95 +44,14 @@ namespace AW.Services.Basket.REST.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
-
-            services.AddApiVersioning(options => options.ReportApiVersions = true)
-                .AddVersionedApiExplorer(
-                    options =>
-                    {
-                        options.GroupNameFormat = "'v'VVV";
-                        options.SubstituteApiVersionInUrl = true;
-                    }
-                );
-
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = Configuration.GetValue<string>("AuthN:Authority");
-                    options.Audience = "basket-api";
-                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-                });
-            services.AddSwaggerDocumentation("Basket API");
-
-            services.AddCustomHealthCheck(Configuration);
-
-            services.Configure<BasketSettings>(Configuration);
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IBasketRepository, RedisBasketRepository>();
-            services.AddTransient<IIdentityService, IdentityService>();
-            services.AddMediatR(typeof(GetBasketQuery));
-
-            services.AddOptions();
-
-            services.AddSingleton(sp =>
-            {
-                var settings = sp.GetRequiredService<IOptions<BasketSettings>>().Value;
-                var configuration = ConfigurationOptions.Parse(settings.RedisConnectionString, true);
-
-                configuration.ResolveDns = true;
-                configuration.Password = Configuration["RedisPassword"];
-
-                return ConnectionMultiplexer.Connect(configuration);
-            });
-
-            if (Configuration.GetValue<bool>("AzureServiceBusEnabled"))
-            {
-                services.AddSingleton<IServiceBusPersisterConnection>(sp =>
-                {
-                    var serviceBusConnectionString = Configuration["EventBusConnection"];
-
-                    var subscriptionClientName = Configuration["SubscriptionClientName"];
-                    return new DefaultServiceBusPersisterConnection(serviceBusConnectionString, subscriptionClientName);
-                });
-            }
-            else
-            {
-                services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
-                {
-                    var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
-
-                    var factory = new ConnectionFactory()
-                    {
-                        HostName = Configuration["EventBusConnection"],
-                        DispatchConsumersAsync = true
-                    };
-
-                    if (!string.IsNullOrEmpty(Configuration["EventBusUserName"]))
-                    {
-                        factory.UserName = Configuration["EventBusUserName"];
-                    }
-
-                    if (!string.IsNullOrEmpty(Configuration["EventBusPassword"]))
-                    {
-                        factory.Password = Configuration["EventBusPassword"];
-                    }
-
-                    var retryCount = 5;
-                    if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
-                    {
-                        retryCount = int.Parse(Configuration["EventBusRetryCount"]);
-                    }
-
-                    return new DefaultRabbitMQPersistentConnection(factory, logger, retryCount);
-                });
-            }
-
-            RegisterEventBus(services);
+            services
+                .AddCustomMvc()
+                .AddVersioning()
+                .AddCustomAuthentication(Configuration)
+                .AddCustomSwagger()
+                .AddCustomIntegrations(Configuration)
+                .AddEventBus(Configuration)
+                .AddCustomHealthCheck(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -164,18 +86,138 @@ namespace AW.Services.Basket.REST.API
                     });
                 });
             });
+
+            ConfigureEventBus(app);
         }
 
-        private void RegisterEventBus(IServiceCollection services)
+        private static void ConfigureEventBus(IApplicationBuilder app)
         {
-            if (Configuration.GetValue<bool>("AzureServiceBusEnabled"))
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<OrderStartedIntegrationEvent, IIntegrationEventHandler<OrderStartedIntegrationEvent>>();
+        }
+    }
+
+    public static class CustomExtensionMethods
+    {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        {
+            services.AddControllers();
+
+            return services;
+        }
+
+        public static IServiceCollection AddVersioning(this IServiceCollection services)
+        {
+            services.AddMvcCore()
+                .AddApiExplorer();
+
+            services.AddApiVersioning(options => options.ReportApiVersions = true)
+                .AddVersionedApiExplorer(
+                    options =>
+                    {
+                        options.GroupNameFormat = "'v'VVV";
+                        options.SubstituteApiVersionInUrl = true;
+                    }
+                );
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = configuration.GetValue<string>("AuthN:Authority");
+                    options.Audience = "basket-api";
+                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerDocumentation("Basket API");
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomIntegrations(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<BasketSettings>(configuration);
+
+            services.AddScoped(typeof(IApplication), typeof(Application));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IBasketRepository, RedisBasketRepository>();
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddMediatR(typeof(GetBasketQuery));
+            services.AddIntegrationEventHandlers();
+
+            services.AddOptions();
+
+            services.AddScoped(sp =>
             {
+                var settings = sp.GetRequiredService<IOptions<BasketSettings>>().Value;
+                var redisConfig = ConfigurationOptions.Parse(settings.RedisConnectionString, true);
+
+                redisConfig.ResolveDns = true;
+                redisConfig.Password = configuration["RedisPassword"];
+
+                return ConnectionMultiplexer.Connect(redisConfig);
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddIntegrationEventHandlers(this IServiceCollection services)
+        {
+            var coreAssembly = typeof(GetBasketQuery).Assembly;
+            var types = coreAssembly.GetExportedTypes()
+                .Where(t => t.GetInterfaces().Any(i =>
+                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IIntegrationEventHandler<>))
+                )
+                .ToList();
+
+            types.ForEach(type =>
+            {
+                var interfaces = type.GetInterfaces()
+                    .Where(i =>
+                        i.IsGenericType &&
+                        i.GetGenericTypeDefinition() == typeof(IIntegrationEventHandler<>)
+                    )
+                    .ToList();
+
+                // Has the type implemented any IIntegrationEventHandler<T>?
+                if (interfaces.Count > 0)
+                {
+                    services.AddScoped(interfaces[0], type);
+                }
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
+        {
+            if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
+            {
+                services.AddSingleton<IServiceBusPersisterConnection>(sp =>
+                {
+                    var serviceBusConnectionString = configuration["EventBusConnection"];
+
+                    var subscriptionClientName = configuration["SubscriptionClientName"];
+                    return new DefaultServiceBusPersisterConnection(serviceBusConnectionString, subscriptionClientName);
+                });
+
                 services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
                 {
                     var serviceBusPersisterConnection = sp.GetRequiredService<IServiceBusPersisterConnection>();
                     var logger = sp.GetRequiredService<ILogger<EventBusServiceBus>>();
                     var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
-                    var topicName = Configuration["EventBusTopic"];
+                    var topicName = configuration["EventBusTopic"];
 
                     return new EventBusServiceBus(
                         sp,
@@ -188,20 +230,49 @@ namespace AW.Services.Basket.REST.API
             }
             else
             {
+                services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+                {
+                    var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
+
+                    var factory = new ConnectionFactory()
+                    {
+                        HostName = configuration["EventBusConnection"],
+                        DispatchConsumersAsync = true
+                    };
+
+                    if (!string.IsNullOrEmpty(configuration["EventBusUserName"]))
+                    {
+                        factory.UserName = configuration["EventBusUserName"];
+                    }
+
+                    if (!string.IsNullOrEmpty(configuration["EventBusPassword"]))
+                    {
+                        factory.Password = configuration["EventBusPassword"];
+                    }
+
+                    var retryCount = 5;
+                    if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
+                    {
+                        retryCount = int.Parse(configuration["EventBusRetryCount"]);
+                    }
+
+                    return new DefaultRabbitMQPersistentConnection(factory, logger, retryCount);
+                });
+
                 services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
                 {
                     var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                     var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
                     var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
-                    var queueName = Configuration["SubscriptionClientName"];                    
+                    var queueName = configuration["EventBusQueueName"];
                     var retryCount = 5;
-                    if (!string.IsNullOrEmpty(Configuration["EventBusRetryCount"]))
+                    if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
                     {
-                        retryCount = int.Parse(Configuration["EventBusRetryCount"]);
+                        retryCount = int.Parse(configuration["EventBusRetryCount"]);
                     }
 
-                    return new EventBusRabbitMQ(sp, 
+                    return new EventBusRabbitMQ(sp.GetService<IServiceScopeFactory>(),
                         rabbitMQPersistentConnection,
                         logger,
                         eventBusSubcriptionsManager,
@@ -212,13 +283,9 @@ namespace AW.Services.Basket.REST.API
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
 
-            services.AddTransient<ProductPriceChangedIntegrationEventHandler>();
-            services.AddTransient<OrderStartedIntegrationEventHandler>();
+            return services;
         }
-    }
 
-    public static class CustomExtensionMethods
-    {
         public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
         {
             var hcBuilder = services.AddHealthChecks();

@@ -1,7 +1,8 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
 using AW.SharedKernel.EventBus.Abstractions;
+using AW.SharedKernel.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
+using Serilog.Context;
 using System.Threading.Tasks;
 
 namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
@@ -9,20 +10,29 @@ namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
     public class OrderStartedIntegrationEventHandler : IIntegrationEventHandler<OrderStartedIntegrationEvent>
     {
         private readonly IBasketRepository repository;
+        private readonly IApplication application;
         private readonly ILogger<OrderStartedIntegrationEventHandler> logger;
 
         public OrderStartedIntegrationEventHandler(
             IBasketRepository repository,
+            IApplication application,
             ILogger<OrderStartedIntegrationEventHandler> logger)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.repository = repository;
+            this.application = application;
+            this.logger = logger;
         }
 
         public async Task Handle(OrderStartedIntegrationEvent @event)
         {
-            logger.LogInformation("----- Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", @event.Id, @event);
-            await repository.DeleteBasketAsync(@event.UserId.ToString());
+            using (LogContext.PushProperty("IntegrationEventContext", $"{@event.Id}-{application.AppName}"))
+            {
+                logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, application.AppName, @event);
+
+                await repository.DeleteBasketAsync(@event.UserId.ToString());
+
+                logger.LogInformation("----- Basket deleted for user {User}", @event.UserId);
+            }
         }
     }
 }
