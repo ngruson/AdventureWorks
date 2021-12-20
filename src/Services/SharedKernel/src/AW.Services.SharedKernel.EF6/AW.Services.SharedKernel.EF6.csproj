@@ -72,6 +72,10 @@
       <Project>{1590BB85-9E79-4538-BD8B-834BA50D4A6C}</Project>
       <Name>AW.SharedKernel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure\AW.Services.Infrastructure.csproj">
+      <Project>{6aa09d9c-0077-4d59-bab2-714291ccd105}</Project>
+      <Name>AW.Services.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

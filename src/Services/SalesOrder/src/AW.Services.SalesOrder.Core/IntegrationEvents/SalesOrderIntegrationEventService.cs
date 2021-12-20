@@ -1,4 +1,4 @@
-﻿using AW.Services.SharedKernel;
+﻿using AW.Services.Infrastructure;
 using AW.SharedKernel.EventBus.Abstractions;
 using AW.SharedKernel.EventBus.Events;
 using AW.SharedKernel.EventBus.IntegrationEventLog;

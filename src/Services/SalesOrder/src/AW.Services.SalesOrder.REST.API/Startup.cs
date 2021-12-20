@@ -1,3 +1,4 @@
+using AW.Services.Infrastructure;
 using AW.Services.SalesOrder.Core.Behaviors;
 using AW.Services.SalesOrder.Core.Handlers.CreateSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
@@ -6,9 +7,7 @@ using AW.Services.SalesOrder.Core.Idempotency;
 using AW.Services.SalesOrder.Core.IntegrationEvents;
 using AW.Services.SalesOrder.Core.IntegrationEvents.Events;
 using AW.Services.SalesOrder.Infrastructure.EFCore;
-using AW.Services.SharedKernel;
 using AW.Services.SharedKernel.EFCore;
-using AW.SharedKernel;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.EventBus;
 using AW.SharedKernel.EventBus.Abstractions;

@@ -1,5 +1,5 @@
 ﻿using AW.Services.SalesOrder.Core.IntegrationEvents;
-using AW.Services.SharedKernel;
+using AW.Services.Infrastructure;
 using AW.SharedKernel.EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;

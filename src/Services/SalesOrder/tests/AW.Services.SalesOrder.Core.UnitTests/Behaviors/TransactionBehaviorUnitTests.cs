@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Infrastructure;
 using AW.Services.SalesOrder.Core.Behaviors;
 using AW.Services.SalesOrder.Core.Handlers.CreateSalesOrder;
-using AW.Services.SharedKernel;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
