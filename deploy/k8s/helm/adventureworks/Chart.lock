@@ -1,0 +1,6 @@
+dependencies:
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.15.0
+digest: sha256:cf8268e027d765f72b1925e7899d802d926d1c5929b73ac3b530d023c6984f1f
+generated: "2021-12-13T07:31:15.9292227+01:00"

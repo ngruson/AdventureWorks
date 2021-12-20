@@ -2,6 +2,7 @@
 {
     public class BasketSettings
     {
+        public string ElasticSearchUri { get; set; }
         public string RedisConnectionString { get; set; }
     }
 }

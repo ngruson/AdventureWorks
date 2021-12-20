@@ -46,14 +46,7 @@ namespace AW.UI.Web.Store
 
             app.Map(virtualPath, builder =>
             {
-                if (env.IsDevelopment())
-                {
-                    builder.UseDeveloperExceptionPage();
-                }
-                else
-                {
-                    builder.UseExceptionHandler("/Error");
-                }
+                builder.UseExceptionHandler("/Error");
 
                 builder.UseForwardedHeaders(new ForwardedHeadersOptions
                 {

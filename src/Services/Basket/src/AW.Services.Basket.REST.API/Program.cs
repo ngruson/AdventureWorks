@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 using System.IO;
 
 namespace AW.Services.Basket.REST.API
@@ -11,7 +12,20 @@ namespace AW.Services.Basket.REST.API
         public static void Main(string[] args)
         {
             Log.Logger = CreateSerilogLogger(GetConfiguration());
-            CreateHostBuilder(args).Build().Run();
+
+            try
+            {
+                Log.Information("Starting web host");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         private static IConfiguration GetConfiguration()
@@ -28,9 +42,13 @@ namespace AW.Services.Basket.REST.API
         {
             return new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .Enrich.WithProperty("ApplicationContext", Program.AppName)
+                .Enrich.WithProperty("ApplicationContext", new Application().AppName)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.Elasticsearch(
+                    configuration["ElasticSearchUri"],
+                    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
+                )
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
@@ -42,8 +60,5 @@ namespace AW.Services.Basket.REST.API
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseSerilog();
                 });
-
-        public static string Namespace = typeof(Startup).Namespace;
-        public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
     }
 }

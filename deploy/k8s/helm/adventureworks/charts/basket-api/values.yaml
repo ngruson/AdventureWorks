@@ -11,3 +11,16 @@ image:
 service:
   type: ClusterIP
   port: 80
+
+probes:
+  liveness:
+    path: /basket-api/liveness
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    port: 80
+  readiness:
+    path: /basket-api/hc
+    timeoutSeconds: 5
+    initialDelaySeconds: 90
+    periodSeconds: 60
+    port: 80

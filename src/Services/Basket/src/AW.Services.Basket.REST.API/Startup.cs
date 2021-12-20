@@ -1,9 +1,10 @@
 using AW.Services.Basket.Core;
 using AW.Services.Basket.Core.Handlers.GetBasket;
-using AW.Services.Basket.Core.IntegrationEvents.EventHandling;
 using AW.Services.Basket.Core.IntegrationEvents.Events;
 using AW.Services.Basket.Infrastructure.Repositories;
+using AW.Services.Basket.REST.API.HealthChecks;
 using AW.Services.Basket.REST.API.Services;
+using AW.Services.Infrastructure.Filters;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.EventBus;
 using AW.SharedKernel.EventBus.Abstractions;
@@ -84,6 +85,10 @@ namespace AW.Services.Basket.REST.API
                         Predicate = _ => true,
                         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                     });
+                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                    {
+                        Predicate = r => r.Name.Contains("self")
+                    });
                 });
             });
 
@@ -101,7 +106,11 @@ namespace AW.Services.Basket.REST.API
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                options.Filters.Add(typeof(ValidateModelStateFilter));
+            });
 
             return services;
         }
@@ -315,6 +324,13 @@ namespace AW.Services.Basket.REST.API
                         name: "basket-rabbitmqbus-check",
                         tags: new string[] { "rabbitmqbus" });
             }
+
+            hcBuilder.AddIdentityServer(
+                new System.Uri(
+                    configuration.GetValue<string>("AuthN:Authority")
+                ),
+                "identityserver"
+            );
 
             return services;
         }
