@@ -6,11 +6,7 @@ using System.Collections.Generic;
 
 namespace AW.Services.SalesOrder.Core.IntegrationEvents.Events
 {
-#if NET
     public record UserCheckoutAcceptedIntegrationEvent : IntegrationEvent
-#elif NETSTANDARD
-    public class UserCheckoutAcceptedIntegrationEvent : IntegrationEvent
-#endif
     {
         public string UserId { get; }
         public string UserName { get; }

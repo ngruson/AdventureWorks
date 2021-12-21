@@ -98,7 +98,7 @@ namespace AW.Services.SalesPerson.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'salesPersons')");
         }
     }

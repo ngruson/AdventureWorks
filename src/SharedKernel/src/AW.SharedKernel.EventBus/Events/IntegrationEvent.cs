@@ -3,11 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AW.SharedKernel.EventBus.Events
 {
-    #if NET
     public record IntegrationEvent
-    #elif NETSTANDARD
-    public abstract class IntegrationEvent
-    #endif
     {
         protected IntegrationEvent()
         {
@@ -23,17 +19,9 @@ namespace AW.SharedKernel.EventBus.Events
         }
 
         [JsonInclude]
-#if NET
         public Guid Id { get; private init; }
-#elif NETSTANDARD
-        public Guid Id { get; private set; }
-#endif
 
         [JsonInclude]
-#if NET
-        public DateTime CreationDate { get; private set; }
-#elif NETSTANDARD
-        public DateTime CreationDate { get; private set; }
-#endif
+        public DateTime CreationDate { get; private init; }
     }
 }

@@ -1,6 +1,7 @@
-<Project Sdk="MSBuild.Sdk.SqlProj/1.17.0">
+<Project Sdk="MSBuild.Sdk.SqlProj/2.0.0-beta.1">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <SqlServerVersion>Sql150</SqlServerVersion>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\AW.Services.Customer.Database\**\Tables\*.sql" />

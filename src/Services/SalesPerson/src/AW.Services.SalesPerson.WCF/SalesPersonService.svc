@@ -1,5 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" 
-    Service="AW.Services.SalesPerson.WCF.SalesPersonService, AW.Services.SalesPerson.WCF" 
-    CodeBehind="SalesPersonService.svc.cs"
-    Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf"
-%>

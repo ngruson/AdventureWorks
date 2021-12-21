@@ -2,9 +2,9 @@
 
 namespace AW.Services.SalesOrder.Core.IntegrationEvents.Events
 {
-    public class OrderStartedIntegrationEvent : IntegrationEvent
+    public record OrderStartedIntegrationEvent : IntegrationEvent
     {
-        public string UserId { get; private set; }
+        public string UserId { get; private init; }
 
         public OrderStartedIntegrationEvent(string userId)
             => UserId = userId;
