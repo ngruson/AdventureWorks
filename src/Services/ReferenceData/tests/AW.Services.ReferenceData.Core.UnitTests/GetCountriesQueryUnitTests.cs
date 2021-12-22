@@ -55,7 +55,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>();
+            func.Should().ThrowAsync<ArgumentNullException>();
             countryRegionRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
         }
     }

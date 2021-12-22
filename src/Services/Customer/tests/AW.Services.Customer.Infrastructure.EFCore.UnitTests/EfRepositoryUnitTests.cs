@@ -143,7 +143,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             Func<Task> func = async () => await repository.ListAsync<string>(null);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>();
+            func.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             Func<Task> func = async () => await repository.ListAsync(spec);
 
             //Assert
-            func.Should().Throw<SelectorNotFoundException>();
+            func.Should().ThrowAsync<SelectorNotFoundException>();
         }
 
         [Theory]

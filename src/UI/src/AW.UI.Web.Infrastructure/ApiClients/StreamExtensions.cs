@@ -27,7 +27,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             CancellationToken cancellationToken
         )
         {
-            return await JsonSerializer.DeserializeAsync<T>(stream, null, cancellationToken);
+            return await JsonSerializer.DeserializeAsync<T>(stream, (JsonSerializerOptions)null, cancellationToken);
         }
 
         public static async Task<T> DeserializeAsync<T>(
