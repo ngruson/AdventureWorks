@@ -16,7 +16,7 @@ on:
 env:
   SERVICE: product-api
   IMAGE: product.api
-  DOTNET_VERSION: 5.0.x
+  DOTNET_VERSION: 6.0.x
 
 jobs:
   BuildLinux:
