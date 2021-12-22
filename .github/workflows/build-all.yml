@@ -72,10 +72,6 @@ jobs:
           dotnet build src\Services\Customer\src\AW.Services.Customer.REST.API\AW.Services.Customer.REST.API.csproj --no-restore
           dotnet build src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
           dotnet test src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          msbuild src\Services\Customer\src\AW.Services.Customer.WCF\AW.Services.Customer.WCF.csproj
-          msbuild src\Services\Customer\tests\AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj
-          dotnet test src\Services\Customer\tests\AW.Services.Customer.WCF.UnitTests\AW.Services.Customer.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
       - name: Build Product services and run unit tests
         run: |
@@ -91,10 +87,6 @@ jobs:
           dotnet build src\Services\Product\src\AW.Services.Product.REST.API\AW.Services.Product.REST.API.csproj --no-restore
           dotnet build src\Services\Product\tests\AW.Services.Product.REST.API.UnitTests\AW.Services.Product.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\Product\tests\AW.Services.Product.REST.API.UnitTests\AW.Services.Product.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          msbuild src\Services\Product\src\AW.Services.Product.WCF\AW.Services.Product.WCF.csproj
-          msbuild src\Services\Product\tests\AW.Services.Product.WCF.UnitTests\AW.Services.Product.WCF.UnitTests.csproj
-          dotnet test src\Services\Product\tests\AW.Services.Product.WCF.UnitTests\AW.Services.Product.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
       - name: Build ReferenceData services and run unit tests
         run: |
@@ -111,11 +103,6 @@ jobs:
           dotnet build src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          nuget restore src\Services\ReferenceData\src\AW.Services.ReferenceData.WCF\packages.config
-          msbuild src\Services\ReferenceData\src\AW.Services.ReferenceData.WCF\AW.Services.ReferenceData.WCF.csproj
-          msbuild src\Services\ReferenceData\tests\AW.Services.ReferenceData.WCF.UnitTests\AW.Services.ReferenceData.WCF.UnitTests.csproj
-          dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.WCF.UnitTests\AW.Services.ReferenceData.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
       - name: Build SalesOrder services and run unit tests
         run: |
           dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.Core.UnitTests\AW.Services.SalesOrder.Core.UnitTests.csproj --no-restore
@@ -130,11 +117,6 @@ jobs:
           dotnet build src\Services\SalesOrder\src\AW.Services.SalesOrder.REST.API\AW.Services.SalesOrder.REST.API.csproj --no-restore
           dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          nuget restore src\Services\SalesOrder\src\AW.Services.SalesOrder.WCF\packages.config
-          msbuild src\Services\SalesOrder\src\AW.Services.SalesOrder.WCF\AW.Services.SalesOrder.WCF.csproj
-          msbuild src\Services\SalesOrder\tests\AW.Services.SalesOrder.WCF.UnitTests\AW.Services.SalesOrder.WCF.UnitTests.csproj
-          dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.WCF.UnitTests\AW.Services.SalesOrder.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
         
       - name: Build SalesPerson services and run unit tests
         run: |
@@ -150,11 +132,6 @@ jobs:
           dotnet build src\Services\SalesPerson\src\AW.Services.SalesPerson.REST.API\AW.Services.SalesPerson.REST.API.csproj --no-restore
           dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          nuget restore src\Services\SalesPerson\src\AW.Services.SalesPerson.WCF\packages.config
-          msbuild src\Services\SalesPerson\src\AW.Services.SalesPerson.WCF\AW.Services.SalesPerson.WCF.csproj
-          msbuild src\Services\SalesPerson\tests\AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj
-          dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.WCF.UnitTests\AW.Services.SalesPerson.WCF.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
         
       - name: Build UI and run unit tests
         run: |
