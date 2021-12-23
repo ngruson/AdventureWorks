@@ -77,7 +77,6 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Entities
             string productNumber,
             string productName,
             decimal unitPrice,
-            decimal unitPriceDiscount,
             SpecialOfferProduct specialOfferProduct,
             short quantity
         )
@@ -89,7 +88,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Entities
                 productNumber,
                 productName,
                 unitPrice,
-                unitPriceDiscount,
+                0,
                 specialOfferProduct,
                 quantity
             );
