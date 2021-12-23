@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /src
 COPY ["Services/Basket/src/AW.Services.Basket.REST.API/AW.Services.Basket.REST.API.csproj", "Services/Basket/src/AW.Services.Basket.REST.API/"]
 COPY aw-ca.pem .
