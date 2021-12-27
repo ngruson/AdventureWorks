@@ -11,7 +11,7 @@ USER root
 
 ENV ACCEPT_EULA="Y" \
   DATA_PATH="/data" \
-  SA_PASSWORD="Welkom01!"
+  SA_PASSWORD="password"
 
 VOLUME ${DATA_PATH}
 WORKDIR ./init
