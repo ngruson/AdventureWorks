@@ -1,3 +1,4 @@
+using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Store.Services;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,17 +28,12 @@ namespace AW.UI.Web.Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
-                .Services
-                .AddAutoMapper(typeof(Startup))
-                .AddApplicationServices()
-                .AddHttpClientServices(Configuration)
-                .AddCustomAuthentication(Configuration);
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.Secure = CookieSecurePolicy.Always;
-            });
+            services
+                .AddCustomMvc()
+                .AddCustomIntegrations()
+                .AddHttpClients(Configuration)
+                .AddCustomAuthentication(Configuration)
+                .AddCustomHealthCheck(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,10 +72,23 @@ namespace AW.UI.Web.Store
         }
     }
 
-    static class ServiceCollectionExtensions
+    static class CustomExtensionsMethods
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always;
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomIntegrations(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IApplication, Application>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
@@ -86,7 +96,7 @@ namespace AW.UI.Web.Store
             return services;
         }
 
-        public static IServiceCollection AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAccessTokenManagement();
 
@@ -133,6 +143,19 @@ namespace AW.UI.Web.Store
                 options.Scope.Add("basket-api.write");
                 options.Scope.Add("product-api.read");
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+
+            hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+            hcBuilder.AddUrlGroup(new Uri(configuration["BasketAPI:Uri"]), name: "basket-api");
+            hcBuilder.AddUrlGroup(new Uri(configuration["ProductAPI:Uri"]), name: "product-api");
 
             return services;
         }

@@ -6,9 +6,10 @@ kind: ConfigMap
 metadata:
   name: "{{ $name }}-config"
   labels:
-    app: {{ template "customer-api.name" . }}
-    chart: {{ template "customer-api.chart" .}}
+    app: {{ template "identityserver.name" . }}
+    chart: {{ template "identityserver.chart" .}}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
+  ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200

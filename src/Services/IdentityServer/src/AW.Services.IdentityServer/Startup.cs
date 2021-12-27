@@ -1,16 +1,19 @@
 using AW.Services.IdentityServer.Configuration;
 using AW.Services.IdentityServer.Data;
 using AW.Services.IdentityServer.Models;
+using HealthChecks.UI.Client;
 using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Security.Claims;
@@ -30,48 +33,16 @@ namespace AW.Services.IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
-            services.AddIdentityServer()
-                .AddSigningCredential(new X509Certificate2("identityserver.pfx"))
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        Configuration.GetConnectionString("DbConnection"),
-                        options => options.MigrationsAssembly(migrationsAssembly)
-                    );
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        Configuration.GetConnectionString("DbConnection"),
-                        options => options.MigrationsAssembly(migrationsAssembly)
-                    );
-                });
+            services
+                .AddCustomMvc()
+                .AddDatabase(Configuration)
+                .AddIdentity(Configuration)
+                .AddCustomHealthCheck(Configuration);
 
             //.AddInMemoryClients(InMemoryConfiguration.Clients())
             //.AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
             //.AddInMemoryApiScopes(InMemoryConfiguration.ApiScopes())
             //.AddInMemoryIdentityResources(InMemoryConfiguration.IdentityResources());
-
-            services.AddMvc(opt => opt.EnableEndpointRouting = false);
-
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                options.RequireHeaderSymmetry = false;
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,6 +74,15 @@ namespace AW.Services.IdentityServer
                 {
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
+                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                    {
+                        Predicate = _ => true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });
+                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                    {
+                        Predicate = r => r.Name.Contains("self")
+                    });
                 });
             });
         }
@@ -171,6 +151,71 @@ namespace AW.Services.IdentityServer
                         }).Result;
                 };
             }
+        }
+    }
+
+    public static class CustomExtensionMethods
+    {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        {
+            services.AddMvc(opt => opt.EnableEndpointRouting = false);
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.RequireHeaderSymmetry = false;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
+            services.AddRazorPages();
+
+            return services;
+        }
+
+        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            return services;
+        }
+
+        public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
+        {
+            var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
+            services.AddIdentityServer()
+                .AddSigningCredential(new X509Certificate2("identityserver.pfx"))
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(
+                        configuration.GetConnectionString("DbConnection"),
+                        options => options.MigrationsAssembly(migrationsAssembly)
+                    );
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(
+                        configuration.GetConnectionString("DbConnection"),
+                        options => options.MigrationsAssembly(migrationsAssembly)
+                    );
+                });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+            hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
+            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+
+            return services;
         }
     }
 }

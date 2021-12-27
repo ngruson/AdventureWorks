@@ -2,7 +2,6 @@ using AW.Services.Basket.Core;
 using AW.Services.Basket.Core.Handlers.GetBasket;
 using AW.Services.Basket.Core.IntegrationEvents.Events;
 using AW.Services.Basket.Infrastructure.Repositories;
-using AW.Services.Basket.REST.API.HealthChecks;
 using AW.Services.Basket.REST.API.Services;
 using AW.Services.Infrastructure.Filters;
 using AW.SharedKernel.Api;
@@ -28,6 +27,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using StackExchange.Redis;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
@@ -325,12 +325,8 @@ namespace AW.Services.Basket.REST.API
                         tags: new string[] { "rabbitmqbus" });
             }
 
-            hcBuilder.AddIdentityServer(
-                new System.Uri(
-                    configuration.GetValue<string>("AuthN:Authority")
-                ),
-                "identityserver"
-            );
+            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
 
             return services;
         }

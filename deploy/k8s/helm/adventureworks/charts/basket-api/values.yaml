@@ -1,7 +1,7 @@
 replicaCount: 1
 pathBase: /basket-api/
 serviceName: basket-api
-authority: k8s-local.adventureworks.com/identityserver
+authority: k8s-local.adventureworks.com/identityserver/
 
 image:
   repository: ngruson/adventureworks_basketapi
@@ -22,5 +22,5 @@ probes:
     path: /basket-api/hc
     timeoutSeconds: 5
     initialDelaySeconds: 90
-    periodSeconds: 60
+    periodSeconds: 30
     port: 80

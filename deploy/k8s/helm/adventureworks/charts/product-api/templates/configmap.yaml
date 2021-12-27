@@ -12,3 +12,4 @@ metadata:
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
   AuthN__Authority: {{ printf "https://%s.%s" .Release.Name .Values.authority }}
+  ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200

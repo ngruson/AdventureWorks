@@ -12,6 +12,7 @@ metadata:
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
   AuthN__Authority: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.authority }}
+  ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200
   CustomerAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.customer_api }}
   ReferenceDataAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.referencedata_api }}
   SalesOrderAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.salesorder_api }}

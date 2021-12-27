@@ -1,4 +1,5 @@
 using AW.Services.Infrastructure;
+using AW.Services.Infrastructure.Filters;
 using AW.Services.SalesOrder.Core.Behaviors;
 using AW.Services.SalesOrder.Core.Handlers.CreateSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
@@ -16,18 +17,22 @@ using AW.SharedKernel.EventBus.EFCore;
 using AW.SharedKernel.EventBus.IntegrationEventLog;
 using AW.SharedKernel.EventBus.RabbitMQ;
 using AW.SharedKernel.Interfaces;
+using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -53,7 +58,8 @@ namespace AW.Services.SalesOrder.REST.API
                 .AddCustomSwagger()
                 .AddCustomDbContext(Configuration)
                 .AddCustomIntegrations(Configuration)
-                .AddEventBus(Configuration);
+                .AddEventBus(Configuration)
+                .AddCustomHealthCheck(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +85,15 @@ namespace AW.Services.SalesOrder.REST.API
                 builder.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                    {
+                        Predicate = _ => true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });
+                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                    {
+                        Predicate = r => r.Name.Contains("self")
+                    });
                 });
             });
 
@@ -98,12 +113,16 @@ namespace AW.Services.SalesOrder.REST.API
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
-            services.AddControllers()
-                 .AddJsonOptions(options =>
-                 {
-                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                 });
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                options.Filters.Add(typeof(ValidateModelStateFilter));
+            })
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             return services;
         }
@@ -312,6 +331,18 @@ namespace AW.Services.SalesOrder.REST.API
                     services.AddScoped(interfaces[0], type);
                 }
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+
+            hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            hcBuilder.AddIdentityServer(new Uri(configuration.GetValue<string>("AuthN:Authority")));
+            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
 
             return services;
         }

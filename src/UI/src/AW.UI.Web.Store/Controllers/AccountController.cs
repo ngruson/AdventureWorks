@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AW.SharedKernel.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,16 +10,18 @@ namespace AW.UI.Web.Store.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IApplication application;
         private readonly ILogger<AccountController> logger;
 
-        public AccountController(ILogger<AccountController> logger) => this.logger = logger;
+        public AccountController(IApplication application, ILogger<AccountController> logger) => 
+            (this.application, this.logger) = (application, logger);
 
         [Authorize]
         public async Task<IActionResult> SignIn(string returnUrl)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            logger.LogInformation("----- User {@User} authenticated into {AppName}", User, Program.AppName);
+            logger.LogInformation("----- User {@User} authenticated into {AppName}", User, application.AppName);
 
             if (token != null)
             {

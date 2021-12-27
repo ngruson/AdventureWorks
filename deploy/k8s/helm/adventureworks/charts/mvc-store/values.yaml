@@ -2,7 +2,7 @@ replicaCount: 1
 pathBase: /mvc-store/
 serviceName: mvc-store
 ingress: k8s-local.adventureworks.com
-authority: /identityserver
+authority: /identityserver/
 basket_api: /basket-api
 product_api: /product-api
 
@@ -14,3 +14,16 @@ image:
 service:
   type: ClusterIP
   port: 80
+
+probes:
+  liveness:
+    path: /mvc-store/liveness
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    port: 80
+  readiness:
+    path: /mvc-store/hc
+    timeoutSeconds: 5
+    initialDelaySeconds: 90
+    periodSeconds: 30
+    port: 80

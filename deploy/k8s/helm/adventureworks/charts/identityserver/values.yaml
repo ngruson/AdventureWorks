@@ -12,3 +12,16 @@ db: sqldb-adv-identityserver
 service:
   type: ClusterIP
   port: 80
+
+probes:
+  liveness:
+    path: /identityserver/liveness
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    port: 80
+  readiness:
+    path: /identityserver/hc
+    timeoutSeconds: 5
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    port: 80
