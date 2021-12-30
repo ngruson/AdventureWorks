@@ -1,36 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models
 {
     public class BasketCheckout
     {
-        [Required]
-        public string City { get; init; }
-        [Required]
-        public string Street { get; init; }
-        [Required]
-        public string State { get; init; }
-        [Required]
-        public string Country { get; init; }
+        public string CustomerNumber { get; set; }
+        public string ShipMethod { get; set; }
+        public Address BillToAddress { get; set; }
+        public Address ShipToAddress { get; set; }
 
-        public string ZipCode { get; init; }
-        [Required]
-        public string CardNumber { get; init; }
-        [Required]
-        public string CardHolderName { get; init; }
+        public string CardNumber { get; set; }
 
-        [Required]
-        public DateTime CardExpiration { get; init; }
+        public string CardHolderName { get; set; }
 
-        [Required]
-        public string CardSecurityNumber { get; init; }
+        public DateTime CardExpiration { get; set; }
 
-        public int CardTypeId { get; init; }
+        public string CardSecurityNumber { get; set; }
 
-        public string Buyer { get; init; }
+        public string CardType { get; set; }
 
-        [Required]
-        public Guid RequestId { get; init; }
+        public string Buyer { get; set; }
+
+        public Guid RequestId { get; set; }
+        public List<BasketItem> Items { get; set; }
     }
 }

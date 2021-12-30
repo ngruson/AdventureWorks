@@ -1,8 +1,11 @@
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -91,6 +94,7 @@ namespace AW.UI.Web.Store
             services.AddScoped<IApplication, Application>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IReferenceDataService, ReferenceDataService>();
             services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
 
             return services;
@@ -112,6 +116,12 @@ namespace AW.UI.Web.Store
             })
             .AddClientAccessTokenHandler();
 
+            services.AddHttpClient<IReferenceDataApiClient, ReferenceDataApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["ReferenceDataAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler();
+
             return services;
         }
 
@@ -131,8 +141,7 @@ namespace AW.UI.Web.Store
                 options.ClientId = configuration["AuthN:ClientId"];
                 options.ClientSecret = configuration["AuthN:ClientSecret"];
                 options.ResponseType = "code";
-                options.UsePkce = true;
-                options.GetClaimsFromUserInfoEndpoint = true;
+                options.UsePkce = true;                
                 options.SaveTokens = true;
                 options.Scope.Clear();
                 options.Scope.Add("openid");
@@ -142,6 +151,9 @@ namespace AW.UI.Web.Store
                 options.Scope.Add("basket-api.read");
                 options.Scope.Add("basket-api.write");
                 options.Scope.Add("product-api.read");
+                options.Scope.Add("referencedata-api.read");
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.ClaimActions.MapUniqueJsonKey("customer_number", "customer_number");
             });
 
             return services;

@@ -1,4 +1,4 @@
-﻿@model AW.UI.Web.Store.ViewModels.Basket
+﻿@model AW.UI.Web.Store.ViewModels.Cart.Basket
 
 @{
     ViewData["Title"] = "My Cart";
@@ -65,7 +65,7 @@
 
                 <article class="row">
                     <section class="basket-item col-10"></section>
-                    <section class="basket-item basket-item--mark col-2">$ @Model.Total().ToString("N2")</section>
+                    <section class="basket-item basket-item--mark col-2">$ @Model.Total.ToString("N2")</section>
                 </article>
 
                 <div class="align-middle">

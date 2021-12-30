@@ -6,6 +6,5 @@ namespace AW.UI.Web.Store.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-               
     }
 }

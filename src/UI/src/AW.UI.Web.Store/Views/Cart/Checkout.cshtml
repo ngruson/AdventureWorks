@@ -1,0 +1,181 @@
+﻿@using AW.UI.Web.Store.ViewModels
+@model AW.UI.Web.Store.ViewModels.Cart.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "New Order";
+    var headerList = new List<Header>() {
+       new Header() { Controller = "Cart", Text = "Back to cart" } };
+}
+
+<partial name="_Header" model="headerList" />
+<div class="container">
+    <form method="post" asp-controller="Cart" asp-action="Checkout">
+        <section class="orders_new-section">
+            <div class="row">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(err => err.Errors))
+                {
+                    <div class="alert alert-warning" role="alert">
+                        &nbsp;@error.ErrorMessage
+                    </div>
+                }
+            </div>
+            <h4 class="orders_new-title">Billing address</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.AddressLine1" class="orders_new-title">Address line 1</label>
+                        <input asp-for="Basket.BillToAddress.AddressLine1" class="form-control form-input" type="text" placeholder="Address line 1" />
+                        <span asp-validation-for="Basket.BillToAddress.AddressLine1" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.AddressLine2" class="orders_new-title">Address line 2</label>
+                        <input asp-for="Basket.BillToAddress.AddressLine2" class="form-control form-input" type="text" placeholder="Address line 2" />
+                        <span asp-validation-for="Basket.BillToAddress.AddressLine2" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.PostalCode" class="orders_new-title">Postal code</label>
+                        <input asp-for="Basket.BillToAddress.PostalCode" class="form-control form-input" type="text" placeholder="Postal code" />
+                        <span asp-validation-for="Basket.BillToAddress.PostalCode" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.City" class="esh-orders_new-title">City</label>
+                        <input asp-for="Basket.BillToAddress.City" class="form-control form-input" type="text" placeholder="City" />
+                        <span asp-validation-for="Basket.BillToAddress.City" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.StateProvinceCode" class="esh-orders_new-title">State/province</label>
+                        <input asp-for="Basket.BillToAddress.StateProvinceCode" class="form-control form-input" type="text" placeholder="State/province" />
+                        <span asp-validation-for="Basket.BillToAddress.StateProvinceCode" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.BillToAddress.CountryRegionCode" class="esh-orders_new-title">Country</label>
+                        <select class="form-control form-select" asp-for="Basket.BillToAddress.CountryRegionCode" asp-items="Model.Countries"></select>
+                        <span asp-validation-for="Basket.BillToAddress.CountryRegionCode" class="danger" />
+                    </div>
+                </div>
+            </div>
+            <h4 class="orders_new-title">Shipping address</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.AddressLine1" class="orders_new-title">Address line 1</label>
+                        <input asp-for="Basket.ShipToAddress.AddressLine1" class="form-control form-input" type="text" placeholder="Address line 1" />
+                        <span asp-validation-for="Basket.ShipToAddress.AddressLine1" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.AddressLine2" class="orders_new-title">Address line 2</label>
+                        <input asp-for="Basket.ShipToAddress.AddressLine2" class="form-control form-input" type="text" placeholder="Address line 2" />
+                        <span asp-validation-for="Basket.ShipToAddress.AddressLine2" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.PostalCode" class="orders_new-title">Postal code</label>
+                        <input asp-for="Basket.ShipToAddress.PostalCode" class="form-control form-input" type="text" placeholder="Postal code" />
+                        <span asp-validation-for="Basket.ShipToAddress.PostalCode" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.City" class="orders_new-title">City</label>
+                        <input asp-for="Basket.ShipToAddress.City" class="form-control form-input" type="text" placeholder="City" />
+                        <span asp-validation-for="Basket.ShipToAddress.City" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.StateProvinceCode" class="orders_new-title">State/province</label>
+                        <input asp-for="Basket.ShipToAddress.StateProvinceCode" class="form-control form-input" type="text" placeholder="State/province" />
+                        <span asp-validation-for="Basket.ShipToAddress.StateProvinceCode" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipToAddress.CountryRegionCode" class="orders_new-title">Country</label>
+                        <select class="form-control form-select" asp-for="Basket.ShipToAddress.CountryRegionCode" asp-items="Model.Countries"></select>
+                        <span asp-validation-for="Basket.ShipToAddress.CountryRegionCode" class="danger" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="orders_new-section">
+            <h4 class="orders_new-title">Payment method</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.CardType" class="orders_new-title">Card type</label>
+                        <select class="form-control form-select" asp-for="Basket.CardType" asp-items="Model.CardTypes"></select>
+                        <span asp-validation-for="Basket.CardType" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.CardNumber" class="orders_new-title">Card number</label>
+                        <input asp-for="Basket.CardNumber" class="form-control form-input" type="text" placeholder="000000000000000" />
+                        <span asp-validation-for="Basket.CardNumber" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.CardHolderName" class="orders_new-title">Cardholder name</label>
+                        <input asp-for="Basket.CardHolderName" class="form-control form-input" type="text" placeholder="Cardholder" />
+                        <span asp-validation-for="Basket.CardHolderName" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.CardExpirationShort" class="orders_new-title">Expiration date</label>
+                        <input asp-for="Basket.CardExpirationShort" class="form-control form-input form-input-medium" type="text" placeholder="MM/YY" />
+                        <span asp-validation-for="Basket.CardExpirationShort" class="danger" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.CardSecurityNumber" class="orders_new-title">Security code</label>
+                        <input asp-for="Basket.CardSecurityNumber" class="form-control form-input form-input-small" type="text" placeholder="000" />
+                        <span asp-validation-for="Basket.CardSecurityNumber" class="danger" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Basket.ShipMethod" class="orders_new-title">Shipping method</label>
+                        <select class="form-control form-select" asp-for="Basket.ShipMethod" asp-items="Model.ShipMethods"></select>
+                        <span asp-validation-for="Basket.ShipMethod" class="danger" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @await Html.PartialAsync("BasketItems")
+
+        <section class="orders_new-section">
+            <div class="form-group row">
+                <div class="col-md-9">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Place Order" name="action" class="btn btn-primary basket-placeorder" />
+                </div>
+            </div>
+        </section>
+        <input asp-for="Basket.RequestId" type="hidden" value="@Guid.NewGuid().ToString()" />
+        <input asp-for="Basket.BuyerId" type="hidden" />
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

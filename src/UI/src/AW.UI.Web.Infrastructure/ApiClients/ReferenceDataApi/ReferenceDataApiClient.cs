@@ -1,6 +1,7 @@
 ﻿using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetAddressTypes;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetContactTypes;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
+using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetShipMethods;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 using Microsoft.Extensions.Logging;
@@ -73,6 +74,27 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
             var stream = await response.Content.ReadAsStreamAsync();
 
             return await stream.DeserializeAsync<List<CountryRegion>>(new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                },
+                IgnoreReadOnlyProperties = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+
+        public async Task<List<ShipMethod>> GetShipMethodsAsync()
+        {
+            string requestUri = "referencedata-api/ShipMethod?api-version=1.0";
+            logger.LogInformation("Getting shipping methods");
+
+            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            using var response = await client.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            return await stream.DeserializeAsync<List<ShipMethod>>(new JsonSerializerOptions
             {
                 Converters =
                 {

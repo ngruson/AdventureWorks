@@ -1,8 +1,8 @@
-﻿namespace AW.UI.Web.Store.ViewModels
+﻿namespace AW.UI.Web.Store.ViewModels.SalesOrder
 {
     public record OrderItem
     {
-        public int ProductId { get; init; }
+        public string ProductNumber { get; init; }
 
         public string ProductName { get; init; }
 

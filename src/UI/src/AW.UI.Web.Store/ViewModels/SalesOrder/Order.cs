@@ -1,45 +1,28 @@
-﻿using AW.UI.Web.Store.Services.ModelDTOs;
-using AW.UI.Web.Store.ViewModels.Annotations;
+﻿using AW.UI.Web.Store.ViewModels.Annotations;
 using AW.UI.Web.Store.ViewModels.Converters;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace AW.UI.Web.Store.ViewModels
+namespace AW.UI.Web.Store.ViewModels.SalesOrder
 {
     public class Order
     {
         [JsonConverter(typeof(NumberToStringConverter))]
         public string OrderNumber { get; set; }
+        public string ShipMethod { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public string Status { get; set; }
-
-        public decimal Total { get; set; }
-
-        public string Description { get; set; }
-
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string Street { get; set; }
-        [Required]
-        public string State { get; set; }
-        [Required]
-        public string Country { get; set; }
-
-        public string ZipCode { get; set; }
+        public Address BillToAddress { get; set; }
+        public Address ShipToAddress { get; set; }
+        
         [Required]
         [DisplayName("Card number")]
         public string CardNumber { get; set; }
         [Required]
         [DisplayName("Cardholder name")]
         public string CardHolderName { get; set; }
-
         public DateTime CardExpiration { get; set; }
         [RegularExpression(@"(0[1-9]|1[0-2])\/[0-9]{2}", ErrorMessage = "Expiration should match a valid MM/YY value")]
         [CardExpiration(ErrorMessage = "The card is expired"), Required]
@@ -48,13 +31,9 @@ namespace AW.UI.Web.Store.ViewModels
         [Required]
         [DisplayName("Card security number")]
         public string CardSecurityNumber { get; set; }
-
-        public int CardTypeId { get; set; }
+        public string CardType { get; set; }
 
         public string Buyer { get; set; }
-
-        public List<SelectListItem> ActionCodeSelectList =>
-           GetActionCodesByCurrentState();
 
         public List<OrderItem> OrderItems { get; set; }
 
@@ -73,25 +52,6 @@ namespace AW.UI.Web.Store.ViewModels
             var year = $"20{CardExpirationShort.Split('/')[1]}";
 
             CardExpiration = new DateTime(int.Parse(year), int.Parse(month), 1);
-        }
-
-        private List<SelectListItem> GetActionCodesByCurrentState()
-        {
-            var actions = new List<OrderProcessAction>();
-            switch (Status?.ToLower())
-            {
-                case "paid":
-                    actions.Add(OrderProcessAction.Ship);
-                    break;
-            }
-
-            var result = new List<SelectListItem>();
-            actions.ForEach(action =>
-            {
-                result.Add(new SelectListItem { Text = action.Name, Value = action.Code });
-            });
-
-            return result;
         }
     }
 }

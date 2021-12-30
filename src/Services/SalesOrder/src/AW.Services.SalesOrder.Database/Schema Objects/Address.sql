@@ -4,7 +4,7 @@
 	[AddressLine2] [nvarchar](60) NULL,
 	[PostalCode] [nvarchar](15) NOT NULL,
 	[City] [nvarchar](30) NOT NULL,
-	[StateProvinceCode] [nchar](3) NOT NULL,
+	[StateProvinceCode] [nchar](3) NULL,
 	[CountryRegionCode] [nvarchar](3) NOT NULL
  CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED 
 (

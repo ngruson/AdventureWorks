@@ -3,6 +3,7 @@ using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
 using api = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Store.ViewModels;
+using AW.UI.Web.Store.ViewModels.Cart;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -93,6 +94,15 @@ namespace AW.UI.Web.Store.Services
 
             logger.LogInformation("Returning basket");
             return currentBasket;
+        }
+
+        public async Task Checkout(Basket basket, string customerNumber)
+        {
+            var basketCheckout = mapper.Map<api.BasketCheckout>(basket);
+            basketCheckout.CustomerNumber = customerNumber;
+
+            logger.LogInformation("Checking out basket");
+            await basketApiClient.Checkout(basketCheckout);
         }
     }
 }

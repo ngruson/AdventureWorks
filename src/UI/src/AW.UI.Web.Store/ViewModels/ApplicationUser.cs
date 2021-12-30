@@ -9,5 +9,6 @@ namespace AW.UI.Web.Store.ViewModels
         public string Name { get; set; }
         [Required]
         public string LastName { get; set; }
+        public string CustomerNumber { get; set; }
     }
 }

@@ -53,3 +53,7 @@ ingress:
             value: /mvc-store/
             serviceName: mvc-store
             servicePort: 80
+        - path:
+            value: /
+            serviceName: kibana
+            servicePort: 5601

@@ -17,6 +17,7 @@ namespace AW.UI.Web.Store.Services
                     Id = claims.Claims.FirstOrDefault(x => x.Type == "sub")?.Value ?? "",
                     LastName = claims.Claims.FirstOrDefault(x => x.Type == "last_name")?.Value ?? "",
                     Name = claims.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "",
+                    CustomerNumber = claims.Claims.FirstOrDefault(x => x.Type == "customer_number")?.Value ?? "",
                 };
             }
             throw new ArgumentException(message: "The principal must be a ClaimsPrincipal", paramName: nameof(principal));

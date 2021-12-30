@@ -1,4 +1,5 @@
-﻿using AW.SharedKernel.UnitTesting;
+﻿using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Store.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication;
@@ -19,14 +20,15 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         [Theory, MockHttpData]
         public async Task SignIn_ReturnsHomeViewModel(
             string returnUrl,
-            string accessToken
+            string accessToken,
+            Mock<IApplication> mockApplication
         )
         {
             //Arrange
             var mockLogger = new Mock<ILogger<AccountController>>();
 
             //Act
-            var controller = new AccountController(mockLogger.Object);
+            var controller = new AccountController(mockApplication.Object, mockLogger.Object);
 
             var authResult = AuthenticateResult.Success(
                 new AuthenticationTicket(new ClaimsPrincipal(), null)
@@ -62,14 +64,14 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             redirectToActionResult.ActionName.Should().Be("Index");
         }
 
-        [Fact]
-        public async Task Signout_ReturnsHomeViewModel()
+        [Theory, MockHttpData]
+        public async Task Signout_ReturnsHomeViewModel(Mock<IApplication> mockApplication)
         {
             //Arrange
             var mockLogger = new Mock<ILogger<AccountController>>();
 
             //Act
-            var controller = new AccountController(mockLogger.Object);
+            var controller = new AccountController(mockApplication.Object, mockLogger.Object);
             var mockAuthenticationService = new Mock<IAuthenticationService>();
 
             var mockUrlHelperFactory = new Mock<IUrlHelperFactory>();

@@ -3,6 +3,7 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewComponents;
 using AW.UI.Web.Store.ViewModels;
+using AW.UI.Web.Store.ViewModels.Cart;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Moq;

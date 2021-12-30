@@ -9,8 +9,7 @@
     <ProjectGuid>{a8ef0e52-f97d-47d8-9453-c7d01f2c7593}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>AW.Services.ReferenceData.Database</RootNamespace>
     <AssemblyName>AW.Services.ReferenceData.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
@@ -48,7 +47,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -71,8 +69,12 @@
     <None Include="Scripts\PostDeployment\InsertCountryRegion.sql" />
     <None Include="Scripts\PostDeployment\InsertStateProvince.sql" />
     <None Include="Scripts\PostDeployment\InsertTerritory.sql" />
+    <Build Include="Schema Objects\ShipMethod.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\PostDeployment\InsertShipMethod.sql" />
   </ItemGroup>
 </Project>

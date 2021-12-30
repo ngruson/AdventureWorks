@@ -1,5 +1,6 @@
 ﻿using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
+using AW.UI.Web.Store.ViewModels.Cart;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

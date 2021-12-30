@@ -91,7 +91,7 @@ networkHost: "0.0.0.0"
 
 volumeClaimTemplate:
   accessModes: [ "ReadWriteOnce" ]
-  storageClassName: "hostPath"
+  #storageClassName: "hostPath"
   resources:
     requests:
       storage: 100M
@@ -177,7 +177,7 @@ transportPort: 9300
 service:
   labels: {}
   labelsHeadless: {}
-  type: ClusterIP
+  type: "ClusterIP"
   nodePort: ""
   annotations: {}
   httpPortName: http

@@ -15,14 +15,18 @@ namespace AW.UI.Web.Infrastructure.ApiClients.BasketApi
         public BasketApiClient(HttpClient client, ILogger<BasketApiClient> logger) =>
             (this.client, this.logger) = (client, logger);
 
-        public Task Checkout(BasketCheckout basket)
+        public async Task Checkout(BasketCheckout basketCheckout)
         {
-            throw new NotImplementedException();
+            string requestUri = "Basket/checkout?api-version=1.0";
+
+            var basketContent = new StringContent(JsonSerializer.Serialize(basketCheckout), System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(requestUri, basketContent);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<Basket> GetBasket(string userID)
         {
-            string requestUri = $"/basket-api/Basket/{userID}?api-version=1.0";
+            string requestUri = $"Basket/{userID}?api-version=1.0";
             logger.LogInformation("Getting basket");
 
             using var response = await client.GetAsync(requestUri);
@@ -39,7 +43,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.BasketApi
 
         public async Task<Basket> UpdateBasket(Basket basket)
         {
-            string requestUri = "/basket-api/Basket?api-version=1.0";
+            string requestUri = "Basket?api-version=1.0";
 
             var basketContent = new StringContent(JsonSerializer.Serialize(basket), System.Text.Encoding.UTF8, "application/json");
             var response = await client.PostAsync(requestUri, basketContent);

@@ -48,7 +48,7 @@
     width: 100%;
 }
 
-.basket-checkout {
+.basket-checkout, .basket-placeorder {
     border: 0;
     border-radius: 0;
     color: #FFFFFF;
