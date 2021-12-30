@@ -30,7 +30,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             )
             {
                 //Arrange
-                mockBasketService.Setup(_ => _.GetBasketAsync(It.IsAny<string>()))
+                mockBasketService.Setup(_ => _.GetBasketAsync<Basket>(It.IsAny<string>()))
                     .ReturnsAsync(basket);
 
                 var serviceProvider = new Mock<IServiceProvider>();
@@ -88,8 +88,8 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
 
                 //Assert
                 var redirectActionResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
-                redirectActionResult.ControllerName.Should().Be("Order");
-                redirectActionResult.ActionName.Should().Be("Create");
+                redirectActionResult.ControllerName.Should().Be("Cart");
+                redirectActionResult.ActionName.Should().Be("Checkout");
             }
 
             [Theory, AutoMoqData]

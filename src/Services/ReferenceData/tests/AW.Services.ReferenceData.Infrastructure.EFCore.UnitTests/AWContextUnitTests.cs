@@ -37,8 +37,9 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
             entityTypes[0].Name.Should().Be(typeof(AddressType).FullName);
             entityTypes[1].Name.Should().Be(typeof(ContactType).FullName);
             entityTypes[2].Name.Should().Be(typeof(CountryRegion).FullName);
-            entityTypes[3].Name.Should().Be(typeof(StateProvince).FullName);
-            entityTypes[4].Name.Should().Be(typeof(Territory).FullName);
+            entityTypes[3].Name.Should().Be(typeof(ShipMethod).FullName);
+            entityTypes[4].Name.Should().Be(typeof(StateProvince).FullName);
+            entityTypes[5].Name.Should().Be(typeof(Territory).FullName);
         }
     }
 }

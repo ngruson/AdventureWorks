@@ -5,7 +5,7 @@ namespace AW.UI.Web.Store.ViewModels.Cart
 {
     public class CheckoutViewModel
     {
-        public Basket Basket { get; set; }
+        public BasketCheckout Basket { get; set; }
         public List<SelectListItem> Countries { get; set; }
         public List<SelectListItem> CardTypes { get; set; }
         public List<SelectListItem> ShipMethods { get; set; }

@@ -146,20 +146,51 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class Checkout
         {
             [Theory, MockHttpData]
-            public void Checkout_ThrowsNotImplementedException(
+            public void Checkout_ReturnsAccepted(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
                 BasketApiClient sut,
                 BasketCheckout basket
             )
             {
                 //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Post, $"{uri}*")
+                    .Respond(HttpStatusCode.Accepted);
+
+                //Act
+                async Task func() => await sut.Checkout(basket);
+
+                //Assert
+                var task = func();
+                task.GetAwaiter().GetResult();
+                task.IsCompleted.Should().BeTrue();
+            }
+
+            [Theory, MockHttpData]
+            public void Checkout_Fails_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                BasketApiClient sut,
+                BasketCheckout basket
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Post, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
 
                 //Act
                 Func<Task> func = async () => await sut.Checkout(basket);
 
                 //Assert
-                func.Should().Throw<NotImplementedException>();
+                func.Should().Throw<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
-
     }
 }

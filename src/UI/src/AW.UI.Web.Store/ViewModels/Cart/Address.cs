@@ -20,7 +20,8 @@ namespace AW.UI.Web.Store.ViewModels.Cart
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, api.Address>();
+            profile.CreateMap<Address, api.Address>()
+                .ReverseMap();
         }
     }
 }

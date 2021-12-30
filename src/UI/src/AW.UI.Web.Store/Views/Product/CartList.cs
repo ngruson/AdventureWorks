@@ -29,6 +29,6 @@ namespace AW.UI.Web.Store.ViewComponents
             return View(vm);
         }
 
-        private Task<Basket> GetItemsAsync(ApplicationUser user) => basketService.GetBasketAsync(user.Id);
+        private Task<Basket> GetItemsAsync(ApplicationUser user) => basketService.GetBasketAsync<Basket>(user.Id);
     }
 }

@@ -6,6 +6,7 @@ using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
+using AW.UI.Web.Store.ViewModels.Cart;
 using FluentAssertions;
 using Moq;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace AW.UI.Web.Store.UnitTests.Services
                     .ReturnsAsync(basket);
 
                 //Act
-                var response = await sut.GetBasketAsync(basket.BuyerId);
+                var response = await sut.GetBasketAsync<Basket>(basket.BuyerId);
 
                 //Assert
                 response.BuyerId.Should().Be(basket.BuyerId);

@@ -24,7 +24,7 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
         )
         {
             //Arrange
-            mockBasketService.Setup(_ => _.GetBasketAsync(It.IsAny<string>()))
+            mockBasketService.Setup(_ => _.GetBasketAsync<Basket>(It.IsAny<string>()))
                 .ReturnsAsync(basket);
 
             //Act
@@ -43,7 +43,7 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
         )
         {
             //Arrange
-            mockBasketService.Setup(_ => _.GetBasketAsync(It.IsAny<string>()))
+            mockBasketService.Setup(_ => _.GetBasketAsync<Basket>(It.IsAny<string>()))
                 .Throws<Exception>();
 
             //Act

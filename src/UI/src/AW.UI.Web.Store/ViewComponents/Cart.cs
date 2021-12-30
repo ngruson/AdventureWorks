@@ -30,7 +30,7 @@ namespace AW.UI.Web.Store.ViewComponents
         }
         private async Task<int> ItemsInCartAsync(ApplicationUser user)
         {
-            var basket = await basketService.GetBasketAsync(user.Id);
+            var basket = await basketService.GetBasketAsync<Basket>(user.Id);
             return basket.Items.Count;
         }
     }

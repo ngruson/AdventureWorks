@@ -30,7 +30,7 @@ namespace AW.UI.Web.Store.Controllers
         {
             try
             {
-                var vm = await GetBasket();
+                var vm = await GetBasket<Basket>();
                 return View(vm);
             }
             catch (Exception ex)
@@ -87,7 +87,7 @@ namespace AW.UI.Web.Store.Controllers
             {
                 var vm = new CheckoutViewModel
                 {
-                    Basket = await GetBasket(),
+                    Basket = await GetBasket<BasketCheckout>(),
                     Countries = await GetCountries(),
                     CardTypes = GetCardTypes(),
                     ShipMethods = await GetShipMethods()
@@ -167,10 +167,10 @@ namespace AW.UI.Web.Store.Controllers
             return View(model);
         }
 
-        private async Task<Basket> GetBasket()
+        private async Task<T> GetBasket<T>()
         {
             var user = appUserParser.Parse(HttpContext.User);
-            return await basketService.GetBasketAsync(user.Id);
+            return await basketService.GetBasketAsync<T>(user.Id);
         }
 
         private void HandleException(Exception ex)

@@ -7,7 +7,7 @@ namespace AW.UI.Web.Store.Services
 {
     public interface IBasketService
     {
-        Task<Basket> GetBasketAsync(string userID);
+        Task<T> GetBasketAsync<T>(string userID);
         Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
         Task<Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities);
         Task Checkout(Basket basket, string customerNumber);

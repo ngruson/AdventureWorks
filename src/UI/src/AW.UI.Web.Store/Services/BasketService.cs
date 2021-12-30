@@ -28,11 +28,11 @@ namespace AW.UI.Web.Store.Services
         ) => 
             (this.logger, this.basketApiClient, this.productApiClient, this.mapper) = (logger, basketApiClient, productApiClient, mapper);
 
-        public async Task<Basket> GetBasketAsync(string userID)
+        public async Task<T> GetBasketAsync<T>(string userID)
         {
             logger.LogInformation("GetBasket called");
             var dto = await basketApiClient.GetBasket(userID);
-            var response = mapper.Map<Basket>(dto);
+            var response = mapper.Map<T>(dto);
 
             return response;
         }
