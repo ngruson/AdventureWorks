@@ -1,6 +1,8 @@
-﻿namespace AW.Services.SalesOrder.Core.Entities
+﻿using AW.SharedKernel.Interfaces;
+
+namespace AW.Services.SalesOrder.Core.Entities
 {
-    public class Address
+    public class Address : IAggregateRoot
     {
         public int Id { get; set; }
         public string AddressLine1 { get; set; }
@@ -10,6 +12,7 @@
         public string StateProvinceCode { get; set; }
         public string CountryRegionCode { get; set; }
 
+        public Address() { }
         public Address(string addressLine1, string addressLine2, string postalCode, string city, string stateProvinceCode, string countryRegionCode)
         {
             AddressLine1 = addressLine1;
