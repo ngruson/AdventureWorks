@@ -24,6 +24,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
         )
         {
             //Arrange
+            command.OrderItems.ForEach(_ => _.Discount = 0);
 
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
@@ -50,6 +51,8 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
         )
         {
             //Arrange
+            command.OrderItems.ForEach(_ => _.Discount = 0);
+
             addressRepositoryMock.Setup(_ => _.GetBySpecAsync(
                 It.IsAny<GetAddressSpecification>(),
                 It.IsAny<CancellationToken>()

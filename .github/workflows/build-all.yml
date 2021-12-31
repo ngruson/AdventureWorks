@@ -52,9 +52,6 @@ jobs:
           dotnet build src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-restore
           dotnet test src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.EF6.UnitTests\AW.Services.SharedKernel.EF6.UnitTests.csproj --no-restore
-          dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.EF6.UnitTests\AW.Services.SharedKernel.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
           dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
       
@@ -62,9 +59,6 @@ jobs:
         run: |
           dotnet build src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          msbuild src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EF6.UnitTests\AW.Services.Customer.Infrastructure.EF6.UnitTests.csproj
-          dotnet test src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EF6.UnitTests\AW.Services.Customer.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EFCore.UnitTests\AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\Customer\tests\AW.Services.Customer.Infrastructure.EFCore.UnitTests\AW.Services.Customer.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
@@ -78,9 +72,6 @@ jobs:
           dotnet build src\Services\Product\tests\AW.Services.Product.Core.UnitTests\AW.Services.Product.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\Product\tests\AW.Services.Product.Core.UnitTests\AW.Services.Product.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          msbuild src\Services\Product\tests\AW.Services.Product.Infrastructure.EF6.UnitTests\AW.Services.Product.Infrastructure.EF6.UnitTests.csproj
-          dotnet test src\Services\Product\tests\AW.Services.Product.Infrastructure.EF6.UnitTests\AW.Services.Product.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
           dotnet build src\Services\Product\tests\AW.Services.Product.Infrastructure.EFCore.UnitTests\AW.Services.Product.Infrastructure.EFCore.UnitTests.csproj --no-restore                    
           dotnet test src\Services\Product\tests\AW.Services.Product.Infrastructure.EFCore.UnitTests\AW.Services.Product.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
@@ -92,9 +83,6 @@ jobs:
         run: |
           dotnet build src\Services\ReferenceData\tests\AW.Services.ReferenceData.Core.UnitTests\AW.Services.ReferenceData.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.Core.UnitTests\AW.Services.ReferenceData.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-                    
-          msbuild src\Services\ReferenceData\tests\AW.Services.ReferenceData.Infrastructure.EF6.UnitTests\AW.Services.ReferenceData.Infrastructure.EF6.UnitTests.csproj
-          dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.Infrastructure.EF6.UnitTests\AW.Services.ReferenceData.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\ReferenceData\tests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
@@ -108,9 +96,6 @@ jobs:
           dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.Core.UnitTests\AW.Services.SalesOrder.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.Core.UnitTests\AW.Services.SalesOrder.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          msbuild src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EF6.UnitTests\AW.Services.SalesOrder.Infrastructure.EF6.UnitTests.csproj
-          dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EF6.UnitTests\AW.Services.SalesOrder.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
           dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
@@ -122,9 +107,6 @@ jobs:
         run: |
           dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.Core.UnitTests\AW.Services.SalesPerson.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.Core.UnitTests\AW.Services.SalesPerson.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          msbuild src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EF6.UnitTests\AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj
-          dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EF6.UnitTests\AW.Services.SalesPerson.Infrastructure.EF6.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
