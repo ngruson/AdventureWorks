@@ -23,7 +23,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetSalesOrderSpecification>(),
+                It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(salesOrder);
@@ -34,7 +34,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
             //Assert
             result.Should().NotBeNull();
             salesOrderRepoMock.Verify(x => x.GetBySpecAsync(
-                It.IsAny<GetSalesOrderSpecification>(),
+                It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
             result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);

@@ -24,7 +24,7 @@ namespace AW.Services.SalesOrder.Core.Handlers.GetSalesOrder
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting sales order from database");
-            var spec = new GetSalesOrderSpecification(
+            var spec = new GetFullSalesOrderSpecification(
                 request.SalesOrderNumber
             );
 

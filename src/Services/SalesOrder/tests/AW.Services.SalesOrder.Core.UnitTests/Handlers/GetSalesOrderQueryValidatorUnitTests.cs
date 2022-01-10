@@ -69,7 +69,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
-                It.IsAny<GetSalesOrderSpecification>(),
+                It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((Core.Entities.SalesOrder)null);

@@ -2,51 +2,51 @@
     @model Internal.ViewModels.SalesOrder.AddressViewModel;
 }
 
-<div class="row">
+<div class="row mb-3">
     <div class="col">
-        <label>Address line 1</label>
+        @Html.LabelFor(m => m.AddressLine1)
     </div>
     <div class="col">
-        @Model.AddressLine1
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <label>Address line 2</label>
-    </div>
-    <div class="col">
-        @Model.AddressLine2
+        @Html.EditorFor(m => m.AddressLine1, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
     </div>
 </div>
-<div class="row">
+<div class="row mb-3">
     <div class="col">
-        <label>Postal code</label>
+        @Html.LabelFor(m => m.AddressLine2)
     </div>
     <div class="col">
-        @Model.PostalCode
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <label>City</label>
-    </div>
-    <div class="col">
-        @Model.City
+        @Html.EditorFor(m => m.AddressLine2, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
     </div>
 </div>
-<div class="row">
+<div class="row mb-3">
     <div class="col">
-        <label>State/Province</label>
+        @Html.LabelFor(m => m.PostalCode)
     </div>
     <div class="col">
-        @Model.StateProvinceCode
+        @Html.EditorFor(m => m.PostalCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
     </div>
 </div>
-<div class="row">
+<div class="row mb-3">
     <div class="col">
-        <label>Country</label>
+        @Html.LabelFor(m => m.City)
     </div>
     <div class="col">
-        @Model.CountryRegionCode
+        @Html.EditorFor(m => m.City, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.StateProvinceCode)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.StateProvinceCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.CountryRegionCode)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.CountryRegionCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
     </div>
 </div>

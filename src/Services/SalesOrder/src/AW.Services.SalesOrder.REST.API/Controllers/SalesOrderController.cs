@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AW.Services.SalesOrder.Core.Handlers.CreateSalesOrder;
+using AW.Services.SalesOrder.Core.Handlers.DeleteSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrder;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrders;
 using AW.Services.SalesOrder.Core.Handlers.GetSalesOrdersForCustomer;
@@ -8,7 +8,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,6 +77,17 @@ namespace AW.Services.SalesOrder.REST.API.Controllers
 
             logger.LogInformation("Returning sales order");
             return new OkObjectResult(mapper.Map<Core.Models.SalesOrder>(salesOrder));
+        }
+
+        [HttpDelete("{salesOrderNumber}")]
+        public async Task<IActionResult> DeleteSalesOrder([FromRoute] DeleteSalesOrderCommand command)
+        {
+            logger.LogInformation("DeleteSalesOrder called");
+
+            logger.LogInformation("Sending the DeleteSalesOrder command");
+            await mediator.Send(command);
+
+            return new OkResult();
         }
     }
 }

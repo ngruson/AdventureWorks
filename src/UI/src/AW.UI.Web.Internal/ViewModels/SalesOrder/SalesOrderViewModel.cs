@@ -2,48 +2,75 @@
 using AW.SharedKernel.AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using s = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
     public class SalesOrderViewModel : IMapFrom<s.SalesOrder>
     {
+        [Display(Name = "Revision number")]
         public string RevisionNumber { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Order date")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime OrderDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Due date")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime DueDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Ship date")]
+        [DisplayFormat(DataFormatString = "{0:d}", ConvertEmptyStringToNull = true)]
         public DateTime? ShipDate { get; set; }
 
         public string Status { get; set; }
 
+        [Display(Name = "Ordered online")]
         public string OnlineOrdered { get; set; }
 
+        [Display(Name = "Sales order number")]
         public string SalesOrderNumber { get; set; }
 
+        [Display(Name = "Purchase order number")]
         public string PurchaseOrderNumber { get; set; }
 
+        [Display(Name = "Account number")]
         public string AccountNumber { get; set; }
 
+        [Display(Name = "Customer name")]
         public string CustomerName { get; set; }
 
+        [Display(Name = "Sales person")]
         public string SalesPerson { get; set; }
 
+        [Display(Name = "Sales territory")]
         public string Territory { get; set; }
 
+        [Display(Name = "Subtotal")]
+        [DisplayFormat(DataFormatString = "${0:C}")]
         public decimal SubTotal { get; set; }
 
+        [Display(Name = "Tax amount")]
+        [DisplayFormat(DataFormatString = "${0:C}")]
         public decimal TaxAmt { get; set; }
 
+        [Display(Name = "Freight")]
+        [DisplayFormat(DataFormatString = "${0:C}")]
         public decimal Freight { get; set; }
 
+        [Display(Name = "Total due")]
+        [DisplayFormat(DataFormatString = "${0:C}")]
         public decimal TotalDue { get; set; }
 
         public AddressViewModel BillToAddress { get; set; }
 
         public AddressViewModel ShipToAddress { get; set; }
 
+        [Display(Name = "Shipping method")]
         public string ShipMethod { get; set; }
 
         public List<SalesOrderLineViewModel> OrderLines { get; set; }

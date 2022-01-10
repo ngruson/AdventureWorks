@@ -54,7 +54,7 @@ namespace AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrderSpecification(salesOrders[0].SalesOrderNumber);
+            var spec = new GetFullSalesOrderSpecification(salesOrders[0].SalesOrderNumber);
             var result = await repository.GetBySpecAsync(spec);
 
             //Assert
