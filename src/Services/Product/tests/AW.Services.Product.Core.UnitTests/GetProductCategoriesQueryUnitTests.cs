@@ -65,7 +65,7 @@ namespace AW.Services.Product.Core.UnitTests
             Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>();
+            func.Should().ThrowAsync<ArgumentNullException>();
             categoriesRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<ISpecification<Entities.ProductCategory>>(),
                 It.IsAny<CancellationToken>()

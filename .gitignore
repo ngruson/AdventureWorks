@@ -30,8 +30,8 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-/src/Persistence/AW.Persistence.EntityFramework.UnitTests/coverage.opencover.xml
 /data/sql
 *.dbmdl
 *.jfm
 deploy/k8s/helm/adventureworks/inf.dev.yaml
+/src/Services/Product/productphotos

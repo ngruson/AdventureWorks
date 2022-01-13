@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AW.ConsoleTools": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

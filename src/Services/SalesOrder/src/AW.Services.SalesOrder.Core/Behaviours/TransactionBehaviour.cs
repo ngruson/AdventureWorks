@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AW.Services.SalesOrder.Core.Behaviors
 {
-    public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly ILogger<TransactionBehavior<TRequest, TResponse>> logger;
         private readonly IDbContext dbContext;

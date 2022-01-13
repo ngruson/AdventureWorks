@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.SalesOrder.Core.Exceptions;
 using AW.Services.SalesOrder.Core.Handlers.DeleteSalesOrder;
 using AW.Services.SalesOrder.Core.Specifications;
 using AW.SharedKernel.Interfaces;
@@ -37,7 +38,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMoqData()]
-        public void Handle_SalesOrderDoesNotExist_ThrowArgumentException(
+        public void Handle_SalesOrderDoesNotExist_ThrowSalesOrderNotFoundException(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepositoryMock,
             DeleteSalesOrderCommandHandler sut,
             DeleteSalesOrderCommand command
@@ -54,7 +55,7 @@ namespace AW.Services.SalesOrder.Core.UnitTests.Handlers
             Func<Task> func = async() => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentException>();
+            func.Should().Throw<SalesOrderNotFoundException>();
 
             salesOrderRepositoryMock.Verify(_ => _.DeleteAsync(
                     It.IsAny<Core.Entities.SalesOrder>(),
