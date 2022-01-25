@@ -12,7 +12,7 @@ namespace AW.Services.Sales.Core.Specifications
             Query.Include(so => so.SalesReasons);
 
             Query
-                .Where(so => so.CustomerNumber == customerNumber);
+                .Where(so => so.Customer.CustomerNumber == customerNumber);
         }
     }
 }

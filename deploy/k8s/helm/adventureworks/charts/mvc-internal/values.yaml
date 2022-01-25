@@ -1,8 +1,6 @@
 replicaCount: 1
 pathBase: /mvc-internal/
 serviceName: mvc-internal
-ingress: k8s-local.adventureworks.com
-authority: /identityserver/
 customer_api: /customer-api
 referencedata_api: /referencedata-api
 salesorder_api: /salesorder-api
@@ -20,12 +18,12 @@ service:
 probes:
   liveness:
     path: /mvc-internal/liveness
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 15
     port: 80
   readiness:
     path: /mvc-internal/hc
     timeoutSeconds: 5
-    initialDelaySeconds: 90
-    periodSeconds: 30
+    initialDelaySeconds: 60
+    periodSeconds: 15
     port: 80

@@ -44,6 +44,9 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
         [Display(Name = "Customer name")]
         public string CustomerName { get; set; }
 
+        [Display(Name = "Customer type")]
+        public string CustomerType { get; set; }
+
         [Display(Name = "Sales person")]
         public string SalesPerson { get; set; }
 
@@ -82,7 +85,9 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
             profile.CreateMap<s.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
-                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)));
+                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson)))
+                .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.FullName))
+                .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Customer.CustomerType));
         }
 
         private static string MapOnlineOrderFlag(bool onlineOrderFlag)

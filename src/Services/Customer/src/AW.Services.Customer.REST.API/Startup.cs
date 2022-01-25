@@ -97,32 +97,32 @@ namespace AW.Services.Customer.REST.API
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilter));
             })
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
-                    options.JsonSerializerOptions.Converters.Add(
-                        new CustomerConverter<
-                            Core.Models.GetCustomers.Customer,
-                            Core.Models.GetCustomers.StoreCustomer,
-                            Core.Models.GetCustomers.IndividualCustomer>()
-                    );
+                options.JsonSerializerOptions.Converters.Add(
+                    new CustomerConverter<
+                        Core.Models.GetCustomers.Customer,
+                        Core.Models.GetCustomers.StoreCustomer,
+                        Core.Models.GetCustomers.IndividualCustomer>()
+                );
 
-                    options.JsonSerializerOptions.Converters.Add(
-                        new CustomerConverter<
-                            Models.GetCustomer.Customer,
-                            Models.GetCustomer.StoreCustomer,
-                            Models.GetCustomer.IndividualCustomer>()
-                    );
+                options.JsonSerializerOptions.Converters.Add(
+                    new CustomerConverter<
+                        Models.GetCustomer.Customer,
+                        Models.GetCustomer.StoreCustomer,
+                        Models.GetCustomer.IndividualCustomer>()
+                );
 
-                    options.JsonSerializerOptions.Converters.Add(
-                        new CustomerConverter<
-                            Core.Models.UpdateCustomer.Customer,
-                            Core.Models.UpdateCustomer.StoreCustomer,
-                            Core.Models.UpdateCustomer.IndividualCustomer>()
-                    );
-                });
+                options.JsonSerializerOptions.Converters.Add(
+                    new CustomerConverter<
+                        Core.Models.UpdateCustomer.Customer,
+                        Core.Models.UpdateCustomer.StoreCustomer,
+                        Core.Models.UpdateCustomer.IndividualCustomer>()
+                );
+            });
 
             return services;
         }

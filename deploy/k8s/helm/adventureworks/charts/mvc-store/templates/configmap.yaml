@@ -11,7 +11,7 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
-  AuthN__Authority: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.authority }}
+  AuthN__Authority: https://{{ .Values.global.inf.authority }}
   ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200
-  BasketAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.basket_api }}
-  ProductAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.product_api }}
+  BasketAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.basket_api }}
+  ProductAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.product_api }}

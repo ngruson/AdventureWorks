@@ -9,12 +9,12 @@ namespace AW.Services.Sales.Core.Entities
         {
             if (quantity <= 0)
             {
-                throw new SalesOrderDomainException("Invalid quantity");
+                throw new SalesDomainException("Invalid quantity");
             }
 
             if (unitPrice * quantity < unitPriceDiscount)
             {
-                throw new SalesOrderDomainException("The total of order items is lower than applied discount");
+                throw new SalesDomainException("The total of order items is lower than applied discount");
             }
 
             ProductNumber = productNumber;
@@ -42,7 +42,7 @@ namespace AW.Services.Sales.Core.Entities
         {
             if (discount < 0)
             {
-                throw new SalesOrderDomainException("Discount is not valid");
+                throw new SalesDomainException("Discount is not valid");
             }
 
             UnitPriceDiscount = discount;
@@ -52,7 +52,7 @@ namespace AW.Services.Sales.Core.Entities
         {
             if (quantity < 0)
             {
-                throw new SalesOrderDomainException("Invalid units");
+                throw new SalesDomainException("Invalid units");
             }
 
             OrderQty += quantity;

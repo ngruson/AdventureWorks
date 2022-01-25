@@ -11,9 +11,9 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
-  AuthN__Authority: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.authority }}
+  AuthN__Authority: https://{{ .Values.global.inf.authority }}
   ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200
-  CustomerAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.customer_api }}
-  ReferenceDataAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.referencedata_api }}
-  SalesOrderAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.salesorder_api }}
-  SalesPersonAPI__Uri: {{ printf "https://%s.%s%s" .Release.Name .Values.ingress .Values.salesperson_api }}
+  CustomerAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.customer_api }}
+  ReferenceDataAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.referencedata_api }}
+  SalesOrderAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesorder_api }}
+  SalesPersonAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesperson_api }}

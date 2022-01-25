@@ -11,7 +11,7 @@
 GO
 
 ALTER TABLE [SalesPersonPhone] WITH CHECK ADD CONSTRAINT [FK_SalesPersonPhone_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
-REFERENCES [SalesPerson] ([SalesPersonID])
+REFERENCES [SalesPerson] ([PersonID])
 GO
 
 ALTER TABLE [SalesPersonPhone] CHECK CONSTRAINT [FK_SalesPersonPhone_SalesPerson_SalesPersonID]

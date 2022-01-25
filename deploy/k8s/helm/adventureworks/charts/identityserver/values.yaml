@@ -16,12 +16,12 @@ service:
 probes:
   liveness:
     path: /identityserver/liveness
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 15
     port: 80
   readiness:
     path: /identityserver/hc
     timeoutSeconds: 5
     initialDelaySeconds: 60
-    periodSeconds: 30
+    periodSeconds: 15
     port: 80

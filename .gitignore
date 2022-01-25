@@ -33,5 +33,5 @@ bld/
 /data/sql
 *.dbmdl
 *.jfm
-deploy/k8s/helm/adventureworks/inf.dev.yaml
+**/inf.dev*.yaml
 /src/Services/Product/productphotos

@@ -8,10 +8,9 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.SalesPerson> builder)
         {
             builder.ToTable("SalesPerson");
-            builder.HasKey(p => p.Id);
 
             builder.Property(c => c.Id)
-                .HasColumnName("SalesPersonID");
+                .HasColumnName("PersonID");
         }
     }
 }

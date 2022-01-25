@@ -95,11 +95,11 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].CustomerNumber);
+            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].Customer.CustomerNumber);
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(1);
+            list.Count.Should().Be(3);
         }
 
         [Theory, OmitOnRecursion]
@@ -170,11 +170,11 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.SalesOrder>(mockContext.Object);
 
             //Act
-            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].CustomerNumber);
+            var spec = new GetSalesOrdersForCustomerSpecification(salesOrders[0].Customer.CustomerNumber);
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(1);
+            count.Should().Be(3);
         }
 
         [Theory, OmitOnRecursion]

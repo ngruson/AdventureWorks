@@ -6,15 +6,19 @@
 
 <div class="container-xl">
     <div class="detail">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
-                <a class="nav-link" id="nav-order-lines-tab" data-toggle="tab" href="#nav-order-lines" role="tab" aria-controls="nav-order-lines" aria-selected="false">Order lines</a>
-                <a class="nav-link" id="nav-sales-reasons-tab" data-toggle="tab" href="#nav-sales-reasons" role="tab" aria-controls="nav-sales-reasons" aria-selected="false">Sales reasons</a>
-            </div>
-        </nav>
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general" aria-selected="true">Sales order</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="orderlines-tab" data-bs-toggle="tab" data-bs-target="#nav-orderlines" type="button" role="tab" aria-controls="nav-orderlines" aria-selected="false">Order lines</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="salesreasons-tab" data-bs-toggle="tab" data-bs-target="#nav-salesreasons" type="button" role="tab" aria-controls="nav-salesreasons" aria-selected="false">Sales reasons</button>
+            </li>
+        </ul>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+            <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="general-tab">
                 <div>
                     <nav class="navbar navbar-light bg-light mb-3">
                         <div class="container-fluid">
@@ -36,7 +40,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i> Delete</button>
                             </div>
                         </div>
                     </nav>
@@ -138,12 +142,12 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <div class="row">
+                            <div class="row">                                
                                 <div class="col-6">
-                                    @Html.LabelFor(m => m.SalesOrder.CustomerName)
+                                    @Html.LabelFor(m => m.SalesOrder.ShipMethod)
                                 </div>
                                 <div class="col-6">
-                                    @Html.EditorFor(m => m.SalesOrder.CustomerName, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                                    @Html.EditorFor(m => m.SalesOrder.ShipMethod, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
                                 </div>
                             </div>
                         </div>
@@ -169,13 +173,23 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-8">
+                        <div class="col-4">
                             <div class="row">
-                                <div class="col-3">
-                                    @Html.LabelFor(m => m.SalesOrder.ShipMethod)
+                                <div class="col-6">
+                                    @Html.LabelFor(m => m.SalesOrder.CustomerName)
                                 </div>
                                 <div class="col-6">
-                                    @Html.EditorFor(m => m.SalesOrder.ShipMethod, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                                    @Html.EditorFor(m => m.SalesOrder.CustomerName, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    @Html.LabelFor(m => m.SalesOrder.CustomerType)
+                                </div>
+                                <div class="col-6">
+                                    @Html.EditorFor(m => m.SalesOrder.CustomerType, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
                                 </div>
                             </div>
                         </div>
@@ -263,7 +277,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-order-lines" role="tabpanel" aria-labelledby="nav-order-lines-tab">
+            <div class="tab-pane fade" id="nav-orderlines" role="tabpanel" aria-labelledby="orderlines-tab">
                 @if (Model.SalesOrder.OrderLines.Any())
                 {
                     <table class="table">
@@ -299,7 +313,7 @@
                     </div>
                 }
             </div>
-            <div class="tab-pane fade" id="nav-sales-reasons" role="tabpanel" aria-labelledby="nav-sales-reasons-tab">
+            <div class="tab-pane fade" id="nav-salesreasons" role="tabpanel" aria-labelledby="salesreasons-tab">
                 @if (Model.SalesOrder.SalesReasons.Count() > 0)
                 {
                     <table class="table">
@@ -312,7 +326,7 @@
                         @foreach (var reason in Model.SalesOrder.SalesReasons)
                         {
                             <tr>
-                                <td>@reason.Name</td>
+                                <td>@reason.Name</td> 
                                 <td>@reason.ReasonType</td>
                             </tr>
                         }

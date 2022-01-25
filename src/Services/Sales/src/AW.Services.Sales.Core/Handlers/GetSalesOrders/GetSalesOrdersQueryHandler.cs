@@ -35,13 +35,13 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
                 request.Territory
             );
 
-            var orders = await repository.ListAsync(spec);
+            var orders = await repository.ListAsync(spec, cancellationToken);
 
             logger.LogInformation("Returning sales orders");
             return new GetSalesOrdersDto
             {
                 SalesOrders = mapper.Map<List<SalesOrderDto>>(orders),
-                TotalSalesOrders = await repository.CountAsync(countSpec)
+                TotalSalesOrders = await repository.CountAsync(countSpec, cancellationToken)
             };
         }
     }

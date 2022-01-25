@@ -46,6 +46,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                     .Excluding(_ => _.SelectedMemberPath.EndsWith("DomainEvents", StringComparison.InvariantCultureIgnoreCase))
                     .Excluding(_ => _.SelectedMemberPath.EndsWith("SpecialOfferProduct"))
                     .Excluding(_ => _.SelectedMemberPath.EndsWith("SalesReason"))
+                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SalesPerson"))
             );
         }
     }

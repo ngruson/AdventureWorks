@@ -22,7 +22,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public string CustomerName { get; set; }
+        public Customer Customer { get; set; }
 
         public string SalesPerson { get; set; }
 

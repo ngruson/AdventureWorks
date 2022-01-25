@@ -202,7 +202,7 @@ namespace AW.Services.Sales.Order.REST.API
             services.AddScoped<IDbContext>(sp => sp.GetRequiredService<AWContext>());
             services.AddIntegrationEventHandlers();
 
-            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetSalesOrdersQuery).Assembly);
+            services.AddAutoMapper(typeof(GetSalesOrdersQuery).Assembly);
             services.AddScoped(
                 typeof(IRequestHandler<IdentifiedCommand<CreateSalesOrderCommand, bool>, bool>),
                 typeof(IdentifiedCommandHandler<CreateSalesOrderCommand, bool>)

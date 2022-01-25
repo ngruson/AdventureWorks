@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Idempotency
             var exists = await ExistAsync(id);
 
             var request = exists ?
-                throw new SalesOrderDomainException($"Request with {id} already exists") :
+                throw new SalesDomainException($"Request with {id} already exists") :
                 new ClientRequest()
                 {
                     Id = id,

@@ -40,7 +40,7 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result.FullName().Should().Be(salesPerson.FullName());
+            result.FullName().Should().Be(salesPerson.FullName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]

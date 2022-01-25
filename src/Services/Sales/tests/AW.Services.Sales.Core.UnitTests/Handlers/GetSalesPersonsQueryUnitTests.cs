@@ -45,7 +45,7 @@ namespace AW.Services.Sales.Core.UnitTests
 
             for (int i = 0; i < result.Count; i++)
             {
-                result[i].FullName().Should().Be(salesPersons[i].FullName());
+                result[i].FullName().Should().Be(salesPersons[i].FullName);
             }
         }
 
@@ -76,7 +76,7 @@ namespace AW.Services.Sales.Core.UnitTests
 
             for (int i = 0; i < result.Count; i++)
             {
-                result[i].FullName().Should().Be(salesPersons[i].FullName());
+                result[i].FullName().Should().Be(salesPersons[i].FullName);
             }
         }
 

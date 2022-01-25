@@ -112,7 +112,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                 Func<Task> func = async () => await sut.CreateRequestForCommandAsync<CreateSalesOrderCommand>(id);
 
                 //Assert
-                func.Should().Throw<SalesOrderDomainException>();
+                func.Should().Throw<SalesDomainException>();
 
                 mockRepository.Verify(_ => _.AddAsync(
                         It.IsAny<ClientRequest>(),

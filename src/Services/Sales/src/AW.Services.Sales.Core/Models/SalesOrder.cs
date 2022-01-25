@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Models
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public string CustomerNumber { get; set; }
+        public Customer Customer { get; set; }
 
         public string SalesPerson { get; set; }
 

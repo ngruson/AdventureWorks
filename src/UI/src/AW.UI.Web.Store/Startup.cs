@@ -4,9 +4,11 @@ using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -70,6 +72,16 @@ namespace AW.UI.Web.Store
                     endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                    {
+                        Predicate = _ => true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });
+                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                    {
+                        Predicate = r => r.Name.Contains("self")
+                    });
                 });
             });
         }

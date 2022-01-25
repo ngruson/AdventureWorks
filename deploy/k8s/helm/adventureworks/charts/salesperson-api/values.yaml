@@ -1,14 +1,13 @@
 replicaCount: 1
 pathBase: /salesperson-api/
 serviceName: salesperson-api
-authority: k8s-local.adventureworks.com/identityserver/
 
 image:
   repository: ngruson/adventureworks_salespersonapi
   tag: latest
   pullPolicy: IfNotPresent
 
-db: sqldb-adv-salesperson
+db: sqldb-adv-sales
 
 service:
   type: ClusterIP
@@ -17,12 +16,12 @@ service:
 probes:
   liveness:
     path: /salesperson-api/liveness
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 15
     port: 80
   readiness:
     path: /salesperson-api/hc
     timeoutSeconds: 5
-    initialDelaySeconds: 90
-    periodSeconds: 30
+    initialDelaySeconds: 60
+    periodSeconds: 15
     port: 80

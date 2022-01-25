@@ -1,14 +1,14 @@
 ﻿CREATE TABLE [SalesPerson](
-	[SalesPersonID] [int] IDENTITY(1,1) NOT NULL,
+	[PersonID] [int] IDENTITY(1,1) NOT NULL,
 	[Territory] [nvarchar](50) NULL
- CONSTRAINT [PK_SalesPerson_SalesPersonID] PRIMARY KEY CLUSTERED
+ CONSTRAINT [PK_SalesPerson_PersonID] PRIMARY KEY CLUSTERED
 (
-	[SalesPersonID] ASC
+	[PersonID] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [SalesPerson] WITH CHECK ADD CONSTRAINT [FK_SalesPerson_Person_PersonID] FOREIGN KEY([SalesPersonID])
+ALTER TABLE [SalesPerson] WITH CHECK ADD CONSTRAINT [FK_SalesPerson_Person_PersonID] FOREIGN KEY([PersonID])
 REFERENCES [Person] ([PersonID])
 GO
 

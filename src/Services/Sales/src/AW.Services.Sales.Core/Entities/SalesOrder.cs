@@ -10,7 +10,7 @@ namespace AW.Services.Sales.Core.Entities
     public class SalesOrder : Entity, IAggregateRoot
     {
         public SalesOrder() { }
-        public SalesOrder(string userId, string userName, string customerNumber, string shipMethod, Address billToAddress, Address shipToAddress, string cardType, string cardNumber, string cardSecurityNumber,
+        public SalesOrder(string userId, string userName, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, string cardType, string cardNumber, string cardSecurityNumber,
                 string cardHolderName, DateTime cardExpiration)
         {
             RevisionNumber = 1;
@@ -18,7 +18,7 @@ namespace AW.Services.Sales.Core.Entities
             DueDate = OrderDate.AddDays(12);
             Status = SalesOrderStatus.InProcess;
             OnlineOrderFlag = true;
-            CustomerNumber = customerNumber;
+            Customer = customer;
             ShipMethod = shipMethod;
             TaxRate = 8;
             Freight = 0;
@@ -47,9 +47,11 @@ namespace AW.Services.Sales.Core.Entities
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        public string CustomerNumber { get; set; }
+        public Customer Customer { get; set; }
+        public int CustomerID { get; set; }
 
-        public string SalesPerson { get; set; }
+        public SalesPerson SalesPerson { get; set; }
+        public int? SalesPersonID { get; set; }
 
         public string Territory { get; set; }
 
@@ -60,6 +62,7 @@ namespace AW.Services.Sales.Core.Entities
         public string ShipMethod { get; set; }
 
         public CreditCard CreditCard { get; set; }
+        public int CreditCardID { get; set; }
 
         public decimal SubTotal
         {

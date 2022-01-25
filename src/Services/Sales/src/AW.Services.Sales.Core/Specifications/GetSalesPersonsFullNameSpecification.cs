@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using AW.SharedKernel.Extensions;
 
 namespace AW.Services.Sales.Core.Specifications
 {
@@ -7,7 +6,7 @@ namespace AW.Services.Sales.Core.Specifications
     {
         public GetSalesPersonsFullNameSpecification()
         {
-            Query.Select(s => s.FullName());
+            Query.Select(s => s.FullName);
         }
     }
 }

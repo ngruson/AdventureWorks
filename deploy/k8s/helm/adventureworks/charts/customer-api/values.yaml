@@ -1,7 +1,6 @@
 replicaCount: 1
 pathBase: /customer-api/
 serviceName: customer-api
-authority: k8s-local.adventureworks.com/identityserver/
 
 image:
   repository: ngruson/adventureworks_customerapi
@@ -17,12 +16,12 @@ service:
 probes:
   liveness:
     path: /customer-api/liveness
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 15
     port: 80
   readiness:
     path: /customer-api/hc
     timeoutSeconds: 5
-    initialDelaySeconds: 90
-    periodSeconds: 30
+    initialDelaySeconds: 60
+    periodSeconds: 15
     port: 80

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Customer](
 	[CustomerID] [int] IDENTITY(1,1) NOT NULL,
 	[Territory] [nvarchar](50) NULL,
-	[AccountNumber]  [varchar](10) NOT NULL
+	[CustomerNumber]  [varchar](10) NOT NULL
  CONSTRAINT [PK_Customer_CustomerID] PRIMARY KEY CLUSTERED 
 (
 	[CustomerID] ASC

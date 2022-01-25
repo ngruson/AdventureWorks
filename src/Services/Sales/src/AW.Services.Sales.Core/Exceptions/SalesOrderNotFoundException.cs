@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace AW.Services.Sales.Core.Exceptions
 {
     [Serializable]
-    public class SalesOrderNotFoundException : SalesOrderDomainException
+    public class SalesOrderNotFoundException : SalesDomainException
     {
         public SalesOrderNotFoundException()
         { }

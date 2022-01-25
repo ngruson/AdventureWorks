@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Sales.Core.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace AW.Services.Sales.Core.Guards
 {
@@ -9,6 +10,16 @@ namespace AW.Services.Sales.Core.Guards
         {
             if (input == null)
                 throw new SalesOrderNotFoundException();
+        }
+
+        public static void CustomerNull(this IGuardClause guardClause, Entities.Customer input, string customerNumber, ILogger logger)
+        {
+            if (input == null)
+            {
+                logger.LogInformation($"Customer {customerNumber} not found");
+                throw new CustomerNotFoundException();
+            }
+                
         }
     }
 }

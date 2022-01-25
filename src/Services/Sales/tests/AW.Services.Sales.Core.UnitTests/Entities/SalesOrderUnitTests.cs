@@ -14,7 +14,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
         public void Create_HasOrderStartedDomainEvent(
             string userId,
             string userName,
-            string customerNumber,
+            Customer customer,
             string shipMethod,
             Address address,
             string cardType,
@@ -27,10 +27,10 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             //Arrange
 
             //Act
-            var salesOrder = new Core.Entities.SalesOrder(
+            var salesOrder = new SalesOrder(
                 userId,
                 userName,
-                customerNumber,
+                customer,
                 shipMethod,
                 address,
                 address,
@@ -48,7 +48,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLine_NoOrderLinesWithProduct_NewOrderLine(
-            Core.Entities.SalesOrder salesOrder,
+            SalesOrder salesOrder,
             string productNumber,
             string productName,
             decimal unitPrice,
@@ -73,7 +73,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLine_NoOrderLinesWithProductFound_NewOrderLineWithQuantity(
-            Core.Entities.SalesOrder salesOrder,
+            SalesOrder salesOrder,
             string productNumber,
             string productName,
             decimal unitPrice,
@@ -100,7 +100,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLine_OrderLineWithProductFound_UpdatedOrderLine(
-            Core.Entities.SalesOrder salesOrder,
+            SalesOrder salesOrder,
             SpecialOfferProduct specialOfferProduct
         )
         {
@@ -124,7 +124,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLineWithQuantity_OrderLineWithProductFound_UpdatedOrderLine(
-            Core.Entities.SalesOrder salesOrder,
+            SalesOrder salesOrder,
             SpecialOfferProduct specialOfferProduct,
             short quantity
         )

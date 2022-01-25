@@ -10,7 +10,7 @@
 GO
 
 ALTER TABLE [SalesPersonEmailAddress] WITH CHECK ADD CONSTRAINT [FK_SalesPersonEmailAddress_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
-REFERENCES [SalesPerson] ([SalesPersonID])
+REFERENCES [SalesPerson] ([PersonID])
 GO
 
 ALTER TABLE [SalesPersonEmailAddress] CHECK CONSTRAINT [FK_SalesPersonEmailAddress_SalesPerson_SalesPersonID]

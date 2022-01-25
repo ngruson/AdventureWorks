@@ -58,7 +58,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 };
 
                 //Assert
-                act.Should().Throw<SalesOrderDomainException>();
+                act.Should().Throw<SalesDomainException>();
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -85,7 +85,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 };
 
                 //Assert
-                act.Should().Throw<SalesOrderDomainException>();
+                act.Should().Throw<SalesDomainException>();
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -110,7 +110,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 };
 
                 //Assert
-                act.Should().Throw<SalesOrderDomainException>();
+                act.Should().Throw<SalesDomainException>();
             }
         }
 
@@ -157,7 +157,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 };
 
                 //Assert
-                act.Should().Throw<SalesOrderDomainException>();
+                act.Should().Throw<SalesDomainException>();
             }
         }
 
@@ -206,7 +206,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 };
 
                 //Assert
-                act.Should().Throw<SalesOrderDomainException>();
+                act.Should().Throw<SalesDomainException>();
             }
         }
     }

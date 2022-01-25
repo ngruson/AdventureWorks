@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.Sales.Core.Entities;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Specifications;
@@ -20,6 +21,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
         private readonly IRepository<SalesOrder> salesOrderRepository;
         private readonly IRepository<SpecialOfferProduct> specialOfferProductRepository;
         private readonly IRepository<Address> addressRepository;
+        private readonly IRepository<Customer> customerRepository;
 
         public CreateSalesOrderCommandHandler(
             ILogger<CreateSalesOrderCommandHandler> logger,
@@ -27,7 +29,8 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             ISalesOrderIntegrationEventService salesOrderIntegrationEventService,
             IRepository<SalesOrder> salesOrderRepository,
             IRepository<SpecialOfferProduct> specialOfferProductRepository,
-            IRepository<Address> addressRepository
+            IRepository<Address> addressRepository,
+            IRepository<Customer> customerRepository
         )
         {
             this.logger = logger;
@@ -36,6 +39,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             this.salesOrderRepository = salesOrderRepository;
             this.specialOfferProductRepository = specialOfferProductRepository;
             this.addressRepository = addressRepository;
+            this.customerRepository = customerRepository;
         }
 
         public async Task<bool> Handle(CreateSalesOrderCommand request, CancellationToken cancellationToken)
@@ -47,9 +51,10 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserId);
             await salesOrderIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
 
+            var customer = await GetCustomer(request.CustomerNumber);
             var billToAddress = await GetAddress(request.BillToAddress);
             var shipToAddress = await GetAddress(request.ShipToAddress);
-            var salesOrder = new SalesOrder(request.UserId, request.UserName, request.CustomerNumber, request.ShipMethod, billToAddress, shipToAddress, request.CardType, request.CardNumber, request.CardSecurityNumber, request.CardHolderName, request.CardExpiration);
+            var salesOrder = new SalesOrder(request.UserId, request.UserName, customer, request.ShipMethod, billToAddress, shipToAddress, request.CardType, request.CardNumber, request.CardSecurityNumber, request.CardHolderName, request.CardExpiration);
 
             foreach (var item in request.OrderItems)
             {
@@ -70,6 +75,17 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             logger.LogInformation("Sales order was created succesfully");
 
             return true;
+        }
+
+        private async Task<Customer> GetCustomer(string customerNumber)
+        {
+            var customer = await customerRepository.GetBySpecAsync(
+                new GetCustomerSpecification(customerNumber)
+            );
+
+            Guard.Against.CustomerNull(customer, customerNumber, logger);
+
+            return customer;
         }
 
         private async Task<Address> GetAddress(AddressDto address)
