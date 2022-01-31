@@ -96,29 +96,21 @@ jobs:
           dotnet build src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-restore
           dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-      - name: Build SalesOrder services and run unit tests
+      - name: Build Sales services and run unit tests
         run: |
-          dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.Core.UnitTests\AW.Services.SalesOrder.Core.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.Core.UnitTests\AW.Services.SalesOrder.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet build src\Services\Sales\tests\AW.Services.Sales.Core.UnitTests\AW.Services.Sales.Core.UnitTests.csproj --no-restore
+          dotnet test src\Services\Sales\tests\AW.Services.Sales.Core.UnitTests\AW.Services.Sales.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests\AW.Services.SalesOrder.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet build src\Services\Sales\tests\AW.Services.Sales.Infrastructure.EFCore.UnitTests\AW.Services.Sales.Infrastructure.EFCore.UnitTests.csproj --no-restore
+          dotnet test src\Services\Sales\tests\AW.Services.Sales.Infrastructure.EFCore.UnitTests\AW.Services.Sales.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
-          dotnet build src\Services\SalesOrder\src\AW.Services.SalesOrder.REST.API\AW.Services.SalesOrder.REST.API.csproj --no-restore
-          dotnet build src\Services\SalesOrder\tests\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesOrder\tests\AW.Services.SalesOrder.REST.API.UnitTests\AW.Services.SalesOrder.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-        
-      - name: Build SalesPerson services and run unit tests
-        run: |
-          dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.Core.UnitTests\AW.Services.SalesPerson.Core.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.Core.UnitTests\AW.Services.SalesPerson.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests\AW.Services.SalesPerson.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          dotnet build src\Services\SalesPerson\src\AW.Services.SalesPerson.REST.API\AW.Services.SalesPerson.REST.API.csproj --no-restore
-          dotnet build src\Services\SalesPerson\tests\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-restore
-          dotnet test src\Services\SalesPerson\tests\AW.Services.SalesPerson.REST.API.UnitTests\AW.Services.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet build src\Services\Sales\src\AW.Services.Sales.Order.REST.API\AW.Services.Sales.Order.REST.API.csproj --no-restore
+          dotnet build src\Services\Sales\tests\AW.Services.Sales.Order.REST.API.UnitTests\AW.Services.Sales.Order.REST.API.UnitTests.csproj --no-restore
+          dotnet test src\Services\Sales\tests\AW.Services.Sales.Order.REST.API.UnitTests\AW.Services.Sales.Order.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
+          dotnet build src\Services\Sales\src\AW.Services.Sales.SalesPerson.REST.API\AW.Services.Sales.SalesPerson.REST.API.csproj --no-restore
+          dotnet build src\Services\Sales\tests\AW.Services.Sales.SalesPerson.REST.API.UnitTests\AW.Services.Sales.SalesPerson.REST.API.UnitTests.csproj --no-restore
+          dotnet test src\Services\Sales\tests\AW.Services.Sales.SalesPerson.REST.API.UnitTests\AW.Services.Sales.SalesPerson.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
         
       - name: Build UI and run unit tests
         run: |
