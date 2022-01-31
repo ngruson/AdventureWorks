@@ -60,6 +60,11 @@ jobs:
           dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-restore
           dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.EFCore.UnitTests\AW.Services.SharedKernel.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
       
+      - name: Build IdentityServer and run unit tests
+        run: |
+          dotnet build src\Services\IdentityServer\tests\AW.Services.IdentityServer.Core.UnitTests\AW.Services.IdentityServer.Core.UnitTests.csproj --no-restore
+          dotnet test src\Services\IdentityServer\tests\AW.Services.IdentityServer.Core.UnitTests\AW.Services.IdentityServer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
       - name: Build Customer services and run unit tests
         run: |
           dotnet build src\Services\Customer\tests\AW.Services.Customer.Core.UnitTests\AW.Services.Customer.Core.UnitTests.csproj --no-restore
