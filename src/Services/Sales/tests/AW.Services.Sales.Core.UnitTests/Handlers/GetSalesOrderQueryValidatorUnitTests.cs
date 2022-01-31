@@ -1,5 +1,5 @@
-﻿using Ardalis.Specification;
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
+using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using AW.Services.Sales.Core.Specifications;
 using AW.SharedKernel.Interfaces;

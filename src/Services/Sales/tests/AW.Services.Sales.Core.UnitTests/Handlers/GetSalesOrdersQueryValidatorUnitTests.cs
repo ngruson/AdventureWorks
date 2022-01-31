@@ -1,4 +1,5 @@
-﻿using AW.Services.Sales.Core.Handlers.GetSalesOrders;
+﻿using AW.Services.Sales.Core.AutoMapper;
+using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Xunit;

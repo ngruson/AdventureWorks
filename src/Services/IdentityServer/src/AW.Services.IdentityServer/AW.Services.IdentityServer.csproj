@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
+    <ProjectReference Include="..\AW.Services.IdentityServer.Core\AW.Services.IdentityServer.Core.csproj" />
   </ItemGroup>
 
 </Project>

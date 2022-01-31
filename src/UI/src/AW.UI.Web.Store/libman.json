@@ -3,7 +3,11 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "font-awesome@6.0.0-beta2",
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "font-awesome@6.0.0-beta3",
       "destination": "wwwroot/lib/font-awesome/"
     }
   ]

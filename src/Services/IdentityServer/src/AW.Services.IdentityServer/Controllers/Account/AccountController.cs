@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using AW.Services.IdentityServer.Models;
+using AW.Services.IdentityServer.Core.Models;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServerHost.Quickstart.UI
+namespace AW.Services.IdentityServer.Controllers.Account
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.
@@ -153,7 +153,7 @@ namespace IdentityServerHost.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>

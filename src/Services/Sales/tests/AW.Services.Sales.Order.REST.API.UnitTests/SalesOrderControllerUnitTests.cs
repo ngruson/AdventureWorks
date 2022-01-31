@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using AW.Services.Sales.Core.AutoMapper;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
 {

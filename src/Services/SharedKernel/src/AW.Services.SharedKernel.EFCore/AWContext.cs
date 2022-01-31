@@ -30,9 +30,9 @@ namespace AW.Services.SharedKernel.EFCore
         }
 
         public AWContext(
-            DbContextOptions<AWContext> options, 
-            Assembly configurationsAssembly,
-            IMediator mediator
+            DbContextOptions<AWContext> options,             
+            IMediator mediator,
+            Assembly configurationsAssembly
         ) : base(options)
         {
             this.configurationsAssembly = configurationsAssembly;
@@ -46,7 +46,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (configurationsAssembly != null)
+            if (configurationsAssembly != null)                
                 modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
         }
 

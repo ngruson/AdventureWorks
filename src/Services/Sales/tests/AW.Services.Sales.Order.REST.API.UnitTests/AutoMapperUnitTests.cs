@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AW.Services.Sales.Core.AutoMapper;
 using Xunit;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
@@ -10,7 +11,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<Core.MappingProfile>();
+                cfg.AddProfile<MappingProfile>();
             });            
             
             config.AssertConfigurationIsValid();

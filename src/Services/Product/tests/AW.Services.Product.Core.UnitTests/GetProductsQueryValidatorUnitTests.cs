@@ -1,4 +1,4 @@
-﻿using AutoFixture.Xunit2;
+﻿using AW.Services.Product.Core.AutoMapper;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;

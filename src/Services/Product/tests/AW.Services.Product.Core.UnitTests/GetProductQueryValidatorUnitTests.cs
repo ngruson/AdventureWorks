@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Product.Core.AutoMapper;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Specifications;
 using AW.SharedKernel.Interfaces;

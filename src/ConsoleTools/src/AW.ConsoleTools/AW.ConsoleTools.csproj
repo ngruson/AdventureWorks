@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Customer\src\AW.Services.Customer.Core\AW.Services.Customer.Core.csproj" />
+    <ProjectReference Include="..\..\..\Services\Customer\src\AW.Services.Customer.Infrastructure.EFCore\AW.Services.Customer.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\..\..\Services\IdentityServer\src\AW.Services.IdentityServer.Core\AW.Services.IdentityServer.Core.csproj" />
+    <ProjectReference Include="..\..\..\Services\Product\src\AW.Services.Product.Core\AW.Services.Product.Core.csproj" />
+    <ProjectReference Include="..\..\..\Services\Product\src\AW.Services.Product.Infrastructure.EFCore\AW.Services.Product.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\..\..\Services\SharedKernel\src\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

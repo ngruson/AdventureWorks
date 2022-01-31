@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddCustomer;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;

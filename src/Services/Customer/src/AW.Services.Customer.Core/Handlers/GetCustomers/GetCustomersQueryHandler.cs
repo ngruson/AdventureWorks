@@ -41,14 +41,14 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers
                 request.AccountNumber
             );
 
-            var customers = await repository.ListAsync(spec);
+            var customers = await repository.ListAsync(spec, cancellationToken);
             Guard.Against.Null(customers, nameof(customers));
 
             logger.LogInformation("Returning customers");
             return new GetCustomersDto
             {
                 Customers = mapper.Map<List<CustomerDto>>(customers),
-                TotalCustomers = await repository.CountAsync(countSpec)
+                TotalCustomers = await repository.CountAsync(countSpec, cancellationToken)
             };
         }
     }

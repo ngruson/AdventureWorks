@@ -22,7 +22,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
     {
         public class GetCustomers
         {
-            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
             public async Task GetCustomers_ShouldReturnCustomers_WhenGivenCustomers(
                 
                 [Frozen] Mock<IMediator> mockMediator,
@@ -155,7 +155,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
         public class UpdateCustomer
         {
-            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
             public async Task UpdateCustomer_ShouldReturnCustomer_GivenCustomer(
                 Core.Handlers.UpdateCustomer.StoreCustomerDto dto,
                 [Frozen] Mock<IMediator> mockMediator,

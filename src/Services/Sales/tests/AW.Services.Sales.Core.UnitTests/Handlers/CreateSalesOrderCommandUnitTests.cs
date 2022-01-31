@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.Specifications;

@@ -10,6 +10,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get; set; }
         public string Suffix { get; set; }
         public List<PersonEmailAddressDto> EmailAddresses { get; set; }
         public List<PersonPhoneDto> PhoneNumbers { get; set; }

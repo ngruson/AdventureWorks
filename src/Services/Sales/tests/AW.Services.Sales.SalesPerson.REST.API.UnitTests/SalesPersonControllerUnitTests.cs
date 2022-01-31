@@ -17,7 +17,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
 {
     public class SalesPersonControllerUnitTests
     {
-        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
         public async Task GetSalesPersons_ShouldReturnSalesPersons_WhenGivenSalesPersons(
             [Frozen] Mock<IMediator> mockMediator,
             List<Core.Handlers.GetSalesPersons.SalesPersonDto> salesPersons,
@@ -57,7 +57,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             notFoundResult.Should().NotBeNull();
         }
 
-        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+        [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
         public async Task GetSalesPerson_ShouldReturnSalesPerson_GivenSalesPerson(
             [Frozen] Mock<IMediator> mockMediator,
             Core.Handlers.GetSalesPerson.SalesPersonDto salesPerson,

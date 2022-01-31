@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AW.Services.Customer.Core.AutoMapper;
 
 namespace AW.Services.Customer.Core.UnitTests
 {

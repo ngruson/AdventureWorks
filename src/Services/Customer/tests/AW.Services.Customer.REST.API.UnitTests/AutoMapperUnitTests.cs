@@ -10,7 +10,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
         {
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile<MappingProfile>();
-                cfg.AddProfile<Core.MappingProfile>();
+                cfg.AddProfile<Core.AutoMapper.MappingProfile>();
             });
             config.AssertConfigurationIsValid();
         }

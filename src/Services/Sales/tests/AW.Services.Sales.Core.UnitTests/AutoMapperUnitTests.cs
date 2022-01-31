@@ -1,4 +1,5 @@
 using AutoMapper;
+using AW.Services.Sales.Core.AutoMapper;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests

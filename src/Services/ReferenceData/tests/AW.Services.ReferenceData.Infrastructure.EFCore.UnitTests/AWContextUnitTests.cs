@@ -25,8 +25,8 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
                 
             var context = new AWContext(
                 contextOptions,
-                typeof(EfRepository<>).Assembly,
-                mockMediator.Object
+                mockMediator.Object,
+                typeof(EfRepository<>).Assembly
             );
 
             //Act

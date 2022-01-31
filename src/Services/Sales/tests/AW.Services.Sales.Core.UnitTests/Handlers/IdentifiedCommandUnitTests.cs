@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.Handlers.Identified;
 using AW.Services.Sales.Core.Idempotency;
@@ -7,9 +8,6 @@ using FluentAssertions;
 using MediatR;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

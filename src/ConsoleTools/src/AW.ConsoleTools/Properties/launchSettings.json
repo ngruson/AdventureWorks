@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AW.ConsoleTools": {
+      "commandName": "Project",
+      "commandLineArgs": "create-customer-logins",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

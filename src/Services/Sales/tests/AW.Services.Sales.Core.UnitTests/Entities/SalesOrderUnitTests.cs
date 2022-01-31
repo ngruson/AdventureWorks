@@ -1,4 +1,5 @@
-﻿using AW.Services.Sales.Core.Entities;
+﻿using AW.Services.Sales.Core.AutoMapper;
+using AW.Services.Sales.Core.Entities;
 using AW.Services.Sales.Core.Events;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;

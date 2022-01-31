@@ -21,7 +21,7 @@ namespace AW.Services.Product.REST.API.UnitTests
     {
         public class GetProducts
         {
-            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
             public async Task GetProducts_ShouldReturnProducts_WhenProductsExist(
                 [Frozen] Mock<IMediator> mockMediator,
                 List<Core.Handlers.GetProduct.Product> products,
@@ -73,7 +73,7 @@ namespace AW.Services.Product.REST.API.UnitTests
 
         public class GetProduct
         {
-            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.MappingProfile))]
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
             public async Task GetProduct_ShouldReturnProduct_WhenProductExist(
                 [Frozen] Core.Handlers.GetProduct.Product product,
                 [Frozen] Mock<IMediator> mockMediator,

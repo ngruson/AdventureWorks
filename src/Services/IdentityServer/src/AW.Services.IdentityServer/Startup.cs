@@ -1,6 +1,6 @@
 using AW.Services.IdentityServer.Configuration;
-using AW.Services.IdentityServer.Data;
-using AW.Services.IdentityServer.Models;
+using AW.Services.IdentityServer.Core.Data;
+using AW.Services.IdentityServer.Core.Models;
 using HealthChecks.UI.Client;
 using IdentityModel;
 using IdentityServer4.EntityFramework.DbContexts;

@@ -189,9 +189,9 @@ namespace AW.Services.Customer.REST.API
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
 
                 return new AWContext(
-                    builder.Options,
-                    typeof(EfRepository<>).Assembly,
-                    provider.GetService<IMediator>()
+                    builder.Options,                    
+                    provider.GetService<IMediator>(),
+                    typeof(EfRepository<>).Assembly
                 );
             });
 

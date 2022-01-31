@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
+using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.IntegrationEvents.EventHandling;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.SharedKernel.Interfaces;
