@@ -1,4 +1,5 @@
 ﻿using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
+using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,9 +14,13 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
     {
         private readonly IMediator mediator;
         private readonly ILogger<StoreProductPhotosCommandHandler> logger;
+        private readonly IFileWriter fileWriter;
 
-        public StoreProductPhotosCommandHandler(IMediator mediator, ILogger<StoreProductPhotosCommandHandler> logger) =>
-            (this.mediator, this.logger) = (mediator, logger);
+        public StoreProductPhotosCommandHandler(
+            IMediator mediator, 
+            ILogger<StoreProductPhotosCommandHandler> logger,
+            IFileWriter fileWriter
+        ) => (this.mediator, this.logger, this.fileWriter) = (mediator, logger, fileWriter);
         
         public async Task<Unit> Handle(StoreProductPhotosCommand request, CancellationToken cancellationToken)
         {
@@ -33,24 +38,25 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
             return Unit.Value;
         }
 
-        private static void WriteFile(string fileName, byte[] photo)
+        private void WriteFile(string fileName, byte[] photo)
         {
-            if (!File.Exists(fileName))
+            if (!fileWriter.FileExists(fileName))
             {
-                Console.WriteLine($"Saving photo to {fileName}");
+                logger.LogInformation("Saving photo to {FileName}", fileName);
 
                 try
                 {
-                    File.WriteAllBytes(fileName, photo);
+                    fileWriter.WriteFile(fileName, photo);
                 }
                 catch (Exception ex)
                 {
-                    var foregroundColor = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"ERROR when trying to write {fileName}: {ex.Message}");
-                    Console.ForegroundColor = foregroundColor;
+                    logger.LogError("ERROR when trying to write {FileName}: {Message}",
+                        fileName, ex.Message
+                    );
                 }
             }
+            else
+                logger.LogWarning("{FileName} already exists", fileName);
         }
     }
 }

@@ -118,8 +118,6 @@ namespace AW.ConsoleTools.DependencyInjection
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddScoped(typeof(UserManager<>));
-
             return services;
         }
     }
