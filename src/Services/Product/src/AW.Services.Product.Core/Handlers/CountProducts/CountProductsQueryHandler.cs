@@ -23,7 +23,7 @@ namespace AW.Services.Product.Core.Handlers.CountProducts
 
             logger.LogInformation("Getting product count from database");
             var spec = new GetProductsCountSpecification();
-            var count = await repository.CountAsync(spec);
+            var count = await repository.CountAsync(spec, cancellationToken);
 
             logger.LogInformation("Returning product count");
             return count;

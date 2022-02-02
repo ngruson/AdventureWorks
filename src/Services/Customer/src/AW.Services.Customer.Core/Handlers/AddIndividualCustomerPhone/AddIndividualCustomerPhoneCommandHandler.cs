@@ -27,7 +27,8 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
             logger.LogInformation("Getting customer from database");
 
             var individualCustomer = await individualCustomerRepository.GetBySpecAsync(
-                new GetIndividualCustomerSpecification(request.AccountNumber)
+                new GetIndividualCustomerSpecification(request.AccountNumber),
+                cancellationToken
             );
             Guard.Against.Null(individualCustomer, nameof(individualCustomer));
 
@@ -36,7 +37,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
             individualCustomer.Person.PhoneNumbers.Add(phone);
 
             logger.LogInformation("Saving customer to database");
-            await individualCustomerRepository.UpdateAsync(individualCustomer);
+            await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);
 
             return Unit.Value;
         }

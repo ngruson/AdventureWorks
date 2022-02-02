@@ -26,7 +26,11 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
 
         private async Task<bool> NotExists(string accountNumber, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(accountNumber));
+            var customer = await customerRepository.GetBySpecAsync(
+                new GetCustomerSpecification(accountNumber),
+                cancellationToken
+            );
+
             return customer == null;
         }
     }

@@ -26,7 +26,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting address types from database");
-            var addressTypes = await repository.ListAsync();
+            var addressTypes = await repository.ListAsync(cancellationToken);
 
             Guard.Against.Null(addressTypes, nameof(addressTypes));
 

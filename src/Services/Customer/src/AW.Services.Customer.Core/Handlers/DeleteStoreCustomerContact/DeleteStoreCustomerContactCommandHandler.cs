@@ -26,7 +26,8 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
             logger.LogInformation("Getting customer from database");
 
             var storeCustomer = await storeCustomerRepository.GetBySpecAsync(
-                new GetStoreCustomerSpecification(request.AccountNumber)
+                new GetStoreCustomerSpecification(request.AccountNumber),
+                cancellationToken
             );
             Guard.Against.Null(storeCustomer, nameof(storeCustomer), logger);
 
@@ -42,7 +43,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
             storeCustomer.Contacts.Remove(contact);
 
             logger.LogInformation("Updating customer to database");
-            await storeCustomerRepository.UpdateAsync(storeCustomer);
+            await storeCustomerRepository.UpdateAsync(storeCustomer, cancellationToken);
             return Unit.Value;
         }
     }

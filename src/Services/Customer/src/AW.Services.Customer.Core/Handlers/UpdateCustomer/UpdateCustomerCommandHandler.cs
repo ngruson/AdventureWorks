@@ -27,14 +27,14 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
 
             logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
-            var customer = await customerRepository.GetBySpecAsync(spec);
+            var customer = await customerRepository.GetBySpecAsync(spec, cancellationToken);
             Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Updating customer");
             mapper.Map(request.Customer, customer);
 
             logger.LogInformation("Saving customer to database");
-            await customerRepository.UpdateAsync(customer);
+            await customerRepository.UpdateAsync(customer, cancellationToken);
 
             logger.LogInformation("Returning customer");
             return mapper.Map<CustomerDto>(customer);

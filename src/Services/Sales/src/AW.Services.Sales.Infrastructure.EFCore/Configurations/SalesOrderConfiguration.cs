@@ -16,9 +16,6 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
             builder.Property(p => p.SalesOrderNumber)
                 .HasComputedColumnSql();
 
-            //builder.Property(_ => _.CreditCardID)
-            //    .HasColumnName("CreditCardID");
-
             builder.Ignore(p => p.SubTotal);
             builder.Ignore(p => p.TaxAmt);
             builder.Ignore(p => p.TaxRate);

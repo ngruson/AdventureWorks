@@ -121,7 +121,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.Customer.AccountNumber);
             }
 
@@ -179,7 +179,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.Customer.AccountNumber);
             }
 
@@ -245,7 +245,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -312,7 +312,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -403,7 +403,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -473,7 +473,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -548,7 +548,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -619,7 +619,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -689,7 +689,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -765,7 +765,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 
@@ -837,7 +837,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
                 redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.Keys.Contains("AccountNumber");
+                redirectResult.RouteValues.ContainsKey("AccountNumber");
                 redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
             }
 

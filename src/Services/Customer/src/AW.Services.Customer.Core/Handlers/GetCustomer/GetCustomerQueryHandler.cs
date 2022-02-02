@@ -30,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
                 request.AccountNumber
             );
 
-            var customer = await repository.GetBySpecAsync(spec);
+            var customer = await repository.GetBySpecAsync(spec, cancellationToken);
             Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Returning customer");

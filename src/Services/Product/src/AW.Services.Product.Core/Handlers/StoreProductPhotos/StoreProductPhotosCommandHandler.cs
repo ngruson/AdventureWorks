@@ -29,8 +29,6 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
 
             foreach (var photo in products.SelectMany(_ => _.Photos))
             {
-                string fileName = Path.Combine(request.TargetFolder, photo.ThumbnailPhotoFileName);
-
                 WriteFile(Path.Combine(request.TargetFolder, photo.ThumbnailPhotoFileName), photo.ThumbNailPhoto);
                 WriteFile(Path.Combine(request.TargetFolder, photo.LargePhotoFileName), photo.LargePhoto);
             }

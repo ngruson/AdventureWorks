@@ -650,7 +650,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             var viewModel = await svc.GetCustomerAddressForDelete("AW00000001", "Main Office");
 
             //Assert
-            viewModel.CustomerName = "A Bike Store";
+            viewModel.CustomerName.Should().Be("A Bike Store");
         }
 
         [Fact]

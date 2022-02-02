@@ -28,7 +28,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting shipping methods from database");
-            var shipMethods = await repository.ListAsync();
+            var shipMethods = await repository.ListAsync(cancellationToken);
             Guard.Against.NullOrEmpty(shipMethods, nameof(shipMethods));
 
             logger.LogInformation("Returning shipping methods");

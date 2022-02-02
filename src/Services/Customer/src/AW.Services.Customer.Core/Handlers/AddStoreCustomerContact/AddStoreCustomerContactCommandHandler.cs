@@ -27,7 +27,8 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
             logger.LogInformation("Getting customer from database");
 
             var storeCustomer = await storeRepository.GetBySpecAsync(
-                new GetStoreCustomerSpecification(request.AccountNumber)
+                new GetStoreCustomerSpecification(request.AccountNumber),
+                cancellationToken
             );
             Guard.Against.Null(storeCustomer, nameof(storeCustomer));
 
@@ -36,7 +37,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
             storeCustomer.Contacts.Add(contact);
 
             logger.LogInformation("Saving customer to database");
-            await storeRepository.UpdateAsync(storeCustomer);
+            await storeRepository.UpdateAsync(storeCustomer, cancellationToken);
 
             return Unit.Value;
         }

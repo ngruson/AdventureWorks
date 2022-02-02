@@ -26,7 +26,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting countries from database");
-            var countries = await repository.ListAsync();
+            var countries = await repository.ListAsync(cancellationToken);
 
             Guard.Against.NullOrEmpty(countries, nameof(countries));
 

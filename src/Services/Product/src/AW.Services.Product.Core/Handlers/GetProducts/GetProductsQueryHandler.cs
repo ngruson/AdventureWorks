@@ -42,18 +42,18 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
                 request.Subcategory
             );
 
-            var products = await repository.ListAsync(spec);
+            var products = await repository.ListAsync(spec, cancellationToken);
             Guard.Against.Null(products, nameof(products));
 
             logger.LogInformation("Returning products");
             return new GetProductsDto
             {
                 Products = mapper.Map<List<GetProduct.Product>>(products),
-                TotalProducts = await repository.CountAsync(countSpec)
+                TotalProducts = await repository.CountAsync(countSpec, cancellationToken)
             };
         }
 
-        private OrderByClause<Entities.Product> OrderBy(string orderBy)
+        private static OrderByClause<Entities.Product> OrderBy(string orderBy)
         {
             if (string.IsNullOrEmpty(orderBy))
                 return null;

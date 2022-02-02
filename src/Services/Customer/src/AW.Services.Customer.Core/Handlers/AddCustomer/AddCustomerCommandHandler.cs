@@ -28,7 +28,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
             var customer = mapper.Map<Entities.Customer>(request.Customer);
 
             logger.LogInformation("Saving customer to database");
-            await customerRepository.AddAsync(customer);
+            await customerRepository.AddAsync(customer, cancellationToken);
 
             logger.LogInformation("Returning customer");
             return mapper.Map<CustomerDto>(customer);

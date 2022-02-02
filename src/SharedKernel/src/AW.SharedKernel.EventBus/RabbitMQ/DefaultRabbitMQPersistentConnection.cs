@@ -45,7 +45,13 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
 
         public void Dispose()
         {
-            if (!disposed)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
                 try
                 {
@@ -54,12 +60,8 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
                 catch (IOException ex)
                 {
                     logger.LogCritical(ex.ToString());
-                }
-
-                disposed = true;
+                }                
             }
-
-            GC.SuppressFinalize(this);
         }
 
         public bool TryConnect()

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AW.Services.Infrastructure.Filters
 {
-    public class ValidateModelStateFilter : ActionFilterAttribute
+    public class ValidateModelStateFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

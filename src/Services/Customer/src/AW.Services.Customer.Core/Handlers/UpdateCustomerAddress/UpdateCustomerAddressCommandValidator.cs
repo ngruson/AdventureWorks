@@ -69,7 +69,11 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 
         private async Task<bool> UniqueAddress(UpdateCustomerAddressCommand command, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(command.AccountNumber));
+            var customer = await customerRepository.GetBySpecAsync(
+                new GetCustomerSpecification(command.AccountNumber),
+                cancellationToken
+            );
+
             if (customer == null)
                 return true;
 
@@ -88,7 +92,11 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 
         private async Task<bool> CustomerExist(string accountNumber, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.GetBySpecAsync(new GetCustomerSpecification(accountNumber));
+            var customer = await customerRepository.GetBySpecAsync(
+                new GetCustomerSpecification(accountNumber),
+                cancellationToken
+            );
+
             return customer != null;
         }
     }

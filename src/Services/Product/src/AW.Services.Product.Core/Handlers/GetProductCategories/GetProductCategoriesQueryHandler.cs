@@ -28,7 +28,8 @@ namespace AW.Services.Product.Core.Handlers.GetProductCategories
 
             logger.LogInformation("Getting product categories from database");
             var categories = await repository.ListAsync(
-                new GetProductCategoriesSpecification()
+                new GetProductCategoriesSpecification(),
+                cancellationToken
             );
 
             Guard.Against.Null(categories, nameof(categories));

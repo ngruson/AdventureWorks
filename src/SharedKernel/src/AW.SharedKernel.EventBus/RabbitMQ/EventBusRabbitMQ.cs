@@ -169,13 +169,21 @@ namespace AW.SharedKernel.EventBus.RabbitMQ
 
         public void Dispose()
         {
-            if (consumerChannel != null)
-            {
-                consumerChannel.Dispose();
-            }
-
-            subsManager.Clear();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (consumerChannel != null)
+                {
+                    consumerChannel.Dispose();
+                }
+
+                subsManager.Clear();
+            }
         }
 
         private void StartBasicConsume()

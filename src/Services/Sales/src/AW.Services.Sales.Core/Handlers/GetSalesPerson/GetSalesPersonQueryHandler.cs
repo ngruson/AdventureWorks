@@ -33,7 +33,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPerson
                 request.LastName
             );
 
-            var salesPerson = await repository.GetBySpecAsync(spec);
+            var salesPerson = await repository.GetBySpecAsync(spec, cancellationToken);
             Guard.Against.Null(salesPerson, nameof(salesPerson), logger);
 
             logger.LogInformation("Returning sales persons");

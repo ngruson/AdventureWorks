@@ -22,13 +22,13 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
 
         private bool BeValid(string orderBy)
         {
-            if (orderBy.IndexOf('(') == -1)
+            if (!orderBy.Contains('('))
                 return false;
 
-            if (orderBy.IndexOf(')') == -1)
+            if (!orderBy.Contains(')'))
                 return false;
 
-            string direction = orderBy.Substring(0, orderBy.IndexOf('('));
+            string direction = orderBy[..orderBy.IndexOf('(')];
             if (!(direction == "asc" || direction == "desc"))
                 return false;
 

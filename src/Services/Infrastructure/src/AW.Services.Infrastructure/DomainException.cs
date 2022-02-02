@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace AW.Services.Infrastructure
 {
-    public class DomainException : Exception
+    [Serializable]
+    public class DomainException : Exception, ISerializable
     {
         public DomainException()
         { }
@@ -14,5 +16,10 @@ namespace AW.Services.Infrastructure
         public DomainException(string message, Exception innerException)
             : base(message, innerException)
         { }
+
+        protected DomainException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            :base(serializationInfo, streamingContext)
+        {
+        }
     }
 }

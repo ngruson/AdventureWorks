@@ -1,6 +1,5 @@
 ﻿using AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,11 +14,11 @@ namespace AW.UI.Web.Infrastructure.ApiClients.BasketApi
         public BasketApiClient(HttpClient client, ILogger<BasketApiClient> logger) =>
             (this.client, this.logger) = (client, logger);
 
-        public async Task Checkout(BasketCheckout basketCheckout)
+        public async Task Checkout(BasketCheckout basket)
         {
             string requestUri = "Basket/checkout?api-version=1.0";
 
-            var basketContent = new StringContent(JsonSerializer.Serialize(basketCheckout), System.Text.Encoding.UTF8, "application/json");
+            var basketContent = new StringContent(JsonSerializer.Serialize(basket), System.Text.Encoding.UTF8, "application/json");
             var response = await client.PostAsync(requestUri, basketContent);
             response.EnsureSuccessStatusCode();
         }

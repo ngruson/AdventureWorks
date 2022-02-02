@@ -26,7 +26,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting territories from database");
-            var territories = await repository.ListAsync();
+            var territories = await repository.ListAsync(cancellationToken);
             Guard.Against.NullOrEmpty(territories, nameof(territories));
 
             logger.LogInformation("Returning territories");

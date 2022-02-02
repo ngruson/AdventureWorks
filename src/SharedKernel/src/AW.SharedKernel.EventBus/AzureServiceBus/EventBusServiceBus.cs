@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AW.SharedKernel.EventBus.AzureServiceBus
 {
-    public class EventBusServiceBus : IEventBus, IDisposable
+    public class EventBusServiceBus : IEventBus
     {
         private readonly IServiceBusPersisterConnection serviceBusPersisterConnection;
         private readonly ILogger<EventBusServiceBus> logger;

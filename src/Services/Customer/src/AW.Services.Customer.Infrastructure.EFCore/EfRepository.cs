@@ -19,7 +19,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore
         public override async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
             dbContext.SetModified(entity);
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
         }
     }
 }

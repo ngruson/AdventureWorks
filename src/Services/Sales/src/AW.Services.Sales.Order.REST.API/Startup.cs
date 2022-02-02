@@ -116,7 +116,7 @@ namespace AW.Services.Sales.Order.REST.API
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-                options.Filters.Add(typeof(ValidateModelStateFilter));
+                options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
             })
                 .AddJsonOptions(options =>
                 {

@@ -26,7 +26,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes
             logger.LogInformation("Handle called");
 
             logger.LogInformation("Getting contact types from database");
-            var contactTypes = await repository.ListAsync();
+            var contactTypes = await repository.ListAsync(cancellationToken);
 
             Guard.Against.Null(contactTypes, nameof(contactTypes));
 
