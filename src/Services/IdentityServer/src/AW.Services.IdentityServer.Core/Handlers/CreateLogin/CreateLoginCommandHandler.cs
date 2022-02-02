@@ -3,6 +3,7 @@ using AW.Services.IdentityServer.Core.Models;
 using IdentityModel;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
@@ -12,12 +13,13 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
     {
         private readonly ILogger<CreateLoginCommandHandler> logger;
         private readonly UserManager<ApplicationUser> userManager;
-        private const string PASSWORD = "P@ssw0rd!";
+        private readonly IConfiguration configuration;
 
         public CreateLoginCommandHandler(
             ILogger<CreateLoginCommandHandler> logger,
-            UserManager<ApplicationUser> userManager) =>
-                (this.logger, this.userManager) = (logger, userManager);
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration) =>
+                (this.logger, this.userManager, this.configuration) = (logger, userManager, configuration);
 
         public async Task<Unit> Handle(CreateLoginCommand request, CancellationToken cancellationToken)
         {
@@ -34,7 +36,7 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
                 };
 
                 logger.LogInformation("Creating login for user {User}", request.Username);
-                var result = await userManager.CreateAsync(appUser, PASSWORD);
+                var result = await userManager.CreateAsync(appUser, configuration["DefaultUserPassword"]);
 
                 if (result.Succeeded)
                 {

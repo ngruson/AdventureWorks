@@ -4,6 +4,7 @@ using AW.Services.IdentityServer.Core.Models;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace AW.Services.IdentityServer.Core.UnitTests
         public async Task Handle_UserDoesNotExist_CreateUserSucceeds_CreateLoginAndClaims(
             [Frozen] Mock<UserManager<ApplicationUser>> userManagerMock,
             Mock<ILogger<CreateLoginCommandHandler>> loggerMock,
+            Mock<IConfiguration> configurationMock,
             CreateLoginCommand command,
             ApplicationUser? applicationUser
         )
@@ -78,7 +80,8 @@ namespace AW.Services.IdentityServer.Core.UnitTests
 
             var sut = new CreateLoginCommandHandler(
                 loggerMock.Object,
-                userManagerMock.Object
+                userManagerMock.Object,
+                configurationMock.Object
             );
 
             //Act
@@ -106,6 +109,7 @@ namespace AW.Services.IdentityServer.Core.UnitTests
         public async Task Handle_UserDoesNotExist_CreateUserFails_CreateLoginAndClaims(
             [Frozen] Mock<UserManager<ApplicationUser>> userManagerMock,
             Mock<ILogger<CreateLoginCommandHandler>> loggerMock,
+            Mock<IConfiguration> configurationMock,
             CreateLoginCommand command,
             ApplicationUser? applicationUser
         )
@@ -127,7 +131,8 @@ namespace AW.Services.IdentityServer.Core.UnitTests
 
             var sut = new CreateLoginCommandHandler(
                 loggerMock.Object,
-                userManagerMock.Object
+                userManagerMock.Object,
+                configurationMock.Object
             );
 
             //Act
