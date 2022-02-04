@@ -18,19 +18,22 @@ namespace AW.UI.Web.Store.Controllers
         private readonly IBasketService basketService;
         private readonly IIdentityParser<ApplicationUser> appUserParser;
         private readonly IReferenceDataService referenceDataService;
+        private readonly ICustomerService customerService;
 
         public CartController(
             IBasketService basketService, 
             IIdentityParser<ApplicationUser> appUserParser,
-            IReferenceDataService referenceDataService) =>
-            (this.basketService, this.appUserParser, this.referenceDataService) = 
-                (basketService, appUserParser, referenceDataService);
+            IReferenceDataService referenceDataService,
+            ICustomerService customerService
+        ) =>
+            (this.basketService, this.appUserParser, this.referenceDataService, this.customerService) = 
+                (basketService, appUserParser, referenceDataService, customerService);
 
         public async Task<IActionResult> Index()
         {
             try
             {
-                var vm = await GetBasket<Basket>();
+                var vm = await GetBasketAsync<Basket>();
                 return View(vm);
             }
             catch (Exception ex)
@@ -85,13 +88,22 @@ namespace AW.UI.Web.Store.Controllers
         {
             try
             {
+                var user = appUserParser.Parse(HttpContext.User);                
+
                 var vm = new CheckoutViewModel
                 {
-                    Basket = await GetBasket<BasketCheckout>(),
-                    Countries = await GetCountries(),
-                    CardTypes = GetCardTypes(),
-                    ShipMethods = await GetShipMethods()
+                    Basket = await GetBasketAsync<BasketCheckout>(),
+                    Countries = await GetCountriesAsync(),
+                    CardTypes = GetCardTypesAsync(),
+                    ShipMethods = await GetShipMethodsAsync()
                 };
+
+                var customer = await customerService.GetCustomerAsync(user.CustomerNumber);
+                if (customer != null)
+                {
+                    // TODO
+                    //vm.Basket.BillToAddress = mapper.Map<Address>(customer.Addresses.)
+                }
 
                 return View(vm);
             }
@@ -101,9 +113,9 @@ namespace AW.UI.Web.Store.Controllers
             }
 
             return View();
-        }
+        }        
 
-        private async Task<List<SelectListItem>> GetCountries()
+        private async Task<List<SelectListItem>> GetCountriesAsync()
         {
             var countries = await referenceDataService.GetCountriesAsync();
 
@@ -118,7 +130,7 @@ namespace AW.UI.Web.Store.Controllers
             return items;
         }
 
-        private List<SelectListItem> GetCardTypes()
+        private static List<SelectListItem> GetCardTypesAsync()
         {
             return new List<SelectListItem>
             {
@@ -130,7 +142,7 @@ namespace AW.UI.Web.Store.Controllers
             };
         }
 
-        private async Task<List<SelectListItem>> GetShipMethods()
+        private async Task<List<SelectListItem>> GetShipMethodsAsync()
         {
             var shipMethods = await referenceDataService.GetShipMethodsAsync();
 
@@ -167,7 +179,7 @@ namespace AW.UI.Web.Store.Controllers
             return View(model);
         }
 
-        private async Task<T> GetBasket<T>()
+        private async Task<T> GetBasketAsync<T>()
         {
             var user = appUserParser.Parse(HttpContext.User);
             return await basketService.GetBasketAsync<T>(user.Id);

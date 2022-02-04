@@ -1,6 +1,5 @@
 ﻿using sh_int = AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,6 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Exceptions;
 
 namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
 {
@@ -83,24 +84,32 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
         {
             logger.LogInformation("Getting customer with account number {AccountNumber}", accountNumber);
 
-            using var response = await client.GetAsync($"customer-api/Customer/{accountNumber}?&api-version=1.0");
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
+            try
+            {
+                using var response = await client.GetAsync($"customer-api/Customer/{accountNumber}?&api-version=1.0");
+                response.EnsureSuccessStatusCode();
+                var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<T>(
-                new JsonSerializerOptions
-                {
-                    Converters =
+                return await stream.DeserializeAsync<T>(
+                    new JsonSerializerOptions
                     {
+                        Converters =
+                        {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
                             Models.GetCustomer.Customer,
                             Models.GetCustomer.StoreCustomer,
                             Models.GetCustomer.IndividualCustomer>()
-                    },
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                }
-            );
+                        },
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Getting customer {AccountNumber} failed", accountNumber);
+                throw new CustomerApiClientException($"Getting customer {accountNumber} failed", ex);
+            }
         }
 
         public async Task<Models.UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, Models.UpdateCustomer.Customer customer)

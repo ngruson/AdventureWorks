@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.AddCustomer;
 using AW.Services.Customer.Core.Handlers.DeleteCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
+using AW.Services.Customer.Core.Handlers.GetPreferredAddress;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -59,6 +61,35 @@ namespace AW.Services.Customer.REST.API.Controllers
 
             logger.LogInformation("Returning customer");
             return Ok(mapper.Map<Models.GetCustomer.Customer>(customer));
+        }
+
+        [HttpGet("{accountNumber}/preferredAddress/{addressType}")]
+        public async Task<IActionResult> GetPreferredAddress([FromRoute] GetPreferredAddressQuery query)
+        {
+            try
+            {
+                logger.LogInformation(
+                    "{Method} : called with query {Query}",
+                    nameof(GetPreferredAddress), query
+                );
+
+                logger.LogInformation("Sending the GetPreferredAddress query");
+                var address = await mediator.Send(query);
+
+                if (address == null)
+                {
+                    logger.LogInformation("No address found");
+                    return new NotFoundResult();
+                }
+
+                logger.LogInformation("Returning address {@Address}", address);
+                return Ok(address);
+            }
+            catch (CustomerNotFoundException ex)
+            {
+                logger.LogError(ex, "Customer {AccountNumber} was not found", query.AccountNumber);
+                return new NotFoundResult();
+            }
         }
 
         [HttpPost]

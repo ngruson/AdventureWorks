@@ -207,7 +207,7 @@ namespace AW.Services.Customer.REST.API
             var hcBuilder = services.AddHealthChecks();
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
-            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            //hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
             hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
             hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
 

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Store.ViewModels.Annotations;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using api = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels.Cart

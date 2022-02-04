@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure\AW.Services.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
