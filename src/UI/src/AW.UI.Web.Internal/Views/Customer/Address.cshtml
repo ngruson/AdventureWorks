@@ -82,7 +82,7 @@
                 }
                 else {
                     dropdown.prop('disabled', false);
-                    getStateProvinces(this.value, dropdown, "@Url.Action("GetStateProvinces", new { country = "js-country" })"
+                    getStatesProvinces(this.value, dropdown, "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
                         .replace("js-country", this.value)
                     );
                 }

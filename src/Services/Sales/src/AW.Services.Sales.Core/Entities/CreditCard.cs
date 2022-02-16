@@ -1,6 +1,8 @@
-﻿namespace AW.Services.Sales.Core.Entities
+﻿using AW.SharedKernel.Interfaces;
+
+namespace AW.Services.Sales.Core.Entities
 {
-    public class CreditCard
+    public class CreditCard : IAggregateRoot
     {
         public int Id { get; set; }
 

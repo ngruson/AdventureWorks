@@ -5,7 +5,7 @@ serviceName: salesorder-api
 image:
   repository: ngruson/adventureworks_salesorderapi
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 db: sqldb-adv-sales
 

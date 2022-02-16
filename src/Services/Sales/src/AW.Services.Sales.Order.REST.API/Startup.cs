@@ -170,6 +170,7 @@ namespace AW.Services.Sales.Order.REST.API
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
+                builder.EnableSensitiveDataLogging();
 
                 return new AWContext(
                     builder.Options,                    

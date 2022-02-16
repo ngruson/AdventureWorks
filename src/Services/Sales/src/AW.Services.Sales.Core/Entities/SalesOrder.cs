@@ -10,8 +10,8 @@ namespace AW.Services.Sales.Core.Entities
     public class SalesOrder : Entity, IAggregateRoot
     {
         public SalesOrder() { }
-        public SalesOrder(string userId, string userName, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, string cardType, string cardNumber, string cardSecurityNumber,
-                string cardHolderName, DateTime cardExpiration)
+        public SalesOrder(string userId, string userName, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, CreditCard creditCard, string cardSecurityNumber,
+                string cardHolderName)
         {
             RevisionNumber = 1;
             OrderDate = DateTime.Today;
@@ -24,9 +24,17 @@ namespace AW.Services.Sales.Core.Entities
             Freight = 0;
             BillToAddress = billToAddress;
             ShipToAddress = shipToAddress;
+            CreditCard = creditCard;
 
-            AddOrderStartedDomainEvent(userId, userName, cardType, cardNumber,
-                cardSecurityNumber, cardHolderName, cardExpiration);
+            AddOrderStartedDomainEvent(userId, userName, 
+                creditCard.CardType, creditCard.CardNumber,
+                cardSecurityNumber, cardHolderName, 
+                new DateTime(
+                    creditCard.ExpYear,
+                    creditCard.ExpMonth,
+                    1
+                )
+            );
         }
 
         public int Id { get; set; }

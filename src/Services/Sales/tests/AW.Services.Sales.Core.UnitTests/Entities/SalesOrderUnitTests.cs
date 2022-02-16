@@ -18,14 +18,15 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             Customer customer,
             string shipMethod,
             Address address,
-            string cardType,
-            string cardNumber,
+            CreditCard creditCard,
+            DateTime expirationDate,
             string cardSecurityNumber,
-            string cardHolderName,
-            DateTime cardExpiration
+            string cardHolderName
         )
         {
             //Arrange
+            creditCard.ExpMonth = byte.Parse(expirationDate.Month.ToString());
+            creditCard.ExpYear = short.Parse(expirationDate.Year.ToString());
 
             //Act
             var salesOrder = new SalesOrder(
@@ -35,11 +36,9 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 shipMethod,
                 address,
                 address,
-                cardType,
-                cardNumber,
+                creditCard,
                 cardSecurityNumber,
-                cardHolderName,
-                cardExpiration
+                cardHolderName
             );
 
             //Assert

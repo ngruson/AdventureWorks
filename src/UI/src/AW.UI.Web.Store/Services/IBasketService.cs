@@ -10,6 +10,7 @@ namespace AW.UI.Web.Store.Services
         Task<T> GetBasketAsync<T>(string userID);
         Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
         Task<Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities);
+        Task<CheckoutViewModel> Checkout(ApplicationUser user);
         Task Checkout(Basket basket, string customerNumber);
     }
 }

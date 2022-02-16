@@ -5,7 +5,7 @@ serviceName: customer-api
 image:
   repository: ngruson/adventureworks_customerapi
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 db: sqldb-adv-customer
 

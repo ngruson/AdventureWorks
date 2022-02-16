@@ -5,7 +5,7 @@ serviceName: basket-api
 image:
   repository: ngruson/adventureworks_basketapi
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: ClusterIP

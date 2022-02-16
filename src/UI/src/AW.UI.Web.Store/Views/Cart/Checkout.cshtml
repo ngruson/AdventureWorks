@@ -52,7 +52,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Basket.BillToAddress.StateProvinceCode" class="esh-orders_new-title">State/province</label>
-                        <input asp-for="Basket.BillToAddress.StateProvinceCode" class="form-control form-input" type="text" placeholder="State/province" />
+                        <select class="form-control form-select" asp-for="Basket.BillToAddress.StateProvinceCode" asp-items="Model.StatesProvinces_Billing"></select>
                         <span asp-validation-for="Basket.BillToAddress.StateProvinceCode" class="danger" />
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Basket.ShipToAddress.StateProvinceCode" class="orders_new-title">State/province</label>
-                        <input asp-for="Basket.ShipToAddress.StateProvinceCode" class="form-control form-input" type="text" placeholder="State/province" />
+                        <select class="form-control form-select" asp-for="Basket.ShipToAddress.StateProvinceCode" asp-items="Model.StatesProvinces_Shipping"></select>
                         <span asp-validation-for="Basket.ShipToAddress.StateProvinceCode" class="danger" />
                     </div>
                 </div>
@@ -176,6 +176,41 @@
     </form>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
+    <script>
+        $(document).ready(function () {
+            $('#Basket_BillToAddress_CountryRegionCode').change(function () {
+                var dropdown = $('#Basket_BillToAddress_StateProvinceCode');
+                
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getStatesProvinces(this.value, dropdown, "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                    );
+                }
+            });
+
+            $('#Basket_ShipToAddress_CountryRegionCode').change(function () {
+                var dropdown = $('#Basket_ShipToAddress_StateProvinceCode');
+                
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getStatesProvinces(this.value, dropdown, "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                    );
+                }
+            });
+        });
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

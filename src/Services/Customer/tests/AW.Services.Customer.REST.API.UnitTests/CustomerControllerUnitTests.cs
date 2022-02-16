@@ -3,6 +3,7 @@ using AW.Services.Customer.Core.Handlers.AddCustomer;
 using AW.Services.Customer.Core.Handlers.DeleteCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
+using AW.Services.Customer.Core.Handlers.GetPreferredAddress;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using AW.Services.Customer.REST.API.Controllers;
 using AW.SharedKernel.UnitTesting;
@@ -125,6 +126,59 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Act
                 var actionResult = await sut.GetCustomer(query);
+
+                //Assert
+                var notFoundResult = actionResult as NotFoundResult;
+                notFoundResult.Should().NotBeNull();
+            }
+        }
+
+        public class GetPreferredAddress
+        {
+            [Theory]
+            [AutoMoqData]
+            public async Task GetPreferredAddress_ShouldReturnAddress_GivenAddress(
+                [Frozen] Mock<IMediator> mockMediator,
+                Core.Handlers.GetPreferredAddress.AddressDto address,
+                [Greedy] CustomerController sut,
+                GetPreferredAddressQuery query
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<GetPreferredAddressQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(address);
+
+                //Act
+                var actionResult = await sut.GetPreferredAddress(query);
+
+                //Assert
+                var okObjectResult = actionResult as OkObjectResult;
+                okObjectResult.Should().NotBeNull();
+
+                var result = okObjectResult.Value as Core.Handlers.GetPreferredAddress.AddressDto;
+                result.Should().Be(address);
+            }
+
+            [Theory]
+            [AutoMoqData]
+            public async Task GetPreferredAddress_ShouldReturnNotFound_WhenGivenNoCustomer(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] CustomerController sut,
+                GetPreferredAddressQuery query
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<GetPreferredAddressQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync((Core.Handlers.GetPreferredAddress.AddressDto)null);
+
+                //Act
+                var actionResult = await sut.GetPreferredAddress(query);
 
                 //Assert
                 var notFoundResult = actionResult as NotFoundResult;

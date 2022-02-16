@@ -112,6 +112,30 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
             }
         }
 
+        public async Task<Models.GetPreferredAddress.Address> GetPreferredAddressAsync(string accountNumber, string addressType)
+        {
+            logger.LogInformation("Getting preferred address for address type {AddressType} for customer {AccountNumber}", addressType, accountNumber);
+
+            try
+            {
+                using var response = await client.GetAsync($"Customer/{accountNumber}/preferredAddress/{addressType}?&api-version=1.0");
+                response.EnsureSuccessStatusCode();
+                var stream = await response.Content.ReadAsStreamAsync();
+
+                return await stream.DeserializeAsync<Models.GetPreferredAddress.Address>(
+                    new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Getting preferred address for address type {AddressType} for customer {AccountNumber} failed", addressType, accountNumber);
+                throw new CustomerApiClientException($"Getting preferred address for address type {addressType} for customer {accountNumber} failed", ex);
+            }
+        }
+
         public async Task<Models.UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, Models.UpdateCustomer.Customer customer)
         {
             logger.LogInformation("Updating customer with account number {AccountNumber}", accountNumber);

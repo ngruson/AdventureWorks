@@ -1,13 +1,12 @@
-﻿using AW.UI.Web.Store.Services;
+﻿using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
+using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
 using AW.UI.Web.Store.ViewModels.Cart;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Controllers
@@ -88,22 +87,8 @@ namespace AW.UI.Web.Store.Controllers
         {
             try
             {
-                var user = appUserParser.Parse(HttpContext.User);                
-
-                var vm = new CheckoutViewModel
-                {
-                    Basket = await GetBasketAsync<BasketCheckout>(),
-                    Countries = await GetCountriesAsync(),
-                    CardTypes = GetCardTypesAsync(),
-                    ShipMethods = await GetShipMethodsAsync()
-                };
-
-                var customer = await customerService.GetCustomerAsync(user.CustomerNumber);
-                if (customer != null)
-                {
-                    // TODO
-                    //vm.Basket.BillToAddress = mapper.Map<Address>(customer.Addresses.)
-                }
+                var user = appUserParser.Parse(HttpContext.User);
+                var vm = await basketService.Checkout(user);
 
                 return View(vm);
             }
@@ -113,48 +98,6 @@ namespace AW.UI.Web.Store.Controllers
             }
 
             return View();
-        }        
-
-        private async Task<List<SelectListItem>> GetCountriesAsync()
-        {
-            var countries = await referenceDataService.GetCountriesAsync();
-
-            var items = countries
-                .Select(t => new SelectListItem() { Value = t.CountryRegionCode, Text = t.Name })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            var allItem = new SelectListItem() { Value = "", Text = "--Select country--", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
-        }
-
-        private static List<SelectListItem> GetCardTypesAsync()
-        {
-            return new List<SelectListItem>
-            {
-                new SelectListItem("--Select card type--", null),
-                new SelectListItem("SuperiorCard", "SuperiorCard"),
-                new SelectListItem("Vista", "Vista"),
-                new SelectListItem("Distinguish", "Distinguish"),
-                new SelectListItem("ColonialVoice", "ColonialVoice")
-            };
-        }
-
-        private async Task<List<SelectListItem>> GetShipMethodsAsync()
-        {
-            var shipMethods = await referenceDataService.GetShipMethodsAsync();
-
-            var items = shipMethods
-                .Select(s => new SelectListItem() { Value = s.Name, Text = s.Name })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            var allItem = new SelectListItem() { Value = "", Text = "--Select shipping method--", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
         }
 
         [HttpPost]
@@ -177,6 +120,12 @@ namespace AW.UI.Web.Store.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IEnumerable<StateProvince>> GetStatesProvinces(string country)
+        {
+            var stateProvinces = await referenceDataService.GetStatesProvincesAsync(country);
+            return stateProvinces;
         }
 
         private async Task<T> GetBasketAsync<T>()

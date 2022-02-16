@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using System.ComponentModel.DataAnnotations;
-using api = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
+using basketApi = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
+using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels.Cart
 {
-    public class Address : IMapFrom<api.Address>
+    public class Address : IMapFrom<basketApi.Address>
     {
         [Required]
         public string AddressLine1 { get; set; }
@@ -20,8 +21,10 @@ namespace AW.UI.Web.Store.ViewModels.Cart
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, api.Address>()
+            profile.CreateMap<Address, basketApi.Address>()
                 .ReverseMap();
+
+            profile.CreateMap<customerApi.GetPreferredAddress.Address, Address>();
         }
     }
 }

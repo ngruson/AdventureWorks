@@ -9,7 +9,7 @@ salesperson_api: /salesperson-api
 image:
   repository: ngruson/adventureworks_mvc_internal
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: ClusterIP

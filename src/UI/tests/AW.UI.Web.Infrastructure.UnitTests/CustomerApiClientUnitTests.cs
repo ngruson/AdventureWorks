@@ -3,7 +3,7 @@ using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomers;
+using models = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -16,6 +16,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Xunit;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Exceptions;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
 {
@@ -28,7 +29,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<StoreCustomer> list,
+                List<models.GetCustomers.StoreCustomer> list,
                 CustomerApiClient sut
             )
             {
@@ -38,9 +39,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Store;
                 }
 
-                var customers = new GetCustomersResponse
+                var customers = new models.GetCustomers.GetCustomersResponse
                 {
-                    Customers = list.ToList<Customer>(),
+                    Customers = list.ToList<models.GetCustomers.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -55,9 +56,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            models.GetCustomers.Customer,
+                                            models.GetCustomers.StoreCustomer,
+                                            models.GetCustomers.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -86,7 +87,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<IndividualCustomer> list,
+                List<models.GetCustomers.IndividualCustomer> list,
                 CustomerApiClient sut
             )
             {
@@ -96,9 +97,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Individual;
                 }
 
-                var customers = new GetCustomersResponse
+                var customers = new models.GetCustomers.GetCustomersResponse
                 {
-                    Customers = list.ToList<Customer>(),
+                    Customers = list.ToList<models.GetCustomers.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -113,9 +114,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            models.GetCustomers.Customer,
+                                            models.GetCustomers.StoreCustomer,
+                                            models.GetCustomers.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -175,12 +176,12 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                StoreCustomer customer,
+                models.GetCustomer.StoreCustomer customer,
                 CustomerApiClient sut
             )
             {
                 //Arrange
-                customer.CustomerType = SharedKernel.Interfaces.CustomerType.Store;
+                customer.CustomerType = CustomerType.Store;
                 httpClient.BaseAddress = uri;
 
                 handler.When(HttpMethod.Get, $"{uri}*")
@@ -192,9 +193,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            models.GetCustomer.Customer,
+                                            models.GetCustomer.StoreCustomer,
+                                            models.GetCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -229,7 +230,74 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetCustomerAsync("AW00000001");
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                func.Should().Throw<CustomerApiClientException>()
+                    .WithInnerException<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class GetPreferredAddress
+        {
+            [Theory, MockHttpData]
+            public async Task GetPreferredAddress_AddressFound_ReturnAddress(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                string accountNumber,
+                string addressType,
+                models.GetPreferredAddress.Address address,
+                CustomerApiClient sut
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(address, new JsonSerializerOptions
+                            {
+                                Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            }),
+                            Encoding.UTF8,
+                            "application/json"
+                        )
+                    );
+
+                //Act
+                var response = await sut.GetPreferredAddressAsync(accountNumber, addressType);
+
+                //Assert
+                response.Should().BeEquivalentTo(address);
+            }
+
+            [Theory, MockHttpData]
+            public void GetPreferredAddress_CustomerNotFound_ThrowsHttpRequestException(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                string accountNumber,
+                string addressType,
+                CustomerApiClient sut
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.GetPreferredAddressAsync(accountNumber, addressType);
+
+                //Assert
+                func.Should().Throw<CustomerApiClientException>()
+                    .WithInnerException<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -237,11 +305,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         public class UpdateCustomer
         {
             [Theory, MockHttpData]
-            public async Task GetCustomer_StoreCustomerFound_ReturnStoreCustomer(
+            public async Task UpdateCustomer_StoreCustomerFound_ReturnStoreCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer customer,
+                models.UpdateCustomer.StoreCustomer customer,
                 CustomerApiClient sut
             )
             {
@@ -258,9 +326,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            models.UpdateCustomer.Customer,
+                                            models.UpdateCustomer.StoreCustomer,
+                                            models.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -278,11 +346,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public async Task GetCustomer_IndividualCustomerFound_ReturnIndividualCustomer(
+            public async Task UpdateCustomer_IndividualCustomerFound_ReturnIndividualCustomer(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer customer,
+                models.UpdateCustomer.IndividualCustomer customer,
                 CustomerApiClient sut
             )
             {
@@ -299,9 +367,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            models.UpdateCustomer.Customer,
+                                            models.UpdateCustomer.StoreCustomer,
+                                            models.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase

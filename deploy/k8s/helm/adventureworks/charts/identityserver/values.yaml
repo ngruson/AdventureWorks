@@ -5,7 +5,7 @@ serviceName: identityserver
 image:
   repository: ngruson/adventureworks_identityserver
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 db: sqldb-adv-identityserver
 

@@ -1,5 +1,6 @@
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Store.Services;
@@ -105,6 +106,7 @@ namespace AW.UI.Web.Store
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IApplication, Application>();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IReferenceDataService, ReferenceDataService>();
             services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
@@ -119,6 +121,12 @@ namespace AW.UI.Web.Store
             services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["BasketAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler();
+
+            services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["CustomerAPI:Uri"]);
             })
             .AddUserAccessTokenHandler();
 
@@ -162,6 +170,7 @@ namespace AW.UI.Web.Store
                 options.Scope.Add("offline_access");
                 options.Scope.Add("basket-api.read");
                 options.Scope.Add("basket-api.write");
+                options.Scope.Add("customer-api.read");
                 options.Scope.Add("product-api.read");
                 options.Scope.Add("referencedata-api.read");
                 options.GetClaimsFromUserInfoEndpoint = true;

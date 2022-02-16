@@ -10,6 +10,9 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         {
             builder.ToTable("CreditCard");
             builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Id)
+                .HasColumnName("CreditCardID");
         }
     }
 }

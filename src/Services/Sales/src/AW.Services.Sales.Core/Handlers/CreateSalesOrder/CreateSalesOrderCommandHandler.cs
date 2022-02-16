@@ -8,6 +8,7 @@ using AW.Services.Sales.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
         private readonly IRepository<SpecialOfferProduct> specialOfferProductRepository;
         private readonly IRepository<Address> addressRepository;
         private readonly IRepository<Customer> customerRepository;
+        private readonly IRepository<CreditCard> creditCardRepository;
 
         public CreateSalesOrderCommandHandler(
             ILogger<CreateSalesOrderCommandHandler> logger,
@@ -30,7 +32,8 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             IRepository<SalesOrder> salesOrderRepository,
             IRepository<SpecialOfferProduct> specialOfferProductRepository,
             IRepository<Address> addressRepository,
-            IRepository<Customer> customerRepository
+            IRepository<Customer> customerRepository,
+            IRepository<CreditCard> creditCardRepository
         )
         {
             this.logger = logger;
@@ -40,6 +43,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             this.specialOfferProductRepository = specialOfferProductRepository;
             this.addressRepository = addressRepository;
             this.customerRepository = customerRepository;
+            this.creditCardRepository = creditCardRepository;
         }
 
         public async Task<bool> Handle(CreateSalesOrderCommand request, CancellationToken cancellationToken)
@@ -54,7 +58,13 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             var customer = await GetCustomer(request.CustomerNumber);
             var billToAddress = await GetAddress(request.BillToAddress);
             var shipToAddress = await GetAddress(request.ShipToAddress);
-            var salesOrder = new SalesOrder(request.UserId, request.UserName, customer, request.ShipMethod, billToAddress, shipToAddress, request.CardType, request.CardNumber, request.CardSecurityNumber, request.CardHolderName, request.CardExpiration);
+            var creditCard = await GetCreditCard(
+                request.CardType,
+                request.CardNumber,
+                request.CardExpiration
+            );
+
+            var salesOrder = new SalesOrder(request.UserId, request.UserName, customer, request.ShipMethod, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber, request.CardHolderName);
 
             foreach (var item in request.OrderItems)
             {
@@ -75,7 +85,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             logger.LogInformation("Sales order was created succesfully");
 
             return true;
-        }
+        }        
 
         private async Task<Customer> GetCustomer(string customerNumber)
         {
@@ -112,6 +122,35 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             logger.LogInformation("Address {@Address} found", address);
 
             return existingAddress;
+        }
+
+        private async Task<CreditCard> GetCreditCard(
+            string cardType,
+            string cardNumber,
+            DateTime cardExpiration
+        )
+        {
+            var creditCard = await creditCardRepository.GetBySpecAsync(
+                new GetCreditCardSpecification(
+                    cardNumber
+                )
+            );
+
+            if (creditCard == null)
+            {
+                logger.LogInformation("Credit card {CardNumber} not found", cardNumber);
+                return new CreditCard
+                {
+                    CardType = cardType,
+                    CardNumber = cardNumber,
+                    ExpMonth = byte.Parse(cardExpiration.Month.ToString()),
+                    ExpYear = short.Parse(cardExpiration.Year.ToString())
+                };
+            }
+
+            logger.LogInformation("Credit card {@CreditCard} found", creditCard);
+
+            return creditCard;
         }
     }
 }

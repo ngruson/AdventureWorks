@@ -19,7 +19,6 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
             builder.Ignore(p => p.SubTotal);
             builder.Ignore(p => p.TaxAmt);
             builder.Ignore(p => p.TaxRate);
-            builder.Ignore(p => p.Freight);
             builder.Ignore(p => p.TotalDue);
         }
     }

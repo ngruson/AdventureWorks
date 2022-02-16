@@ -7,7 +7,7 @@ product_api: /product-api
 image:
   repository: ngruson/adventureworks_mvc_store
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: ClusterIP
