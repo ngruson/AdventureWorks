@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure\AW.Services.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>

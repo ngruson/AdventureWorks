@@ -1,11 +1,11 @@
 ﻿using Ardalis.GuardClauses;
-using AW.Services.Customer.Core.Interfaces;
 using AW.SharedKernel.Extensions;
+using AW.SharedKernel.Interfaces;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AW.Services.Customer.Core.JsonConverters
+namespace AW.SharedKernel.JsonConverters
 {
     public class CustomerConverter<T, TStore, TIndividual> : JsonConverter<T>
         where T : class, ICustomer
@@ -20,7 +20,7 @@ namespace AW.Services.Customer.Core.JsonConverters
             // Read the `className` from our JSON document
             using var jsonDocument = JsonDocument.ParseValue(ref readerCopy);
             var jsonObject = jsonDocument.RootElement;
-            
+
             var customerType = jsonObject.GetProperty("customerType");
             Guard.Against.Null(customerType, nameof(customerType));
 

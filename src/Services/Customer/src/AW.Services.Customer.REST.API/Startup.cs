@@ -12,7 +12,6 @@ using System.Text.Json;
 using System;
 using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
-using AW.Services.Customer.Core.JsonConverters;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +23,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using AW.SharedKernel.JsonConverters;
 
 namespace AW.Services.Customer.REST.API
 {

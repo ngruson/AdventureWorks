@@ -1,4 +1,4 @@
-﻿namespace AW.Services.Customer.Core.Interfaces
+﻿namespace AW.SharedKernel.Interfaces
 {
     public interface ICustomer
     {

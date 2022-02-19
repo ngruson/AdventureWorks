@@ -105,7 +105,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Models.GetCustomer.Customer;
+                var result = okObjectResult.Value as Core.Models.GetCustomer.Customer;
                 result.Should().NotBeNull();
             }
 
