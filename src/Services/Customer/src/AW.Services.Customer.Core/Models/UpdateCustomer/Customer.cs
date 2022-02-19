@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Interfaces;
+﻿using AW.Services.Customer.Core.Interfaces;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 

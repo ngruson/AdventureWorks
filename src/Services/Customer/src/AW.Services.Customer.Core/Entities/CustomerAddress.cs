@@ -2,9 +2,17 @@
 {
     public class CustomerAddress
     {
-        public int Id { get; set; }
-        public string AddressType { get; set; }
+        private CustomerAddress()
+        {
+        }
+        public CustomerAddress(string addressType, Address address)
+        {
+            AddressType = addressType;
+            Address = address;
+        }
+
+        private int Id { get; set; }
+        public string AddressType { get; private set; }
         public Address Address { get; set; }
-        public int AddressID { get; set; }
     }
 }

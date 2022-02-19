@@ -9,9 +9,9 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<CustomerAddress> builder)
         {
             builder.ToTable("CustomerAddress");
-            builder.HasKey(p => p.Id);
+            builder.HasKey("Id");
 
-            builder.Property(c => c.Id)
+            builder.Property("Id")
                 .HasColumnName("CustomerAddressID");
         }
     }

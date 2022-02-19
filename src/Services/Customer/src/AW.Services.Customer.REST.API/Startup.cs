@@ -12,7 +12,7 @@ using System.Text.Json;
 using System;
 using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
-using AW.SharedKernel.JsonConverters;
+using AW.Services.Customer.Core.JsonConverters;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -111,9 +111,9 @@ namespace AW.Services.Customer.REST.API
 
                 options.JsonSerializerOptions.Converters.Add(
                     new CustomerConverter<
-                        Models.GetCustomer.Customer,
-                        Models.GetCustomer.StoreCustomer,
-                        Models.GetCustomer.IndividualCustomer>()
+                        Core.Models.GetCustomer.Customer,
+                        Core.Models.GetCustomer.StoreCustomer,
+                        Core.Models.GetCustomer.IndividualCustomer>()
                 );
 
                 options.JsonSerializerOptions.Converters.Add(

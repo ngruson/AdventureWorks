@@ -45,10 +45,10 @@ namespace AW.Services.Sales.Order.REST.API
                 .Enrich.WithProperty("ApplicationContext", new Application().AppName)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Elasticsearch(
-                    configuration["ElasticSearchUri"],
-                    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
-                )
+                //.WriteTo.Elasticsearch(
+                //    configuration["ElasticSearchUri"],
+                //    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
+                //)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }

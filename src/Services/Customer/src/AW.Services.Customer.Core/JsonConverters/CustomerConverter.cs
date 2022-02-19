@@ -1,11 +1,11 @@
 ﻿using Ardalis.GuardClauses;
+using AW.Services.Customer.Core.Interfaces;
 using AW.SharedKernel.Extensions;
-using AW.SharedKernel.Interfaces;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AW.SharedKernel.JsonConverters
+namespace AW.Services.Customer.Core.JsonConverters
 {
     public class CustomerConverter<T, TStore, TIndividual> : JsonConverter<T>
         where T : class, ICustomer

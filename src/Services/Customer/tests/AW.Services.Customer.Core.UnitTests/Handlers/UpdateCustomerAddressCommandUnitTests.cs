@@ -21,17 +21,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             Entities.Customer customer,
             UpdateCustomerAddressCommandHandler sut,
-            UpdateCustomerAddressCommand command
+            UpdateCustomerAddressCommand command,
+            Entities.Address address
         )
         {
             //Arrange
-            customer.Addresses = new List<Entities.CustomerAddress>
-            {
-                new Entities.CustomerAddress
-                {
-                    AddressType = command.CustomerAddress.AddressType
-                }
-            };
+            customer.AddAddress(
+                new Entities.CustomerAddress(
+                    command.CustomerAddress.AddressType,
+                    address
+                )
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetCustomerSpecification>(),
@@ -57,7 +57,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Entities.Customer customer,
             [Frozen] Mock<IRepository<Entities.Address>> addressRepoMock,
             UpdateCustomerAddressCommandHandler sut,
-            UpdateCustomerAddressCommand command
+            UpdateCustomerAddressCommand command,
+            Entities.Address address
         )
         {
             //Arrange
@@ -67,13 +68,12 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             ))
             .ReturnsAsync((Entities.Address)null);
 
-            customer.Addresses = new List<Entities.CustomerAddress>
-            {
-                new Entities.CustomerAddress
-                {
-                    AddressType = command.CustomerAddress.AddressType
-                }
-            };
+            customer.AddAddress(
+                new Entities.CustomerAddress(
+                    command.CustomerAddress.AddressType,
+                    address
+                )
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetCustomerSpecification>(),

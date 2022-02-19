@@ -9,9 +9,9 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<StoreCustomerContact> builder)
         {
             builder.ToTable("StoreCustomerContact");
-            builder.HasKey(p => p.Id);
+            builder.HasKey("Id");
 
-            builder.Property(c => c.Id)
+            builder.Property("Id")
                 .HasColumnName("StoreCustomerContactID");
 
             builder.Property(c => c.StoreCustomerId)

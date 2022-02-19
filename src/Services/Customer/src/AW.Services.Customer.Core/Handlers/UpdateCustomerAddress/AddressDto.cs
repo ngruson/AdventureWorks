@@ -11,11 +11,5 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
         public string City { get; set; }
         public string StateProvinceCode { get; set; }
         public string CountryRegionCode { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<AddressDto, Entities.Address>()
-                .ForMember(m => m.Id, opt => opt.Ignore());
-        }
     }
 }

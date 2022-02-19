@@ -19,25 +19,21 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_ExistingCustomer_DeleteEmailAddress(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
-            Entities.IndividualCustomer customer,
+            Entities.Person person,
             DeleteIndividualCustomerEmailAddressCommandHandler sut,
             DeleteIndividualCustomerEmailAddressCommand command
         )
         {
             //Arrange
-            customer.Person.EmailAddresses = new List<Entities.PersonEmailAddress>
-            {
-                new Entities.PersonEmailAddress
-                {
-                    EmailAddress = command.EmailAddress
-                }
-            };
+            person.AddEmailAddress(
+                new Entities.PersonEmailAddress(command.EmailAddress)
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(customer);
+            .ReturnsAsync(new Entities.IndividualCustomer(person));
 
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
@@ -80,10 +76,21 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [Theory]
         [AutoMoqData]
         public void Handle_EmailAddressDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerEmailAddressCommandHandler sut,
-            DeleteIndividualCustomerEmailAddressCommand command
+            DeleteIndividualCustomerEmailAddressCommand command,
+            Entities.Person person
         )
         {
+            //Arrange
+            customerRepoMock.Setup(_ =>
+                _.GetBySpecAsync(
+                    It.IsAny<GetIndividualCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(new Entities.IndividualCustomer(person));
+
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 

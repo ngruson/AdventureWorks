@@ -9,12 +9,12 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<ContactType> builder)
         {
             builder.ToTable("ContactType");
-            builder.HasKey(a => a.Id);
+            builder.HasKey("Id");
 
-            builder.Property(at => at.Id)
+            builder.Property("Id")
                 .HasColumnName("ContactTypeID");
 
-            builder.Property(at => at.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
         }

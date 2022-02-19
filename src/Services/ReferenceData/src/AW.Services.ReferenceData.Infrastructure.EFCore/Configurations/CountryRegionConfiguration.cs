@@ -18,8 +18,8 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(e => e.StateProvinces)
-                .WithOne(e => e.CountryRegion)
+            builder.HasMany("_statesProvinces")
+                .WithOne("CountryRegion")
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

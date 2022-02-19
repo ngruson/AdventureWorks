@@ -6,10 +6,14 @@ namespace AW.Services.Customer.Core.Entities
     {
         public IndividualCustomer()
         {
-            preferredAddressStrategy = new IndividualPreferredAddressStrategy(this);
+            preferredAddressFactory = new IndividualPreferredAddressFactory(this);
+        }
+        public IndividualCustomer(Person person) : base()
+        {
+            Person = person;
         }
 
-        public Person Person { get; set; } = new Person();
+        public Person Person { get; private set; }
 
         public override CustomerType CustomerType => CustomerType.Individual;
     }

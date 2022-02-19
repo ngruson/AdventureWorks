@@ -2,8 +2,14 @@
 {
     public class PersonPhone
     {
-        public int Id { get; set; }
-        public string PhoneNumberType { get; set; }
-        public string PhoneNumber { get; set; }
+        public PersonPhone(string phoneNumberType, string phoneNumber)
+        {
+            PhoneNumberType = phoneNumberType;
+            PhoneNumber = phoneNumber;
+        }
+
+        private int Id { get; set; }
+        public string PhoneNumberType { get; private set; }
+        public string PhoneNumber { get; private set; }
     }
 }

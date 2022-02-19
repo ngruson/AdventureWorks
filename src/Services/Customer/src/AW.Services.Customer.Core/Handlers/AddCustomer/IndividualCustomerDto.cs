@@ -10,7 +10,6 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<IndividualCustomerDto, Entities.IndividualCustomer>()
-                .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
         }

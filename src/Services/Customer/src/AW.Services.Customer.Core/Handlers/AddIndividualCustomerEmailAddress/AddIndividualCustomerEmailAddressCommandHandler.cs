@@ -30,8 +30,8 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress
             Guard.Against.Null(individualCustomer, nameof(individualCustomer));
 
             logger.LogInformation("Adding email address to customer");
-            var emailAddress = new Entities.PersonEmailAddress { EmailAddress = request.EmailAddress };
-            individualCustomer.Person.EmailAddresses.Add(emailAddress);
+            var emailAddress = new Entities.PersonEmailAddress(request.EmailAddress);
+            individualCustomer.Person.AddEmailAddress(emailAddress);
 
             logger.LogInformation("Saving customer to database");
             await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);

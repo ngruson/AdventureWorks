@@ -2,7 +2,12 @@
 {
     public class PersonEmailAddress
     {
-        public int Id { get; set; }
-        public string EmailAddress { get; set; }
+        public PersonEmailAddress(string emailAddress)
+        {
+            EmailAddress = emailAddress;
+        }
+
+        private int Id { get; set; }
+        public string EmailAddress { get; private set; }
     }
 }

@@ -4,14 +4,20 @@ namespace AW.Services.ReferenceData.Core.Entities
 {
     public class StateProvince : IAggregateRoot
     {
-        public int Id { get; set; }
-        public string StateProvinceCode { get; set; }
+        public StateProvince(string countryRegionCode, string name)
+        {
+            CountryRegionCode = countryRegionCode;
+            Name = name;
+        }
 
-        public string CountryRegionCode { get; set; }
+        private int Id { get; set; }
+        public string StateProvinceCode { get; private set; }
 
-        public bool IsOnlyStateProvinceFlag { get; set; }
+        public string CountryRegionCode { get; private set; }
 
-        public string Name { get; set; }
-        public CountryRegion CountryRegion { get; set; }
+        public bool IsOnlyStateProvinceFlag { get; private set; }
+
+        public string Name { get; private set; }
+        public CountryRegion CountryRegion { get; private set; }
     }
 }

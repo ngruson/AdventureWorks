@@ -48,7 +48,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             if (existingAddress != null)
             {
                 logger.LogInformation("Found existing address");
-                customerAddress.AddressID = existingAddress.Id;
+                customerAddress.Address = existingAddress;
             }
             else
             {

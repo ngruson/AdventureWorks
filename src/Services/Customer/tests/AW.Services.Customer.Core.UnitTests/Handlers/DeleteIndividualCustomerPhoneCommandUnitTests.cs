@@ -6,7 +6,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,26 +18,24 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_ExistingCustomerAndAddress_DeleteCustomerAddress(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
-            Entities.IndividualCustomer customer,
+            Entities.Person person,
             DeleteIndividualCustomerPhoneCommandHandler sut,
             DeleteIndividualCustomerPhoneCommand command
         )
         {
             //Arrange
-            customer.Person.PhoneNumbers = new List<Entities.PersonPhone>
-            {
-                new Entities.PersonPhone
-                {
-                    PhoneNumberType = command.Phone.PhoneNumberType,
-                    PhoneNumber = command.Phone.PhoneNumber
-                }
-            };
+            person.AddPhoneNumber(
+                new Entities.PersonPhone(
+                    command.Phone.PhoneNumberType,
+                    command.Phone.PhoneNumber
+                )
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(customer);
+            .ReturnsAsync(new Entities.IndividualCustomer(person));
 
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
@@ -77,10 +74,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [Theory]
         [AutoMoqData]
         public void Handle_PhoneNumberDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerPhoneCommandHandler sut,
-            DeleteIndividualCustomerPhoneCommand command
+            DeleteIndividualCustomerPhoneCommand command,
+            Entities.Person person
         )
         {
+            //Arrange
+            customerRepoMock.Setup(x => x.GetBySpecAsync(
+                It.IsAny<GetIndividualCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Entities.IndividualCustomer(person));
+
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 

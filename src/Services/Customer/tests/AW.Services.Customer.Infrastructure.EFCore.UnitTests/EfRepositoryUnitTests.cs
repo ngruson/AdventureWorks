@@ -223,7 +223,10 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var existingCustomer = new Entities.StoreCustomer { Name = "A Bike Store", AccountNumber = "AW00000001" };
+            var existingCustomer = new Entities.StoreCustomer(
+                "A Bike Store",
+                "AW00000001"
+            );
             await repository.UpdateAsync(existingCustomer);
 
             //Assert

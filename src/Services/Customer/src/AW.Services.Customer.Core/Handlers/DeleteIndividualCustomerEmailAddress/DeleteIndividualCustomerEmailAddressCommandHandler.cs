@@ -37,7 +37,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddres
             );
             Guard.Against.Null(emailAddress, nameof(emailAddress), logger);
 
-            individualCustomer.Person.EmailAddresses.Remove(emailAddress);
+            individualCustomer.Person.RemoveEmailAddress(emailAddress);
 
             logger.LogInformation("Updating customer to database");
             await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);

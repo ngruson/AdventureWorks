@@ -16,7 +16,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PersonDto, Entities.Person>()
-                .ForMember(m => m.Id, opt => opt.Ignore())
+                //.ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.PhoneNumbers, opt => opt.Ignore());
         }
     }

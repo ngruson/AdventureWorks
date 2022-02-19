@@ -1,4 +1,4 @@
-﻿namespace AW.SharedKernel.Interfaces
+﻿namespace AW.Services.Customer.Core.Interfaces
 {
     public enum CustomerType
     {

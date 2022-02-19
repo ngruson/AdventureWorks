@@ -19,10 +19,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomerExist_AddIndividualCustomerEmailAddress(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             AddIndividualCustomerEmailAddressCommandHandler sut,
-            AddIndividualCustomerEmailAddressCommand command
+            AddIndividualCustomerEmailAddressCommand command,
+            Entities.Person person
         )
         {
             //Act
+            customerRepoMock.Setup(_ =>
+                _.GetBySpecAsync(
+                    It.IsAny<GetIndividualCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(new Entities.IndividualCustomer(person));
+
             var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert

@@ -5,6 +5,7 @@ using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
+using System.Linq;
 using System.Threading;
 using Xunit;
 
@@ -343,12 +344,15 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateCustomerAddressCommandValidator sut,
-            UpdateCustomerAddressCommand command
+            UpdateCustomerAddressCommand command,
+            Entities.CustomerAddress customerAddress
         )
         {
             //Arrange
+            customer.AddAddress(customerAddress);
+
             command.AccountNumber = "1";
-            var address = customer.Addresses[0];
+            var address = customer.Addresses.ToList()[0];
             command.CustomerAddress.AddressType = address.AddressType;
             command.CustomerAddress.Address.AddressLine1 = address.Address.AddressLine1;
             command.CustomerAddress.Address.AddressLine2 = address.Address.AddressLine2;

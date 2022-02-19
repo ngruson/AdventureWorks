@@ -40,7 +40,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
             );
             Guard.Against.Null(contact, nameof(contact), logger);
 
-            storeCustomer.Contacts.Remove(contact);
+            storeCustomer.RemoveContact(contact);
 
             logger.LogInformation("Updating customer to database");
             await storeCustomerRepository.UpdateAsync(storeCustomer, cancellationToken);

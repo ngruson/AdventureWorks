@@ -9,9 +9,9 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Territory> builder)
         {
             builder.ToTable("Territory");
-            builder.HasKey(sp => sp.Id);
+            builder.HasKey("Id");
 
-            builder.Property(sp => sp.Id)
+            builder.Property("Id")
                 .HasColumnName("TerritoryID");
 
             builder.Property(sp => sp.CountryRegionCode)

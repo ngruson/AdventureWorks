@@ -58,7 +58,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<AddressType>(mockContext.Object);
 
             //Act
-            var spec = new GetAddressTypeByIdSpecification(addressTypes[0].Id);
+            var spec = new GetAddressTypeByNameSpecification(addressTypes[0].Name);
             var result = await repository.GetBySpecAsync(spec);
 
             //Assert
@@ -88,10 +88,15 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         [Theory, OmitOnRecursion]
         public async Task ListAsync_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
-            List<StateProvince> statesProvinces
+            Tuple<string, string>[] data
         )
         {
             //Arrange
+            var statesProvinces = data.Select(_ =>
+                new StateProvince(_.Item1, _.Item2)
+            )
+            .ToList();
+
             var mockSet = statesProvinces.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<StateProvince>())
@@ -164,10 +169,15 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         [Theory, OmitOnRecursion]
         public async Task CountAsync_ReturnsCount(
             [Frozen] Mock<AWContext> mockContext,
-            List<StateProvince> statesProvinces
+            Tuple<string, string>[] data
         )
         {
             //Arrange
+            var statesProvinces = data.Select(_ =>
+                new StateProvince(_.Item1, _.Item2)
+            )
+            .ToList();
+
             var mockSet = statesProvinces.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<StateProvince>())

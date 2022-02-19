@@ -2,12 +2,21 @@
 {
     public class StoreCustomerContact
     {
-        public int Id { get; set; }
-        public string ContactType { get; set; }
+        private StoreCustomerContact()
+        {
+        }
+        public StoreCustomerContact(string contactType, Person contactPerson)
+        {
+            ContactType = contactType;
+            ContactPerson = contactPerson;
+        }
 
-        public int StoreCustomerId { get; set; }
+        private int Id { get; set; }
+        public string ContactType { get; private set; }
 
-        public Person ContactPerson { get; set; }
-        public int ContactPersonId { get; set; }
+        public int StoreCustomerId { get; private set; }
+
+        public Person ContactPerson { get; private set; }
+        public int ContactPersonId { get; private set; }
     }
 }

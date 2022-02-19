@@ -9,9 +9,9 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<StateProvince> builder)
         {
             builder.ToTable("StateProvince");
-            builder.HasKey(sp => sp.Id);
+            builder.HasKey("Id");
 
-            builder.Property(sp => sp.Id)
+            builder.Property("Id")
                 .HasColumnName("StateProvinceID");
 
             builder.Property(sp => sp.StateProvinceCode)
@@ -23,7 +23,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
                 .HasMaxLength(3);
 
             builder.HasOne(sp => sp.CountryRegion)
-                .WithMany(c => c.StateProvinces)
+                .WithMany("_statesProvinces")
                 .HasForeignKey(sp => sp.CountryRegionCode);
 
             builder.Property(sp => sp.Name)

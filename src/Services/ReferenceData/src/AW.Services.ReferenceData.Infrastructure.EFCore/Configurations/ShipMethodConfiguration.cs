@@ -9,9 +9,9 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<ShipMethod> builder)
         {
             builder.ToTable("ShipMethod");
-            builder.HasKey(sp => sp.Id);
+            builder.HasKey("Id");
 
-            builder.Property(sp => sp.Id)
+            builder.Property("Id")
                 .HasColumnName("ShipMethodID");
         }
     }

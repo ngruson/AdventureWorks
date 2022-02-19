@@ -24,12 +24,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.IndividualCustomer customer
+                Entities.IndividualCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Billing";
-                customer.Addresses[0].AddressType = "Billing";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Billing",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -42,7 +48,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -58,12 +64,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.IndividualCustomer customer
+                Entities.IndividualCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Billing";
-                customer.Addresses[0].AddressType = "Home";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Home",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -76,7 +88,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -154,12 +166,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.IndividualCustomer customer
+                Entities.IndividualCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Shipping";
-                customer.Addresses[0].AddressType = "Shipping";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Shipping",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -172,7 +190,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -188,12 +206,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.IndividualCustomer customer
+                Entities.IndividualCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Shipping";
-                customer.Addresses[0].AddressType = "Home";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Home",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -206,7 +230,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -284,12 +308,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Billing";
-                customer.Addresses[0].AddressType = "Billing";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Billing",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -302,7 +332,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -318,12 +348,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Billing";
-                customer.Addresses[0].AddressType = "Main Office";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Main Office",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -336,7 +372,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -352,12 +388,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Billing";
-                customer.Addresses[0].AddressType = "Home";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Home",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -370,7 +412,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -448,12 +490,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Shipping";
-                customer.Addresses[0].AddressType = "Shipping";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Shipping",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -466,7 +514,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -482,12 +530,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Shipping";
-                customer.Addresses[0].AddressType = "Main Office";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Main Office",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -500,7 +554,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
@@ -516,12 +570,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
                 GetPreferredAddressQueryHandler sut,
                 GetPreferredAddressQuery query,
-                Entities.StoreCustomer customer
+                Entities.StoreCustomer customer,
+                Entities.Address address
             )
             {
                 //Arrange
                 query.AddressType = "Shipping";
-                customer.Addresses[0].AddressType = "Home";
+                customer.AddAddress(
+                    new Entities.CustomerAddress(
+                        "Home",
+                        address
+                    )
+                );
 
                 customerRepoMock.Setup(_ => _.GetBySpecAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
@@ -534,7 +594,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
                 //Assert
                 result.Should().BeEquivalentTo(
-                    customer.Addresses[0].Address,
+                    address,
                     opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 

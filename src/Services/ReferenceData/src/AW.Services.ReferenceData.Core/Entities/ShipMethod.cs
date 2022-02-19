@@ -4,9 +4,9 @@ namespace AW.Services.ReferenceData.Core.Entities
 {
     public class ShipMethod : IAggregateRoot
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal ShipBase { get; set; }
-        public decimal ShipRate { get; set; }
+        private int Id { get; set; }
+        public string Name { get; private set; }
+        public decimal ShipBase { get; private set; }
+        public decimal ShipRate { get; private set; }
     }
 }

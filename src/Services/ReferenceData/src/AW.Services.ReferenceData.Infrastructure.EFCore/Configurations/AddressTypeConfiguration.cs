@@ -9,9 +9,9 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<AddressType> builder)
         {
             builder.ToTable("AddressType");
-            builder.HasKey(a => a.Id);
+            builder.HasKey("Id");
 
-            builder.Property(at => at.Id)
+            builder.Property("Id")
                 .HasColumnName("AddressTypeID");
 
             builder.Property(at => at.Name)

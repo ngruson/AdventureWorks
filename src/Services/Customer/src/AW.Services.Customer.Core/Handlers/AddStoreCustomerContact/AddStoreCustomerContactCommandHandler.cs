@@ -34,7 +34,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
 
             logger.LogInformation("Adding contact to store");
             var contact = mapper.Map<Entities.StoreCustomerContact>(request.CustomerContact);
-            storeCustomer.Contacts.Add(contact);
+            storeCustomer.AddContact(contact);
 
             logger.LogInformation("Saving customer to database");
             await storeRepository.UpdateAsync(storeCustomer, cancellationToken);

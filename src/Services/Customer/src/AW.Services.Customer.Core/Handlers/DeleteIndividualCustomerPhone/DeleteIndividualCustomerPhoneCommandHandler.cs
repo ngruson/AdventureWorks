@@ -38,7 +38,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
             );
             Guard.Against.Null(phone, nameof(phone), logger);
 
-            individualCustomer.Person.PhoneNumbers.Remove(phone);
+            individualCustomer.Person.RemovePhoneNumber(phone);
 
             logger.LogInformation("Updating customer to database");
             await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);

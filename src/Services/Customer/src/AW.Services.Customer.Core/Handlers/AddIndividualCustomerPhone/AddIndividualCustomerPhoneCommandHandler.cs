@@ -34,7 +34,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
 
             logger.LogInformation("Adding phone to customer");
             var phone = mapper.Map<Entities.PersonPhone>(request.Phone);
-            individualCustomer.Person.PhoneNumbers.Add(phone);
+            individualCustomer.Person.AddPhoneNumber(phone);
 
             logger.LogInformation("Saving customer to database");
             await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);

@@ -8,9 +8,9 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.SalesOrder> builder)
         {
             builder.ToTable("SalesOrder");
-            builder.HasKey(p => p.Id);
+            builder.HasKey("Id");
             
-            builder.Property(p => p.Id)
+            builder.Property("Id")
                 .HasColumnName("SalesOrderID");
             
             builder.Property(p => p.SalesOrderNumber)

@@ -14,8 +14,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomerAddress
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AddressDto, Entities.Address>()
-                .ForMember(m => m.Id, opt => opt.Ignore());
+            profile.CreateMap<AddressDto, Entities.Address>();
         }
     }
 }

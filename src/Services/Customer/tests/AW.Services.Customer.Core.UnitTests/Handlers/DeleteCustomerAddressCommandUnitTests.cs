@@ -21,17 +21,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Entities.Customer customer,
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             DeleteCustomerAddressCommandHandler sut,
-            DeleteCustomerAddressCommand command
+            DeleteCustomerAddressCommand command,
+            Entities.Address address
         )
         {
             //Arrange
-            customer.Addresses = new List<Entities.CustomerAddress>
-            {
-                new Entities.CustomerAddress
-                {
-                    AddressType = command.AddressType
-                }
-            };
+            customer.AddAddress(
+                new Entities.CustomerAddress(
+                    command.AddressType,
+                    address
+                )
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetCustomerSpecification>(),

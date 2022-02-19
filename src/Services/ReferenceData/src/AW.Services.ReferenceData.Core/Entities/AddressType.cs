@@ -4,8 +4,8 @@ namespace AW.Services.ReferenceData.Core.Entities
 {
     public class AddressType : IAggregateRoot
     {
-        public int Id { get; set; }
+        private int Id { get; set; }
         
-        public string Name { get; set; }
+        public string Name { get; private set; }
     }
 }

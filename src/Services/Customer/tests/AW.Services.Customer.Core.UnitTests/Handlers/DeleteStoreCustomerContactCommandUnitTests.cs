@@ -6,7 +6,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,19 +24,15 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            customer.Contacts = new List<Entities.StoreCustomerContact>
-            {
-                new Entities.StoreCustomerContact
-                {
-                    ContactType = command.CustomerContact.ContactType,
-                    ContactPerson = new Entities.Person
-                    {
-                        FirstName = command.CustomerContact.ContactPerson.FirstName,
-                        MiddleName = command.CustomerContact.ContactPerson.MiddleName,
-                        LastName = command.CustomerContact.ContactPerson.LastName
-                    }
-                }
-            };
+            customer.AddContact(new Entities.StoreCustomerContact(
+                command.CustomerContact.ContactType,
+                new Entities.Person(
+                    command.CustomerContact.ContactPerson.Title,
+                    command.CustomerContact.ContactPerson.FirstName,
+                    command.CustomerContact.ContactPerson.MiddleName,
+                    command.CustomerContact.ContactPerson.LastName
+                )
+            ));
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),

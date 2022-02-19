@@ -238,11 +238,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - chart-example.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - dev.elasticsearch.adventureworks-vnext.com
+  tls:
+    - secretName: chart-example-tls
+      hosts:
+        - dev.elasticsearch.adventureworks-vnext.com
 
 nameOverride: "dev-elasticsearch"
 fullnameOverride: ""

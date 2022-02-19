@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.Interfaces;
@@ -15,7 +16,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     public class AddStoreCustomerContactCommandUnitTests
     {
         [Theory]
-        [AutoMoqData]
+        [AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_CustomerExist_AddStoreCustomerContact(
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             AddStoreCustomerContactCommandHandler sut,

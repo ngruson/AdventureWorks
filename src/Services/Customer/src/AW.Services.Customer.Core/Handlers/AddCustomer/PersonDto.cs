@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AW.Services.Customer.Core.Handlers.AddCustomer
 {
@@ -17,7 +18,32 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PersonDto, Entities.Person>()
-                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.EmailAddresses, opt =>
+                    opt.MapFrom((src, dest, member, ctx) =>
+                    {
+                        src.EmailAddresses.ForEach(personEmailAddress =>
+                            dest.AddEmailAddress(
+                                ctx.Mapper.Map<Entities.PersonEmailAddress>(personEmailAddress)
+                            )
+                        );
+
+                        return dest.EmailAddresses;
+                    }
+                    )
+                )
+                .ForMember(m => m.PhoneNumbers, opt =>
+                    opt.MapFrom((src, dest, member, ctx) =>
+                    {
+                        src.PhoneNumbers.ForEach(personPhoneNumber =>
+                            dest.AddPhoneNumber(
+                                ctx.Mapper.Map<Entities.PersonPhone>(personPhoneNumber)
+                            )
+                        );
+
+                        return dest.PhoneNumbers;
+                    }
+                    )
+                )
                 .ReverseMap();
         }
     }

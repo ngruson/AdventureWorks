@@ -1,6 +1,6 @@
 ﻿namespace AW.Services.Customer.Core.Entities.PreferredAddress
 {
-    public interface IPreferredAddressStrategy
+    public interface IPreferredAddressFactory
     {
         Address GetPreferredAddress(string addressType);
     }

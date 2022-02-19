@@ -60,7 +60,7 @@ namespace AW.Services.Customer.REST.API.Controllers
             }
 
             logger.LogInformation("Returning customer");
-            return Ok(mapper.Map<Models.GetCustomer.Customer>(customer));
+            return Ok(mapper.Map<Core.Models.GetCustomer.Customer>(customer));
         }
 
         [HttpGet("{accountNumber}/preferredAddress/{addressType}")]

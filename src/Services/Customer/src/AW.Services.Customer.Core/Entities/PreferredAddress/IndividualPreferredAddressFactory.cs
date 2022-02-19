@@ -1,12 +1,13 @@
-﻿using System.Linq;
+﻿using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace AW.Services.Customer.Core.Entities.PreferredAddress
 {
-    public class StorePreferredAddressStrategy : IPreferredAddressStrategy
+    public class IndividualPreferredAddressFactory : IPreferredAddressFactory
     {
         private readonly Customer customer;
 
-        public StorePreferredAddressStrategy(
+        public IndividualPreferredAddressFactory(
             Customer customer
         ) =>
             this.customer = customer;
@@ -26,25 +27,17 @@ namespace AW.Services.Customer.Core.Entities.PreferredAddress
             var customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Billing");
             if (customerAddress != null)
                 return customerAddress.Address;
-
-            customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Main Office");
-            if (customerAddress != null)
-                return customerAddress.Address;
-
+                
             customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Home");
             if (customerAddress != null)
                 return customerAddress.Address;
-
+                
             return null;
         }
 
         private Address GetPreferredAddressForShipping()
         {
             var customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Shipping");
-            if (customerAddress != null)
-                return customerAddress.Address;
-
-            customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Main Office");
             if (customerAddress != null)
                 return customerAddress.Address;
 

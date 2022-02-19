@@ -34,7 +34,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomerAddress
 
             logger.LogInformation("Adding address to customer");
             var customerAddress = mapper.Map<Entities.CustomerAddress>(request.CustomerAddress);
-            customer.Addresses.Add(customerAddress);
+            customer.AddAddress(customerAddress);
 
             logger.LogInformation("Saving customer to database");
             await customerRepository.UpdateAsync(customer, cancellationToken);

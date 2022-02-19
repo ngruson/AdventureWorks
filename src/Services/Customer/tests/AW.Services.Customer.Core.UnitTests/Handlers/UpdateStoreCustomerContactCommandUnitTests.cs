@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
 using AW.SharedKernel.Interfaces;
@@ -16,28 +17,22 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     public class UpdateStoreCustomerContactCommandUnitTests
     {
         [Theory]
-        [AutoMoqData]
+        [AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_CustomerAndContactExist_UpdateStoreCustomerContact(
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateStoreCustomerContactCommandHandler sut,
-            UpdateStoreCustomerContactCommand command
+            UpdateStoreCustomerContactCommand command,
+            Entities.Person contactPerson
         )
         {
             //Arrange
-            customer.Contacts = new List<Entities.StoreCustomerContact>
-            {
-                new Entities.StoreCustomerContact
-                {
-                    ContactType = command.CustomerContact.ContactType,
-                    ContactPerson = new Entities.Person
-                    {
-                        FirstName = command.CustomerContact.ContactPerson.FirstName,
-                        MiddleName = command.CustomerContact.ContactPerson.MiddleName,
-                        LastName = command.CustomerContact.ContactPerson.LastName
-                    }
-                }
-            };
+            customer.AddContact(
+                new Entities.StoreCustomerContact(
+                    command.CustomerContact.ContactType,
+                    contactPerson
+                )
+            );
 
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
