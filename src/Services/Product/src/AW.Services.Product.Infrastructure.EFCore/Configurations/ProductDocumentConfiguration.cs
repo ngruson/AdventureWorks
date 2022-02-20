@@ -8,10 +8,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductDocument> builder)
         {
             builder.ToTable("ProductDocument");
-            builder.HasKey(pd => new { pd.ProductID, pd.DocumentNode });
-
-            builder.Property(pd => pd.ProductID)
-                .HasColumnName("ProductID");
+            builder.HasKey("Id", "DocumentNode");
         }
     }
 }

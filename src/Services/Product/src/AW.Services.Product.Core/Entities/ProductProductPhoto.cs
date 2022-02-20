@@ -2,13 +2,11 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductProductPhoto
     {
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        private int ProductId { get; set; }
+        private int ProductPhotoId { get; set; }
 
-        public int ProductPhotoId { get; set; }
+        public bool Primary { get; internal set; }
 
-        public bool Primary { get; set; }
-
-        public virtual ProductPhoto ProductPhoto { get; set; }
+        public ProductPhoto ProductPhoto { get; private set; }
     }
 }

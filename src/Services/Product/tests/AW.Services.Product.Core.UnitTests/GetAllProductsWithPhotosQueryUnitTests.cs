@@ -22,10 +22,15 @@ namespace AW.Services.Product.Core.UnitTests
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetAllProductsWithPhotosQueryHandler sut,
             GetAllProductsWithPhotosQuery query,
-            List<Entities.Product> products
+            List<Entities.Product> products,
+            Entities.ProductProductPhoto photo
         )
         {
             // Arrange
+            products.ForEach(p =>
+                p.AddProductPhoto(photo)
+            );
+
             productRepoMock.Setup(_ => _.ListAsync(
                     It.IsAny<GetAllProductsWithPhotosSpecification>(),
                     It.IsAny<CancellationToken>()

@@ -9,7 +9,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<BillOfMaterials> builder)
         {
             builder.ToTable("BillOfMaterials");
-            builder.HasKey(bom => bom.Id);
+            builder.HasKey("Id");
 
             builder.HasOne(bom => bom.ProductAssembly);
             builder.HasOne(bom => bom.Component);

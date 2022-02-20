@@ -4,15 +4,15 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductModelProductDescriptionCulture
     {
-        public int ProductModelID { get; set; }
-        public int ProductDescriptionID { get; set; }
+        private int ProductModelID { get; set; }
+        private int ProductDescriptionID { get; set; }
 
-        public string CultureID { get; set; }
+        private string CultureID { get; set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; private set; }
 
-        public virtual Culture Culture { get; set; }
+        public Culture Culture { get; private set; }
 
-        public virtual ProductDescription ProductDescription { get; set; }
+        public ProductDescription ProductDescription { get; private set; }
     }
 }

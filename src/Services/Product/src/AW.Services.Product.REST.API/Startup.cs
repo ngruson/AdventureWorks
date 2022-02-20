@@ -3,6 +3,7 @@ using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Infrastructure.EFCore;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
+using AW.SharedKernel.FileHandling;
 using AW.SharedKernel.Interfaces;
 using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
@@ -147,6 +148,7 @@ namespace AW.Services.Product.REST.API
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetProductsQuery).Assembly);
             services.AddMediatR(typeof(GetProductsQuery));
+            services.AddScoped<IFileWriter, FileWriter>();
 
             return services;
         }

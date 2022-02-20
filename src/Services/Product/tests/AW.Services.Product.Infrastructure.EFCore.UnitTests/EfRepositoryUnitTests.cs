@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,9 +19,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
     {
         [Theory, OmitOnRecursion]
         public async Task GetByIdAsync_ReturnsObject(
-            [Frozen] Mock<DbSet<Core.Entities.Product>> mockSet,
+            [Frozen] Mock<DbSet<Core.Entities.UnitMeasure>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
-            Core.Entities.Product product
+            Core.Entities.UnitMeasure unitMeasure
         )
         {
             //Arrange
@@ -28,17 +29,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
                 It.IsAny<object[]>(), 
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(product);
+            .ReturnsAsync(unitMeasure);
 
-            mockContext.Setup(x => x.Set<Core.Entities.Product>())
+            mockContext.Setup(x => x.Set<Core.Entities.UnitMeasure>())
                 .Returns(mockSet.Object);
-            var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
+            var repository = new EfRepository<Core.Entities.UnitMeasure>(mockContext.Object);
 
             //Act
-            var result = await repository.GetByIdAsync(product.Id);
+            var result = await repository.GetByIdAsync(unitMeasure.UnitMeasureCode);
 
             //Assert
-            result.ProductNumber.Should().Be(product.ProductNumber);
+            result.Should().BeEquivalentTo(unitMeasure);
         }
 
         [Theory, OmitOnRecursion]
@@ -63,10 +64,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
 
         [Theory, OmitOnRecursion]
         public async Task ListAsync_ReturnsObjects(
-            List<Core.Entities.Product> products
+            Tuple<string, string>[] data
         )
         {
             //Arrange
+            var products = data.Select(data =>
+                new Core.Entities.Product(
+                    data.Item1, data.Item2
+                )
+            )
+            .ToList();
+
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -109,10 +117,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
 
         [Theory, OmitOnRecursion]
         public async Task CountAsync_ReturnsCount(
-            List<Core.Entities.Product> products
+            Tuple<string, string>[] data
         )
         {
             //Arrange
+            var products = data.Select(data =>
+                new Core.Entities.Product(
+                    data.Item1, data.Item2
+                )
+            )
+            .ToList();
+
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -142,10 +157,10 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var newProduct = new Core.Entities.Product 
-            { 
-                ProductNumber = products[0].ProductNumber 
-            };
+            var newProduct = new Core.Entities.Product( 
+                products[0].ProductNumber,
+                products[0].Color
+            );
             var savedProduct = await repository.AddAsync(newProduct);
 
             //Assert

@@ -8,9 +8,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductListPriceHistory> builder)
         {
             builder.ToTable("ProductListPriceHistory");
-            builder.HasKey(plphc => new { plphc.ProductID, plphc.StartDate });
+            builder.HasKey("ProductID", "StartDate");
 
-            builder.Property(plphc => plphc.ProductID)
+            builder.Property("ProductID")
                 .ValueGeneratedNever();
 
             builder.Property(plphc => plphc.ListPrice)

@@ -8,7 +8,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductInventory> builder)
         {
             builder.ToTable("ProductInventory");
-            builder.HasKey(pic => new { pic.ProductID, pic.LocationID });
+            builder.HasKey("ProductID", "LocationID");
 
             builder.Property(pic => pic.Shelf)
                 .IsRequired()

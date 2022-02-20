@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AW.Services.Product.Core.Entities
 {
     public class Location
     {
-        public virtual int Id { get; protected set; }
-        public string Name { get; set; }
+        private int Id { get; set; }
+        public string Name { get; private set; }
 
-        public decimal CostRate { get; set; }
+        public decimal CostRate { get; private set; }
 
-        public decimal Availability { get; set; }
+        public decimal Availability { get; private set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; private set; }
 
-        public virtual IEnumerable<ProductInventory> ProductInventory { get; set; } = new List<ProductInventory>();
+        public IEnumerable<ProductInventory> ProductInventory => _productInventory.ToList();
+        private List<ProductInventory> _productInventory = new();
     }
 }

@@ -8,6 +8,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.Location> builder)
         {
             builder.ToTable("Location");
+            builder.HasKey("Id");
 
             builder.Property(l => l.Name)
                 .IsRequired()

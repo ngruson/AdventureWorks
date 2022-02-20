@@ -9,7 +9,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         {
             builder.ToTable("ProductPhoto");
 
-            builder.Property(pd => pd.Id)
+            builder.Property("Id")
                 .HasColumnName("ProductPhotoID");
 
             builder.Property(pp => pp.ThumbnailPhotoFileName)

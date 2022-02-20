@@ -4,13 +4,13 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductCostHistory
     {
-        public int ProductID { get; set; }
-        public DateTime StartDate { get; set; }
+        private int Id { get; set; }
+        public DateTime StartDate { get; private set; }
 
-        public DateTime? EndDate { get; set; }
+        public DateTime? EndDate { get; private set; }
 
-        public decimal StandardCost { get; set; }
+        public decimal StandardCost { get; private set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; private set; }
     }
 }

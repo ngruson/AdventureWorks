@@ -9,7 +9,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         {
             builder.ToTable("ProductCategory");
 
-            builder.Property(c => c.Id)
+            builder.Property("Id")
                 .HasColumnName("ProductCategoryID");
 
             builder.Property(c => c.Name)

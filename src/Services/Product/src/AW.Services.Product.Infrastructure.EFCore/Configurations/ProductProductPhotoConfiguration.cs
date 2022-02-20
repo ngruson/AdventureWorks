@@ -8,17 +8,13 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductProductPhoto> builder)
         {
             builder.ToTable("ProductProductPhoto");
-            builder.HasKey(ppp => new { ppp.ProductId, ppp.ProductPhotoId });
+            builder.HasKey("ProductId", "ProductPhotoId");
 
-            builder.Property(ppp => ppp.ProductId)
+            builder.Property("ProductId")
                 .ValueGeneratedNever();
 
-            builder.Property(ppp => ppp.ProductPhotoId)
+            builder.Property("ProductPhotoId")
                 .ValueGeneratedNever();
-
-            builder.HasOne(ppp => ppp.Product)
-                .WithMany(p => p.ProductProductPhotos)
-                .HasForeignKey("ProductId");
         }
     }
 }

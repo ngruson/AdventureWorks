@@ -4,9 +4,9 @@ namespace AW.Services.Product.Core.Entities
 {
     public class Illustration
     {
-        public virtual int Id { get; protected set; }
-        public string Diagram { get; set; }
+        private int Id { get; set; }
+        public string Diagram { get; private set; }
 
-        public DateTime ModifiedDate { get; set; }        
+        public DateTime ModifiedDate { get; private set; }        
     }
 }

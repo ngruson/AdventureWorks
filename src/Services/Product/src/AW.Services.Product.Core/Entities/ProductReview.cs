@@ -4,22 +4,22 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductReview
     {
-        public virtual int Id { get; protected set; }
+        private int Id { get; set; }
 
-        public int ProductID { get; set; }
+        private int ProductID { get; set; }
 
-        public string ReviewerName { get; set; }
+        public string ReviewerName { get; private set; }
 
-        public DateTime ReviewDate { get; set; }
+        public DateTime ReviewDate { get; private set; }
 
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; private set; }
 
-        public int Rating { get; set; }
+        public int Rating { get; private set; }
 
-        public string Comments { get; set; }
+        public string Comments { get; private set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; private set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; private set; }
     }
 }

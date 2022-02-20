@@ -1,14 +1,16 @@
 using AW.SharedKernel.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AW.Services.Product.Core.Entities
 {
 
     public class ProductCategory : IAggregateRoot
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        private int Id { get; set; }
+        public string Name { get; private set; }
 
-        public List<ProductSubcategory> ProductSubcategory { get; set; } = new List<ProductSubcategory>();
+        public IEnumerable<ProductSubcategory> ProductSubcategory => _productSubcategory.ToList();
+        private List<ProductSubcategory> _productSubcategory = new();
     }
 }

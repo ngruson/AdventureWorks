@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AW.Services.Product.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AW.Services.Product.Infrastructure.EFCore.Configurations
 {
     public class ProductModelConfiguration : IEntityTypeConfiguration<Core.Entities.ProductModel>
     {
-        public void Configure(EntityTypeBuilder<Core.Entities.ProductModel> builder)
+        public void Configure(EntityTypeBuilder<ProductModel> builder)
         {
             builder.ToTable("ProductModel");
+            builder.HasKey("Id");
 
             builder.Property(pmc => pmc.Name)
                 .IsRequired()

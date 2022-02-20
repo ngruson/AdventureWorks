@@ -7,6 +7,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,11 +25,6 @@ namespace AW.Services.Product.Core.UnitTests
         )
         {
             // Arrange
-            for (int i = 0; i < product.ProductProductPhotos.Count; i++)
-            {
-                product.ProductProductPhotos[0].Primary = i == 0;
-            }
-
             productRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()

@@ -8,12 +8,12 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductModelIllustration> builder)
         {
             builder.ToTable("ProductModelIllustration");
-            builder.HasKey(pmi => new { pmi.ProductModelID, pmi.IllustrationID });
+            builder.HasKey("ProductModelID", "IllustrationID");
 
-            builder.Property(pmi => pmi.ProductModelID)
+            builder.Property("ProductModelID")
                 .ValueGeneratedNever();
 
-            builder.Property(pmi => pmi.IllustrationID)
+            builder.Property("IllustrationID")
                 .ValueGeneratedNever();
         }
     }

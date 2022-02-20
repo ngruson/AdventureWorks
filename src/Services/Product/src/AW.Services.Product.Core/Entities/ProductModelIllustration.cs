@@ -4,11 +4,11 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductModelIllustration
     {
-        public int ProductModelID { get; set; }
-        public int IllustrationID { get; set; }
+        private int ProductModelID { get; set; }
+        private int IllustrationID { get; set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; private set; }
 
-        public virtual Illustration Illustration { get; set; }
+        public Illustration Illustration { get; private set; }
     }
 }

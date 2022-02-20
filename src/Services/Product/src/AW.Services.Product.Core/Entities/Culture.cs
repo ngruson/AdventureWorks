@@ -4,9 +4,9 @@ namespace AW.Services.Product.Core.Entities
 {
     public class Culture
     {
-        public virtual int Id { get; protected set; }
-        public string Name { get; set; }
+        private int Id { get; set; }
+        public string Name { get; private set; }
 
-        public DateTime ModifiedDate { get; set; }        
+        public DateTime ModifiedDate { get; private set; }        
     }
 }
