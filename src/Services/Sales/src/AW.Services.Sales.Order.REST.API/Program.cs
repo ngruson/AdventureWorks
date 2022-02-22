@@ -33,6 +33,7 @@ namespace AW.Services.Sales.Order.REST.API
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             return builder.Build();
@@ -45,10 +46,10 @@ namespace AW.Services.Sales.Order.REST.API
                 .Enrich.WithProperty("ApplicationContext", new Application().AppName)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                //.WriteTo.Elasticsearch(
-                //    configuration["ElasticSearchUri"],
-                //    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
-                //)
+                .WriteTo.Elasticsearch(
+                    configuration["ElasticSearchUri"],
+                    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
+                )
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
