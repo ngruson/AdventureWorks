@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.AutoMapper;
 using System.Collections.Generic;
 
@@ -7,9 +8,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
     public class PersonDto : IMapFrom<Entities.Person>
     {
         public string Title { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+        public NameFactory Name { get; set; }
         public string Suffix { get; set; }
         public List<EmailAddressDto> EmailAddresses { get; set; } = new List<EmailAddressDto>();
 

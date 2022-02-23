@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AW.Services.SharedKernel.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,33 +7,20 @@ namespace AW.Services.Customer.Core.Entities
 {
     public class Person
     {
-        public Person(string title, string firstName, string middleName, string lastName)
+        public Person(string title, NameFactory name)
         {
             Title = title;
-            FirstName = firstName;
-            MiddleName = middleName;
-            LastName = lastName;
+            Name = name;
         }
+        private Person() { }
 
         private int Id { get; set; }
         public string Title { get; private set; }
-        public string FirstName { get; private set; }
-        public string MiddleName { get; private set; }
-        public string LastName { get; private set; }
+        //public string FirstName { get; private set; }
+        //public string MiddleName { get; private set; }
+        //public string LastName { get; private set; }
 
-        public string FullName
-        {
-            get
-            {
-                string fullName = FirstName;
-                if (!string.IsNullOrEmpty(MiddleName))
-                    fullName += $" {MiddleName}";
-                if (!string.IsNullOrEmpty(LastName))
-                    fullName += $" {LastName}";
-
-                return fullName;
-            }
-        }
+        public NameFactory Name { get; private set; }
         public string Suffix { get; private set; }
 
         public IEnumerable<PersonEmailAddress> EmailAddresses => _emailAddresses.ToList();

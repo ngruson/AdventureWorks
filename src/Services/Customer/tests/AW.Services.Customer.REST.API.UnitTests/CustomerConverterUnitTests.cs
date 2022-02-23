@@ -56,12 +56,12 @@ namespace AW.Services.Customer.REST.API.UnitTests
                         storeCustomer.Contacts[i].ContactType);
                     contactPerson.GetProperty("title").GetString().Should().Be(
                         storeCustomer.Contacts[i].ContactPerson.Title);
-                    contactPerson.GetProperty("firstName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.FirstName);
-                    contactPerson.GetProperty("middleName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.MiddleName);
-                    contactPerson.GetProperty("lastName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.LastName);
+                    contactPerson.GetProperty("name").GetProperty("firstName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.FirstName);
+                    contactPerson.GetProperty("name").GetProperty("middleName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.MiddleName);
+                    contactPerson.GetProperty("name").GetProperty("lastName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.LastName);
                     contactPerson.GetProperty("suffix").GetString().Should().Be(
                         storeCustomer.Contacts[i].ContactPerson.Suffix);
 
@@ -143,9 +143,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 root.GetProperty("territory").GetString().Should().Be(individualCustomer.Territory);
 
                 person.GetProperty("title").GetString().Should().Be(individualCustomer.Person.Title);
-                person.GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.FirstName);
-                person.GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.MiddleName);
-                person.GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.LastName);
+                person.GetProperty("name").GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.Name.FirstName);
+                person.GetProperty("name").GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.Name.MiddleName);
+                person.GetProperty("name").GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.Name.LastName);
                 person.GetProperty("suffix").GetString().Should().Be(individualCustomer.Person.Suffix);
 
                 for (int i = 0; i < emailAddresses.Count; i++)
@@ -198,9 +198,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                         ""contactType"": ""Owner"",
                         ""contactPerson"": {
                           ""title"": null,
-                          ""firstName"": ""Jon"",
-                          ""middleName"": ""V"",
-                          ""lastName"": ""Yang"",
+                          ""name"": {
+                            ""firstName"": ""Jon"",
+                            ""middleName"": ""V"",
+                            ""lastName"": ""Yang""
+                          },
                           ""suffix"": null,
                           ""emailAddresses"": [
                             {
@@ -259,9 +261,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 storeCustomer.Contacts.Count.Should().Be(1);
                 storeCustomer.Contacts[0].ContactType.Should().Be("Owner");
                 storeCustomer.Contacts[0].ContactPerson.Title.Should().BeNull();
-                storeCustomer.Contacts[0].ContactPerson.FirstName.Should().Be("Jon");
-                storeCustomer.Contacts[0].ContactPerson.MiddleName.Should().Be("V");
-                storeCustomer.Contacts[0].ContactPerson.LastName.Should().Be("Yang");
+                storeCustomer.Contacts[0].ContactPerson.Name.FirstName.Should().Be("Jon");
+                storeCustomer.Contacts[0].ContactPerson.Name.MiddleName.Should().Be("V");
+                storeCustomer.Contacts[0].ContactPerson.Name.LastName.Should().Be("Yang");
                 storeCustomer.Contacts[0].ContactPerson.Suffix.Should().BeNull();
                 storeCustomer.Contacts[0].ContactPerson.EmailAddresses.Count.Should().Be(1);
                 storeCustomer.Contacts[0].ContactPerson.EmailAddresses[0].EmailAddress.Should().Be("jon24@adventure-works.com");
@@ -286,9 +288,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                   ""customerType"": ""Individual"",
                   ""person"": {
                     ""title"": null,
-                    ""firstName"": ""Jon"",
-                    ""middleName"": ""V"",
-                    ""lastName"": ""Yang"",
+                    ""name"": { 
+                        ""firstName"": ""Jon"",
+                        ""middleName"": ""V"",
+                        ""lastName"": ""Yang""
+                    },
                     ""suffix"": null,
                     ""emailAddresses"": [
                       {
@@ -341,9 +345,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
-                individualCustomer.Person.FirstName.Should().Be("Jon");
-                individualCustomer.Person.MiddleName.Should().Be("V");
-                individualCustomer.Person.LastName.Should().Be("Yang");
+                individualCustomer.Person.Name.FirstName.Should().Be("Jon");
+                individualCustomer.Person.Name.MiddleName.Should().Be("V");
+                individualCustomer.Person.Name.LastName.Should().Be("Yang");
                 individualCustomer.Person.Suffix.Should().BeNull();
                 individualCustomer.Person.EmailAddresses.Count.Should().Be(1);
                 individualCustomer.Person.EmailAddresses[0].EmailAddress.Should().Be("jon24@adventure-works.com");
@@ -406,12 +410,12 @@ namespace AW.Services.Customer.REST.API.UnitTests
                         storeCustomer.Contacts[i].ContactType);
                     contactPerson.GetProperty("title").GetString().Should().Be(
                         storeCustomer.Contacts[i].ContactPerson.Title);
-                    contactPerson.GetProperty("firstName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.FirstName);
-                    contactPerson.GetProperty("middleName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.MiddleName);
-                    contactPerson.GetProperty("lastName").GetString().Should().Be(
-                        storeCustomer.Contacts[i].ContactPerson.LastName);
+                    contactPerson.GetProperty("name").GetProperty("firstName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.FirstName);
+                    contactPerson.GetProperty("name").GetProperty("middleName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.MiddleName);
+                    contactPerson.GetProperty("name").GetProperty("lastName").GetString().Should().Be(
+                        storeCustomer.Contacts[i].ContactPerson.Name.LastName);
                     contactPerson.GetProperty("suffix").GetString().Should().Be(
                         storeCustomer.Contacts[i].ContactPerson.Suffix);
 
@@ -493,9 +497,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 root.GetProperty("territory").GetString().Should().Be(individualCustomer.Territory);
 
                 person.GetProperty("title").GetString().Should().Be(individualCustomer.Person.Title);
-                person.GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.FirstName);
-                person.GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.MiddleName);
-                person.GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.LastName);
+                person.GetProperty("name").GetProperty("firstName").GetString().Should().Be(individualCustomer.Person.Name.FirstName);
+                person.GetProperty("name").GetProperty("middleName").GetString().Should().Be(individualCustomer.Person.Name.MiddleName);
+                person.GetProperty("name").GetProperty("lastName").GetString().Should().Be(individualCustomer.Person.Name.LastName);
                 person.GetProperty("suffix").GetString().Should().Be(individualCustomer.Person.Suffix);
 
                 for (int i = 0; i < emailAddresses.Count; i++)
@@ -548,9 +552,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                         ""contactType"": ""Owner"",
                         ""contactPerson"": {
                           ""title"": null,
-                          ""firstName"": ""Jon"",
-                          ""middleName"": ""V"",
-                          ""lastName"": ""Yang"",
+                          ""name"": { 
+                            ""firstName"": ""Jon"",
+                            ""middleName"": ""V"",
+                            ""lastName"": ""Yang""
+                          },
                           ""suffix"": null,
                           ""emailAddresses"": [
                             {
@@ -609,9 +615,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 storeCustomer.Contacts.Count.Should().Be(1);
                 storeCustomer.Contacts[0].ContactType.Should().Be("Owner");
                 storeCustomer.Contacts[0].ContactPerson.Title.Should().BeNull();
-                storeCustomer.Contacts[0].ContactPerson.FirstName.Should().Be("Jon");
-                storeCustomer.Contacts[0].ContactPerson.MiddleName.Should().Be("V");
-                storeCustomer.Contacts[0].ContactPerson.LastName.Should().Be("Yang");
+                storeCustomer.Contacts[0].ContactPerson.Name.FirstName.Should().Be("Jon");
+                storeCustomer.Contacts[0].ContactPerson.Name.MiddleName.Should().Be("V");
+                storeCustomer.Contacts[0].ContactPerson.Name.LastName.Should().Be("Yang");
                 storeCustomer.Contacts[0].ContactPerson.Suffix.Should().BeNull();
                 storeCustomer.Contacts[0].ContactPerson.EmailAddresses.Count.Should().Be(1);
                 storeCustomer.Contacts[0].ContactPerson.EmailAddresses[0].EmailAddress.Should().Be("jon24@adventure-works.com");
@@ -636,9 +642,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                   ""customerType"": ""Individual"",
                   ""person"": {
                     ""title"": null,
-                    ""firstName"": ""Jon"",
-                    ""middleName"": ""V"",
-                    ""lastName"": ""Yang"",
+                    ""name"": {
+                        ""firstName"": ""Jon"",
+                        ""middleName"": ""V"",
+                        ""lastName"": ""Yang""
+                    },
                     ""suffix"": null,
                     ""emailAddresses"": [
                       {
@@ -691,9 +699,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
-                individualCustomer.Person.FirstName.Should().Be("Jon");
-                individualCustomer.Person.MiddleName.Should().Be("V");
-                individualCustomer.Person.LastName.Should().Be("Yang");
+                individualCustomer.Person.Name.FirstName.Should().Be("Jon");
+                individualCustomer.Person.Name.MiddleName.Should().Be("V");
+                individualCustomer.Person.Name.LastName.Should().Be("Yang");
                 individualCustomer.Person.Suffix.Should().BeNull();
                 individualCustomer.Person.EmailAddresses.Count.Should().Be(1);
                 individualCustomer.Person.EmailAddresses[0].EmailAddress.Should().Be("jon24@adventure-works.com");

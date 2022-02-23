@@ -14,10 +14,7 @@ namespace AW.ConsoleTools.AutoMapper
                 .ForMember(m => m.CustomerNumber, opt => opt.MapFrom(src => src.AccountNumber))
                 .ForMember(m => m.Username, opt => opt.MapFrom(src => GetUserName(src.Person)))
                 .ForMember(m => m.Email, opt => opt.MapFrom(src => GetEmailAddress(src.Person)))
-                .ForMember(m => m.FirstName, opt => opt.MapFrom(src => src.Person.FirstName))
-                .ForMember(m => m.MiddleName, opt => opt.MapFrom(src => src.Person.MiddleName))
-                .ForMember(m => m.LastName, opt => opt.MapFrom(src => src.Person.LastName))
-                .ForMember(m => m.FullName, opt => opt.MapFrom(src => src.Person.FullName));
+                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Person.Name));
         }
 
         private static string? GetUserName(PersonDto person)

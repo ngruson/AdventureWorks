@@ -34,9 +34,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
             logger.LogInformation("Removing phone from contact");
             var contact = storeCustomer.Contacts.FirstOrDefault(
                 c => c.ContactType == request.CustomerContact.ContactType &&
-                    c.ContactPerson.FirstName == request.CustomerContact.ContactPerson.FirstName &&
-                    c.ContactPerson.MiddleName == request.CustomerContact.ContactPerson.MiddleName &&
-                    c.ContactPerson.LastName == request.CustomerContact.ContactPerson.LastName
+                    c.ContactPerson.Name == request.CustomerContact.ContactPerson.Name
             );
             Guard.Against.Null(contact, nameof(contact), logger);
 

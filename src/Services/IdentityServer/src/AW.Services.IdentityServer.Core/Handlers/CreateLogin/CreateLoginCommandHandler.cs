@@ -57,19 +57,19 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
         {
             var claims = new List<Claim>();
 
-            if (!string.IsNullOrEmpty(request.FullName))
-                claims.Add(new Claim(JwtClaimTypes.Name, request.FullName));
+            if (!string.IsNullOrEmpty(request.Name.FullName))
+                claims.Add(new Claim(JwtClaimTypes.Name, request.Name.FullName));
 
-            if (!string.IsNullOrEmpty(request.FirstName))
-                claims.Add(new Claim(JwtClaimTypes.GivenName, request.FirstName));
+            if (!string.IsNullOrEmpty(request.Name.FirstName))
+                claims.Add(new Claim(JwtClaimTypes.GivenName, request.Name.FirstName));
 
-            if (!string.IsNullOrEmpty(request.MiddleName))
-                claims.Add(new Claim(JwtClaimTypes.MiddleName, request.MiddleName));
+            if (!string.IsNullOrEmpty(request.Name.MiddleName))
+                claims.Add(new Claim(JwtClaimTypes.MiddleName, request.Name.MiddleName));
 
-            if (!string.IsNullOrEmpty(request.LastName))
-                claims.Add(new Claim(JwtClaimTypes.FamilyName, request.LastName));
+            if (!string.IsNullOrEmpty(request.Name.LastName))
+                claims.Add(new Claim(JwtClaimTypes.FamilyName, request.Name.LastName));
 
-            if (!string.IsNullOrEmpty(request.LastName))
+            if (!string.IsNullOrEmpty(request.CustomerNumber))
                 claims.Add(new Claim(AwClaimTypes.CustomerNumber, request.CustomerNumber));
 
             return claims;

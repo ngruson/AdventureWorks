@@ -28,9 +28,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 command.CustomerContact.ContactType,
                 new Entities.Person(
                     command.CustomerContact.ContactPerson.Title,
-                    command.CustomerContact.ContactPerson.FirstName,
-                    command.CustomerContact.ContactPerson.MiddleName,
-                    command.CustomerContact.ContactPerson.LastName
+                    command.CustomerContact.ContactPerson.Name
                 )
             ));
 
