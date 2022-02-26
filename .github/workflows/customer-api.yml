@@ -18,6 +18,8 @@ env:
   SERVICE: customer-api
   IMAGE: customer.api
   DOTNET_VERSION: 6.0.x
+  REGISTRY_NAME: cradventureworks
+  APP_NAME: adventureworks_customerapi
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -49,3 +51,16 @@ jobs:
           dotnet build src/AW.Services.Customer.REST.API/AW.Services.Customer.REST.API.csproj
           dotnet build tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj
           dotnet test tests/AW.Services.Customer.REST.API.UnitTests/AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${ env.REGISTRY_NAME }.azurecr.io
+          username: ${ secrets.AZ_SP_CLIENT_ID }
+          password: ${ secrets.AZ_SP_CLIENT_SECRET }
+
+      - name: Build the Docker image
+        run: docker build src/AW.Services.Customer.REST.API -t ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:${ github.sha }
+
+      - name: Push Image to Docker
+        run: docker push ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:${ github.sha }
