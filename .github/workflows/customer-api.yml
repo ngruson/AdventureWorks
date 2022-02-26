@@ -62,7 +62,7 @@ jobs:
       - name: Build the Docker image      
         run: |
           cd src/Services/Customer
-          docker build -f src/AW.Services.Customer.REST.API -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
+          docker build -f src/AW.Services.Customer.REST.API/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
         run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
