@@ -43,6 +43,11 @@ jobs:
           dotnet build src\ConsoleTools\tests\AW.ConsoleTools.UnitTests\AW.ConsoleTools.UnitTests.csproj --no-restore
           dotnet test src\ConsoleTools\tests\AW.ConsoleTools.UnitTests\AW.ConsoleTools.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
+      - name: Build Infrastructure and run unit tests
+        run: |
+          dotnet build src\Services\Infrastructure\tests\AW.Services.Infrastructure.EventBus.UnitTests\AW.Services.Infrastructure.EventBus.UnitTests.csproj --no-restore
+          dotnet test src\Services\Infrastructure\tests\AW.Services.Infrastructure.EventBus.UnitTests\AW.Services.Infrastructure.EventBus.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
       - name: Build SharedKernel and run unit tests
         run: |
           dotnet build src\SharedKernel\tests\AW.SharedKernel.UnitTests\AW.SharedKernel.UnitTests.csproj --no-restore
@@ -50,12 +55,6 @@ jobs:
           
           dotnet build src\SharedKernel\tests\AW.SharedKernel.Api.UnitTests\AW.SharedKernel.Api.UnitTests.csproj --no-restore
           dotnet test src\SharedKernel\tests\AW.SharedKernel.Api.UnitTests\AW.SharedKernel.Api.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          dotnet build src\SharedKernel\tests\AW.SharedKernel.EventBus.UnitTests\AW.SharedKernel.EventBus.UnitTests.csproj --no-restore
-          dotnet test src\SharedKernel\tests\AW.SharedKernel.EventBus.UnitTests\AW.SharedKernel.EventBus.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-          
-          dotnet build src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-restore
-          dotnet test src\SharedKernel\tests\AW.SharedKernel.EventBus.EFCore.UnitTests\AW.SharedKernel.EventBus.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\SharedKernel\tests\AW.Services.SharedKernel.UnitTests\AW.Services.SharedKernel.UnitTests.csproj --no-restore
           dotnet test src\Services\SharedKernel\tests\AW.Services.SharedKernel.UnitTests\AW.Services.SharedKernel.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
