@@ -60,7 +60,7 @@ jobs:
           password: ${ secrets.AZ_SP_CLIENT_SECRET }
 
       - name: Build the Docker image
-        run: docker build src/AW.Services.Customer.REST.API -t ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:latest
+        run: docker build -f src/AW.Services.Customer.REST.API -t ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:latest .
 
       - name: Push Image to Docker
         run: docker push ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:${ github.sha }
