@@ -33,8 +33,10 @@ namespace AW.Services.Sales.Order.REST.API
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
+
+            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json")))
+                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
 
             return builder.Build();
         }
