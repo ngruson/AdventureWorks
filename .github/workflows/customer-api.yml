@@ -55,12 +55,14 @@ jobs:
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: ${ env.REGISTRY_NAME }.azurecr.io
-          username: ${ secrets.AZ_SP_CLIENT_ID }
-          password: ${ secrets.AZ_SP_CLIENT_SECRET }
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.AZ_SP_CLIENT_ID }}
+          password: ${{ secrets.AZ_SP_CLIENT_SECRET }}
 
-      - name: Build the Docker image
-        run: docker build src/AW.Services.Customer.REST.API -t ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:${ github.sha }
+      - name: Build the Docker image      
+        run: |
+          cd src
+          docker build -f Services/Customer/src/AW.Services.Customer.REST.API/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
-        run: docker push ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:${ github.sha }
+        run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
