@@ -65,4 +65,4 @@ jobs:
           docker build -f Services/Customer/src/AW.Services.Customer.REST.API/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
-        run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
