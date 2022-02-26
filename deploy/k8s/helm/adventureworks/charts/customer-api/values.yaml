@@ -3,7 +3,7 @@ pathBase: /customer-api/
 serviceName: customer-api
 
 image:
-  repository: ngruson/adventureworks_customerapi
+  repository: cradventureworks.azurecr.io/adventureworks_customerapi
   tag: latest
   pullPolicy: Always
 

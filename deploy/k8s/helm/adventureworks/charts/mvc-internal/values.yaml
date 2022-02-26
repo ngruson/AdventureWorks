@@ -7,7 +7,7 @@ salesorder_api: /salesorder-api
 salesperson_api: /salesperson-api
 
 image:
-  repository: ngruson/adventureworks_mvc_internal
+  repository: cradventureworks.azurecr.io/adventureworks_mvc_internal
   tag: latest
   pullPolicy: Always
 

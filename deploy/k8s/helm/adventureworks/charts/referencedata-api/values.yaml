@@ -3,7 +3,7 @@ pathBase: /referencedata-api/
 serviceName: referencedata-api
 
 image:
-  repository: ngruson/adventureworks_referencedataapi
+  repository: cradventureworks.azurecr.io/adventureworks_referencedataapi
   tag: latest
   pullPolicy: Always
 

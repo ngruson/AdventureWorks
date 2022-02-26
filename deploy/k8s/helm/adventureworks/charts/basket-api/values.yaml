@@ -3,7 +3,7 @@ pathBase: /basket-api/
 serviceName: basket-api
 
 image:
-  repository: ngruson/adventureworks_basketapi
+  repository: cradventureworks.azurecr.io/adventureworks_basketapi
   tag: latest
   pullPolicy: Always
 

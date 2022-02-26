@@ -5,7 +5,7 @@ basket_api: /basket-api
 product_api: /product-api
 
 image:
-  repository: ngruson/adventureworks_mvc_store
+  repository: cradventureworks.azurecr.io/adventureworks_mvc_store
   tag: latest
   pullPolicy: Always
 
