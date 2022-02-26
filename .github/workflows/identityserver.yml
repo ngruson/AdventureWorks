@@ -1,4 +1,4 @@
-name: basket-api
+name: identityserver
 
 on:
   workflow_dispatch:
@@ -6,20 +6,20 @@ on:
   push:
     branches: [ master ]
     paths:
-    - src/Services/Basket/**
-    - .github/workflows/basket-api.yml
+    - src/Services/IdentityServer/**
+    - .github/workflows/identityserver.yml
   pull_request:
     branches: [ master ]
     paths:
-    - src/Services/Basket/**
-    - .github/workflows/basket-api.yml
+    - src/Services/IdentityServer/**
+    - .github/workflows/identityserver.yml
 
 env:
-  SERVICE: basket-api
-  IMAGE: basket.api
+  SERVICE: customer-api
+  IMAGE: customer.api
   DOTNET_VERSION: 6.0.x
   REGISTRY_NAME: cradventureworks
-  APP_NAME: adventureworks_basketapi
+  APP_NAME: adventureworks_identityserver
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -40,16 +40,12 @@ jobs:
    
       - name: Build and run unit tests
         run: |
+          cd src/Services/IdentityServer
 
-          cd src/Services/Basket
+          dotnet build src/AW.Services.IdentityServer/AW.Services.IdentityServer.csproj
 
-          dotnet build src/AW.Services.Basket.Core/AW.Services.Basket.Core.csproj
-          dotnet build tests/AW.Services.Basket.Core.UnitTests/AW.Services.Basket.Core.UnitTests.csproj
-          dotnet test tests/AW.Services.Basket.Core.UnitTests/AW.Services.Basket.Core.UnitTests.csproj --no-build --no-restore
-
-          dotnet build src/AW.Services.Basket.REST.API/AW.Services.Basket.REST.API.csproj
-          dotnet build tests/AW.Services.Basket.REST.API.UnitTests/AW.Services.Basket.REST.API.UnitTests.csproj
-          dotnet test tests/AW.Services.Basket.REST.API.UnitTests/AW.Services.Basket.REST.API.UnitTests.csproj --no-build --no-restore
+          dotnet build tests/AW.Services.IdentityServer.Core.UnitTests/AW.Services.IdentityServer.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.IdentityServer.Core.UnitTests/AW.Services.IdentityServer.Core.UnitTests.csproj --no-build --no-restore --verbosity normal
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
@@ -61,7 +57,7 @@ jobs:
       - name: Build the Docker image      
         run: |
           cd src
-          docker build -f Services/Basket/src/AW.Services.Basket.REST.API/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
+          docker build -f Services/IdentityServer/src/AW.Services.IdentityServer/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
         run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
