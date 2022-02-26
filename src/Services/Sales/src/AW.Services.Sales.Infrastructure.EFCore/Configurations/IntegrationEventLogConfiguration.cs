@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.EventBus.IntegrationEventLog;
+﻿using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

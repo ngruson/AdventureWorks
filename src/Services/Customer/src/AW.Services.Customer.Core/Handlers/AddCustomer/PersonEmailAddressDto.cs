@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.Customer.Core.Handlers.AddCustomer
 {
     public class PersonEmailAddressDto : IMapFrom<Entities.PersonEmailAddress>
     {
-        public string EmailAddress { get; set; }
+        public EmailAddress EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

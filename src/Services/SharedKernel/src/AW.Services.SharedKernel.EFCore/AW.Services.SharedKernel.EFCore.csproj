@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Azure.Identity" Version="1.5.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
@@ -15,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.EventBus\AW.SharedKernel.EventBus.csproj" />
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure.EventBus\AW.Services.Infrastructure.EventBus.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure\AW.Services.Infrastructure.csproj" />
   </ItemGroup>
 

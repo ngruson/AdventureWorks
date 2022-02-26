@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.EventBus.Events;
+﻿using AW.Services.Infrastructure.EventBus.Events;
 using System;
 using System.Threading.Tasks;
 

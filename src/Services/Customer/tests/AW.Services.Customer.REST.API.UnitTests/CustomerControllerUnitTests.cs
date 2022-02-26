@@ -211,13 +211,26 @@ namespace AW.Services.Customer.REST.API.UnitTests
         {
             [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
             public async Task UpdateCustomer_ShouldReturnCustomer_GivenCustomer(
-                Core.Handlers.UpdateCustomer.StoreCustomerDto dto,
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] CustomerController sut,
-                Core.Models.UpdateCustomer.StoreCustomer customer
+                string accountNumber
             )
             {
                 //Arrange
+                var dto = new Core.Handlers.UpdateCustomer.StoreCustomerDto
+                {
+                    AccountNumber = accountNumber,
+                    Addresses = new List<Core.Handlers.UpdateCustomer.CustomerAddressDto>(),
+                    Contacts = new List<Core.Handlers.UpdateCustomer.StoreCustomerContactDto>()
+                };
+
+                var customer = new Core.Models.UpdateCustomer.StoreCustomer
+                {
+                    AccountNumber = accountNumber,
+                    Addresses = new List<Core.Models.UpdateCustomer.CustomerAddress>(),
+                    Contacts = new List<Core.Models.UpdateCustomer.StoreCustomerContact>()
+                };
+
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<UpdateCustomerCommand>(), 
                     It.IsAny<CancellationToken>()
@@ -225,7 +238,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 .ReturnsAsync(dto);
 
                 //Act
-                var actionResult = await sut.UpdateCustomer("1", customer);
+                var actionResult = await sut.UpdateCustomer(accountNumber, customer);
 
                 //Assert
                 var okResult = actionResult as OkObjectResult;

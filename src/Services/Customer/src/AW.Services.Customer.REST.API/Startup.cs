@@ -13,7 +13,6 @@ using System;
 using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
-using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using AW.SharedKernel.Api;
@@ -24,6 +23,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using AW.SharedKernel.JsonConverters;
+using AW.SharedKernel.Interfaces;
 
 namespace AW.Services.Customer.REST.API
 {

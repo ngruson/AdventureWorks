@@ -1,7 +1,7 @@
 ﻿using AW.Services.Infrastructure;
-using AW.SharedKernel.EventBus.Abstractions;
-using AW.SharedKernel.EventBus.Events;
-using AW.SharedKernel.EventBus.IntegrationEventLog;
+using AW.Services.Infrastructure.EventBus.Abstractions;
+using AW.Services.Infrastructure.EventBus.Events;
+using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.SharedKernel.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;

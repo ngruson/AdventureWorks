@@ -2,6 +2,7 @@
 using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -22,11 +23,31 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateStoreCustomerContactCommandHandler sut,
-            UpdateStoreCustomerContactCommand command,
-            Entities.Person contactPerson
+            Entities.Person contactPerson,
+            string accountNumber,
+            string contactType
         )
         {
             //Arrange
+            var command = new UpdateStoreCustomerContactCommand
+            {
+                AccountNumber = accountNumber,
+                CustomerContact = new StoreCustomerContactDto
+                {
+                    ContactType = contactType,
+                    ContactPerson = new PersonDto
+                    {
+                        EmailAddresses = new List<EmailAddressDto>
+                        {
+                            new EmailAddressDto
+                            {
+                                EmailAddress = EmailAddress.Create("test@test.com").Value
+                            }
+                        }
+                    }
+                }
+            };
+
             customer.AddContact(
                 new Entities.StoreCustomerContact(
                     command.CustomerContact.ContactType,
@@ -56,10 +77,24 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             UpdateStoreCustomerContactCommandHandler sut,
-            UpdateStoreCustomerContactCommand command
+            string accountNumber,
+            string contactType
         )
         {
             // Arrange
+            var command = new UpdateStoreCustomerContactCommand
+            {
+                AccountNumber = accountNumber,
+                CustomerContact = new StoreCustomerContactDto
+                {
+                    ContactType = contactType,
+                    ContactPerson = new PersonDto
+                    {
+                        EmailAddresses = new List<EmailAddressDto>()
+                    }
+                }
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -78,9 +113,24 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public void Handle_ContactDoesNotExist_ThrowArgumentNullException(
             UpdateStoreCustomerContactCommandHandler sut,
-            UpdateStoreCustomerContactCommand command
+            string accountNumber,
+            string contactType
         )
         {
+            //Arrange
+            var command = new UpdateStoreCustomerContactCommand
+            {
+                AccountNumber = accountNumber,
+                CustomerContact = new StoreCustomerContactDto
+                {
+                    ContactType = contactType,
+                    ContactPerson = new PersonDto
+                    {
+                        EmailAddresses = new List<EmailAddressDto>()
+                    }
+                }
+            };
+
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 

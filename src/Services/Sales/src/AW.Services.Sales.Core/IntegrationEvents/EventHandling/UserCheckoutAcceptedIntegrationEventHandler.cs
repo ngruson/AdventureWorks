@@ -2,8 +2,8 @@
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Handlers.Identified;
-using AW.SharedKernel.EventBus.Abstractions;
-using AW.SharedKernel.EventBus.Extensions;
+using AW.Services.Infrastructure.EventBus.Abstractions;
+using AW.Services.Infrastructure.EventBus.Extensions;
 using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;

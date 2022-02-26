@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddress;
 using AW.Services.Customer.Core.Specifications;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -21,10 +22,16 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             Entities.Person person,
             DeleteIndividualCustomerEmailAddressCommandHandler sut,
-            DeleteIndividualCustomerEmailAddressCommand command
+            string accountNumber
         )
         {
             //Arrange
+            var command = new DeleteIndividualCustomerEmailAddressCommand
+            {
+                AccountNumber = accountNumber,
+                EmailAddress = EmailAddress.Create("test@test.com").Value
+            };
+
             person.AddEmailAddress(
                 new Entities.PersonEmailAddress(command.EmailAddress)
             );
@@ -55,10 +62,16 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerEmailAddressCommandHandler sut,
-            DeleteIndividualCustomerEmailAddressCommand command
+            string accountNumber
         )
         {
             // Arrange
+            var command = new DeleteIndividualCustomerEmailAddressCommand
+            {
+                AccountNumber = accountNumber,
+                EmailAddress = EmailAddress.Create("test@test.com").Value
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -78,11 +91,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public void Handle_EmailAddressDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerEmailAddressCommandHandler sut,
-            DeleteIndividualCustomerEmailAddressCommand command,
-            Entities.Person person
+            Entities.Person person,
+            string accountNumber
         )
         {
             //Arrange
+            var command = new DeleteIndividualCustomerEmailAddressCommand
+            {
+                AccountNumber = accountNumber,
+                EmailAddress = EmailAddress.Create("test@test.com").Value
+            };
+
             customerRepoMock.Setup(_ =>
                 _.GetBySpecAsync(
                     It.IsAny<GetIndividualCustomerSpecification>(),

@@ -2,11 +2,13 @@
 using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,9 +22,30 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomerExist_AddStoreCustomerContact(
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             AddStoreCustomerContactCommandHandler sut,
-            AddStoreCustomerContactCommand command
+            string accountNumber,
+            string contactType
         )
         {
+            //Arrange
+            var command = new AddStoreCustomerContactCommand
+            {
+                AccountNumber = accountNumber,
+                CustomerContact = new StoreCustomerContactDto
+                {
+                    ContactType = contactType,
+                    ContactPerson = new PersonDto
+                    {
+                        EmailAddresses = new List<EmailAddressDto>
+                        {
+                            new EmailAddressDto
+                            {
+                                EmailAddress = EmailAddress.Create("test@test.com").Value
+                            }
+                        }
+                    }
+                }
+            };
+
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
 
@@ -39,10 +62,30 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.StoreCustomer>> customerRepoMock,
             AddStoreCustomerContactCommandHandler sut,
-            AddStoreCustomerContactCommand command
+            string accountNumber,
+            string contactType
         )
         {
             // Arrange
+            var command = new AddStoreCustomerContactCommand
+            {
+                AccountNumber = accountNumber,
+                CustomerContact = new StoreCustomerContactDto
+                {
+                    ContactType = contactType,
+                    ContactPerson = new PersonDto
+                    {
+                        EmailAddresses = new List<EmailAddressDto>
+                        {
+                            new EmailAddressDto
+                            {
+                                EmailAddress = EmailAddress.Create("test@test.com").Value
+                            }
+                        }
+                    }
+                }
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()

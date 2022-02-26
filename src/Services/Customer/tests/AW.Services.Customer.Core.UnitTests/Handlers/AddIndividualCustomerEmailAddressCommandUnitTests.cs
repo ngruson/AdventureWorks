@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress;
 using AW.Services.Customer.Core.Specifications;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -19,10 +20,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomerExist_AddIndividualCustomerEmailAddress(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             AddIndividualCustomerEmailAddressCommandHandler sut,
-            AddIndividualCustomerEmailAddressCommand command,
-            Entities.Person person
+            Entities.Person person,
+            string accountNumber
         )
         {
+            //Arrange
+            var command = new AddIndividualCustomerEmailAddressCommand
+            {
+                AccountNumber = accountNumber,
+                EmailAddress = EmailAddress.Create("test@test.com").Value
+            };
+
             //Act
             customerRepoMock.Setup(_ =>
                 _.GetBySpecAsync(
@@ -47,10 +55,16 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             AddIndividualCustomerEmailAddressCommandHandler sut,
-            AddIndividualCustomerEmailAddressCommand command
+            string accountNumber
         )
         {
             // Arrange
+            var command = new AddIndividualCustomerEmailAddressCommand
+            {
+                AccountNumber = accountNumber,
+                EmailAddress = EmailAddress.Create("test@test.com").Value
+            };
+
             customerRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()

@@ -13,6 +13,8 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
 
             builder.Property("Id")
                 .HasColumnName("PersonEmailAddressID");
+
+            builder.OwnsOne(_ => _.EmailAddress);
         }
     }
 }

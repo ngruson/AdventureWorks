@@ -1,10 +1,12 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using AW.Services.Customer.Core.Specifications;
+using AW.Services.SharedKernel.ValueObjects;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
+using System.Collections.Generic;
 using System.Threading;
 using Xunit;
 
@@ -98,10 +100,37 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandValidator sut,
             UpdateCustomerCommand command,
-            StoreCustomerDto customerDto
+            string accountNumber,
+            List<CustomerAddressDto> addresses,
+            string contactType,
+            List<PersonPhoneDto> phoneNumbers
         )
         {
             //Arrange
+            var customerDto = new StoreCustomerDto
+            {
+                AccountNumber = accountNumber,
+                Addresses = addresses,
+                Contacts = new List<StoreCustomerContactDto>
+                {
+                    new StoreCustomerContactDto
+                    {
+                        ContactType = contactType,
+                        ContactPerson = new PersonDto
+                        {
+                            EmailAddresses = new List<PersonEmailAddressDto>
+                            {
+                                new PersonEmailAddressDto
+                                {
+                                    EmailAddress = EmailAddress.Create("test@test.com").Value
+                                }
+                            },
+                            PhoneNumbers = phoneNumbers
+                        }
+                    }
+                }
+            };
+
             command.Customer = customerDto;
             command.Customer.AccountNumber = command.Customer.AccountNumber.Substring(0, 10);
 

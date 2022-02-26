@@ -1,5 +1,5 @@
 ﻿using AW.Services.Infrastructure;
-using AW.SharedKernel.EventBus.Extensions;
+using AW.Services.Infrastructure.EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;

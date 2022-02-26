@@ -1,5 +1,5 @@
 ﻿using AW.Services.Basket.Core.Models;
-using AW.SharedKernel.EventBus.Events;
+using AW.Services.Infrastructure.EventBus.Events;
 using System;
 using System.Collections.Generic;
 

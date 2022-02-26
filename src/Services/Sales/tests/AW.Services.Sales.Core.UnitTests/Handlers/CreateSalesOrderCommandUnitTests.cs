@@ -1,9 +1,9 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.Specifications;
-using AW.SharedKernel.EventBus.Events;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;

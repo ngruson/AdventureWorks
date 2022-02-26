@@ -1,6 +1,6 @@
-﻿using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
+﻿using AW.Services.Infrastructure.EventBus.Events;
+using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.Models;
-using AW.SharedKernel.EventBus.Events;
 using System;
 using System.Collections.Generic;
 

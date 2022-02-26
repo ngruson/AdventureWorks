@@ -1,6 +1,6 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
 using AW.Services.Basket.Core.Models;
-using AW.SharedKernel.EventBus.Abstractions;
+using AW.Services.Infrastructure.EventBus.Abstractions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;

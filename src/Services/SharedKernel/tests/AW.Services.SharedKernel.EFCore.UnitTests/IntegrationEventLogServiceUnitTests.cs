@@ -1,16 +1,12 @@
 using AutoFixture.Xunit2;
-using AW.Services.SharedKernel.EFCore;
-using AW.SharedKernel.EventBus.EFCore;
-using AW.SharedKernel.EventBus.IntegrationEventLog;
+using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 

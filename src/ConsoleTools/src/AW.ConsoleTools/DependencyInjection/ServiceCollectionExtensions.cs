@@ -1,7 +1,4 @@
-﻿using c = AW.Services.Customer.Infrastructure.EFCore;
-using p = AW.Services.Product.Infrastructure.EFCore;
-using AW.Services.SharedKernel.EFCore;
-using AW.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.EFCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
@@ -12,6 +9,7 @@ using AW.Services.IdentityServer.Core.Data;
 using AW.Services.IdentityServer.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using AW.Services.Product.Infrastructure.EFCore.Configurations;
+using AW.SharedKernel.Interfaces;
 
 namespace AW.ConsoleTools.DependencyInjection
 {
@@ -59,25 +57,25 @@ namespace AW.ConsoleTools.DependencyInjection
              {
                  var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                  var dbContext = func(ServiceDomain.Customer);
-                 return new c.EfRepository<Services.Customer.Core.Entities.Customer>(dbContext);
+                 return new EfRepository<Services.Customer.Core.Entities.Customer>(dbContext);
              })
             .AddScoped<IRepository<Services.Customer.Core.Entities.StoreCustomer>>(provider =>
             {
                 var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                 var dbContext = func(ServiceDomain.Customer);
-                return new c.EfRepository<Services.Customer.Core.Entities.StoreCustomer>(dbContext);
+                return new EfRepository<Services.Customer.Core.Entities.StoreCustomer>(dbContext);
             })
             .AddScoped<IRepository<Services.Customer.Core.Entities.IndividualCustomer>>(provider =>
             {
                 var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                 var dbContext = func(ServiceDomain.Customer);
-                return new c.EfRepository<Services.Customer.Core.Entities.IndividualCustomer>(dbContext);
+                return new EfRepository<Services.Customer.Core.Entities.IndividualCustomer>(dbContext);
             })
             .AddScoped<IRepository<Services.Customer.Core.Entities.Address>>(provider =>
              {
                  var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                  var dbContext = func(ServiceDomain.Customer);
-                 return new c.EfRepository<Services.Customer.Core.Entities.Address>(dbContext);
+                 return new EfRepository<Services.Customer.Core.Entities.Address>(dbContext);
              });
 
             return services;
@@ -89,13 +87,13 @@ namespace AW.ConsoleTools.DependencyInjection
              {
                  var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                  var dbContext = func(ServiceDomain.Product);
-                 return new p.EfRepository<Services.Product.Core.Entities.Product>(dbContext);
+                 return new EfRepository<Services.Product.Core.Entities.Product>(dbContext);
              })
             .AddScoped<IRepository<Services.Product.Core.Entities.ProductCategory>>(provider =>
             {
                 var func = provider.GetRequiredService<Func<ServiceDomain, AWContext>>();
                 var dbContext = func(ServiceDomain.Product);
-                return new p.EfRepository<Services.Product.Core.Entities.ProductCategory>(dbContext);
+                return new EfRepository<Services.Product.Core.Entities.ProductCategory>(dbContext);
             });
 
             return services;

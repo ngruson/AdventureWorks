@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.EventBus.Events;
+﻿using AW.Services.Infrastructure.EventBus.Events;
 
 namespace AW.Services.SharedKernel.EFCore.UnitTests
 {

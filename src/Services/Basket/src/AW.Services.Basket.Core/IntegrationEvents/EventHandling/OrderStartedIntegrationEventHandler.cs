@@ -1,5 +1,5 @@
 ﻿using AW.Services.Basket.Core.IntegrationEvents.Events;
-using AW.SharedKernel.EventBus.Abstractions;
+using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.SharedKernel.Interfaces;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;

@@ -8,6 +8,7 @@ using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.UnitTesting;
 using Moq;
 using MediatR;
+using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 
 namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 {
@@ -26,7 +27,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             var context = new AWContext(
                 contextOptions,
                 mockMediator.Object,
-                typeof(EfRepository<>).Assembly
+                typeof(CustomerConfiguration).Assembly
             );
 
             //Act

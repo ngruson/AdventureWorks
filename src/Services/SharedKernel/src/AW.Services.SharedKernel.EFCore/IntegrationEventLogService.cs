@@ -1,6 +1,5 @@
-﻿using AW.Services.SharedKernel.EFCore;
-using AW.SharedKernel.EventBus.Events;
-using AW.SharedKernel.EventBus.IntegrationEventLog;
+﻿using AW.Services.Infrastructure.EventBus.Events;
+using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace AW.SharedKernel.EventBus.EFCore
+namespace AW.Services.SharedKernel.EFCore
 {
     public class IntegrationEventLogService : IIntegrationEventLogService
     {

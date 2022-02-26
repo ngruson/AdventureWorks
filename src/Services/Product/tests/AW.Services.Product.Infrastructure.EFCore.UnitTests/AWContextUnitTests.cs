@@ -1,4 +1,5 @@
 ﻿using AW.Services.Product.Core.Entities;
+using AW.Services.Product.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -26,7 +27,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var context = new AWContext(
                 contextOptions,
                 mockMediator.Object,
-                typeof(EfRepository<>).Assembly
+                typeof(ProductConfiguration).Assembly
             );
 
             //Act

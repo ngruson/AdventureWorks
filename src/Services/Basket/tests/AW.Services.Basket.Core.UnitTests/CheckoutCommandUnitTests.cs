@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Basket.Core.Handlers.Checkout;
 using AW.Services.Basket.Core.Models;
-using AW.SharedKernel.EventBus.Abstractions;
-using AW.SharedKernel.EventBus.Events;
+using AW.Services.Infrastructure.EventBus.Abstractions;
+using AW.Services.Infrastructure.EventBus.Events;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
