@@ -9,7 +9,8 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entities.PersonEmailAddress, PersonEmailAddressDto>();
+            profile.CreateMap<Entities.PersonEmailAddress, PersonEmailAddressDto>()
+                .ForMember(m => m.EmailAddress, opt => opt.MapFrom(src => src.EmailAddress.Value));
         }
     }
 }

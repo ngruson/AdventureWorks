@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 
 namespace AW.Services.Customer.Core.Models.UpdateCustomer
 {

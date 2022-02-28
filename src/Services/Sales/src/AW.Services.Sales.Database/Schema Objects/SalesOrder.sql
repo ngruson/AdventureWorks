@@ -12,8 +12,18 @@
 	[CustomerID] [int] NOT NULL,
 	[SalesPersonID] [int] NULL,
 	[Territory] [nvarchar](50) NULL,
-	[BillToAddressID] [int] NOT NULL,
-	[ShipToAddressID] [int] NOT NULL,
+	[BillToAddress_AddressLine1] [nvarchar](60) NOT NULL,
+	[BillToAddress_AddressLine2] [nvarchar](60) NULL,
+	[BillToAddress_PostalCode] [nvarchar](15) NOT NULL,
+	[BillToAddress_City] [nvarchar](30) NOT NULL,
+	[BillToAddress_StateProvinceCode] [nchar](3) NULL,
+	[BillToAddress_CountryRegionCode] [nvarchar](3) NOT NULL,
+	[ShipToAddress_AddressLine1] [nvarchar](60) NOT NULL,
+	[ShipToAddress_AddressLine2] [nvarchar](60) NULL,
+	[ShipToAddress_PostalCode] [nvarchar](15) NOT NULL,
+	[ShipToAddress_City] [nvarchar](30) NOT NULL,
+	[ShipToAddress_StateProvinceCode] [nchar](3) NULL,
+	[ShipToAddress_CountryRegionCode] [nvarchar](3) NOT NULL,
 	[ShipMethod] [nvarchar](50) NOT NULL,
 	[TaxRate] [decimal] NULL,
 	[CreditCardID] [int] NULL,
@@ -38,20 +48,6 @@ REFERENCES [SalesPerson] ([PersonID])
 GO
 
 ALTER TABLE [SalesOrder] CHECK CONSTRAINT [FK_SalesOrder_SalesPerson_SalesPersonID]
-GO
-
-ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_Address_BillToAddressID] FOREIGN KEY([BillToAddressID])
-REFERENCES [Address] ([AddressID])
-GO
-
-ALTER TABLE [SalesOrder] CHECK CONSTRAINT [FK_SalesOrder_Address_BillToAddressID]
-GO
-
-ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_Address_ShipToAddressID] FOREIGN KEY([ShipToAddressID])
-REFERENCES [Address] ([AddressID])
-GO
-
-ALTER TABLE [SalesOrder] CHECK CONSTRAINT [FK_SalesOrder_Address_ShipToAddressID]
 GO
 
 ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_CreditCard_CreditCardID] FOREIGN KEY([CreditCardID])

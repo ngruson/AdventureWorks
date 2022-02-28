@@ -16,6 +16,9 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
             builder.Property(p => p.SalesOrderNumber)
                 .HasComputedColumnSql();
 
+            builder.OwnsOne(_ => _.BillToAddress);
+            builder.OwnsOne(_ => _.ShipToAddress);
+
             builder.Ignore(p => p.SubTotal);
             builder.Ignore(p => p.TaxAmt);
             builder.Ignore(p => p.TaxRate);

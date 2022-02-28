@@ -2,7 +2,7 @@
 using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;

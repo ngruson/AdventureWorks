@@ -1,4 +1,4 @@
-﻿using AW.Services.SharedKernel.ValueObjects;
+﻿using AW.Services.SharedKernel.ValueTypes;
 using MediatR;
 
 namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin

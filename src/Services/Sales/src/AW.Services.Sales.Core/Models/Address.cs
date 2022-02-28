@@ -16,8 +16,7 @@ namespace AW.Services.Sales.Core.Models
         {
             profile.CreateMap<Handlers.GetSalesOrders.AddressDto, Address>();
             profile.CreateMap<Handlers.GetSalesOrder.AddressDto, Address>();
-            profile.CreateMap<Address, Entities.Address>()
-                .ForMember(m => m.Id, opt => opt.Ignore());
+            profile.CreateMap<Address, ValueTypes.Address>();
         }
     }
 }

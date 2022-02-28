@@ -1,4 +1,5 @@
 ﻿using AW.Services.Sales.Core.Events;
+using AW.Services.Sales.Core.ValueTypes;
 using AW.SharedKernel.Domain;
 using AW.SharedKernel.Interfaces;
 using System;
@@ -38,39 +39,39 @@ namespace AW.Services.Sales.Core.Entities
         }
 
         private int Id { get; set; }
-        public byte RevisionNumber { get; set; }
+        public byte RevisionNumber { get; private set; }
 
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; private set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTime DueDate { get; private set; }
 
-        public DateTime? ShipDate { get; set; }
+        public DateTime? ShipDate { get; private set; }
 
-        public SalesOrderStatus Status { get; set; }
+        public SalesOrderStatus Status { get; private set; }
 
-        public bool OnlineOrderFlag { get; set; }
+        public bool OnlineOrderFlag { get; private set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string SalesOrderNumber { get; private set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string PurchaseOrderNumber { get; private set; }
 
-        public string AccountNumber { get; set; }
-        public Customer Customer { get; set; }
-        public int CustomerID { get; set; }
+        public string AccountNumber { get; private set; }
+        public Customer Customer { get; private set; }
+        public int CustomerID { get; private set; }
 
-        public SalesPerson SalesPerson { get; set; }
-        public int? SalesPersonID { get; set; }
+        public SalesPerson SalesPerson { get; private set; }
+        public int? SalesPersonID { get; private set; }
 
-        public string Territory { get; set; }
+        public string Territory { get; private set; }
 
-        public Address BillToAddress { get; set; }
+        public Address BillToAddress { get; private set; }
 
-        public Address ShipToAddress { get; set; }
+        public Address ShipToAddress { get; private set; }
 
-        public string ShipMethod { get; set; }
+        public string ShipMethod { get; private set; }
 
-        public CreditCard CreditCard { get; set; }
-        public int CreditCardID { get; set; }
+        public CreditCard CreditCard { get; private set; }
+        public int CreditCardID { get; private set; }
 
         public decimal SubTotal
         {
@@ -80,11 +81,11 @@ namespace AW.Services.Sales.Core.Entities
             }
         }
 
-        public decimal TaxRate { get; set; }
+        public decimal TaxRate { get; private set; }
 
         public decimal TaxAmt => SubTotal / 100 * TaxRate;
 
-        public decimal Freight { get; set; }
+        public decimal Freight { get; private set; }
 
         public decimal TotalDue
         {
@@ -94,11 +95,13 @@ namespace AW.Services.Sales.Core.Entities
             }
         }
 
-        public string Comment { get; set; }
+        public string Comment { get; private set; }
 
-        public List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
+        public IEnumerable<SalesOrderLine> OrderLines => _orderLines.ToList();
+        private List<SalesOrderLine> _orderLines = new();
 
-        public List<SalesOrderSalesReason> SalesReasons { get; set; } = new List<SalesOrderSalesReason>();
+        public IEnumerable<SalesOrderSalesReason> SalesReasons => _salesReasons.ToList();
+        private List<SalesOrderSalesReason> _salesReasons = new();
 
         private void AddOrderStartedDomainEvent(string userId, string userName, string cardType, string cardNumber,
                 string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
@@ -131,7 +134,7 @@ namespace AW.Services.Sales.Core.Entities
                 //add validated new order item
 
                 var orderLine = new SalesOrderLine(productNumber, productName, unitPrice, unitPriceDiscount, specialOfferProduct, quantity);
-                OrderLines.Add(orderLine);
+                _orderLines.Add(orderLine);
             }
         }
     }

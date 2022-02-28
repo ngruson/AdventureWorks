@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 {
-    public class AddressDto : IMapFrom<Entities.Address>
+    public class AddressDto : IMapFrom<ValueTypes.Address>
     {
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
@@ -14,8 +14,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AddressDto, Entities.Address>()
-                .ForMember(m => m.Id, opt => opt.Ignore());
+            profile.CreateMap<AddressDto, ValueTypes.Address>();
             profile.CreateMap<Models.Address, AddressDto>();
         }
     }

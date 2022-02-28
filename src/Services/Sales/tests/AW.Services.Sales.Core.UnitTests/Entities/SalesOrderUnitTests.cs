@@ -1,6 +1,7 @@
 ﻿using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Entities;
 using AW.Services.Sales.Core.Events;
+using AW.Services.Sales.Core.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using System;
@@ -67,8 +68,9 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.OrderLines.Count.Should().Be(4);
-            salesOrder.OrderLines[3].OrderQty.Should().Be(1);
+            var orderLines = salesOrder.OrderLines.ToList();
+            orderLines.Count.Should().Be(1);
+            orderLines[0].OrderQty.Should().Be(1);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -94,18 +96,29 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.OrderLines.Count.Should().Be(4);
-            salesOrder.OrderLines[3].OrderQty.Should().Be(quantity);
+            var orderLines = salesOrder.OrderLines.ToList();
+            orderLines.Count.Should().Be(1);
+            orderLines[0].OrderQty.Should().Be(quantity);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLine_OrderLineWithProductFound_UpdatedOrderLine(
             SalesOrder salesOrder,
+            SalesOrderLine salesOrderLine,
             SpecialOfferProduct specialOfferProduct
         )
         {
             //Arrange
-            var existingOrderLine = salesOrder.OrderLines[0];
+            salesOrder.AddOrderLine(
+                salesOrderLine.ProductNumber,
+                salesOrderLine.ProductName,
+                salesOrderLine.UnitPriceDiscount,
+                0,
+                specialOfferProduct
+            );
+
+            var orderLines = salesOrder.OrderLines.ToList();
+            var existingOrderLine = orderLines[0];
             var originalQuantity = existingOrderLine.OrderQty;
 
             //Act
@@ -118,19 +131,29 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.OrderLines.Count.Should().Be(3);
-            salesOrder.OrderLines[0].OrderQty.Should().Be((short)(originalQuantity + 1));
+            orderLines.Count.Should().Be(1);
+            orderLines[0].OrderQty.Should().Be((short)(originalQuantity + 1));
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLineWithQuantity_OrderLineWithProductFound_UpdatedOrderLine(
             SalesOrder salesOrder,
+            SalesOrderLine salesOrderLine,
             SpecialOfferProduct specialOfferProduct,
             short quantity
         )
         {
             //Arrange
-            var existingOrderLine = salesOrder.OrderLines[0];
+            salesOrder.AddOrderLine(
+                salesOrderLine.ProductNumber,
+                salesOrderLine.ProductName,
+                salesOrderLine.UnitPriceDiscount,
+                0,
+                specialOfferProduct
+            );
+
+            var orderLines = salesOrder.OrderLines.ToList();
+            var existingOrderLine = orderLines[0];
             var originalQuantity = existingOrderLine.OrderQty;
 
             //Act
@@ -144,18 +167,28 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.OrderLines.Count.Should().Be(3);
-            salesOrder.OrderLines[0].OrderQty.Should().Be((short)(originalQuantity + quantity));
+            orderLines.Count.Should().Be(1);
+            orderLines[0].OrderQty.Should().Be((short)(originalQuantity + quantity));
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void AddOrderLineWithDiscount_OrderLineWithProductFound_UpdatedOrderLine(
-            Core.Entities.SalesOrder salesOrder,
+            SalesOrder salesOrder,
+            SalesOrderLine salesOrderLine,
             SpecialOfferProduct specialOfferProduct
         )
         {
             //Arrange
-            var existingOrderLine = salesOrder.OrderLines[0];
+            salesOrder.AddOrderLine(
+                salesOrderLine.ProductNumber,
+                salesOrderLine.ProductName,
+                salesOrderLine.UnitPriceDiscount,
+                0,
+                specialOfferProduct
+            );
+
+            var orderLines = salesOrder.OrderLines.ToList();
+            var existingOrderLine = orderLines[0];
             var originalQuantity = existingOrderLine.UnitPriceDiscount;
 
             //Act
@@ -168,8 +201,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.OrderLines.Count.Should().Be(3);
-            salesOrder.OrderLines[0].UnitPriceDiscount.Should().Be((short)(originalQuantity + 1));
+            orderLines.Count.Should().Be(1);
+            orderLines[0].UnitPriceDiscount.Should().Be((short)(originalQuantity + 1));
         }
     }
 }

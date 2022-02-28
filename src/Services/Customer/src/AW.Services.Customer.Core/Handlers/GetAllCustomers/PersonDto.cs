@@ -1,4 +1,4 @@
-﻿using AW.Services.SharedKernel.ValueObjects;
+﻿using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
 using System.Collections.Generic;
 

@@ -1,8 +1,9 @@
 ﻿using Ardalis.Specification;
+using AW.Services.Sales.Core.ValueTypes;
 
 namespace AW.Services.Sales.Core.Specifications
 {
-    public class GetAddressSpecification : Specification<Entities.Address>, ISingleResultSpecification
+    public class GetAddressSpecification : Specification<Address>, ISingleResultSpecification
     {
         public GetAddressSpecification(
             string addressLine1,

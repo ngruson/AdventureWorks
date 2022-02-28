@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.Customer.Core.Models.DeleteStoreCustomerContact

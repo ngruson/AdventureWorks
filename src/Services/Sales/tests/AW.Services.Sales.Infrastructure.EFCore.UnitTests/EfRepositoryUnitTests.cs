@@ -84,10 +84,39 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
         [Theory, OmitOnRecursion]
         public async Task ListAsync_ReturnsObjects(
             [Frozen] Mock<AWContext> mockContext,
-            List<Core.Entities.SalesOrder> salesOrders
+            string userId,
+            string userName,
+            Core.Entities.Customer customer,
+            string shipMethod,
+            Core.ValueTypes.Address address,
+            Core.Entities.CreditCard creditCard,
+            string cardSecurityNumber,
+            string cardHolderName
         )
         {
             //Arrange
+            creditCard.ExpYear = short.Parse(DateTime.Today.Year.ToString());
+            creditCard.ExpMonth = byte.Parse(DateTime.Today.Month.ToString());
+
+            var salesOrders = new List<Core.Entities.SalesOrder>();
+            int orderCount = 2;
+            for (int i = 0; i < orderCount; i++)
+            {
+                salesOrders.Add(
+                    new Core.Entities.SalesOrder(
+                        userId,
+                        userName,
+                        customer,
+                        shipMethod,
+                        address,
+                        address,
+                        creditCard,
+                        cardSecurityNumber,
+                        cardHolderName
+                    )
+                );
+            }
+
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
@@ -99,7 +128,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
             var list = await repository.ListAsync(spec);
 
             //Assert
-            list.Count.Should().Be(3);
+            list.Count.Should().Be(orderCount);
         }
 
         [Theory, OmitOnRecursion]
@@ -159,10 +188,39 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
         [Theory, OmitOnRecursion]
         public async Task CountAsync_ReturnsCount(
             [Frozen] Mock<AWContext> mockContext,
-            List<Core.Entities.SalesOrder> salesOrders
+            string userId,
+            string userName,
+            Core.Entities.Customer customer,
+            string shipMethod,
+            Core.ValueTypes.Address address,
+            Core.Entities.CreditCard creditCard,
+            string cardSecurityNumber,
+            string cardHolderName
         )
         {
             //Arrange
+            creditCard.ExpYear = short.Parse(DateTime.Today.Year.ToString());
+            creditCard.ExpMonth = byte.Parse(DateTime.Today.Month.ToString());
+
+            var salesOrders = new List<Core.Entities.SalesOrder>();
+            int orderCount = 2;
+            for (int i = 0; i < orderCount; i++)
+            {
+                salesOrders.Add(
+                    new Core.Entities.SalesOrder(
+                        userId,
+                        userName,
+                        customer,
+                        shipMethod,
+                        address,
+                        address,
+                        creditCard,
+                        cardSecurityNumber,
+                        cardHolderName
+                    )
+                );
+            }
+
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
@@ -174,7 +232,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
             var count = await repository.CountAsync(spec);
 
             //Assert
-            count.Should().Be(3);
+            count.Should().Be(orderCount);
         }
 
         [Theory, OmitOnRecursion]

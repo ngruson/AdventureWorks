@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddCustomer;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;

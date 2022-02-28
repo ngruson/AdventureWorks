@@ -12,6 +12,7 @@ using AW.Services.Sales.Core.Handlers.Identified;
 using AW.Services.Sales.Core.Idempotency;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
@@ -95,7 +96,7 @@ namespace AW.Services.Sales.Order.REST.API
                 });
             });
 
-            ConfigureEventBus(app);
+            //ConfigureEventBus(app);
         }
 
         private static void ConfigureEventBus(IApplicationBuilder app)
@@ -172,7 +173,7 @@ namespace AW.Services.Sales.Order.REST.API
                 return new AWContext(
                     builder.Options,                    
                     provider.GetService<IMediator>(),
-                    typeof(EfRepository<>).Assembly
+                    typeof(SalesOrderConfiguration).Assembly
                 );
             });
 

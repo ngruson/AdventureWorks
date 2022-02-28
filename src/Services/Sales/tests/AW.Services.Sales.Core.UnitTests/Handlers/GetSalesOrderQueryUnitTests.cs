@@ -6,6 +6,7 @@ using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,15 +17,35 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_SalesOrderWithIndividualCustomer_Exists_ReturnSalesOrder(
-            Core.Entities.SalesOrder salesOrder,
+            string userId,
+            string userName,
+            string cardSecurityNumber,
+            string cardHolderName,
             Core.Entities.IndividualCustomer customer,
+            string shipMethod,
+            ValueTypes.Address billToAddress,
+            ValueTypes.Address shipToAddress,
+            Core.Entities.CreditCard creditCard,
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             GetSalesOrderQueryHandler sut,
             GetSalesOrderQuery query
         )
         {
             //Arrange
-            salesOrder.Customer = customer;
+            creditCard.ExpYear = short.Parse(DateTime.Today.Year.ToString());
+            creditCard.ExpMonth = byte.Parse(DateTime.Today.Month.ToString());
+
+            var salesOrder = new Core.Entities.SalesOrder(
+                userId,
+                userName,
+                customer,
+                shipMethod,
+                billToAddress,
+                shipToAddress,
+                creditCard,
+                cardSecurityNumber,
+                cardHolderName
+            );
 
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
@@ -46,15 +67,35 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_SalesOrderWithStoreCustomer_Exists_ReturnSalesOrder(
-            Core.Entities.SalesOrder salesOrder,
+            string userId,
+            string userName,
+            string cardSecurityNumber,
+            string cardHolderName,
             Core.Entities.StoreCustomer customer,
+            string shipMethod,
+            ValueTypes.Address billToAddress,
+            ValueTypes.Address shipToAddress,
+            Core.Entities.CreditCard creditCard,
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             GetSalesOrderQueryHandler sut,
             GetSalesOrderQuery query
         )
         {
             //Arrange
-            salesOrder.Customer = customer;
+            creditCard.ExpYear = short.Parse(DateTime.Today.Year.ToString());
+            creditCard.ExpMonth = byte.Parse(DateTime.Today.Month.ToString());
+
+            var salesOrder = new Core.Entities.SalesOrder(
+                userId,
+                userName,
+                customer,
+                shipMethod,
+                billToAddress,
+                shipToAddress,
+                creditCard,
+                cardSecurityNumber,
+                cardHolderName
+            );
 
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),

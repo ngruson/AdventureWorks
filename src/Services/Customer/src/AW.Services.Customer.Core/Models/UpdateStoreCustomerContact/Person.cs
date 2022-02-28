@@ -2,7 +2,7 @@
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using System.Collections.Generic;
 using AW.SharedKernel.AutoMapper;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 
 namespace AW.Services.Customer.Core.Models.UpdateStoreCustomerContact
 {

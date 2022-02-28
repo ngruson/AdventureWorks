@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.Interfaces;
+using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -191,7 +192,7 @@ namespace AW.Services.Customer.REST.API
                 return new AWContext(
                     builder.Options,                    
                     provider.GetService<IMediator>(),
-                    typeof(EfRepository<>).Assembly
+                    typeof(CustomerConfiguration).Assembly
                 );
             });
 

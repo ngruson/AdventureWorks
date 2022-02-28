@@ -2,7 +2,7 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using System.Collections.Generic;
-using AW.Services.SharedKernel.ValueObjects;
+using AW.Services.SharedKernel.ValueTypes;
 
 namespace AW.Services.Customer.Core.Models.GetCustomer
 {
