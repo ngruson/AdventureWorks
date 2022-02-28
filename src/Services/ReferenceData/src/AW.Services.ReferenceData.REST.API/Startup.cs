@@ -1,6 +1,7 @@
 using AW.Services.Infrastructure.Filters;
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using AW.Services.ReferenceData.Infrastructure.EFCore;
+using AW.Services.ReferenceData.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
@@ -142,7 +143,7 @@ namespace AW.Services.ReferenceData.REST.API
                 return new AWContext(
                     builder.Options,
                     provider.GetService<IMediator>(),
-                    typeof(EfRepository<>).Assembly
+                    typeof(AddressTypeConfiguration).Assembly
                 );
             });
 

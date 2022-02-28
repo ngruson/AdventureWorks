@@ -1,6 +1,7 @@
 using AW.Services.Infrastructure.Filters;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Infrastructure.EFCore;
+using AW.Services.Product.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.FileHandling;
@@ -142,7 +143,7 @@ namespace AW.Services.Product.REST.API
                 return new AWContext(
                     builder.Options,                    
                     provider.GetService<IMediator>(),
-                    typeof(EfRepository<>).Assembly
+                    typeof(ProductConfiguration).Assembly
                 );
             });
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
