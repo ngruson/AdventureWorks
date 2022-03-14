@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces
 {
-    public class StateProvince : IMapFrom<Core.Entities.StateProvince>
+    public class StateProvince : IMapFrom<Entities.StateProvince>
     {
         public string StateProvinceCode { get; set; }
 
@@ -16,7 +16,8 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Core.Entities.StateProvince, StateProvince>()
-                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()));
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()))
+                .ForMember(m => m.CountryRegionCode, opt => opt.MapFrom(src => src.CountryRegion.CountryRegionCode));
         }
     }
 }

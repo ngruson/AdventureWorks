@@ -18,14 +18,11 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
                 .IsRequired()
                 .HasMaxLength(3);
 
-            builder.Property(sp => sp.CountryRegionCode)
-                .IsRequired()
-                .HasMaxLength(3);
-
             builder.HasOne(sp => sp.CountryRegion)
-                .WithMany("_statesProvinces")
-                .HasForeignKey(sp => sp.CountryRegionCode);
-
+                .WithMany(_ => _.StatesProvinces)
+                .HasForeignKey("CountryRegionCode");
+            
+                
             builder.Property(sp => sp.Name)
                 .IsRequired()
                 .HasMaxLength(50);

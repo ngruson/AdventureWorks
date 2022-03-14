@@ -6,10 +6,14 @@ namespace AW.Services.ReferenceData.Core.Entities
 {
     public class CountryRegion : IAggregateRoot
     {
+        public CountryRegion(string countryRegionCode)
+        {
+            CountryRegionCode = countryRegionCode;
+        }
         public string CountryRegionCode { get; private set; }
         public string Name { get; private set; }
 
         public IEnumerable<StateProvince> StatesProvinces => _statesProvinces.ToList();
-        private List<StateProvince> _statesProvinces;
+        private List<StateProvince> _statesProvinces = new();
     }
 }

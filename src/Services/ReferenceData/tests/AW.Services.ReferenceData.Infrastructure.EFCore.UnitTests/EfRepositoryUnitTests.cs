@@ -93,7 +93,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         {
             //Arrange
             var statesProvinces = data.Select(_ =>
-                new StateProvince(_.Item1, _.Item2)
+                new StateProvince(new CountryRegion(_.Item1), _.Item2)
             )
             .ToList();
 
@@ -104,7 +104,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<StateProvince>(mockContext.Object);
 
             //Act
-            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegionCode);
+            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegion.CountryRegionCode);
             var list = await repository.ListAsync(spec);
 
             //Assert
@@ -174,7 +174,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         {
             //Arrange
             var statesProvinces = data.Select(_ =>
-                new StateProvince(_.Item1, _.Item2)
+                new StateProvince(new CountryRegion(_.Item1), _.Item2)
             )
             .ToList();
 
@@ -185,7 +185,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<StateProvince>(mockContext.Object);
 
             //Act
-            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegionCode);
+            var spec = new GetStatesProvincesForCountrySpecification(statesProvinces[0].CountryRegion.CountryRegionCode);
             var count = await repository.CountAsync(spec);
 
             //Assert
