@@ -96,7 +96,7 @@ namespace AW.Services.Sales.Order.REST.API
                 });
             });
 
-            //ConfigureEventBus(app);
+            ConfigureEventBus(app);
         }
 
         private static void ConfigureEventBus(IApplicationBuilder app)
