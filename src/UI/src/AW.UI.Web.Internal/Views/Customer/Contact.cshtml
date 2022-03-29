@@ -39,43 +39,43 @@
             @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Title, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CustomerContact.ContactPerson.FirstName, new { @class = "control-label" })
+            @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.FirstName, new { @class = "control-label" })
             @if (Model.IsNewContact)
             {
-                <input asp-for="CustomerContact.ContactPerson.FirstName" class="form-control" />
+                <input asp-for="CustomerContact.ContactPerson.Name.FirstName" class="form-control" />
             }
             else
             {
-                <input asp-for="CustomerContact.ContactPerson.FirstName" disabled class="form-control" />
-                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.FirstName)
+                <input asp-for="CustomerContact.ContactPerson.Name.FirstName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.Name.FirstName)
             }
-            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.FirstName, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.FirstName, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CustomerContact.ContactPerson.MiddleName, new { @class = "control-label" })
+            @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, new { @class = "control-label" })
             @if (Model.IsNewContact)
             {
-                <input asp-for="CustomerContact.ContactPerson.MiddleName" class="form-control" />
+                <input asp-for="CustomerContact.ContactPerson.Name.MiddleName" class="form-control" />
             }
             else
             {
-                <input asp-for="CustomerContact.ContactPerson.MiddleName" disabled class="form-control" />
-                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.MiddleName)
+                <input asp-for="CustomerContact.ContactPerson.Name.MiddleName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.Name.MiddleName)
             }
-            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.MiddleName, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.CustomerContact.ContactPerson.LastName, new { @class = "control-label" })
+            @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.LastName, new { @class = "control-label" })
             @if (Model.IsNewContact)
             {
-                <input asp-for="CustomerContact.ContactPerson.LastName" class="form-control" />
+                <input asp-for="CustomerContact.ContactPerson.Name.LastName" class="form-control" />
             }
             else
             {
-                <input asp-for="CustomerContact.ContactPerson.LastName" disabled class="form-control" />
-                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.LastName)
+                <input asp-for="CustomerContact.ContactPerson.Name.LastName" disabled class="form-control" />
+                @Html.HiddenFor(m => m.CustomerContact.ContactPerson.Name.LastName)
             }
-            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.LastName, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.LastName, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.CustomerContact.ContactPerson.Suffix, new { @class = "control-label" })

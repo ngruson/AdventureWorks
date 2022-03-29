@@ -829,9 +829,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     ContactType = "Owner",
                     ContactPerson = new PersonViewModel
                     {
-                        FirstName = "Orlando",
-                        MiddleName = "N.",
-                        LastName = "Gee"
+                        Name = new PersonNameViewModel
+                        {
+                            FirstName = "Orlando",
+                            MiddleName = "N.",
+                            LastName = "Gee"
+                        }
                     }
                 }
             };
@@ -923,9 +926,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     ContactType = "Owner",
                     ContactPerson = new PersonViewModel
                     {
-                        FirstName = "Orlando",
-                        MiddleName = "N.",
-                        LastName = "Gee"
+                        Name = new PersonNameViewModel
+                        {
+                            FirstName = "Orlando",
+                            MiddleName = "N.",
+                            LastName = "Gee"
+                        }
                     }
                 }
             };
@@ -1001,9 +1007,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 CustomerName = "A Bike Store",
                 ContactPerson = new PersonViewModel
                 {
-                    FirstName = "Orlando",
-                    MiddleName = "N.",
-                    LastName = "Gee"
+                    Name = new PersonNameViewModel
+                    {
+                        FirstName = "Orlando",
+                        MiddleName = "N.",
+                        LastName = "Gee"
+                    }
                 },
                 ContactType = "Owner"
             };

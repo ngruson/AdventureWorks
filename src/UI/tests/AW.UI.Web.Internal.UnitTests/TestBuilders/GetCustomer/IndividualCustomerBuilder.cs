@@ -37,9 +37,13 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
                 AccountNumber = "AW00000001",
                 Person = new Person
                 {
-                    FirstName = "Jon",
-                    MiddleName = "V",
-                    LastName = "Yang"
+                    Name = new PersonName
+                    {
+                        FirstName = "Jon",
+                        MiddleName = "V",
+                        LastName = "Yang",
+                        FullName = "Jon V Yang"
+                    }
                 },
                 Addresses = new List<CustomerAddress>
                 {

@@ -513,7 +513,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 //Act
                 var actionResult = await sut.EditContact(
                     viewModel.AccountNumber,
-                    viewModel.CustomerContact.ContactPerson.FullName(),
+                    viewModel.CustomerContact.ContactPerson.Name.FullName,
                     viewModel.CustomerContact.ContactType
                 );
 
@@ -588,7 +588,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 //Act
                 var actionResult = await sut.DeleteContact(
                     viewModel.AccountNumber,
-                    viewModel.ContactPerson.FullName(),
+                    viewModel.ContactPerson.Name.FullName,
                     viewModel.ContactType
                 );
 

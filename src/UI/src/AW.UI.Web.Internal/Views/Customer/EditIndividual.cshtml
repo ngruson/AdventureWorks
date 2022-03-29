@@ -22,19 +22,19 @@
         @Html.ValidationMessageFor(m => m.Customer.Person.Title, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Person.FirstName, new { @class = "control-label" })
-        <input asp-for="Customer.Person.FirstName" class="form-control" />
-        @Html.ValidationMessageFor(m => m.Customer.Person.FirstName, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.Customer.Person.Name.FirstName, new { @class = "control-label" })
+        <input asp-for="Customer.Person.Name.FirstName" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.Person.Name.FirstName, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Person.MiddleName, new { @class = "control-label" })
-        <input asp-for="Customer.Person.MiddleName" class="form-control" />
-        @Html.ValidationMessageFor(m => m.Customer.Person.MiddleName, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.Customer.Person.Name.MiddleName, new { @class = "control-label" })
+        <input asp-for="Customer.Person.Name.MiddleName" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.Person.Name.MiddleName, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Person.LastName, new { @class = "control-label" })
-        <input asp-for="Customer.Person.LastName" class="form-control" />
-        @Html.ValidationMessageFor(m => m.Customer.Person.LastName, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.Customer.Person.Name.LastName, new { @class = "control-label" })
+        <input asp-for="Customer.Person.Name.LastName" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.Person.Name.LastName, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Person.Suffix, new { @class = "control-label" })

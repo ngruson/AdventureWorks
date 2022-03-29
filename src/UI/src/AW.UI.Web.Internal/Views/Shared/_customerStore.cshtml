@@ -58,19 +58,19 @@
                 @Html.ActionLink("Edit", "EditContact", new
                     {
                         accountNumber = ViewData["accountNumber"],
-                        contactName = contact.ContactPerson.FullName(),
+                        contactName = contact.ContactPerson.Name.FullName,
                         contact.ContactType
                     })
                 |
                 @Html.ActionLink("Delete", "DeleteContact", new
                    {
                        accountNumber = ViewData["accountNumber"],
-                       contactName = contact.ContactPerson.FullName(),
+                       contactName = contact.ContactPerson.Name.FullName,
                        contact.ContactType
                    })
             </td>
             <td>@contact.ContactType</td>
-            <td>@contact.ContactPerson.FullName()</td>
+            <td>@contact.ContactPerson.Name.FullName</td>
         </tr>
             }
     </table>

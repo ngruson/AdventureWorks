@@ -21,19 +21,19 @@
         @Html.HiddenFor(m => m.ContactPerson.Title)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ContactPerson.FirstName, new { @class = "control-label" })
-        <input asp-for="ContactPerson.FirstName" readonly class="form-control-plaintext" />
-        @Html.HiddenFor(m => m.ContactPerson.FirstName)
+        @Html.LabelFor(m => m.ContactPerson.Name.FirstName, new { @class = "control-label" })
+        <input asp-for="ContactPerson.Name.FirstName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.ContactPerson.Name.FirstName)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ContactPerson.MiddleName, new { @class = "control-label" })
-        <input asp-for="ContactPerson.MiddleName" readonly class="form-control-plaintext" />
-        @Html.HiddenFor(m => m.ContactPerson.MiddleName)
+        @Html.LabelFor(m => m.ContactPerson.Name.MiddleName, new { @class = "control-label" })
+        <input asp-for="ContactPerson.Name.MiddleName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.ContactPerson.Name.MiddleName)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ContactPerson.LastName, new { @class = "control-label" })
-        <input asp-for="ContactPerson.LastName" readonly class="form-control-plaintext" />
-        @Html.HiddenFor(m => m.ContactPerson.LastName)
+        @Html.LabelFor(m => m.ContactPerson.Name.LastName, new { @class = "control-label" })
+        <input asp-for="ContactPerson.Name.LastName" readonly class="form-control-plaintext" />
+        @Html.HiddenFor(m => m.ContactPerson.Name.LastName)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ContactPerson.Suffix, new { @class = "control-label" })

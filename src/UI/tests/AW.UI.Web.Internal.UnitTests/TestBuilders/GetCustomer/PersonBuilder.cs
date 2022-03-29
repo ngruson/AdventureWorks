@@ -12,21 +12,9 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
             return this;
         }
 
-        public PersonBuilder FirstName(string firstName)
+        public PersonBuilder Name(PersonName name)
         {
-            person.FirstName = firstName;
-            return this;
-        }
-
-        public PersonBuilder MiddleName(string middleName)
-        {
-            person.MiddleName = middleName;
-            return this;
-        }
-
-        public PersonBuilder LastName(string lastName)
-        {
-            person.LastName = lastName;
+            person.Name = name;
             return this;
         }
 
@@ -40,9 +28,13 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
         {
             person = new Person
             {
-                FirstName = "Orlando",
-                MiddleName = "N.",
-                LastName = "Gee"
+                Name = new PersonName
+                {
+                    FirstName = "Orlando",
+                    MiddleName = "N.",
+                    LastName = "Gee",
+                    FullName = "Orlando N. Gee"
+                }
             };
 
             return this;

@@ -25,6 +25,8 @@ namespace AW.UI.Web.Internal
             CreateMap<m.GetCustomer.Customer, m.UpdateCustomer.Customer>()
                 .Include<m.GetCustomer.IndividualCustomer, m.UpdateCustomer.IndividualCustomer>()
                 .Include<m.GetCustomer.StoreCustomer, m.UpdateCustomer.StoreCustomer>();
+
+            CreateMap<m.GetCustomer.PersonName, m.UpdateCustomer.PersonName>();
         }
     }
 }

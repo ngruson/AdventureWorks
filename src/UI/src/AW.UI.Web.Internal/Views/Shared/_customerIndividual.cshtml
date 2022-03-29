@@ -34,7 +34,7 @@
         <label>First name</label>
     </div>
     <div class="col">
-        @Model.Person.FirstName
+        @Model.Person.Name.FirstName
     </div>
 </div>
 <div class="row">
@@ -42,7 +42,7 @@
         <label>Middle name</label>
     </div>
     <div class="col">
-        @Model.Person.MiddleName
+        @Model.Person.Name.MiddleName
     </div>
 </div>
 <div class="row">
@@ -50,7 +50,7 @@
         <label>Last name</label>
     </div>
     <div class="col">
-        @Model.Person.LastName
+        @Model.Person.Name.LastName
     </div>
 </div>
 <div class="row">
@@ -95,4 +95,4 @@ else
         No email addresses found
     </div>
 }
-@Html.ActionLink("Add email address", "AddEmailAddress", new { AccountNumber = ViewData["accountNumber"], ContactName = Model.Person.FullName() })
+@Html.ActionLink("Add email address", "AddEmailAddress", new { AccountNumber = ViewData["accountNumber"], ContactName = Model.Person.Name.FullName })

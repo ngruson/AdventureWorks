@@ -374,7 +374,7 @@ namespace AW.UI.Web.Internal.Services
 
             var contact = customer.Contacts.FirstOrDefault(c =>
                 c.ContactType == contactType &&
-                c.ContactPerson.FullName() == contactName
+                c.ContactPerson.Name.FullName == contactName
             );
 
             var vm = new EditCustomerContactViewModel
@@ -463,7 +463,7 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
-                a.ContactType == contactType && a.ContactPerson.FullName() == contactName
+                a.ContactType == contactType && a.ContactPerson.Name.FullName == contactName
             );
 
             var vm = mapper.Map<DeleteCustomerContactViewModel>(contact);
@@ -547,7 +547,7 @@ namespace AW.UI.Web.Internal.Services
             var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.FullName() == viewModel.PersonName);
+            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.PersonName);
             Guard.Against.Null(contact, nameof(contact));
 
             contact.ContactPerson.EmailAddresses.Add(new Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
@@ -574,7 +574,7 @@ namespace AW.UI.Web.Internal.Services
 
             var vm = mapper.Map<DeleteIndividualCustomerEmailAddressViewModel>(personEmailAddress);
             vm.AccountNumber = accountNumber;
-            vm.CustomerName = customer.Person.FullName();
+            vm.CustomerName = customer.Person.Name.FullName;
 
             return vm;
         }
@@ -587,7 +587,7 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
-                a.ContactType == contactType && a.ContactPerson.FullName() == contactName
+                a.ContactType == contactType && a.ContactPerson.Name.FullName == contactName
             );
             Guard.Against.Null(contact, nameof(contact));
 
@@ -674,7 +674,7 @@ namespace AW.UI.Web.Internal.Services
             
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => 
                 c.ContactType == viewModel.ContactType &&
-                c.ContactPerson.FullName() == viewModel.ContactName);
+                c.ContactPerson.Name.FullName == viewModel.ContactName);
             Guard.Against.Null(contact, nameof(contact));
 
             var personEmailAddress = contact.ContactPerson.EmailAddresses.FirstOrDefault(c =>
@@ -742,7 +742,7 @@ namespace AW.UI.Web.Internal.Services
             var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.FullName() == viewModel.PersonName);
+            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.PersonName);
             Guard.Against.Null(contact, nameof(contact));
 
             contact.ContactPerson.PhoneNumbers.Add(new Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonPhone
@@ -770,7 +770,7 @@ namespace AW.UI.Web.Internal.Services
 
             var vm = mapper.Map<DeleteIndividualCustomerPhoneNumberViewModel>(personPhone);
             vm.AccountNumber = accountNumber;
-            vm.CustomerName = customer.Person.FullName();
+            vm.CustomerName = customer.Person.Name.FullName;
 
             return vm;
         }
@@ -783,7 +783,7 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
-                a.ContactType == contactType && a.ContactPerson.FullName() == contactName
+                a.ContactType == contactType && a.ContactPerson.Name.FullName == contactName
             );
             Guard.Against.Null(contact, nameof(contact));
 
@@ -872,7 +872,7 @@ namespace AW.UI.Web.Internal.Services
 
             var contact = customerToUpdate.Contacts.FirstOrDefault(c =>
                 c.ContactType == viewModel.ContactType &&
-                c.ContactPerson.FullName() == viewModel.ContactName);
+                c.ContactPerson.Name.FullName == viewModel.ContactName);
             Guard.Against.Null(contact, nameof(contact));
 
             var personPhone = contact.ContactPerson.PhoneNumbers.FirstOrDefault(p =>
