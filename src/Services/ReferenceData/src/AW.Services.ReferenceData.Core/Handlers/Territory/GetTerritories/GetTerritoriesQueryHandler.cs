@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.Specifications;
 using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -24,9 +25,20 @@ namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
         public async Task<List<Territory>> Handle(GetTerritoriesQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");
+            List<Entities.Territory> territories;
 
-            logger.LogInformation("Getting territories from database");
-            var territories = await repository.ListAsync(cancellationToken);
+            if (string.IsNullOrEmpty(request.CountryRegionCode))
+            {
+                logger.LogInformation("Getting territories from database");
+                territories = await repository.ListAsync(cancellationToken);
+            }
+            else
+            {
+                logger.LogInformation("Getting territories for country {@Country} from database", request.CountryRegionCode);
+                var spec = new GetTerritoriesForCountrySpecification(request.CountryRegionCode);
+                territories = await repository.ListAsync(spec, cancellationToken);
+            }
+            
             Guard.Against.NullOrEmpty(territories, nameof(territories));
 
             logger.LogInformation("Returning territories");

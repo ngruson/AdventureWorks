@@ -23,11 +23,14 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
             (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<IActionResult> GetTerritories()
+        public async Task<IActionResult> GetTerritories(string countryRegionCode)
         {
             logger.LogInformation("GetTerritories called");
 
-            var query = new GetTerritoriesQuery();
+            var query = new GetTerritoriesQuery
+            {
+                CountryRegionCode = countryRegionCode
+            };
             logger.LogInformation("Sending GetTerritories query");
             var territories = await mediator.Send(query);
 

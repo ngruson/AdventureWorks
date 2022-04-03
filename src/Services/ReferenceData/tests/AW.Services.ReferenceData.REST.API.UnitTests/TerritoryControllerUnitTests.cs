@@ -30,7 +30,7 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await sut.GetTerritories();
+            var actionResult = await sut.GetTerritories(dto[0].CountryRegionCode);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
