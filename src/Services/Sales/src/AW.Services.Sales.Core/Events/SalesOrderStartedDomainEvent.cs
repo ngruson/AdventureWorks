@@ -3,7 +3,7 @@ using System;
 
 namespace AW.Services.Sales.Core.Events
 {
-    public class OrderStartedDomainEvent : INotification
+    public class SalesOrderStartedDomainEvent : INotification
     {
         public string UserId { get; }
         public string UserName { get; }
@@ -14,7 +14,7 @@ namespace AW.Services.Sales.Core.Events
         public DateTime CardExpiration { get; }
         public Entities.SalesOrder SalesOrder { get; }
 
-        public OrderStartedDomainEvent(Entities.SalesOrder salesOrder, string userId, string userName,
+        public SalesOrderStartedDomainEvent(Entities.SalesOrder salesOrder, string userId, string userName,
             string cardType, string cardNumber,
             string cardSecurityNumber, string cardHolderName,
             DateTime cardExpiration

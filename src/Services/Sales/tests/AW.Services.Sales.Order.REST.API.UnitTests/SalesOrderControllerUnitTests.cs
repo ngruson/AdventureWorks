@@ -13,6 +13,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using AW.Services.Sales.Core.AutoMapper;
+using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
+using System;
+using AW.Services.Sales.Core.Handlers.Identified;
+using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
+using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
+using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
 {
@@ -22,11 +28,11 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetSalesOrders_ShouldReturnSalesOrders_WhenGivenSalesOrders(
-            [Frozen] Mock<IMediator> mockMediator,
-            List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
-            [Greedy] SalesOrderController sut,
-            GetSalesOrdersQuery query
-        )
+                [Frozen] Mock<IMediator> mockMediator,
+                List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
+                [Greedy] SalesOrderController sut,
+                GetSalesOrdersQuery query
+            )
             {
                 //Arrange
                 var dto = new GetSalesOrdersDto
@@ -158,6 +164,262 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 //Assert
                 var notFoundResult = actionResult as NotFoundResult;
                 notFoundResult.Should().NotBeNull();
+            }
+        }
+
+        public class ApproveSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ApproveSalesOrder_ApproveSucceeds_ReturnOk(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                ApproveSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<IdentifiedCommand<ApproveSalesOrderCommand, bool>>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(true);
+
+                //Act
+                var actionResult = await sut.ApproveSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<IdentifiedCommand<ApproveSalesOrderCommand, bool>>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ApproveSalesOrder_ApproveDoesNotSucceed_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                ApproveSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                //Act
+                var actionResult = await sut.ApproveSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ApproveSalesOrder_InvalidRequestId_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                ApproveSalesOrderCommand command,
+                string requestId
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.ApproveSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+        }
+
+        public class RejectSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task RejectSalesOrder_RejectSucceeds_ReturnOk(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                RejectSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<IdentifiedCommand<RejectSalesOrderCommand, bool>>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(true);
+
+                //Act
+                var actionResult = await sut.RejectSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<IdentifiedCommand<RejectSalesOrderCommand, bool>>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task RejectSalesOrder_RejectDoesNotSucceed_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                RejectSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                //Act
+                var actionResult = await sut.RejectSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task RejectSalesOrder_InvalidRequestId_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                RejectSalesOrderCommand command,
+                string requestId
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.RejectSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+        }
+
+        public class CancelSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task CancelSalesOrder_CancelSucceeds_ReturnOk(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                CancelSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<IdentifiedCommand<CancelSalesOrderCommand, bool>>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(true);
+
+                //Act
+                var actionResult = await sut.CancelSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<IdentifiedCommand<CancelSalesOrderCommand, bool>>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task CancelSalesOrder_CancelDoesNotSucceed_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                CancelSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                //Act
+                var actionResult = await sut.CancelSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task CancelSalesOrder_InvalidRequestId_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                CancelSalesOrderCommand command,
+                string requestId
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.CancelSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+        }
+
+        public class ShipSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ShipSalesOrder_ShipSucceeds_ReturnOk(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                ShipSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<IdentifiedCommand<ShipSalesOrderCommand, bool>>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(true);
+
+                //Act
+                var actionResult = await sut.ShipSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<IdentifiedCommand<ShipSalesOrderCommand, bool>>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ShipSalesOrder_ShipDoesNotSucceed_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                ShipSalesOrderCommand command
+            )
+            {
+                //Arrange
+                string requestId = Guid.NewGuid().ToString();
+
+                //Act
+                var actionResult = await sut.ShipSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ShipSalesOrder_InvalidRequestId_ReturnBadRequest(
+                [Greedy] SalesOrderController sut,
+                ShipSalesOrderCommand command,
+                string requestId
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.ShipSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
             }
         }
     }

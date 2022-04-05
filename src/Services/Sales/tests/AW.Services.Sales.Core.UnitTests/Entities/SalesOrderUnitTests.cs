@@ -44,7 +44,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
             //Assert
             salesOrder.DomainEvents.ToList()[0]
-                .Should().BeAssignableTo<OrderStartedDomainEvent>();
+                .Should().BeAssignableTo<SalesOrderStartedDomainEvent>();
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]

@@ -1,4 +1,5 @@
 ﻿using AW.Services.Sales.Core.Events;
+using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.ValueTypes;
 using AW.SharedKernel.Domain;
 using AW.SharedKernel.Interfaces;
@@ -106,7 +107,7 @@ namespace AW.Services.Sales.Core.Entities
         private void AddOrderStartedDomainEvent(string userId, string userName, string cardType, string cardNumber,
                 string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
         {
-            var orderStartedDomainEvent = new OrderStartedDomainEvent(this, userId, userName, cardType,
+            var orderStartedDomainEvent = new SalesOrderStartedDomainEvent(this, userId, userName, cardType,
                                                                       cardNumber, cardSecurityNumber,
                                                                       cardHolderName, cardExpiration);
 
@@ -136,6 +137,55 @@ namespace AW.Services.Sales.Core.Entities
                 var orderLine = new SalesOrderLine(productNumber, productName, unitPrice, unitPriceDiscount, specialOfferProduct, quantity);
                 _orderLines.Add(orderLine);
             }
+        }
+
+        private void StatusChangeException(SalesOrderStatus orderStatusToChange)
+        {
+            throw new SalesDomainException($"Is not possible to change the order status from {Status.Name} to {orderStatusToChange.Name}.");
+        }
+
+        public void SetApprovedStatus()
+        {
+            if (Status == SalesOrderStatus.Cancelled || Status == SalesOrderStatus.Shipped)
+            {
+                StatusChangeException(SalesOrderStatus.Approved);
+            }
+
+            Status = SalesOrderStatus.Approved;
+            AddDomainEvent(new SalesOrderApprovedDomainEvent(this));
+        }
+
+        public void SetRejectedStatus()
+        {
+            if (Status == SalesOrderStatus.Cancelled || Status == SalesOrderStatus.Shipped)
+            {
+                StatusChangeException(SalesOrderStatus.Rejected);
+            }
+
+            Status = SalesOrderStatus.Rejected;
+            AddDomainEvent(new SalesOrderRejectedDomainEvent(this));
+        }
+
+        public void SetCancelledStatus()
+        {
+            if (Status == SalesOrderStatus.Shipped)
+            {
+                StatusChangeException(SalesOrderStatus.Cancelled);
+            }
+
+            Status = SalesOrderStatus.Cancelled;
+            AddDomainEvent(new SalesOrderCancelledDomainEvent(this));
+        }
+
+        public void SetShippedStatus()
+        {
+            if (Status == SalesOrderStatus.Cancelled || Status == SalesOrderStatus.Rejected)
+            {
+                StatusChangeException(SalesOrderStatus.Shipped);
+            }
+
+            Status = SalesOrderStatus.Shipped;
+            AddDomainEvent(new SalesOrderShippedDomainEvent(this));
         }
     }
 }

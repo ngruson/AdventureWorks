@@ -1,14 +1,22 @@
 ﻿using AutoMapper;
+using AW.Services.Infrastructure.EventBus.Extensions;
+using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
+using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Handlers.DeleteSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer;
+using AW.Services.Sales.Core.Handlers.Identified;
+using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
+using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 using AW.Services.Sales.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Order.REST.API.Controllers
@@ -88,6 +96,130 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             await mediator.Send(command);
 
             return new OkResult();
+        }
+
+        [Route("approve")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ApproveSalesOrderAsync([FromBody] ApproveSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var requestApproveSalesOrder = new IdentifiedCommand<ApproveSalesOrderCommand, bool>(command, guid);
+
+                logger.LogInformation(
+                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                    requestApproveSalesOrder.GetGenericTypeName(),
+                    nameof(requestApproveSalesOrder.Command.SalesOrderNumber),
+                    requestApproveSalesOrder.Command.SalesOrderNumber,
+                    requestApproveSalesOrder
+                );
+
+                commandResult = await mediator.Send(requestApproveSalesOrder);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [Route("reject")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> RejectSalesOrderAsync([FromBody] RejectSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var requestRejectSalesOrder = new IdentifiedCommand<RejectSalesOrderCommand, bool>(command, guid);
+
+                logger.LogInformation(
+                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                    requestRejectSalesOrder.GetGenericTypeName(),
+                    nameof(requestRejectSalesOrder.Command.SalesOrderNumber),
+                    requestRejectSalesOrder.Command.SalesOrderNumber,
+                    requestRejectSalesOrder
+                );
+
+                commandResult = await mediator.Send(requestRejectSalesOrder);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [Route("cancel")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CancelSalesOrderAsync([FromBody] CancelSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var requestCancelSalesOrder = new IdentifiedCommand<CancelSalesOrderCommand, bool>(command, guid);
+
+                logger.LogInformation(
+                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                    requestCancelSalesOrder.GetGenericTypeName(),
+                    nameof(requestCancelSalesOrder.Command.SalesOrderNumber),
+                    requestCancelSalesOrder.Command.SalesOrderNumber,
+                    requestCancelSalesOrder
+                );
+
+                commandResult = await mediator.Send(requestCancelSalesOrder);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [Route("ship")]
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ShipSalesOrderAsync([FromBody] ShipSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var requestShipSalesOrder = new IdentifiedCommand<ShipSalesOrderCommand, bool>(command, guid);
+
+                logger.LogInformation(
+                    "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                    requestShipSalesOrder.GetGenericTypeName(),
+                    nameof(requestShipSalesOrder.Command.SalesOrderNumber),
+                    requestShipSalesOrder.Command.SalesOrderNumber,
+                    requestShipSalesOrder
+                );
+
+                commandResult = await mediator.Send(requestShipSalesOrder);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

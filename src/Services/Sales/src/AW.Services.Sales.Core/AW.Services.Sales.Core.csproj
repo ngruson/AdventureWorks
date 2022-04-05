@@ -4,6 +4,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.0.1" />
     <PackageReference Include="Ardalis.Specification" Version="6.0.1" />
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="FluentValidation" Version="10.3.6" />
