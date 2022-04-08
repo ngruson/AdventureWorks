@@ -1,12 +1,15 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.SmartEnum;
 using AW.Services.Infrastructure;
 using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SmartEnum.EFCore;
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,8 +49,68 @@ namespace AW.Services.SharedKernel.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (configurationsAssembly != null)                
+            if (configurationsAssembly != null)
+            {
                 modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
+                modelBuilder.ConfigureSmartEnum();
+
+                //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+                //{
+                //    var properties = entityType.ClrType.GetProperties()
+                //        .Where(p => IsDerived(p.PropertyType, typeof(SmartEnum<,>)));
+
+                //    foreach (var property in properties)
+                //    {
+                //        var keyType = GetValueType(property.PropertyType, typeof(SmartEnum<,>));
+
+                //        //var converterType = typeof(SmartEnumConverter<,>).MakeGenericType(property.PropertyType, keyType);
+
+                //        //var converter = (ValueConverter)Activator.CreateInstance(converterType);
+
+                //        //modelBuilder.Entity(entityType.Name).Property(property.Name).HasConversion(converter);
+                //    }
+                //}
+            }
+        }
+
+        public static bool IsDerived(Type objectType, Type mainType)
+        {
+            Type currentType = objectType.BaseType;
+
+            if (currentType == null)
+            {
+                return false;
+            }
+
+            while (currentType != typeof(object))
+            {
+                if (currentType.IsGenericType && currentType.GetGenericTypeDefinition() == mainType)
+                    return true;
+
+                currentType = currentType.BaseType;
+            }
+
+            return false;
+        }
+
+        private static Type GetValueType(Type objectType, Type mainType)
+        {
+            Type currentType = objectType.BaseType;
+
+            if (currentType == null)
+            {
+                return null;
+            }
+
+            while (currentType != typeof(object))
+            {
+                if (currentType.IsGenericType && currentType.GetGenericTypeDefinition() == mainType)
+                    return currentType.GenericTypeArguments[1];
+
+                currentType = currentType.BaseType;
+            }
+
+            return null;
         }
 
         public virtual void SetModified(object entity)
