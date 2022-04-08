@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AW.Services.Sales.Core.Entities;
 using AW.SharedKernel.AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace AW.Services.Sales.Core.Models
 
         public DateTime? ShipDate { get; set; }
 
-        public SalesOrderStatus Status { get; set; }
+        public string Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 

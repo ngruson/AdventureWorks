@@ -17,7 +17,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
 
         public DateTime? ShipDate { get; set; }
 
-        public SalesOrderStatus Status { get; set; }
+        public string Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 
@@ -57,6 +57,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesOrder, SalesOrderDto>()
+                .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status.Name))
                 .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
                     .Select(r => r.SalesReason)));
         }
