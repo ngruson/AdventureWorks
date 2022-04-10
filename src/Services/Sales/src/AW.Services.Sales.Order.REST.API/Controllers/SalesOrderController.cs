@@ -98,7 +98,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             return new OkResult();
         }
 
-        [Route("approve")]
+        [Route("{salesOrderNumber}/approve")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -129,7 +129,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             return Ok();
         }
 
-        [Route("reject")]
+        [Route("{salesOrderNumber}/reject")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -160,7 +160,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             return Ok();
         }
 
-        [Route("cancel")]
+        [Route("{salesOrderNumber}/cancel")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -191,7 +191,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             return Ok();
         }
 
-        [Route("ship")]
+        [Route("{salesOrderNumber}/ship")]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
