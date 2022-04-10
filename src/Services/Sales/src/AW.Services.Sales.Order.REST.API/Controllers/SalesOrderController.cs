@@ -102,7 +102,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> ApproveSalesOrderAsync([FromBody] ApproveSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> ApproveSalesOrderAsync([FromRoute] ApproveSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
@@ -133,7 +133,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> RejectSalesOrderAsync([FromBody] RejectSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> RejectSalesOrderAsync([FromRoute] RejectSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
@@ -164,7 +164,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CancelSalesOrderAsync([FromBody] CancelSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> CancelSalesOrderAsync([FromRoute] CancelSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
@@ -195,7 +195,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> ShipSalesOrderAsync([FromBody] ShipSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> ShipSalesOrderAsync([FromRoute] ShipSalesOrderCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
