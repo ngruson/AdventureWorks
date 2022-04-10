@@ -6,9 +6,13 @@ using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.Services.Infrastructure.EventBus.RabbitMQ;
 using AW.Services.Infrastructure.Filters;
 using AW.Services.Sales.Core.Behaviors;
+using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
+using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Handlers.Identified;
+using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
+using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 using AW.Services.Sales.Core.Idempotency;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
@@ -205,6 +209,22 @@ namespace AW.Services.Sales.Order.REST.API
             services.AddScoped(
                 typeof(IRequestHandler<IdentifiedCommand<CreateSalesOrderCommand, bool>, bool>),
                 typeof(IdentifiedCommandHandler<CreateSalesOrderCommand, bool>)
+            );
+            services.AddScoped(
+                typeof(IRequestHandler<IdentifiedCommand<ApproveSalesOrderCommand, bool>, bool>),
+                typeof(IdentifiedCommandHandler<ApproveSalesOrderCommand, bool>)
+            );
+            services.AddScoped(
+                typeof(IRequestHandler<IdentifiedCommand<RejectSalesOrderCommand, bool>, bool>),
+                typeof(IdentifiedCommandHandler<RejectSalesOrderCommand, bool>)
+            );
+            services.AddScoped(
+                typeof(IRequestHandler<IdentifiedCommand<CancelSalesOrderCommand, bool>, bool>),
+                typeof(IdentifiedCommandHandler<CancelSalesOrderCommand, bool>)
+            );
+            services.AddScoped(
+                typeof(IRequestHandler<IdentifiedCommand<ShipSalesOrderCommand, bool>, bool>),
+                typeof(IdentifiedCommandHandler<ShipSalesOrderCommand, bool>)
             );
             services.AddMediatR(typeof(GetSalesOrdersQuery));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
