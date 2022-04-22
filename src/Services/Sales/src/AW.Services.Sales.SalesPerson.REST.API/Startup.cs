@@ -8,6 +8,7 @@ using AW.Services.Infrastructure.Filters;
 using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Infrastructure.EFCore.Configurations;
 using AW.Services.Sales.SalesPerson.REST.API.Extensions;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
@@ -145,7 +146,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API
                 return new AWContext(
                     builder.Options,
                     provider.GetService<IMediator>(),
-                    typeof(EfRepository<>).Assembly
+                    typeof(SalesPersonConfiguration).Assembly
                 );
             });
 
