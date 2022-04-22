@@ -60,7 +60,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
                 .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status.Name))
                 .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
                     .Select(r => r.SalesReason)))
-                .ForMember(_ => _.SalesPerson, opt => opt.MapFrom(src => src.SalesPerson.FullName));
+                .ForMember(_ => _.SalesPerson, opt => opt.MapFrom(src => src.SalesPerson.Name.FullName));
         }
     }
 }

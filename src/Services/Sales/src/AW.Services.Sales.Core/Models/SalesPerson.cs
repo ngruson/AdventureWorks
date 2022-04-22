@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
+using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
-using AW.SharedKernel.Interfaces;
 using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Models
 {
-    public class SalesPerson : IMapFrom<Handlers.GetSalesPerson.SalesPersonDto>, IPerson
-    {
+    public class SalesPerson : IMapFrom<Handlers.GetSalesPerson.SalesPersonDto>
+    {        
         public string Title { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+        public NameFactory Name { get; set; }
         public string Suffix { get; set; }
         public string Territory { get; set; }
         public List<SalesPersonEmailAddress> EmailAddresses { get; set; }

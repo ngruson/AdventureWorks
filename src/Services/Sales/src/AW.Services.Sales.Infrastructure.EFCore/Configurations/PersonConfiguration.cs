@@ -13,6 +13,15 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
 
             builder.Property(c => c.Id)
                 .HasColumnName("PersonID");
+
+            builder.OwnsOne(_ => _.Name)
+                .Property(_ => _.FirstName).HasColumnName("FirstName");
+
+            builder.OwnsOne(_ => _.Name)
+                .Property(_ => _.MiddleName).HasColumnName("MiddleName");
+
+            builder.OwnsOne(_ => _.Name)
+                .Property(_ => _.LastName).HasColumnName("LastName");
         }
     }
 }

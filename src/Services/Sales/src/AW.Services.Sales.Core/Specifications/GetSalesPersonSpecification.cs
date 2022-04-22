@@ -10,7 +10,7 @@ namespace AW.Services.Sales.Core.Specifications
             Query.Include(sp => sp.PhoneNumbers);
 
             Query
-                .Where(sp => sp.FirstName == firstName && sp.MiddleName == middleName && sp.LastName == lastName);
+                .Where(sp => sp.Name.FirstName == firstName && sp.Name.MiddleName == middleName && sp.Name.LastName == lastName);
         }
     }
 }
