@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.Interfaces;
 using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Entities

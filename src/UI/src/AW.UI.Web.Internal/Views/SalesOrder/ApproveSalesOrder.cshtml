@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = $"Approve sales order { Model.SalesOrder.SalesOrderNumber }";
+    var territories = ViewData["territories"] as List<SelectListItem>;
+    var salesPersons = ViewData["salesPersons"] as List<SelectListItem>;
+    @model SalesOrderDetailViewModel;
+
+}
+
+<div class="container-xl">
+    <nav class="navbar navbar-light bg-light mb-3">
+        <div class="container-fluid">
+            <a asp-action="Detail" asp-route-salesOrderNumber="@Model.SalesOrder.SalesOrderNumber" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Go back</a>
+        </div>
+    </nav>
+    <form>
+        <div class="row mb-3">
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.SalesOrderNumber, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.SalesOrderNumber, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.OrderDate, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.OrderDate, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.DueDate, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.DueDate, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.CustomerName, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.CustomerName, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.CustomerType, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.CustomerType, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.OnlineOrdered, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.OnlineOrdered, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.ShipMethod, new { @class = "control-label" })
+                    @Html.EditorFor(m => m.SalesOrder.ShipMethod, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                    <span asp-validation-for="SalesOrder.ShipMethod" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.Territory, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.SalesOrder.Territory, territories, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.SalesOrder.Territory, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SalesOrder.SalesPerson, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.SalesOrder.SalesPerson, salesPersons, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.SalesOrder.SalesPerson, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row amounts">
+            <div class="col-4">
+                <div class="row mb-3">
+                    <div class="col">
+                        @Html.LabelFor(m => m.SalesOrder.SubTotal)
+                    </div>
+                    <div class="col">
+                        @Html.EditorFor(m => m.SalesOrder.SubTotal, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        @Html.LabelFor(m => m.SalesOrder.TaxAmt)
+                    </div>
+                    <div class="col">
+                        @Html.EditorFor(m => m.SalesOrder.TaxAmt, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        @Html.LabelFor(m => m.SalesOrder.Freight)
+                    </div>
+                    <div class="col">
+                        @Html.EditorFor(m => m.SalesOrder.Freight, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        @Html.LabelFor(m => m.SalesOrder.TotalDue)
+                    </div>
+                    <div class="col">
+                        @Html.EditorFor(m => m.SalesOrder.TotalDue, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Approve sales order</button>
+        </div>
+    </form>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#SalesOrder_Territory').change(function () {
+                var dropdown = $('#SalesOrder_SalesPerson');
+                
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getSalesPersons(this.value, dropdown, "@Url.Action("GetSalesPersons", new { territory = "js-territory" })"
+                        .replace("js-territory", this.value)
+                    );
+                }
+            });
+        });
+    </script>
+}

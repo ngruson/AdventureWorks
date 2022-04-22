@@ -1,8 +1,8 @@
 ﻿using AW.Services.Sales.Core.Events;
 using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.ValueTypes;
-using AW.SharedKernel.Domain;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Domain;
+using AW.Services.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

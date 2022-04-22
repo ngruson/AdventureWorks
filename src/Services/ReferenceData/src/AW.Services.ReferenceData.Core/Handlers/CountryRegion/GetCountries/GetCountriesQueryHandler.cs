@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.Extensions.Logging;
 using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
 {

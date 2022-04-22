@@ -2,7 +2,7 @@
 using AW.Services.Product.Core.AutoMapper;
 using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
 using AW.Services.Product.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

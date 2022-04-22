@@ -2,7 +2,7 @@ using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

@@ -5,6 +5,6 @@ namespace AW.UI.Web.Internal.Interfaces
 {
     public interface ISalesPersonViewModelService
     {
-        Task<SalesPersonIndexViewModel> GetSalesPersons();
+        Task<SalesPersonIndexViewModel> GetSalesPersons(string territory = null);
     }
 }

@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Sales.Core.Entities
 {

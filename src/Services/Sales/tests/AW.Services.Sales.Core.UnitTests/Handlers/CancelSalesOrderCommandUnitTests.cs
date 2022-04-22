@@ -4,7 +4,7 @@ using AW.Services.Sales.Core.Entities;
 using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

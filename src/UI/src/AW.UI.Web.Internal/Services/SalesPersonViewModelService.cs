@@ -26,10 +26,10 @@ namespace AW.UI.Web.Internal.Services
             (this.logger, this.mapper, this.salesPersonApiClient, this.referenceDataApiClient) = 
                 (logger, mapper, salesPersonApiClient, referenceDataApiClient);
 
-        public async Task<SalesPersonIndexViewModel> GetSalesPersons()
+        public async Task<SalesPersonIndexViewModel> GetSalesPersons(string territory = null)
         {
             logger.LogInformation("GetSalesPersons called");
-            var salesPersons = await salesPersonApiClient.GetSalesPersonsAsync();
+            var salesPersons = await salesPersonApiClient.GetSalesPersonsAsync(territory);
 
             var vm = new SalesPersonIndexViewModel
             {

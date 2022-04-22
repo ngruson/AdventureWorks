@@ -22,7 +22,10 @@
                 <div>
                     <nav class="navbar navbar-light bg-light mb-3">
                         <div class="container-fluid">
-                            <div class="d-flex">
+                            <div>
+                                <a asp-action="ApproveSalesOrder" asp-route-salesOrderNumber="@Model.SalesOrder.SalesOrderNumber" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
+                                <a asp-action="RejectSalesOrder" asp-route-salesOrderNumber="@Model.SalesOrder.SalesOrderNumber" class="btn btn-warning"><i class="fa fa-xmark"></i> Reject</a>
+
                                 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -142,7 +145,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <div class="row">                                
+                            <div class="row">
                                 <div class="col-6">
                                     @Html.LabelFor(m => m.SalesOrder.ShipMethod)
                                 </div>
@@ -326,7 +329,7 @@
                         @foreach (var reason in Model.SalesOrder.SalesReasons)
                         {
                             <tr>
-                                <td>@reason.Name</td> 
+                                <td>@reason.Name</td>
                                 <td>@reason.ReasonType</td>
                             </tr>
                         }

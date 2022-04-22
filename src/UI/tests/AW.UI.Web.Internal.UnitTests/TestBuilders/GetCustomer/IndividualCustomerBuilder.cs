@@ -1,4 +1,5 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer;
+﻿using AW.SharedKernel.ValueTypes;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
@@ -37,13 +38,7 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer
                 AccountNumber = "AW00000001",
                 Person = new Person
                 {
-                    Name = new PersonName
-                    {
-                        FirstName = "Jon",
-                        MiddleName = "V",
-                        LastName = "Yang",
-                        FullName = "Jon V Yang"
-                    }
+                    Name = new NameFactory("Jon", "V", "Yang")
                 },
                 Addresses = new List<CustomerAddress>
                 {

@@ -2,7 +2,7 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Customer.Core.Handlers.AddStoreCustomerContact;
 using System.Collections.Generic;
-using AW.Services.SharedKernel.ValueTypes;
+using AW.SharedKernel.ValueTypes;
 
 namespace AW.Services.Customer.Core.Models.AddStoreCustomerContact
 {

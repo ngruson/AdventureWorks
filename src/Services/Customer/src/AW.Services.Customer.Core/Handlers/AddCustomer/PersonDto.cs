@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.ValueTypes;
 using System.Collections.Generic;
 
 namespace AW.Services.Customer.Core.Handlers.AddCustomer

@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SmartEnum;
 using AW.Services.Infrastructure;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -53,23 +53,6 @@ namespace AW.Services.SharedKernel.EFCore
             {
                 modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
                 modelBuilder.ConfigureSmartEnum();
-
-                //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-                //{
-                //    var properties = entityType.ClrType.GetProperties()
-                //        .Where(p => IsDerived(p.PropertyType, typeof(SmartEnum<,>)));
-
-                //    foreach (var property in properties)
-                //    {
-                //        var keyType = GetValueType(property.PropertyType, typeof(SmartEnum<,>));
-
-                //        //var converterType = typeof(SmartEnumConverter<,>).MakeGenericType(property.PropertyType, keyType);
-
-                //        //var converter = (ValueConverter)Activator.CreateInstance(converterType);
-
-                //        //modelBuilder.Entity(entityType.Name).Property(property.Name).HasConversion(converter);
-                //    }
-                //}
             }
         }
 

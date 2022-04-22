@@ -3,7 +3,7 @@ using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.GetAllCustomers;
 using AW.Services.Customer.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

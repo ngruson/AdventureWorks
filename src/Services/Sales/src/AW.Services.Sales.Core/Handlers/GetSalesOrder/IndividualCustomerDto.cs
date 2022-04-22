@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.ValueTypes;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {

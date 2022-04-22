@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.ValueTypes;
 using System.ComponentModel.DataAnnotations;
-using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class PersonNameViewModel : IPerson, IMapFrom<customerApi.GetCustomers.Person>
+    public class PersonNameViewModel : IMapFrom<NameFactory>
     {
         [Display(Name = "First name")]
         [Required]
@@ -25,9 +24,8 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<customerApi.GetCustomers.PersonName, PersonNameViewModel>();
-            profile.CreateMap<customerApi.GetCustomer.PersonName, PersonNameViewModel>();
-            profile.CreateMap<PersonNameViewModel, customerApi.UpdateCustomer.PersonName>();
+            profile.CreateMap<NameFactory, PersonNameViewModel>()
+                .ReverseMap();
         }
     }
 }

@@ -1,7 +1,7 @@
 using AutoFixture.Xunit2;
 using AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
 using AW.Services.ReferenceData.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

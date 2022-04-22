@@ -30,7 +30,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 salesPersonApiClient.Setup(_ => _.GetSalesPersonsAsync(It.IsAny<string>()))
                     .ReturnsAsync(salesPersons);
 
-                referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+                referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                     .ReturnsAsync(territories);
 
                 //Act

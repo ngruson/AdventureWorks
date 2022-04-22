@@ -1,11 +1,10 @@
 using AW.Services.Infrastructure.Filters;
 using AW.Services.Product.Core.Handlers.GetProducts;
-using AW.Services.Product.Infrastructure.EFCore;
 using AW.Services.Product.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.FileHandling;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
 using MediatR;
@@ -19,9 +18,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using AW.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.REST.API
 {

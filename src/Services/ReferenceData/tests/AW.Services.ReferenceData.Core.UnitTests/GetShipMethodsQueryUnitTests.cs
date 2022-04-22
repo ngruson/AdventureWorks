@@ -1,9 +1,8 @@
 using AutoFixture.Xunit2;
 using AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;

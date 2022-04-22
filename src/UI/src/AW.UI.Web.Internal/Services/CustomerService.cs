@@ -174,7 +174,7 @@ namespace AW.UI.Web.Internal.Services
             var salesPersons = await salesPersonApiClient.GetSalesPersonsAsync(salesTerritoryName);
 
             var items = salesPersons
-                .Select(t => new SelectListItem() { Value = t.FullName(), Text = t.FullName() })
+                .Select(t => new SelectListItem() { Value = t.Name.FullName, Text = t.Name.FullName })
                 .OrderBy(b => b.Text)
                 .ToList();
 

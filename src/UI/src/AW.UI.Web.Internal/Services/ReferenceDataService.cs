@@ -69,12 +69,12 @@ namespace AW.UI.Web.Internal.Services
             return statesProvinces;
         }
 
-        public async Task<List<Territory>> GetTerritoriesAsync()
+        public async Task<List<Territory>> GetTerritoriesAsync(string countryRegionCode = null)
         {
             logger.LogInformation("GetTerritoriesAsync called");
 
             logger.LogInformation("Getting territories from Reference Data API");
-            var territories = await referenceDataApiClient.GetTerritoriesAsync();
+            var territories = await referenceDataApiClient.GetTerritoriesAsync(countryRegionCode);
             Guard.Against.Null(territories, nameof(territories));
 
             logger.LogInformation("Returning territories from Reference Data API");

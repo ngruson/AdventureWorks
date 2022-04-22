@@ -1,7 +1,7 @@
 using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Handlers.CountProducts;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;

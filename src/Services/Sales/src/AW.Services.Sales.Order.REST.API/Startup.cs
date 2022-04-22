@@ -18,6 +18,7 @@ using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using HealthChecks.UI.Client;

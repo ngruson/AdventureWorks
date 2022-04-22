@@ -1,4 +1,5 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomers;
+﻿using AW.SharedKernel.ValueTypes;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomers;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
 {
@@ -12,7 +13,7 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
             return this;
         }
 
-        public PersonBuilder Name(PersonName name)
+        public PersonBuilder Name(NameFactory name)
         {
             person.Name = name;
             return this;
@@ -28,12 +29,7 @@ namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomers
         {
             person = new Person
             {
-                Name = new PersonName
-                {
-                    FirstName = "Orlando",
-                    MiddleName = "N.",
-                    LastName = "Gee"
-                }
+                Name = new NameFactory("Orlando", "N.", "Gee")
             };
 
             return this;

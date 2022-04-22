@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;

@@ -117,9 +117,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
                 //Act
                 var response = await sut.GetSalesPersonAsync(
-                    salesPerson.FirstName,
-                    salesPerson.MiddleName,
-                    salesPerson.LastName
+                    salesPerson.Name.FirstName,
+                    salesPerson.Name.MiddleName,
+                    salesPerson.Name.LastName
                 );
 
                 //Assert

@@ -129,10 +129,13 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
             });
         }
 
-        public async Task<List<Territory>> GetTerritoriesAsync()
+        public async Task<List<Territory>> GetTerritoriesAsync(string countryRegionCode = null)
         {
             string requestUri = "referencedata-api/Territory?api-version=1.0";
             logger.LogInformation("Getting territories");
+
+            if (!string.IsNullOrEmpty(countryRegionCode))
+                requestUri += $"&countryRegionCode={countryRegionCode}";
 
             logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
             using var response = await client.GetAsync(requestUri);

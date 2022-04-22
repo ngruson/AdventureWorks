@@ -1,10 +1,9 @@
 using AW.Services.Infrastructure.Filters;
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
-using AW.Services.ReferenceData.Infrastructure.EFCore;
 using AW.Services.ReferenceData.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.Api;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

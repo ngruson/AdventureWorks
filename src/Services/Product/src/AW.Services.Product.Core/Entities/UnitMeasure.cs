@@ -1,4 +1,4 @@
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using System;
 
 namespace AW.Services.Product.Core.Entities

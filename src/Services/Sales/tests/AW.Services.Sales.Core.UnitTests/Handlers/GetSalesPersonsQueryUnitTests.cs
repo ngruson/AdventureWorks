@@ -2,8 +2,8 @@ using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using AW.Services.Sales.Core.Specifications;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
-using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
@@ -46,7 +46,7 @@ namespace AW.Services.Sales.Core.UnitTests
 
             for (int i = 0; i < result.Count; i++)
             {
-                result[i].FullName().Should().Be(salesPersons[i].FullName);
+                result[i].Name.FullName.Should().Be(salesPersons[i].Name.FullName);
             }
         }
 
@@ -77,7 +77,7 @@ namespace AW.Services.Sales.Core.UnitTests
 
             for (int i = 0; i < result.Count; i++)
             {
-                result[i].FullName().Should().Be(salesPersons[i].FullName);
+                result[i].Name.FullName.Should().Be(salesPersons[i].Name.FullName);
             }
         }
 

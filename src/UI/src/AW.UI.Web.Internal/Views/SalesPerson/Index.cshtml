@@ -19,7 +19,7 @@
                     @foreach (var salesPerson in Model.SalesPersons)
                     {
                         <tr>
-                            <td>@salesPerson.FullName()</td>
+                            <td>@salesPerson.Name.FullName</td>
                             <td>@(!string.IsNullOrEmpty(salesPerson.Territory) ? salesPerson.Territory : "-")</td>
                         </tr>
                     }

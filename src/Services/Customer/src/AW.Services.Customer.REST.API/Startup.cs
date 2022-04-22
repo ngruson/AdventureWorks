@@ -23,8 +23,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using AW.SharedKernel.JsonConverters;
-using AW.SharedKernel.Interfaces;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
+using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Customer.REST.API
 {

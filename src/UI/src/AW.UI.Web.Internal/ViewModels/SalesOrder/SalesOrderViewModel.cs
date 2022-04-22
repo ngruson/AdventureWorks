@@ -51,6 +51,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
         public string SalesPerson { get; set; }
 
         [Display(Name = "Sales territory")]
+        [Required]
         public string Territory { get; set; }
 
         [Display(Name = "Subtotal")]

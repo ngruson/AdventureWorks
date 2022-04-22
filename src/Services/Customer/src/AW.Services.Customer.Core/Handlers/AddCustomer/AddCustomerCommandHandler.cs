@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using AutoMapper;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;

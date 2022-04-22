@@ -3,7 +3,7 @@ using AutoMapper;
 using AW.Services.Product.Core.Common;
 using AW.Services.Product.Core.Extensions;
 using AW.Services.Product.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

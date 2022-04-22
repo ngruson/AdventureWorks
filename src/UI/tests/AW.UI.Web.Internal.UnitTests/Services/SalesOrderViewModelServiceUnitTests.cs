@@ -34,7 +34,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             ))
             .ReturnsAsync(salesOrdersResult);
 
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                 .ReturnsAsync(territories);
 
             //Act

@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Domain;
+﻿using AW.Services.SharedKernel.Domain;
 using MediatR;
 using System.Linq;
 using System.Threading.Tasks;

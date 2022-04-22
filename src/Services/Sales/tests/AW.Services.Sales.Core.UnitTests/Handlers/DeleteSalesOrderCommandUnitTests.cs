@@ -2,7 +2,7 @@
 using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.DeleteSalesOrder;
 using AW.Services.Sales.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;

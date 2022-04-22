@@ -80,7 +80,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             okObjectResult.Should().NotBeNull();
 
             var result = okObjectResult.Value as Core.Models.SalesPerson;
-            result.FullName().Should().Be(salesPerson.FullName());
+            result.Name.FullName.Should().Be(salesPerson.Name.FullName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]

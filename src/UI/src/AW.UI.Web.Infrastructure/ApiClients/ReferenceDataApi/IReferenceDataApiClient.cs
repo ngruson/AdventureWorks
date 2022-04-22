@@ -16,6 +16,6 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
         Task<List<CountryRegion>> GetCountriesAsync();
         Task<List<ShipMethod>> GetShipMethodsAsync();
         Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null);
-        Task<List<Territory>> GetTerritoriesAsync();
+        Task<List<Territory>> GetTerritoriesAsync(string countryRegionCode = null);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.Sales.Core.Specifications;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
-using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

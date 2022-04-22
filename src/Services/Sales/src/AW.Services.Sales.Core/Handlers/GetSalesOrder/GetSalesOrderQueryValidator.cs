@@ -1,5 +1,5 @@
 ﻿using AW.Services.Sales.Core.Specifications;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using FluentValidation;
 using System.Threading;
 using System.Threading.Tasks;

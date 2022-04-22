@@ -2,8 +2,8 @@ using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesPerson;
 using AW.Services.Sales.Core.Specifications;
+using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
-using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
@@ -41,7 +41,7 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result.FullName().Should().Be(salesPerson.FullName);
+            result.Name.FullName.Should().Be(salesPerson.Name.FullName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]

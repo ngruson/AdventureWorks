@@ -9,7 +9,7 @@ using AW.Services.IdentityServer.Core.Data;
 using AW.Services.IdentityServer.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using AW.Services.Product.Infrastructure.EFCore.Configurations;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.ConsoleTools.DependencyInjection
 {

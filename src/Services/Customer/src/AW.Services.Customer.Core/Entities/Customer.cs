@@ -1,5 +1,5 @@
 ﻿using AW.Services.Customer.Core.Entities.PreferredAddress;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -174,7 +174,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             )
         {
             //Arrange
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                 .ReturnsAsync(territories);
 
             //Act
@@ -191,7 +191,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             )
         {
             //Arrange
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                 .ReturnsAsync((List<Territory>)null);
 
             //Act

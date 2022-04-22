@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
 {

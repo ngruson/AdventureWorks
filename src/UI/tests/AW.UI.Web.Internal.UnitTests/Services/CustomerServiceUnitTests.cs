@@ -48,7 +48,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     TotalCustomers = customers.Count * 10
                 });
 
-                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync())
+                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                     .ReturnsAsync(territories);
 
                 //Act
@@ -92,7 +92,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     TotalCustomers = customers.Count * 10
                 });
 
-                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync())
+                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                     .ReturnsAsync(territories);
 
                 //Act
@@ -133,7 +133,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 ))
                .ReturnsAsync(customer);
 
-                mockReferenceDataApiClient.Setup(x => x.GetTerritoriesAsync())
+                mockReferenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
                     .ReturnsAsync(territories);
 
                 mockSalesPersonApiClient.Setup(_ => _.GetSalesPersonsAsync(It.IsAny<string>()))
@@ -196,9 +196,9 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 .Build()
             );
             
-            mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync()
+            mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>())
             )
-            .ReturnsAsync(new List<referenceDataApi.Models.GetTerritories.Territory>
+            .ReturnsAsync(new List<Territory>
             {
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northwest").Build(),
                 new SalesTerritoryBuilder().CountryRegion("US").Name("Northeast").Build()

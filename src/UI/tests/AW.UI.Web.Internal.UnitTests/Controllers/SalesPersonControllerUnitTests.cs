@@ -18,7 +18,9 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             {
                 //Arrange
                 var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();
-                mockSalesPersonViewModelService.Setup(x => x.GetSalesPersons())
+                mockSalesPersonViewModelService.Setup(x => x.GetSalesPersons(
+                    It.IsAny<string>())
+                )
                 .ReturnsAsync(new SalesPersonIndexViewModel());
 
                 var controller = new SalesPersonController(
@@ -32,7 +34,9 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
                 viewResult.Model.Should().BeAssignableTo<SalesPersonIndexViewModel>();
 
-                mockSalesPersonViewModelService.Verify(x => x.GetSalesPersons());
+                mockSalesPersonViewModelService.Verify(x => x.GetSalesPersons(
+                    It.IsAny<string>())
+                );
             }
         }
     }

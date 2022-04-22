@@ -6,7 +6,7 @@ using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.Sales.Core.ValueTypes;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;

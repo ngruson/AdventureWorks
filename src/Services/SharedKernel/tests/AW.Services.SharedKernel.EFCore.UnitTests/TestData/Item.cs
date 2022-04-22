@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Domain;
+﻿using AW.Services.SharedKernel.Domain;
 
 namespace AW.Services.SharedKernel.EFCore.UnitTests.TestData
 {

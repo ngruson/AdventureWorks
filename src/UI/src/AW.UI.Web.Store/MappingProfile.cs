@@ -11,8 +11,6 @@ namespace AW.UI.Web.Store
         {
             ApplyMappingsFromAssembly(typeof(IProductApiClient).Assembly);
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-
-            CreateMap<m.GetCustomer.PersonName, m.UpdateCustomer.PersonName>();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AW.Services.Sales.Core.Exceptions;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using System;
 using System.Threading.Tasks;
 

@@ -1,6 +1,6 @@
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
-using AW.SharedKernel.Interfaces;
+using AW.Services.SharedKernel.Interfaces;
 using FluentAssertions;
 using Moq;
 using System;

@@ -1,6 +1,7 @@
 ﻿using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Internal.Controllers;
 using AW.UI.Web.Internal.Interfaces;
+using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,13 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 ))
                 .ReturnsAsync(new SalesOrderIndexViewModel());
 
+                var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();
+                var mockReferenceDataService = new Mock<IReferenceDataService>();
+
                 var controller = new SalesOrderController(
-                    mockSalesOrderViewModelService.Object
+                    mockSalesOrderViewModelService.Object,
+                    mockSalesPersonViewModelService.Object,
+                    mockReferenceDataService.Object
                 );
 
                 //Act
@@ -62,8 +68,13 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
                 .ReturnsAsync(new SalesOrderDetailViewModel()
                 );
 
+                var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();
+                var mockReferenceDataService = new Mock<IReferenceDataService>();
+
                 var controller = new SalesOrderController(
-                    mockSalesOrderViewModelService.Object
+                    mockSalesOrderViewModelService.Object,
+                    mockSalesPersonViewModelService.Object,
+                    mockReferenceDataService.Object
                 );
 
                 //Act
