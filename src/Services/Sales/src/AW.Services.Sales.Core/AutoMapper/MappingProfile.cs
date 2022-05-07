@@ -13,6 +13,8 @@ namespace AW.Services.Sales.Core.AutoMapper
                 .IncludeAllDerived();
             CreateMap<Entities.Customer, Handlers.GetSalesOrder.CustomerDto>()
                 .IncludeAllDerived();
+            CreateMap<Models.Customer, Handlers.UpdateSalesOrder.CustomerDto>()
+                .IncludeAllDerived();
         }
     }
 }

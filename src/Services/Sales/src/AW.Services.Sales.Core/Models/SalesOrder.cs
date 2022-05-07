@@ -62,6 +62,10 @@ namespace AW.Services.Sales.Core.Models
                 .ForMember(m => m.OrderLines, opt => opt.Ignore())
                 .ForMember(m => m.SalesReasons, opt => opt.Ignore());
             profile.CreateMap<Handlers.GetSalesOrder.SalesOrderDto, SalesOrder>();
+            profile.CreateMap<SalesOrder, Handlers.UpdateSalesOrder.UpdateSalesOrderCommand>()
+                .ForMember(m => m.SalesOrder, opt => opt.MapFrom(src => src));
+            profile.CreateMap<SalesOrder, Handlers.UpdateSalesOrder.SalesOrderDto>()
+                .ReverseMap();
         }
     }
 }

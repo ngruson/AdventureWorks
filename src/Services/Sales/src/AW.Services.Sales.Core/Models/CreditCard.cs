@@ -14,6 +14,8 @@ namespace AW.Services.Sales.Core.Models
         {
             profile.CreateMap<Handlers.GetSalesOrders.CreditCardDto, CreditCard>();
             profile.CreateMap<Handlers.GetSalesOrder.CreditCardDto, CreditCard>();
+            profile.CreateMap<CreditCard, Handlers.UpdateSalesOrder.CreditCardDto>()
+                .ReverseMap();
         }
     }
 }

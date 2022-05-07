@@ -16,6 +16,8 @@ namespace AW.Services.Sales.Core.Models
         {
             profile.CreateMap<Handlers.GetSalesOrders.AddressDto, Address>();
             profile.CreateMap<Handlers.GetSalesOrder.AddressDto, Address>();
+            profile.CreateMap<Address, Handlers.UpdateSalesOrder.AddressDto>()
+                .ReverseMap();
             profile.CreateMap<Address, ValueTypes.Address>();
         }
     }

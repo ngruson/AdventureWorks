@@ -19,6 +19,7 @@ using AW.Services.Sales.Core.Handlers.Identified;
 using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
 using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
+using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
 {
@@ -164,6 +165,35 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 //Assert
                 var notFoundResult = actionResult as NotFoundResult;
                 notFoundResult.Should().NotBeNull();
+            }
+        }
+
+        public class UpdateSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                Core.Handlers.UpdateSalesOrder.SalesOrderDto dto,
+                Core.Models.SalesOrder salesOrder
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<UpdateSalesOrderCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(dto);
+
+                //Act
+                var actionResult = await sut.UpdateSalesOrder(salesOrder.SalesOrderNumber, salesOrder);
+
+                //Assert
+                var okResult = actionResult as OkObjectResult;
+                okResult.Should().NotBeNull();
+
+                var updatedSalesOrder = okResult.Value as Core.Models.SalesOrder;
+                updatedSalesOrder.Should().NotBeNull();
             }
         }
 

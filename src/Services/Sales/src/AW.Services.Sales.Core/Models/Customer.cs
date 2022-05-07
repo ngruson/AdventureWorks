@@ -13,6 +13,7 @@ namespace AW.Services.Sales.Core.Models
         {
             profile.CreateMap<Handlers.GetSalesOrders.CustomerDto, Customer>();
             profile.CreateMap<Handlers.GetSalesOrder.CustomerDto, Customer>();
+            //profile.CreateMap<Customer, Handlers.UpdateSalesOrder.CustomerDto>();
             profile.CreateMap<Handlers.GetSalesOrdersForCustomer.CustomerDto, Customer>();
         }
     }

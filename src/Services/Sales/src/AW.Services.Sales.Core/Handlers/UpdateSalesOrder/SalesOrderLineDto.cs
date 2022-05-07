@@ -1,24 +1,29 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.Services.Sales.Core.Entities;
 
-namespace AW.Services.Sales.Core.Models
+namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class SalesOrderLine : IMapFrom<Handlers.GetSalesOrders.SalesOrderLineDto>
+    public class SalesOrderLineDto : IMapFrom<SalesOrderLine>
     {
         public string CarrierTrackingNumber { get; set; }
+
         public short OrderQty { get; set; }
+
         public string ProductName { get; set; }
+
         public string SpecialOfferDescription { get; set; }
+
         public decimal UnitPrice { get; set; }
+
         public decimal UnitPriceDiscount { get; set; }
+
         public decimal LineTotal { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Handlers.GetSalesOrders.SalesOrderLineDto, SalesOrderLine>();
-            profile.CreateMap<Handlers.GetSalesOrder.SalesOrderLineDto, SalesOrderLine>();
-            profile.CreateMap<SalesOrderLine, Handlers.UpdateSalesOrder.SalesOrderLineDto>()
-                .ReverseMap();
+            profile.CreateMap<SalesOrderLine, SalesOrderLineDto>()
+                .ForMember(m => m.SpecialOfferDescription, opt => opt.MapFrom(src => src.SpecialOfferProduct.SpecialOffer.Description));
         }
     }
 }
