@@ -122,24 +122,26 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
+                var requestApproveSalesOrder = new IdentifiedCommand<ApproveSalesOrderCommand, bool>(command, guid);
+
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    command.GetGenericTypeName(),
-                    nameof(command.SalesOrderNumber),
-                    command.SalesOrderNumber,
-                    command
+                    requestApproveSalesOrder.GetGenericTypeName(),
+                    nameof(requestApproveSalesOrder.Command.SalesOrderNumber),
+                    requestApproveSalesOrder.Command.SalesOrderNumber,
+                    requestApproveSalesOrder
                 );
 
-                commandResult = await mediator.Send(command);
+                commandResult = await mediator.Send(requestApproveSalesOrder);
             }
 
             if (!commandResult)
             {
-                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)"); 
                 return BadRequest();
             }
 
-            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
+            logger.LogInformation("Command succeeded, returning OK (HTTP 200)");
             return Ok();
         }
 
@@ -153,24 +155,26 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
+                var requestRejectSalesOrder = new IdentifiedCommand<RejectSalesOrderCommand, bool>(command, guid);
+
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    command.GetGenericTypeName(),
-                    nameof(command.SalesOrderNumber),
-                    command.SalesOrderNumber,
-                    command
+                    requestRejectSalesOrder.GetGenericTypeName(),
+                    nameof(requestRejectSalesOrder.Command.SalesOrderNumber),
+                    requestRejectSalesOrder.Command.SalesOrderNumber,
+                    requestRejectSalesOrder
                 );
 
-                commandResult = await mediator.Send(command);
+                commandResult = await mediator.Send(requestRejectSalesOrder);
             }
 
             if (!commandResult)
             {
-                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)");
                 return BadRequest();
             }
 
-            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
+            logger.LogInformation("Command succeeded, returning OK (HTTP 200)");
             return Ok();
         }
 
@@ -184,24 +188,26 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
+                var requestCancelSalesOrder = new IdentifiedCommand<CancelSalesOrderCommand, bool>(command, guid);
+
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    command.GetGenericTypeName(),
-                    nameof(command.SalesOrderNumber),
-                    command.SalesOrderNumber,
-                    command
+                    requestCancelSalesOrder.GetGenericTypeName(),
+                    nameof(requestCancelSalesOrder.Command.SalesOrderNumber),
+                    requestCancelSalesOrder.Command.SalesOrderNumber,
+                    requestCancelSalesOrder
                 );
 
-                commandResult = await mediator.Send(command);
+                commandResult = await mediator.Send(requestCancelSalesOrder);
             }
 
             if (!commandResult)
             {
-                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)");
                 return BadRequest();
             }
 
-            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
+            logger.LogInformation("Command succeeded, returning OK (HTTP 200)");
             return Ok();
         }
 
@@ -215,24 +221,26 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
+                var requestShipSalesOrder = new IdentifiedCommand<ShipSalesOrderCommand, bool>(command, guid);
+
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    command.GetGenericTypeName(),
-                    nameof(command.SalesOrderNumber),
-                    command.SalesOrderNumber,
-                    command
+                    requestShipSalesOrder.GetGenericTypeName(),
+                    nameof(requestShipSalesOrder.Command.SalesOrderNumber),
+                    requestShipSalesOrder.Command.SalesOrderNumber,
+                    requestShipSalesOrder
                 );
 
-                commandResult = await mediator.Send(command);
+                commandResult = await mediator.Send(requestShipSalesOrder);
             }
 
             if (!commandResult)
             {
-                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)");
                 return BadRequest();
             }
 
-            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
+            logger.LogInformation("Command succeeded, returning OK (HTTP 200)");
             return Ok();
         }
     }
