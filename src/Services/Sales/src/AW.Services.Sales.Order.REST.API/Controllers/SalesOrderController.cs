@@ -122,24 +122,24 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var requestApproveSalesOrder = new IdentifiedCommand<ApproveSalesOrderCommand, bool>(command, guid);
-
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestApproveSalesOrder.GetGenericTypeName(),
-                    nameof(requestApproveSalesOrder.Command.SalesOrderNumber),
-                    requestApproveSalesOrder.Command.SalesOrderNumber,
-                    requestApproveSalesOrder
+                    command.GetGenericTypeName(),
+                    nameof(command.SalesOrderNumber),
+                    command.SalesOrderNumber,
+                    command
                 );
 
-                commandResult = await mediator.Send(requestApproveSalesOrder);
+                commandResult = await mediator.Send(command);
             }
 
             if (!commandResult)
             {
+                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
                 return BadRequest();
             }
 
+            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
             return Ok();
         }
 
@@ -153,24 +153,24 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var requestRejectSalesOrder = new IdentifiedCommand<RejectSalesOrderCommand, bool>(command, guid);
-
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestRejectSalesOrder.GetGenericTypeName(),
-                    nameof(requestRejectSalesOrder.Command.SalesOrderNumber),
-                    requestRejectSalesOrder.Command.SalesOrderNumber,
-                    requestRejectSalesOrder
+                    command.GetGenericTypeName(),
+                    nameof(command.SalesOrderNumber),
+                    command.SalesOrderNumber,
+                    command
                 );
 
-                commandResult = await mediator.Send(requestRejectSalesOrder);
+                commandResult = await mediator.Send(command);
             }
 
             if (!commandResult)
             {
+                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
                 return BadRequest();
             }
 
+            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
             return Ok();
         }
 
@@ -184,24 +184,24 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var requestCancelSalesOrder = new IdentifiedCommand<CancelSalesOrderCommand, bool>(command, guid);
-
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestCancelSalesOrder.GetGenericTypeName(),
-                    nameof(requestCancelSalesOrder.Command.SalesOrderNumber),
-                    requestCancelSalesOrder.Command.SalesOrderNumber,
-                    requestCancelSalesOrder
+                    command.GetGenericTypeName(),
+                    nameof(command.SalesOrderNumber),
+                    command.SalesOrderNumber,
+                    command
                 );
 
-                commandResult = await mediator.Send(requestCancelSalesOrder);
+                commandResult = await mediator.Send(command);
             }
 
             if (!commandResult)
             {
+                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
                 return BadRequest();
             }
 
+            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
             return Ok();
         }
 
@@ -215,24 +215,24 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var requestShipSalesOrder = new IdentifiedCommand<ShipSalesOrderCommand, bool>(command, guid);
-
                 logger.LogInformation(
                     "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-                    requestShipSalesOrder.GetGenericTypeName(),
-                    nameof(requestShipSalesOrder.Command.SalesOrderNumber),
-                    requestShipSalesOrder.Command.SalesOrderNumber,
-                    requestShipSalesOrder
+                    command.GetGenericTypeName(),
+                    nameof(command.SalesOrderNumber),
+                    command.SalesOrderNumber,
+                    command
                 );
 
-                commandResult = await mediator.Send(requestShipSalesOrder);
+                commandResult = await mediator.Send(command);
             }
 
             if (!commandResult)
             {
+                logger.LogInformation("Command failed, returning HTTP 401 (Bad Request)");
                 return BadRequest();
             }
 
+            logger.LogInformation("Command succeeded, returning HTTP 200 (OK)");
             return Ok();
         }
     }
