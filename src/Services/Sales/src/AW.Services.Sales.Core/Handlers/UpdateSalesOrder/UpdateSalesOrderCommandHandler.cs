@@ -13,13 +13,16 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
     {
         private readonly ILogger<UpdateSalesOrderCommandHandler> logger;
         private readonly IRepository<Entities.SalesOrder> salesOrderRepository;
+        private readonly IRepository<Entities.SalesPerson> salesPersonRepository;
         private readonly IMapper mapper;
 
         public UpdateSalesOrderCommandHandler(
             ILogger<UpdateSalesOrderCommandHandler> logger,
             IRepository<Entities.SalesOrder> salesOrderRepository,
+            IRepository<Entities.SalesPerson> salesPersonRepository,
             IMapper mapper) =>
-                (this.logger, this.salesOrderRepository, this.mapper) = (logger, salesOrderRepository, mapper);
+                (this.logger, this.salesOrderRepository, this.salesPersonRepository, this.mapper) 
+                    = (logger, salesOrderRepository, salesPersonRepository, mapper);
 
         public async Task<SalesOrderDto> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
         {
@@ -32,6 +35,17 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 
             logger.LogInformation("Updating sales order");
             mapper.Map(request.SalesOrder, salesOrder);
+
+            var salesPerson = await salesPersonRepository.GetBySpecAsync(
+                new GetSalesPersonSpecification(
+                    request.SalesOrder.SalesPerson.Name.FirstName,
+                    request.SalesOrder.SalesPerson.Name.MiddleName,
+                    request.SalesOrder.SalesPerson.Name.LastName
+                ),
+                cancellationToken
+            );
+            Guard.Against.Null(salesPerson, nameof(salesPerson));
+            salesOrder.SetSalesPerson(salesPerson);
 
             logger.LogInformation("Saving sales order to database");
             await salesOrderRepository.UpdateAsync(salesOrder, cancellationToken);

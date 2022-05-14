@@ -63,6 +63,11 @@ namespace AW.Services.Sales.Core.Entities
         public SalesPerson SalesPerson { get; private set; }
         public int? SalesPersonID { get; private set; }
 
+        internal void SetSalesPerson(SalesPerson salesPerson)
+        {
+            SalesPerson = salesPerson;
+        }
+
         public string Territory { get; private set; }
 
         public Address BillToAddress { get; private set; }
