@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
         public string AccountNumber { get; set; }
         public CustomerDto Customer { get; set; }
 
-        public string SalesPerson { get; set; }
+        public SalesPersonDto SalesPerson { get; set; }
 
         public string Territory { get; set; }
 

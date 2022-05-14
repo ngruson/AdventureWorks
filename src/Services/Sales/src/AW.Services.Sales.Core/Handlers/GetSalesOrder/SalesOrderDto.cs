@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
         public string AccountNumber { get; set; }
         public CustomerDto Customer { get; set; }
 
-        public string SalesPerson { get; set; }
+        public SalesPersonDto SalesPerson { get; set; }
 
         public string Territory { get; set; }
 
@@ -59,8 +59,8 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
             profile.CreateMap<SalesOrder, SalesOrderDto>()
                 .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status.Name))
                 .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
-                    .Select(r => r.SalesReason)))
-                .ForMember(_ => _.SalesPerson, opt => opt.MapFrom(src => src.SalesPerson.Name.FullName));
+                    .Select(r => r.SalesReason))
+                );
         }
     }
 }

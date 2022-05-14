@@ -26,7 +26,7 @@ namespace AW.Services.Sales.Core.Models
         public string AccountNumber { get; set; }
         public Customer Customer { get; set; }
 
-        public string SalesPerson { get; set; }
+        public SalesOrderSalesPerson SalesPerson { get; set; }
 
         public string Territory { get; set; }
 

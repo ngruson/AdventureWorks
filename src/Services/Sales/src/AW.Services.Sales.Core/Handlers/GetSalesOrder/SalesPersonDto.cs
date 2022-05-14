@@ -3,7 +3,7 @@ using AW.Services.Sales.Core.Entities;
 using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.ValueTypes;
 
-namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
+namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {
     public class SalesPersonDto : IMapFrom<SalesPerson>
     {
