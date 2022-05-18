@@ -31,11 +31,14 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             public async Task GetSalesOrders_ShouldReturnSalesOrders_WhenGivenSalesOrders(
                 [Frozen] Mock<IMediator> mockMediator,
                 List<Core.Handlers.GetSalesOrders.SalesOrderDto> salesOrders,
+                Core.Handlers.GetSalesOrders.IndividualCustomerDto customer,
                 [Greedy] SalesOrderController sut,
                 GetSalesOrdersQuery query
             )
             {
                 //Arrange
+                salesOrders.ForEach(_ => _.Customer = customer);
+
                 var dto = new GetSalesOrdersDto
                 {
                     SalesOrders = salesOrders,
@@ -80,11 +83,14 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             public async Task GetSalesOrdersForCustomer_ShouldReturnSalesOrders_WhenGivenSalesOrders(
                 [Frozen] Mock<IMediator> mockMediator,
                 List<salesOrdersForCustomers.SalesOrderDto> salesOrders,
+                salesOrdersForCustomers.IndividualCustomerDto customer,
                 [Greedy] SalesOrderController sut,
                 salesOrdersForCustomers.GetSalesOrdersForCustomerQuery query
             )
             {
                 //Arrange
+                salesOrders.ForEach(_ => _.Customer = customer);
+
                 var dto = new salesOrdersForCustomers.GetSalesOrdersDto
                 {
                     SalesOrders = salesOrders,
@@ -128,12 +134,14 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder(
             Core.Handlers.GetSalesOrder.SalesOrderDto salesOrder,
+            Core.Handlers.GetSalesOrder.IndividualCustomerDto customer,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] SalesOrderController sut,
             GetSalesOrderQuery query
             )
             {
                 //Arrange
+                salesOrder.Customer = customer;
                 mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(salesOrder);
 
@@ -175,10 +183,15 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] SalesOrderController sut,
                 Core.Handlers.UpdateSalesOrder.SalesOrderDto dto,
-                Core.Models.SalesOrder salesOrder
+                Core.Handlers.UpdateSalesOrder.IndividualCustomerDto customerDto,
+                Core.Models.SalesOrder salesOrder,
+                Core.Models.IndividualCustomer customer
             )
             {
                 //Arrange
+                salesOrder.Customer = customer;
+                dto.Customer = customerDto;
+
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<UpdateSalesOrderCommand>(),
                     It.IsAny<CancellationToken>()

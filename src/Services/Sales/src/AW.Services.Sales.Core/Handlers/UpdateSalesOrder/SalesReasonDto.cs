@@ -11,7 +11,8 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesReason, SalesReasonDto>();
+            profile.CreateMap<SalesReason, SalesReasonDto>()
+                .ReverseMap();
         }
     }
 }

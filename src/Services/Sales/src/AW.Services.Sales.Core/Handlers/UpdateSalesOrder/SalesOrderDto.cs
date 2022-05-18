@@ -26,7 +26,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
         public string PurchaseOrderNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        //public CustomerDto Customer { get; set; }
+        public CustomerDto Customer { get; set; }
 
         public SalesPersonDto SalesPerson { get; set; }
 

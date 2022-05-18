@@ -12,7 +12,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesPerson, SalesPersonDto>()
-                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Name));
+                .ReverseMap();
         }
     }
 }
