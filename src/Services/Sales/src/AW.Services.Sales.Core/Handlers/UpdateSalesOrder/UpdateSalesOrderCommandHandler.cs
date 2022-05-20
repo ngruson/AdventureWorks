@@ -45,7 +45,8 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
                 cancellationToken
             );
             Guard.Against.Null(salesPerson, nameof(salesPerson));
-            salesOrder.SetSalesPerson(salesPerson);
+            if (salesOrder.SalesPerson != salesPerson)
+                salesOrder.SetSalesPerson(salesPerson);
 
             logger.LogInformation("Saving sales order to database");
             await salesOrderRepository.UpdateAsync(salesOrder, cancellationToken);

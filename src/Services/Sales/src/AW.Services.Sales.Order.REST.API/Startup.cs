@@ -21,6 +21,7 @@ using AW.Services.SharedKernel.EFCore;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.JsonConverters;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -101,7 +102,7 @@ namespace AW.Services.Sales.Order.REST.API
                 });
             });
 
-            //ConfigureEventBus(app);
+            ConfigureEventBus(app);
         }
 
         private static void ConfigureEventBus(IApplicationBuilder app)
@@ -122,11 +123,18 @@ namespace AW.Services.Sales.Order.REST.API
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
             })
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                options.JsonSerializerOptions.Converters.Add(
+                    new CustomerConverter<
+                        Core.Models.Customer,
+                        Core.Models.StoreCustomer,
+                        Core.Models.IndividualCustomer>()
+                );
+            });
 
             return services;
         }

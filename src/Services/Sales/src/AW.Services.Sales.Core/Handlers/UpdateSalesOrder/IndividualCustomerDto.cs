@@ -15,7 +15,8 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
             profile.CreateMap<Entities.IndividualCustomer, IndividualCustomerDto>()
                 .ForMember(_ => _.Title, opt => opt.MapFrom(src => src.Person.Title))
                 .ForMember(_ => _.Name, opt => opt.MapFrom(src => src.Person.Name))
-                .ForMember(_ => _.Suffix, opt => opt.MapFrom(src => src.Person.Suffix));
+                .ForMember(_ => _.Suffix, opt => opt.MapFrom(src => src.Person.Suffix))
+                .ReverseMap();
         }
     }    
 }
