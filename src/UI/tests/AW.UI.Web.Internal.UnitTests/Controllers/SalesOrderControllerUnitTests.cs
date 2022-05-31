@@ -19,7 +19,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             public async Task Index_ReturnsViewModel()
             {
                 //Arrange
-                var mockSalesOrderViewModelService = new Mock<ISalesOrderViewModelService>();
+                var mockSalesOrderViewModelService = new Mock<ISalesOrderService>();
                 mockSalesOrderViewModelService.Setup(x => x.GetSalesOrders(
                     It.IsAny<int>(),
                     It.IsAny<int>(),
@@ -61,7 +61,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             public async Task Detail_ReturnsViewModel()
             {
                 //Arrange
-                var mockSalesOrderViewModelService = new Mock<ISalesOrderViewModelService>();
+                var mockSalesOrderViewModelService = new Mock<ISalesOrderService>();
                 mockSalesOrderViewModelService.Setup(x => x.GetSalesOrder(
                     It.IsAny<string>()
                 ))

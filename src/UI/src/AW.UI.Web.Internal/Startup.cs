@@ -110,7 +110,7 @@ namespace AW.UI.Web.Internal
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<ISalesOrderViewModelService, SalesOrderViewModelService>();
+            services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
             services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
             services.AddScoped<IReferenceDataService, ReferenceDataService>();

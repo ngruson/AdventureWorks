@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
 using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
@@ -26,6 +27,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 List<SalesOrder> salesOrders,
+                IndividualCustomer customer,
                 SalesOrderApiClient sut,
                 int pageIndex,
                 int pageSize,
@@ -35,6 +37,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             {
                 //Arrange
                 httpClient.BaseAddress = uri;
+                salesOrders.ForEach(_ => _.Customer = customer);
 
                 var salesOrdersResult = new SalesOrdersResult
                 {
@@ -51,7 +54,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                 {
                                     Converters =
                                     {
-                                        new JsonStringEnumConverter()
+                                        new JsonStringEnumConverter(),
+                                        new CustomerConverter<
+                                            Customer,
+                                            StoreCustomer,
+                                            IndividualCustomer>()
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -99,11 +106,13 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 SalesOrder salesOrder,
+                IndividualCustomer customer,
                 SalesOrderApiClient sut
             )
             {
                 //Arrange
                 httpClient.BaseAddress = uri;
+                salesOrder.Customer = customer;
 
                 handler.When(HttpMethod.Get, $"{uri}*")
                     .Respond(HttpStatusCode.OK,
@@ -114,7 +123,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                 {
                                     Converters =
                                     {
-                                        new JsonStringEnumConverter()
+                                        new JsonStringEnumConverter(),
+                                        new CustomerConverter<
+                                            Customer,
+                                            StoreCustomer,
+                                            IndividualCustomer>()
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

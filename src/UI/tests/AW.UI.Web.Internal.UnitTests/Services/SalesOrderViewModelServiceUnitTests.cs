@@ -22,7 +22,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             SalesOrdersResult salesOrdersResult,
             [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
             List<Territory> territories,
-            SalesOrderViewModelService sut
+            SalesOrderService sut
         )
         {
             //Arrange
@@ -64,7 +64,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         public async Task GetSalesOrder_ReturnsViewModel(
             [Frozen] Mock<ISalesOrderApiClient> salesOrderApiClient,
             SalesOrder salesOrder,
-            SalesOrderViewModelService sut
+            SalesOrderService sut
         )
         {
             //Arrange

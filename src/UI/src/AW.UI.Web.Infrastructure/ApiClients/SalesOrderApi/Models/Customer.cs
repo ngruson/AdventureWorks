@@ -1,9 +1,14 @@
-﻿namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models
+﻿using AW.SharedKernel.Interfaces;
+using System.Text.Json.Serialization;
+
+namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models
 {
-    public class Customer
+    public abstract class Customer : ICustomer
     {
-        public CustomerType CustomerType { get; set; }
+        public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
         public string CustomerNumber { get; set; }
-        public string FullName { get; set; }
+        
+        [JsonIgnore]
+        public virtual string CustomerName { get; }
     }
 }

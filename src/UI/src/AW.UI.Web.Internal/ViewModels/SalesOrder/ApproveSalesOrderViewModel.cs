@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using s = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesOrderViewModel : IMapFrom<s.SalesOrder>
+    public class ApproveSalesOrderViewModel : IMapFrom<s.SalesOrder>
     {
-        [Display(Name = "Revision number")]
-        public string RevisionNumber { get; set; }
+        [Display(Name = "Sales order number")]
+        public string SalesOrderNumber { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Order date")]
@@ -22,30 +21,17 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime DueDate { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Ship date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ConvertEmptyStringToNull = true)]
-        public DateTime? ShipDate { get; set; }
-
-        public string Status { get; set; }
-
-        [Display(Name = "Ordered online")]
-        public string OnlineOrdered { get; set; }
-
-        [Display(Name = "Sales order number")]
-        public string SalesOrderNumber { get; set; }
-
-        [Display(Name = "Purchase order number")]
-        public string PurchaseOrderNumber { get; set; }
-
-        [Display(Name = "Account number")]
-        public string AccountNumber { get; set; }
-
         [Display(Name = "Customer name")]
         public string CustomerName { get; set; }
 
         [Display(Name = "Customer type")]
         public string CustomerType { get; set; }
+
+        [Display(Name = "Ordered online")]
+        public string OnlineOrdered { get; set; }
+
+        [Display(Name = "Shipping method")]
+        public string ShipMethod { get; set; }
 
         [Display(Name = "Sales person")]
         [Required]
@@ -73,40 +59,19 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public AddressViewModel BillToAddress { get; set; }
 
-        public AddressViewModel ShipToAddress { get; set; }
-
-        [Display(Name = "Shipping method")]
-        public string ShipMethod { get; set; }
-
-        public List<SalesOrderLineViewModel> OrderLines { get; set; }
-
-        public List<SalesReasonViewModel> SalesReasons { get; set; }
-
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<s.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<s.SalesOrder, ApproveSalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
-                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
                 .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName))
                 .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Customer.CustomerType))
                 .ReverseMap();
-        }
+        }        
 
         private static string MapOnlineOrderFlag(bool onlineOrderFlag)
         {
-            if (onlineOrderFlag)
-                return "Yes";
-
-            return "No";
-        }
-
-        private static string MapPurchaseOrderNumber(string purchaseOrderNumber)
-        {
-            if (!string.IsNullOrEmpty(purchaseOrderNumber))
-                return purchaseOrderNumber;
-
-            return "-";
+            return onlineOrderFlag ? "Yes" : "No";
         }
 
         private static string MapSalesPerson(string salesPerson)

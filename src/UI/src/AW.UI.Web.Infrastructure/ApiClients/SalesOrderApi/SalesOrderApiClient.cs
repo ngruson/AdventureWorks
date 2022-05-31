@@ -1,7 +1,10 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
+﻿using AW.SharedKernel.JsonConverters;
+using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -48,7 +51,11 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi
             {
                 Converters =
                 {
-                    new JsonStringEnumConverter()
+                    new JsonStringEnumConverter(),
+                    new CustomerConverter<
+                        Customer,
+                        StoreCustomer,
+                        IndividualCustomer>()
                 },
                 IgnoreReadOnlyProperties = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -69,11 +76,63 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi
             {
                 Converters =
                 {
-                    new JsonStringEnumConverter()
+                    new JsonStringEnumConverter(),
+                    new CustomerConverter<
+                        Customer,
+                        StoreCustomer,
+                        IndividualCustomer>()
                 },
                 IgnoreReadOnlyProperties = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
+        }
+
+        public async Task<SalesOrder> UpdateSalesOrderAsync(SalesOrder salesOrder)
+        {
+            logger.LogInformation("Updating sales order with sales order number {SalesOrderNumber}", salesOrder.SalesOrderNumber);
+            string requestUri = $"SalesOrder/{salesOrder.SalesOrderNumber}?&api-version=1.0";
+            var options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter(),
+                    new CustomerConverter<
+                        Customer,
+                        StoreCustomer,
+                        IndividualCustomer>()
+                },
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            string json = JsonSerializer.Serialize(salesOrder, options);
+            logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
+
+            using var response = await client.PutAsync(
+                requestUri,
+                new StringContent(json, Encoding.UTF8, "application/json")
+            );
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+            var updatedSalesOrder = await stream.DeserializeAsync<SalesOrder>(options);
+
+            logger.LogInformation("Returning sales order {@SalesOrder}", updatedSalesOrder);
+            return updatedSalesOrder;
+        }
+
+        public async Task ApproveSalesOrderAsync(string salesOrderNumber)
+        {
+            logger.LogInformation("Approving sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
+            string requestUri = $"SalesOrder/{salesOrderNumber}/approve?&api-version=1.0";
+
+            logger.LogInformation("Calling PUT method on {RequestUri}", requestUri);
+
+            using var request = new HttpRequestMessage(HttpMethod.Put, requestUri);
+            request.Headers.Add("x-requestid", Guid.NewGuid().ToString());
+
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            logger.LogInformation("Sales order {SalesOrderNumber} succesfully approved", salesOrderNumber);
         }
     }
 }
