@@ -48,7 +48,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void Handle_NoCustomersExists_ThrowArgumentNullException(
+        public async Task Handle_NoCustomersExists_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetAllCustomersQueryHandler sut,
             GetAllCustomersQuery query
@@ -65,7 +65,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'customers')");
         }
     }

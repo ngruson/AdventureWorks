@@ -37,10 +37,10 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public void GetAddressTypes_NoAddressTypesFound_ReturnsAddressTypes(
-                [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
-                ReferenceDataService sut
-            )
+        public async Task GetAddressTypes_NoAddressTypesFound_ReturnsAddressTypes(
+            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
+            ReferenceDataService sut
+        )
         {
             //Arrange
             referenceDataApiClient.Setup(x => x.GetAddressTypesAsync())
@@ -50,7 +50,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             Func<Task> func = async () => await sut.GetAddressTypesAsync();
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'addressTypes')");
         }
 
@@ -73,10 +73,10 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public void GetContactTypes_NoContactTypesFound_ReturnsContactTypes(
-                [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
-                ReferenceDataService sut
-            )
+        public async Task GetContactTypes_NoContactTypesFound_ReturnsContactTypes(
+            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
+            ReferenceDataService sut
+        )
         {
             //Arrange
             referenceDataApiClient.Setup(x => x.GetContactTypesAsync())
@@ -86,7 +86,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             Func<Task> func = async () => await sut.GetContactTypesAsync();
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'contactTypes')");
         }
 
@@ -109,10 +109,10 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public void GetCountries_NoCountriesFound_ReturnsCountries(
-                [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
-                ReferenceDataService sut
-            )
+        public async Task GetCountries_NoCountriesFound_ReturnsCountries(
+            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
+            ReferenceDataService sut
+        )
         {
             //Arrange
             referenceDataApiClient.Setup(x => x.GetCountriesAsync())
@@ -122,7 +122,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             Func<Task> func = async () => await sut.GetCountriesAsync();
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'countries')");
         }
 
@@ -147,7 +147,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public void GetStatesProvinces_NoStatesProvincesFound_ReturnsStatesProvinces(
+        public async Task GetStatesProvinces_NoStatesProvincesFound_ReturnsStatesProvinces(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 ReferenceDataService sut
             )
@@ -162,7 +162,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             Func<Task> func = async () => await sut.GetStatesProvincesAsync();
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'statesProvinces')");
         }
 
@@ -185,7 +185,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         }
 
         [Theory, AutoMoqData]
-        public void GetTerritories_NoTerritoriesFound_ReturnsTerritories(
+        public async Task GetTerritories_NoTerritoriesFound_ReturnsTerritories(
                 [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
                 ReferenceDataService sut
             )
@@ -198,7 +198,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             Func<Task> func = async () => await sut.GetTerritoriesAsync();
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'territories')");
         }
     }

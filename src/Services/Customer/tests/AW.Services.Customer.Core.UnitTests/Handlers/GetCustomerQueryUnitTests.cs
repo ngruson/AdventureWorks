@@ -42,13 +42,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             ));
 
             result.Should().BeEquivalentTo(customer, opt => opt
-                .Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
             );
         }
 
         [Theory]
         [AutoMoqData]
-        public void Handle_CustomerNotFound_ThrowArgumentNullException(
+        public async Task Handle_CustomerNotFound_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomerQueryHandler sut,
             GetCustomerQuery query
@@ -65,7 +65,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'customer')");
         }
     }

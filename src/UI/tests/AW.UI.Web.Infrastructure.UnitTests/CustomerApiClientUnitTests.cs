@@ -141,7 +141,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetCustomers_NoCustomersFound_ThrowsHttpRequestException(
+            public async Task GetCustomers_NoCustomersFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -164,7 +164,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 );
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -213,7 +213,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetCustomer_CustomerNotFound_ThrowsHttpRequestException(
+            public async Task GetCustomer_CustomerNotFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -230,8 +230,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetCustomerAsync("AW00000001");
 
                 //Assert
-                func.Should().Throw<CustomerApiClientException>()
-                    .WithInnerException<HttpRequestException>()
+                await func.Should().ThrowAsync<CustomerApiClientException>()
+                    .WithInnerException<CustomerApiClientException, HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -277,7 +277,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetPreferredAddress_CustomerNotFound_ThrowsHttpRequestException(
+            public async Task GetPreferredAddress_CustomerNotFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -296,8 +296,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetPreferredAddressAsync(accountNumber, addressType);
 
                 //Assert
-                func.Should().Throw<CustomerApiClientException>()
-                    .WithInnerException<HttpRequestException>()
+                await func.Should().ThrowAsync<CustomerApiClientException>()
+                    .WithInnerException<CustomerApiClientException, HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }

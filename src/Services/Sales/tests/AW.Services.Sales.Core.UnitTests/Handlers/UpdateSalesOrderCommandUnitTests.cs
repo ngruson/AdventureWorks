@@ -35,7 +35,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void Handle_SalesOrderDoesNotExist_ThrowArgumentNullException(
+        public async Task Handle_SalesOrderDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             UpdateSalesOrderCommandHandler sut,
             UpdateSalesOrderCommand command
@@ -52,7 +52,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'salesOrder')");
         }
     }

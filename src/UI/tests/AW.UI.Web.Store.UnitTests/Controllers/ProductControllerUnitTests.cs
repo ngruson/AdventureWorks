@@ -282,7 +282,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         }
 
         [Fact]
-        public void Index_WithNoProductCategoryFilter_ThrowsException()
+        public async Task Index_WithNoProductCategoryFilter_ThrowsException()
         {
             //Arrange
             var mockProductService = new Mock<IProductService>();
@@ -295,7 +295,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             Func<Task> func = async () => await controller.Index(0, 5, null, null);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>();
+            await func.Should().ThrowAsync<ArgumentNullException>();
         }
     }
 }

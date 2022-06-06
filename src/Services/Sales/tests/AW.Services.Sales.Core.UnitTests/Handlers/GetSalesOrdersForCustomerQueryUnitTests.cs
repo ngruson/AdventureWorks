@@ -43,11 +43,11 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
             result.SalesOrders.Should().BeEquivalentTo(salesOrders,
                 opt => opt
-                    .Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
-                    .Excluding(_ => _.SelectedMemberPath.EndsWith("DomainEvents", StringComparison.InvariantCultureIgnoreCase))
-                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SpecialOfferProduct"))
-                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SalesReason"))
-                    .Excluding(_ => _.SelectedMemberPath.EndsWith("SalesPerson"))
+                    .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    .Excluding(_ => _.Path.EndsWith("DomainEvents", StringComparison.InvariantCultureIgnoreCase))
+                    .Excluding(_ => _.Path.EndsWith("SpecialOfferProduct"))
+                    .Excluding(_ => _.Path.EndsWith("SalesReason"))
+                    .Excluding(_ => _.Path.EndsWith("SalesPerson"))
             );
         }
     }

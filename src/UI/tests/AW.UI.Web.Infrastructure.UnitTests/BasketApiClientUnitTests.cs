@@ -57,7 +57,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetBasket_NoBasketFound_ThrowsHttpRequestException(
+            public async Task GetBasket_NoBasketFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -75,7 +75,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetBasket(userID);
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -120,7 +120,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void UpdateBasket_NoBasketFound_ThrowsHttpRequestException(
+            public async Task UpdateBasket_NoBasketFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -138,7 +138,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.UpdateBasket(basket);
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -170,7 +170,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void Checkout_Fails_ThrowsHttpRequestException(
+            public async Task Checkout_Fails_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -188,7 +188,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.Checkout(basket);
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }

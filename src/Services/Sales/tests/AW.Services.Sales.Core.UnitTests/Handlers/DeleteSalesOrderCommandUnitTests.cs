@@ -38,7 +38,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMoqData()]
-        public void Handle_SalesOrderDoesNotExist_ThrowSalesOrderNotFoundException(
+        public async Task Handle_SalesOrderDoesNotExist_ThrowSalesOrderNotFoundException(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepositoryMock,
             DeleteSalesOrderCommandHandler sut,
             DeleteSalesOrderCommand command
@@ -55,7 +55,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<SalesOrderNotFoundException>();
+            await func.Should().ThrowAsync<SalesOrderNotFoundException>();
 
             salesOrderRepositoryMock.Verify(_ => _.DeleteAsync(
                     It.IsAny<Core.Entities.SalesOrder>(),

@@ -58,7 +58,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
         }
 
         [Theory, AutoMoqData]
-        public void Handle_ExceptionOccurred_ThrowException(
+        public async Task Handle_ExceptionOccurred_ThrowException(
             [Frozen] Mock<IDbContext> mockDbContext,
             TransactionBehavior<CreateSalesOrderCommand, bool> sut,
             CreateSalesOrderCommand command,
@@ -75,7 +75,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None, next);
 
             //Assert
-            func.Should().Throw<Exception>();
+            await func.Should().ThrowAsync<Exception>();
 
             mockDbContext.Verify(_ => _.Execute(
                 It.IsAny<Func<Task>>()

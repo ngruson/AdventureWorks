@@ -100,7 +100,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
             }
 
             [Theory, AutoMoqData]
-            public void CreateRequestForCommandAsync_RequestExists_ThrowDomainException(
+            public async Task CreateRequestForCommandAsync_RequestExists_ThrowDomainException(
                 [Frozen] Mock<IRepository<ClientRequest>> mockRepository,
                 RequestManager sut,
                 Guid id
@@ -112,7 +112,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                 Func<Task> func = async () => await sut.CreateRequestForCommandAsync<CreateSalesOrderCommand>(id);
 
                 //Assert
-                func.Should().Throw<SalesDomainException>();
+                await func.Should().ThrowAsync<SalesDomainException>();
 
                 mockRepository.Verify(_ => _.AddAsync(
                         It.IsAny<ClientRequest>(),

@@ -49,7 +49,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -89,7 +89,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -191,7 +191,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -231,7 +231,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -333,7 +333,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -373,7 +373,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -413,7 +413,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -515,7 +515,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -555,7 +555,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(
@@ -595,7 +595,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeEquivalentTo(
                     address,
-                    opt => opt.Excluding(_ => _.SelectedMemberPath.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+                    opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
                 customerRepoMock.Verify(x => x.GetBySpecAsync(

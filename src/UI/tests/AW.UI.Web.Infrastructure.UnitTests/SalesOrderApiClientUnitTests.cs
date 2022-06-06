@@ -76,7 +76,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetSalesOrders_NoSalesOrdersFound_ThrowsHttpRequestException(
+            public async Task GetSalesOrders_NoSalesOrdersFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -93,7 +93,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetSalesOrdersAsync(0, 10, null, null);
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
@@ -145,7 +145,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
 
             [Theory, MockHttpData]
-            public void GetSalesOrder_NoSalesOrderFound_ThrowsHttpRequestException(
+            public async Task GetSalesOrder_NoSalesOrderFound_ThrowsHttpRequestException(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
@@ -162,7 +162,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Func<Task> func = async () => await sut.GetSalesOrderAsync("123");
 
                 //Assert
-                func.Should().Throw<HttpRequestException>()
+                await func.Should().ThrowAsync<HttpRequestException>()
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }

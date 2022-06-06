@@ -52,7 +52,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+        public async Task Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             AddIndividualCustomerEmailAddressCommandHandler sut,
             string accountNumber
@@ -75,7 +75,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'individualCustomer')");
         }
     }

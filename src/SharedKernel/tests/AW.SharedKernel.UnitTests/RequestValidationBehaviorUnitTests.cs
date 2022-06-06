@@ -41,7 +41,7 @@ namespace AW.SharedKernel.UnitTests
         }
 
         [Fact]
-        public void Handle_InvalidValidator_ThrowsValidationException()
+        public async Task Handle_InvalidValidator_ThrowsValidationException()
         {
             //Arrange
             var sut = new RequestValidationBehavior<GetCustomerQuery, Customer>(
@@ -60,7 +60,7 @@ namespace AW.SharedKernel.UnitTests
                 );
 
             //Assert
-            func.Should().Throw<ValidationException>()
+            await func.Should().ThrowAsync<ValidationException>()
                 .Where(ex => ex.Errors.ToList().Count == 1);
         }
     }

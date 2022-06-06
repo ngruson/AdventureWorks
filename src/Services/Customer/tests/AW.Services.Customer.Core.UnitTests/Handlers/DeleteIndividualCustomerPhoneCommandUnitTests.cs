@@ -50,7 +50,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+        public async Task Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerPhoneCommandHandler sut,
             DeleteIndividualCustomerPhoneCommand command
@@ -67,13 +67,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'individualCustomer')");
         }
 
         [Theory]
         [AutoMoqData]
-        public void Handle_PhoneNumberDoesNotExist_ThrowArgumentNullException(
+        public async Task Handle_PhoneNumberDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.IndividualCustomer>> customerRepoMock,
             DeleteIndividualCustomerPhoneCommandHandler sut,
             DeleteIndividualCustomerPhoneCommand command,
@@ -91,7 +91,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            func.Should().Throw<ArgumentNullException>()
+            await func.Should().ThrowAsync<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'phone')");
         }
     }

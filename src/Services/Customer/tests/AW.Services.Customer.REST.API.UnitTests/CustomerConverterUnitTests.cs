@@ -254,7 +254,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 storeCustomer.AccountNumber.Should().Be("AW00000001");
-                storeCustomer.CustomerType.Should().Be(CustomerType.Store);
+                storeCustomer.CustomerType.Should().Be(AW.SharedKernel.Interfaces.CustomerType.Store);
                 storeCustomer.Name.Should().Be("A Bike Store");
                 storeCustomer.SalesPerson.Should().Be("Pamela O Ansman-Wolfe");
                 storeCustomer.Territory.Should().Be("Northwest");
@@ -342,7 +342,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 individualCustomer.AccountNumber.Should().Be("AW00011000");
-                individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
+                individualCustomer.CustomerType.Should().Be(AW.SharedKernel.Interfaces.CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
                 individualCustomer.Person.Name.FirstName.Should().Be("Jon");
@@ -608,7 +608,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 storeCustomer.AccountNumber.Should().Be("AW00000001");
-                storeCustomer.CustomerType.Should().Be(CustomerType.Store);
+                storeCustomer.CustomerType.Should().Be(AW.SharedKernel.Interfaces.CustomerType.Store);
                 storeCustomer.Name.Should().Be("A Bike Store");
                 storeCustomer.SalesPerson.Should().Be("Pamela O Ansman-Wolfe");
                 storeCustomer.Territory.Should().Be("Northwest");
@@ -696,7 +696,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
 
                 //Assert
                 individualCustomer.AccountNumber.Should().Be("AW00011000");
-                individualCustomer.CustomerType.Should().Be(CustomerType.Individual);
+                individualCustomer.CustomerType.Should().Be(AW.SharedKernel.Interfaces.CustomerType.Individual);
                 individualCustomer.Territory.Should().Be("Australia");
                 individualCustomer.Person.Title.Should().BeNull();
                 individualCustomer.Person.Name.FirstName.Should().Be("Jon");
