@@ -14,12 +14,12 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
     {
         private readonly IMediator mediator;
         private readonly ILogger<StoreProductPhotosCommandHandler> logger;
-        private readonly IFileWriter fileWriter;
+        private readonly IFileHandler fileWriter;
 
         public StoreProductPhotosCommandHandler(
             IMediator mediator, 
             ILogger<StoreProductPhotosCommandHandler> logger,
-            IFileWriter fileWriter
+            IFileHandler fileWriter
         ) => (this.mediator, this.logger, this.fileWriter) = (mediator, logger, fileWriter);
         
         public async Task<Unit> Handle(StoreProductPhotosCommand request, CancellationToken cancellationToken)

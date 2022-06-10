@@ -17,6 +17,7 @@ namespace AW.Services.Infrastructure.Filters
         {
             logger.LogError(new EventId(context.Exception.HResult),
                 context.Exception,
+                "Exception message: {Message}",
                 context.Exception.Message
             );
 

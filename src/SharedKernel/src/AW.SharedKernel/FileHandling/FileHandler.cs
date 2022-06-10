@@ -3,7 +3,7 @@ using System.IO;
 
 namespace AW.SharedKernel.FileHandling
 {
-    public class FileWriter : IFileWriter
+    public class FileHandler : IFileHandler
     {
         public bool FileExists(string fileName)
         {

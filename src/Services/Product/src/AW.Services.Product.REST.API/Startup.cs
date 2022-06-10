@@ -148,7 +148,7 @@ namespace AW.Services.Product.REST.API
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetProductsQuery).Assembly);
             services.AddMediatR(typeof(GetProductsQuery));
-            services.AddScoped<IFileWriter, FileWriter>();
+            services.AddScoped<IFileHandler, FileHandler>();
 
             return services;
         }

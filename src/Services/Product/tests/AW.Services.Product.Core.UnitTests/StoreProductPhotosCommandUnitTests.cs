@@ -19,7 +19,7 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMoqData]
         public async Task Handle_FilesDoNotExists_WriteFiles(
             [Frozen] Mock<IMediator> mediatorMock,
-            [Frozen] Mock<IFileWriter> fileWriterMock,
+            [Frozen] Mock<IFileHandler> fileWriterMock,
             StoreProductPhotosCommandHandler sut,
             StoreProductPhotosCommand command,
             List<ProductWithPhotoDto> products
@@ -49,7 +49,7 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMoqData]
         public async Task Handle_WriteFilesFails_NoFilesWritten(
             [Frozen] Mock<IMediator> mediatorMock,
-            [Frozen] Mock<IFileWriter> fileWriterMock,
+            [Frozen] Mock<IFileHandler> fileWriterMock,
             StoreProductPhotosCommandHandler sut,
             StoreProductPhotosCommand command,
             List<ProductWithPhotoDto> products
@@ -86,7 +86,7 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMoqData]
         public async Task Handle_FilesExist_WriteNoFiles(
             [Frozen] Mock<IMediator> mediatorMock,
-            [Frozen] Mock<IFileWriter> fileWriterMock,
+            [Frozen] Mock<IFileHandler> fileWriterMock,
             StoreProductPhotosCommandHandler sut,
             StoreProductPhotosCommand command,
             List<ProductWithPhotoDto> products

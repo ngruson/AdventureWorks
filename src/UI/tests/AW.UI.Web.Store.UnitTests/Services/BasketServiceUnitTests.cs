@@ -149,5 +149,36 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
             }
         }
+
+        public class Checkout
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task Checkout_GetPreferrredAddressIsCalledForBillingAndShipping(
+                [Frozen] Mock<IBasketApiClient> mockClient,
+                [Frozen] Mock<ICustomerService> mockCustomerService,
+                [Greedy] BasketService sut,
+                bm.Basket basket,
+                ApplicationUser user
+            )
+            {
+                //Arrange
+                mockClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
+                    .ReturnsAsync(basket);
+
+                //Act
+                var response = await sut.Checkout(user);
+
+                //Assert
+                mockCustomerService.Verify(_ => _.GetPreferredAddressAsync(
+                    It.Is<string>(_ => _ == user.CustomerNumber),
+                    It.Is<string>(_ => _ == "Billing")
+                ));
+
+                mockCustomerService.Verify(_ => _.GetPreferredAddressAsync(
+                    It.Is<string>(_ => _ == user.CustomerNumber),
+                    It.Is<string>(_ => _ == "Shipping")
+                ));
+            }
+        }
     }
 }

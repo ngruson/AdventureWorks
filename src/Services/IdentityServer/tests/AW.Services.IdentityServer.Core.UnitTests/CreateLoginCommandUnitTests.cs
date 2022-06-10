@@ -1,7 +1,6 @@
 using AutoFixture.Xunit2;
 using AW.Services.IdentityServer.Core.Handlers.CreateLogin;
 using AW.Services.IdentityServer.Core.Models;
-using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
