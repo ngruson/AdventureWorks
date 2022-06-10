@@ -1,4 +1,4 @@
-name: customer-api
+name: ui-web-internal
 
 on:
   workflow_dispatch:
@@ -7,12 +7,12 @@ on:
     branches: [ master ]
     paths:
     - src/UI/src/AW.UI.Web.Internal/**
-    - .github/workflows/web-ui-internal.yml
+    - .github/workflows/ui-web-internal.yml
   pull_request:
     branches: [ master ]
     paths:
     - src/UI/src/AW.UI.Web.Internal/**
-    - .github/workflows/web-ui-internal.yml
+    - .github/workflows/ui-web-internal.yml
 
 env:
   DOTNET_VERSION: 6.0.x
