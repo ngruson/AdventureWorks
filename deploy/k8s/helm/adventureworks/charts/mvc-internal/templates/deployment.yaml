@@ -27,9 +27,9 @@ spec:
       volumes:
       - name: envoy-config
         configMap:
-          name: {{ $cfgName }}
+          name: {{ $cfgname }}
           items:
-          - key: config
+          - key: envoy-config
             path: envoy.yaml
       containers:
       - name: {{ .Chart.Name }}
@@ -68,7 +68,7 @@ spec:
             containerPort: 80
             protocol: TCP
       - name: envoy
-        image: envoyproxy/envoy:v1.23-latest
+        image: envoyproxy/envoy:v1.22-latest
         ports:
           - containerPort: 80
         volumeMounts:

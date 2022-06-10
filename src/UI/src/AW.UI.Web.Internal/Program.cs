@@ -35,11 +35,8 @@ namespace AW.UI.Web.Internal
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (environment == Environments.Development)
-            {
+            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json")))
                 builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
-            }
 
             return builder.Build();
         }
