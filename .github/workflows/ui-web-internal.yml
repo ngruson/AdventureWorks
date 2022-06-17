@@ -7,11 +7,13 @@ on:
     branches: [ master ]
     paths:
     - src/UI/src/AW.UI.Web.Internal/**
+    - src/UI/src/AW.UI.Web.Infrastructure/**
     - .github/workflows/ui-web-internal.yml
   pull_request:
     branches: [ master ]
     paths:
     - src/UI/src/AW.UI.Web.Internal/**
+    - src/UI/src/AW.UI.Web.Infrastructure/**
     - .github/workflows/ui-web-internal.yml
 
 env:
