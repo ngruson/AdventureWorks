@@ -17,15 +17,15 @@ service:
   type: ClusterIP
   port: 80
 
-# probes:
-#   liveness:
-#     path: /mvc-internal/liveness
-#     initialDelaySeconds: 60
-#     periodSeconds: 15
-#     port: 80
-#   readiness:
-#     path: /mvc-internal/hc
-#     timeoutSeconds: 5
-#     initialDelaySeconds: 60
-#     periodSeconds: 15
-#     port: 80
+probes:
+  liveness:
+    path: /mvc-internal/liveness
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    port: 80
+  readiness:
+    path: /mvc-internal/hc
+    timeoutSeconds: 5
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    port: 80

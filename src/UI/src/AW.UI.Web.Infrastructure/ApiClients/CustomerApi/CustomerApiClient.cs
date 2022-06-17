@@ -28,7 +28,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
             string accountNumber
         )
         {
-            string requestUri = $"/customer-api/Customer?api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
+            string requestUri = $"Customer?api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting customers with page index {PageIndex}, page size {PageSize}";
             
             var args = new List<object> { pageIndex, pageSize };
@@ -86,7 +86,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
 
             try
             {
-                using var response = await client.GetAsync($"customer-api/Customer/{accountNumber}?&api-version=1.0");
+                using var response = await client.GetAsync($"Customer/{accountNumber}?&api-version=1.0");
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
 
@@ -139,7 +139,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.CustomerApi
         public async Task<Models.UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, Models.UpdateCustomer.Customer customer)
         {
             logger.LogInformation("Updating customer with account number {AccountNumber}", accountNumber);
-            string requestUri = $"customer-api/Customer/{accountNumber}?&api-version=1.0";
+            string requestUri = $"Customer/{accountNumber}?&api-version=1.0";
 
             string json = JsonSerializer.Serialize(customer, new JsonSerializerOptions
             {

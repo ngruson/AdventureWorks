@@ -14,9 +14,9 @@ data:
   AuthN__Authority: https://{{ .Values.global.inf.authority }}
   AuthN__ClientId: {{ .Values.clientId }}
   AuthN__ClientSecret: {{ .Values.clientSecret }}
-  ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200
-  CustomerAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.customer_api }}
-  ReferenceDataAPI__Uri: http://localhost:8080/referencedata-api
+  ElasticSearchUri: http://localhost:8080
+  CustomerAPI__Uri: http://localhost:8080/customer-api/
+  ReferenceDataAPI__Uri: http://localhost:8080/referencedata-api/
   SalesOrderAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesorder_api }}
   SalesPersonAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesperson_api }}
   envoy-config: |
@@ -39,16 +39,31 @@ data:
                 - name: backend
                   domains:
                   - "*"
-                  routes:
+                  routes:                  
                   - match:
                       prefix: "/referencedata-api"
                     route:
                       cluster: referencedata-api
+                  - match:
+                      prefix: "/"
+                    route:
+                      cluster: elasticsearch
               http_filters:
               - name: envoy.filters.http.router
                 typed_config:
                   "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
       clusters:
+        - name: elasticsearch
+          type: strict_dns
+          load_assignment:
+            cluster_name: elasticsearch
+            endpoints:
+              - lb_endpoints:
+                - endpoint:
+                    address:
+                      socket_address:
+                        address: {{ .Release.Name }}-elasticsearch-master
+                        port_value: 9200
         - name: referencedata-api
           type: strict_dns
           load_assignment:

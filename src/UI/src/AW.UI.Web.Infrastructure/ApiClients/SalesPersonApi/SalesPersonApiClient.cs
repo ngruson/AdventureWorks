@@ -18,7 +18,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesPersonApi
         public async Task<List<Models.SalesPerson>> GetSalesPersonsAsync(string territory = null)
         {
             logger.LogInformation("Getting sales persons");
-            var requestUri = "/salesperson-api/SalesPerson?api-version=1.0";
+            var requestUri = "SalesPerson?api-version=1.0";
 
             if (!string.IsNullOrEmpty(territory))
                 requestUri += $"&territory={territory}";
@@ -41,7 +41,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients.SalesPersonApi
         public async Task<Models.SalesPerson> GetSalesPersonAsync(string firstName, string middleName, string lastName)
         {
             logger.LogInformation("Getting sales person");
-            var requestUri = "/salesperson-api/SalesPerson?api-version=1.0";
+            var requestUri = "SalesPerson?api-version=1.0";
 
             if (!string.IsNullOrEmpty(firstName))
                 requestUri += $"&firstName={firstName}";
