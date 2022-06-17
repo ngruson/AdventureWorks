@@ -16,7 +16,7 @@ data:
   AuthN__ClientSecret: {{ .Values.clientSecret }}
   ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200
   CustomerAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.customer_api }}
-  ReferenceDataAPI__Uri: http://localhost:8080/
+  ReferenceDataAPI__Uri: http://localhost:8080/referencedata-api
   SalesOrderAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesorder_api }}
   SalesPersonAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesperson_api }}
   envoy-config: |
@@ -31,8 +31,8 @@ data:
           - name: envoy.http_connection_manager
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-              #codec_type: http1
-              stat_prefix: ingress_http
+              codec_type: http1
+              stat_prefix: forward_http
               route_config:
                 name: local_route
                 virtual_hosts:
@@ -44,18 +44,31 @@ data:
                       prefix: "/referencedata-api"
                     route:
                       cluster: referencedata-api
-              # http_filters:
-              # - name: envoy.router
-              #   typed_config: {}
+              http_filters:
+              - name: envoy.filters.http.router
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
       clusters:
-      - name: referencedata-api
-        type: STRICT_DNS
-        load_assignment:
-          cluster_name: referencedata-api
-          endpoints:
-          - lb_endpoints:
-            - endpoint:
-                address:
-                  socket_address:
-                    address: {{ .Release.Name }}-referencedata-api
-                    port_value: 80
+        - name: referencedata-api
+          type: strict_dns
+          load_assignment:
+            cluster_name: referencedata-api
+            endpoints:
+              - lb_endpoints:
+                - endpoint:
+                    address:
+                      socket_address:
+                        address: {{ .Release.Name }}-referencedata-api
+                        port_value: 80
+
+    layered_runtime:
+      layers:
+      - name: static_layer_0
+        static_layer:
+          envoy:
+            resource_limits:
+              listener:
+                example_listener_name:
+                  connection_limit: 10000
+          overload:
+            global_downstream_max_connections: 50000

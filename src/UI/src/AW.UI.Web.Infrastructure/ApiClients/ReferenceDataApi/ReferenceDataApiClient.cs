@@ -23,10 +23,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<AddressType>> GetAddressTypesAsync()
         {
-            string requestUri = $"referencedata-api/AddressType?api-version=1.0";
+            string requestUri = "AddressType?api-version=1.0";
             logger.LogInformation("Getting address types");
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
@@ -44,10 +44,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<ContactType>> GetContactTypesAsync()
         {
-            string requestUri = "referencedata-api/ContactType?api-version=1.0";
+            string requestUri = "ContactType?api-version=1.0";
             logger.LogInformation("Getting contact types");
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
@@ -65,10 +65,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<CountryRegion>> GetCountriesAsync()
         {
-            string requestUri = "referencedata-api/CountryRegion?api-version=1.0";
+            string requestUri = "CountryRegion?api-version=1.0";
             logger.LogInformation("Getting countries");
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
@@ -86,10 +86,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<ShipMethod>> GetShipMethodsAsync()
         {
-            string requestUri = "referencedata-api/ShipMethod?api-version=1.0";
+            string requestUri = "ShipMethod?api-version=1.0";
             logger.LogInformation("Getting shipping methods");
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
@@ -107,13 +107,13 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<StateProvince>> GetStatesProvincesAsync(string countryRegionCode = null)
         {
-            string requestUri = "referencedata-api/StateProvince?api-version=1.0";
+            string requestUri = "StateProvince?api-version=1.0";
             logger.LogInformation("Getting states/provinces");
 
             if (!string.IsNullOrEmpty(countryRegionCode))
                 requestUri += $"&countryRegionCode={countryRegionCode}";
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
@@ -131,13 +131,13 @@ namespace AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi
 
         public async Task<List<Territory>> GetTerritoriesAsync(string countryRegionCode = null)
         {
-            string requestUri = "referencedata-api/Territory?api-version=1.0";
+            string requestUri = "Territory?api-version=1.0";
             logger.LogInformation("Getting territories");
 
             if (!string.IsNullOrEmpty(countryRegionCode))
                 requestUri += $"&countryRegionCode={countryRegionCode}";
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
+            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
             using var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
