@@ -17,8 +17,8 @@ data:
   ElasticSearchUri: http://localhost:8080
   CustomerAPI__Uri: http://localhost:8080/customer-api/
   ReferenceDataAPI__Uri: http://localhost:8080/referencedata-api/
-  SalesOrderAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesorder_api }}
-  SalesPersonAPI__Uri: https://{{ .Values.global.inf.ingress.host }}{{ .Values.salesperson_api }}
+  SalesOrderAPI__Uri: http://localhost:8080/salesorder-api/
+  SalesPersonAPI__Uri: http://localhost:8080/salesperson-api/
   envoy-config: |
     static_resources:
       listeners:
@@ -41,9 +41,21 @@ data:
                   - "*"
                   routes:                  
                   - match:
+                      prefix: "/customer-api"
+                    route:
+                      cluster: customer-api
+                  - match:
                       prefix: "/referencedata-api"
                     route:
                       cluster: referencedata-api
+                  - match:
+                      prefix: "/salesorder-api"
+                    route:
+                      cluster: salesorder-api
+                  - match:
+                      prefix: "/salesperson-api"
+                    route:
+                      cluster: salesperson-api
                   - match:
                       prefix: "/"
                     route:
@@ -53,6 +65,17 @@ data:
                 typed_config:
                   "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
       clusters:
+        - name: customer-api
+          type: strict_dns
+          load_assignment:
+            cluster_name: customer-api
+            endpoints:
+              - lb_endpoints:
+                - endpoint:
+                    address:
+                      socket_address:
+                        address: {{ .Release.Name }}-customer-api
+                        port_value: 80
         - name: elasticsearch
           type: strict_dns
           load_assignment:
@@ -74,6 +97,28 @@ data:
                     address:
                       socket_address:
                         address: {{ .Release.Name }}-referencedata-api
+                        port_value: 80
+        - name: salesorder-api
+          type: strict_dns
+          load_assignment:
+            cluster_name: salesorder-api
+            endpoints:
+              - lb_endpoints:
+                - endpoint:
+                    address:
+                      socket_address:
+                        address: {{ .Release.Name }}-salesorder-api
+                        port_value: 80
+        - name: salesperson-api
+          type: strict_dns
+          load_assignment:
+            cluster_name: salesperson-api
+            endpoints:
+              - lb_endpoints:
+                - endpoint:
+                    address:
+                      socket_address:
+                        address: {{ .Release.Name }}-salesperson-api
                         port_value: 80
 
     layered_runtime:
