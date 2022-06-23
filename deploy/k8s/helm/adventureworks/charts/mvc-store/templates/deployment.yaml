@@ -23,6 +23,13 @@ spec:
         app: {{ include "mvc-store.name" . }}
         release: {{ .Release.Name }}
     spec:
+      volumes:
+      - name: envoy-config
+        configMap:
+          name: {{ $cfgname }}
+          items:
+          - key: envoy-config
+            path: envoy.yaml
       containers:
       - name: {{ .Chart.Name }}
         {{ if .Values.probes -}}
@@ -59,3 +66,11 @@ spec:
           - name: http
             containerPort: 80
             protocol: TCP
+      - name: envoy
+        image: envoyproxy/envoy:v1.22-latest
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: envoy-config
+            mountPath: /etc/envoy
+            readOnly: true

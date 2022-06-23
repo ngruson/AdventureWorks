@@ -3,6 +3,8 @@ pathBase: /mvc-store/
 serviceName: mvc-store
 basket_api: /basket-api
 product_api: /product-api
+clientId: store
+clientSecret: secret
 
 image:
   repository: cradventureworks.azurecr.io/adventureworks_mvc_store
