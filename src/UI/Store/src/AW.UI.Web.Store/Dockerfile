@@ -5,11 +5,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /src
-COPY ["UI/src/AW.UI.Web.Store/AW.UI.Web.Store.csproj", "UI/AW.UI.Web.Store/"]
+COPY ["UI/Store/src/AW.UI.Web.Store/AW.UI.Web.Store.csproj", "UI/AW.UI.Web.Store/"]
 COPY aw-ca.pem .
 RUN dotnet restore "UI/AW.UI.Web.Store/AW.UI.Web.Store.csproj"
 COPY . .
-WORKDIR "/src/UI/src/AW.UI.Web.Store"
+WORKDIR "/src/UI/Store/src/AW.UI.Web.Store"
 RUN dotnet build "AW.UI.Web.Store.csproj" -c Release -o /app/build
 
 FROM build AS publish

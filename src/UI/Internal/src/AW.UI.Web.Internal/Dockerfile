@@ -5,11 +5,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /src
-COPY ["UI/src/AW.UI.Web.Internal/AW.UI.Web.Internal.csproj", "UI/AW.UI.Web.Internal/"]
+COPY ["UI/Internal/src/AW.UI.Web.Internal/AW.UI.Web.Internal.csproj", "UI/AW.UI.Web.Internal/"]
 COPY aw-ca.pem .
 RUN dotnet restore "UI/AW.UI.Web.Internal/AW.UI.Web.Internal.csproj"
 COPY . .
-WORKDIR "/src/UI/src/AW.UI.Web.Internal"
+WORKDIR "/src/UI/Internal/src/AW.UI.Web.Internal"
 RUN dotnet build "AW.UI.Web.Internal.csproj" -c Release -o /app/build
 
 FROM build AS publish
