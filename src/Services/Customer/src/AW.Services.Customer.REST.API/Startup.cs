@@ -1,4 +1,3 @@
-using AW.Services.Customer.Infrastructure.EFCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

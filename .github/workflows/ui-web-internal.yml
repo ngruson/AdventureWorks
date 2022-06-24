@@ -6,14 +6,16 @@ on:
   push:
     branches: [ master ]
     paths:
-    - src/UI/src/AW.UI.Web.Internal/**
-    - src/UI/src/AW.UI.Web.Infrastructure/**
+    - src/UI/Internal/**
+    - src/UI/Infrastructure/**
+    - src/UI/SharedKernel/**
     - .github/workflows/ui-web-internal.yml
   pull_request:
     branches: [ master ]
     paths:
-    - src/UI/src/AW.UI.Web.Internal/**
-    - src/UI/src/AW.UI.Web.Infrastructure/**
+    - src/UI/Internal/**
+    - src/UI/Infrastructure/**
+    - src/UI/SharedKernel/**
     - .github/workflows/ui-web-internal.yml
 
 env:
@@ -42,11 +44,14 @@ jobs:
         run: |
           cd src/UI
 
-          dotnet build tests/AW.UI.Web.Infrastructure.UnitTests/AW.UI.Web.Infrastructure.UnitTests.csproj
-          dotnet test tests/AW.UI.Web.Infrastructure.UnitTests/AW.UI.Web.Infrastructure.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build Infrastructure/tests/AW.UI.Web.Infrastructure.UnitTests/AW.UI.Web.Infrastructure.UnitTests.csproj
+          dotnet test Infrastructure/tests/AW.UI.Web.Infrastructure.UnitTests/AW.UI.Web.Infrastructure.UnitTests.csproj --no-build --no-restore --verbosity normal
+
+          dotnet build SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj
+          dotnet test SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj --no-build --no-restore --verbosity normal
           
-          dotnet build tests/AW.UI.Web.Internal.UnitTests/AW.UI.Web.Internal.UnitTests.csproj
-          dotnet test tests/AW.UI.Web.Internal.UnitTests/AW.UI.Web.Internal.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build Internal/tests/AW.UI.Web.Internal.UnitTests/AW.UI.Web.Internal.UnitTests.csproj
+          dotnet test Internal/tests/AW.UI.Web.Internal.UnitTests/AW.UI.Web.Internal.UnitTests.csproj --no-build --no-restore --verbosity normal
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
@@ -58,7 +63,7 @@ jobs:
       - name: Build the Docker image      
         run: |
           cd src
-          docker build -f UI/src/AW.UI.Web.Internal/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
+          docker build -f UI/Internal/src/AW.UI.Web.Internal/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
         run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
