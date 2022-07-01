@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
+﻿using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 
 namespace AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories
 {

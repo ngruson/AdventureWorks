@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
+using AW.UI.Web.Infrastructure.ApiClients;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -105,8 +105,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                SalesOrder salesOrder,
-                IndividualCustomer customer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer customer,
                 SalesOrderApiClient sut
             )
             {
@@ -125,9 +125,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            Customer,
-                                            StoreCustomer,
-                                            IndividualCustomer>()
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>()
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

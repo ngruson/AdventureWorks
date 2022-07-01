@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using m = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesReasonViewModel : IMapFrom<m.SalesReason>
+    public class SalesReasonViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesReason>
     {
         public string Name { get; set; }
         public string ReasonType { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.SalesReason, SalesReasonViewModel>();
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesReason, SalesReasonViewModel>();
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesReason, SalesReasonViewModel>();
         }
     }
 }

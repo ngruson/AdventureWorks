@@ -1,30 +1,31 @@
-﻿using salesOrderApi = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
-using AW.UI.Web.Internal.Extensions;
+﻿using AW.UI.Web.Internal.Extensions;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using MediatR;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 
 namespace AW.UI.Web.Internal.Controllers
 {
     public class SalesOrderController : Controller
     {
+        private readonly IMediator mediator;
         private readonly ISalesOrderService salesOrderService;
         private readonly ISalesPersonViewModelService salesPersonViewModelService;
-        private readonly IReferenceDataService referenceDataService;
 
         public SalesOrderController(
+            IMediator mediator,
             ISalesOrderService salesOrdersViewModelService,
-            ISalesPersonViewModelService salesPersonViewModelService,
-            IReferenceDataService referenceDataService
+            ISalesPersonViewModelService salesPersonViewModelService
         )
         {
+            this.mediator = mediator;
             this.salesOrderService = salesOrdersViewModelService;
             this.salesPersonViewModelService = salesPersonViewModelService;
-            this.referenceDataService = referenceDataService;
         }
 
         public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, string customerTypeFilterApplied)
@@ -34,7 +35,7 @@ namespace AW.UI.Web.Internal.Controllers
                     pageId ?? 0,
                     Constants.ITEMS_PER_PAGE,
                     territoryFilterApplied,
-                    !string.IsNullOrEmpty(customerTypeFilterApplied) ? Enum.Parse<salesOrderApi.CustomerType>(customerTypeFilterApplied) : default(salesOrderApi.CustomerType?)
+                    !string.IsNullOrEmpty(customerTypeFilterApplied) ? Enum.Parse<CustomerType>(customerTypeFilterApplied) : default(CustomerType?)
                 )
             );
         }
@@ -54,8 +55,9 @@ namespace AW.UI.Web.Internal.Controllers
             );
 
             ViewData["territories"] = 
-                (await referenceDataService.GetTerritoriesAsync(
-                    salesOrder.BillToAddress.CountryRegionCode
+                (await mediator.Send(new GetTerritoriesQuery(
+                        salesOrder.BillToAddress.CountryRegionCode
+                    )
                 ))
                 .OrderBy(c => c.Name)
                 .ToList()

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using s = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesOrderLineViewModel : IMapFrom<s.SalesOrderLine>
+    public class SalesOrderLineViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrderLine>
     {
         public string CarrierTrackingNumber { get; set; }
         public int OrderQty { get; set; }
@@ -16,9 +15,13 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<s.SalesOrderLine, SalesOrderLineViewModel>()
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrderLine, SalesOrderLineViewModel>()
                 .ForMember(m => m.CarrierTrackingNumber, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(CarrierTrackingNumber) ? src.CarrierTrackingNumber : "-"));
+                    !string.IsNullOrEmpty(src.CarrierTrackingNumber) ? src.CarrierTrackingNumber : "-"));
+
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrderLine, SalesOrderLineViewModel>()
+                .ForMember(m => m.CarrierTrackingNumber, opt => opt.MapFrom(src =>
+                    !string.IsNullOrEmpty(src.CarrierTrackingNumber) ? src.CarrierTrackingNumber : "-"));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using AW.UI.Web.Infrastructure.Extensions;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;

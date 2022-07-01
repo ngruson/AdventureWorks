@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using referenceDataApi = AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +11,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
+using MediatR;
+using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
 
 namespace AW.UI.Web.Internal.Services
 {
@@ -20,23 +23,20 @@ namespace AW.UI.Web.Internal.Services
     {
         private readonly ILogger<CustomerService> logger;
         private readonly IMapper mapper;
+        private readonly IMediator mediator;
         private readonly ICustomerApiClient customerApiClient;
-        private readonly referenceDataApi.IReferenceDataApiClient referenceDataApiClient;
-        private readonly ISalesPersonApiClient salesPersonApiClient;
 
         public CustomerService(
             ILogger<CustomerService> logger,
             IMapper mapper,
             ICustomerApiClient customerApiClient,
-            referenceDataApi.IReferenceDataApiClient referenceDataApiClient,
-            ISalesPersonApiClient salesPersonApiClient
+            IMediator mediator
         )
         {
             this.logger = logger;
             this.mapper = mapper;
             this.customerApiClient = customerApiClient;
-            this.referenceDataApiClient = referenceDataApiClient;
-            this.salesPersonApiClient = salesPersonApiClient;
+            this.mediator = mediator;
         }
 
         public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, CustomerType? customerType, string accountNumber)
@@ -102,7 +102,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("GetIndividualCustomerForEdit called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
                 accountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
@@ -120,7 +120,7 @@ namespace AW.UI.Web.Internal.Services
         private async Task<IEnumerable<SelectListItem>> GetTerritories(bool edit)
         {
             logger.LogInformation("GetTerritories called.");
-            var territories = await referenceDataApiClient.GetTerritoriesAsync();
+            var territories = await mediator.Send(new GetTerritoriesQuery());
 
             var items = territories
                 .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
@@ -168,10 +168,10 @@ namespace AW.UI.Web.Internal.Services
             return items;
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetSalesPersons(string salesTerritoryName)
+        private async Task<IEnumerable<SelectListItem>> GetSalesPersons(string territory)
         {
             logger.LogInformation("GetSalesPersons called.");
-            var salesPersons = await salesPersonApiClient.GetSalesPersonsAsync(salesTerritoryName);
+            var salesPersons = await mediator.Send(new GetSalesPersonsQuery(territory));
 
             var items = salesPersons
                 .Select(t => new SelectListItem() { Value = t.Name.FullName, Text = t.Name.FullName })
@@ -190,10 +190,10 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(viewModel, nameof(viewModel));
 
             logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var storeCustomer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var storeCustomer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
-            var storeCustomerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(storeCustomer);
+            var storeCustomerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(storeCustomer);
 
             storeCustomerToUpdate.Name = viewModel.Name;
             storeCustomerToUpdate.Territory = viewModel.Territory;
@@ -209,7 +209,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, nameof(viewModel));
 
-            var individualCustomer = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(viewModel);
+            var individualCustomer = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(viewModel);
 
             logger.LogInformation("Calling Customer API to update customer");
             await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, individualCustomer);
@@ -298,9 +298,9 @@ namespace AW.UI.Web.Internal.Services
         public async Task<IEnumerable<SelectListItem>> GetStatesProvinces(string country)
         {
             logger.LogInformation("GetStateProvinces called.");
-            var response = await referenceDataApiClient.GetStatesProvincesAsync(country);
+            var statesProvinces = await mediator.Send(new GetStatesProvincesQuery(country));
 
-            var items = response
+            var items = statesProvinces
                 .OrderBy(c => c.Name)
                 .Select(c => new SelectListItem() { Value = c.StateProvinceCode, Text = c.Name })
                 .ToList();
@@ -324,10 +324,10 @@ namespace AW.UI.Web.Internal.Services
             return vm;
         }
 
-        public async Task<IEnumerable<StateProvinceViewModel>> GetStatesProvincesJson(string country)
+        public async Task<IEnumerable<StateProvince>> GetStatesProvincesJson(string country)
         {
-            var stateProvinces = await referenceDataApiClient.GetStatesProvincesAsync(country);
-            return mapper.Map<IEnumerable<StateProvinceViewModel>>(stateProvinces);
+            var statesProvinces = await mediator.Send(new GetStatesProvincesQuery(country));
+            return statesProvinces;
         }
 
         public async Task DeleteAddress(string accountNumber, string addressType)
@@ -339,7 +339,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var addressToDelete = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == addressType);
             Guard.Against.Null(addressToDelete, nameof(addressToDelete));
@@ -353,7 +353,7 @@ namespace AW.UI.Web.Internal.Services
         private async Task<IEnumerable<SelectListItem>> GetContactTypes()
         {
             logger.LogInformation("GetContactTypes called.");
-            var contactTypes = await referenceDataApiClient.GetContactTypesAsync();
+            var contactTypes = await mediator.Send(new GetContactTypesQuery());
             Guard.Against.Null(contactTypes, nameof(contactTypes));
 
             var items = contactTypes
@@ -478,13 +478,13 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
+            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
                 viewModel.AccountNumber
             );
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactType == viewModel.ContactType);
             Guard.Against.Null(contact, nameof(contact));

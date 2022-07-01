@@ -1,16 +1,17 @@
 ﻿using AutoFixture.Xunit2;
-using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetCountries;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetStateProvinces;
 using AW.UI.Web.Internal.Controllers;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.ViewModels.Customer;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -53,23 +54,32 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             [Theory, AutoMoqData]
             public async Task Detail_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerDetailViewModel viewModel,
-                [Frozen] Mock<IReferenceDataService> referenceDataService,
                 List<CountryRegion> countries,
                 List<StateProvince> statesProvinces,
                 [Greedy] CustomerController sut
             )
             {
                 //Arrange
-                customerService.Setup(x => x.GetCustomer(
+                customerService.Setup(_ => _.GetCustomer(
                     It.IsAny<string>()
                 ))
                 .ReturnsAsync(viewModel);
 
-                referenceDataService.Setup(x => x.GetCountriesAsync())
-                    .ReturnsAsync(countries);
-                referenceDataService.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(statesProvinces);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCountriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(countries);
+
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStatesProvincesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(statesProvinces);
 
                 //Act
                 var actionResult = await sut.Detail(viewModel.Customer.AccountNumber);
@@ -339,7 +349,7 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
             [Theory, AutoMoqData]
             public async Task GetStatesProvinces_ReturnsJsonResult(
                 [Frozen] Mock<ICustomerService> customerService,
-                List<StateProvinceViewModel> statesProvinces,
+                List<StateProvince> statesProvinces,
                 [Greedy] CustomerController sut
             )
             {

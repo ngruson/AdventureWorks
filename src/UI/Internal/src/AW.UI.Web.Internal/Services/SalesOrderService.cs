@@ -1,12 +1,15 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.ApproveSalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder;
+using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,34 +23,30 @@ namespace AW.UI.Web.Internal.Services
     {
         private readonly ILogger<SalesOrderService> logger;
         private readonly IMapper mapper;
-        private readonly IReferenceDataApiClient referenceDataApiClient;
-        private readonly ISalesOrderApiClient salesOrderApiClient;
-        private readonly ISalesPersonApiClient salesPersonApiClient;
+        private readonly IMediator mediator;
 
         public SalesOrderService(
             ILoggerFactory loggerFactory,
-            IMapper mapper,            
-            IReferenceDataApiClient referenceDataApiClient,
-            ISalesOrderApiClient salesOrderApiClient,
-            ISalesPersonApiClient salesPersonApiClient
+            IMapper mapper, 
+            IMediator mediator
         )
         {
             logger = loggerFactory.CreateLogger<SalesOrderService>();
-            this.mapper = mapper;            
-            this.referenceDataApiClient = referenceDataApiClient;
-            this.salesOrderApiClient = salesOrderApiClient;
-            this.salesPersonApiClient = salesPersonApiClient;
+            this.mapper = mapper;
+            this.mediator = mediator;
         }
 
-        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, CustomerType? customerType)
+        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, SharedKernel.SalesOrder.Handlers.GetSalesOrders.CustomerType? customerType)
         {
             logger.LogInformation("GetSalesOrders called");
 
-            var response = await salesOrderApiClient.GetSalesOrdersAsync(
-                pageIndex,
-                pageSize,
-                territory,
-                customerType
+            var response = await mediator.Send(
+                new GetSalesOrdersQuery(
+                    pageIndex,
+                    pageSize,
+                    territory,
+                    customerType
+                )
             );
 
             var vm = new SalesOrderIndexViewModel
@@ -73,7 +72,7 @@ namespace AW.UI.Web.Internal.Services
         private async Task<List<SelectListItem>> GetTerritories()
         {
             logger.LogInformation("GetTerritories called.");
-            var territories = await referenceDataApiClient.GetTerritoriesAsync();
+            var territories = await mediator.Send(new GetTerritoriesQuery());
 
             var items = territories
                 .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
@@ -103,7 +102,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<SalesOrderDetailViewModel> GetSalesOrder(string salesOrderNumber)
         {
             logger.LogInformation("GetSalesOrder called");
-            var salesOrder = await salesOrderApiClient.GetSalesOrderAsync(salesOrderNumber);
+            var salesOrder = await mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
 
             var vm = new SalesOrderDetailViewModel
             {
@@ -116,7 +115,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<ApproveSalesOrderViewModel> GetSalesOrderForApproval(string salesOrderNumber)
         {
             logger.LogInformation("GetSalesOrderForApproval called");
-            var salesOrder = await salesOrderApiClient.GetSalesOrderAsync(salesOrderNumber);
+            var salesOrder = await mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
 
             return mapper.Map<ApproveSalesOrderViewModel>(salesOrder);
         }
@@ -124,45 +123,45 @@ namespace AW.UI.Web.Internal.Services
         public async Task UpdateSalesOrder(SalesOrderViewModel viewModel)
         {
             logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrderNumber);
-            var salesOrder = await salesOrderApiClient.GetSalesOrderAsync(viewModel.SalesOrderNumber);
+            var salesOrder = await mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrderNumber));
             logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
             Guard.Against.Null(salesOrder, nameof(salesOrder));
 
-            var salesOrderToUpdate = mapper.Map<SalesOrder>(salesOrder);
+            var salesOrderToUpdate = mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, nameof(salesOrderToUpdate));
 
             mapper.Map(viewModel, salesOrderToUpdate);
 
             logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await salesOrderApiClient.UpdateSalesOrderAsync(salesOrderToUpdate);
+            await mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
             logger.LogInformation("Sales order updated successfully");
         }
 
         public async Task UpdateSalesOrder(ApproveSalesOrderViewModel viewModel)
         {
             logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrderNumber);
-            var salesOrder = await salesOrderApiClient.GetSalesOrderAsync(viewModel.SalesOrderNumber);
+            var salesOrder = await mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrderNumber));
             logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
             Guard.Against.Null(salesOrder, nameof(salesOrder));
 
-            var salesOrderToUpdate = mapper.Map<SalesOrder>(salesOrder);
+            var salesOrderToUpdate = mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, nameof(salesOrderToUpdate));
 
-            var salesPersons = await salesPersonApiClient.GetSalesPersonsAsync(viewModel.Territory);
+            var salesPersons = await mediator.Send(new GetSalesPersonsQuery(viewModel.Territory));
             var salesPerson = salesPersons.SingleOrDefault(_ => _.Name.FullName == viewModel.SalesPerson);
             
             salesOrderToUpdate.Territory = viewModel.Territory;
-            salesOrderToUpdate.SalesPerson = mapper.Map<SalesPerson>(salesPerson);
+            salesOrderToUpdate.SalesPerson = mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
 
             logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await salesOrderApiClient.UpdateSalesOrderAsync(salesOrderToUpdate);
+            await mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
             logger.LogInformation("Sales order updated successfully");
         }
 
         public async Task ApproveSalesOrder(string salesOrderNumber)
         {
             logger.LogInformation("Approving sales order {SalesOrderNumber}", salesOrderNumber);
-            await salesOrderApiClient.ApproveSalesOrderAsync(salesOrderNumber);
+            await mediator.Send(new ApproveSalesOrderCommand(salesOrderNumber));
             logger.LogInformation("Sales order approved successfully");
         }
     }

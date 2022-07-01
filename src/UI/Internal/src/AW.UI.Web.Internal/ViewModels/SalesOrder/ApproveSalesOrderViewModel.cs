@@ -2,11 +2,10 @@
 using AW.SharedKernel.AutoMapper;
 using System;
 using System.ComponentModel.DataAnnotations;
-using s = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class ApproveSalesOrderViewModel : IMapFrom<s.SalesOrder>
+    public class ApproveSalesOrderViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
     {
         [Display(Name = "Sales order number")]
         public string SalesOrderNumber { get; set; }
@@ -61,7 +60,7 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<s.SalesOrder, ApproveSalesOrderViewModel>()
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder, ApproveSalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
                 .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName))

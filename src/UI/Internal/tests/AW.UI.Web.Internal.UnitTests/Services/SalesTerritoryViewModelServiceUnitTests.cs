@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.Caching;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 using AW.UI.Web.Internal.Services;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ namespace AW.UI.Web.Internal.UnitTests.Services
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task GetSalesOrders_ReturnsViewModel(
-            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
+            [Frozen] Mock<ICache<Territory>> mockCache,
             List<Territory> territories,
             SalesTerritoryViewModelService sut
         )
         {
             //Arrange
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
+            mockCache.Setup(x => x.GetData())
                 .ReturnsAsync(territories);
 
             //Act

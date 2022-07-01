@@ -1,9 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 using AW.UI.Web.Internal.Services;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using FluentAssertions;
 using MediatR;
@@ -21,22 +19,26 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetSalesPersons_ReturnsViewModel(
-            [Frozen] Mock<IMediator> mediator,
-            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
+            [Frozen] Mock<IMediator> mockMediator,
             List<SalesPerson> salesPersons,
             List<Territory> territories,
             SalesPersonViewModelService sut
         )
             {
                 //Arrange
-                mediator.Setup(_ => _.Send(
-                    It.IsAny<GetSalesPersonsQuery>(),
-                    It.IsAny<CancellationToken>())
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetSalesPersonsQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
                 )
                 .ReturnsAsync(salesPersons);
 
-                referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(territories);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )                        
+                .ReturnsAsync(territories);
 
                 //Act
                 var result = await sut.GetSalesPersons();

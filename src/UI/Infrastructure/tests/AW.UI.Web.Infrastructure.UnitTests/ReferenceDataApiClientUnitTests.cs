@@ -1,6 +1,11 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
+using AW.UI.Web.Infrastructure.ApiClients;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -24,7 +29,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<ApiClients.ReferenceDataApi.Models.GetAddressTypes.AddressType> addressTypes,
+                List<AddressType> addressTypes,
                 ReferenceDataApiClient sut
             )
             {
@@ -87,7 +92,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<ApiClients.ReferenceDataApi.Models.GetContactTypes.ContactType> contactTypes,
+                List<ContactType> contactTypes,
                 ReferenceDataApiClient sut
             )
             {
@@ -150,7 +155,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<ApiClients.ReferenceDataApi.Models.GetCountries.CountryRegion> countries,
+                List<CountryRegion> countries,
                 ReferenceDataApiClient sut
             )
             {
@@ -213,7 +218,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<ApiClients.ReferenceDataApi.Models.GetStateProvinces.StateProvince> statesProvinces,
+                List<StateProvince> statesProvinces,
                 ReferenceDataApiClient sut
             )
             {
@@ -276,7 +281,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<ApiClients.ReferenceDataApi.Models.GetTerritories.Territory> territories,
+                List<Territory> territories,
                 ReferenceDataApiClient sut
             )
             {

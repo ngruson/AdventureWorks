@@ -1,8 +1,9 @@
 using AW.SharedKernel.Interfaces;
+using AW.UI.Web.Infrastructure.ApiClients;
 using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
 using HealthChecks.UI.Client;

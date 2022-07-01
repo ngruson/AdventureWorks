@@ -1,5 +1,6 @@
 ﻿using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Internal.ViewModels.Customer;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace AW.UI.Web.Internal.Services
         Task AddAddress(EditCustomerAddressViewModel viewModel);
         Task<EditCustomerAddressViewModel> GetCustomerAddress(string accountNumber, string addressType);
         Task UpdateAddress(EditCustomerAddressViewModel viewModel);
-        Task<IEnumerable<StateProvinceViewModel>> GetStatesProvincesJson(string country);
+        Task<IEnumerable<StateProvince>> GetStatesProvincesJson(string country);
         Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType);
         Task DeleteAddress(string accountNumber, string addressType);
         Task<EditCustomerContactViewModel> AddContact(string accountNumber, string customerName);

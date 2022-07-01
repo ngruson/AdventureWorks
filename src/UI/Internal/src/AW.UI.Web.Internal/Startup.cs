@@ -1,11 +1,16 @@
 using AW.SharedKernel.Caching;
 using AW.UI.Web.Infrastructure.ApiClients;
 using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Caching;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetShipMethods;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.SalesPerson.Caching;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using HealthChecks.UI.Client;
@@ -119,8 +124,14 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
             services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
-            services.AddScoped<IReferenceDataService, ReferenceDataService>();
+            
+            services.AddScoped<ICache<AddressType>, AddressTypeCache>();
+            services.AddScoped<ICache<ContactType>, ContactTypeCache>();
+            services.AddScoped<ICache<CountryRegion>, CountryCache>();
             services.AddScoped<ICache<SalesPerson>, SalesPersonCache>();
+            services.AddScoped<ICache<ShipMethod>, ShipMethodCache>();
+            services.AddScoped<ICache<StateProvince>, StateProvinceCache>();
+            services.AddScoped<ICache<Territory>, TerritoryCache>();
 
             return services;
         }

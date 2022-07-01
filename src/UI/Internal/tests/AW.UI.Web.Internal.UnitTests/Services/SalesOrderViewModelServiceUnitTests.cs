@@ -1,14 +1,17 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi;
-using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 using AW.UI.Web.Internal.Services;
+using AW.UI.Web.Internal.ViewModels.SalesOrder;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,9 +21,8 @@ namespace AW.UI.Web.Internal.UnitTests.Services
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task GetSalesOrders_ReturnsViewModel(
-            [Frozen] Mock<ISalesOrderApiClient> salesOrderApiClient,
+            [Frozen] Mock<IMediator> mockMediator,
             SalesOrdersResult salesOrdersResult,
-            [Frozen] Mock<IReferenceDataApiClient> referenceDataApiClient,
             List<Territory> territories,
             SalesOrderService sut
         )
@@ -28,14 +30,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             //Arrange
             salesOrdersResult.TotalSalesOrders = 21;
 
-            salesOrderApiClient.Setup(x => x.GetSalesOrdersAsync(
-                It.IsAny<int>(), It.IsAny<int>(),
-                It.IsAny<string>(), It.IsAny<CustomerType?>()
+            mockMediator.Setup(_ => _.Send(
+                It.IsAny<GetSalesOrdersQuery>(),
+                It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(salesOrdersResult);
 
-            referenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
-                .ReturnsAsync(territories);
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetTerritoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(territories);
 
             //Act
             var result = await sut.GetSalesOrders(
@@ -62,22 +68,29 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task GetSalesOrder_ReturnsViewModel(
-            [Frozen] Mock<ISalesOrderApiClient> salesOrderApiClient,
-            SalesOrder salesOrder,
+            [Frozen] Mock<IMediator> mockMediator,
+            SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
             SalesOrderService sut
         )
         {
             //Arrange
-            salesOrderApiClient.Setup(x => x.GetSalesOrderAsync(
-                It.IsAny<string>()
-            ))
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetSalesOrderQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
             .ReturnsAsync(salesOrder);
 
             //Act
             var result = await sut.GetSalesOrder("123");
 
             //Assert
-            result.SalesOrder.Should().NotBeNull();
+            result.SalesOrder.Should().BeEquivalentTo(salesOrder, opt =>
+                opt
+                    .ExcludingMissingMembers()
+                    .Excluding(_ => _.RevisionNumber)
+                    .Excluding(_ => _.Status)
+            );
         }
     }
 }

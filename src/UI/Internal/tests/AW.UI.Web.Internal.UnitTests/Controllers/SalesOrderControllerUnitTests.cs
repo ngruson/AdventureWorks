@@ -1,9 +1,11 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Internal.Controllers;
 using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.ViewModels.SalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Threading.Tasks;
@@ -15,38 +17,39 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
     {
         public class Index
         {
-            [Fact]
-            public async Task Index_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task Index_ReturnsViewModel(
+                [Frozen] Mock<ISalesOrderService> mockSalesOrderService,
+                Mock<ISalesPersonViewModelService> mockSalesPersonViewModelService,
+                Mock<IMediator> mockMediator,
+                SalesOrderIndexViewModel viewModel
+            )
             {
                 //Arrange
-                var mockSalesOrderViewModelService = new Mock<ISalesOrderService>();
-                mockSalesOrderViewModelService.Setup(x => x.GetSalesOrders(
+                mockSalesOrderService.Setup(x => x.GetSalesOrders(
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<string>(),
                     It.IsAny<CustomerType?>()
                 ))
-                .ReturnsAsync(new SalesOrderIndexViewModel());
+                .ReturnsAsync(viewModel);
 
-                var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();
-                var mockReferenceDataService = new Mock<IReferenceDataService>();
-
-                var controller = new SalesOrderController(
-                    mockSalesOrderViewModelService.Object,
-                    mockSalesPersonViewModelService.Object,
-                    mockReferenceDataService.Object
+                var sut = new SalesOrderController(
+                    mockMediator.Object,
+                    mockSalesOrderService.Object,
+                    mockSalesPersonViewModelService.Object
                 );
 
                 //Act
-                var actionResult = await controller.Index(
+                var actionResult = await sut.Index(
                     0, null, null
                 );
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().BeAssignableTo<SalesOrderIndexViewModel>();
+                viewResult.Model.Should().BeEquivalentTo(viewModel);
 
-                mockSalesOrderViewModelService.Verify(x => x.GetSalesOrders(
+                mockSalesOrderService.Verify(x => x.GetSalesOrders(
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<string>(),
@@ -57,34 +60,34 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
 
         public class Detail
         {
-            [Fact]
-            public async Task Detail_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task Detail_ReturnsViewModel(
+                [Frozen] Mock<ISalesOrderService> mockSalesOrderService,
+                Mock<ISalesPersonViewModelService> mockSalesPersonViewModelService,
+                Mock<IMediator> mockMediator,
+                SalesOrderDetailViewModel viewModel
+            )
             {
                 //Arrange
-                var mockSalesOrderViewModelService = new Mock<ISalesOrderService>();
-                mockSalesOrderViewModelService.Setup(x => x.GetSalesOrder(
+                mockSalesOrderService.Setup(x => x.GetSalesOrder(
                     It.IsAny<string>()
                 ))
-                .ReturnsAsync(new SalesOrderDetailViewModel()
-                );
+                .ReturnsAsync(viewModel);
 
-                var mockSalesPersonViewModelService = new Mock<ISalesPersonViewModelService>();
-                var mockReferenceDataService = new Mock<IReferenceDataService>();
-
-                var controller = new SalesOrderController(
-                    mockSalesOrderViewModelService.Object,
-                    mockSalesPersonViewModelService.Object,
-                    mockReferenceDataService.Object
+                var sut = new SalesOrderController(
+                    mockMediator.Object,
+                    mockSalesOrderService.Object,
+                    mockSalesPersonViewModelService.Object
                 );
 
                 //Act
-                var actionResult = await controller.Detail("SO43659");
+                var actionResult = await sut.Detail("SO43659");
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                var viewModel = viewResult.Model.Should().BeAssignableTo<SalesOrderDetailViewModel>().Subject;
+                viewResult.Model.Should().BeEquivalentTo(viewModel);
 
-                mockSalesOrderViewModelService.Verify(x => x.GetSalesOrder(
+                mockSalesOrderService.Verify(x => x.GetSalesOrder(
                     It.IsAny<string>()
                 ));
             }

@@ -6,6 +6,10 @@ using AW.UI.Web.Internal.Services;
 using AW.UI.Web.Internal.Extensions;
 using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using MediatR;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
 
 namespace AW.UI.Web.Internal.Controllers
 {
@@ -13,12 +17,12 @@ namespace AW.UI.Web.Internal.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService customerService;
-        private readonly IReferenceDataService referenceDataService;
+        private readonly IMediator mediator;
 
-        public CustomerController(ICustomerService customerService, IReferenceDataService referenceDataService)
+        public CustomerController(ICustomerService customerService, IMediator mediator)
         {
             this.customerService = customerService;
-            this.referenceDataService = referenceDataService;
+            this.mediator = mediator;
         }
 
         public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, CustomerType? customerTypeFilterApplied, string accountNumber)
@@ -39,8 +43,8 @@ namespace AW.UI.Web.Internal.Controllers
             var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
             ViewData["customerName"] = viewModel.Customer.CustomerName;
-            ViewData["countries"] = await referenceDataService.GetCountriesAsync();
-            ViewData["statesProvinces"] = await referenceDataService.GetStatesProvincesAsync();
+            ViewData["countries"] = await mediator.Send(new GetCountriesQuery());
+            ViewData["statesProvinces"] = await mediator.Send(new GetStatesProvincesQuery("US"));
             return View(viewModel);
         }
 
@@ -90,17 +94,17 @@ namespace AW.UI.Web.Internal.Controllers
         {
             var vm = customerService.AddAddress(accountNumber, customerName);
 
-            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypesAsync())
+            ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
                 .OrderBy(a => a.Name)
                 .ToList()
                 .ToSelectList(a => a.Name, a => a.Name);
 
-            ViewData["countries"] = (await referenceDataService.GetCountriesAsync())
+            ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
                 .OrderBy(c => c.Name)
                 .ToList()
                 .ToSelectList(x => x.CountryRegionCode, x => x.Name);
 
-            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvincesAsync("US"))
+            ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery("US")))
                 .OrderBy(s => s.Name)
                 .ToList()
                 .ToSelectList(x => x.StateProvinceCode, x => x.Name);
@@ -125,17 +129,17 @@ namespace AW.UI.Web.Internal.Controllers
             var vm = await customerService.GetCustomerAddress(accountNumber, addressType);
             var countryRegionCode = vm.CustomerAddress.Address.CountryRegionCode;
 
-            ViewData["addressTypes"] = (await referenceDataService.GetAddressTypesAsync())
+            ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
                 .OrderBy(a => a.Name)
                 .ToList()
                 .ToSelectList(a => a.Name, a => a.Name);
 
-            ViewData["countries"] = (await referenceDataService.GetCountriesAsync())
+            ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
                 .OrderBy(c => c.Name)
                 .ToList()
                 .ToSelectList(c => c.CountryRegionCode, c => c.Name);
                
-            ViewData["statesProvinces"] = (await referenceDataService.GetStatesProvincesAsync(countryRegionCode))
+            ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery(countryRegionCode)))
                 .OrderBy(s => s.Name)
                 .ToList()
                 .ToSelectList(s => s.StateProvinceCode, s => s.Name);

@@ -1,5 +1,5 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
-using AW.UI.Web.Internal.ViewModels.SalesOrder;
+﻿using AW.UI.Web.Internal.ViewModels.SalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using System.Threading.Tasks;
 
 namespace AW.UI.Web.Internal.Interfaces

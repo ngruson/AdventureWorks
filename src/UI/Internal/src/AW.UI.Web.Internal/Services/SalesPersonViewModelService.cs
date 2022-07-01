@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.ViewModels.SalesPerson;
 using AW.UI.Web.Internal.ViewModels.SalesTerritory;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -36,17 +37,10 @@ namespace AW.UI.Web.Internal.Services
             var vm = new SalesPersonIndexViewModel
             {
                 SalesPersons = salesPersons,
-                Territories = await GetTerritories(),
+                Territories = await mediator.Send(new GetTerritoriesQuery())
             };
 
             return vm;
-        }
-
-        private async Task<IEnumerable<SalesTerritoryViewModel>> GetTerritories()
-        {
-            var territories = await referenceDataApiClient.GetTerritoriesAsync();
-
-            return mapper.Map<IEnumerable<SalesTerritoryViewModel>>(territories);
         }
     }
 }

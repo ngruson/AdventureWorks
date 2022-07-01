@@ -1,22 +1,27 @@
-﻿using AW.UI.Web.Internal.UnitTests.AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer;
 using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using referenceDataApi = AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi;
 using AW.UI.Web.Internal.Services;
 using Microsoft.Extensions.Logging;
 using AW.UI.Web.Internal.ViewModels.Customer;
-using AW.UI.Web.Internal.UnitTests.TestBuilders.GetTerritories;
 using AW.SharedKernel.Interfaces;
 using System.Threading.Tasks;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
-using AW.UI.Web.Infrastructure.ApiClients.ReferenceDataApi.Models.GetTerritories;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using MediatR;
+using System.Threading;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
 {
@@ -26,8 +31,8 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {            
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomers_FirstPage_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
                 [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
-                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApi,
                 CustomerService sut,                
                 List<Territory> territories
             )
@@ -48,8 +53,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     TotalCustomers = customers.Count * 10
                 });
 
-                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(territories);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(territories);
 
                 //Act
                 var viewModel = await sut.GetCustomers(0, 10, null, CustomerType.Store, null);
@@ -71,7 +80,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomers_LastPage_ReturnsViewModel(
                 [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
-                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApi,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 List<Territory> territories
             )
@@ -92,8 +101,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                     TotalCustomers = customers.Count * 10
                 });
 
-                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(territories);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(territories);
 
                 //Act
                 var viewModel = await sut.GetCustomers(9, 10, null, CustomerType.Store, null);
@@ -115,34 +128,25 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetCustomer
         {
-            [Fact]
-            public async Task GetCustomer_ReturnsViewModel()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetCustomer_ReturnsViewModel(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                .ReturnsAsync(new StoreCustomerBuilder()
-                    .AccountNumber("AW00000001")
-                    .Build()
-                );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomer("AW00000001");
+                var viewModel = await sut.GetCustomer(customer.AccountNumber);
 
                 //Assert
-                viewModel.Customer.AccountNumber.Should().Be("AW00000001");
+                viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
             }
         }
 
@@ -150,13 +154,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetStoreCustomerForEdit_ReturnsViewModel(
-                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApiClient,
-                [Frozen] Mock<referenceDataApi.IReferenceDataApiClient> mockReferenceDataApiClient,
-                [Frozen] Mock<ISalesPersonApiClient> mockSalesPersonApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
                 CustomerService sut,
                 customerApi.Models.GetCustomer.StoreCustomer customer,
                 List<Territory> territories,
-                List<AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons.SalesPerson> salesPersons
+                List<SalesPerson> salesPersons
             )
             {
                 //Arrange
@@ -166,11 +169,19 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 ))
                .ReturnsAsync(customer);
 
-                mockReferenceDataApiClient.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(territories);
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<GetTerritoriesQuery>(),                    
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(territories);
 
-                mockSalesPersonApiClient.Setup(_ => _.GetSalesPersonsAsync(It.IsAny<string>()))
-                    .ReturnsAsync(salesPersons);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetSalesPersonsQuery>(),                    
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(salesPersons);
 
                 //Act
                 var viewModel = await sut.GetStoreCustomerForEdit(customer.AccountNumber);
@@ -186,43 +197,35 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetIndividualCustomerForEdit
         {
-            [Fact]
-            public async Task GetIndividualCustomerForEdit_ReturnsViewModel()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetIndividualCustomerForEdit_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                List<Territory> territories,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.IndividualCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.IndividualCustomer>(It.IsAny<string>()))
-               .ReturnsAsync(new IndividualCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
-
-                mockReferenceDataApi.Setup(x => x.GetTerritoriesAsync(It.IsAny<string>())
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.IndividualCustomer>(
+                        It.IsAny<string>()
+                    )
                 )
-                .ReturnsAsync(new List<Territory>
-                {
-                new SalesTerritoryBuilder().CountryRegion("US").Name("Northwest").Build(),
-                new SalesTerritoryBuilder().CountryRegion("US").Name("Northeast").Build()
-                });
+               .ReturnsAsync(customer);
 
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(territories);
 
                 //Act
-                var viewModel = await svc.GetIndividualCustomerForEdit("AW00000001");
+                var viewModel = await sut.GetIndividualCustomerForEdit(customer.AccountNumber);
 
                 //Assert
-                viewModel.Customer.AccountNumber.Should().Be("AW00000001");
-                viewModel.Territories.ToList().Count.Should().Be(3);
+                viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
+                viewModel.Territories.ToList().Count.Should().Be(4);
                 viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
                 viewModel.EmailPromotions.Count().Should().Be(4);
                 viewModel.EmailPromotions.ToList()[0].Text.Should().Be("All");
@@ -231,36 +234,23 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class UpdateStore
         {
-            [Fact]
-            public async Task UpdateStore_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task UpdateStore_ReturnsViewModel(
+                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
+                CustomerService sut,
+                StoreCustomerViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-               .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
-
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+               .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new StoreCustomerViewModel
-                {
-                    AccountNumber = "AW00000001"
-                };
-                await svc.UpdateStore(viewModel);
+                await sut.UpdateStore(viewModel);
 
                 //Assert
                 mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
@@ -269,85 +259,51 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 );
             }
 
-            [Fact]
-            public async Task UpdateStore_OK()
+            [Theory, AutoMoqData]
+            public async Task UpdateStore_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                StoreCustomerViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-               .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
-
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+               .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new StoreCustomerViewModel
-                {
-                    AccountNumber = "AW00000001"
-                };
-                await svc.UpdateStore(viewModel);
+                await sut.UpdateStore(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
                 );
             }
 
-            [Fact]
-            public async Task UpdateStore_WithSalesPerson_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateStore_WithSalesPerson_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                StoreCustomerViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-               .ReturnsAsync(new StoreCustomerBuilder()
-                    .WithTestValues()
-                    .Build()
-                );
-
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockSalesPersonApi.Setup(x => x.GetSalesPersonAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(new AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPerson.SalesPerson());
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+               .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new StoreCustomerViewModel
-                {
-                    AccountNumber = "AW00000001",
-                    SalesPerson = "Stephen Y. Jiang"
-                };
-                await svc.UpdateStore(viewModel);
+                await sut.UpdateStore(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
                 );
@@ -356,277 +312,126 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class UpdateIndividual
         {
-            [Fact]
-            public async Task UpdateIndividual_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateIndividual_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                IndividualCustomerViewModel viewModel
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
 
                 //Act
-                var viewModel = new IndividualCustomerViewModel
-                {
-                    AccountNumber = "AW00000001"
-                };
-                await svc.UpdateIndividual(viewModel);
+                await sut.UpdateIndividual(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
+                    It.IsAny<customerApi.Models.UpdateCustomer.IndividualCustomer>())
                 );
             }
-
         }
 
         public class AddAddress
         {
-            [Fact]
-            public void AddAddress_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public void AddAddress_ReturnsViewModel(
+                CustomerService sut,
+                string accountNumber,
+                string customerName
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetAddressTypesAsync())
-                .ReturnsAsync(
-                    new string[] { "Main Office", "Home" }
-                        .Select(x => new referenceDataApi.Models.GetAddressTypes.AddressType
-                        {
-                            Name = x
-                        })
-                        .ToList()
-               );
-
-                mockReferenceDataApi.Setup(x => x.GetCountriesAsync())
-                .ReturnsAsync(new List<referenceDataApi.Models.GetCountries.CountryRegion>()
-                {
-                new referenceDataApi.Models.GetCountries.CountryRegion
-                {
-                    CountryRegionCode = "US",
-                    Name = "United States"
-                },
-                new referenceDataApi.Models.GetCountries.CountryRegion
-                {
-                    CountryRegionCode = "GB",
-                    Name = "United Kingdom"
-                }
-                });
-
-                mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>()
-                {
-                new referenceDataApi.Models.GetStateProvinces.StateProvince
-                {
-                    CountryRegionCode = "US",
-                    Name = "Alaska"
-                },
-                new referenceDataApi.Models.GetStateProvinces.StateProvince
-                {
-                    CountryRegionCode = "US",
-                    Name = "North Carolina"
-                },
-                new referenceDataApi.Models.GetStateProvinces.StateProvince
-                {
-                    CountryRegionCode = "CA",
-                    Name = "Brunswick"
-                }
-                });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
 
                 //Act
-                var viewModel = svc.AddAddress("AW00000001", "A Bike Store");
+                var viewModel = sut.AddAddress(accountNumber, customerName);
 
                 //Assert
                 viewModel.IsNewAddress.Should().Be(true);
+                viewModel.AccountNumber.Should().Be(accountNumber);
+                viewModel.CustomerName.Should().Be(customerName);
             }
 
-            [Fact]
-            public async Task AddAddress_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddAddress_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                EditCustomerAddressViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                .ReturnsAsync(
-                    new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new EditCustomerAddressViewModel
-                {
-                    CustomerAddress = new CustomerAddressViewModel
-                    {
-                        AddressType = "Main Office",
-                        Address = new AddressViewModel
-                        {
-                            AddressLine1 = "2251 Elliot Avenue",
-                            PostalCode = "98104",
-                            City = "Seattle",
-                            StateProvinceCode = "WA",
-                            CountryRegionCode = "US"
-                        }
-                    }
-                };
-                await svc.AddAddress(viewModel);
+                await sut.AddAddress(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()));
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
+                        It.IsAny<string>(),
+                        It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
+                    )
+                );
             }
         }
 
         public class GetCustomerAddress
         {
-            [Fact]
-            public async Task GetCustomerAddress_ReturnsViewModel()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetCustomerAddress_ReturnsViewModel(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetAddressTypesAsync())
-                .ReturnsAsync(new List<referenceDataApi.Models.GetAddressTypes.AddressType>
-                {
-                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Billing" },
-                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Home" },
-                new referenceDataApi.Models.GetAddressTypes.AddressType { Name = "Main Office" }
-                });
-
-                mockReferenceDataApi.Setup(x => x.GetCountriesAsync())
-                .ReturnsAsync(new List<referenceDataApi.Models.GetCountries.CountryRegion>
-                {
-                new referenceDataApi.Models.GetCountries.CountryRegion { CountryRegionCode = "US", Name = "United States" },
-                new referenceDataApi.Models.GetCountries.CountryRegion { CountryRegionCode = "GB", Name = "United Kingdom" }
-                });
-
-                mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
-                .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
-                {
-                new referenceDataApi.Models.GetStateProvinces.StateProvince
-                {
-                    CountryRegionCode = "US",
-                    StateProvinceCode = "CA",
-                    Name = "California"
-                },
-                new referenceDataApi.Models.GetStateProvinces.StateProvince
-                {
-                    CountryRegionCode = "US",
-                    StateProvinceCode = "TX",
-                    Name = "Texas"
-                }
-                });
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                .ReturnsAsync(
-                    new StoreCustomerBuilder()
-                        .Name("A Bike Store")
-                        .WithTestValues()
-                        .Build()
-                );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync(
+                    It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomerAddress("AW00000001", "Main Office");
+                var viewModel = await sut.GetCustomerAddress(
+                    customer.AccountNumber,
+                    customer.Addresses[0].AddressType
+                );
 
                 //Assert
-                viewModel.AccountNumber.Should().Be("AW00000001");
-                viewModel.CustomerName.Should().Be("A Bike Store");
+                viewModel.AccountNumber.Should().Be(customer.AccountNumber);
+                viewModel.CustomerName.Should().Be(customer.Name);
                 viewModel.CustomerAddress.Should().NotBeNull();
             }
         }
 
         public class UpdateAddress
         {
-            [Fact]
-            public async Task UpdateAddress_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateAddress_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                EditCustomerAddressViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                viewModel.CustomerAddress.AddressType = customer.Addresses[0].AddressType;
 
-                mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                .ReturnsAsync(
-                    new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new EditCustomerAddressViewModel
-                {
-                    AccountNumber = "AW00000001",
-                    CustomerAddress = new CustomerAddressViewModel
-                    {
-                        AddressType = "Main Office",
-                        Address = new AddressViewModel
-                        {
-                            AddressLine1 = "2251 Elliot Avenue",
-                            PostalCode = "98104",
-                            City = "Seattle",
-                            StateProvinceCode = "WA",
-                            CountryRegionCode = "US"
-                        }
-                    }
-                };
-                await svc.UpdateAddress(viewModel);
+                await sut.UpdateAddress(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -635,119 +440,73 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetCustomerAddressForDelete
         {
-            [Fact]
-            public async Task GetCustomerAddressForDelete_Store_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task GetCustomerAddressForDelete_Store_ReturnsViewModel(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                .ReturnsAsync(
-                    new StoreCustomerBuilder()
-                        .Name("A Bike Store")
-                        .Addresses(new List<customerApi.Models.GetCustomer.CustomerAddress>
-                        {
-                        new CustomerAddressBuilder()
-                            .AddressTypeName("Main Office")
-                            .Address(new AddressBuilder()
-                                .City("Seattle")
-                                .StateProvinceCode("WA")
-                                .CountryRegionCode("US")
-                                .Build()
-                            )
-                            .Build()
-                        })
-                        .Build()
-                );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomerAddressForDelete("AW00000001", "Main Office");
+                var viewModel = await sut.GetCustomerAddressForDelete(customer.AccountNumber, "Main Office");
 
                 //Assert
-                viewModel.CustomerName.Should().Be("A Bike Store");
+                viewModel.CustomerName.Should().Be(customer.Name);
             }
 
-            [Fact]
-            public async Task GetCustomerAddressForDelete_Person_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task GetCustomerAddressForDelete_Person_ReturnsViewModel(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.IndividualCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                    .ReturnsAsync(new IndividualCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomerAddressForDelete("AW00000002", "Home");
+                var viewModel = await sut.GetCustomerAddressForDelete(customer.AccountNumber, "Home");
 
                 //Assert
-                viewModel.CustomerName.Should().Be("Jon V Yang");
+                viewModel.CustomerName.Should().Be(customer.CustomerName);
             }
         }
 
         public class GetStatesProvinces
         {
-            [Fact]
-            public async Task GetStatesProvinces_ReturnsList()
+            [Theory, AutoMoqData]
+            public async Task GetStatesProvinces_ReturnsList(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut,
+                List<StateProvince> statesProvinces,
+                string countryRegionCode
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
-                    {
-                    new referenceDataApi.Models.GetStateProvinces.StateProvince
-                    {
-                        CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona"
-                    },
-                    new referenceDataApi.Models.GetStateProvinces.StateProvince
-                    {
-                        CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California"
-                    }
-                    });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStatesProvincesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(statesProvinces);
 
                 //Act
-                var selectListItems = await svc.GetStatesProvinces("US");
+                var selectListItems = await sut.GetStatesProvinces(countryRegionCode);
                 var list = selectListItems.ToList();
 
                 //Assert
-                list.Count().Should().Be(3);
+                list.Count.Should().Be(4);
                 list[0].Value.Should().Be("");
                 list[0].Text.Should().Be("--Select--");
             }
@@ -755,75 +514,52 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetStatesProvincesJson
         {
-            [Fact]
-            public async Task GetStatesProvincesJson_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task GetStatesProvincesJson_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut,
+                string countryRegionCode,
+                List<StateProvince> statesProvinces
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetStatesProvincesAsync(It.IsAny<string>()))
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetStateProvinces.StateProvince>
-                    {
-                    new referenceDataApi.Models.GetStateProvinces.StateProvince
-                    {
-                        CountryRegionCode = "US", StateProvinceCode = "AZ", Name = "Arizona"
-                    },
-                    new referenceDataApi.Models.GetStateProvinces.StateProvince
-                    {
-                        CountryRegionCode = "US", StateProvinceCode = "CA", Name = "California"
-                    }
-                    });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<GetStatesProvincesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(statesProvinces);
 
                 //Act
-                var viewModel = await svc.GetStatesProvincesJson("US");
+                var viewModel = await sut.GetStatesProvincesJson(countryRegionCode);
 
                 //Assert
-                viewModel.Count().Should().Be(2);
+                viewModel.Should().BeEquivalentTo(statesProvinces);
             }
         }
 
         public class DeleteAddress
         {
-            [Fact]
-            public async Task DeleteAddress_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DeleteAddress_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.IndividualCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi
+                mockCustomerApiClient
                     .Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                    .ReturnsAsync(new IndividualCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                    .ReturnsAsync(customer);
 
                 //Act
-                await svc.DeleteAddress("AW00000001", "Home");
+                await sut.DeleteAddress(
+                    customer.AccountNumber,
+                    customer.Addresses[0].AddressType
+                );
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -832,33 +568,25 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class AddContact
         {
-            [Fact]
-            public async Task AddContact_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task AddContact_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut,
+                List<ContactType> contactTypes,
+                string accountNumber,
+                string customerName
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
-                        {
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
-                        });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetContactTypesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(contactTypes);
 
                 //Act
-                var viewModel = await svc.AddContact("AW00000001", "A Bike Store");
+                var viewModel = await sut.AddContact(accountNumber, customerName);
 
                 //Assert
                 viewModel.IsNewContact.Should().Be(true);
@@ -866,59 +594,26 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 viewModel.ContactTypes.ToList()[0].Text.Should().Be("--Select--");
             }
 
-            [Fact]
-            public async Task AddContact_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddContact_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                EditCustomerContactViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
-                        {
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
-                        });
-
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new EditCustomerContactViewModel
-                {
-                    CustomerContact = new CustomerContactViewModel
-                    {
-                        ContactType = "Owner",
-                        ContactPerson = new PersonViewModel
-                        {
-                            Name = new PersonNameViewModel
-                            {
-                                FirstName = "Orlando",
-                                MiddleName = "N.",
-                                LastName = "Gee"
-                            }
-                        }
-                    }
-                };
-                await svc.AddContact(viewModel);
+                await sut.AddContact(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -927,46 +622,33 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetCustomerContact
         {
-            [Fact]
-            public async Task GetCustomerContact_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task GetCustomerContact_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                List<ContactType> contactTypes,
+                customerApi.Models.GetCustomer.StoreCustomer customer,
+                string contactName,
+                string contactType
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetContactTypesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(contactTypes);
 
-                mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
-                        {
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
-                        });
-
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .Name("A Bike Store")
-                        .Contacts(new List<customerApi.Models.GetCustomer.StoreCustomerContact>
-                        {
-                        new StoreCustomerContactBuilder()
-                            .WithTestValues()
-                            .Build()
-                        })
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomerContact("AW00000001", "Orlando N. Gee", "Order Administrator");
+                var viewModel = await sut.GetCustomerContact(customer.AccountNumber, contactName, contactType);
 
                 //Assert            
                 viewModel.IsNewContact.Should().Be(false);
@@ -977,51 +659,28 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class UpdateContact
         {
-            [Fact]
-            public async Task UpdateContact_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateContact_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer,
+                EditCustomerContactViewModel viewModel
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                viewModel.CustomerContact.ContactType = customer.Contacts[0].ContactType;
 
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new EditCustomerContactViewModel
-                {
-                    AccountNumber = "AW00000001",
-                    CustomerContact = new CustomerContactViewModel
-                    {
-                        ContactType = "Owner",
-                        ContactPerson = new PersonViewModel
-                        {
-                            Name = new PersonNameViewModel
-                            {
-                                FirstName = "Orlando",
-                                MiddleName = "N.",
-                                LastName = "Gee"
-                            }
-                        }
-                    }
-                };
-                await svc.UpdateContact(viewModel);
+                await sut.UpdateContact(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -1030,85 +689,58 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class GetCustomerContactForDelete
         {
-            [Fact]
-            public async Task GetCustomerContactForDelete_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task GetCustomerContactForDelete_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await svc.GetCustomerContactForDelete("AW00000001", "Orlando N. Gee", "Owner");
+                var viewModel = await sut.GetCustomerContactForDelete(
+                    customer.AccountNumber,
+                    customer.Contacts[0].ContactPerson.Name.FullName,
+                    customer.Contacts[0].ContactType
+                );
 
                 //Assert
-                viewModel.AccountNumber.Should().Be("AW00000001");
-                viewModel.CustomerName.Should().Be("A Bike Store");
-                viewModel.ContactType.Should().Be("Owner");
+                viewModel.AccountNumber.Should().Be(customer.AccountNumber);
+                viewModel.CustomerName.Should().Be(customer.Name);
+                viewModel.ContactType.Should().Be(customer.Contacts[0].ContactType);
             }
         }
 
         public class DeleteContact
         {
-            [Fact]
-            public async Task DeleteContact_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DeleteContact_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                customerApi.Models.GetCustomer.StoreCustomer customer,
+                DeleteCustomerContactViewModel viewModel
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                viewModel.ContactType = customer.Contacts[0].ContactType;
 
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new DeleteCustomerContactViewModel
-                {
-                    AccountNumber = "AW00000001",
-                    CustomerName = "A Bike Store",
-                    ContactPerson = new PersonViewModel
-                    {
-                        Name = new PersonNameViewModel
-                        {
-                            FirstName = "Orlando",
-                            MiddleName = "N.",
-                            LastName = "Gee"
-                        }
-                    },
-                    ContactType = "Owner"
-                };
-                await svc.DeleteContact(viewModel);
+                await sut.DeleteContact(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -1117,74 +749,44 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class AddContactEmailAddress
         {
-            [Fact]
-            public void AddContactEmailAddress_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public void AddContactEmailAddress_ReturnsViewModel(
+                CustomerService sut,
+                string accountNumber,
+                string customerName
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
-                        {
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
-                        });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
 
                 //Act
-                var viewModel = svc.AddEmailAddress("AW00000001", "Orlando N. Gee");
+                var viewModel = sut.AddEmailAddress(accountNumber, customerName);
 
                 //Assert
                 viewModel.IsNewEmailAddress.Should().Be(true);
             }
 
-            [Fact]
-            public async Task AddContactEmailAddress_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddContactEmailAddress_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                EditEmailAddressViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                viewModel.PersonName = customer.Contacts[0].ContactPerson.Name.FullName;
 
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);                
 
                 //Act
-                var viewModel = new EditEmailAddressViewModel
-                {
-                    IsNewEmailAddress = true,
-                    AccountNumber = "AW00000001",
-                    PersonName = "Orlando N. Gee",
-                    EmailAddress = "orlando0@adventure-works.com"
-                };
-                await svc.AddContactEmailAddress(viewModel);
+                await sut.AddContactEmailAddress(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
@@ -1193,81 +795,48 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class AddContactPhoneNumber
         {
-            [Fact]
-            public void AddContactPhoneNumber_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public void AddContactPhoneNumber_ReturnsViewModel(
+                CustomerService sut,
+                string accountNumber,
+                string personName
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
-
-                mockReferenceDataApi.Setup(x => x.GetContactTypesAsync())
-                    .ReturnsAsync(new List<referenceDataApi.Models.GetContactTypes.ContactType>
-                        {
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Owner" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Marketing Assistant" },
-                        new referenceDataApi.Models.GetContactTypes.ContactType { Name = "Order Administrator" }
-                        });
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
 
                 //Act
-                var viewModel = svc.AddPhoneNumber("AW00000001", "Orlando N. Gee");
+                var viewModel = sut.AddPhoneNumber(accountNumber, personName);
 
                 //Assert
                 viewModel.IsNewPhoneNumber.Should().Be(true);
             }
 
-            [Fact]
-            public async Task AddContactPhoneNumber_OK()
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddContactPhoneNumber_OK(
+                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                CustomerService sut,
+                EditPhoneNumberViewModel viewModel,
+                customerApi.Models.GetCustomer.StoreCustomer customer
+            )
             {
                 //Arrange
-                var mockLogger = new Mock<ILogger<CustomerService>>();
-                var mockCustomerApi = new Mock<customerApi.ICustomerApiClient>();
-                var mockReferenceDataApi = new Mock<referenceDataApi.IReferenceDataApiClient>();
-                var mockSalesPersonApi = new Mock<ISalesPersonApiClient>();
+                viewModel.PersonName = customer.Contacts[0].ContactPerson.Name.FullName;
 
-                mockCustomerApi
-                    .Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(It.IsAny<string>()))
-                    .ReturnsAsync(new StoreCustomerBuilder()
-                        .WithTestValues()
-                        .Build()
-                    );
-
-                var svc = new CustomerService(
-                    mockLogger.Object,
-                    Mapper.CreateMapper(),
-                    mockCustomerApi.Object,
-                    mockReferenceDataApi.Object,
-                    mockSalesPersonApi.Object
-                );
+                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
+                        It.IsAny<string>()
+                    )
+                )
+                .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = new EditPhoneNumberViewModel
-                {
-                    IsNewPhoneNumber = true,
-                    AccountNumber = "AW00000001",
-                    PersonName = "Orlando N. Gee",
-                    PhoneNumberType = "Cell",
-                    PhoneNumber = "245-555-0173"
-                };
-                await svc.AddContactPhoneNumber(viewModel);
+                await sut.AddContactPhoneNumber(viewModel);
 
                 //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
+                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
                     It.IsAny<string>(),
                     It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
                 ));
             }
         }
-
-        
     }
 }

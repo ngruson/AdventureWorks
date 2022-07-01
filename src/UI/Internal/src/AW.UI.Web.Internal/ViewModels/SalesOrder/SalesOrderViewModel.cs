@@ -3,11 +3,10 @@ using AW.SharedKernel.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using s = AW.UI.Web.Infrastructure.ApiClients.SalesOrderApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 {
-    public class SalesOrderViewModel : IMapFrom<s.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
     {
         [Display(Name = "Revision number")]
         public string RevisionNumber { get; set; }
@@ -84,7 +83,16 @@ namespace AW.UI.Web.Internal.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<s.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder, SalesOrderViewModel>()
+                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
+                .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
+                .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName))
+                .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Customer.CustomerType))
+                .ReverseMap();
+
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder, SalesOrderViewModel>()
+                .ForMember(m => m.RevisionNumber, opt => opt.MapFrom(src => src.RevisionNumber.ToString()))
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
