@@ -1,7 +1,9 @@
-﻿using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+﻿using AutoMapper;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
 using AW.UI.Web.Store.ViewModels.Cart;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +18,17 @@ namespace AW.UI.Web.Store.Controllers
     {
         private readonly IBasketService basketService;
         private readonly IIdentityParser<ApplicationUser> appUserParser;
-        private readonly IReferenceDataService referenceDataService;
-        private readonly ICustomerService customerService;
+        private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
         public CartController(
             IBasketService basketService, 
             IIdentityParser<ApplicationUser> appUserParser,
-            IReferenceDataService referenceDataService,
-            ICustomerService customerService
+            IMediator mediator,
+            IMapper mapper
         ) =>
-            (this.basketService, this.appUserParser, this.referenceDataService, this.customerService) = 
-                (basketService, appUserParser, referenceDataService, customerService);
+            (this.basketService, this.appUserParser, this.mediator, this.mapper) = 
+                (basketService, appUserParser, mediator, mapper);
 
         public async Task<IActionResult> Index()
         {
@@ -108,7 +110,10 @@ namespace AW.UI.Web.Store.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = appUserParser.Parse(HttpContext.User);
-                    await basketService.Checkout(model.Basket, user.CustomerNumber);
+                    await basketService.Checkout(
+                        mapper.Map<SharedKernel.Basket.Handlers.Checkout.BasketCheckout>(model.Basket), 
+                        user.CustomerNumber
+                    );
 
                     //Redirect to historic list.
                     return RedirectToAction("Index", "Home");
@@ -124,7 +129,7 @@ namespace AW.UI.Web.Store.Controllers
 
         public async Task<IEnumerable<StateProvince>> GetStatesProvinces(string country)
         {
-            var stateProvinces = await referenceDataService.GetStatesProvincesAsync(country);
+            var stateProvinces = await mediator.Send(new GetStatesProvincesQuery(country));
             return stateProvinces;
         }
 

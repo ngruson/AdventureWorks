@@ -1,7 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
+using AW.UI.Web.Infrastructure.ApiClients;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;

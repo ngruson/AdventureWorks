@@ -1,18 +1,18 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
-using bm = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
-using AW.UI.Web.Store.ViewModels.Cart;
 using FluentAssertions;
 using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using System.Collections.Generic;
+using MediatR;
+using System.Threading;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
+using System;
 
 namespace AW.UI.Web.Store.UnitTests.Services
 {
@@ -22,21 +22,30 @@ namespace AW.UI.Web.Store.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetBasket_BasketExist_ReturnsBasket(
-                [Frozen] Mock<IBasketApiClient> mockClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
-                bm.Basket basket
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket
             )
             {
                 //Arrange
-                mockClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
-                    .ReturnsAsync(basket);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(basket);
 
                 //Act
-                var response = await sut.GetBasketAsync<Basket>(basket.BuyerId);
+                var response = await sut.GetBasketAsync<SharedKernel.Basket.Handlers.GetBasket.Basket>(basket.BuyerId);
 
                 //Assert
-                response.BuyerId.Should().Be(basket.BuyerId);
-                response.Items.Count.Should().Be(basket.Items.Count);
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+
+                response.Should().Be(basket);
             }
         }
 
@@ -44,21 +53,28 @@ namespace AW.UI.Web.Store.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddBasketItem_ProductNotExistsInBasket_ReturnsBasket(
-                [Frozen] Mock<IBasketApiClient> mockBasketApiClient,
-                [Frozen] Mock<IProductApiClient> mockProductApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                bm.Basket basket,
-                Product product,
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
+                SharedKernel.Product.Handlers.GetProduct.Product product,
                 int quantity
             )
             {
                 //Arrange
-                mockProductApiClient.Setup(_ => _.GetProductAsync(It.IsAny<string>()))
-                    .ReturnsAsync(product);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(product);
 
-                mockBasketApiClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
-                    .ReturnsAsync(basket);                
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(basket);
 
                 //Act
                 var response = await sut.AddBasketItemAsync(
@@ -68,30 +84,40 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 );
 
                 //Assert
-                response.BuyerId.Should().Be(basket.BuyerId);
-                response.Items.Count.Should().Be(basket.Items.Count + 1);
-                mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
+                response.Should().Be(basket);
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddBasketItem_ProductExistsInBasket_ReturnsBasket(
-                [Frozen] Mock<IBasketApiClient> mockBasketApiClient,
-                [Frozen] Mock<IProductApiClient> mockProductApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                bm.Basket basket,
-                Product product,
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
+                SharedKernel.Product.Handlers.GetProduct.Product product,
                 int quantity
             )
             {
                 //Arrange
-                mockProductApiClient.Setup(_ => _.GetProductAsync(It.IsAny<string>()))
-                    .ReturnsAsync(product);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(product);
 
-                mockBasketApiClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
-                    .ReturnsAsync(basket);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(basket);
 
-                basket.Items.Add(new bm.BasketItem
+                basket.Items.Add(new SharedKernel.Basket.Handlers.GetBasket.BasketItem
                 {
                     ProductNumber = product.ProductNumber,
                     Quantity = 10
@@ -110,18 +136,58 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 response.Items.Where(_ => _.ProductNumber == product.ProductNumber)
                     .ToList()[0].Quantity.Should().Be(10 + quantity);
 
-                mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddBasketItem_ProductDoesNotExist_ThrowsArgumentNullException(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] BasketService sut,
+                ApplicationUser user,
+                SharedKernel.Product.Handlers.GetProduct.Product product,
+                int quantity
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(null as SharedKernel.Product.Handlers.GetProduct.Product);
+
+                //Act
+                Func<Task> func = async () => await sut.AddBasketItemAsync(
+                    user,
+                    product.ProductNumber,
+                    quantity
+                );
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>()
+                    .WithMessage("Value cannot be null. (Parameter 'product')");
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<CancellationToken>()
+                    ),
+                    Times.Never
+                );
             }
         }
 
         public class SetQuantities
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task AddBasketItem_ProductExistsInBasket_ReturnsBasket(
-                [Frozen] Mock<IBasketApiClient> mockBasketApiClient,
+            public async Task SetQuantities_ProductExistsInBasket_ReturnsBasket(
+                [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                bm.Basket basket,
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
                 List<int> quantityValues
             )
             {
@@ -132,8 +198,12 @@ namespace AW.UI.Web.Store.UnitTests.Services
                     quantities.Add(basket.Items[i].Id, quantityValues[i]);
                 }
 
-                mockBasketApiClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
-                    .ReturnsAsync(basket);
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(basket);
 
                 //Act
                 var resultBasket = await sut.SetQuantities(
@@ -146,7 +216,11 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 {
                     resultBasket.Items[i].Quantity.Should().Be(quantityValues[i]);
                 }
-                mockBasketApiClient.Verify(_ => _.UpdateBasket(It.IsAny<bm.Basket>()));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -155,9 +229,9 @@ namespace AW.UI.Web.Store.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task Checkout_GetPreferrredAddressIsCalledForBillingAndShipping(
                 [Frozen] Mock<IBasketApiClient> mockClient,
-                [Frozen] Mock<ICustomerService> mockCustomerService,
+                [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
-                bm.Basket basket,
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
                 ApplicationUser user
             )
             {
@@ -169,15 +243,21 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 var response = await sut.Checkout(user);
 
                 //Assert
-                mockCustomerService.Verify(_ => _.GetPreferredAddressAsync(
-                    It.Is<string>(_ => _ == user.CustomerNumber),
-                    It.Is<string>(_ => _ == "Billing")
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.Is<GetPreferredAddressQuery>(_ =>
+                            _.AccountNumber == user.CustomerNumber && _.AddressType == "Billing"
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
 
-                mockCustomerService.Verify(_ => _.GetPreferredAddressAsync(
-                    It.Is<string>(_ => _ == user.CustomerNumber),
-                    It.Is<string>(_ => _ == "Shipping")
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.Is<GetPreferredAddressQuery>(_ =>
+                            _.AccountNumber == user.CustomerNumber && _.AddressType == "Shipping"
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
     }

@@ -1,11 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Sales territories";
-    @model SalesTerritoryIndexViewModel;
+    @model IEnumerable<AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories.Territory>;
 }
 
 <div class="container">
     <h2>Sales territories</h2>
-    @if (Model.SalesTerritories.Any())
+    @if (Model.Any())
     {
         <div class="row">
             <table class="table table-striped listView">
@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var territory in Model.SalesTerritories)
+                    @foreach (var territory in Model)
                     {
                     <tr>
                         <td>@territory.Name</td>

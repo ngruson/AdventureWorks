@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using System;
-using m = AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels.Product
 {
-    public class ProductViewModel : IMapFrom<m.Product>
+    public class ProductViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProducts.Product>
     {
         public string Name { get; set; }
         public string ProductNumber { get; set; }
@@ -25,7 +24,7 @@ namespace AW.UI.Web.Store.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.Product, ProductViewModel>()
+            profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.Product, ProductViewModel>()
                 .ForMember(m => m.ListPrice, opt => opt.MapFrom(src => src.ListPrice.ToString("C")))
                 .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom(src => src.ThumbnailPhoto != null ?
                     $"data:image;base64,{Convert.ToBase64String(src.ThumbnailPhoto)}" : null))

@@ -3,10 +3,7 @@ using Moq;
 using System.Linq;
 using Xunit;
 using System.Collections.Generic;
-using AW.UI.Web.Internal.UnitTests.TestBuilders.GetCustomer;
-using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Internal.Services;
-using Microsoft.Extensions.Logging;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using AW.SharedKernel.Interfaces;
 using System.Threading.Tasks;
@@ -17,11 +14,14 @@ using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using MediatR;
 using System.Threading;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
+using System;
 
 namespace AW.UI.Web.Internal.UnitTests.Services
 {
@@ -32,24 +32,21 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomers_FirstPage_ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
-                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
                 CustomerService sut,                
                 List<Territory> territories
             )
             {
                 //Arrange
-                var customers = Enumerable.Repeat(new customerApi.Models.GetCustomers.StoreCustomer(), 10).ToList();
+                var customers = Enumerable.Repeat(new SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
 
-                mockCustomerApi.Setup(x => x.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string>(),
-                    It.IsAny<CustomerType>(),
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomersQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new GetCustomersResponse
                 {
-                    Customers = customers.Cast<customerApi.Models.GetCustomers.Customer>().ToList(),
+                    Customers = customers.Cast<SharedKernel.Customer.Handlers.GetCustomers.Customer>().ToList(),
                     TotalCustomers = customers.Count * 10
                 });
 
@@ -79,25 +76,22 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomers_LastPage_ReturnsViewModel(
-                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 List<Territory> territories
             )
             {
                 //Arrange
-                var customers = Enumerable.Repeat(new customerApi.Models.GetCustomers.StoreCustomer(), 10).ToList();
+                var customers = Enumerable.Repeat(new SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
 
-                mockCustomerApi.Setup(x => x.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string>(),
-                    It.IsAny<CustomerType>(),
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(new customerApi.Models.GetCustomers.GetCustomersResponse
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomersQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new GetCustomersResponse
                 {
-                    Customers = customers.Cast<customerApi.Models.GetCustomers.Customer>().ToList(),
+                    Customers = customers.Cast<SharedKernel.Customer.Handlers.GetCustomers.Customer>().ToList(),
                     TotalCustomers = customers.Count * 10
                 });
 
@@ -130,14 +124,15 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomer_ReturnsViewModel(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -147,6 +142,12 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
                 //Assert
                 viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -155,18 +156,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetStoreCustomerForEdit_ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 List<Territory> territories,
                 List<SalesPerson> salesPersons
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x
-                    .GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
-                ))
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
                .ReturnsAsync(customer);
 
                 mockMediator.Setup(x => x.Send(
@@ -200,15 +201,15 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetIndividualCustomerForEdit_ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
                 List<Territory> territories,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.IndividualCustomer customer
+                SharedKernel.Customer.Handlers.GetIndividualCustomer.IndividualCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.IndividualCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetIndividualCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                .ReturnsAsync(customer);
@@ -234,42 +235,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
         public class UpdateStore
         {
-            [Theory, AutoMoqData]
-            public async Task UpdateStore_ReturnsViewModel(
-                [Frozen] Mock<customerApi.ICustomerApiClient> mockCustomerApi,
-                CustomerService sut,
-                StoreCustomerViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
-            )
-            {
-                //Arrange
-                mockCustomerApi.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
-                    )
-                )
-               .ReturnsAsync(customer);
-
-                //Act
-                await sut.UpdateStore(viewModel);
-
-                //Assert
-                mockCustomerApi.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
-                );
-            }
-
-            [Theory, AutoMoqData]
+            [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateStore_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 StoreCustomerViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                .ReturnsAsync(customer);
@@ -278,34 +255,33 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.UpdateStore(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
                 );
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task UpdateStore_WithSalesPerson_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
-                CustomerService sut,
-                StoreCustomerViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+            public async Task UpdateStore_WithoutViewModel_ThrowsArgumentNullException(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
-                    )
-                )
-               .ReturnsAsync(customer);
 
                 //Act
-                await sut.UpdateStore(viewModel);
+                Func<Task> func = async () => await sut.UpdateStore(null);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>())
+                await func.Should().ThrowAsync<ArgumentNullException>()
+                    .WithMessage("Value cannot be null. (Parameter 'viewModel')");
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    ),
+                    Times.Never
                 );
             }
         }
@@ -314,7 +290,7 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateIndividual_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 IndividualCustomerViewModel viewModel
             )
@@ -325,9 +301,33 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.UpdateIndividual(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.IndividualCustomer>())
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateIndividual_WithoutViewModel_ThrowsArgumentNullException(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut
+            )
+            {
+                //Arrange
+
+                //Act
+                Func<Task> func = async() => await sut.UpdateIndividual(null);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>()
+                    .WithMessage("Value cannot be null. (Parameter 'viewModel')");
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    ),
+                    Times.Never
                 );
             }
         }
@@ -354,15 +354,16 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddAddress_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 EditCustomerAddressViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -371,9 +372,9 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.AddAddress(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                        It.IsAny<string>(),
-                        It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
                     )
                 );
             }
@@ -383,14 +384,15 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomerAddress_ReturnsViewModel(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync(
-                    It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -412,17 +414,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateAddress_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 EditCustomerAddressViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
                 viewModel.CustomerAddress.AddressType = customer.Addresses[0].AddressType;
 
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -431,10 +434,75 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.UpdateAddress(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateAddress_CustomerNotFound_ThrowsArgumentNullException(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut,
+                EditCustomerAddressViewModel viewModel,
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+            )
+            {
+                //Arrange
+                viewModel.CustomerAddress.AddressType = customer.Addresses[0].AddressType;
+
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(null as SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer);
+
+                //Act
+
+                Func<Task> func = async () => await sut.UpdateAddress(viewModel);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>()
+                    .WithMessage("Value cannot be null. (Parameter 'customer')");
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateAddress_AddressNotFound_ThrowsArgumentNullException(
+                [Frozen] Mock<IMediator> mockMediator,
+                CustomerService sut,
+                EditCustomerAddressViewModel viewModel,
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(customer);
+
+                //Act
+
+                Func<Task> func = async () => await sut.UpdateAddress(viewModel);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>()
+                    .WithMessage("Value cannot be null. (Parameter 'addressToUpdate')");
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -442,14 +510,15 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMoqData]
             public async Task GetCustomerAddressForDelete_Store_ReturnsViewModel(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetCustomerQuery>(),
+                    It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -463,14 +532,16 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMoqData]
             public async Task GetCustomerAddressForDelete_Person_ReturnsViewModel(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.IndividualCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync(
-                        It.IsAny<string>()
+                mockMediator
+                    .Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -542,15 +613,19 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task DeleteAddress_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.IndividualCustomer customer
+                SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient
-                    .Setup(x => x.GetCustomerAsync(It.IsAny<string>()))
-                    .ReturnsAsync(customer);
+                mockMediator
+                    .Setup(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+               )
+               .ReturnsAsync(customer);
 
                 //Act
                 await sut.DeleteAddress(
@@ -559,10 +634,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 );
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -596,15 +672,16 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddContact_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 EditCustomerContactViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -613,10 +690,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.AddContact(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -625,10 +703,9 @@ namespace AW.UI.Web.Internal.UnitTests.Services
             [Theory, AutoMoqData]
             public async Task GetCustomerContact_ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
                 CustomerService sut,
                 List<ContactType> contactTypes,
-                customerApi.Models.GetCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 string contactName,
                 string contactType
             )
@@ -641,8 +718,9 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 )
                 .ReturnsAsync(contactTypes);
 
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -661,17 +739,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateContact_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 EditCustomerContactViewModel viewModel
             )
             {
                 //Arrange
                 viewModel.CustomerContact.ContactType = customer.Contacts[0].ContactType;
 
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<SharedKernel.Customer.Handlers.GetStoreCustomer.GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -680,10 +759,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.UpdateContact(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<UpdateCustomerCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -691,14 +771,15 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetCustomerContactForDelete_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                mockCustomerApiClient.Setup(x => x.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetStoreCustomerQuery>(),
+                    It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -721,17 +802,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task DeleteContact_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                customerApi.Models.GetCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 DeleteCustomerContactViewModel viewModel
             )
             {
                 //Arrange
                 viewModel.ContactType = customer.Contacts[0].ContactType;
 
-                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -740,10 +822,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.DeleteContact(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -767,17 +850,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddContactEmailAddress_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 EditEmailAddressViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
                 viewModel.PersonName = customer.Contacts[0].ContactPerson.Name.FullName;
 
-                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);                
@@ -786,10 +870,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.AddContactEmailAddress(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -813,17 +898,18 @@ namespace AW.UI.Web.Internal.UnitTests.Services
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddContactPhoneNumber_OK(
-                [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
+                [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 EditPhoneNumberViewModel viewModel,
-                customerApi.Models.GetCustomer.StoreCustomer customer
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
                 viewModel.PersonName = customer.Contacts[0].ContactPerson.Name.FullName;
 
-                mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<customerApi.Models.GetCustomer.StoreCustomer>(
-                        It.IsAny<string>()
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(customer);
@@ -832,10 +918,11 @@ namespace AW.UI.Web.Internal.UnitTests.Services
                 await sut.AddContactPhoneNumber(viewModel);
 
                 //Assert
-                mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<customerApi.Models.UpdateCustomer.Customer>()
-                ));
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetStoreCustomerQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
-using AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
+using AW.UI.Web.Infrastructure.ApiClients;
+using AW.UI.Web.SharedKernel.Basket.Handlers.Checkout;
+using AW.UI.Web.SharedKernel.Basket.Handlers.GetBasket;
+using AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -25,7 +27,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 BasketApiClient sut,
-                Basket basket
+                SharedKernel.Basket.Handlers.GetBasket.Basket basket
             )
             {
                 //Arrange
@@ -88,7 +90,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 BasketApiClient sut,
-                Basket basket
+                SharedKernel.Basket.Handlers.UpdateBasket.Basket basket
             )
             {
                 //Arrange
@@ -125,7 +127,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 BasketApiClient sut,
-                Basket basket
+                SharedKernel.Basket.Handlers.UpdateBasket.Basket basket
             )
             {
                 //Arrange

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class EditCustomerAddressViewModel : IMapFrom<m.GetCustomer.CustomerAddress>
+    public class EditCustomerAddressViewModel : IMapFrom<CustomerAddress>
     {
         public bool IsNewAddress { get; set; }
         public string AccountNumber { get; set; }
@@ -13,10 +13,10 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EditCustomerAddressViewModel, m.GetCustomer.CustomerAddress>()
+            profile.CreateMap<EditCustomerAddressViewModel, CustomerAddress>()
                 .ForMember(m => m.AddressType, opt => opt.MapFrom(src => src.CustomerAddress.AddressType))
                 .ForMember(m => m.Address, opt => opt.MapFrom(src => src.CustomerAddress.Address));
-            profile.CreateMap<EditCustomerAddressViewModel, m.UpdateCustomer.CustomerAddress>()
+            profile.CreateMap<EditCustomerAddressViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.CustomerAddress>()
                 .ForMember(m => m.AddressType, opt => opt.MapFrom(src => src.CustomerAddress.AddressType))
                 .ForMember(m => m.Address, opt => opt.MapFrom(src => src.CustomerAddress.Address));
         }

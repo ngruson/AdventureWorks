@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class ContactViewModel : IMapFrom<m.GetCustomers.StoreCustomerContact>
+    public class ContactViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomerContact>
     {
         public string ContactType { get; set; }
         public PersonViewModel ContactPerson { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.GetCustomers.StoreCustomerContact, ContactViewModel>();
-            profile.CreateMap<m.GetCustomer.StoreCustomerContact, ContactViewModel>();
-            profile.CreateMap<ContactViewModel, m.UpdateCustomer.StoreCustomerContact>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomerContact, ContactViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.StoreCustomerContact, ContactViewModel>();
+            profile.CreateMap<ContactViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomerContact>();
         }
     }
 }

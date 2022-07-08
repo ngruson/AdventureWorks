@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using System.Collections.Generic;
-using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class PersonViewModel : IMapFrom<customerApi.GetCustomers.Person>
+    public class PersonViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.Person>
     {
         public string Title { get; set; }
         public PersonNameViewModel Name { get; set; }        
@@ -17,9 +17,11 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<customerApi.GetCustomers.Person, PersonViewModel>();
-            profile.CreateMap<customerApi.GetCustomer.Person, PersonViewModel>();
-            profile.CreateMap<PersonViewModel, customerApi.UpdateCustomer.Person>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Person, PersonViewModel>();
+            profile.CreateMap<Person, PersonViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.Person, PersonViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.Person, PersonViewModel>();
+            profile.CreateMap<PersonViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.Person>();
         }
     }
 }

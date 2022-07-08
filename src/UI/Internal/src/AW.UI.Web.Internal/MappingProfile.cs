@@ -1,8 +1,8 @@
 ﻿using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Internal.ViewModels.Customer;
+//using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
 using System.Reflection;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal
 {
@@ -13,18 +13,20 @@ namespace AW.UI.Web.Internal
             ApplyMappingsFromAssembly(typeof(ICustomerApiClient).Assembly);
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-            CreateMap<m.GetCustomers.Customer, CustomerViewModel>()
+            CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Customer, CustomerViewModel>()
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
-                .Include<m.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>()
-                .Include<m.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
+                .Include<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>()
+                .Include<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
 
-            CreateMap<m.GetCustomer.Customer, CustomerViewModel>()
-                .Include<m.GetCustomer.IndividualCustomer, IndividualCustomerViewModel>()
-                .Include<m.GetCustomer.StoreCustomer, StoreCustomerViewModel>();
+            CreateMap<SharedKernel.Customer.Handlers.GetCustomer.Customer, CustomerViewModel>()
+                .Include<SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer, IndividualCustomerViewModel>()
+                .Include<SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer, StoreCustomerViewModel>();
 
-            CreateMap<m.GetCustomer.Customer, m.UpdateCustomer.Customer>()
-                .Include<m.GetCustomer.IndividualCustomer, m.UpdateCustomer.IndividualCustomer>()
-                .Include<m.GetCustomer.StoreCustomer, m.UpdateCustomer.StoreCustomer>();
+            CreateMap<SharedKernel.Customer.Handlers.GetCustomer.Customer, SharedKernel.Customer.Handlers.UpdateCustomer.Customer>()
+                .Include<SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer, SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
+                .Include<SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer, SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>();
+
+            CreateMap<SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer, SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>();
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using AW.UI.Web.Store.Services;
+﻿using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.Store.ViewModels.ProductMenu;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,16 +8,16 @@ namespace AW.UI.Web.Store.ViewComponents
 {
     public class ProductMenu : ViewComponent
     {
-        private readonly IProductService productService;
+        private readonly IMediator mediator;
 
-        public ProductMenu(IProductService productService) =>
-            this.productService = productService;
+        public ProductMenu(IMediator mediator) =>
+            this.mediator = mediator;
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var vm = new ProductMenuComponentViewModel
             {
-                Categories = await productService.GetCategoriesAsync()
+                Categories = await mediator.Send(new GetProductCategoriesQuery())
             };
             return View(vm);
         }

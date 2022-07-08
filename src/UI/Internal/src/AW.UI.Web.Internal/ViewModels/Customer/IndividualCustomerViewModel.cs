@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.Interfaces;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class IndividualCustomerViewModel : CustomerViewModel, IMapFrom<m.GetCustomers.IndividualCustomer>
+    public class IndividualCustomerViewModel : CustomerViewModel, IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>
     {
         public override CustomerType CustomerType => CustomerType.Individual;
 
@@ -13,10 +13,12 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>();
-            profile.CreateMap<m.GetCustomer.IndividualCustomer, IndividualCustomerViewModel>()
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>();
+            profile.CreateMap<IndividualCustomer, IndividualCustomerViewModel>()
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore());
-            profile.CreateMap<IndividualCustomerViewModel, m.UpdateCustomer.IndividualCustomer>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.IndividualCustomer, IndividualCustomerViewModel>()
+                .ForMember(m => m.SalesOrders, opt => opt.Ignore());
+            profile.CreateMap<IndividualCustomerViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>();
         }
     }
 }

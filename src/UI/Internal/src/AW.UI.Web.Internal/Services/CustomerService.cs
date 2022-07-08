@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Internal.ViewModels;
 using AW.UI.Web.Internal.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +15,11 @@ using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
 
 namespace AW.UI.Web.Internal.Services
 {
@@ -24,25 +28,29 @@ namespace AW.UI.Web.Internal.Services
         private readonly ILogger<CustomerService> logger;
         private readonly IMapper mapper;
         private readonly IMediator mediator;
-        private readonly ICustomerApiClient customerApiClient;
 
         public CustomerService(
             ILogger<CustomerService> logger,
             IMapper mapper,
-            ICustomerApiClient customerApiClient,
             IMediator mediator
         )
         {
             this.logger = logger;
             this.mapper = mapper;
-            this.customerApiClient = customerApiClient;
             this.mediator = mediator;
         }
 
         public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, CustomerType? customerType, string accountNumber)
         {
             logger.LogInformation("GetCustomers called");
-            var response = await customerApiClient.GetCustomersAsync(pageIndex, pageSize, territory, customerType, accountNumber);
+            var response = await mediator.Send(new GetCustomersQuery(
+                    pageIndex,
+                    pageSize,
+                    territory,
+                    customerType,
+                    accountNumber
+                )
+            );
 
             var vm = new CustomersIndexViewModel
             {
@@ -67,7 +75,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<CustomerDetailViewModel> GetCustomer(string accountNumber)
         {
             logger.LogInformation("GetCustomer called");
-            var customer = await customerApiClient.GetCustomerAsync(accountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(accountNumber));
 
             var vm = new CustomerDetailViewModel
             {
@@ -82,9 +90,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("GetStoreCustomerForEdit called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                accountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(accountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
 
             var vm = new EditStoreCustomerViewModel
@@ -102,9 +108,7 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("GetIndividualCustomerForEdit called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
-                accountNumber
-            );
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(accountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
 
             var vm = new EditIndividualCustomerViewModel
@@ -190,17 +194,15 @@ namespace AW.UI.Web.Internal.Services
             Guard.Against.Null(viewModel, nameof(viewModel));
 
             logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var storeCustomer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
-            var storeCustomerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(storeCustomer);
+            var storeCustomer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
+            var storeCustomerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
 
             storeCustomerToUpdate.Name = viewModel.Name;
             storeCustomerToUpdate.Territory = viewModel.Territory;
             storeCustomerToUpdate.SalesPerson = viewModel.SalesPerson;
 
             logger.LogInformation("Calling Customer API to update customer");
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, storeCustomerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, storeCustomerToUpdate));
             logger.LogInformation("Customer successfully updated");
         }
 
@@ -209,10 +211,10 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, nameof(viewModel));
 
-            var individualCustomer = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(viewModel);
+            var individualCustomer = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(viewModel);
 
             logger.LogInformation("Calling Customer API to update customer");
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, individualCustomer);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, individualCustomer));
             logger.LogInformation("Customer successfully updated");
         }
 
@@ -241,25 +243,25 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync(viewModel.AccountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
-            var newAddress = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.CustomerAddress>(viewModel.CustomerAddress);
+            var newAddress = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.CustomerAddress>(viewModel.CustomerAddress);
             Guard.Against.Null(newAddress, nameof(newAddress));
             customerToUpdate.Addresses.Add(newAddress);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
         public async Task<EditCustomerAddressViewModel> GetCustomerAddress(string accountNumber, string addressType)
         {
             logger.LogInformation("GetCustomerAddress called");
-            var customer = await customerApiClient.GetCustomerAsync(accountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var address = customer.Addresses.FirstOrDefault(a => a.AddressType == addressType);
@@ -280,18 +282,18 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync(viewModel.AccountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var addressToUpdate = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == viewModel.CustomerAddress.AddressType);
             Guard.Against.Null(addressToUpdate, nameof(addressToUpdate));
             mapper.Map(viewModel.CustomerAddress.Address, addressToUpdate.Address);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -314,7 +316,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType)
         {
             logger.LogInformation("GetCustomerAddressForDelete called");
-            var customer = await customerApiClient.GetCustomerAsync(accountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(accountNumber));
             var address = customer.Addresses.FirstOrDefault(a => a.AddressType == addressType);
 
             var vm = mapper.Map<DeleteCustomerAddressViewModel>(address);
@@ -335,18 +337,18 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await customerApiClient.GetCustomerAsync(accountNumber);
+            var customer = await mediator.Send(new GetCustomerQuery(accountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var addressToDelete = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == addressType);
             Guard.Against.Null(addressToDelete, nameof(addressToDelete));
             customerToUpdate.Addresses.Remove(addressToDelete);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(accountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -369,8 +371,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<EditCustomerContactViewModel> GetCustomerContact(string accountNumber, string contactName, string contactType)
         {
             logger.LogInformation("GetCustomerContact called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetStoreCustomerQuery(accountNumber));
 
             var contact = customer.Contacts.FirstOrDefault(c =>
                 c.ContactType == contactType &&
@@ -415,21 +416,19 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
-            var contactToAdd = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomerContact>(
+            var contactToAdd = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomerContact>(
                 viewModel.CustomerContact
             );
             customerToUpdate.Contacts.Add(contactToAdd);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -438,28 +437,25 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("UpdateContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactType == viewModel.CustomerContact.ContactType);
             Guard.Against.Null(contact, nameof(contact));
             mapper.Map(viewModel.CustomerContact.ContactPerson, contact.ContactPerson);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
         public async Task<DeleteCustomerContactViewModel> GetCustomerContactForDelete(string accountNumber, string contactName, string contactType)
         {
             logger.LogInformation("GetCustomerContactForDelete called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetStoreCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
@@ -478,20 +474,18 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContact called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactType == viewModel.ContactType);
             Guard.Against.Null(contact, nameof(contact));
             customerToUpdate.Contacts.Remove(contact);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -514,22 +508,20 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddIndividualCustomerEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
-            customerToUpdate.Person.EmailAddresses.Add(new Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
+            customerToUpdate.Person.EmailAddresses.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonEmailAddress
             {
                 EmailAddress = viewModel.EmailAddress
             });
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -538,33 +530,30 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.PersonName);
             Guard.Against.Null(contact, nameof(contact));
 
-            contact.ContactPerson.EmailAddresses.Add(new Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonEmailAddress
+            contact.ContactPerson.EmailAddresses.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonEmailAddress
             {
                 EmailAddress = viewModel.EmailAddress
             });
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
         public async Task<DeleteIndividualCustomerEmailAddressViewModel> GetIndividualCustomerEmailAddressForDelete(string accountNumber, string emailAddress)
         {
             logger.LogInformation("GetIndividualCustomerEmailAddressForDelete called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var personEmailAddress = customer.Person.EmailAddresses.FirstOrDefault(c =>
@@ -582,8 +571,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<DeleteContactEmailAddressViewModel> GetContactEmailAddressForDelete(string accountNumber, string contactType, string contactName, string emailAddress)
         {
             logger.LogInformation("GetContactEmailAddressForDelete called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetStoreCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
@@ -622,13 +610,11 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteIndividualCustomerEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var personEmailAddress = customerToUpdate.Person.EmailAddresses.FirstOrDefault(c =>
@@ -639,7 +625,7 @@ namespace AW.UI.Web.Internal.Services
             customerToUpdate.Person.EmailAddresses.Remove(personEmailAddress);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -663,13 +649,11 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteEmailAddress called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Web.Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
             
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => 
@@ -685,7 +669,7 @@ namespace AW.UI.Web.Internal.Services
             contact.ContactPerson.EmailAddresses.Remove(personEmailAddress);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -708,23 +692,21 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddIndividualCustomerPhoneNumber called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
-            customerToUpdate.Person.PhoneNumbers.Add(new Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonPhone
+            customerToUpdate.Person.PhoneNumbers.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonPhone
             {
                 PhoneNumberType = viewModel.PhoneNumberType,
                 PhoneNumber = viewModel.PhoneNumber
             });
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -733,34 +715,31 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("AddContactPhoneNumber called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.PersonName);
             Guard.Against.Null(contact, nameof(contact));
 
-            contact.ContactPerson.PhoneNumbers.Add(new Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.PersonPhone
+            contact.ContactPerson.PhoneNumbers.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonPhone
             {
                 PhoneNumberType = viewModel.PhoneNumberType,
                 PhoneNumber = viewModel.PhoneNumber
             });
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
         public async Task<DeleteIndividualCustomerPhoneNumberViewModel> GetIndividualCustomerPhoneNumberForDelete(string accountNumber, string phoneNumberType, string phoneNumber)
         {
             logger.LogInformation("GetIndividualCustomerPhoneNumberForDelete called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.IndividualCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var personPhone = customer.Person.PhoneNumbers.FirstOrDefault(p =>
@@ -778,8 +757,7 @@ namespace AW.UI.Web.Internal.Services
         public async Task<DeleteContactPhoneNumberViewModel> GetContactPhoneNumberForDelete(string accountNumber, string contactType, string contactName, string phoneNumberType, string phoneNumber)
         {
             logger.LogInformation("GetContactPhoneNumberForDelete called");
-            var customer = await customerApiClient
-                .GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(accountNumber);
+            var customer = await mediator.Send(new GetStoreCustomerQuery(accountNumber));
             Guard.Against.Null(customer, nameof(customer));
 
             var contact = customer.Contacts.FirstOrDefault(a =>
@@ -819,13 +797,11 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteIndividualCustomerPhoneNumber called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var personPhone = customerToUpdate.Person.PhoneNumbers.FirstOrDefault(p =>
@@ -836,7 +812,7 @@ namespace AW.UI.Web.Internal.Services
             customerToUpdate.Person.PhoneNumbers.Remove(personPhone);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
 
@@ -861,13 +837,11 @@ namespace AW.UI.Web.Internal.Services
             logger.LogInformation("DeleteContactPhoneNumber called");
 
             logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await customerApiClient.GetCustomerAsync<Infrastructure.ApiClients.CustomerApi.Models.GetCustomer.StoreCustomer>(
-                viewModel.AccountNumber
-            );
+            var customer = await mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, nameof(customer));
 
-            var customerToUpdate = mapper.Map<Infrastructure.ApiClients.CustomerApi.Models.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, nameof(customerToUpdate));
 
             var contact = customerToUpdate.Contacts.FirstOrDefault(c =>
@@ -883,7 +857,7 @@ namespace AW.UI.Web.Internal.Services
             contact.ContactPerson.PhoneNumbers.Remove(personPhone);
 
             logger.LogInformation("Updating customer {@Customer}", customer);
-            await customerApiClient.UpdateCustomerAsync(viewModel.AccountNumber, customerToUpdate);
+            await mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             logger.LogInformation("Customer updated successfully");
         }
     }

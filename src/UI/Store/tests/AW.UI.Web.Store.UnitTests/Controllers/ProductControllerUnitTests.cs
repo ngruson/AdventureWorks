@@ -1,12 +1,16 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.Store.Controllers;
-using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels.Product;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,285 +18,262 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
 {
     public class ProductControllerUnitTests
     {
-        [Fact]
-        public async Task Index_WithProductCategoryFilter_ReturnsProductsViewModel()
+        [Theory, AutoMoqData]
+        public async Task Index_WithProductCategoryFilter_ReturnsProductsViewModel(
+            [Frozen] Mock<IMediator> mockMediator,
+            GetProductsResult productsResult,
+            List<ProductCategory> categories,
+            string productCategory
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(x => x.GetProductsAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new GetProductsResult
-                {
-                    Products = new List<Product>
-                    {
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                    },
-                    TotalProducts = 20
-                }
+            productsResult.TotalProducts = 20;
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductsQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(productsResult);
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductCategoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(categories);
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
             );
-            mockProductService.Setup(x => x.GetCategoriesAsync())
-                .ReturnsAsync(new List<ProductCategory>
-                {
-                    new ProductCategory { Name = "Bikes" },
-                    new ProductCategory { Name = "Components" }
-                });
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            var actionResult = await controller.Index(0, 5, "Bikes", null);
+            var actionResult = await sut.Index(0, 5, productCategory, null);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
-            viewModel.Title.Should().Be("Bikes");
-            viewModel.ProductCategory.Should().Be("Bikes");
+            viewModel.Title.Should().Be(productCategory);
+            viewModel.ProductCategory.Should().Be(productCategory);
             viewModel.ProductSubcategory.Should().BeNull();
-            viewModel.ProductCategories.Should().NotBeNull();
-            viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count.Should().Be(5);
+            viewModel.ProductCategories.Should().BeEquivalentTo(categories);
+            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
             viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
-            viewModel.PaginationInfo.TotalItems.Should().Be(20);
+            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo.TotalItems.Should().Be(productsResult.TotalProducts);
             viewModel.PaginationInfo.TotalPages.Should().Be(4);
             viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
             viewModel.PaginationInfo.Previous.Should().Be("disabled");
         }
 
-        [Fact]
-        public async Task Index_WithOddProductCount_ReturnsProductsViewModel()
+        [Theory, AutoMoqData]
+        public async Task Index_WithOddProductCount_ReturnsProductsViewModel(
+            [Frozen] Mock<IMediator> mockMediator,
+            GetProductsResult productsResult,
+            List<ProductCategory> categories,
+            string productCategory
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(x => x.GetProductsAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new GetProductsResult
-            {
-                Products = new List<Product>
-                    {
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                    },
-                TotalProducts = 21
-            }
+            productsResult.TotalProducts = 21;
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductsQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(productsResult);
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductCategoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(categories);
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
             );
-            mockProductService.Setup(x => x.GetCategoriesAsync())
-                .ReturnsAsync(new List<ProductCategory>
-                {
-                    new ProductCategory { Name = "Bikes" },
-                    new ProductCategory { Name = "Components" }
-                });
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            var actionResult = await controller.Index(0, 5, "Bikes", null);
+            var actionResult = await sut.Index(0, 5, productCategory, null);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
             viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
+            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
             viewModel.PaginationInfo.TotalItems.Should().Be(21);
             viewModel.PaginationInfo.TotalPages.Should().Be(5);            
         }
 
-        [Fact]
-        public async Task Index_FirstPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task Index_FirstPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
+            [Frozen] Mock<IMediator> mockMediator,
+            GetProductsResult productsResult,
+            List<ProductCategory> categories,
+            string productCategory,
+            string productSubcategory
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(x => x.GetProductsAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new GetProductsResult
-            {
-                Products = new List<Product>
-                    {
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                    },
-                TotalProducts = 20
-            }
+            productsResult.TotalProducts = 20;
+
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductsQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(productsResult);
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductCategoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(categories);
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
             );
-            mockProductService.Setup(x => x.GetCategoriesAsync())
-                .ReturnsAsync(new List<ProductCategory>
-                {
-                    new ProductCategory { Name = "Bikes" },
-                    new ProductCategory { Name = "Components" }
-                });
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            var actionResult = await controller.Index(0, 5, "Bikes", "Mountain Bikes");
+            var actionResult = await sut.Index(0, 5, productCategory, productSubcategory);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
-            viewModel.Title.Should().Be("Mountain Bikes");
-            viewModel.ProductCategory.Should().Be("Bikes");
-            viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
-            viewModel.ProductCategories.Should().NotBeNull();
-            viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count.Should().Be(5);
+            viewModel.Title.Should().Be(productSubcategory);
+            viewModel.ProductCategory.Should().Be(productCategory);
+            viewModel.ProductSubcategory.Should().Be(productSubcategory);
+            viewModel.ProductCategories.Should().BeEquivalentTo(categories);
+            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
             viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
+            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
             viewModel.PaginationInfo.TotalPages.Should().Be(4);
             viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
             viewModel.PaginationInfo.Previous.Should().Be("disabled");
         }
 
-        [Fact]
-        public async Task Index_SecondPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        [Theory, AutoMoqData]
+        public async Task Index_SecondPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
+            [Frozen] Mock<IMediator> mockMediator,
+            GetProductsResult productsResult,
+            List<ProductCategory> categories,
+            string productCategory,
+            string productSubcategory
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(x => x.GetProductsAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new GetProductsResult
-            {
-                Products = new List<Product>
-                    {
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                    },
-                TotalProducts = 20
-            }
+            productsResult.TotalProducts = 20;
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductsQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(productsResult);
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductCategoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(categories);
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
             );
-            mockProductService.Setup(x => x.GetCategoriesAsync())
-                .ReturnsAsync(new List<ProductCategory>
-                {
-                    new ProductCategory { Name = "Bikes" },
-                    new ProductCategory { Name = "Components" }
-                });
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            var actionResult = await controller.Index(1, 5, "Bikes", "Mountain Bikes");
+            var actionResult = await sut.Index(1, 5, productCategory, productSubcategory);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
-            viewModel.Title.Should().Be("Mountain Bikes");
-            viewModel.ProductCategory.Should().Be("Bikes");
-            viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
-            viewModel.ProductCategories.Should().NotBeNull();
-            viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count.Should().Be(5);
+            viewModel.Title.Should().Be(productSubcategory);
+            viewModel.ProductCategory.Should().Be(productCategory);
+            viewModel.ProductSubcategory.Should().Be(productSubcategory);
+            viewModel.ProductCategories.Should().BeEquivalentTo(categories);
+            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
             viewModel.PaginationInfo.ActualPage.Should().Be(1);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
+            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
             viewModel.PaginationInfo.TotalPages.Should().Be(4);
             viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
             viewModel.PaginationInfo.Previous.Should().BeNullOrEmpty();
         }
 
-        [Fact]
-        public async Task Index_LastPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel()
+        [Theory, AutoMoqData]
+        public async Task Index_LastPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
+            [Frozen] Mock<IMediator> mockMediator,
+            GetProductsResult productsResult,
+            List<ProductCategory> categories,
+            string productCategory,
+            string productSubcategory
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
-            mockProductService.Setup(x => x.GetProductsAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()
-            ))
-            .ReturnsAsync(new GetProductsResult
-            {
-                Products = new List<Product>
-                    {
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                        new Product(),
-                    },
-                TotalProducts = 20
-            }
+            productsResult.TotalProducts = 20;
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductsQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(productsResult);
+
+            mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductCategoriesQuery>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(categories);
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
             );
-            mockProductService.Setup(x => x.GetCategoriesAsync())
-                .ReturnsAsync(new List<ProductCategory>
-                {
-                    new ProductCategory { Name = "Bikes" },
-                    new ProductCategory { Name = "Components" }
-                });
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            var actionResult = await controller.Index(3, 5, "Bikes", "Mountain Bikes");
+            var actionResult = await sut.Index(3, 5, productCategory, productSubcategory);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
-            viewModel.Title.Should().Be("Mountain Bikes");
-            viewModel.ProductCategory.Should().Be("Bikes");
-            viewModel.ProductSubcategory.Should().Be("Mountain Bikes");
-            viewModel.ProductCategories.Should().NotBeNull();
-            viewModel.ProductCategories.Count.Should().Be(2);
-            viewModel.Products.Count.Should().Be(5);
+            viewModel.Title.Should().Be(productSubcategory);
+            viewModel.ProductCategory.Should().Be(productCategory);
+            viewModel.ProductSubcategory.Should().Be(productSubcategory);
+            viewModel.ProductCategories.Should().BeEquivalentTo(categories);
+            viewModel.Products.Count.Should().Be(3);
             viewModel.PaginationInfo.ActualPage.Should().Be(3);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(5);
+            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
             viewModel.PaginationInfo.TotalItems.Should().Be(20);
             viewModel.PaginationInfo.TotalPages.Should().Be(4);
             viewModel.PaginationInfo.Next.Should().Be("disabled");
             viewModel.PaginationInfo.Previous.Should().BeNullOrEmpty();
         }
 
-        [Fact]
-        public async Task Index_WithNoProductCategoryFilter_ThrowsException()
+        [Theory, AutoMoqData]
+        public async Task Index_WithNoProductCategoryFilter_ThrowsException(
+            Mock<IMediator> mockMediator
+        )
         {
             //Arrange
-            var mockProductService = new Mock<IProductService>();
+
+            var sut = new ProductController(
+                Mapper.CreateMapper(),
+                mockMediator.Object
+            );
 
             //Act
-            var controller = new ProductController(
-                Mapper.CreateMapper(),
-                mockProductService.Object
-            );
-            Func<Task> func = async () => await controller.Index(0, 5, null, null);
+            Func<Task> func = async () => await sut.Index(0, 5, null, null);
 
             //Assert
             await func.Should().ThrowAsync<ArgumentNullException>();

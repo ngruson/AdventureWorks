@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using AW.SharedKernel.AutoMapper;
 using AW.UI.Web.Store.ViewModels.Annotations;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using api = AW.UI.Web.Infrastructure.ApiClients.BasketApi.Models;
 
 namespace AW.UI.Web.Store.ViewModels.Cart
 {
-    public class BasketCheckout : Basket
+    public class BasketCheckout : Basket, IMapFrom<SharedKernel.Basket.Handlers.GetBasket.Basket>
     {
         [Required]
         public string ShipMethod { get; set; }
@@ -37,7 +37,7 @@ namespace AW.UI.Web.Store.ViewModels.Cart
 
         public override void Mapping(Profile profile)
         {
-            profile.CreateMap<api.Basket, BasketCheckout>()
+            profile.CreateMap<SharedKernel.Basket.Handlers.GetBasket.Basket, BasketCheckout>()
                 .ForMember(m => m.ShipMethod, opt => opt.Ignore())
                 .ForMember(m => m.BillToAddress, opt => opt.Ignore())
                 .ForMember(m => m.ShipToAddress, opt => opt.Ignore())
@@ -48,12 +48,11 @@ namespace AW.UI.Web.Store.ViewModels.Cart
                 .ForMember(m => m.CardType, opt => opt.Ignore())
                 .ForMember(m => m.RequestId, opt => opt.Ignore());
 
-            profile.CreateMap<api.BasketCheckout, BasketCheckout>()
+            profile.CreateMap<SharedKernel.Basket.Handlers.Checkout.BasketCheckout, BasketCheckout>()
                 .ForMember(m => m.CardExpirationShort, opt => opt.Ignore())
-                .ForMember(m => m.BuyerId, opt => opt.MapFrom(src => src.Buyer));
-
-            profile.CreateMap<BasketCheckout, api.BasketCheckout>()
-                .ForMember(m => m.Buyer, opt => opt.MapFrom(src => src.BuyerId))
+                .ForMember(m => m.BuyerId, opt => opt.MapFrom(src => src.Buyer))
+                .ForMember(m => m.Items, opt => opt.MapFrom(src => src.Items))
+                .ReverseMap()
                 .ForMember(m => m.CardExpiration, opt => opt.MapFrom(src => MapCardExpiration(src.CardExpirationShort)))
                 .ForMember(m => m.CustomerNumber, opt => opt.Ignore());
         }

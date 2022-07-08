@@ -1,9 +1,13 @@
-﻿using AW.UI.Web.Internal.Controllers;
-using AW.UI.Web.Internal.Interfaces;
-using AW.UI.Web.Internal.ViewModels.SalesTerritory;
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.Internal.Controllers;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,26 +17,36 @@ namespace AW.UI.Web.Internal.UnitTests.Controllers
     {
         public class Index
         {
-            [Fact]
-            public async Task Index_ReturnsViewModel()
+            [Theory, AutoMoqData]
+            public async Task Index_ReturnsViewModel(
+                [Frozen] Mock<IMediator> mockMediator,
+                List<Territory> territories
+            )
             {
                 //Arrange
-                var mockSalesTerritoryViewModelService = new Mock<ISalesTerritoryViewModelService>();
-                mockSalesTerritoryViewModelService.Setup(x => x.GetSalesTerritories())
-                .ReturnsAsync(new SalesTerritoryIndexViewModel());
+                mockMediator.Setup(_ => _.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(territories);
 
-                var controller = new SalesTerritoryController(
-                    mockSalesTerritoryViewModelService.Object
+                var sut = new SalesTerritoryController(
+                    mockMediator.Object
                 );
 
                 //Act
-                var actionResult = await controller.Index();
+                var actionResult = await sut.Index();
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().BeAssignableTo<SalesTerritoryIndexViewModel>();
+                viewResult.Model.Should().BeEquivalentTo(territories);
 
-                mockSalesTerritoryViewModelService.Verify(x => x.GetSalesTerritories());
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<GetTerritoriesQuery>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
     }

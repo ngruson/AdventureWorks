@@ -1,8 +1,11 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
 using AW.UI.Web.Store.ViewModels.Product;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -14,10 +17,10 @@ namespace AW.UI.Web.Store.Controllers
     public class ProductController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IProductService productService;
+        private readonly IMediator mediator;
 
-        public ProductController(IMapper mapper, IProductService productService) =>
-            (this.mapper, this.productService) = (mapper, productService);
+        public ProductController(IMapper mapper, IMediator mediator) =>
+            (this.mapper, this.mediator) = (mapper, mediator);
 
         private static List<SelectListItem> GetPageSizeList()
         {
@@ -36,14 +39,17 @@ namespace AW.UI.Web.Store.Controllers
             Guard.Against.NullOrEmpty(productCategory, nameof(productCategory));
             ViewData["pageSizeList"] = GetPageSizeList();
 
-            var products = await productService.GetProductsAsync(page ?? 0, pageSize ?? 12, productCategory, productSubcategory);
+            var products = await mediator.Send(new GetProductsQuery(
+                    page ?? 0, pageSize ?? 12, productCategory, productSubcategory
+                )
+            );
 
             var vm = new ProductsViewModel
             {
                 Title = productSubcategory ?? productCategory,
                 ProductCategory = productCategory,
                 ProductSubcategory = productSubcategory,
-                ProductCategories = await productService.GetCategoriesAsync(),
+                ProductCategories = await mediator.Send(new GetProductCategoriesQuery()),
                 Products = mapper.Map<List<ProductViewModel>>(products.Products),
                 PaginationInfo = new PaginationInfoViewModel()
                 {

@@ -1,8 +1,5 @@
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Infrastructure.ApiClients;
-using AW.UI.Web.Infrastructure.ApiClients.BasketApi;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using AW.UI.Web.Store.Services;
 using AW.UI.Web.Store.ViewModels;
@@ -107,9 +104,6 @@ namespace AW.UI.Web.Store
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IApplication, Application>();
             services.AddScoped<IBasketService, BasketService>();
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IReferenceDataService, ReferenceDataService>();
             services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
 
             return services;

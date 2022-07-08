@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
+﻿using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using System.Collections.Generic;
 
 namespace AW.UI.Web.Store.ViewModels.ProductMenu

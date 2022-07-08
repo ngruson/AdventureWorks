@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi.Models;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 
 namespace AW.UI.Web.Store.ViewModels.Product
 {

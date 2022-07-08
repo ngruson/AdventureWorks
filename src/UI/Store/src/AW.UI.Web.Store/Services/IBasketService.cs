@@ -8,9 +8,9 @@ namespace AW.UI.Web.Store.Services
     public interface IBasketService
     {
         Task<T> GetBasketAsync<T>(string userID);
-        Task<Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
-        Task<Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities);
+        Task<SharedKernel.Basket.Handlers.GetBasket.Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity);
+        Task<SharedKernel.Basket.Handlers.GetBasket.Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities);
         Task<CheckoutViewModel> Checkout(ApplicationUser user);
-        Task Checkout(Basket basket, string customerNumber);
+        Task Checkout(SharedKernel.Basket.Handlers.Checkout.BasketCheckout basket, string customerNumber);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {

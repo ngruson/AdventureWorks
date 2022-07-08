@@ -1,6 +1,5 @@
 using AW.SharedKernel.Caching;
 using AW.UI.Web.Infrastructure.ApiClients;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
@@ -123,7 +122,6 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
-            services.AddScoped<ISalesTerritoryViewModelService, SalesTerritoryViewModelService>();
             
             services.AddScoped<ICache<AddressType>, AddressTypeCache>();
             services.AddScoped<ICache<ContactType>, ContactTypeCache>();

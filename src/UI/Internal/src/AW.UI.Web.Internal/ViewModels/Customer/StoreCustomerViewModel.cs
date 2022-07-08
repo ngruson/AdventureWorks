@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using customerApi = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.Interfaces;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class StoreCustomerViewModel : CustomerViewModel, IMapFrom<customerApi.GetCustomers.StoreCustomer>
+    public class StoreCustomerViewModel : CustomerViewModel, IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer>
     {
         public override CustomerType CustomerType => CustomerType.Store;
         public string Name { get; set; }
@@ -18,9 +18,10 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<customerApi.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
-            profile.CreateMap<customerApi.GetCustomer.StoreCustomer, StoreCustomerViewModel>();
-            profile.CreateMap<StoreCustomerViewModel, customerApi.UpdateCustomer.StoreCustomer>()
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
+            profile.CreateMap<StoreCustomer, StoreCustomerViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer, StoreCustomerViewModel>();
+            profile.CreateMap<StoreCustomerViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>()
                 .ForMember(m => m.Name, opt => opt.Ignore());
         }
     }

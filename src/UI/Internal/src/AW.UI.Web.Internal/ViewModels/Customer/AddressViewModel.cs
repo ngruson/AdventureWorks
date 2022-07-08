@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using System.ComponentModel.DataAnnotations;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class AddressViewModel : IMapFrom<m.GetCustomers.Address>
+    public class AddressViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.Address>
     {
         [Display(Name = "Address line 1")]
         [Required]
@@ -25,11 +24,14 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<m.GetCustomers.Address, AddressViewModel>();
-            profile.CreateMap<m.GetCustomer.Address, AddressViewModel>()
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Address, AddressViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.Address, AddressViewModel>()
                 .ReverseMap();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.Address, AddressViewModel>()
+                .ReverseMap();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.Address, AddressViewModel>();
 
-            profile.CreateMap<AddressViewModel, m.UpdateCustomer.Address>();
+            profile.CreateMap<AddressViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.Address>();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.Infrastructure.ApiClients.ProductApi;
-using m = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 using System.Reflection;
+using AW.UI.Web.SharedKernel.Interfaces.Api;
 
 namespace AW.UI.Web.Store
 {

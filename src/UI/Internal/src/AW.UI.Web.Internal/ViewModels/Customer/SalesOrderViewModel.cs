@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using System;
-using getCustomer = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models.GetCustomer;
 
 namespace AW.UI.Web.Internal.ViewModels.Customer
 {
-    public class SalesOrderViewModel : IMapFrom<getCustomer.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder>
     {
         public DateTime OrderDate { get; set; }
 
@@ -13,7 +13,7 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public DateTime? ShipDate { get; set; }
 
-        public getCustomer.SalesOrderStatus Status { get; set; }
+        public SalesOrderStatus Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 
@@ -27,7 +27,10 @@ namespace AW.UI.Web.Internal.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<getCustomer.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder, SalesOrderViewModel>()
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
+
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
         }
 

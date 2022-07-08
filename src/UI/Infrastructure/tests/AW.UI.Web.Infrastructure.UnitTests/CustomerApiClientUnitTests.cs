@@ -2,8 +2,6 @@
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi;
-using models = AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Models;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -16,7 +14,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Xunit;
-using AW.UI.Web.Infrastructure.ApiClients.CustomerApi.Exceptions;
+using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
+using AW.UI.Web.Infrastructure.ApiClients;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
 {
@@ -29,7 +29,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<models.GetCustomers.StoreCustomer> list,
+                List<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer> list,
                 CustomerApiClient sut
             )
             {
@@ -39,9 +39,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Store;
                 }
 
-                var customers = new models.GetCustomers.GetCustomersResponse
+                var customers = new GetCustomersResponse
                 {
-                    Customers = list.ToList<models.GetCustomers.Customer>(),
+                    Customers = list.ToList<SharedKernel.Customer.Handlers.GetCustomers.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -56,9 +56,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            models.GetCustomers.Customer,
-                                            models.GetCustomers.StoreCustomer,
-                                            models.GetCustomers.IndividualCustomer>()
+                                            SharedKernel.Customer.Handlers.GetCustomers.Customer,
+                                            SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
+                                            SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -87,7 +87,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<models.GetCustomers.IndividualCustomer> list,
+                List<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer> list,
                 CustomerApiClient sut
             )
             {
@@ -97,9 +97,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Individual;
                 }
 
-                var customers = new models.GetCustomers.GetCustomersResponse
+                var customers = new GetCustomersResponse
                 {
-                    Customers = list.ToList<models.GetCustomers.Customer>(),
+                    Customers = list.ToList<SharedKernel.Customer.Handlers.GetCustomers.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -114,9 +114,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            models.GetCustomers.Customer,
-                                            models.GetCustomers.StoreCustomer,
-                                            models.GetCustomers.IndividualCustomer>()
+                                            SharedKernel.Customer.Handlers.GetCustomers.Customer,
+                                            SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
+                                            SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -176,7 +176,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                models.GetCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer,
                 CustomerApiClient sut
             )
             {
@@ -193,9 +193,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            models.GetCustomer.Customer,
-                                            models.GetCustomer.StoreCustomer,
-                                            models.GetCustomer.IndividualCustomer>()
+                                            SharedKernel.Customer.Handlers.GetCustomer.Customer,
+                                            SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer,
+                                            SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -245,7 +245,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 Uri uri,
                 string accountNumber,
                 string addressType,
-                models.GetPreferredAddress.Address address,
+                SharedKernel.Customer.Handlers.GetPreferredAddress.Address address,
                 CustomerApiClient sut
             )
             {
@@ -309,7 +309,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                models.UpdateCustomer.StoreCustomer customer,
+                SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer customer,
                 CustomerApiClient sut
             )
             {
@@ -326,9 +326,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            models.UpdateCustomer.Customer,
-                                            models.UpdateCustomer.StoreCustomer,
-                                            models.UpdateCustomer.IndividualCustomer>()
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -350,7 +350,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                models.UpdateCustomer.IndividualCustomer customer,
+                SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer customer,
                 CustomerApiClient sut
             )
             {
@@ -367,9 +367,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            models.UpdateCustomer.Customer,
-                                            models.UpdateCustomer.StoreCustomer,
-                                            models.UpdateCustomer.IndividualCustomer>()
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
+                                            SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
