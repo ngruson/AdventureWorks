@@ -8,11 +8,12 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductSubcategory> builder)
         {
             builder.ToTable("ProductSubcategory");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("ProductSubcategoryID");
 
-            builder.Property(psc => psc.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
         }

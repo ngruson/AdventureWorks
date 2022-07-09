@@ -9,21 +9,21 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<StateProvince> builder)
         {
             builder.ToTable("StateProvince");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("StateProvinceID");
 
-            builder.Property(sp => sp.StateProvinceCode)
+            builder.Property(_ => _.StateProvinceCode)
                 .IsRequired()
                 .HasMaxLength(3);
 
-            builder.HasOne(sp => sp.CountryRegion)
+            builder.HasOne(_ => _.CountryRegion)
                 .WithMany(_ => _.StatesProvinces)
                 .HasForeignKey("CountryRegionCode");
             
                 
-            builder.Property(sp => sp.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
         }

@@ -6,7 +6,7 @@ namespace AW.Services.Product.Core.Entities
 {
     public class Location
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; private set; }
 
         public decimal CostRate { get; private set; }
@@ -16,6 +16,6 @@ namespace AW.Services.Product.Core.Entities
         public DateTime ModifiedDate { get; private set; }
 
         public IEnumerable<ProductInventory> ProductInventory => _productInventory.ToList();
-        private List<ProductInventory> _productInventory = new();
+        private readonly List<ProductInventory> _productInventory = new();
     }
 }

@@ -14,6 +14,6 @@ namespace AW.Services.ReferenceData.Core.Entities
         public string Name { get; private set; }
 
         public IEnumerable<StateProvince> StatesProvinces => _statesProvinces.ToList();
-        private List<StateProvince> _statesProvinces = new();
+        private readonly List<StateProvince> _statesProvinces = new();
     }
 }

@@ -9,20 +9,20 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Territory> builder)
         {
             builder.ToTable("Territory");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("TerritoryID");
 
-            builder.Property(sp => sp.CountryRegionCode)
+            builder.Property(_ => _.CountryRegionCode)
                 .IsRequired()
                 .HasMaxLength(3);
 
-            builder.Property(sp => sp.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(sp => sp.Group)
+            builder.Property(_ => _.Group)
                 .IsRequired()
                 .HasMaxLength(50);
         }

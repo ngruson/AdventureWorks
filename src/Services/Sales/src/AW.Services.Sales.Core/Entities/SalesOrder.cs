@@ -39,7 +39,7 @@ namespace AW.Services.Sales.Core.Entities
             );
         }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public byte RevisionNumber { get; private set; }
 
         public DateTime OrderDate { get; private set; }

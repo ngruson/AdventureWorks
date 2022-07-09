@@ -9,9 +9,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<ProductDescription> builder)
         {
             builder.ToTable("ProductDescription");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property(pdc => pdc.Description)
+            builder.Property(_ => _.Description)
                 .IsRequired()
                 .HasMaxLength(400);
         }

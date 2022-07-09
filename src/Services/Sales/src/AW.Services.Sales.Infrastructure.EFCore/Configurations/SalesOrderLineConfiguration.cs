@@ -9,17 +9,17 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<SalesOrderLine> builder)
         {
             builder.ToTable("SalesOrderLine");
-            builder.HasKey(sol => sol.Id);
-            builder.Property(sol => sol.Id)
+            builder.HasKey(_ => _.Id);
+            builder.Property(_ => _.Id)
                 .HasColumnName("SalesOrderLineID");
 
-            builder.Property(sol => sol.UnitPrice)
+            builder.Property(_ => _.UnitPrice)
                 .HasColumnType("money");
 
-            builder.Property(sol => sol.UnitPriceDiscount)
+            builder.Property(_ => _.UnitPriceDiscount)
                 .HasColumnType("money");
 
-            builder.Ignore(sol => sol.LineTotal);
+            builder.Ignore(_ => _.LineTotal);
         }
     }
 }

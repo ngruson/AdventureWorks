@@ -8,9 +8,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductCostHistory> builder)
         {
             builder.ToTable("ProductCostHistory");
-            builder.HasKey("Id", "StartDate");
+            builder.HasKey(_ => new { _.Id, _.StartDate });
 
-            builder.Property(pch => pch.StandardCost)
+            builder.Property(_ => _.StandardCost)
                 .HasColumnType("decimal(19,4)")
                 .HasColumnType("money");
         }

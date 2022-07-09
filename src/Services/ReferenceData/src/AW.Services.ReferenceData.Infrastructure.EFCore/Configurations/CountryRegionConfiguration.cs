@@ -9,12 +9,12 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<CountryRegion> builder)
         {
             builder.ToTable("CountryRegion");
-            builder.HasKey(cr => cr.CountryRegionCode);
+            builder.HasKey(_ => _.CountryRegionCode);
 
-            builder.Property(cr => cr.CountryRegionCode)
+            builder.Property(_ => _.CountryRegionCode)
                 .HasMaxLength(3);
 
-            builder.Property(cr => cr.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 

@@ -8,17 +8,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.Location> builder)
         {
             builder.ToTable("Location");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property(l => l.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(l => l.CostRate)
+            builder.Property(_ => _.CostRate)
                 .HasColumnType("decimal(10,4)")
                 .HasColumnType("smallmoney");
 
-            builder.Property(l => l.Availability)
+            builder.Property(_ => _.Availability)
                 .HasColumnType("decimal(8,2)");
         }
     }

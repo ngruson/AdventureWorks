@@ -9,9 +9,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Illustration> builder)
         {
             builder.ToTable("Illustration");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property(i => i.Diagram)
+            builder.Property(_ => _.Diagram)
                 .HasColumnType("xml");
         }
     }

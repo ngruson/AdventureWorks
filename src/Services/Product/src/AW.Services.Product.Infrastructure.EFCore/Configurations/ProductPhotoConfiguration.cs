@@ -8,14 +8,15 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductPhoto> builder)
         {
             builder.ToTable("ProductPhoto");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("ProductPhotoID");
 
-            builder.Property(pp => pp.ThumbnailPhotoFileName)
+            builder.Property(_ => _.ThumbnailPhotoFileName)
                 .HasMaxLength(50);
 
-            builder.Property(pp => pp.LargePhotoFileName)
+            builder.Property(_ => _.LargePhotoFileName)
                 .HasMaxLength(50);
         }
     }

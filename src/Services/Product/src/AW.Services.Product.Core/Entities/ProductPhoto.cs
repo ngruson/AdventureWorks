@@ -3,7 +3,7 @@ namespace AW.Services.Product.Core.Entities
 
     public class ProductPhoto
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         public byte[] ThumbNailPhoto { get; private set; }
 
         public string ThumbnailPhotoFileName { get; private set; }

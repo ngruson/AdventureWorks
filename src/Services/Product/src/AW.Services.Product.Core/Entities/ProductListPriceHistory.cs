@@ -4,7 +4,7 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductListPriceHistory
     {
-        private int ProductID { get; set; }
+        public int ProductID { get; set; }
         public DateTime StartDate { get; private set; }
 
         public DateTime? EndDate { get; private set; }

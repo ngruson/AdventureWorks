@@ -9,8 +9,8 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<SalesReason> builder)
         {
             builder.ToTable("SalesReason");
-            builder.HasKey(p => p.Id);
-            builder.Property(s => s.Id)
+            builder.HasKey(_ => _.Id);
+            builder.Property(_ => _.Id)
                 .HasColumnName("SalesReasonID");
         }
     }

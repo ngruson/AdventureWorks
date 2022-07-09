@@ -8,7 +8,7 @@
             PhoneNumber = phoneNumber;
         }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string PhoneNumberType { get; private set; }
         public string PhoneNumber { get; private set; }
     }

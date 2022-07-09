@@ -9,9 +9,9 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.ToTable("Person");
-            builder.HasKey(p => p.Id);
+            builder.HasKey(_ => _.Id);
 
-            builder.Property(c => c.Id)
+            builder.Property(_ => _.Id)
                 .HasColumnName("PersonID");
 
             builder.OwnsOne(_ => _.Name)

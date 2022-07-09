@@ -8,21 +8,21 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.SalesOrder> builder)
         {
             builder.ToTable("SalesOrder");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
             
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("SalesOrderID");
             
-            builder.Property(p => p.SalesOrderNumber)
+            builder.Property(_ => _.SalesOrderNumber)
                 .HasComputedColumnSql();
 
             builder.OwnsOne(_ => _.BillToAddress);
             builder.OwnsOne(_ => _.ShipToAddress);
 
-            builder.Ignore(p => p.SubTotal);
-            builder.Ignore(p => p.TaxAmt);
-            builder.Ignore(p => p.TaxRate);
-            builder.Ignore(p => p.TotalDue);
+            builder.Ignore(_ => _.SubTotal);
+            builder.Ignore(_ => _.TaxAmt);
+            builder.Ignore(_ => _.TaxRate);
+            builder.Ignore(_ => _.TotalDue);
         }
     }
 }

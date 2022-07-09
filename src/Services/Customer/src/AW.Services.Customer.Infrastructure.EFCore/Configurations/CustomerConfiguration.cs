@@ -9,12 +9,12 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Entities.Customer> builder)
         {
             builder.ToTable("Customer");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("CustomerID");
 
-            builder.Property(c => c.AccountNumber)
+            builder.Property(_ => _.AccountNumber)
                 .IsRequired()
                 .HasMaxLength(10);
         }

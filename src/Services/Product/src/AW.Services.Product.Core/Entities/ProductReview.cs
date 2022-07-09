@@ -4,9 +4,9 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductReview
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
 
-        private int ProductID { get; set; }
+        public int ProductID { get; set; }
 
         public string ReviewerName { get; private set; }
 

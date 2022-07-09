@@ -9,16 +9,16 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<ProductModel> builder)
         {
             builder.ToTable("ProductModel");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property(pmc => pmc.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(pmc => pmc.CatalogDescription)
+            builder.Property(_ => _.CatalogDescription)
                 .HasColumnType("xml");
 
-            builder.Property(pmc => pmc.Instructions)
+            builder.Property(_ => _.Instructions)
                 .HasColumnType("xml");
         }
     }

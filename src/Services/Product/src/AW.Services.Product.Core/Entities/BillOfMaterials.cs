@@ -4,7 +4,7 @@ namespace AW.Services.Product.Core.Entities
 {
     public class BillOfMaterials
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         public int? ProductAssemblyID { get; private set; }
         public virtual Product ProductAssembly { get; private set; }
 

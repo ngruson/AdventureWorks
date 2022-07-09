@@ -8,15 +8,15 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductModelProductDescriptionCulture> builder)
         {
             builder.ToTable("ProductModelProductDescriptionCulture");
-            builder.HasKey("ProductModelID", "ProductDescriptionID", "CultureID");
+            builder.HasKey(_ => new { _.ProductModelID, _.ProductDescriptionID, _.CultureID });
 
-            builder.Property("ProductModelID")
+            builder.Property(_ => _.ProductModelID)
                 .ValueGeneratedNever();
 
-            builder.Property("ProductDescriptionID")
+            builder.Property(_ => _.ProductDescriptionID)
                 .ValueGeneratedNever();
 
-            builder.Property("CultureID")
+            builder.Property(_ => _.CultureID)
                 .HasMaxLength(6);
         }
     }

@@ -13,21 +13,18 @@ namespace AW.Services.Customer.Core.Entities
             Name = name;
         }
         private Person() { }
+        public int Id { get; set; }
 
-        private int Id { get; set; }
         public string Title { get; private set; }
-        //public string FirstName { get; private set; }
-        //public string MiddleName { get; private set; }
-        //public string LastName { get; private set; }
 
         public NameFactory Name { get; private set; }
         public string Suffix { get; private set; }
 
         public IEnumerable<PersonEmailAddress> EmailAddresses => _emailAddresses.ToList();
-        private List<PersonEmailAddress> _emailAddresses = new();
+        private readonly List<PersonEmailAddress> _emailAddresses = new();
 
         public IEnumerable<PersonPhone> PhoneNumbers => _phoneNumbers.ToList();
-        private List<PersonPhone> _phoneNumbers = new();
+        private readonly List<PersonPhone> _phoneNumbers = new();
 
         public void AddPhoneNumber(PersonPhone phone)
         {

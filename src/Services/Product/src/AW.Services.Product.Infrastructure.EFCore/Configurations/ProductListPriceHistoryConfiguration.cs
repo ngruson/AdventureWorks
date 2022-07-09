@@ -8,12 +8,12 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductListPriceHistory> builder)
         {
             builder.ToTable("ProductListPriceHistory");
-            builder.HasKey("ProductID", "StartDate");
+            builder.HasKey(_ => new { _.ProductID, _.StartDate });
 
-            builder.Property("ProductID")
+            builder.Property(_ => _.ProductID)
                 .ValueGeneratedNever();
 
-            builder.Property(plphc => plphc.ListPrice)
+            builder.Property(_ => _.ListPrice)
                 .HasColumnType("decimal(19,4)")
                 .HasColumnType("money");
         }

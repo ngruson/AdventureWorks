@@ -9,7 +9,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Culture> builder)
         {
             builder.ToTable("Culture");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AW.Services.Customer.Core.Entities
         {
         }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public EmailAddress EmailAddress { get; private set; }
     }
 }

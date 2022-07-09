@@ -9,9 +9,9 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<PersonEmailAddress> builder)
         {
             builder.ToTable("PersonEmailAddress");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("PersonEmailAddressID");
 
             builder.OwnsOne(_ => _.EmailAddress)

@@ -9,8 +9,8 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<IntegrationEventLogEntry> builder)
         {
             builder.ToTable("IntegrationEventLog");
-            builder.HasKey(p => p.EventId);
-            builder.Property(s => s.EventId)
+            builder.HasKey(_ => _.EventId);
+            builder.Property(_ => _.EventId)
                 .HasColumnName("EventId");
         }
     }

@@ -22,7 +22,7 @@ namespace AW.Services.Customer.Core.Entities
         public string SalesPerson { get; private set; }
 
         public IEnumerable<StoreCustomerContact> Contacts => _contacts.ToList();
-        private List<StoreCustomerContact> _contacts = new();
+        private readonly List<StoreCustomerContact> _contacts = new();
 
         public void AddContact(StoreCustomerContact contact)
         {

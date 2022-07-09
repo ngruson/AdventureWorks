@@ -11,7 +11,7 @@ namespace AW.Services.ReferenceData.Core.Entities
         }
         private StateProvince() { }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string StateProvinceCode { get; private set; }
 
         public CountryRegion CountryRegion { get; private set; }

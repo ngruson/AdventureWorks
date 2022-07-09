@@ -8,16 +8,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductCategory> builder)
         {
             builder.ToTable("ProductCategory");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("ProductCategoryID");
 
-            builder.Property(c => c.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(pc => pc.ProductSubcategory)
-                .WithOne(psc => psc.ProductCategory)
+            builder.HasMany(_ => _.ProductSubcategory)
+                .WithOne(_ => _.ProductCategory)
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

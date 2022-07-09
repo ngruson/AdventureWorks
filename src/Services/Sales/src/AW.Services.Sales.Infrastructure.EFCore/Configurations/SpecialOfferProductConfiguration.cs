@@ -9,8 +9,8 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<SpecialOfferProduct> builder)
         {
             builder.ToTable("SpecialOfferProduct");
-            builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id)
+            builder.HasKey(_ => _.Id);
+            builder.Property(_ => _.Id)
                 .HasColumnName("SpecialOfferProductID");
         }
     }

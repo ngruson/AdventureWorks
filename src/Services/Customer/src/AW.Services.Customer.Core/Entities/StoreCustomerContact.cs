@@ -11,7 +11,7 @@
             ContactPerson = contactPerson;
         }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string ContactType { get; private set; }
 
         public int StoreCustomerId { get; private set; }

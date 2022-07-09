@@ -10,16 +10,16 @@ namespace AW.Services.Customer.Core.Entities
     {
         protected IPreferredAddressFactory preferredAddressFactory;
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public abstract CustomerType CustomerType { get; }
         public string AccountNumber { get; protected set; }
         public string Territory { get; private set; }
 
         public IEnumerable<CustomerAddress> Addresses => _addresses.ToList();
-        private List<CustomerAddress> _addresses = new();
+        private readonly List<CustomerAddress> _addresses = new();
 
         public IEnumerable<SalesOrder> SalesOrders => _salesOrders.ToList();
-        private List<SalesOrder> _salesOrders = new();
+        private readonly List<SalesOrder> _salesOrders = new();
 
         public Address GetPreferredAddress(string addressType)
         {

@@ -4,9 +4,9 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductInventory
     {
-        private int ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        private short LocationID { get; set; }
+        public short LocationID { get; set; }
 
         public string Shelf { get; private set; }
 
@@ -14,7 +14,7 @@ namespace AW.Services.Product.Core.Entities
 
         public short Quantity { get; private set; }
 
-        public Guid rowguid { get; private set; }
+        public Guid Rowguid { get; private set; }
 
         public DateTime ModifiedDate { get; private set; }
 

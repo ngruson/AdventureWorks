@@ -11,7 +11,7 @@
             Address = address;
         }
 
-        private int Id { get; set; }
+        public int Id { get; set; }
         public string AddressType { get; private set; }
         public Address Address { get; set; }
     }

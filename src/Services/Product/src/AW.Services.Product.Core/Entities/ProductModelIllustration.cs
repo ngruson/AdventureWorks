@@ -4,8 +4,8 @@ namespace AW.Services.Product.Core.Entities
 {
     public class ProductModelIllustration
     {
-        private int ProductModelID { get; set; }
-        private int IllustrationID { get; set; }
+        public int ProductModelID { get; set; }
+        public int IllustrationID { get; set; }
 
         public DateTime ModifiedDate { get; private set; }
 

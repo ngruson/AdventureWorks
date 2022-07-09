@@ -8,12 +8,12 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.ProductProductPhoto> builder)
         {
             builder.ToTable("ProductProductPhoto");
-            builder.HasKey("ProductId", "ProductPhotoId");
+            builder.HasKey(_ => new { _.ProductId, _.ProductPhotoId });
 
-            builder.Property("ProductId")
+            builder.Property(_ => _.ProductId)
                 .ValueGeneratedNever();
 
-            builder.Property("ProductPhotoId")
+            builder.Property(_ => _.ProductPhotoId)
                 .ValueGeneratedNever();
         }
     }

@@ -16,7 +16,10 @@ namespace AW.Services.Product.Core.Entities
             Color = color;
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private int Id { get; set; }
+#pragma warning restore IDE0051 // Remove unused private members
+        
         public string Name { get; private set; }
        
         public string ProductNumber { get; private set; }

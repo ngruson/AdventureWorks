@@ -6,22 +6,28 @@ namespace AW.ConsoleTools
     {
         static Env()
         {
-            RepositoryRoot = "";
-            var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-
-            while (!File.Exists(Path.Combine(directoryInfo.FullName, "README.md")))
-            {
-                if (directoryInfo.Parent == null)
-                {
-                    return;
-                }
-
-                directoryInfo = directoryInfo.Parent;
-            }
-
-            RepositoryRoot = directoryInfo.FullName;
+            
         }
 
-        public static string RepositoryRoot { get; }
+        public static string RepositoryRoot
+        {
+            get
+            {
+                var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+
+                while (!File.Exists(Path.Combine(directoryInfo.FullName, "README.md")))
+                {
+                    if (directoryInfo.Parent == null)
+                    {
+                        return string.Empty;
+                    }
+
+                    directoryInfo = directoryInfo.Parent;
+                }
+
+                string repositoryRoot = directoryInfo.FullName;
+                return repositoryRoot;
+            }
+        }
     }
 }

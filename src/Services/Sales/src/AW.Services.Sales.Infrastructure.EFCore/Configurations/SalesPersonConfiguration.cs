@@ -9,7 +9,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.Configurations
         {
             builder.ToTable("SalesPerson");
 
-            builder.Property(c => c.Id)
+            builder.Property(_ => _.Id)
                 .HasColumnName("PersonID");
         }
     }

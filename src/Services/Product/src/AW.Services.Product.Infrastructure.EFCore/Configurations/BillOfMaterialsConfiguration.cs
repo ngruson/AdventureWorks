@@ -9,17 +9,17 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<BillOfMaterials> builder)
         {
             builder.ToTable("BillOfMaterials");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.HasOne(bom => bom.ProductAssembly);
-            builder.HasOne(bom => bom.Component);
+            builder.HasOne(_ => _.ProductAssembly);
+            builder.HasOne(_ => _.Component);
 
-            builder.Property(e => e.UnitMeasureCode)
+            builder.Property(_ => _.UnitMeasureCode)
                 .IsFixedLength()
                 .IsRequired()
                 .HasMaxLength(3);
 
-            builder.Property(e => e.PerAssemblyQty)
+            builder.Property(_ => _.PerAssemblyQty)
                 .HasColumnType("decimal(8,2)");
         }
     }
