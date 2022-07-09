@@ -17,16 +17,18 @@ namespace AW.Services.Customer.Core.AutoMapper
                 .Include<Entities.StoreCustomer, Handlers.GetCustomer.StoreCustomerDto>();
 
             CreateMap<Handlers.AddCustomer.CustomerDto, Entities.Customer>()
+                .ForMember(_ => _.Id, opt => opt.Ignore())
                 .Include<Handlers.AddCustomer.IndividualCustomerDto, Entities.IndividualCustomer>()
                 .Include<Handlers.AddCustomer.StoreCustomerDto, Entities.StoreCustomer>()
-                //.ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<Handlers.UpdateCustomer.CustomerDto, Entities.Customer>()
+                .ForMember(_ => _.Id, opt => opt.Ignore())
                 .Include<Handlers.UpdateCustomer.IndividualCustomerDto, Entities.IndividualCustomer>()
                 .Include<Handlers.UpdateCustomer.StoreCustomerDto, Entities.StoreCustomer>()
-                //.ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
 

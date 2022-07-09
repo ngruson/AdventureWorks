@@ -16,7 +16,8 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PersonDto, Entities.Person>()
-                .ForMember(m => m.EmailAddresses, opt =>
+                .ForMember(_ => _.Id, opt => opt.Ignore())
+                .ForMember(_ => _.EmailAddresses, opt =>
                     opt.MapFrom((src, dest, member, ctx) =>
                     {
                         src.EmailAddresses.ForEach(personEmailAddress =>
@@ -29,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
                     }
                     )
                 )
-                .ForMember(m => m.PhoneNumbers, opt =>
+                .ForMember(_ => _.PhoneNumbers, opt =>
                     opt.MapFrom((src, dest, member, ctx) =>
                     {
                         src.PhoneNumbers.ForEach(personPhoneNumber =>

@@ -11,6 +11,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PersonPhoneDto, Entities.PersonPhone>()
+                .ForMember(_ => _.Id, opt => opt.Ignore())
                 .ReverseMap();
         }
     }

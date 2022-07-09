@@ -14,7 +14,8 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         public void Mapping(Profile profile)
         {
             profile.CreateMap<StoreCustomerDto, Entities.StoreCustomer>()
-                .ForMember(m => m.Addresses, opt => 
+                .ForMember(_ => _.Id, opt => opt.Ignore())
+                .ForMember(_ => _.Addresses, opt => 
                     opt.MapFrom((src, dest, member, ctx) =>
                         {
                             src.Addresses.ForEach(customerAddress =>
@@ -27,7 +28,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
                         }                        
                     )
                 )
-                .ForMember(m => m.Contacts, opt =>
+                .ForMember(_ => _.Contacts, opt =>
                     opt.MapFrom((src, dest, member, ctx) =>
                         {
                             src.Contacts.ForEach(customerContact =>
@@ -40,7 +41,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
                         }
                     )
                 )
-                .ForMember(m => m.SalesOrders, opt => opt.Ignore())
+                .ForMember(_ => _.SalesOrders, opt => opt.Ignore())
                 .ReverseMap();
         }
     }
