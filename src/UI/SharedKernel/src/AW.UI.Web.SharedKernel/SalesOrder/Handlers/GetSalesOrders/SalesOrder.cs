@@ -17,22 +17,22 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 
         public bool OnlineOrderFlag { get; set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string? SalesOrderNumber { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string? PurchaseOrderNumber { get; set; }
 
-        public string AccountNumber { get; set; }
-        public Customer Customer { get; set; }
+        public string? AccountNumber { get; set; }
+        public Customer? Customer { get; set; }
 
-        public SalesPerson SalesPerson { get; set; }
+        public SalesPerson? SalesPerson { get; set; }
 
-        public string Territory { get; set; }
+        public string? Territory { get; set; }
 
-        public Address BillToAddress { get; set; }
+        public Address? BillToAddress { get; set; }
 
-        public Address ShipToAddress { get; set; }
+        public Address? ShipToAddress { get; set; }
 
-        public string ShipMethod { get; set; }
+        public string? ShipMethod { get; set; }
 
         public decimal SubTotal { get; set; }
 
@@ -42,10 +42,10 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 
         public decimal TotalDue { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
-        public List<SalesOrderLine> OrderLines { get; set; }
+        public List<SalesOrderLine>? OrderLines { get; set; }
 
-        public List<SalesReason> SalesReasons { get; set; }
+        public List<SalesReason>? SalesReasons { get; set; }
     }
 }

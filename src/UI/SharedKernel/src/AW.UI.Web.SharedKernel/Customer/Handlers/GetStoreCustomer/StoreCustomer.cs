@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer
+﻿namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer
 {
     public class StoreCustomer : Customer
     {

@@ -5,6 +5,6 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 {
     public class SalesPerson : IMapFrom<SalesPerson>
     {
-        public NameFactory Name { get; set; }
+        public NameFactory? Name { get; set; }
     }
 }

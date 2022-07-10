@@ -1,5 +1,4 @@
 ﻿using AW.SharedKernel.ValueTypes;
-using System.Collections.Generic;
 
 namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers
 {

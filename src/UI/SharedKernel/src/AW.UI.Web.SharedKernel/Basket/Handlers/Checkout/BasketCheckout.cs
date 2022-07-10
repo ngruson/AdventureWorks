@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AW.UI.Web.SharedKernel.Basket.Handlers.Checkout
+﻿namespace AW.UI.Web.SharedKernel.Basket.Handlers.Checkout
 {
     public class BasketCheckout
     {
