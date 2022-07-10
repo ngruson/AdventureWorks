@@ -128,7 +128,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICache<CountryRegion>, CountryCache>();
             services.AddScoped<ICache<SalesPerson>, SalesPersonCache>();
             services.AddScoped<ICache<ShipMethod>, ShipMethodCache>();
-            services.AddScoped<ICache<StateProvince>, StateProvinceCache>();
+            services.AddScoped<ICache<StateProvince>, StatesProvinceCache>();
             services.AddScoped<ICache<Territory>, TerritoryCache>();
 
             return services;

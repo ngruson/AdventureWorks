@@ -18,8 +18,10 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.GetBasket
 
         public async Task<Basket> Handle(GetBasketQuery request, CancellationToken cancellationToken)
         {
+            Guard.Against.NullOrEmpty(request.UserID, nameof(request.UserID));
+
             logger.LogInformation("Getting shopping basket for user ID {UserID} from API", request.UserID);
-            var basket = await client.GetBasket(request.UserID);
+            var basket = await client.GetBasketAsync(request.UserID);
             Guard.Against.Null(basket, nameof(basket));
 
             logger.LogInformation("Returning shopping basket for user ID {UserID}", request.UserID);

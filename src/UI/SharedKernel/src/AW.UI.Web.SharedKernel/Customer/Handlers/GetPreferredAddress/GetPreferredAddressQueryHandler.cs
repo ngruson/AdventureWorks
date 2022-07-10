@@ -18,6 +18,9 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress
 
         public async Task<Address> Handle(GetPreferredAddressQuery request, CancellationToken cancellationToken)
         {
+            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
+            Guard.Against.NullOrEmpty(request.AddressType, nameof(request.AddressType));
+
             logger.LogInformation("Getting preferred address from API for {@Query}", request);
             var address = await client.GetPreferredAddressAsync(
                 request.AccountNumber,

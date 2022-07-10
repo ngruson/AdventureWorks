@@ -21,7 +21,7 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.Checkout
             Guard.Against.Null(request.Basket, nameof(request.Basket));
 
             logger.LogInformation("Checking out shopping basket for user ID {UserID}", request.Basket.Buyer);
-            await client.Checkout(request.Basket);
+            await client.CheckoutAsync(request.Basket);
 
             logger.LogInformation("Succesfully checked out shopping basket for user ID {UserID}", request.Basket.Buyer);
 

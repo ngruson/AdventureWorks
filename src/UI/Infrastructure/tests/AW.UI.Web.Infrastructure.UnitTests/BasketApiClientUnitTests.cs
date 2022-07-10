@@ -2,8 +2,6 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients;
 using AW.UI.Web.SharedKernel.Basket.Handlers.Checkout;
-using AW.UI.Web.SharedKernel.Basket.Handlers.GetBasket;
-using AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using System;
@@ -51,7 +49,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.GetBasket(basket.BuyerId);
+                var response = await sut.GetBasketAsync(basket.BuyerId);
 
                 //Assert
                 response.BuyerId.Should().Be(basket.BuyerId);
@@ -74,7 +72,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetBasket(userID);
+                Func<Task> func = async () => await sut.GetBasketAsync(userID);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -114,7 +112,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.UpdateBasket(basket);
+                var response = await sut.UpdateBasketAsync(basket);
 
                 //Assert
                 response.BuyerId.Should().Be(basket.BuyerId);
@@ -137,7 +135,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.UpdateBasket(basket);
+                Func<Task> func = async () => await sut.UpdateBasketAsync(basket);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -163,7 +161,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.Accepted);
 
                 //Act
-                async Task func() => await sut.Checkout(basket);
+                async Task func() => await sut.CheckoutAsync(basket);
 
                 //Assert
                 var task = func();
@@ -187,7 +185,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.Checkout(basket);
+                Func<Task> func = async () => await sut.CheckoutAsync(basket);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()

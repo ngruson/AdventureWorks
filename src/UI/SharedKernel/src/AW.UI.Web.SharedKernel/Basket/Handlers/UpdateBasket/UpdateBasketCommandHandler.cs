@@ -21,7 +21,7 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket
             Guard.Against.Null(request.Basket, nameof(request.Basket));
 
             logger.LogInformation("Updating shopping basket for user ID {UserID}", request.Basket?.BuyerId);
-            var basket = await client.UpdateBasket(request.Basket);
+            var basket = await client.UpdateBasketAsync(request.Basket);
             Guard.Against.Null(basket, nameof(basket));
 
             logger.LogInformation("Returning shopping basket for user ID {UserID}", request.Basket?.BuyerId);

@@ -18,13 +18,15 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer
 
         public async Task<Customer> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting individual customer {AccountNumber} from API", request.AccountNumber);
-            var customer = await client.GetCustomerAsync<IndividualCustomer>(
+            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
+
+            logger.LogInformation("Getting customer {AccountNumber} from API", request.AccountNumber);
+            var customer = await client.GetCustomerAsync(
                 request.AccountNumber
             );
             Guard.Against.Null(customer, nameof(customer));
 
-            logger.LogInformation("Returning individual customer {AccountNumber}", request.AccountNumber);
+            logger.LogInformation("Returning customer {AccountNumber}", request.AccountNumber);
 
             return customer;
         }

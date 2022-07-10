@@ -18,6 +18,8 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer
 
         public async Task<IndividualCustomer> Handle(GetIndividualCustomerQuery request, CancellationToken cancellationToken)
         {
+            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
+
             logger.LogInformation("Getting individual customer {AccountNumber} from API", request.AccountNumber);
             var customer = await client.GetCustomerAsync<IndividualCustomer>(
                 request.AccountNumber

@@ -18,6 +18,8 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer
 
         public async Task<StoreCustomer> Handle(GetStoreCustomerQuery request, CancellationToken cancellationToken)
         {
+            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
+
             logger.LogInformation("Getting store customer {AccountNumber} from API", request.AccountNumber);
             var customer = await client.GetCustomerAsync<StoreCustomer>(
                 request.AccountNumber

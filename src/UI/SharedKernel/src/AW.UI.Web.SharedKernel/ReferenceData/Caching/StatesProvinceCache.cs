@@ -5,13 +5,13 @@ using AW.UI.Web.SharedKernel.Caching;
 
 namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 {
-    public class StateProvinceCache : ICache<Handlers.GetStatesProvinces.StateProvince>
+    public class StatesProvinceCache : ICache<Handlers.GetStatesProvinces.StateProvince>
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
         private List<Handlers.GetStatesProvinces.StateProvince>? statesProvinces;
 
-        public StateProvinceCache(IMemoryCache cache, IReferenceDataApiClient client) =>
+        public StatesProvinceCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
         public async Task Initialize()

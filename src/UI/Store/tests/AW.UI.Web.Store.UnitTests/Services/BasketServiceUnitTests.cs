@@ -236,7 +236,7 @@ namespace AW.UI.Web.Store.UnitTests.Services
             )
             {
                 //Arrange
-                mockClient.Setup(_ => _.GetBasket(It.IsAny<string>()))
+                mockClient.Setup(_ => _.GetBasketAsync(It.IsAny<string>()))
                     .ReturnsAsync(basket);
 
                 //Act
