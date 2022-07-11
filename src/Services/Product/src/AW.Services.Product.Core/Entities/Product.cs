@@ -69,17 +69,16 @@ namespace AW.Services.Product.Core.Entities
 
         public virtual UnitMeasure WeightUnitMeasure { get; private set; }
 
-        public IEnumerable<ProductProductPhoto> ProductProductPhotos => _productProductPhotos.ToList();
-        private readonly List<ProductProductPhoto> _productProductPhotos = new();
+        public List<ProductProductPhoto> ProductProductPhotos { get; internal set; } = new();
 
         public void AddProductPhoto(ProductProductPhoto photo)
         {
-            _productProductPhotos.Add(photo);
+            ProductProductPhotos.Add(photo);
         }
 
         public void SetPrimaryPhoto(ProductProductPhoto photo)
         {
-            foreach (var item in _productProductPhotos)
+            foreach (var item in ProductProductPhotos)
             {
                 item.Primary = photo == item;
             }

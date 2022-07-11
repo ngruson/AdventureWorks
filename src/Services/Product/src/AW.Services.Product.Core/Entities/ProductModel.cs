@@ -17,10 +17,8 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime ModifiedDate { get; private set; }
 
-        public IEnumerable<ProductModelIllustration> ProductModelIllustrations => _productModelIllustrations.ToList();
-        private readonly List<ProductModelIllustration> _productModelIllustrations = new();
+        public List<ProductModelIllustration> ProductModelIllustrations { get; internal set; } = new();
 
-        public IEnumerable<ProductModelProductDescriptionCulture> ProductModelProductDescriptionCultures => _productModelProductDescriptionCultures.ToList();
-        private readonly List<ProductModelProductDescriptionCulture> _productModelProductDescriptionCultures = new();
+        public List<ProductModelProductDescriptionCulture> ProductModelProductDescriptionCultures { get; internal set; } = new();
     }
 }

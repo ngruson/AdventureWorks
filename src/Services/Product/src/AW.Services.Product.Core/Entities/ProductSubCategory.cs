@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -11,7 +10,6 @@ namespace AW.Services.Product.Core.Entities
 
         public ProductCategory ProductCategory { get; private set; }
 
-        public IEnumerable<Product> Products => _products.ToList();
-        private readonly List<Product> _products = new();
+        public List<Product> Products { get; internal set; } = new();
     }
 }

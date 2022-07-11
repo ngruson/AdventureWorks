@@ -103,11 +103,9 @@ namespace AW.Services.Sales.Core.Entities
 
         public string Comment { get; private set; }
 
-        public IEnumerable<SalesOrderLine> OrderLines => _orderLines.ToList();
-        private readonly List<SalesOrderLine> _orderLines = new();
+        public List<SalesOrderLine> OrderLines { get; internal set; } = new();
 
-        public IEnumerable<SalesOrderSalesReason> SalesReasons => _salesReasons.ToList();
-        private readonly List<SalesOrderSalesReason> _salesReasons = new();
+        public List<SalesOrderSalesReason> SalesReasons { get; internal set; } = new();
 
         private void AddOrderStartedDomainEvent(string userId, string userName, string cardType, string cardNumber,
                 string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
@@ -140,7 +138,7 @@ namespace AW.Services.Sales.Core.Entities
                 //add validated new order item
 
                 var orderLine = new SalesOrderLine(productNumber, productName, unitPrice, unitPriceDiscount, specialOfferProduct, quantity);
-                _orderLines.Add(orderLine);
+                OrderLines.Add(orderLine);
             }
         }
 

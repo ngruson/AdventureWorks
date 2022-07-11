@@ -1,6 +1,5 @@
 ﻿using AW.Services.SharedKernel.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.ReferenceData.Core.Entities
 {
@@ -13,7 +12,6 @@ namespace AW.Services.ReferenceData.Core.Entities
         public string CountryRegionCode { get; private set; }
         public string Name { get; private set; }
 
-        public IEnumerable<StateProvince> StatesProvinces => _statesProvinces.ToList();
-        private readonly List<StateProvince> _statesProvinces = new();
+        public List<StateProvince> StatesProvinces { get; internal set; } = new();
     }
 }

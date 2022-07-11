@@ -1,7 +1,5 @@
 ﻿using AW.SharedKernel.ValueTypes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Customer.Core.Entities
 {
@@ -20,30 +18,28 @@ namespace AW.Services.Customer.Core.Entities
         public NameFactory Name { get; private set; }
         public string Suffix { get; private set; }
 
-        public IEnumerable<PersonEmailAddress> EmailAddresses => _emailAddresses.ToList();
-        private readonly List<PersonEmailAddress> _emailAddresses = new();
+        public List<PersonEmailAddress> EmailAddresses { get; internal set; } = new();
 
-        public IEnumerable<PersonPhone> PhoneNumbers => _phoneNumbers.ToList();
-        private readonly List<PersonPhone> _phoneNumbers = new();
+        public List<PersonPhone> PhoneNumbers { get; internal set; } = new();
 
         public void AddPhoneNumber(PersonPhone phone)
         {
-            _phoneNumbers.Add(phone);
+            PhoneNumbers.Add(phone);
         }
 
         public void RemovePhoneNumber(PersonPhone phone)
         {
-            _phoneNumbers.Remove(phone);
+            PhoneNumbers.Remove(phone);
         }
 
         public void AddEmailAddress(PersonEmailAddress emailAddress)
         {
-            _emailAddresses.Add(emailAddress);
+            EmailAddresses.Add(emailAddress);
         }
 
         public void RemoveEmailAddress(PersonEmailAddress emailAddress)
         {
-            _emailAddresses.Remove(emailAddress);
+            EmailAddresses.Remove(emailAddress);
         }
     }
 }

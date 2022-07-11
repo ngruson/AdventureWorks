@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -14,7 +13,6 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime ModifiedDate { get; private set; }
 
-        public IEnumerable<ProductModelProductDescriptionCulture> ProductModelProductDescriptionCulture => _productModelProductDescriptionCulture.ToList();
-        private readonly List<ProductModelProductDescriptionCulture> _productModelProductDescriptionCulture = new();
+        public List<ProductModelProductDescriptionCulture> ProductModelProductDescriptionCulture { get; internal set; } = new();
     }
 }

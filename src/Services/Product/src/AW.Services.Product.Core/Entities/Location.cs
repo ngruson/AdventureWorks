@@ -15,7 +15,6 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime ModifiedDate { get; private set; }
 
-        public IEnumerable<ProductInventory> ProductInventory => _productInventory.ToList();
-        private readonly List<ProductInventory> _productInventory = new();
+        public List<ProductInventory> ProductInventory { get; internal set; } = new();
     }
 }

@@ -1,4 +1,6 @@
-﻿using AW.SharedKernel.AutoMapper;
+﻿using AutoMapper;
+using AW.SharedKernel.AutoMapper;
+using System.Collections.Generic;
 
 namespace AW.Services.Customer.Core.AutoMapper
 {
@@ -18,6 +20,10 @@ namespace AW.Services.Customer.Core.AutoMapper
 
             CreateMap<Handlers.AddCustomer.CustomerDto, Entities.Customer>()
                 .ForMember(_ => _.Id, opt => opt.Ignore())
+                .ForMember(_ => _.Addresses, opt => opt.MapFrom((src, dest, m, ctx) =>
+                        MapAddresses(src.Addresses, dest, ctx)
+                    )
+                )
                 .Include<Handlers.AddCustomer.IndividualCustomerDto, Entities.IndividualCustomer>()
                 .Include<Handlers.AddCustomer.StoreCustomerDto, Entities.StoreCustomer>()
                 .ForMember(m => m.Id, opt => opt.Ignore())
@@ -50,6 +56,17 @@ namespace AW.Services.Customer.Core.AutoMapper
                 .ReverseMap()
                 .Include<Handlers.UpdateCustomer.IndividualCustomerDto, Models.UpdateCustomer.IndividualCustomer>()
                 .Include<Handlers.UpdateCustomer.StoreCustomerDto, Models.UpdateCustomer.StoreCustomer>();
+        }
+
+        private static IEnumerable<Entities.CustomerAddress> MapAddresses(List<Handlers.AddCustomer.CustomerAddressDto> addresses, Entities.Customer customer, ResolutionContext ctx)
+        {
+            addresses.ForEach(_ =>
+            {
+                var mappedAddress = ctx.Mapper.Map<Entities.CustomerAddress>(_);
+                customer.AddAddress(mappedAddress);
+            });
+
+            return customer.Addresses;
         }
     }
 }
