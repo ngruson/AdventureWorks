@@ -1,6 +1,5 @@
 ﻿using AW.SharedKernel.AutoMapper;
 using AW.UI.Web.Internal.ViewModels.Customer;
-//using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using System.Reflection;
 

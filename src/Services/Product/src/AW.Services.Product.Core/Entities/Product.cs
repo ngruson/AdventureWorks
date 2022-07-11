@@ -16,9 +16,7 @@ namespace AW.Services.Product.Core.Entities
             Color = color;
         }
 
-#pragma warning disable IDE0051 // Remove unused private members
-        private int Id { get; set; }
-#pragma warning restore IDE0051 // Remove unused private members
+        public int Id { get; set; }
         
         public string Name { get; private set; }
        
@@ -72,7 +70,7 @@ namespace AW.Services.Product.Core.Entities
         public virtual UnitMeasure WeightUnitMeasure { get; private set; }
 
         public IEnumerable<ProductProductPhoto> ProductProductPhotos => _productProductPhotos.ToList();
-        private List<ProductProductPhoto> _productProductPhotos = new();
+        private readonly List<ProductProductPhoto> _productProductPhotos = new();
 
         public void AddProductPhoto(ProductProductPhoto photo)
         {

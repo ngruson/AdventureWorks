@@ -9,27 +9,28 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
-        private List<Handlers.GetCountries.CountryRegion>? countries;
 
         public CountryCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        public async Task<List<Handlers.GetCountries.CountryRegion>> Initialize()
         {
-            countries = await client.GetCountriesAsync();
+            var countries = await client.GetCountriesAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.Countries, countries, cacheEntryOptions);
+
+            return countries;
         }
 
         public async Task<List<Handlers.GetCountries.CountryRegion>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.Countries, out countries))
+            if (!cache.TryGetValue(CacheKeys.Countries, out List<Handlers.GetCountries.CountryRegion> countries))
             {
-                await Initialize();
+                countries = await Initialize();
             }
 
             return countries;

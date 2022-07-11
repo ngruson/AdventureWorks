@@ -4,6 +4,5 @@
     {
         public CustomerType CustomerType { get; set; }
         public string CustomerNumber { get; set; }
-        //public string FullName { get; set; }
     }    
 }

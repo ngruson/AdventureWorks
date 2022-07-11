@@ -9,27 +9,28 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
-        private List<Handlers.GetAddressTypes.AddressType>? addressTypes;
 
         public AddressTypeCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        private async Task<List<Handlers.GetAddressTypes.AddressType>> Initialize()
         {
-            addressTypes = await client.GetAddressTypesAsync();
+            var addressTypes = await client.GetAddressTypesAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.AddressTypes, addressTypes, cacheEntryOptions);
+
+            return addressTypes;
         }
 
-        public async Task<List<Handlers.GetAddressTypes.AddressType>?> GetData()
+        public async Task<List<Handlers.GetAddressTypes.AddressType>> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.AddressTypes, out addressTypes))
+            if (!cache.TryGetValue(CacheKeys.AddressTypes, out List<Handlers.GetAddressTypes.AddressType> addressTypes))
             {
-                await Initialize();
+                addressTypes = await Initialize();
             }
 
             return addressTypes;
@@ -37,7 +38,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
         public async Task<List<Handlers.GetAddressTypes.AddressType>> GetData(Func<Handlers.GetAddressTypes.AddressType, bool> predicate)
         {
-            return (await GetData())!
+            return (await GetData())
                 .Where(predicate).ToList();
         }
     }

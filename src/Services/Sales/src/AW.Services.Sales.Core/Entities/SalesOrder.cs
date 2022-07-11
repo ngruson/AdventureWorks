@@ -104,10 +104,10 @@ namespace AW.Services.Sales.Core.Entities
         public string Comment { get; private set; }
 
         public IEnumerable<SalesOrderLine> OrderLines => _orderLines.ToList();
-        private List<SalesOrderLine> _orderLines = new();
+        private readonly List<SalesOrderLine> _orderLines = new();
 
         public IEnumerable<SalesOrderSalesReason> SalesReasons => _salesReasons.ToList();
-        private List<SalesOrderSalesReason> _salesReasons = new();
+        private readonly List<SalesOrderSalesReason> _salesReasons = new();
 
         private void AddOrderStartedDomainEvent(string userId, string userName, string cardType, string cardNumber,
                 string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)

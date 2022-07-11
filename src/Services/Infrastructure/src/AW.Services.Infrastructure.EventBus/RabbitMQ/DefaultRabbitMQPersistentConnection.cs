@@ -49,7 +49,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             GC.SuppressFinalize(this);
         }
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -59,8 +59,10 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
                 }
                 catch (IOException ex)
                 {
-                    logger.LogCritical(ex.ToString());
+                    logger.LogCritical("Exception thrown during disposing: {@Exception}", ex);
                 }
+
+                disposed = true;
             }
         }
 

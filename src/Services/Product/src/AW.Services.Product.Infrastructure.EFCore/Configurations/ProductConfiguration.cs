@@ -8,57 +8,57 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         public void Configure(EntityTypeBuilder<Core.Entities.Product> builder)
         {
             builder.ToTable("Product");
-            builder.HasKey("Id");
+            builder.HasKey(_ => _.Id);
 
-            builder.Property("Id")
+            builder.Property(_ => _.Id)
                 .HasColumnName("ProductId");
 
-            builder.Property(p => p.Name)
+            builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(p => p.ProductNumber)
+            builder.Property(_ => _.ProductNumber)
                 .IsRequired()
                 .HasMaxLength(25);
 
-            builder.Property(p => p.Color)
+            builder.Property(_ => _.Color)
                 .HasMaxLength(15);
 
-            builder.Property(p => p.StandardCost)
+            builder.Property(_ => _.StandardCost)
                 .HasColumnType("decimal(19,4)")
                 .HasColumnType("money");
 
-            builder.Property(p => p.ListPrice)
+            builder.Property(_ => _.ListPrice)
                 .HasColumnType("decimal(19,4)")
                 .HasColumnType("money");
 
-            builder.Property(p => p.Size)
+            builder.Property(_ => _.Size)
                 .HasMaxLength(5);
 
-            builder.Property(p => p.SizeUnitMeasureCode)
+            builder.Property(_ => _.SizeUnitMeasureCode)
                 .HasMaxLength(3);
 
-            builder.HasOne(p => p.SizeUnitMeasure)
+            builder.HasOne(_ => _.SizeUnitMeasure)
                 .WithMany()
-                .HasForeignKey(p => p.SizeUnitMeasureCode);
+                .HasForeignKey(_ => _.SizeUnitMeasureCode);
 
-            builder.Property(e => e.WeightUnitMeasureCode)
+            builder.Property(_ => _.WeightUnitMeasureCode)
                 .HasMaxLength(3);
 
-            builder.HasOne(p => p.WeightUnitMeasure)
+            builder.HasOne(_ => _.WeightUnitMeasure)
                 .WithMany()
-                .HasForeignKey(p => p.WeightUnitMeasureCode);
+                .HasForeignKey(_ => _.WeightUnitMeasureCode);
 
-            builder.Property(e => e.Weight)
+            builder.Property(_ => _.Weight)
                 .HasColumnType("decimal(8,2)");
 
-            builder.Property(e => e.ProductLine)
+            builder.Property(_ => _.ProductLine)
                 .HasMaxLength(2);
 
-            builder.Property(e => e.Class)
+            builder.Property(_ => _.Class)
                 .HasMaxLength(2);
 
-            builder.Property(e => e.Style)
+            builder.Property(_ => _.Style)
                 .HasMaxLength(2);
         }
     }

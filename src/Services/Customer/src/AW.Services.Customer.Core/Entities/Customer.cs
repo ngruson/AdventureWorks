@@ -15,10 +15,10 @@ namespace AW.Services.Customer.Core.Entities
         public string AccountNumber { get; protected set; }
         public string Territory { get; private set; }
 
-        public IEnumerable<CustomerAddress> Addresses => _addresses.ToList();
+        public IEnumerable<CustomerAddress> Addresses => _addresses;
         private readonly List<CustomerAddress> _addresses = new();
 
-        public IEnumerable<SalesOrder> SalesOrders => _salesOrders.ToList();
+        public IEnumerable<SalesOrder> SalesOrders => _salesOrders;
         private readonly List<SalesOrder> _salesOrders = new();
 
         public Address GetPreferredAddress(string addressType)

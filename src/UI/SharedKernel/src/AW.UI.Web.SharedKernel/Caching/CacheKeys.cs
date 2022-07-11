@@ -1,6 +1,6 @@
 ﻿namespace AW.UI.Web.SharedKernel.Caching
 {
-    public class CacheKeys
+    public static class CacheKeys
     {
         public const string AddressTypes = "addresstypes";
         public const string ContactTypes = "contacttypes";

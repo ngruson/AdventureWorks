@@ -9,27 +9,28 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
-        private List<Handlers.GetShipMethods.ShipMethod>? shipMethods;
 
         public ShipMethodCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        public async Task<List<Handlers.GetShipMethods.ShipMethod>> Initialize()
         {
-            shipMethods = await client.GetShipMethodsAsync();
+            var shipMethods = await client.GetShipMethodsAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.ShipMethods, shipMethods, cacheEntryOptions);
+
+            return shipMethods;
         }
 
-        public async Task<List<Handlers.GetShipMethods.ShipMethod>?> GetData()
+        public async Task<List<Handlers.GetShipMethods.ShipMethod>> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.ShipMethods, out shipMethods))
+            if (!cache.TryGetValue(CacheKeys.ShipMethods, out List<Handlers.GetShipMethods.ShipMethod> shipMethods))
             {
-                await Initialize();
+                shipMethods = await Initialize();
             }
 
             return shipMethods;

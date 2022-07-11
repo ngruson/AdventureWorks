@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System;
 using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
@@ -68,9 +67,9 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            SharedKernel.Customer.Handlers.GetCustomers.Customer,
-                            SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
-                            SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>()
+                            Customer,
+                            StoreCustomer,
+                            IndividualCustomer>()
                     },
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.EquivalencyExpression;
 using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.AutoMapper;
 
@@ -13,7 +12,6 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
         {
             profile.CreateMap<Entities.PersonEmailAddress, PersonEmailAddressDto>()
                 .ReverseMap();
-                //.EqualityComparison((src, dest) => src.EmailAddress == dest.EmailAddress);
         }
     }
 }

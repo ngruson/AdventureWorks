@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace AW.Services.Infrastructure
 {
     [Serializable]
-    public class DomainException : Exception, ISerializable
+    public class DomainException : Exception
     {
         public DomainException()
         { }

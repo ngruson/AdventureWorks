@@ -23,7 +23,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
         {
             this.mediator = mediator;
             this.requestManager = requestManager;
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.logger = logger;
         }
 
         /// <summary>
@@ -39,23 +39,23 @@ namespace AW.Services.Sales.Core.Handlers.Identified
         /// This method handles the command. It just ensures that no other request exists with the same ID, and if this is the case
         /// just enqueues the original inner command.
         /// </summary>
-        /// <param name="message">IdentifiedCommand which contains both original command & request ID</param>
+        /// <param name="request">IdentifiedCommand which contains both original command & request ID</param>
         /// <returns>Return value of inner command or default value if request same ID was found</returns>
-        public async Task<R> Handle(IdentifiedCommand<T, R> message, CancellationToken cancellationToken)
+        public async Task<R> Handle(IdentifiedCommand<T, R> request, CancellationToken cancellationToken)
         {
-            var alreadyExists = await requestManager.ExistAsync(message.Id);
+            var alreadyExists = await requestManager.ExistAsync(request.Id);
             if (alreadyExists)
             {
-                logger.LogInformation($"----- Request {message.Id} already exists");
+                logger.LogInformation("----- Request {Id} already exists", request.Id);
                 return CreateResultForDuplicateRequest();
             }
             else
             {
-                logger.LogInformation($"----- Creating request {message.Id} ");
-                await requestManager.CreateRequestForCommandAsync<T>(message.Id);
+                logger.LogInformation("----- Creating request {Id}", request.Id);
+                await requestManager.CreateRequestForCommandAsync<T>(request.Id);
                 try
                 {
-                    var command = message.Command;
+                    var command = request.Command;
                     var commandName = command.GetGenericTypeName();
                     var idProperty = string.Empty;
                     var commandId = string.Empty;
@@ -95,7 +95,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation($"Exception occurred: {ex.Message}, {ex.StackTrace}");
+                    logger.LogInformation("Exception occurred: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
                     return default;
                 }
             }

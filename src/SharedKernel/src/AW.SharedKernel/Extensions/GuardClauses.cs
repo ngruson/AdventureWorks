@@ -11,7 +11,7 @@ namespace AW.SharedKernel.Extensions
             if (input is null)
             {
                 var ex = new ArgumentNullException(parameterName);
-                logger.LogError(ex, ex.Message);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
                 throw ex;
             }
 

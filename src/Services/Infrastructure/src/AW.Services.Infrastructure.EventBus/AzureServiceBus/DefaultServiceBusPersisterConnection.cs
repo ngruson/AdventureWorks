@@ -75,8 +75,8 @@ namespace AW.Services.Infrastructure.EventBus.AzureServiceBus
 
         protected virtual void Dispose(bool disposing)
         {
-            serviceBusClient?.DisposeAsync().GetAwaiter().GetResult();
-            processor?.DisposeAsync().GetAwaiter().GetResult();
+            Task.Run(() => serviceBusClient?.DisposeAsync()).Wait();
+            Task.Run(() => processor?.DisposeAsync()).Wait();
         }
     }
 }

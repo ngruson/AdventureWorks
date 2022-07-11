@@ -9,27 +9,28 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
-        private List<Handlers.GetStatesProvinces.StateProvince>? statesProvinces;
 
         public StatesProvinceCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        public async Task<List<Handlers.GetStatesProvinces.StateProvince>> Initialize()
         {
-            statesProvinces = await client.GetStatesProvincesAsync();
+            var statesProvinces = await client.GetStatesProvincesAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.StatesProvinces, statesProvinces, cacheEntryOptions);
+
+            return statesProvinces;
         }
 
         public async Task<List<Handlers.GetStatesProvinces.StateProvince>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.StatesProvinces, out statesProvinces))
+            if (!cache.TryGetValue(CacheKeys.StatesProvinces, out List<Handlers.GetStatesProvinces.StateProvince> statesProvinces))
             {
-                await Initialize();
+                statesProvinces = await Initialize();
             }
 
             return statesProvinces;

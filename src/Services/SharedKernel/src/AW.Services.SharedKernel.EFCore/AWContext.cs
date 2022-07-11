@@ -76,26 +76,6 @@ namespace AW.Services.SharedKernel.EFCore
             return false;
         }
 
-        private static Type GetValueType(Type objectType, Type mainType)
-        {
-            Type currentType = objectType.BaseType;
-
-            if (currentType == null)
-            {
-                return null;
-            }
-
-            while (currentType != typeof(object))
-            {
-                if (currentType.IsGenericType && currentType.GetGenericTypeDefinition() == mainType)
-                    return currentType.GenericTypeArguments[1];
-
-                currentType = currentType.BaseType;
-            }
-
-            return null;
-        }
-
         public virtual void SetModified(object entity)
         {
             Entry(entity).State = EntityState.Modified;

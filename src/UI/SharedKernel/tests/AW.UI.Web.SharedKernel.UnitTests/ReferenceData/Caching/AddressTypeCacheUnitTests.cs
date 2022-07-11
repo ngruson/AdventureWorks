@@ -9,27 +9,6 @@ namespace AW.UI.Web.SharedKernel.UnitTests.ReferenceData.Caching
 {
     public class AddressTypeCacheUnitTests
     {
-        public class Initialize
-        {
-            [Theory, AutoMoqData]
-            public async Task Initialize_CacheIsSet(
-                [Frozen] Mock<IMemoryCache> cacheMock,
-                AddressTypeCache sut
-            )
-            {
-                //Arrange
-
-                //Act
-                await sut.Initialize();
-
-                //Assert
-                cacheMock.Verify(_ => _.CreateEntry(
-                        It.IsAny<string>()
-                    )
-                );
-            }
-        }
-
         public class GetData
         {
             [Theory, AutoMoqData]

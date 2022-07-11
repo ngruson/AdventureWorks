@@ -14,22 +14,24 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
         public SalesPersonCache(IMemoryCache cache, ISalesPersonApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        public async Task<List<Handlers.GetSalesPersons.SalesPerson>> Initialize()
         {
-            salesPersons = await client.GetSalesPersonsAsync();
+            var salesPersons = await client.GetSalesPersonsAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.SalesPersons, salesPersons, cacheEntryOptions);
+
+            return salesPersons;
         }
 
-        public async Task<List<Handlers.GetSalesPersons.SalesPerson>?> GetData()
+        public async Task<List<Handlers.GetSalesPersons.SalesPerson>> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.SalesPersons, out salesPersons))
+            if (!cache.TryGetValue(CacheKeys.SalesPersons, out List<Handlers.GetSalesPersons.SalesPerson> salesPersons))
             {
-                await Initialize();
+                salesPersons = await Initialize();
             }
 
             return salesPersons;

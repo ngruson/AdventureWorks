@@ -9,27 +9,28 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IReferenceDataApiClient client;
-        private List<Handlers.GetTerritories.Territory>? territories;
 
         public TerritoryCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task Initialize()
+        public async Task<List<Handlers.GetTerritories.Territory>> Initialize()
         {
-            territories = await client.GetTerritoriesAsync();
+            var territories = await client.GetTerritoriesAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
             cache.Set(CacheKeys.Territories, territories, cacheEntryOptions);
+
+            return territories;
         }
 
         public async Task<List<Handlers.GetTerritories.Territory>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.Territories, out territories))
+            if (!cache.TryGetValue(CacheKeys.Territories, out List<Handlers.GetTerritories.Territory> territories))
             {
-                await Initialize();
+                territories = await Initialize();
             }
 
             return territories;

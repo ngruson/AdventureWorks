@@ -21,7 +21,7 @@ namespace AW.Services.SharedKernel.ValueTypes
         {
             emailAddress = (emailAddress ?? string.Empty).Trim();
 
-            if (IsValidEmailAddress(emailAddress) == false)
+            if (!IsValidEmailAddress(emailAddress))
                 return Result.Failure<EmailAddress>("Email address is invalid");
 
             return Result.Success(new EmailAddress(emailAddress));

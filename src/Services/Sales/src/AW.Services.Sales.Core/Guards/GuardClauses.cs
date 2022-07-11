@@ -16,7 +16,7 @@ namespace AW.Services.Sales.Core.Guards
         {
             if (input == null)
             {
-                logger.LogInformation($"Customer {customerNumber} not found");
+                logger.LogInformation("Customer {CustomerNumber} not found", customerNumber);
                 throw new CustomerNotFoundException();
             }
                 

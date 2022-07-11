@@ -10,19 +10,19 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
     {
         private readonly IMemoryCache cache;
         private readonly IProductApiClient client;
-        private List<ProductCategory>? products;
 
         public ProductCategoryCache(IMemoryCache cache, IProductApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task<List<ProductCategory>?> GetData()
+        public async Task<List<ProductCategory>> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.ProductCategories, out products))
+
+            if (!cache.TryGetValue(CacheKeys.ProductCategories, out List<ProductCategory> categories))
             {
-                await Initialize();
+                categories = await Initialize();
             }
 
-            return products;
+            return categories;
         }
 
         public async Task<List<ProductCategory>> GetData(Func<ProductCategory, bool> predicate)
@@ -31,15 +31,17 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
                 .Where(predicate).ToList();
         }
 
-        public async Task Initialize()
+        private async Task<List<ProductCategory>> Initialize()
         {
-            products = await client.GetCategoriesAsync();
+            var categories = await client.GetCategoriesAsync();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)
             );
 
-            cache.Set(CacheKeys.ProductCategories, products, cacheEntryOptions);
+            cache.Set(CacheKeys.ProductCategories, categories, cacheEntryOptions);
+
+            return categories;
         }
     }
 }

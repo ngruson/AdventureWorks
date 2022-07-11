@@ -98,5 +98,33 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<Guid>())
             );
         }
+
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task Handle_UnknownCommand(
+            [Frozen] Mock<IRequestManager> requestManagerMock,
+            [Frozen] Mock<IMediator> mediatorMock,
+            IdentifiedCommandHandler<UnknownCommand, bool> sut,
+            IdentifiedCommand<UnknownCommand, bool> command
+        )
+        {
+            //Arrange
+            requestManagerMock.Setup(_ => _.ExistAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(false);
+
+            mediatorMock.Setup(_ => _.Send<bool>(
+                It.IsAny<UnknownCommand>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(true);
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            result.Should().Be(true);
+            requestManagerMock.Verify(_ => _.CreateRequestForCommandAsync<UnknownCommand>(
+                It.IsAny<Guid>())
+            );
+        }
     }
 }

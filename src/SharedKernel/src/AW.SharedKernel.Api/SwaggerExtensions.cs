@@ -129,7 +129,6 @@ namespace AW.SharedKernel.Api
         {
             var client = new HttpClient();
             var authority = config.GetValue<string>("AuthN:Authority");
-            logger.LogInformation($"Authority = {authority}");
             return await client.GetDiscoveryDocumentAsync(authority);
         }
     }
