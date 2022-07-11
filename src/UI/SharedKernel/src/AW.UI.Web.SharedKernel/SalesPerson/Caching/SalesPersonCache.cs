@@ -9,7 +9,6 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
     {
         private readonly IMemoryCache cache;
         private readonly ISalesPersonApiClient client;
-        private List<Handlers.GetSalesPersons.SalesPerson>? salesPersons;
 
         public SalesPersonCache(IMemoryCache cache, ISalesPersonApiClient client) =>
             (this.cache, this.client) = (cache, client);
