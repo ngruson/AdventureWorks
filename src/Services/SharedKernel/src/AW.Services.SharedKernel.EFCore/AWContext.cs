@@ -1,5 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using Ardalis.SmartEnum;
 using AW.Services.Infrastructure;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
@@ -9,7 +8,6 @@ using SmartEnum.EFCore;
 using System;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;

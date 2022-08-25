@@ -17,8 +17,4 @@
     <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel\AW.Services.SharedKernel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

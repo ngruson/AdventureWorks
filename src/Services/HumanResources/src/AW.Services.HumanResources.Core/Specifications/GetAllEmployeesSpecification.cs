@@ -1,0 +1,20 @@
+﻿using Ardalis.Specification;
+
+namespace AW.Services.HumanResources.Core.Specifications
+{
+    public class GetAllEmployeesSpecification : Specification<Entities.Employee>
+    {
+        public GetAllEmployeesSpecification()
+        {
+
+            Query.Include(_ => _.DepartmentHistory)
+                .ThenInclude(_ => _.Department);
+
+            //Query.Where(_ =>
+                //_.DepartmentHistory.selectma(_ => !_.EndDate.HasValue)
+            //);
+
+            Query.OrderBy(_ => _.Id);
+        }
+    }
+}

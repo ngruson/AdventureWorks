@@ -2,7 +2,7 @@
   "profiles": {
     "AW.ConsoleTools": {
       "commandName": "Project",
-      "commandLineArgs": "create-customer-logins",
+      "commandLineArgs": "create-aad-users",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
