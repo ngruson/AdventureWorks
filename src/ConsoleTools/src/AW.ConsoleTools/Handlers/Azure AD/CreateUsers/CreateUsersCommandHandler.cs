@@ -50,7 +50,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                 {
                     _logger.LogInformation("Creating user {DisplayName}", employee?.Name?.FullName);
 
-                    var createdUser = await _mediator.Send(
+                    await _mediator.Send(
                         new CreateUserCommand(
                             employee?.Name?.FullName!,
                             employee?.LoginID!
@@ -72,9 +72,9 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                 if (user?.MemberOf?.FirstOrDefault(_ => _.Id == group.Id) == null)
                 {
                     await _mediator.Send(new AddUserToGroupCommand(
-                            user?.DisplayName,
-                            group.DisplayName,
-                            group.Id
+                            user?.DisplayName!,
+                            group.DisplayName!,
+                            group.Id!
                         ),
                         cancellationToken
                     );
