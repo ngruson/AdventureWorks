@@ -1,4 +1,5 @@
-﻿using IdentityModel.Client;
+﻿using AW.SharedKernel.Api.OpenIdConnect;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -33,11 +34,12 @@ namespace AW.SharedKernel.Api
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, 
             string virtualPath,
-            IConfiguration config,
+            IConfiguration configuration,
             IApiVersionDescriptionProvider provider,
             string apiName)
         {
-            var clientId = config.GetValue<string>("AuthN:SwaggerClientId");
+            var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+            
             app
                 .UseSwagger()
                 .UseSwaggerUI(options =>
@@ -48,7 +50,7 @@ namespace AW.SharedKernel.Api
                         options.RoutePrefix = string.Empty;
                     }
                     options.DocumentTitle = $"{apiName} Documentation";
-                    options.OAuthClientId(clientId);
+                    options.OAuthClientId(oidcConfig.ClientId);
                     options.OAuthAppName("AdventureWorks");
                     options.OAuthUsePkce();
                 });
@@ -59,28 +61,26 @@ namespace AW.SharedKernel.Api
 
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        private readonly IConfiguration config;
+        private readonly IConfiguration configuration;
         private readonly IApiVersionDescriptionProvider provider;
         private readonly string apiName;
         private readonly ILogger<ConfigureSwaggerOptions> logger;
+        private readonly OpenIdConnectConfiguration oidcConfig;
 
-        public ConfigureSwaggerOptions(ILogger<ConfigureSwaggerOptions> logger, IConfiguration config, IApiVersionDescriptionProvider provider, string apiName)
+        public ConfigureSwaggerOptions(ILogger<ConfigureSwaggerOptions> logger, IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
         {
-            this.config = config;
+            this.configuration = configuration;
             this.provider = provider;
             this.apiName = apiName;
             this.logger = logger;
+            oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
         }
 
         public void Configure(SwaggerGenOptions options)
         {
             var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
-            
-            var apiScope = config.GetValue<string>("AuthN:ApiName");
-            var scopes = apiScope.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-            var additionalScopes = config.GetValue<string>("AuthN:AdditionalScopes");
-            scopes.AddRange(additionalScopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList());
+            var scopes = oidcConfig.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            scopes.AddRange(oidcConfig.AdditionalScopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
             var oauthScopeDic = new Dictionary<string, string>();
             foreach (var scope in scopes)
@@ -128,8 +128,19 @@ namespace AW.SharedKernel.Api
         private async Task<DiscoveryDocumentResponse> GetDiscoveryDocument()
         {
             var client = new HttpClient();
-            var authority = config.GetValue<string>("AuthN:Authority");
-            return await client.GetDiscoveryDocumentAsync(authority);
+            
+            var request = new DiscoveryDocumentRequest
+            {
+                Address = oidcConfig.WellKnownEndpoint
+            };
+
+            if (oidcConfig.IdentityProvider == IdentityProvider.AzureAd)
+            {
+                request.Policy.ValidateIssuerName = false;
+                request.Policy.ValidateEndpoints = false;
+            }
+            
+            return await client.GetDiscoveryDocumentAsync(request);
         }
     }
 }

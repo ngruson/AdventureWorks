@@ -24,6 +24,8 @@ using HealthChecks.UI.Client;
 using AW.SharedKernel.JsonConverters;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.Interfaces;
+using Microsoft.Identity.Web;
+using AW.SharedKernel.Api.OpenIdConnect;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -163,13 +165,23 @@ namespace AW.Services.Customer.REST.API
         {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration.GetValue<string>("AuthN:Authority");
-                    options.Audience = "customer-api";
-                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-                });
+            if (configuration["AuthN:IdP"] == "AzureAd")
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+            }
+            else if (configuration["AuthN:IdP"] == "IdSrv")
+            {
+                var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = oidcConfig.Authority;
+                        options.Audience = "customer-api";
+                        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+            }
 
             return services;
         }
@@ -208,7 +220,10 @@ namespace AW.Services.Customer.REST.API
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+
+            if (configuration["AuthN:IdP"] == "IdSrv")
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+
             hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
 
             return services;
