@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace AW.SharedKernel.Api.OpenIdConnect
+namespace AW.SharedKernel.OpenIdConnect
 {
     public class OpenIdConnectConfigurationBuilder
     {
@@ -20,8 +20,8 @@ namespace AW.SharedKernel.Api.OpenIdConnect
                     Authority = _configuration["AuthN:AzureAd:Instance"],
                     WellKnownEndpoint = $"https://login.microsoftonline.com/{_configuration["AuthN:AzureAd:TenantId"]}/v2.0/.well-known/openid-configuration",
                     ClientId = _configuration["AuthN:AzureAd:ClientId"],
-                    Scopes = _configuration["AuthN:AzureAd:Scopes"],
-                    AdditionalScopes = _configuration["AuthN:AzureAd:AdditionalScopes"],
+                    ClientSecret = _configuration["AuthN:AzureAd:ClientSecret"],
+                    Scopes = _configuration.GetSection("AuthN:AzureAd:Scopes").Get<string[]>(),
                     OpenIdClientId = _configuration["AuthN:AzureAd:OpenIdClientId"]
                 };
             }
@@ -33,8 +33,8 @@ namespace AW.SharedKernel.Api.OpenIdConnect
                     Authority = _configuration["AuthN:IdSrv:Authority"],
                     WellKnownEndpoint = _configuration["AuthN:IdSrv:Authority"],
                     ClientId = _configuration["AuthN:IdSrv:ClientId"],
-                    Scopes = _configuration["AuthN:IdSrv:Scopes"],
-                    AdditionalScopes = _configuration["AuthN:IdSrv:AdditionalScopes"],
+                    ClientSecret = _configuration["AuthN:IdSrv:ClientSecret"],
+                    Scopes = _configuration.GetSection("AuthN:IdSrv:Scopes").Get<string[]>(),
                     OpenIdClientId = _configuration["AuthN:IdSrv:OpenIdClientId"]
                 };
             }

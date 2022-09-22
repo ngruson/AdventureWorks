@@ -1,4 +1,4 @@
-﻿namespace AW.SharedKernel.Api.OpenIdConnect
+﻿namespace AW.SharedKernel.OpenIdConnect
 {
     public enum IdentityProvider
     {

@@ -1,4 +1,4 @@
-﻿using AW.SharedKernel.Api.OpenIdConnect;
+﻿using AW.SharedKernel.OpenIdConnect;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -77,11 +77,9 @@ namespace AW.SharedKernel.Api
         public void Configure(SwaggerGenOptions options)
         {
             var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
-            var scopes = oidcConfig.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            scopes.AddRange(oidcConfig.AdditionalScopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList());
 
             var oauthScopeDic = new Dictionary<string, string>();
-            foreach (var scope in scopes)
+            foreach (var scope in oidcConfig.Scopes)
             {
                 oauthScopeDic.Add(scope, $"Resource access: {scope}");
             }

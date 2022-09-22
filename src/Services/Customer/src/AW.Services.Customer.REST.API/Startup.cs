@@ -25,7 +25,7 @@ using AW.SharedKernel.JsonConverters;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.Interfaces;
 using Microsoft.Identity.Web;
-using AW.SharedKernel.Api.OpenIdConnect;
+using AW.SharedKernel.OpenIdConnect;
 
 namespace AW.Services.Customer.REST.API
 {
