@@ -50,7 +50,7 @@ namespace AW.SharedKernel.Api
                         options.RoutePrefix = string.Empty;
                     }
                     options.DocumentTitle = $"{apiName} Documentation";
-                    options.OAuthClientId(oidcConfig.ClientId);
+                    options.OAuthClientId(oidcConfig.OpenIdClientId);
                     options.OAuthAppName("AdventureWorks");
                     options.OAuthUsePkce();
                 });
@@ -61,7 +61,6 @@ namespace AW.SharedKernel.Api
 
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        private readonly IConfiguration configuration;
         private readonly IApiVersionDescriptionProvider provider;
         private readonly string apiName;
         private readonly ILogger<ConfigureSwaggerOptions> logger;
@@ -69,7 +68,6 @@ namespace AW.SharedKernel.Api
 
         public ConfigureSwaggerOptions(ILogger<ConfigureSwaggerOptions> logger, IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
         {
-            this.configuration = configuration;
             this.provider = provider;
             this.apiName = apiName;
             this.logger = logger;

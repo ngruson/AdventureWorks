@@ -21,7 +21,8 @@ namespace AW.SharedKernel.Api.OpenIdConnect
                     WellKnownEndpoint = $"https://login.microsoftonline.com/{_configuration["AuthN:AzureAd:TenantId"]}/v2.0/.well-known/openid-configuration",
                     ClientId = _configuration["AuthN:AzureAd:ClientId"],
                     Scopes = _configuration["AuthN:AzureAd:Scopes"],
-                    AdditionalScopes = _configuration["AuthN:AzureAd:AdditionalScopes"]
+                    AdditionalScopes = _configuration["AuthN:AzureAd:AdditionalScopes"],
+                    OpenIdClientId = _configuration["AuthN:AzureAd:OpenIdClientId"]
                 };
             }
             else if (_configuration["AuthN:IdP"] == "IdSrv")
@@ -33,7 +34,8 @@ namespace AW.SharedKernel.Api.OpenIdConnect
                     WellKnownEndpoint = _configuration["AuthN:IdSrv:Authority"],
                     ClientId = _configuration["AuthN:IdSrv:ClientId"],
                     Scopes = _configuration["AuthN:IdSrv:Scopes"],
-                    AdditionalScopes = _configuration["AuthN:IdSrv:AdditionalScopes"]
+                    AdditionalScopes = _configuration["AuthN:IdSrv:AdditionalScopes"],
+                    OpenIdClientId = _configuration["AuthN:IdSrv:OpenIdClientId"]
                 };
             }
 

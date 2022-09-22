@@ -8,5 +8,6 @@
         public string ClientId { get; init; }
         public string Scopes { get; init; }
         public string AdditionalScopes { get; init; }
+        public string OpenIdClientId { get; init; }
     }
 }
