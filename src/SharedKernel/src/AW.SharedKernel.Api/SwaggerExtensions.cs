@@ -79,7 +79,8 @@ namespace AW.SharedKernel.Api
             var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
 
             var oauthScopeDic = new Dictionary<string, string>();
-            foreach (var scope in oidcConfig.Scopes)
+            var scopes = oidcConfig.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var scope in scopes)
             {
                 oauthScopeDic.Add(scope, $"Resource access: {scope}");
             }

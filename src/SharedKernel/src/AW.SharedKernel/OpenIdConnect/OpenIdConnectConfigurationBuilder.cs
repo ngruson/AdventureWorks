@@ -14,29 +14,27 @@ namespace AW.SharedKernel.OpenIdConnect
         {
             if (_configuration["AuthN:IdP"] == "AzureAd")
             {
-                return new OpenIdConnectConfiguration
-                {
-                    IdentityProvider = IdentityProvider.AzureAd,
-                    Authority = _configuration["AuthN:AzureAd:Instance"],
-                    WellKnownEndpoint = $"https://login.microsoftonline.com/{_configuration["AuthN:AzureAd:TenantId"]}/v2.0/.well-known/openid-configuration",
-                    ClientId = _configuration["AuthN:AzureAd:ClientId"],
-                    ClientSecret = _configuration["AuthN:AzureAd:ClientSecret"],
-                    Scopes = _configuration.GetSection("AuthN:Scopes").Get<string[]>(),
-                    OpenIdClientId = _configuration["AuthN:AzureAd:OpenIdClientId"]
-                };
+                return new OpenIdConnectConfiguration(
+                    identityProvider: IdentityProvider.AzureAd,
+                    authority: _configuration["AuthN:AzureAd:Instance"],
+                    wellKnownEndpoint: $"https://login.microsoftonline.com/{_configuration["AuthN:AzureAd:TenantId"]}/v2.0/.well-known/openid-configuration",
+                    clientId: _configuration["AuthN:AzureAd:ClientId"],
+                    clientSecret: _configuration["AuthN:AzureAd:ClientSecret"],
+                    scopes: _configuration["AuthN:Scopes"],
+                    openIdClientId: _configuration["AuthN:AzureAd:OpenIdClientId"]
+                );
             }
             else if (_configuration["AuthN:IdP"] == "IdSrv")
             {
-                return new OpenIdConnectConfiguration
-                {
-                    IdentityProvider = IdentityProvider.IdentityServer,
-                    Authority = _configuration["AuthN:IdSrv:Authority"],
-                    WellKnownEndpoint = _configuration["AuthN:IdSrv:Authority"],
-                    ClientId = _configuration["AuthN:IdSrv:ClientId"],
-                    ClientSecret = _configuration["AuthN:IdSrv:ClientSecret"],
-                    Scopes = _configuration.GetSection("AuthN:Scopes").Get<string[]>(),
-                    OpenIdClientId = _configuration["AuthN:IdSrv:OpenIdClientId"]
-                };
+                return new OpenIdConnectConfiguration(
+                    identityProvider: IdentityProvider.IdentityServer,
+                    authority: _configuration["AuthN:IdSrv:Authority"],
+                    wellKnownEndpoint: _configuration["AuthN:IdSrv:Authority"],
+                    clientId: _configuration["AuthN:IdSrv:ClientId"],
+                    clientSecret: _configuration["AuthN:IdSrv:ClientSecret"],
+                    scopes: _configuration["AuthN:Scopes"],
+                    openIdClientId: _configuration["AuthN:IdSrv:OpenIdClientId"]
+                );
             }
 
             return null;
