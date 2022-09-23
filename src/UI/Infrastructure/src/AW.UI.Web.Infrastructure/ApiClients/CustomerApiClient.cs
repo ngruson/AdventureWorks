@@ -57,6 +57,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             logger.LogInformation(logMessage, args.ToArray());
 
             using var response = await client.GetAsync(requestUri);
+
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
