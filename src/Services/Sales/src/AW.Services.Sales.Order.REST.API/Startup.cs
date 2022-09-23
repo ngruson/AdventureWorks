@@ -22,6 +22,7 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
+using AW.SharedKernel.OpenIdConnect;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,6 +37,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web;
 using RabbitMQ.Client;
 using System;
 using System.Linq;
@@ -158,13 +160,23 @@ namespace AW.Services.Sales.Order.REST.API
 
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration.GetValue<string>("AuthN:Authority");
-                    options.Audience = "salesorder-api";
-                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-                });
+            if (configuration["AuthN:IdP"] == "AzureAd")
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+            }
+            else if (configuration["AuthN:IdP"] == "IdSrv")
+            {
+                var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = oidcConfig.Authority;
+                        options.Audience = "salesorder-api";
+                        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+            }
 
             return services;
         }
@@ -369,7 +381,28 @@ namespace AW.Services.Sales.Order.REST.API
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-            hcBuilder.AddIdentityServer(new Uri(configuration.GetValue<string>("AuthN:Authority")));
+
+            if (configuration.GetValue<bool>("AzureServiceBusEnabled"))
+            {
+                hcBuilder
+                    .AddAzureServiceBusTopic(
+                        configuration["EventBusConnection"],
+                        topicName: "event_bus",
+                        name: "basket-servicebus-check",
+                        tags: new string[] { "servicebus" });
+            }
+            else
+            {
+                hcBuilder
+                    .AddRabbitMQ(
+                        $"amqp://{configuration["EventBusConnection"]}",
+                        name: "basket-rabbitmqbus-check",
+                        tags: new string[] { "rabbitmqbus" });
+            }
+
+            if (configuration["AuthN:IdP"] == "IdSrv")
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+
             hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
 
             return services;

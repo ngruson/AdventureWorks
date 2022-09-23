@@ -14,6 +14,7 @@ using AW.Services.SharedKernel.EFCore;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.OpenIdConnect;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +28,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web;
 using System;
 using System.Linq;
 
@@ -119,13 +121,23 @@ namespace AW.Services.Sales.SalesPerson.REST.API
 
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration.GetValue<string>("AuthN:Authority");
-                    options.Audience = "salesperson-api";
-                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-                });
+            if (configuration["AuthN:IdP"] == "AzureAd")
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+            }
+            else if (configuration["AuthN:IdP"] == "IdSrv")
+            {
+                var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = oidcConfig.Authority;
+                        options.Audience = "salesperson-api";
+                        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+            }
 
             return services;
         }
@@ -260,7 +272,10 @@ namespace AW.Services.Sales.SalesPerson.REST.API
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+
+            if (configuration["AuthN:IdP"] == "IdSrv")
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+
             hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
 
             return services;
