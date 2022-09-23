@@ -21,7 +21,7 @@ namespace AW.SharedKernel.OpenIdConnect
                     clientId: _configuration["AuthN:AzureAd:ClientId"],
                     clientSecret: _configuration["AuthN:AzureAd:ClientSecret"],
                     scopes: _configuration["AuthN:Scopes"],
-                    openIdClientId: _configuration["AuthN:AzureAd:OpenIdClientId"]
+                    openIdClientId: _configuration["AuthN:OpenIdClientId"]
                 );
             }
             else if (_configuration["AuthN:IdP"] == "IdSrv")
@@ -33,7 +33,7 @@ namespace AW.SharedKernel.OpenIdConnect
                     clientId: _configuration["AuthN:IdSrv:ClientId"],
                     clientSecret: _configuration["AuthN:IdSrv:ClientSecret"],
                     scopes: _configuration["AuthN:Scopes"],
-                    openIdClientId: _configuration["AuthN:IdSrv:OpenIdClientId"]
+                    openIdClientId: _configuration["AuthN:OpenIdClientId"]
                 );
             }
 

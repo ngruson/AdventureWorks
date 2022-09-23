@@ -35,6 +35,9 @@ namespace AW.Services.Basket.REST.API
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
+            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json")))
+                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+
             return builder.Build();
         }
 

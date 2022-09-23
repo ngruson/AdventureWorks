@@ -10,6 +10,7 @@ using AW.Services.Infrastructure.EventBus.RabbitMQ;
 using AW.Services.Infrastructure.Filters;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.OpenIdConnect;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +26,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
 using RabbitMQ.Client;
 using StackExchange.Redis;
 using System;
@@ -136,13 +138,23 @@ namespace AW.Services.Basket.REST.API
         {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration.GetValue<string>("AuthN:Authority");
-                    options.Audience = "basket-api";
-                    options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-                });
+            if (configuration["AuthN:IdP"] == "AzureAd")
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+            }
+            else if (configuration["AuthN:IdP"] == "IdSrv")
+            {
+                var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = oidcConfig.Authority;
+                        options.Audience = "basket-api";
+                        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                    });
+            }
 
             return services;
         }
@@ -325,7 +337,9 @@ namespace AW.Services.Basket.REST.API
                         tags: new string[] { "rabbitmqbus" });
             }
 
-            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+            if (configuration["AuthN:IdP"] == "IdSrv")
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
 
             return services;
