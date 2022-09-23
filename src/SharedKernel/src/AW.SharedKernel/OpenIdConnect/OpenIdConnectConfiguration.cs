@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AW.SharedKernel.OpenIdConnect
+﻿namespace AW.SharedKernel.OpenIdConnect
 {
     public class OpenIdConnectConfiguration
     {
