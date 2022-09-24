@@ -1,6 +1,6 @@
 ﻿namespace AW.SharedKernel.ValueTypes
 {
-    public record NameFactory(string FirstName, string MiddleName = null, string LastName = null)
+    public record NameFactory(string FirstName, string? MiddleName, string LastName)
     {
         public string FullName
         {

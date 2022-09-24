@@ -1,4 +1,5 @@
 using AW.SharedKernel.Interfaces;
+using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Infrastructure.ApiClients;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using AW.UI.Web.Store.Services;
@@ -32,10 +33,12 @@ namespace AW.UI.Web.Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var oidcConfig = new OpenIdConnectConfigurationBuilder(Configuration).Build();
+
             services
                 .AddCustomMvc()
                 .AddCustomIntegrations()
-                .AddHttpClients(Configuration)
+                .AddHttpClients(Configuration, oidcConfig)
                 .AddCustomAuthentication(Configuration)
                 .AddCustomHealthCheck(Configuration);
         }
@@ -109,9 +112,10 @@ namespace AW.UI.Web.Store
             return services;
         }
 
-        public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration, OpenIdConnectConfiguration oidcConfig)
         {
-            services.AddAccessTokenManagement();
+            if (oidcConfig.IdentityProvider == IdentityProvider.IdentityServer)
+                services.AddOpenIdConnectAccessTokenManagement();
 
             services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
             {
