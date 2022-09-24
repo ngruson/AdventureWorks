@@ -52,7 +52,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         {
             //Arrange
             stateProvinceRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetStatesProvincesForCountrySpecification>(),
+                It.IsAny<GetStatesProvincesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(statesProvinces);
@@ -63,7 +63,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             //Assert
             result.Should().NotBeNull();
             stateProvinceRepoMock.Verify(x => x.ListAsync(
-                It.IsAny<GetStatesProvincesForCountrySpecification>(),
+                It.IsAny<GetStatesProvincesSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
 
