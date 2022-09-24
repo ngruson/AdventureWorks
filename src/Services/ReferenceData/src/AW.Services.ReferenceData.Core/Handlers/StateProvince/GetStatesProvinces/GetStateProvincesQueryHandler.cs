@@ -30,12 +30,13 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
             if (string.IsNullOrEmpty(request.CountryRegionCode))
             {
                 logger.LogInformation("Getting all state/provinces from database");
-                statesProvinces = await repository.ListAsync(cancellationToken);
+                var spec = new GetStatesProvincesSpecification();
+                statesProvinces = await repository.ListAsync(spec, cancellationToken);
             }
             else
             {
                 logger.LogInformation("Getting all state/provinces for country {@Country} from database", request.CountryRegionCode);
-                var spec = new GetStatesProvincesForCountrySpecification(request.CountryRegionCode);
+                var spec = new GetStatesProvincesSpecification(request.CountryRegionCode);
                 statesProvinces = await repository.ListAsync(spec, cancellationToken);
             }
             
