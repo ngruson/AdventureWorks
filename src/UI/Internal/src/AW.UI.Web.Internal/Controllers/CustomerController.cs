@@ -19,7 +19,8 @@ namespace AW.UI.Web.Internal.Controllers
         private readonly ICustomerService customerService;
         private readonly IMediator mediator;
 
-        public CustomerController(ICustomerService customerService, IMediator mediator)
+        public CustomerController(ICustomerService customerService, IMediator mediator
+        )
         {
             this.customerService = customerService;
             this.mediator = mediator;

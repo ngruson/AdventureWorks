@@ -56,12 +56,17 @@ namespace AW.UI.Web.Internal
                 .CreateLogger();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var host = Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
                 });
+
+            host.UseSerilog();
+
+            return host;
+        }
     }
 }

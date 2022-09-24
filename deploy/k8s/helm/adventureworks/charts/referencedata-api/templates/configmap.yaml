@@ -11,5 +11,12 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
-  AuthN__Authority: https://{{ .Values.global.inf.authority }}
+  AuthN__IdP: {{ .Values.global.inf.authN.idP }}
+  AuthN__Scopes: {{- range .Values.global.inf.authN.referenceDataApi.scopes }} {{.}} {{- end }}
+  AuthN__OpenIdClientId: {{ .Values.global.inf.authN.openIdClientId }}
+  AuthN__AzureAd__Instance: {{ .Values.global.inf.authN.aad.instance }}
+  AuthN__AzureAd__Domain: {{ .Values.global.inf.authN.aad.domain }}
+  AuthN__AzureAd__TenantId: {{ .Values.global.inf.authN.aad.tenantId }}
+  AuthN__AzureAd__ClientId: {{ .Values.global.inf.authN.referenceDataApi.clientId }}
+  AuthN__IdSrv__Authority: https://{{ .Values.global.inf.authN.idSrv.authority }}
   ElasticSearchUri: http://{{ .Release.Name }}-elasticsearch-master:9200

@@ -1,8 +1,11 @@
 using AW.SharedKernel.Caching;
+using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Infrastructure.ApiClients;
 using AW.UI.Web.Internal.Interfaces;
 using AW.UI.Web.Internal.Services;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.SharedKernel.Product.Caching;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.ReferenceData.Caching;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
@@ -14,17 +17,24 @@ using AW.UI.Web.SharedKernel.SalesPerson.Caching;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using HealthChecks.UI.Client;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using Microsoft.IdentityModel.Logging;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace AW.UI.Web.Internal
 {
@@ -40,11 +50,13 @@ namespace AW.UI.Web.Internal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var oidcConfig = new OpenIdConnectConfigurationBuilder(Configuration).Build();
+
             services
                 .AddCustomMvc()
-                .AddHttpClients(Configuration)
+                .AddHttpClients(Configuration, oidcConfig)
                 .AddCustomIntegrations()
-                .AddCustomAuthentication(Configuration)
+                .AddCustomAuthentication(Configuration, oidcConfig)
                 .AddCustomHealthCheck(Configuration);
         }
 
@@ -58,6 +70,7 @@ namespace AW.UI.Web.Internal
                 if (env.IsDevelopment())
                 {
                     builder.UseDeveloperExceptionPage();
+                    IdentityModelEventSource.ShowPII = true;
                 }
                 else
                 {
@@ -105,7 +118,14 @@ namespace AW.UI.Web.Internal
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddMicrosoftIdentityUI();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.Secure = CookieSecurePolicy.Always;
@@ -126,6 +146,7 @@ namespace AW.UI.Web.Internal
             services.AddScoped<ICache<AddressType>, AddressTypeCache>();
             services.AddScoped<ICache<ContactType>, ContactTypeCache>();
             services.AddScoped<ICache<CountryRegion>, CountryCache>();
+            services.AddScoped<ICache<ProductCategory>, ProductCategoryCache>();
             services.AddScoped<ICache<SalesPerson>, SalesPersonCache>();
             services.AddScoped<ICache<ShipMethod>, ShipMethodCache>();
             services.AddScoped<ICache<StateProvince>, StatesProvinceCache>();
@@ -134,13 +155,29 @@ namespace AW.UI.Web.Internal
             return services;
         }
 
-        public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration, OpenIdConnectConfiguration oidcConfig)
         {
-            services.AddAccessTokenManagement();
+            if (oidcConfig.IdentityProvider == IdentityProvider.IdentityServer)
+                services.AddOpenIdConnectAccessTokenManagement();
+
+            services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["BasketAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler();
 
             services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["CustomerAPI:Uri"]);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider, 
+                new[] { configuration["AuthN:ApiScopes:CustomerApiRead"] }
+            );
+
+            services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["ProductAPI:Uri"]);
             })
             .AddUserAccessTokenHandler();
 
@@ -148,28 +185,46 @@ namespace AW.UI.Web.Internal
             {
                 client.BaseAddress = new Uri(configuration["ReferenceDataAPI:Uri"]);
             })
-            .AddUserAccessTokenHandler();
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:ReferenceDataApiRead"] }
+            );
 
             services.AddHttpClient<ISalesOrderApiClient, SalesOrderApiClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["SalesOrderAPI:Uri"]);
             })
-            .AddUserAccessTokenHandler();
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:SalesOrderApiRead"] }
+            );
 
             services.AddHttpClient<ISalesPersonApiClient, SalesPersonApiClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["SalesPersonAPI:Uri"]);
             })
-            .AddUserAccessTokenHandler();
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:SalesPersonApiRead"] }
+            );
 
             return services;
         }
 
-        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration, OpenIdConnectConfiguration oidcConfig)
         {
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;            
 
-            services.AddAuthentication(options =>
+            if (configuration["AuthN:IdP"] == "AzureAd")
+            {
+                services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApp(options => configuration.Bind("AuthN:AzureAd", options))
+                        .EnableTokenAcquisitionToCallDownstreamApi()
+                        .AddInMemoryTokenCaches();
+            }
+            else if (configuration["AuthN:IdP"] == "IdSrv")
+
+                services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
                 options.DefaultChallengeScheme = "oidc";
@@ -177,22 +232,23 @@ namespace AW.UI.Web.Internal
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = configuration["AuthN:Authority"];
-                    options.ClientId = configuration["AuthN:ClientId"];
-                    options.ClientSecret = configuration["AuthN:ClientSecret"];
+                    options.Authority = oidcConfig.Authority;
+                    options.ClientId = oidcConfig.ClientId;
+                    options.ClientSecret = oidcConfig.ClientSecret;
                     options.ResponseType = "code";
                     options.UsePkce = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.SaveTokens = true;
                     options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("email");
-                    options.Scope.Add("offline_access");
-                    options.Scope.Add("customer-api.read");
-                    options.Scope.Add("salesorder-api.read");
-                    options.Scope.Add("salesperson-api.read");
-                    options.Scope.Add("referencedata-api.read");
+
+                    var scopes = oidcConfig.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    foreach (var scope in scopes)
+                    {
+                        options.Scope.Add(scope);
+                    }
+
+                    options.Scope.Add(configuration["AuthN:ApiScopes:CustomerApiRead"]);
+                    options.Scope.Add(configuration["AuthN:ApiScopes:ReferenceDataApiRead"]);
                 });
 
             return services;
@@ -204,7 +260,8 @@ namespace AW.UI.Web.Internal
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-            hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]));
+            if (configuration["AuthN:IdP"] == "IdSrv")
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
             hcBuilder.AddUrlGroup(new Uri(configuration["CustomerAPI:Uri"]), name: "customer-api");
             hcBuilder.AddUrlGroup(new Uri(configuration["ReferenceDataAPI:Uri"]), name: "referencedata-api");
             hcBuilder.AddUrlGroup(new Uri(configuration["SalesOrderAPI:Uri"]), name: "salesorder-api");
