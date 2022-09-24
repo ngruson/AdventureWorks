@@ -104,7 +104,7 @@ namespace AW.Services.Sales.Order.REST.API
                 });
             });
 
-            //ConfigureEventBus(app);
+            ConfigureEventBus(app);
         }
 
         private static void ConfigureEventBus(IApplicationBuilder app)
@@ -194,7 +194,6 @@ namespace AW.Services.Sales.Order.REST.API
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
-                builder.LogTo(Console.WriteLine);
 
                 return new AWContext(
                     builder.Options,                    

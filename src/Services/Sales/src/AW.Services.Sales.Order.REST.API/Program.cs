@@ -61,7 +61,7 @@ namespace AW.Services.Sales.Order.REST.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
-                });
+                })
+            .UseSerilog();
     }
 }

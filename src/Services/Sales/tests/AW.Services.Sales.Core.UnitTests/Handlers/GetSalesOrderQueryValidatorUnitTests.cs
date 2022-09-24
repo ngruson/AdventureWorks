@@ -7,6 +7,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -14,7 +15,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
     public class GetSalesOrderQueryValidatorUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void TestValidate_WithValidSalesOrderNumber_NoValidationError(
+        public async Task TestValidate_WithValidSalesOrderNumber_NoValidationError(
             GetSalesOrderQueryValidator sut,
             GetSalesOrderQuery query
         )
@@ -23,7 +24,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             query.SalesOrderNumber = query.SalesOrderNumber.Substring(0, 25);
 
             //Act
-            var result = sut.TestValidate(query);
+            var result = await sut.TestValidateAsync(query);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(query => query.SalesOrderNumber);
@@ -61,13 +62,14 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void TestValidate_WithSalesOrderNumberDoesNotExist_ValidationError(
+        public async Task TestValidate_WithSalesOrderNumberDoesNotExist_ValidationError(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             GetSalesOrderQueryValidator sut,
             GetSalesOrderQuery query
         )
         {
             //Arrange
+            query.SalesOrderNumber = query.SalesOrderNumber.Substring(0, 25);
             salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -75,7 +77,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             .ReturnsAsync((Core.Entities.SalesOrder)null);
 
             //Act
-            var result = sut.TestValidate(query);
+            var result = await sut.TestValidateAsync(query);
 
             //Assert
             result.ShouldHaveValidationErrorFor(query => query.SalesOrderNumber)
