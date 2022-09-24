@@ -24,8 +24,12 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         )
         {
             //Arrange
-            stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(statesProvinces);
+            stateProvinceRepoMock.Setup(x => x.ListAsync(
+                    It.IsAny<GetStatesProvincesSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(statesProvinces);
 
             query.CountryRegionCode = "";
 
@@ -34,8 +38,12 @@ namespace AW.Services.ReferenceData.Core.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            stateProvinceRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
-            
+            stateProvinceRepoMock.Verify(x => x.ListAsync(
+                    It.IsAny<GetStatesProvincesSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            );
+
             for (int i = 0; i < result.Count; i++)
             {
                 result[i].Name.Should().Be(statesProvinces[i].Name);
@@ -81,9 +89,6 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         )
         {
             //Arrange
-            stateProvinceRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((List<Entities.StateProvince>)null);
-
             query.CountryRegionCode = "";
 
             //Act
@@ -91,7 +96,11 @@ namespace AW.Services.ReferenceData.Core.UnitTests
 
             //Assert
             func.Should().ThrowAsync<ArgumentNullException>();
-            stateProvinceRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
+            stateProvinceRepoMock.Verify(x => x.ListAsync(
+                It.IsAny<GetStatesProvincesSpecification>(),
+                It.IsAny<CancellationToken>()
+                )
+            );
         }
     }
 }
