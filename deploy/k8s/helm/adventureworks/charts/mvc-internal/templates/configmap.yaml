@@ -11,9 +11,22 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
-  AuthN__Authority: https://{{ .Values.global.inf.authority }}
-  AuthN__ClientId: {{ .Values.clientId }}
-  AuthN__ClientSecret: {{ .Values.clientSecret }}
+  AuthN__IdP: {{ .Values.global.inf.authN.idP }}
+  AuthN__Scopes: {{- range .Values.global.inf.authN.internalMvc.scopes }} {{.}} {{- end }}
+  AuthN__ApiScopes__CustomerApiRead: {{ .Values.global.inf.authN.internalMvc.apiScopes.customerApiRead }}
+  AuthN__ApiScopes__ReferenceDataApiRead: {{ .Values.global.inf.authN.internalMvc.apiScopes.referenceDataApiRead }}
+  AuthN__ApiScopes__SalesOrderApiRead: {{ .Values.global.inf.authN.internalMvc.apiScopes.salesOrderApiRead }}
+  AuthN__ApiScopes__SalesPersonApiRead: {{ .Values.global.inf.authN.internalMvc.apiScopes.salesPersonApiRead }}
+  AuthN__AzureAd__Instance: {{ .Values.global.inf.authN.aad.instance }}
+  AuthN__AzureAd__Domain: {{ .Values.global.inf.authN.aad.domain }}
+  AuthN__AzureAd__TenantId: {{ .Values.global.inf.authN.aad.tenantId }}
+  AuthN__AzureAd__ClientId: {{ .Values.global.inf.authN.internalMvc.clientId }}
+  AuthN__AzureAd__ClientSecret: {{ .Values.global.inf.authN.internalMvc.clientSecret }}
+  AuthN__AzureAd__CallbackPath: {{ .Values.global.inf.authN.internalMvc.callbackPath }}
+  AuthN__AzureAd__SignedOutCallbackPath: {{ .Values.global.inf.authN.internalMvc.signedOutCallbackPath }}
+  AuthN__IdSrv__Authority: https://{{ .Values.global.inf.authority }}
+  AuthN__IdSrv__ClientId: {{ .Values.authN.idSrv.clientId }}
+  AuthN__IdSrv__ClientSecret: {{ .Values.authN.idSrv.clientSecret }}
   ElasticSearchUri: http://localhost:8080
   CustomerAPI__Uri: http://localhost:8080/customer-api/
   ReferenceDataAPI__Uri: http://localhost:8080/referencedata-api/

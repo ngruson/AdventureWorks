@@ -5,9 +5,11 @@ customer_api: /customer-api
 referencedata_api: /referencedata-api
 salesorder_api: /salesorder-api
 salesperson_api: /salesperson-api
-clientId: internal
-clientSecret: secret
-
+authN:
+  idSrv:     
+    clientId: internal
+    clientSecret: secret
+    
 image:
   repository: cradventureworks.azurecr.io/adventureworks_mvc_internal
   tag: latest
