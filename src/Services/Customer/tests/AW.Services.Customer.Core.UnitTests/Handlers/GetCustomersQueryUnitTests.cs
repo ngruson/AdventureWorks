@@ -21,7 +21,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomersExists_ReturnCustomers(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomersQueryHandler sut,
-            List<Entities.Customer> customers,
+            List<Entities.IndividualCustomer> customers,
             GetCustomersQuery query
         )
         {

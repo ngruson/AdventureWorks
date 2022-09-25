@@ -72,11 +72,14 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
         [Theory]
         [AutoMoqData]
         public async Task ListAllAsync_ReturnsObjects(
-            List<Entities.Customer> customers
+            List<Entities.IndividualCustomer> customers
         )
         {
             //Arrange
-            var mockSet = customers.AsQueryable().BuildMockDbSet();
+            var mockSet = customers
+                .Cast<Entities.Customer>()
+                .AsQueryable()
+                .BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -241,11 +244,14 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
         [Theory]
         [AutoMoqData]
         public async Task DeleteAsync_ReturnsObject(
-            List<Entities.Customer> customers
+            List<Entities.IndividualCustomer> customers
         )
         {
             //Arrange
-            var mockSet = customers.AsQueryable().BuildMockDbSet();
+            var mockSet = customers
+                .Cast<Entities.Customer>()
+                .AsQueryable()
+                .BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -262,11 +268,14 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
         [Theory]
         [AutoMoqData]
         public async Task DeleteRangeAsync_ReturnsObject(
-            List<Entities.Customer> customers
+            List<Entities.IndividualCustomer> customers
         )
         {
             //Arrange
-            var mockSet = customers.AsQueryable().BuildMockDbSet();
+            var mockSet = customers
+                .Cast<Entities.Customer>()
+                .AsQueryable()
+                .BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
             mockContext.Setup(x => x.Set<Entities.Customer>())

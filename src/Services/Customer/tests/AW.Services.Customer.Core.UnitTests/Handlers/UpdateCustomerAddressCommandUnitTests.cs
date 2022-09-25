@@ -18,7 +18,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_CustomerAndAddressExist_UpdateCustomerAddress(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
-            Entities.Customer customer,
+            Entities.IndividualCustomer customer,
             UpdateCustomerAddressCommandHandler sut,
             UpdateCustomerAddressCommand command,
             Entities.Address address
@@ -53,7 +53,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_UpdatedAddressDoesNotExist_UpdateCustomerAddress(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
-            Entities.Customer customer,
+            Entities.IndividualCustomer customer,
             [Frozen] Mock<IRepository<Entities.Address>> addressRepoMock,
             UpdateCustomerAddressCommandHandler sut,
             UpdateCustomerAddressCommand command,
