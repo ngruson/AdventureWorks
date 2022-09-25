@@ -27,7 +27,7 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
 
             var spec = new GetProductSpecification(request.ProductNumber);
             logger.LogInformation("Getting product from database");
-            var product = await repository.GetBySpecAsync(spec, cancellationToken);
+            var product = await repository.SingleOrDefaultAsync(spec, cancellationToken);
 
             Guard.Against.Null(product, nameof(product));
 

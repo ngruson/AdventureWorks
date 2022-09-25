@@ -1,7 +1,6 @@
 using AW.Services.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -9,6 +8,11 @@ namespace AW.Services.Product.Core.Entities
     {
         public Product()
         {
+        }
+
+        public Product(string productNumber)
+        {
+            ProductNumber = productNumber;
         }
         public Product(string productNumber, string color)
         {

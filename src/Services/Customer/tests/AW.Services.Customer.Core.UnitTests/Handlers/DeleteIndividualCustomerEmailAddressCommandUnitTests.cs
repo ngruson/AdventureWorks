@@ -36,7 +36,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 new Entities.PersonEmailAddress(command.EmailAddress)
             );
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -47,7 +47,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.GetBySpecAsync(
+            customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -72,7 +72,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 EmailAddress = EmailAddress.Create("test@test.com").Value
             };
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -103,7 +103,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             };
 
             customerRepoMock.Setup(_ =>
-                _.GetBySpecAsync(
+                _.SingleOrDefaultAsync(
                     It.IsAny<GetIndividualCustomerSpecification>(),
                     It.IsAny<CancellationToken>()
                 )

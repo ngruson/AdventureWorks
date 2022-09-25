@@ -45,12 +45,16 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async Task GetBySpecAsync_ReturnsObject(
+        public async Task SingleOrDefaultAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
-            List<AddressType> addressTypes
+            List<string> addressTypeNames
         )
         {
             //Arrange
+            var addressTypes = addressTypeNames
+                .Select(name => new AddressType(name))
+                .ToList();
+
             var mockSet = addressTypes.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<AddressType>())
@@ -59,7 +63,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
 
             //Act
             var spec = new GetAddressTypeByNameSpecification(addressTypes[0].Name);
-            var result = await repository.GetBySpecAsync(spec);
+            var result = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
             result.Name.Should().Be(addressTypes[0].Name);

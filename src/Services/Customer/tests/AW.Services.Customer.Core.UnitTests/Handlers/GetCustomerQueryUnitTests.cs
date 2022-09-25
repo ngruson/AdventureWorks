@@ -25,7 +25,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            customerRepoMock.Setup(_ => _.GetBySpecAsync(
+            customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -36,7 +36,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
             //Assert
             result.Should().NotBeNull();
-            customerRepoMock.Verify(x => x.GetBySpecAsync(
+            customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -55,7 +55,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

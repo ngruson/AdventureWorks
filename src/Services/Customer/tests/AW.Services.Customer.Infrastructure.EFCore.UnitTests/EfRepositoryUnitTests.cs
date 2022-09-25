@@ -44,12 +44,17 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
         [Theory]
         [AutoMoqData]
-        public async Task GetBySpecAsync_ReturnsObject(
-            List<Entities.Customer> customers,
+        public async Task SingleOrDefaultAsync_ReturnsObject(
+            List<string> customerNumbers,
             [Frozen] Mock<AWContext> mockContext
         )
         {
             //Arrange
+            var customers = customerNumbers
+                .Select(customerNumber => new Entities.IndividualCustomer(customerNumber))
+                .Cast<Entities.Customer>()
+                .ToList();
+
             var mockSet = customers.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<Entities.Customer>())
@@ -58,7 +63,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 
             //Act
             var spec = new GetCustomerSpecification(customers[0].AccountNumber);
-            var result = await repository.GetBySpecAsync(spec);
+            var result = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
             result.Should().BeEquivalentTo(customers[0]);

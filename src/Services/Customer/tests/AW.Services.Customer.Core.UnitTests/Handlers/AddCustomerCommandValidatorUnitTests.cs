@@ -23,7 +23,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             //Arrange
             command.Customer.AccountNumber = "1";
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

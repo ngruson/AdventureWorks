@@ -6,7 +6,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -33,7 +32,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 )
             );
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -62,7 +61,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            addressRepoMock.Setup(x => x.GetBySpecAsync(
+            addressRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetAddressSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -75,7 +74,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 )
             );
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -101,7 +100,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

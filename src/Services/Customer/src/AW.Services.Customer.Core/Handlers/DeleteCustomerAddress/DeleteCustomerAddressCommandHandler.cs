@@ -25,7 +25,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
             logger.LogInformation("Handle called");
             logger.LogInformation("Getting customer from database");
 
-            var customer = await customerRepository.GetBySpecAsync(
+            var customer = await customerRepository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );

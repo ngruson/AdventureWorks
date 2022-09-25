@@ -1,98 +1,122 @@
-﻿using IdentityServer4;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
+﻿using Duende.IdentityServer;
+using Entities = Duende.IdentityServer.EntityFramework.Entities;
+using Duende.IdentityServer.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using Duende.IdentityServer.EntityFramework.Entities;
+using Duende.IdentityServer.Test;
+using Microsoft.Extensions.Configuration;
 
 namespace AW.Services.IdentityServer.Configuration
 {
     public class InMemoryConfiguration
     {
-        public static IEnumerable<ApiResource> ApiResources()
+        public static IEnumerable<Entities.ApiResource> ApiResources()
         {
             return new[]
             {
-                new ApiResource("customer-api", "Customer API")
+                new Entities.ApiResource
                 {
-                    Scopes = { "customer-api.read" }
+                    Name = "customer-api",
+                    DisplayName = "Customer API",
+                    Scopes = { new ApiResourceScope { Scope = "customer-api.read" } }
                 },
-                new ApiResource("basket-api", "Basket API")
+                new Entities.ApiResource
                 {
-                    Scopes = { "basket-api.read", "basket-api.write", "basket-api.checkout" }
+                    Name = "basket-api",
+                    DisplayName = "Basket API",
+                    Scopes = 
+                    {
+                        new ApiResourceScope { Scope = "basket-api.read" },
+                        new ApiResourceScope { Scope = "basket-api.write" },
+                        new ApiResourceScope { Scope = "basket-api.checkout" },
+                    }
                 }
             };
         }
 
-        public static IEnumerable<ApiScope> ApiScopes()
+        public static IEnumerable<Entities.ApiScope> ApiScopes()
         {
             return new[]
             {
-                new ApiScope("customer-api.read", "Reads customers"),
-
-                new ApiScope("basket-api.read", "Reads shopping basket"),
-                new ApiScope("basket-api.write", "Writes shopping basket"),
-                new ApiScope("basket-api.checkout", "Checks out shopping basket")
+                new Entities.ApiScope { Name = "customer-api.read", DisplayName = "Reads customers" },
+                new Entities.ApiScope { Name = "basket-api.read", DisplayName = "Reads shopping basket" },                
+                new Entities.ApiScope { Name = "basket-api.write", DisplayName = "Writes shopping basket" },
+                new Entities.ApiScope { Name = "basket-api.checkout", DisplayName = "Checks out shopping basket" }
             };
         }
 
-        public static IEnumerable<IdentityResource> IdentityResources()
+        public static IEnumerable<Entities.IdentityResource> IdentityResources()
         {
-            return new IdentityResource[]
+            return new Entities.IdentityResource[]
             {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResources.Email()
+                new Entities.IdentityResource { Name = "openid" },
+                new Entities.IdentityResource { Name = "profile" },
+                new Entities.IdentityResource { Name = "email" }
             };
         }
 
-        public static IEnumerable<Client> Clients()
+        public static IEnumerable<Entities.Client> Clients()
         {
-            return new[]
+            return new Entities.Client[]
             {
-                new Client
+                new Entities.Client
                 {
                     ClientId = "store",
-                    ClientSecrets = new[] { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    AllowedScopes =
+                    ClientSecrets = new List<ClientSecret> { new ClientSecret { Value = "secret".Sha256() } },
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials
+                        .Select(grantType => new ClientGrantType { GrantType = grantType })
+                        .ToList(),
+                    AllowedScopes = new List<ClientScope>
                     {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "customer-api.read", "basket-api.read"
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.OpenId },
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.Profile },
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.OfflineAccess },
+                        new ClientScope { Scope = "customer-api.read" },
+                        new ClientScope { Scope = "basket-api.read" }
                     }
                 },
-                new Client
+                new Entities.Client
                 {
                     ClientId = "internal",
-                    ClientSecrets = new[] { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes =
+                    ClientSecrets = new List<ClientSecret> { new ClientSecret { Value = "secret".Sha256() } },
+                    AllowedGrantTypes = GrantTypes.Code
+                        .Select(grantType => new ClientGrantType { GrantType = grantType })
+                        .ToList(),
+                    AllowedScopes = new List<ClientScope>
                     {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email,
-                        "customer-api.read", "basket-api.read"
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.OpenId },
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.Profile },
+                        new ClientScope { Scope = IdentityServerConstants.StandardScopes.Email },
+                        new ClientScope { Scope = "customer-api.read" },
+                        new ClientScope { Scope = "basket-api.read" }
                     },
                     AllowOfflineAccess = true,
-                    RedirectUris = new[] { "http://localhost:40610/signin-oidc" },
-                    PostLogoutRedirectUris = new[] { "http://localhost:40610/signout-callback-oidc" }
+                    RedirectUris = new List<ClientRedirectUri>
+                    {
+                        new ClientRedirectUri { RedirectUri = "http://localhost:40610/signin-oidc" }
+                    },
+                    PostLogoutRedirectUris = new List<ClientPostLogoutRedirectUri> 
+                    { 
+                        new ClientPostLogoutRedirectUri { PostLogoutRedirectUri = "http://localhost:40610/signout-callback-oidc" }
+                    }
                 }
             };
         }
 
-        public static IEnumerable<TestUser> Users()
+        public static IEnumerable<TestUser> Users(IConfiguration configuration)
         {
             return new[]
             {
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "nils",
-                    Password = "Welkom01!",
+                    Username = configuration["TestUser:UserName"],
+                    Password = configuration["TestUser:Password"],
                     Claims = new []
                     {
-                        new Claim("email", "nils@congruent-it.nl")
+                        new Claim("email", configuration["TestUser:Email"])
                     }
                 }
             };

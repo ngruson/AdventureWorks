@@ -6,6 +6,12 @@ namespace AW.Services.Customer.Core.Entities
 {
     public abstract class Customer : IAggregateRoot
     {
+        public Customer() { }
+        public Customer(string accountNumber)
+        {
+            AccountNumber = accountNumber;
+        }
+
         protected IPreferredAddressFactory preferredAddressFactory;
 
         public int Id { get; set; }

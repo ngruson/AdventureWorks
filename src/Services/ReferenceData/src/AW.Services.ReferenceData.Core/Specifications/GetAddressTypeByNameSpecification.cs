@@ -3,7 +3,7 @@ using AW.Services.ReferenceData.Core.Entities;
 
 namespace AW.Services.ReferenceData.Core.Specifications
 {
-    public class GetAddressTypeByNameSpecification : Specification<AddressType>, ISingleResultSpecification
+    public class GetAddressTypeByNameSpecification : Specification<AddressType>, ISingleResultSpecification<AddressType>
     {
         public GetAddressTypeByNameSpecification(string name)
         {

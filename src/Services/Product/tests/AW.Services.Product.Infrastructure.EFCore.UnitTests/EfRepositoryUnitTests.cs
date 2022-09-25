@@ -170,11 +170,15 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async Task GetBySpecAsync_ReturnsObject(
-            List<Core.Entities.Product> products
+        public async Task SingleOrDefaultAsync_ReturnsObject(
+            List<string> productNumbers
         )
         {
             //Arrange
+            var products = productNumbers
+                .Select(productNumber => new Core.Entities.Product(productNumber))
+                .ToList();
+
             var mockSet = products.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<AWContext>();
@@ -184,7 +188,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
 
             //Act
             var spec = new GetProductByProductNumberSpecification(products[0].ProductNumber);
-            var product = await repository.GetBySpecAsync(spec);
+            var product = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
             product.ProductNumber.Should().Be(products[0].ProductNumber);

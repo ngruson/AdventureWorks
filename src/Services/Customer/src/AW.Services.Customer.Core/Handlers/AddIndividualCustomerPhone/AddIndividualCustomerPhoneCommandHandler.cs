@@ -26,7 +26,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
             logger.LogInformation("Handle called");
             logger.LogInformation("Getting customer from database");
 
-            var individualCustomer = await individualCustomerRepository.GetBySpecAsync(
+            var individualCustomer = await individualCustomerRepository.SingleOrDefaultAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );

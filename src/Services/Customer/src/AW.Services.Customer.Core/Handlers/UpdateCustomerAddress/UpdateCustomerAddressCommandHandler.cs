@@ -30,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             logger.LogInformation("Handle called");
             logger.LogInformation("Getting customer from database");
 
-            var customer = await customerRepository.GetBySpecAsync(
+            var customer = await customerRepository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
@@ -64,7 +64,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 
         private async Task<Entities.Address> IsExistingAddress(AddressDto addressDto)
         {
-            var address = await addressRepository.GetBySpecAsync(
+            var address = await addressRepository.SingleOrDefaultAsync(
                 new GetAddressSpecification(
                     addressDto.AddressLine1,
                     addressDto.AddressLine2,

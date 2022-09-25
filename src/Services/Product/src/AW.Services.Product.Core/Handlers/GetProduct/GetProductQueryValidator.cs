@@ -22,7 +22,7 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
 
         private async Task<bool> ProductExists(string productNumber, CancellationToken cancellationToken)
         {
-            var product = await productRepository.GetBySpecAsync(
+            var product = await productRepository.SingleOrDefaultAsync(
                 new GetProductSpecification(productNumber),
                 cancellationToken
             );

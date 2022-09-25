@@ -1,6 +1,6 @@
 using System;
 using AW.Services.IdentityServer.Controllers.Account;
-using IdentityServer4.Models;
+using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AW.Services.IdentityServer.Controllers

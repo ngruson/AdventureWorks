@@ -30,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
                 request.AddressType, request.AccountNumber
             );
 
-            var customer = await repository.GetBySpecAsync(                
+            var customer = await repository.SingleOrDefaultAsync(                
                 new GetCustomerAddressesSpecification(request.AccountNumber),
                 cancellationToken
             );

@@ -24,7 +24,7 @@ namespace AW.Services.Product.Core.UnitTests
         )
         {
             // Arrange
-            productRepoMock.Setup(x => x.GetBySpecAsync(
+            productRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -35,7 +35,7 @@ namespace AW.Services.Product.Core.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            productRepoMock.Verify(x => x.GetBySpecAsync(
+            productRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -51,7 +51,7 @@ namespace AW.Services.Product.Core.UnitTests
         )
         {
             // Arrange
-            productRepoMock.Setup(x => x.GetBySpecAsync(
+            productRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -62,7 +62,7 @@ namespace AW.Services.Product.Core.UnitTests
 
             //Assert
             func.Should().ThrowAsync<ArgumentNullException>();
-            productRepoMock.Verify(x => x.GetBySpecAsync(
+            productRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ));

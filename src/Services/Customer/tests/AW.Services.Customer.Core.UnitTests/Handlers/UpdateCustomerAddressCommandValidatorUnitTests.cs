@@ -25,7 +25,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             //Arrange
             command.AccountNumber = "1";
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -80,7 +80,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             UpdateCustomerAddressCommand command
         )
         {
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -361,7 +361,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             command.CustomerAddress.Address.StateProvinceCode = address.Address.StateProvinceCode;
             command.CustomerAddress.Address.CountryRegionCode = address.Address.CountryRegionCode;
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

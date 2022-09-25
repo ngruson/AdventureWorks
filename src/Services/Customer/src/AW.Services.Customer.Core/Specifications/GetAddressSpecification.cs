@@ -3,7 +3,7 @@ using AW.Services.Customer.Core.Entities;
 
 namespace AW.Services.Customer.Core.Specifications
 {
-    public class GetAddressSpecification : Specification<Address>, ISingleResultSpecification
+    public class GetAddressSpecification : Specification<Address>, ISingleResultSpecification<Address>
     {
         public GetAddressSpecification(
             string addressline1,

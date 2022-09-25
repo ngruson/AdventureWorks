@@ -22,10 +22,11 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
         public async Task GetByIdAsync_ReturnsObject(
             [Frozen] Mock<DbSet<Core.Entities.SalesOrder>> mockSet,
             [Frozen] Mock<AWContext> mockContext,
-            Core.Entities.SalesOrder salesOrder
+            string salesOrderNumber
         )
         {
             //Arrange
+            var salesOrder = new Core.Entities.SalesOrder(salesOrderNumber);
             mockSet.Setup(x => x.FindAsync(It.IsAny<object[]>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(salesOrder);
 
@@ -41,12 +42,16 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
         }
 
         [Theory, OmitOnRecursion]
-        public async Task GetBySpecAsync_ReturnsObject(
+        public async Task SingleOrDefaultAsync_ReturnsObject(
             [Frozen] Mock<AWContext> mockContext,
-            List<Core.Entities.SalesOrder> salesOrders
+            List<string> salesOrderNumbers
         )
         {
             //Arrange
+            var salesOrders = salesOrderNumbers
+                .Select(salesOrderNumber => new Core.Entities.SalesOrder(salesOrderNumber))
+                .ToList();
+            
             var mockSet = salesOrders.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<Core.Entities.SalesOrder>())
@@ -55,7 +60,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
 
             //Act
             var spec = new GetFullSalesOrderSpecification(salesOrders[0].SalesOrderNumber);
-            var result = await repository.GetBySpecAsync(spec);
+            var result = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
             result.SalesOrderNumber.Should().Be(salesOrders[0].SalesOrderNumber);

@@ -27,7 +27,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
 
             logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
-            var customer = await customerRepository.GetBySpecAsync(spec, cancellationToken);
+            var customer = await customerRepository.SingleOrDefaultAsync(spec, cancellationToken);
             Guard.Against.Null(customer, nameof(customer));
 
             logger.LogInformation("Updating customer");

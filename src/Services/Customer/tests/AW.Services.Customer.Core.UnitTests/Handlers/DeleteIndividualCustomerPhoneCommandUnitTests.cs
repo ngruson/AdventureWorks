@@ -31,7 +31,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 )
             );
 
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -57,7 +57,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -81,7 +81,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            customerRepoMock.Setup(x => x.GetBySpecAsync(
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

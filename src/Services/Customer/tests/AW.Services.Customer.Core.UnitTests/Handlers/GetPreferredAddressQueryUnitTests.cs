@@ -37,7 +37,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -52,7 +52,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -77,7 +77,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -92,7 +92,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -110,7 +110,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Billing";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -122,7 +122,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeNull();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -139,7 +139,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Billing";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -151,7 +151,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 await func.Should().ThrowAsync<CustomerNotFoundException>();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -179,7 +179,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -194,7 +194,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -219,7 +219,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -234,7 +234,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -252,7 +252,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Shipping";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -264,7 +264,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeNull();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -281,7 +281,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Shipping";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -293,7 +293,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 await func.Should().ThrowAsync<CustomerNotFoundException>();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -321,7 +321,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -336,7 +336,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -361,7 +361,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -376,7 +376,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -401,7 +401,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -416,7 +416,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -434,7 +434,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Billing";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -446,7 +446,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeNull();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -463,7 +463,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Billing";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -475,7 +475,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 await func.Should().ThrowAsync<CustomerNotFoundException>();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -503,7 +503,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -518,7 +518,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -543,7 +543,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -558,7 +558,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -583,7 +583,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     )
                 );
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -598,7 +598,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     opt => opt.Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
                 );
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -616,7 +616,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Shipping";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -628,7 +628,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 result.Should().BeNull();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));
@@ -645,7 +645,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Arrange
                 query.AddressType = "Shipping";
 
-                customerRepoMock.Setup(_ => _.GetBySpecAsync(
+                customerRepoMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
@@ -657,7 +657,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 //Assert
                 await func.Should().ThrowAsync<CustomerNotFoundException>();
 
-                customerRepoMock.Verify(x => x.GetBySpecAsync(
+                customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ));

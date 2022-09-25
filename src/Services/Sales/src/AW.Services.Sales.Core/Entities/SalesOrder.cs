@@ -39,6 +39,11 @@ namespace AW.Services.Sales.Core.Entities
             );
         }
 
+        public SalesOrder(string salesOrderNumber)
+        {
+            SalesOrderNumber = salesOrderNumber;
+        }
+
         public int Id { get; set; }
         public byte RevisionNumber { get; private set; }
 

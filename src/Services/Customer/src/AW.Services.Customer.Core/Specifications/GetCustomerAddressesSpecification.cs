@@ -2,7 +2,7 @@
 
 namespace AW.Services.Customer.Core.Specifications
 {
-    public class GetCustomerAddressesSpecification : Specification<Entities.Customer>, ISingleResultSpecification
+    public class GetCustomerAddressesSpecification : Specification<Entities.Customer>, ISingleResultSpecification<Entities.Customer>
     {
         public GetCustomerAddressesSpecification(string accountNumber)
         {

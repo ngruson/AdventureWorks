@@ -54,7 +54,7 @@ namespace AW.Services.Product.Core.UnitTests
             GetProductQuery query
         )
         {
-            productRepoMock.Setup(x => x.GetBySpecAsync(
+            productRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

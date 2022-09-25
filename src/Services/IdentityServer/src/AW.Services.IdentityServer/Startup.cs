@@ -1,10 +1,10 @@
+using AW.Services.IdentityServer;
 using AW.Services.IdentityServer.Configuration;
 using AW.Services.IdentityServer.Core.Data;
 using AW.Services.IdentityServer.Core.Models;
+using Duende.IdentityServer.EntityFramework.DbContexts;
 using HealthChecks.UI.Client;
 using IdentityModel;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -99,7 +99,7 @@ namespace AW.Services.IdentityServer
             {
                 foreach (var client in InMemoryConfiguration.Clients())
                 {
-                    context.Clients.Add(client.ToEntity());
+                    context.Clients.Add(client);
                 }
                 context.SaveChanges();
             }
@@ -108,7 +108,7 @@ namespace AW.Services.IdentityServer
             {
                 foreach (var resource in InMemoryConfiguration.IdentityResources())
                 {
-                    context.IdentityResources.Add(resource.ToEntity());
+                    context.IdentityResources.Add(resource);
                 }
                 context.SaveChanges();
             }
@@ -117,7 +117,7 @@ namespace AW.Services.IdentityServer
             {
                 foreach (var resource in InMemoryConfiguration.ApiResources())
                 {
-                    context.ApiResources.Add(resource.ToEntity());
+                    context.ApiResources.Add(resource);
                 }
                 context.SaveChanges();
             }
@@ -126,13 +126,13 @@ namespace AW.Services.IdentityServer
             {
                 foreach (var apiScope in InMemoryConfiguration.ApiScopes())
                 {
-                    context.ApiScopes.Add(apiScope.ToEntity());
+                    context.ApiScopes.Add(apiScope);
                 }
                 context.SaveChanges();
             }
 
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            foreach (var user in InMemoryConfiguration.Users())
+            foreach (var user in InMemoryConfiguration.Users(Configuration))
             {
                 var appUser = userManager.FindByNameAsync(user.Username).Result;
                 if (appUser == null)
@@ -145,77 +145,77 @@ namespace AW.Services.IdentityServer
                     };
                     var result = userManager.CreateAsync(appUser, user.Password).Result;
                     result = userManager.AddClaimsAsync(appUser, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Nils Gruson"),
-                            new Claim(JwtClaimTypes.GivenName, "Nils"),
-                            new Claim(JwtClaimTypes.FamilyName, "Gruson")
+                            new Claim(JwtClaimTypes.Name, Configuration["TestUser:Claims:Name"]),
+                            new Claim(JwtClaimTypes.GivenName, Configuration["TestUser:Claims:GivenName"]),
+                            new Claim(JwtClaimTypes.FamilyName, Configuration["TestUser:Claims:FamilyName"])
                         }).Result;
                 };
             }
         }
     }
+}
 
-    public static class CustomExtensionMethods
+public static class CustomExtensionMethods
+{
+    public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {
-        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
-        {
-            services.AddMvc(opt => opt.EnableEndpointRouting = false);
+        services.AddMvc(opt => opt.EnableEndpointRouting = false);
 
-            services.Configure<ForwardedHeadersOptions>(options =>
+        services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            options.RequireHeaderSymmetry = false;
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        });
+        services.AddRazorPages();
+
+        return services;
+    }
+
+    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
+
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+        return services;
+    }
+
+    public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
+    {
+        var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
+        services.AddIdentityServer()
+            .AddSigningCredential(new X509Certificate2("identityserver.pfx"))
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddConfigurationStore(options =>
             {
-                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                options.RequireHeaderSymmetry = false;
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
+                options.ConfigureDbContext = b => b.UseSqlServer(
+                    configuration.GetConnectionString("DbConnection"),
+                    options => options.MigrationsAssembly(migrationsAssembly)
+                );
+            })
+            .AddOperationalStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseSqlServer(
+                    configuration.GetConnectionString("DbConnection"),
+                    options => options.MigrationsAssembly(migrationsAssembly)
+                );
             });
-            services.AddRazorPages();
 
-            return services;
-        }
+        return services;
+    }
 
-        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
+    public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
+    {
+        var hcBuilder = services.AddHealthChecks();
+        hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
+        hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
+        hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            return services;
-        }
-
-        public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
-        {
-            var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
-            services.AddIdentityServer()
-                .AddSigningCredential(new X509Certificate2("identityserver.pfx"))
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        configuration.GetConnectionString("DbConnection"),
-                        options => options.MigrationsAssembly(migrationsAssembly)
-                    );
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        configuration.GetConnectionString("DbConnection"),
-                        options => options.MigrationsAssembly(migrationsAssembly)
-                    );
-                });
-
-            return services;
-        }
-
-        public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
-        {
-            var hcBuilder = services.AddHealthChecks();
-            hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
-            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
-            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-
-            return services;
-        }
+        return services;
     }
 }
