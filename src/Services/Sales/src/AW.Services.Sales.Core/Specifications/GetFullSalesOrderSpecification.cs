@@ -2,7 +2,7 @@
 
 namespace AW.Services.Sales.Core.Specifications
 {
-    public class GetFullSalesOrderSpecification : Specification<Entities.SalesOrder>, ISingleResultSpecification
+    public class GetFullSalesOrderSpecification : Specification<Entities.SalesOrder>, ISingleResultSpecification<Entities.SalesOrder>
     {
         public GetFullSalesOrderSpecification(string salesOrderNumber) : base()
         {

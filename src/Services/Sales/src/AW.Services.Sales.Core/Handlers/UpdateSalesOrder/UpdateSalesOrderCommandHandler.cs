@@ -30,13 +30,13 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 
             logger.LogInformation("Getting sales order from database");
             var spec = new GetSalesOrderSpecification(request.SalesOrder.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.GetBySpecAsync(spec, cancellationToken);
+            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(spec, cancellationToken);
             Guard.Against.Null(salesOrder, nameof(salesOrder));
 
             logger.LogInformation("Updating sales order");
             mapper.Map(request.SalesOrder, salesOrder);
 
-            var salesPerson = await salesPersonRepository.GetBySpecAsync(
+            var salesPerson = await salesPersonRepository.SingleOrDefaultAsync(
                 new GetSalesPersonSpecification(
                     request.SalesOrder.SalesPerson.Name.FirstName,
                     request.SalesOrder.SalesPerson.Name.MiddleName,

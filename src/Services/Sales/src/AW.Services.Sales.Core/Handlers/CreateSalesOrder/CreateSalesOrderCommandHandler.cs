@@ -68,7 +68,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             foreach (var item in request.OrderItems)
             {
                 var specialOfferProduct = await specialOfferProductRepository
-                    .GetBySpecAsync(
+                    .SingleOrDefaultAsync(
                         new GetSpecialOfferProductSpecification(item.ProductNumber),
                         cancellationToken
                     );
@@ -88,7 +88,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
         private async Task<Customer> GetCustomer(string customerNumber)
         {
-            var customer = await customerRepository.GetBySpecAsync(
+            var customer = await customerRepository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(customerNumber)
             );
 
@@ -103,7 +103,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             DateTime cardExpiration
         )
         {
-            var creditCard = await creditCardRepository.GetBySpecAsync(
+            var creditCard = await creditCardRepository.SingleOrDefaultAsync(
                 new GetCreditCardSpecification(
                     cardNumber
                 )

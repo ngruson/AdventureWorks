@@ -47,7 +47,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 cardHolderName
             );
 
-            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
+            salesOrderRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -58,7 +58,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
             //Assert
             result.Should().NotBeNull();
-            salesOrderRepoMock.Verify(x => x.GetBySpecAsync(
+            salesOrderRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -97,7 +97,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 cardHolderName
             );
 
-            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
+            salesOrderRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -108,7 +108,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
             //Assert
             result.Should().NotBeNull();
-            salesOrderRepoMock.Verify(x => x.GetBySpecAsync(
+            salesOrderRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));

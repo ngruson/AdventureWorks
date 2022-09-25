@@ -47,7 +47,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrder.SetCancelledStatus();
-            salesOrderRepositoryMock.Setup(_ => _.GetBySpecAsync(
+            salesOrderRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetSalesOrderSpecification>(),
                     It.IsAny<CancellationToken>()
                 )
@@ -72,7 +72,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrder.SetShippedStatus();
-            salesOrderRepositoryMock.Setup(_ => _.GetBySpecAsync(
+            salesOrderRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
                     It.IsAny<GetSalesOrderSpecification>(),
                     It.IsAny<CancellationToken>()
                 )

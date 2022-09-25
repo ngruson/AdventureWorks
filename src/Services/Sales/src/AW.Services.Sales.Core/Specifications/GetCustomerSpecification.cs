@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AW.Services.Sales.Core.Specifications
 {
-    public class GetCustomerSpecification : Specification<Entities.Customer>, ISingleResultSpecification
+    public class GetCustomerSpecification : Specification<Entities.Customer>, ISingleResultSpecification<Entities.Customer>
     {
         public GetCustomerSpecification(string customerNumber)
         {

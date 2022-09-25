@@ -24,7 +24,7 @@ namespace AW.Services.Sales.Core.Handlers.ApproveSalesOrder
         public async Task<bool> Handle(ApproveSalesOrderCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.GetBySpecAsync(
+            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(
                 new GetSalesOrderSpecification(request.SalesOrderNumber),
                 cancellationToken
             );

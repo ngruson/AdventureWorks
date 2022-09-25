@@ -42,7 +42,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            salesOrderRepoMock.Setup(x => x.GetBySpecAsync(
+            salesOrderRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

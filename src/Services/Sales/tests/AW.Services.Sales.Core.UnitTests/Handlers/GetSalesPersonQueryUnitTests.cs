@@ -3,7 +3,6 @@ using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesPerson;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
@@ -25,7 +24,7 @@ namespace AW.Services.Sales.Core.UnitTests
         )
         {
             //Arrange            
-            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(
+            salesPersonRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetSalesPersonSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -36,7 +35,7 @@ namespace AW.Services.Sales.Core.UnitTests
 
             //Assert
             result.Should().NotBeNull();
-            salesPersonRepoMock.Verify(x => x.GetBySpecAsync(
+            salesPersonRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetSalesPersonSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -52,7 +51,7 @@ namespace AW.Services.Sales.Core.UnitTests
         )
         {
             //Arrange
-            salesPersonRepoMock.Setup(x => x.GetBySpecAsync(
+            salesPersonRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetSalesPersonSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

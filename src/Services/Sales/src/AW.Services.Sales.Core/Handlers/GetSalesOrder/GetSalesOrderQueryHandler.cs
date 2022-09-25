@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
                 request.SalesOrderNumber
             );
 
-            var salesOrder = await repository.GetBySpecAsync(spec, cancellationToken);
+            var salesOrder = await repository.SingleOrDefaultAsync(spec, cancellationToken);
 
             logger.LogInformation("Returning sales orders");
             return mapper.Map<SalesOrderDto>(salesOrder);

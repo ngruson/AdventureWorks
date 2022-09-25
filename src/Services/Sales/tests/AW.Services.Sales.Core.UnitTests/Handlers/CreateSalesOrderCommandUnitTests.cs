@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             creditCard.ExpMonth = byte.Parse(expirationDate.Month.ToString());
             creditCard.ExpYear = short.Parse(expirationDate.Year.ToString());
 
-            creditCardRepositoryMock.Setup(_ => _.GetBySpecAsync(
+            creditCardRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetCreditCardSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -67,7 +67,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             //Arrange
             command.OrderItems.ForEach(_ => _.Discount = 0);
 
-            creditCardRepositoryMock.Setup(_ => _.GetBySpecAsync(
+            creditCardRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetCreditCardSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

@@ -23,7 +23,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         private async Task<bool> SalesOrderExists(string salesOrderNumber, CancellationToken cancellationToken)
         {
-            var salesOrder = await salesOrderRepository.GetBySpecAsync(
+            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(
                 new GetFullSalesOrderSpecification(salesOrderNumber),
                 cancellationToken
             );
