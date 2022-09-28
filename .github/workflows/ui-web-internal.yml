@@ -10,13 +10,6 @@ on:
     - src/UI/Infrastructure/**
     - src/UI/SharedKernel/**
     - .github/workflows/ui-web-internal.yml
-  pull_request:
-    branches: [ master ]
-    paths:
-    - src/UI/Internal/**
-    - src/UI/Infrastructure/**
-    - src/UI/SharedKernel/**
-    - .github/workflows/ui-web-internal.yml
 
 env:
   DOTNET_VERSION: 6.0.x
