@@ -60,8 +60,8 @@ namespace AW.UI.Web.Store
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
-                });
+                    webBuilder.UseStartup<Startup>();                   
+                })
+            .UseSerilog();
     }
 }

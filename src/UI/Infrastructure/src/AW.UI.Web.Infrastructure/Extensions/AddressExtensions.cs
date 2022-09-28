@@ -11,7 +11,7 @@ namespace AW.UI.Web.Infrastructure.Extensions
         public static string StateProvinceName(this string stateProvinceCode, List<StateProvince> statesProvinces)
         {
             var stateProvince = statesProvinces.FirstOrDefault(s => s.StateProvinceCode == stateProvinceCode);
-            Guard.Against.Null(stateProvince, nameof(stateProvince));
+            Guard.Against.Null(stateProvince);
 
             return stateProvince.Name;
         }
@@ -19,7 +19,7 @@ namespace AW.UI.Web.Infrastructure.Extensions
         public static string CountryRegionName(this string countryRegionCode, List<CountryRegion> countries)
         {
             var country = countries.FirstOrDefault(s => s.CountryRegionCode == countryRegionCode);
-            Guard.Against.Null(country, nameof(country));
+            Guard.Against.Null(country);
 
             return country.Name;
         }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -11,28 +12,28 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
 {
     public class GetProductQueryHandler : IRequestHandler<GetProductQuery, Product>
     {
-        private readonly ILogger<GetProductQueryHandler> logger;
-        private readonly IRepository<Entities.Product> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetProductQueryHandler> _logger;
+        private readonly IRepository<Entities.Product> _repository;
+        private readonly IMapper _mapper;
 
         public GetProductQueryHandler(
             ILogger<GetProductQueryHandler> logger,
             IRepository<Entities.Product> repository,
             IMapper mapper)
-            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            => (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<Product> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
             var spec = new GetProductSpecification(request.ProductNumber);
-            logger.LogInformation("Getting product from database");
-            var product = await repository.SingleOrDefaultAsync(spec, cancellationToken);
+            _logger.LogInformation("Getting product from database");
+            var product = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
 
-            Guard.Against.Null(product, nameof(product));
+            Guard.Against.Null(product, _logger);
 
-            logger.LogInformation("Returning product");
-            return mapper.Map<Product>(product);
+            _logger.LogInformation("Returning product");
+            return _mapper.Map<Product>(product);
         }
     }
 }

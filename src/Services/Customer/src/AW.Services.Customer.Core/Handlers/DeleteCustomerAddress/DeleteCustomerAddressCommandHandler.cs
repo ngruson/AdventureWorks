@@ -29,13 +29,13 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(customer, nameof(customer), logger);
+            Guard.Against.Null(customer, logger);
 
             logger.LogInformation("Removing address from customer");
             var customerAddress = customer.Addresses.FirstOrDefault(
                 a => a.AddressType == request.AddressType
             );
-            Guard.Against.Null(customerAddress, nameof(customerAddress), logger);
+            Guard.Against.Null(customerAddress, logger);
 
             customer.RemoveAddress(customerAddress);
 

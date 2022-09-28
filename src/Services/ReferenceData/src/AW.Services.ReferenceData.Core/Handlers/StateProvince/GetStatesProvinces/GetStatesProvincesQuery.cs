@@ -5,6 +5,6 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
 {
     public class GetStatesProvincesQuery : IRequest<List<StateProvince>>
     {
-        public string CountryRegionCode { get; set; }
+        public string? CountryRegionCode { get; set; }
     }
 }

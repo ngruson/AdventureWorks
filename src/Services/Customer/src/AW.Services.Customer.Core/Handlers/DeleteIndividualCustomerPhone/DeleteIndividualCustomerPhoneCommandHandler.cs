@@ -29,14 +29,14 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, nameof(individualCustomer), logger);
+            Guard.Against.Null(individualCustomer, logger);
 
             logger.LogInformation("Removing phone from customer");
             var phone = individualCustomer.Person.PhoneNumbers.FirstOrDefault(
                 e => e.PhoneNumberType == request.Phone.PhoneNumberType &&
                     e.PhoneNumber == request.Phone.PhoneNumber
             );
-            Guard.Against.Null(phone, nameof(phone), logger);
+            Guard.Against.Null(phone, logger);
 
             individualCustomer.Person.RemovePhoneNumber(phone);
 

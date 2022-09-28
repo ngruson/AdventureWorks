@@ -29,13 +29,13 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddres
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, nameof(individualCustomer), logger);
+            Guard.Against.Null(individualCustomer, logger);
 
             logger.LogInformation("Removing address from customer");
             var emailAddress = individualCustomer.Person.EmailAddresses.FirstOrDefault(
                 e => e.EmailAddress == request.EmailAddress
             );
-            Guard.Against.Null(emailAddress, nameof(emailAddress), logger);
+            Guard.Against.Null(emailAddress, logger);
 
             individualCustomer.Person.RemoveEmailAddress(emailAddress);
 

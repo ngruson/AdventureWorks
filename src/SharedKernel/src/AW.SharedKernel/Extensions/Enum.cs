@@ -27,9 +27,9 @@ namespace AW.SharedKernel.Extensions
             enumValues.Sort();
             return enumValues;
         }
-        public static T Parse(string value)
+        public static T Parse(string? value)
         {
-            return (T)Enum.Parse(typeof(T), value, true);
+            return (T)Enum.Parse(typeof(T), value!, true);
         }
         public static IList<string> GetNames(Enum value)
         {
@@ -39,32 +39,32 @@ namespace AW.SharedKernel.Extensions
                 .OrderBy(_ => _)
                 .ToList();
         }
-        public static IList<string> GetDisplayValues(Enum value)
+        public static IList<string?> GetDisplayValues(Enum value)
         {
             return GetNames(value).Select(obj => GetDisplayValue(Parse(obj)))
                 .OrderBy(x => x)
                 .ToList();
         }
-        private static string LookupResource(Type resourceManagerProvider, string resourceKey)
+        private static string? LookupResource(Type? resourceManagerProvider, string resourceKey)
         {
-            foreach (var staticProperty in resourceManagerProvider.GetProperties(BindingFlags.Static | BindingFlags.Public))
+            foreach (var staticProperty in resourceManagerProvider!.GetProperties(BindingFlags.Static | BindingFlags.Public))
             {
                 if (staticProperty.PropertyType == typeof(System.Resources.ResourceManager))
                 {
-                    var resourceManager = (System.Resources.ResourceManager)staticProperty.GetValue(null, null);
-                    return resourceManager.GetString(resourceKey);
+                    var resourceManager = (System.Resources.ResourceManager?)staticProperty.GetValue(null, null);
+                    return resourceManager?.GetString(resourceKey);
                 }
             }
             return resourceKey;
         }
-        public static string GetDisplayValue(T value)
+        public static string? GetDisplayValue(T? value)
         {
-            var fieldInfo = value.GetType().GetField(value.ToString());
-            var descriptionAttributes = fieldInfo.GetCustomAttributes(
+            var fieldInfo = value?.GetType().GetField(value.ToString()!);
+            var descriptionAttributes = fieldInfo?.GetCustomAttributes(
                 typeof(DisplayAttribute), false) as DisplayAttribute[];
-            if (descriptionAttributes[0].ResourceType != null)
-                return LookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Name);
-            return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
+            if (descriptionAttributes?[0].ResourceType != null)
+                return LookupResource(descriptionAttributes?[0].ResourceType, descriptionAttributes?[0].Name!);
+            return (descriptionAttributes?.Length > 0) ? descriptionAttributes?[0].Name : value?.ToString();
         }
     }
 }

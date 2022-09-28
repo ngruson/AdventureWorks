@@ -2,7 +2,7 @@
 
 namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
 {
-    public class GetUserQuery : IRequest<User>
+    public class GetUserQuery : IRequest<User?>
     {
         public GetUserQuery(string userName)
         {

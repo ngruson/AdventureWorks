@@ -7,6 +7,7 @@ using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.Sales.Core.ValueTypes;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,13 +18,13 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 {
     public class CreateSalesOrderCommandHandler : IRequestHandler<CreateSalesOrderCommand, bool>
     {
-        private readonly ILogger<CreateSalesOrderCommandHandler> logger;
-        private readonly IMapper mapper;
-        private readonly ISalesOrderIntegrationEventService salesOrderIntegrationEventService;
-        private readonly IRepository<SalesOrder> salesOrderRepository;
-        private readonly IRepository<SpecialOfferProduct> specialOfferProductRepository;
-        private readonly IRepository<Customer> customerRepository;
-        private readonly IRepository<CreditCard> creditCardRepository;
+        private readonly ILogger<CreateSalesOrderCommandHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly ISalesOrderIntegrationEventService _salesOrderIntegrationEventService;
+        private readonly IRepository<SalesOrder> _salesOrderRepository;
+        private readonly IRepository<SpecialOfferProduct> _specialOfferProductRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<CreditCard> _creditCardRepository;
 
         public CreateSalesOrderCommandHandler(
             ILogger<CreateSalesOrderCommandHandler> logger,
@@ -35,23 +36,23 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             IRepository<CreditCard> creditCardRepository
         )
         {
-            this.logger = logger;
-            this.mapper = mapper;
-            this.salesOrderIntegrationEventService = salesOrderIntegrationEventService;
-            this.salesOrderRepository = salesOrderRepository;
-            this.specialOfferProductRepository = specialOfferProductRepository;
-            this.customerRepository = customerRepository;
-            this.creditCardRepository = creditCardRepository;
+            _logger = logger;
+            _mapper = mapper;
+            _salesOrderIntegrationEventService = salesOrderIntegrationEventService;
+            _salesOrderRepository = salesOrderRepository;
+            _specialOfferProductRepository = specialOfferProductRepository;
+            _customerRepository = customerRepository;
+            _creditCardRepository = creditCardRepository;
         }
 
         public async Task<bool> Handle(CreateSalesOrderCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("----- Creating sales order");
+            _logger.LogInformation("----- Creating sales order");
 
-            logger.LogInformation("----- Creating OrderStarted domain event");
+            _logger.LogInformation("----- Creating OrderStarted domain event");
             // Add Integration event to clean the basket
             var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserId);
-            await salesOrderIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
+            await _salesOrderIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
 
             var customer = await GetCustomer(request.CustomerNumber);
             var creditCard = await GetCreditCard(
@@ -60,39 +61,39 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
                 request.CardExpiration
             );
 
-            var billToAddress = mapper.Map<Address>(request.BillToAddress);
-            var shipToAddress = mapper.Map<Address>(request.ShipToAddress);
+            var billToAddress = _mapper.Map<Address>(request.BillToAddress);
+            var shipToAddress = _mapper.Map<Address>(request.ShipToAddress);
 
             var salesOrder = new SalesOrder(request.UserId, request.UserName, customer, request.ShipMethod, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber, request.CardHolderName);
 
             foreach (var item in request.OrderItems)
             {
-                var specialOfferProduct = await specialOfferProductRepository
+                var specialOfferProduct = await _specialOfferProductRepository
                     .SingleOrDefaultAsync(
                         new GetSpecialOfferProductSpecification(item.ProductNumber),
                         cancellationToken
                     );
-                Guard.Against.Null(specialOfferProduct, nameof(specialOfferProduct));
+                Guard.Against.Null(specialOfferProduct, _logger);
 
                 salesOrder.AddOrderLine(item.ProductNumber, item.ProductName, item.UnitPrice, item.Discount, specialOfferProduct, item.Quantity);
             }
 
-            logger.LogInformation("----- Saving sales order to database - Sales Order: {@SalesOrder}", salesOrder);
+            _logger.LogInformation("----- Saving sales order to database - Sales Order: {@SalesOrder}", salesOrder);
 
-            await salesOrderRepository.AddAsync(salesOrder, cancellationToken);
+            await _salesOrderRepository.AddAsync(salesOrder, cancellationToken);
 
-            logger.LogInformation("Sales order was created succesfully");
+            _logger.LogInformation("Sales order was created succesfully");
 
             return true;
         }        
 
         private async Task<Customer> GetCustomer(string customerNumber)
         {
-            var customer = await customerRepository.SingleOrDefaultAsync(
+            var customer = await _customerRepository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(customerNumber)
             );
 
-            Guard.Against.CustomerNull(customer, customerNumber, logger);
+            Guard.Against.CustomerNull(customer, customerNumber, _logger);
 
             return customer;
         }
@@ -103,7 +104,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             DateTime cardExpiration
         )
         {
-            var creditCard = await creditCardRepository.SingleOrDefaultAsync(
+            var creditCard = await _creditCardRepository.SingleOrDefaultAsync(
                 new GetCreditCardSpecification(
                     cardNumber
                 )
@@ -111,7 +112,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
             if (creditCard == null)
             {
-                logger.LogInformation("Credit card {CardNumber} not found", cardNumber);
+                _logger.LogInformation("Credit card {CardNumber} not found", cardNumber);
                 return new CreditCard
                 {
                     CardType = cardType,
@@ -121,7 +122,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
                 };
             }
 
-            logger.LogInformation("Credit card {@CreditCard} found", creditCard);
+            _logger.LogInformation("Credit card {@CreditCard} found", creditCard);
 
             return creditCard;
         }

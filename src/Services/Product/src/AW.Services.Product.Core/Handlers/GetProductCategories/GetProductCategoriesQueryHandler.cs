@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -12,30 +13,30 @@ namespace AW.Services.Product.Core.Handlers.GetProductCategories
 {
     public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQuery, List<ProductCategory>>
     {
-        private readonly ILogger<GetProductCategoriesQueryHandler> logger;
-        private readonly IRepository<Entities.ProductCategory> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetProductCategoriesQueryHandler> _logger;
+        private readonly IRepository<Entities.ProductCategory> _repository;
+        private readonly IMapper _mapper;
 
         public GetProductCategoriesQueryHandler(
             ILogger<GetProductCategoriesQueryHandler> logger,
             IRepository<Entities.ProductCategory> repository,
             IMapper mapper)
-            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            => (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<List<ProductCategory>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting product categories from database");
-            var categories = await repository.ListAsync(
+            _logger.LogInformation("Getting product categories from database");
+            var categories = await _repository.ListAsync(
                 new GetProductCategoriesSpecification(),
                 cancellationToken
             );
 
-            Guard.Against.Null(categories, nameof(categories));
+            Guard.Against.Null(categories, _logger);
 
-            logger.LogInformation("Returning product categories");
-            return mapper.Map<List<ProductCategory>>(categories);
+            _logger.LogInformation("Returning product categories");
+            return _mapper.Map<List<ProductCategory>>(categories);
         }
     }
 }

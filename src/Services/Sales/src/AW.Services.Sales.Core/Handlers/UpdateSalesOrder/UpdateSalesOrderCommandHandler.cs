@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -11,32 +12,32 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
     public class UpdateSalesOrderCommandHandler : IRequestHandler<UpdateSalesOrderCommand, SalesOrderDto>
     {
-        private readonly ILogger<UpdateSalesOrderCommandHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> salesOrderRepository;
-        private readonly IRepository<Entities.SalesPerson> salesPersonRepository;
-        private readonly IMapper mapper;
+        private readonly ILogger<UpdateSalesOrderCommandHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _salesOrderRepository;
+        private readonly IRepository<Entities.SalesPerson> _salesPersonRepository;
+        private readonly IMapper _mapper;
 
         public UpdateSalesOrderCommandHandler(
             ILogger<UpdateSalesOrderCommandHandler> logger,
             IRepository<Entities.SalesOrder> salesOrderRepository,
             IRepository<Entities.SalesPerson> salesPersonRepository,
             IMapper mapper) =>
-                (this.logger, this.salesOrderRepository, this.salesPersonRepository, this.mapper) 
+                (_logger, _salesOrderRepository, _salesPersonRepository, _mapper) 
                     = (logger, salesOrderRepository, salesPersonRepository, mapper);
 
         public async Task<SalesOrderDto> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting sales order from database");
+            _logger.LogInformation("Getting sales order from database");
             var spec = new GetSalesOrderSpecification(request.SalesOrder.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(salesOrder, nameof(salesOrder));
+            var salesOrder = await _salesOrderRepository.SingleOrDefaultAsync(spec, cancellationToken);
+            Guard.Against.Null(salesOrder, _logger);
 
-            logger.LogInformation("Updating sales order");
-            mapper.Map(request.SalesOrder, salesOrder);
+            _logger.LogInformation("Updating sales order");
+            _mapper.Map(request.SalesOrder, salesOrder);
 
-            var salesPerson = await salesPersonRepository.SingleOrDefaultAsync(
+            var salesPerson = await _salesPersonRepository.SingleOrDefaultAsync(
                 new GetSalesPersonSpecification(
                     request.SalesOrder.SalesPerson.Name.FirstName,
                     request.SalesOrder.SalesPerson.Name.MiddleName,
@@ -44,15 +45,15 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
                 ),
                 cancellationToken
             );
-            Guard.Against.Null(salesPerson, nameof(salesPerson));
+            Guard.Against.Null(salesPerson, _logger);
             if (salesOrder.SalesPerson != salesPerson)
                 salesOrder.SetSalesPerson(salesPerson);
 
-            logger.LogInformation("Saving sales order to database");
-            await salesOrderRepository.UpdateAsync(salesOrder, cancellationToken);
+            _logger.LogInformation("Saving sales order to database");
+            await _salesOrderRepository.UpdateAsync(salesOrder, cancellationToken);
 
-            logger.LogInformation("Returning sales order");
-            return mapper.Map<SalesOrderDto>(salesOrder);
+            _logger.LogInformation("Returning sales order");
+            return _mapper.Map<SalesOrderDto>(salesOrder);
         }
     }
 }

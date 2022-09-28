@@ -61,7 +61,7 @@ namespace AW.Services.IdentityServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
-                });
+                })
+            .UseSerilog();
     }
 }

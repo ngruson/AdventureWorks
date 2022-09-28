@@ -43,7 +43,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
                 salesPersons = await repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.Null(salesPersons, nameof(salesPersons), logger);
+            Guard.Against.Null(salesPersons, logger);
 
             logger.LogInformation("Returning sales persons");
 

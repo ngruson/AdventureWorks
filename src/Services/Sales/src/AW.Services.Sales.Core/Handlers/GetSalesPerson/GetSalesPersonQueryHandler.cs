@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPerson
             );
 
             var salesPerson = await repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(salesPerson, nameof(salesPerson), logger);
+            Guard.Against.Null(salesPerson, logger);
 
             logger.LogInformation("Returning sales persons");
 

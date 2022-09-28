@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             var customerAddress = customer.Addresses.FirstOrDefault(
                 ca => ca.AddressType == request.CustomerAddress.AddressType
             );
-            Guard.Against.Null(customerAddress, nameof(customerAddress));
+            Guard.Against.Null(customerAddress, logger);
 
 
             var existingAddress = await IsExistingAddress(request.CustomerAddress.Address);

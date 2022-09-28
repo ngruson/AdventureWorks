@@ -12,7 +12,7 @@ namespace AW.SharedKernel.JsonConverters
         where TStore : class, T
         where TIndividual : class, T
     {
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null) return null;
             var readerCopy = reader;
@@ -41,7 +41,7 @@ namespace AW.SharedKernel.JsonConverters
             switch (value)
             {
                 case null:
-                    JsonSerializer.Serialize(writer, (T)null, options);
+                    JsonSerializer.Serialize(writer, (T?)null, options);
                     break;
                 default:
                     {

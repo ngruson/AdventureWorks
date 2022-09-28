@@ -26,7 +26,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomer
             logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.AccountNumber);
             var customer = await customerRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(customer, nameof(customer), logger);
+            Guard.Against.Null(customer, logger);
 
             logger.LogInformation("Deleting customer from database");
             await customerRepository.DeleteAsync(customer, cancellationToken);

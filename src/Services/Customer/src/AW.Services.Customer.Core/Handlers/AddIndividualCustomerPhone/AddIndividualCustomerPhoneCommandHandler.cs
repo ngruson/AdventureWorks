@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -30,7 +31,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, nameof(individualCustomer));
+            Guard.Against.Null(individualCustomer, logger);
 
             logger.LogInformation("Adding phone to customer");
             var phone = mapper.Map<Entities.PersonPhone>(request.Phone);

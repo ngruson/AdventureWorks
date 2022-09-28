@@ -4,6 +4,7 @@ using AW.Services.Product.Core.Common;
 using AW.Services.Product.Core.Extensions;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -15,20 +16,20 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
 {
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, GetProductsDto>
     {
-        private readonly ILogger<GetProductsQueryHandler> logger;
-        private readonly IRepository<Entities.Product> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetProductsQueryHandler> _logger;
+        private readonly IRepository<Entities.Product> _repository;
+        private readonly IMapper _mapper;
 
         public GetProductsQueryHandler(
             ILogger<GetProductsQueryHandler> logger,
             IRepository<Entities.Product> repository, 
             IMapper mapper) 
-            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            => (_logger, _repository, _mapper) = (logger, repository, mapper);
         
         public async Task<GetProductsDto> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting products from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting products from database");
 
             var spec = new GetProductsPaginatedSpecification(
                 request.PageIndex, 
@@ -42,14 +43,14 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
                 request.Subcategory
             );
 
-            var products = await repository.ListAsync(spec, cancellationToken);
-            Guard.Against.Null(products, nameof(products));
+            var products = await _repository.ListAsync(spec, cancellationToken);
+            Guard.Against.Null(products, _logger);
 
-            logger.LogInformation("Returning products");
+            _logger.LogInformation("Returning products");
             return new GetProductsDto
             {
-                Products = mapper.Map<List<GetProduct.Product>>(products),
-                TotalProducts = await repository.CountAsync(countSpec, cancellationToken)
+                Products = _mapper.Map<List<GetProduct.Product>>(products),
+                TotalProducts = await _repository.CountAsync(countSpec, cancellationToken)
             };
         }
 
@@ -58,7 +59,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             if (string.IsNullOrEmpty(orderBy))
                 return null;
 
-            string direction = orderBy.Substring(0, orderBy.IndexOf('('));
+            string direction = orderBy[..orderBy.IndexOf('(')];
 
             string propertyName = orderBy.Substring(
                 orderBy.IndexOf('(') + 1,

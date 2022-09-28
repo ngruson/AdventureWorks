@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
             logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
             var customer = await customerRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(customer, nameof(customer));
+            Guard.Against.Null(customer, logger);
 
             logger.LogInformation("Updating customer");
             mapper.Map(request.Customer, customer);

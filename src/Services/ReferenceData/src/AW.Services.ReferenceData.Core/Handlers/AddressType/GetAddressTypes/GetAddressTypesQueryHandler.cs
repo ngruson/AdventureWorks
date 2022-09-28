@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,27 +12,27 @@ namespace AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes
 {
     public class GetAddressTypesQueryHandler : IRequestHandler<GetAddressTypesQuery, List<AddressType>>
     {
-        private readonly ILogger<GetAddressTypesQueryHandler> logger;
-        private readonly IRepository<Entities.AddressType> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetAddressTypesQueryHandler> _logger;
+        private readonly IRepository<Entities.AddressType> _repository;
+        private readonly IMapper _mapper;
 
         public GetAddressTypesQueryHandler(
             ILogger<GetAddressTypesQueryHandler> logger,
             IRepository<Entities.AddressType> repository,
             IMapper mapper)
-            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            => (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<List<AddressType>> Handle(GetAddressTypesQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting address types from database");
-            var addressTypes = await repository.ListAsync(cancellationToken);
+            _logger.LogInformation("Getting address types from database");
+            var addressTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.Null(addressTypes, nameof(addressTypes));
+            Guard.Against.Null(addressTypes, _logger);
 
-            logger.LogInformation("Returning address types");
-            return mapper.Map<List<AddressType>>(addressTypes);
+            _logger.LogInformation("Returning address types");
+            return _mapper.Map<List<AddressType>>(addressTypes);
         }
     }
 }

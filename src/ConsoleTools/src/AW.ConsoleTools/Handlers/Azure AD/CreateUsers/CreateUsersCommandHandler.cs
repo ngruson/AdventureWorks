@@ -2,6 +2,7 @@
 using AW.ConsoleTools.Handlers.AzureAD.GetGroup;
 using AW.ConsoleTools.Handlers.AzureAD.GetUser;
 using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
@@ -64,7 +65,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                         new GetUserQuery(employee?.Name?.FullName!),
                         cancellationToken
                     );
-                    Guard.Against.Null(user, nameof(user));
+                    Guard.Against.Null(user, _logger);
                 }
                 else
                     _logger.LogInformation("User {DisplayName} already exists", employee?.Name?.FullName);

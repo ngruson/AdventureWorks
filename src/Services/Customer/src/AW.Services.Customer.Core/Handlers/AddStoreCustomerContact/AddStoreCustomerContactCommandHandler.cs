@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -30,7 +31,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
                 new GetStoreCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(storeCustomer, nameof(storeCustomer));
+            Guard.Against.Null(storeCustomer, logger);
 
             logger.LogInformation("Adding contact to store");
             var contact = mapper.Map<Entities.StoreCustomerContact>(request.CustomerContact);

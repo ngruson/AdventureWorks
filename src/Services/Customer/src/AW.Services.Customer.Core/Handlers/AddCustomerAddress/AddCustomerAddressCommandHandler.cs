@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -30,7 +31,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomerAddress
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(customer, nameof(customer));
+            Guard.Against.Null(customer, logger);
 
             logger.LogInformation("Adding address to customer");
             var customerAddress = mapper.Map<Entities.CustomerAddress>(request.CustomerAddress);

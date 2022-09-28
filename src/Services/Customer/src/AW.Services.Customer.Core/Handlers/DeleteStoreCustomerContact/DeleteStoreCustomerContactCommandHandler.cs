@@ -29,14 +29,14 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
                 new GetStoreCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(storeCustomer, nameof(storeCustomer), logger);
+            Guard.Against.Null(storeCustomer, logger);
 
             logger.LogInformation("Removing phone from contact");
             var contact = storeCustomer.Contacts.FirstOrDefault(
                 c => c.ContactType == request.CustomerContact.ContactType &&
                     c.ContactPerson.Name == request.CustomerContact.ContactPerson.Name
             );
-            Guard.Against.Null(contact, nameof(contact), logger);
+            Guard.Against.Null(contact, logger);
 
             storeCustomer.RemoveContact(contact);
 

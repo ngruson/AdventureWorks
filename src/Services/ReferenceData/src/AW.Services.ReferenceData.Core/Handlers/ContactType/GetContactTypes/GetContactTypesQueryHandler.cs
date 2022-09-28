@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,27 +12,27 @@ namespace AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes
 {
     public class GetContactTypesQueryHandler : IRequestHandler<GetContactTypesQuery, List<ContactType>>
     {
-        private readonly ILogger<GetContactTypesQueryHandler> logger;
-        private readonly IRepository<Entities.ContactType> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetContactTypesQueryHandler> _logger;
+        private readonly IRepository<Entities.ContactType> _repository;
+        private readonly IMapper _mapper;
 
         public GetContactTypesQueryHandler(
             ILogger<GetContactTypesQueryHandler> logger,
             IRepository<Entities.ContactType> repository,
             IMapper mapper)
-            => (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            => (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<List<ContactType>> Handle(GetContactTypesQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting contact types from database");
-            var contactTypes = await repository.ListAsync(cancellationToken);
+            _logger.LogInformation("Getting contact types from database");
+            var contactTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.Null(contactTypes, nameof(contactTypes));
+            Guard.Against.Null(contactTypes, _logger);
 
-            logger.LogInformation("Returning contact types");
-            return mapper.Map<List<ContactType>>(contactTypes);
+            _logger.LogInformation("Returning contact types");
+            return _mapper.Map<List<ContactType>>(contactTypes);
         }
     }
 }

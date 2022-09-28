@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
@@ -34,7 +35,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetGroup
                     .GetAsync(cancellationToken);
 
             var group = groupsResponse.FirstOrDefault(_ => _.DisplayName == request.GroupName);
-            Guard.Against.Null(group, nameof(group));
+            Guard.Against.Null(group, _logger);
             
             var result = _mapper.Map<Group>(group);
 

@@ -25,7 +25,7 @@ namespace AW.SharedKernel.Api
                 var config = s.GetRequiredService<IConfiguration>();
                 var provider = s.GetRequiredService<IApiVersionDescriptionProvider>();
                 var logger = s.GetRequiredService<ILogger<ConfigureSwaggerOptions>>();
-                return new ConfigureSwaggerOptions(logger, config, provider, apiName);
+                return new ConfigureSwaggerOptions(config, provider, apiName);
             });
             services.AddSwaggerGen();
 
@@ -63,14 +63,12 @@ namespace AW.SharedKernel.Api
     {
         private readonly IApiVersionDescriptionProvider provider;
         private readonly string apiName;
-        private readonly ILogger<ConfigureSwaggerOptions> logger;
         private readonly OpenIdConnectConfiguration oidcConfig;
 
-        public ConfigureSwaggerOptions(ILogger<ConfigureSwaggerOptions> logger, IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
+        public ConfigureSwaggerOptions(IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
         {
             this.provider = provider;
             this.apiName = apiName;
-            this.logger = logger;
             oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
         }
 

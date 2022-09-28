@@ -4,6 +4,13 @@ namespace AW.Services.ReferenceData.Core.Entities
 {
     public class Territory : IAggregateRoot
     {
+        public Territory(string name, string countryRegionCode, string group)
+        {            
+            Name = name;
+            CountryRegionCode = countryRegionCode;
+            Group = group;
+        }
+
         public int Id { get; set; }
         public string Name { get; private set; }
         public string CountryRegionCode { get; private set; }

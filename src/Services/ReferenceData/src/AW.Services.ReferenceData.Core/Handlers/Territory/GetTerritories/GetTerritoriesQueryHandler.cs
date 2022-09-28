@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -12,37 +13,37 @@ namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
 {
     public class GetTerritoriesQueryHandler : IRequestHandler<GetTerritoriesQuery, List<Territory>>
     {
-        private readonly ILogger<GetTerritoriesQueryHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepository<Entities.Territory> repository;
+        private readonly ILogger<GetTerritoriesQueryHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly IRepository<Entities.Territory> _repository;
 
         public GetTerritoriesQueryHandler(
             ILogger<GetTerritoriesQueryHandler> logger,
             IRepository<Entities.Territory> repository,
             IMapper mapper) =>
-                (this.logger, this.mapper, this.repository) = (logger, mapper, repository);
+                (_logger, _mapper, _repository) = (logger, mapper, repository);
 
         public async Task<List<Territory>> Handle(GetTerritoriesQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
             List<Entities.Territory> territories;
 
             if (string.IsNullOrEmpty(request.CountryRegionCode))
             {
-                logger.LogInformation("Getting territories from database");
-                territories = await repository.ListAsync(cancellationToken);
+                _logger.LogInformation("Getting territories from database");
+                territories = await _repository.ListAsync(cancellationToken);
             }
             else
             {
-                logger.LogInformation("Getting territories for country {@Country} from database", request.CountryRegionCode);
+                _logger.LogInformation("Getting territories for country {@Country} from database", request.CountryRegionCode);
                 var spec = new GetTerritoriesForCountrySpecification(request.CountryRegionCode);
-                territories = await repository.ListAsync(spec, cancellationToken);
+                territories = await _repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.NullOrEmpty(territories, nameof(territories));
+            Guard.Against.Null(territories, _logger);
 
-            logger.LogInformation("Returning territories");
-            return mapper.Map<List<Territory>>(territories);
+            _logger.LogInformation("Returning territories");
+            return _mapper.Map<List<Territory>>(territories);
         }
     }
 }

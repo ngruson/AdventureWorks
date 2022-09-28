@@ -1,12 +1,13 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace AW.SharedKernel.Extensions
 {
     public static class GuardClauses
     {
-        public static T Null<T>(this IGuardClause guardClause, T input, string parameterName, ILogger logger)
+        public static T Null<T>(this IGuardClause guardClause, T input, ILogger logger, [CallerArgumentExpression("input")]  string? parameterName = null)
         {
             if (input is null)
             {

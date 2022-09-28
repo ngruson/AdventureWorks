@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,28 +12,27 @@ namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
 {
     public class GetShipMethodsQueryHandler : IRequestHandler<GetShipMethodsQuery, List<ShipMethod>>
     {
-        private readonly ILogger<GetShipMethodsQueryHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepository<Entities.ShipMethod> repository;
+        private readonly ILogger<GetShipMethodsQueryHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly IRepository<Entities.ShipMethod> _repository;
 
         public GetShipMethodsQueryHandler(
             ILogger<GetShipMethodsQueryHandler> logger,
             IRepository<Entities.ShipMethod> repository,
             IMapper mapper
         ) =>
-            (this.logger, this.mapper, this.repository) = 
-                (logger, mapper, repository);
+            (_logger, _mapper, _repository) = (logger, mapper, repository);
 
         public async Task<List<ShipMethod>> Handle(GetShipMethodsQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting shipping methods from database");
-            var shipMethods = await repository.ListAsync(cancellationToken);
-            Guard.Against.NullOrEmpty(shipMethods, nameof(shipMethods));
+            _logger.LogInformation("Getting shipping methods from database");
+            var shipMethods = await _repository.ListAsync(cancellationToken);
+            Guard.Against.Null(shipMethods, _logger);
 
-            logger.LogInformation("Returning shipping methods");
-            return mapper.Map<List<ShipMethod>>(shipMethods);
+            _logger.LogInformation("Returning shipping methods");
+            return _mapper.Map<List<ShipMethod>>(shipMethods);
         }
     }
 }

@@ -11,6 +11,6 @@ namespace AW.Services.ReferenceData.Core.Entities
 
         public int Id { get; set; }
         
-        public string Name { get; private set; }
+        public string Name { get; private init; }
     }
 }

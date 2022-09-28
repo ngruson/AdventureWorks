@@ -6,32 +6,33 @@ using Microsoft.Extensions.Logging;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 
 namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
 {
     public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, List<Country>>
     {
-        private readonly ILogger<GetCountriesQueryHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepository<Entities.CountryRegion> repository;
+        private readonly ILogger<GetCountriesQueryHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly IRepository<Entities.CountryRegion> _repository;
 
         public GetCountriesQueryHandler(
             ILogger<GetCountriesQueryHandler> logger,
             IRepository<Entities.CountryRegion> repository,
             IMapper mapper) =>
-                (this.logger, this.mapper, this.repository) = (logger, mapper, repository);
+                (_logger, _mapper, _repository) = (logger, mapper, repository);
 
         public async Task<List<Country>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting countries from database");
-            var countries = await repository.ListAsync(cancellationToken);
+            _logger.LogInformation("Getting countries from database");
+            var countries = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.NullOrEmpty(countries, nameof(countries));
+            Guard.Against.Null(countries, _logger);
 
-            logger.LogInformation("Returning countries");
-            return mapper.Map<List<Country>>(countries);
+            _logger.LogInformation("Returning countries");
+            return _mapper.Map<List<Country>>(countries);
         }
     }
 }

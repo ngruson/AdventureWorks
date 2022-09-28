@@ -1,9 +1,11 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Infrastructure;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using SmartEnum.EFCore;
 using System;
 using System.Data;
@@ -16,9 +18,10 @@ namespace AW.Services.SharedKernel.EFCore
 {
     public class AWContext : DbContext, IDbContext, IUnitOfWork
     {
-        private readonly Assembly configurationsAssembly;
-        private readonly IMediator mediator;
-        private IDbContextTransaction currentTransaction;
+        private readonly ILogger<AWContext> _logger;
+        private readonly Assembly _configurationsAssembly;
+        private readonly IMediator _mediator;
+        private IDbContextTransaction _currentTransaction;
 
         public AWContext() { }
 
@@ -27,7 +30,7 @@ namespace AW.Services.SharedKernel.EFCore
             IMediator mediator
         ) : base(options)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
         }
 
         public AWContext(
@@ -36,20 +39,20 @@ namespace AW.Services.SharedKernel.EFCore
             Assembly configurationsAssembly
         ) : base(options)
         {
-            this.configurationsAssembly = configurationsAssembly;
-            this.mediator = mediator;
+            _configurationsAssembly = configurationsAssembly;
+            _mediator = mediator;
         }
 
-        public DbTransaction CurrentTransaction => currentTransaction.GetDbTransaction();
-        public Guid CurrentTransactionId => currentTransaction.TransactionId;
+        public DbTransaction CurrentTransaction => _currentTransaction.GetDbTransaction();
+        public Guid CurrentTransactionId => _currentTransaction.TransactionId;
 
-        public bool HasActiveTransaction => currentTransaction != null;
+        public bool HasActiveTransaction => _currentTransaction != null;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (configurationsAssembly != null)
+            if (_configurationsAssembly != null)
             {
-                modelBuilder.ApplyConfigurationsFromAssembly(configurationsAssembly);
+                modelBuilder.ApplyConfigurationsFromAssembly(_configurationsAssembly);
                 modelBuilder.ConfigureSmartEnum();
             }
         }
@@ -81,7 +84,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            await mediator.DispatchDomainEventsAsync(this);
+            await _mediator.DispatchDomainEventsAsync(this);
 
             // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
             // performed through the DbContext will be committed
@@ -98,15 +101,15 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task<DbTransaction> BeginTransactionAsync()
         {
-            if (currentTransaction != null) return null;
-            currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+            if (_currentTransaction != null) return null;
+            _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
 
             return CurrentTransaction;
         }
 
         public async Task CommitTransactionAsync(DbTransaction transaction)
         {
-            Guard.Against.Null(transaction, nameof(transaction));
+            Guard.Against.Null(transaction, _logger);
 
             if (transaction != CurrentTransaction)
                 throw new InvalidOperationException($"Transaction {CurrentTransactionId} is not current");
@@ -123,10 +126,10 @@ namespace AW.Services.SharedKernel.EFCore
             }
             finally
             {
-                if (currentTransaction != null)
+                if (_currentTransaction != null)
                 {
-                    currentTransaction.Dispose();
-                    currentTransaction = null;
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
                 }
             }
         }
@@ -135,14 +138,14 @@ namespace AW.Services.SharedKernel.EFCore
         {
             try
             {
-                currentTransaction?.Rollback();
+                _currentTransaction?.Rollback();
             }
             finally
             {
-                if (currentTransaction != null)
+                if (_currentTransaction != null)
                 {
-                    currentTransaction.Dispose();
-                    currentTransaction = null;
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
                 }
             }
         }        

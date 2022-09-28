@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, nameof(individualCustomer));
+            Guard.Against.Null(individualCustomer, logger);
 
             logger.LogInformation("Adding email address to customer");
             var emailAddress = new Entities.PersonEmailAddress(request.EmailAddress);

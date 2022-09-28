@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
@@ -33,7 +34,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup
             return Unit.Value;
         }
 
-        private async Task<User> GetUser(AddUserToGroupCommand request, CancellationToken cancellationToken)
+        private async Task<User?> GetUser(AddUserToGroupCommand request, CancellationToken cancellationToken)
         {
             var usersResponse = await _client.Users.Request()
                 .Expand(_ => _.MemberOf)
@@ -41,7 +42,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup
                 .GetAsync(cancellationToken);
 
             var user = usersResponse.FirstOrDefault(_ => _.DisplayName == request.UserName);
-            Guard.Against.Null(user, nameof(user));
+            Guard.Against.Null(user, _logger);
 
             return user;
         }

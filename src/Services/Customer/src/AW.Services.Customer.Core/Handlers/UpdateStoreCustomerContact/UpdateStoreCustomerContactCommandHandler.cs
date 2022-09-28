@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
             var contact = storeCustomer.Contacts.FirstOrDefault(c =>
                 c.ContactType == request.CustomerContact.ContactType
             );
-            Guard.Against.Null(contact, nameof(contact));
+            Guard.Against.Null(contact, logger);
 
             logger.LogInformation("Updating contact");
             mapper.Map(request.CustomerContact, contact);

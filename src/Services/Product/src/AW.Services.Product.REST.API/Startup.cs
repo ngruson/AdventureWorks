@@ -23,6 +23,7 @@ using System.IdentityModel.Tokens.Jwt;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.OpenIdConnect;
 using Microsoft.Identity.Web;
+using FluentValidation;
 
 namespace AW.Services.Product.REST.API
 {
@@ -89,11 +90,12 @@ namespace AW.Services.Product.REST.API
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
             });
 
+            services
+                .AddFluentValidationAutoValidation()
+                .AddValidatorsFromAssemblyContaining<GetProductsQueryValidator>();
+
             services.AddMvcCore()
-                .AddApiExplorer()
-                .AddFluentValidation(fv => fv
-                    .RegisterValidatorsFromAssemblyContaining<GetProductsQueryValidator>()
-                );
+                .AddApiExplorer();
 
             return services;
         }
