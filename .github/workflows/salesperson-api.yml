@@ -8,7 +8,7 @@ on:
     - src/Services/Sales/**
     - .github/workflows/salesperson-api.yml
   pull_request:
-    branches: [ master ]    
+    branches: [ master ]
     paths:
     - src/Services/Sales/**
     - .github/workflows/salesperson-api.yml
