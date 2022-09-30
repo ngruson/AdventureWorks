@@ -16,8 +16,8 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Entities.StateProvince, StateProvince>()
-                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()))
-                .ForMember(m => m.CountryRegionCode, opt => opt.MapFrom(src => src.CountryRegion.CountryRegionCode));
+                .ForMember(m => m.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode!.Trim()))
+                .ForMember(m => m.CountryRegionCode, opt => opt.MapFrom(src => src.CountryRegion!.CountryRegionCode));
         }
     }
 }

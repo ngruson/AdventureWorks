@@ -7,7 +7,7 @@ namespace AW.Services.ReferenceData.Core.Specifications
         public GetStatesProvincesSpecification(string? countryRegionCode = null) : base()
         {
             if (!string.IsNullOrEmpty(countryRegionCode))
-                Query.Where(p => p.CountryRegion.CountryRegionCode == countryRegionCode);
+                Query.Where(p => p.CountryRegion!.CountryRegionCode == countryRegionCode);
 
             Query
                 .Include(p => p.CountryRegion);

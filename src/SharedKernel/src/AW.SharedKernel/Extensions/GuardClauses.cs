@@ -19,7 +19,7 @@ namespace AW.SharedKernel.Extensions
             return input;
         }
 
-        public static string NullOrEmpty(this IGuardClause guardClause, string input, ILogger logger, [CallerArgumentExpression("input")] string? parameterName = null, string? message = null)
+        public static string NullOrEmpty(this IGuardClause guardClause, string? input, ILogger logger, string? message = null, [CallerArgumentExpression("input")] string? parameterName = null)
         {
             if (string.IsNullOrEmpty(input))
             {

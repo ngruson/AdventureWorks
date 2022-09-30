@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -20,9 +21,9 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
         {
             _logger.LogInformation("Getting sales order {SalesOrderNumber} from API", request.SalesOrderNumber);
             
-            Guard.Against.NullOrEmpty(request.SalesOrderNumber, nameof(request.SalesOrderNumber));
-            var salesOrder = await _client.GetSalesOrderAsync(request.SalesOrderNumber);            
-            Guard.Against.Null(salesOrder, nameof(salesOrder));
+            Guard.Against.NullOrEmpty(request.SalesOrderNumber, _logger);
+            var salesOrder = await _client.GetSalesOrderAsync(request.SalesOrderNumber);
+            Guard.Against.Null(salesOrder, _logger);
 
             _logger.LogInformation("Return sales order {SalesOrderNumber}", request.SalesOrderNumber);
 

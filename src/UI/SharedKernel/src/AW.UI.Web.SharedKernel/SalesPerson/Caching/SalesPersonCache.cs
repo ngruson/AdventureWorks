@@ -26,7 +26,7 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
             return salesPersons;
         }
 
-        public async Task<List<Handlers.GetSalesPersons.SalesPerson>> GetData()
+        public async Task<List<Handlers.GetSalesPersons.SalesPerson>?> GetData()
         {
             if (!cache.TryGetValue(CacheKeys.SalesPersons, out List<Handlers.GetSalesPersons.SalesPerson> salesPersons))
             {
@@ -36,10 +36,10 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
             return salesPersons;
         }
 
-        public async Task<List<Handlers.GetSalesPersons.SalesPerson>> GetData(Func<Handlers.GetSalesPersons.SalesPerson, bool> predicate)
+        public async Task<List<Handlers.GetSalesPersons.SalesPerson>?> GetData(Func<Handlers.GetSalesPersons.SalesPerson, bool> predicate)
         {
-            var salesPersons = await GetData();
-            return salesPersons!.Where(predicate).ToList();
+            return (await GetData())?
+                .Where(predicate).ToList();
         }
     }
 }

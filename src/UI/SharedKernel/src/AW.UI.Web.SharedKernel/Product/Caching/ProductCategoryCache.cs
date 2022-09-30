@@ -14,7 +14,7 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
         public ProductCategoryCache(IMemoryCache cache, IProductApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task<List<ProductCategory>> GetData()
+        public async Task<List<ProductCategory>?> GetData()
         {
 
             if (!cache.TryGetValue(CacheKeys.ProductCategories, out List<ProductCategory> categories))
@@ -25,9 +25,9 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
             return categories;
         }
 
-        public async Task<List<ProductCategory>> GetData(Func<ProductCategory, bool> predicate)
+        public async Task<List<ProductCategory>?> GetData(Func<ProductCategory, bool> predicate)
         {
-            return (await GetData())!
+            return (await GetData())?
                 .Where(predicate).ToList();
         }
 

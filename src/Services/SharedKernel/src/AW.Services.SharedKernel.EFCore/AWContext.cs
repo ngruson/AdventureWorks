@@ -5,7 +5,6 @@ using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
 using SmartEnum.EFCore;
 using System;
 using System.Data;
@@ -18,7 +17,6 @@ namespace AW.Services.SharedKernel.EFCore
 {
     public class AWContext : DbContext, IDbContext, IUnitOfWork
     {
-        private readonly ILogger<AWContext> _logger;
         private readonly Assembly _configurationsAssembly;
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;
