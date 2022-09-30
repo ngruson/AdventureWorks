@@ -36,9 +36,9 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return territories;
         }
 
-        public async Task<List<Handlers.GetTerritories.Territory>> GetData(Func<Handlers.GetTerritories.Territory, bool> predicate)
+        public async Task<List<Handlers.GetTerritories.Territory>?> GetData(Func<Handlers.GetTerritories.Territory, bool> predicate)
         {
-            return (await GetData())!
+            return (await GetData())?
                 .Where(predicate).ToList();
         }
     }

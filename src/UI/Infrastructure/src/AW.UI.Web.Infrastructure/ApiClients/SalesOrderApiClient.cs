@@ -1,6 +1,8 @@
 ﻿using AW.SharedKernel.JsonConverters;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using GetSalesOrders = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using GetSalesOrder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
+using UpdateSalesOrder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,23 +11,45 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
     public class SalesOrderApiClient : ISalesOrderApiClient
     {
-        private readonly HttpClient client;
-        private readonly ILogger<SalesOrderApiClient> logger;
+        private readonly ILogger<SalesOrderApiClient> _logger;
+        private readonly HttpClient _httpClient;
 
-        public SalesOrderApiClient(HttpClient client, ILogger<SalesOrderApiClient> logger) =>
-            (this.client, this.logger) = (client, logger);
+        private readonly CustomerConverter<
+            GetSalesOrders.Customer,
+            GetSalesOrders.StoreCustomer,
+            GetSalesOrders.IndividualCustomer> _converterGetSalesOrders;
 
-        public async Task<SalesOrdersResult> GetSalesOrdersAsync(int pageIndex, int pageSize, string territory, CustomerType? customerType)
+        private readonly CustomerConverter<
+            GetSalesOrder.Customer,
+            GetSalesOrder.StoreCustomer,
+            GetSalesOrder.IndividualCustomer> _converterGetSalesOrder;
+
+        private readonly CustomerConverter<
+            UpdateSalesOrder.Customer,
+            UpdateSalesOrder.StoreCustomer,
+            UpdateSalesOrder.IndividualCustomer> _converterUpdateSalesOrder;
+
+        public SalesOrderApiClient(
+            ILogger<SalesOrderApiClient> logger, 
+            HttpClient httpClient,
+            CustomerConverter<GetSalesOrders.Customer, GetSalesOrders.StoreCustomer, GetSalesOrders.IndividualCustomer> converterGetSalesOrders,
+            CustomerConverter<GetSalesOrder.Customer, GetSalesOrder.StoreCustomer, GetSalesOrder.IndividualCustomer> converterGetSalesOrder,
+            CustomerConverter<UpdateSalesOrder.Customer, UpdateSalesOrder.StoreCustomer, UpdateSalesOrder.IndividualCustomer> converterUpdateSalesOrder
+        ) => (_httpClient, _logger, _converterGetSalesOrders, _converterGetSalesOrder, _converterUpdateSalesOrder) = 
+                (httpClient, logger, converterGetSalesOrders, converterGetSalesOrder, converterUpdateSalesOrder);
+
+        public async Task<GetSalesOrders.SalesOrdersResult> GetSalesOrdersAsync(int pageIndex, int pageSize, string territory, GetSalesOrders.CustomerType? customerType)
         {
             string requestUri = $"/salesorder-api/SalesOrder?&api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting sales orders with page index {PageIndex}, page size {PageSize}";
 
-            List<object> args = new List<object> { pageIndex, pageSize };
+            List<object> args = new() { pageIndex, pageSize };
 
             if (!string.IsNullOrEmpty(territory))
             {
@@ -35,105 +59,96 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             }
             if (customerType.HasValue)
             {
-                var customerTypeValue = customerType.Value == CustomerType.Individual ? 0 : 1;
+                var customerTypeValue = customerType.Value == GetSalesOrders.CustomerType.Individual ? 0 : 1;
                 logMessage += ", customer type {CustomerType}";
                 args.Add(customerType);
                 requestUri += $"&customerType={customerTypeValue}";
             }
 
-            logger.LogInformation(logMessage, args.ToArray());
+            _logger.LogInformation(logMessage, args.ToArray());
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", requestUri);
-            using var response = await client.GetAsync(requestUri);
+            _logger.LogInformation("Calling GET operation to {RequestUri}", requestUri);
+            using var response = await _httpClient.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<SalesOrdersResult>(new JsonSerializerOptions
+            return await stream.DeserializeAsync<GetSalesOrders.SalesOrdersResult>(new JsonSerializerOptions
             {
                 Converters =
                 {
                     new JsonStringEnumConverter(),
-                    new CustomerConverter<
-                        Customer,
-                        StoreCustomer,
-                        IndividualCustomer>()
+                    _converterGetSalesOrders
                 },
                 IgnoreReadOnlyProperties = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
 
-        public async Task<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrderAsync(string salesOrderNumber)
+        public async Task<GetSalesOrder.SalesOrder> GetSalesOrderAsync(string salesOrderNumber)
         {
-            logger.LogInformation("Getting sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
+            _logger.LogInformation("Getting sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
             var requestUri = $"SalesOrder/{salesOrderNumber}?&api-version=1.0";
 
-            logger.LogInformation("Calling GET operation to {RequestUri}", client.BaseAddress + requestUri);
-            using var response = await client.GetAsync(requestUri);
+            _logger.LogInformation("Calling GET operation to {RequestUri}", _httpClient.BaseAddress + requestUri);
+            using var response = await _httpClient.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder>(new JsonSerializerOptions
+            return await stream.DeserializeAsync<GetSalesOrder.SalesOrder>(new JsonSerializerOptions
             {
                 Converters =
                 {
                     new JsonStringEnumConverter(),
-                    new CustomerConverter<
-                        SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer,
-                        SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer,
-                        SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>()
+                    _converterGetSalesOrder
                 },
                 IgnoreReadOnlyProperties = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
 
-        public async Task<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder> UpdateSalesOrderAsync(SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
+        public async Task<UpdateSalesOrder.SalesOrder> UpdateSalesOrderAsync(SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
         {
-            logger.LogInformation("Updating sales order with sales order number {SalesOrderNumber}", salesOrder.SalesOrderNumber);
+            _logger.LogInformation("Updating sales order with sales order number {SalesOrderNumber}", salesOrder.SalesOrderNumber);
             string requestUri = $"SalesOrder/{salesOrder.SalesOrderNumber}?&api-version=1.0";
             var options = new JsonSerializerOptions
             {
                 Converters =
                 {
                     new JsonStringEnumConverter(),
-                    new CustomerConverter<
-                        Customer,
-                        StoreCustomer,
-                        IndividualCustomer>()
+                    _converterUpdateSalesOrder
                 },
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
             string json = JsonSerializer.Serialize(salesOrder, options);
-            logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
+            _logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
 
-            using var response = await client.PutAsync(
+            using var response = await _httpClient.PutAsync(
                 requestUri,
                 new StringContent(json, Encoding.UTF8, "application/json")
             );
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
-            var updatedSalesOrder = await stream.DeserializeAsync<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(options);
+            var updatedSalesOrder = await stream.DeserializeAsync<UpdateSalesOrder.SalesOrder>(options);
 
-            logger.LogInformation("Returning sales order {@SalesOrder}", updatedSalesOrder);
+            _logger.LogInformation("Returning sales order {@SalesOrder}", updatedSalesOrder);
             return updatedSalesOrder;
         }
 
         public async Task ApproveSalesOrderAsync(string salesOrderNumber)
         {
-            logger.LogInformation("Approving sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
+            _logger.LogInformation("Approving sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
             string requestUri = $"SalesOrder/{salesOrderNumber}/approve?&api-version=1.0";
 
-            logger.LogInformation("Calling PUT method on {RequestUri}", requestUri);
+            _logger.LogInformation("Calling PUT method on {RequestUri}", requestUri);
 
             using var request = new HttpRequestMessage(HttpMethod.Put, requestUri);
             request.Headers.Add("x-requestid", Guid.NewGuid().ToString());
 
-            using var response = await client.SendAsync(request);
+            using var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            logger.LogInformation("Sales order {SalesOrderNumber} succesfully approved", salesOrderNumber);
+            _logger.LogInformation("Sales order {SalesOrderNumber} succesfully approved", salesOrderNumber);
         }
     }
 }

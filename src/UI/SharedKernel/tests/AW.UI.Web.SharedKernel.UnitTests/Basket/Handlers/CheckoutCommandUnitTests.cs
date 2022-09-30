@@ -44,7 +44,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Basket.Handlers
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Value cannot be null. (Parameter 'Basket')");
+                .WithMessage("Value cannot be null. (Parameter 'request.Basket')");
 
             mockBasketApiClient.Verify(_ => _.CheckoutAsync(
                     It.IsAny<BasketCheckout>()

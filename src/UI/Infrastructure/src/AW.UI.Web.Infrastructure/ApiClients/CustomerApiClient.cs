@@ -8,20 +8,43 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using GetCustomers = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using GetCustomer = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using UpdateCustomer = AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
     public class CustomerApiClient : ICustomerApiClient
     {
-        private readonly HttpClient client;
-        private readonly ILogger<CustomerApiClient> logger;
+        private readonly HttpClient _client;
+        private readonly ILogger<CustomerApiClient> _logger;
+        
+        private readonly CustomerConverter<
+            GetCustomers.Customer,
+            GetCustomers.StoreCustomer,
+            GetCustomers.IndividualCustomer> _converterGetCustomers;
+        
+        private readonly CustomerConverter<
+            GetCustomer.Customer,
+            GetCustomer.StoreCustomer,
+            GetCustomer.IndividualCustomer> _converterGetCustomer;
 
-        public CustomerApiClient(HttpClient client, ILogger<CustomerApiClient> logger)
-            => (this.client, this.logger) = (client, logger);
+        private readonly CustomerConverter<
+            UpdateCustomer.Customer,
+            UpdateCustomer.StoreCustomer,
+            UpdateCustomer.IndividualCustomer> _converterUpdateCustomer;
 
-        public async Task<GetCustomersResponse> GetCustomersAsync(
+        public CustomerApiClient(
+            HttpClient client, 
+            ILogger<CustomerApiClient> logger,
+            CustomerConverter<GetCustomers.Customer, GetCustomers.StoreCustomer, GetCustomers.IndividualCustomer> converterGetCustomers,
+            CustomerConverter<GetCustomer.Customer, GetCustomer.StoreCustomer, GetCustomer.IndividualCustomer> converterGetCustomer,
+            CustomerConverter<UpdateCustomer.Customer, UpdateCustomer.StoreCustomer, UpdateCustomer.IndividualCustomer> converterUpdateCustomer
+        ) => (_client, _logger, _converterGetCustomers, _converterGetCustomer, _converterUpdateCustomer) = (client, logger, converterGetCustomers, converterGetCustomer, converterUpdateCustomer);
+
+        public async Task<GetCustomers.GetCustomersResponse> GetCustomersAsync(
             int pageIndex,
             int pageSize,
             string territory,
@@ -54,41 +77,38 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 requestUri += $"&accountNumber={accountNumber}";
             }
 
-            logger.LogInformation(logMessage, args.ToArray());
+            _logger.LogInformation(logMessage, args.ToArray());
 
-            using var response = await client.GetAsync(requestUri);
+            using var response = await _client.GetAsync(requestUri);
 
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<GetCustomersResponse>(
+            return await stream.DeserializeAsync<GetCustomers.GetCustomersResponse>(
                 new JsonSerializerOptions
                 {
                     Converters =
                     {
                         new JsonStringEnumConverter(),
-                        new CustomerConverter<
-                            Customer,
-                            StoreCustomer,
-                            IndividualCustomer>()
+                        _converterGetCustomers
                     },
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 }
             );
         }
 
-        public async Task<SharedKernel.Customer.Handlers.GetCustomer.Customer> GetCustomerAsync(string accountNumber)
+        public async Task<GetCustomer.Customer> GetCustomerAsync(string accountNumber)
         {
-            return await GetCustomerAsync<SharedKernel.Customer.Handlers.GetCustomer.Customer>(accountNumber);
+            return await GetCustomerAsync<GetCustomer.Customer>(accountNumber);
         }
 
         public async Task<T> GetCustomerAsync<T>(string accountNumber)
         {
-            logger.LogInformation("Getting customer with account number {AccountNumber}", accountNumber);
+            _logger.LogInformation("Getting customer with account number {AccountNumber}", accountNumber);
 
             try
             {
-                using var response = await client.GetAsync($"Customer/{accountNumber}?&api-version=1.0");
+                using var response = await _client.GetAsync($"Customer/{accountNumber}?&api-version=1.0");
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
 
@@ -97,11 +117,8 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                     {
                         Converters =
                         {
-                        new JsonStringEnumConverter(),
-                        new CustomerConverter<
-                            SharedKernel.Customer.Handlers.GetCustomer.Customer,
-                            SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer,
-                            SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer>()
+                            new JsonStringEnumConverter(),
+                            _converterGetCustomer
                         },
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                     }
@@ -109,18 +126,18 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             }
             catch (Exception ex)
             {
-                logger.LogError("Getting customer {AccountNumber} failed", accountNumber);
+                _logger.LogError("Getting customer {AccountNumber} failed", accountNumber);
                 throw new CustomerApiClientException($"Getting customer {accountNumber} failed", ex);
             }
         }
 
         public async Task<SharedKernel.Customer.Handlers.GetPreferredAddress.Address> GetPreferredAddressAsync(string accountNumber, string addressType)
         {
-            logger.LogInformation("Getting preferred address for address type {AddressType} for customer {AccountNumber}", addressType, accountNumber);
+            _logger.LogInformation("Getting preferred address for address type {AddressType} for customer {AccountNumber}", addressType, accountNumber);
 
             try
             {
-                using var response = await client.GetAsync($"Customer/{accountNumber}/preferredAddress/{addressType}?&api-version=1.0");
+                using var response = await _client.GetAsync($"Customer/{accountNumber}/preferredAddress/{addressType}?&api-version=1.0");
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
 
@@ -133,14 +150,14 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             }
             catch (Exception ex)
             {
-                logger.LogError("Getting preferred address for address type {AddressType} for customer {AccountNumber} failed", addressType, accountNumber);
+                _logger.LogError("Getting preferred address for address type {AddressType} for customer {AccountNumber} failed", addressType, accountNumber);
                 throw new CustomerApiClientException($"Getting preferred address for address type {addressType} for customer {accountNumber} failed", ex);
             }
         }
 
-        public async Task<SharedKernel.Customer.Handlers.UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, SharedKernel.Customer.Handlers.UpdateCustomer.Customer customer)
+        public async Task<UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, UpdateCustomer.Customer customer)
         {
-            logger.LogInformation("Updating customer with account number {AccountNumber}", accountNumber);
+            _logger.LogInformation("Updating customer with account number {AccountNumber}", accountNumber);
             string requestUri = $"Customer/{accountNumber}?&api-version=1.0";
 
             var options = new JsonSerializerOptions
@@ -148,18 +165,15 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 Converters =
                     {
                         new JsonStringEnumConverter(),
-                        new CustomerConverter<
-                            SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
-                            SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
-                            SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
+                        _converterUpdateCustomer
                     },
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
             string json = JsonSerializer.Serialize(customer, options);
-            logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
+            _logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
 
-            using var response = await client.PutAsync(
+            using var response = await _client.PutAsync(
                 requestUri,
                 new StringContent(json, Encoding.UTF8, "application/json")
             );
@@ -169,7 +183,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 options
             );
 
-            logger.LogInformation("Returning customer {@Customer}", updatedCustomer);
+            _logger.LogInformation("Returning customer {@Customer}", updatedCustomer);
             return updatedCustomer;
         }
     }

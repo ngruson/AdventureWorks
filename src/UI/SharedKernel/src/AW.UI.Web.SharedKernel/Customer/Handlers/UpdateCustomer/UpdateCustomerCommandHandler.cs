@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -7,28 +8,28 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer
 {
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
-        private readonly ILogger<UpdateCustomerCommandHandler> logger;
-        private readonly ICustomerApiClient client;
+        private readonly ILogger<UpdateCustomerCommandHandler> _logger;
+        private readonly ICustomerApiClient _client;
 
         public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger, ICustomerApiClient client)
         {
-            this.logger = logger;
-            this.client = client;
+            _logger = logger;
+            _client = client;
         }
 
         public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
-            Guard.Against.Null(request.Customer, nameof(request.Customer));
+            Guard.Against.NullOrEmpty(request.AccountNumber, _logger);
+            Guard.Against.Null(request.Customer, _logger);
 
-            logger.LogInformation("Updating customer {AccountNumber}", request.AccountNumber);
-            var customer = await client.UpdateCustomerAsync(
+            _logger.LogInformation("Updating customer {AccountNumber}", request.AccountNumber);
+            var customer = await _client.UpdateCustomerAsync(
                 request.AccountNumber,
                 request.Customer
             );
-            Guard.Against.Null(customer, nameof(customer));
+            Guard.Against.Null(customer, _logger);
 
-            logger.LogInformation("Returning updated customer {AccountNumber}", request.AccountNumber);
+            _logger.LogInformation("Returning updated customer {AccountNumber}", request.AccountNumber);
 
             return customer;
         }

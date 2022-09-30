@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
 {
-    public abstract class Customer
+    public abstract class Customer : ICustomer
     {
-        public CustomerType CustomerType { get; set; }
+        public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
         public string? CustomerNumber { get; set; }
 
         [JsonIgnore]

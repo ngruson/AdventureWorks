@@ -50,7 +50,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Customer.Handlers
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Required input AccountNumber was empty. (Parameter 'AccountNumber')");
+                .WithMessage("Required input request.AccountNumber was empty. (Parameter 'request.AccountNumber')");
 
             mockCustomerApiClient.Verify(x => x.GetCustomerAsync<IndividualCustomer>(
                     It.IsAny<string>()

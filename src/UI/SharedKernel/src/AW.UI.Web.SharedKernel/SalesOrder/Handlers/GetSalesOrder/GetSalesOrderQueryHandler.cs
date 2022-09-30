@@ -7,24 +7,24 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
 {
     public class GetSalesOrderQueryHandler : IRequestHandler<GetSalesOrderQuery, SalesOrder>
     {
-        private readonly ILogger<GetSalesOrderQueryHandler> logger;
-        private readonly ISalesOrderApiClient client;
+        private readonly ILogger<GetSalesOrderQueryHandler> _logger;
+        private readonly ISalesOrderApiClient _client;
 
         public GetSalesOrderQueryHandler(ILogger<GetSalesOrderQueryHandler> logger, ISalesOrderApiClient client)
         {
-            this.logger = logger;
-            this.client = client;
+            _logger = logger;
+            _client = client;
         }
 
         public async Task<SalesOrder> Handle(GetSalesOrderQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting sales order {SalesOrderNumber} from API", request.SalesOrderNumber);
+            _logger.LogInformation("Getting sales order {SalesOrderNumber} from API", request.SalesOrderNumber);
             
             Guard.Against.NullOrEmpty(request.SalesOrderNumber, nameof(request.SalesOrderNumber));
-            var salesOrder = await client.GetSalesOrderAsync(request.SalesOrderNumber);            
+            var salesOrder = await _client.GetSalesOrderAsync(request.SalesOrderNumber);            
             Guard.Against.Null(salesOrder, nameof(salesOrder));
 
-            logger.LogInformation("Return sales order {SalesOrderNumber}", request.SalesOrderNumber);
+            _logger.LogInformation("Return sales order {SalesOrderNumber}", request.SalesOrderNumber);
 
             return salesOrder;
         }

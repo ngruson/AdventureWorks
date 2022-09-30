@@ -4,6 +4,7 @@ using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.Store.Controllers;
 using AW.UI.Web.Store.ViewModels.Product;
+using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         [Theory, AutoMoqData]
         public async Task Index_WithProductCategoryFilter_ReturnsProductsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger,
             GetProductsResult productsResult,
             List<ProductCategory> categories,
             string productCategory
@@ -44,6 +46,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             .ReturnsAsync(categories);
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -68,8 +71,9 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         }
 
         [Theory, AutoMoqData]
-        public async Task Index_WithOddProductCount_ReturnsProductsViewModel(
+        public async Task Index_WithOddProductCount_ReturnsProductsViewModel(            
             [Frozen] Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger,
             GetProductsResult productsResult,
             List<ProductCategory> categories,
             string productCategory
@@ -93,6 +97,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             .ReturnsAsync(categories);
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -112,6 +117,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Index_FirstPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger,
             GetProductsResult productsResult,
             List<ProductCategory> categories,
             string productCategory,
@@ -137,6 +143,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             .ReturnsAsync(categories);
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -163,6 +170,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         [Theory, AutoMoqData]
         public async Task Index_SecondPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger,
             GetProductsResult productsResult,
             List<ProductCategory> categories,
             string productCategory,
@@ -187,6 +195,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             .ReturnsAsync(categories);
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -213,6 +222,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
         [Theory, AutoMoqData]
         public async Task Index_LastPageWithProductCategoryAndSubcategoryFilter_ReturnsProductsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger,
             GetProductsResult productsResult,
             List<ProductCategory> categories,
             string productCategory,
@@ -237,6 +247,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             .ReturnsAsync(categories);
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -262,12 +273,14 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
 
         [Theory, AutoMoqData]
         public async Task Index_WithNoProductCategoryFilter_ThrowsException(
-            Mock<IMediator> mockMediator
+            Mock<IMediator> mockMediator,
+            Mock<ILogger<ProductController>> mockLogger
         )
         {
             //Arrange
 
             var sut = new ProductController(
+                mockLogger.Object,
                 Mapper.CreateMapper(),
                 mockMediator.Object
             );
@@ -276,7 +289,8 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             Func<Task> func = async () => await sut.Index(0, 5, null, null);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<ArgumentException>()
+                .WithMessage("Required input productCategory was empty. (Parameter 'productCategory')");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AW.SharedKernel.Extensions;
 using AW.SharedKernel.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,6 +13,10 @@ namespace AW.SharedKernel.JsonConverters
         where TStore : class, T
         where TIndividual : class, T
     {
+        private readonly ILogger<CustomerConverter<T, TStore, TIndividual>> _logger;
+        public CustomerConverter(ILogger<CustomerConverter<T, TStore, TIndividual>> logger) => 
+            _logger = logger;
+        
         public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null) return null;
@@ -22,7 +27,7 @@ namespace AW.SharedKernel.JsonConverters
             var jsonObject = jsonDocument.RootElement;
 
             var customerType = jsonObject.GetProperty("customerType");
-            Guard.Against.Null(customerType, nameof(customerType));
+            Guard.Against.Null(customerType, _logger);
 
             if (!string.IsNullOrEmpty(customerType.GetString()))
             {

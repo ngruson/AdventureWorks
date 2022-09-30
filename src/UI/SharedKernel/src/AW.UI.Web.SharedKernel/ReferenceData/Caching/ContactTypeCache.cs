@@ -36,7 +36,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return contactTypes;
         }
 
-        public async Task<List<Handlers.GetContactTypes.ContactType>> GetData(Func<Handlers.GetContactTypes.ContactType, bool> predicate)
+        public async Task<List<Handlers.GetContactTypes.ContactType>?> GetData(Func<Handlers.GetContactTypes.ContactType, bool> predicate)
         {
             return (await GetData())!
                 .Where(predicate).ToList();

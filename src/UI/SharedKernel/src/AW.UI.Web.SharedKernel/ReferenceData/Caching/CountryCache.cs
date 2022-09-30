@@ -36,7 +36,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return countries;
         }
 
-        public async Task<List<Handlers.GetCountries.CountryRegion>> GetData(Func<Handlers.GetCountries.CountryRegion, bool> predicate)
+        public async Task<List<Handlers.GetCountries.CountryRegion>?> GetData(Func<Handlers.GetCountries.CountryRegion, bool> predicate)
         {
             return (await GetData())!
                 .Where(predicate).ToList();

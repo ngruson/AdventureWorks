@@ -49,7 +49,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Basket.Handlers
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Value cannot be null. (Parameter 'UserID')");
+                .WithMessage("Required input request.UserID was empty. (Parameter 'request.UserID')");
 
             mockBasketApiClient.Verify(x => x.GetBasketAsync(
                     It.IsAny<string>()

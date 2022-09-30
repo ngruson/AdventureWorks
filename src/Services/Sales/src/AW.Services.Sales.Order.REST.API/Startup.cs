@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using RabbitMQ.Client;
 using System;
@@ -124,19 +126,13 @@ namespace AW.Services.Sales.Order.REST.API
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
-            })
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-
-                options.JsonSerializerOptions.Converters.Add(
-                    new CustomerConverter<
-                        Core.Models.Customer,
-                        Core.Models.StoreCustomer,
-                        Core.Models.IndividualCustomer>()
-                );
             });
+
+            services.AddTransient<CustomerConverter<Core.Models.Customer,
+                Core.Models.StoreCustomer,
+                Core.Models.IndividualCustomer>>();
+            services.AddOptions<ConfigureJsonOptions>();
+            services.AddSingleton<IConfigureOptions<JsonOptions>, ConfigureJsonOptions>();
 
             return services;
         }

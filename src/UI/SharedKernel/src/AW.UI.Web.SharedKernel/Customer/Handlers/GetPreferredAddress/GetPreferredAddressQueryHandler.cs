@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -7,28 +8,28 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress
 {
     public class GetPreferredAddressQueryHandler : IRequestHandler<GetPreferredAddressQuery, Address>
     {
-        private readonly ILogger<GetPreferredAddressQueryHandler> logger;
-        private readonly ICustomerApiClient client;
+        private readonly ILogger<GetPreferredAddressQueryHandler> _logger;
+        private readonly ICustomerApiClient _client;
 
         public GetPreferredAddressQueryHandler(ILogger<GetPreferredAddressQueryHandler> logger, ICustomerApiClient client)
         {
-            this.logger = logger;
-            this.client = client;
+            _logger = logger;
+            _client = client;
         }
 
         public async Task<Address> Handle(GetPreferredAddressQuery request, CancellationToken cancellationToken)
         {
-            Guard.Against.NullOrEmpty(request.AccountNumber, nameof(request.AccountNumber));
-            Guard.Against.NullOrEmpty(request.AddressType, nameof(request.AddressType));
+            Guard.Against.NullOrEmpty(request.AccountNumber, _logger);
+            Guard.Against.NullOrEmpty(request.AddressType, _logger);
 
-            logger.LogInformation("Getting preferred address from API for {@Query}", request);
-            var address = await client.GetPreferredAddressAsync(
+            _logger.LogInformation("Getting preferred address from API for {@Query}", request);
+            var address = await _client.GetPreferredAddressAsync(
                 request.AccountNumber,
                 request.AddressType
             );
-            Guard.Against.Null(address, nameof(address));
+            Guard.Against.Null(address, _logger);
 
-            logger.LogInformation("Returning preferred address for {@Query}", request);
+            _logger.LogInformation("Returning preferred address for {@Query}", request);
 
             return address;
         }

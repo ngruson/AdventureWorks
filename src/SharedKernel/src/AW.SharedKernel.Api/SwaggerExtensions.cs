@@ -24,7 +24,6 @@ namespace AW.SharedKernel.Api
             {
                 var config = s.GetRequiredService<IConfiguration>();
                 var provider = s.GetRequiredService<IApiVersionDescriptionProvider>();
-                var logger = s.GetRequiredService<ILogger<ConfigureSwaggerOptions>>();
                 return new ConfigureSwaggerOptions(config, provider, apiName);
             });
             services.AddSwaggerGen();

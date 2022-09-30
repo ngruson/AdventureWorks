@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -7,24 +8,24 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket
 {
     public class UpdateBasketCommandHandler : IRequestHandler<UpdateBasketCommand, Basket>
     {
-        private readonly ILogger<UpdateBasketCommandHandler> logger;
-        private readonly IBasketApiClient client;
+        private readonly ILogger<UpdateBasketCommandHandler> _logger;
+        private readonly IBasketApiClient _client;
 
         public UpdateBasketCommandHandler(ILogger<UpdateBasketCommandHandler> logger, IBasketApiClient client)
         {
-            this.logger = logger;
-            this.client = client;
+            _logger = logger;
+            _client = client;
         }
 
         public async Task<Basket> Handle(UpdateBasketCommand request, CancellationToken cancellationToken)
         {
-            Guard.Against.Null(request.Basket, nameof(request.Basket));
+            Guard.Against.Null(request.Basket, _logger);
 
-            logger.LogInformation("Updating shopping basket for user ID {UserID}", request.Basket?.BuyerId);
-            var basket = await client.UpdateBasketAsync(request.Basket);
-            Guard.Against.Null(basket, nameof(basket));
+            _logger.LogInformation("Updating shopping basket for user ID {UserID}", request.Basket?.BuyerId);
+            var basket = await _client.UpdateBasketAsync(request.Basket);
+            Guard.Against.Null(basket, _logger);
 
-            logger.LogInformation("Returning shopping basket for user ID {UserID}", request.Basket?.BuyerId);
+            _logger.LogInformation("Returning shopping basket for user ID {UserID}", request.Basket?.BuyerId);
 
             return basket;
         }

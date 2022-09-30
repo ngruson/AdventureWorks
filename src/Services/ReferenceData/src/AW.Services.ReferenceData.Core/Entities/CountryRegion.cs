@@ -10,7 +10,7 @@ namespace AW.Services.ReferenceData.Core.Entities
             CountryRegionCode = countryRegionCode;
         }
         public string CountryRegionCode { get; private set; }
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
 
         public List<StateProvince> StatesProvinces { get; internal set; } = new();
     }

@@ -61,7 +61,7 @@ namespace AW.Services.ReferenceData.REST.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
-                });
+                })
+            .UseSerilog();
     }
 }

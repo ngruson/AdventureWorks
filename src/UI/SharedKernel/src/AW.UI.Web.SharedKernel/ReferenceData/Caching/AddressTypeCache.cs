@@ -26,7 +26,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return addressTypes;
         }
 
-        public async Task<List<Handlers.GetAddressTypes.AddressType>> GetData()
+        public async Task<List<Handlers.GetAddressTypes.AddressType>?> GetData()
         {
             if (!cache.TryGetValue(CacheKeys.AddressTypes, out List<Handlers.GetAddressTypes.AddressType> addressTypes))
             {
@@ -36,9 +36,9 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return addressTypes;
         }
 
-        public async Task<List<Handlers.GetAddressTypes.AddressType>> GetData(Func<Handlers.GetAddressTypes.AddressType, bool> predicate)
+        public async Task<List<Handlers.GetAddressTypes.AddressType>?> GetData(Func<Handlers.GetAddressTypes.AddressType, bool> predicate)
         {
-            return (await GetData())
+            return (await GetData())!
                 .Where(predicate).ToList();
         }
     }

@@ -26,7 +26,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return shipMethods;
         }
 
-        public async Task<List<Handlers.GetShipMethods.ShipMethod>> GetData()
+        public async Task<List<Handlers.GetShipMethods.ShipMethod>?> GetData()
         {
             if (!cache.TryGetValue(CacheKeys.ShipMethods, out List<Handlers.GetShipMethods.ShipMethod> shipMethods))
             {
@@ -36,7 +36,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return shipMethods;
         }
 
-        public async Task<List<Handlers.GetShipMethods.ShipMethod>> GetData(Func<Handlers.GetShipMethods.ShipMethod, bool> predicate)
+        public async Task<List<Handlers.GetShipMethods.ShipMethod>?> GetData(Func<Handlers.GetShipMethods.ShipMethod, bool> predicate)
         {
             return (await GetData())!
                 .Where(predicate).ToList();

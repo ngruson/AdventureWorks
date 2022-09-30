@@ -4,6 +4,7 @@ using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Xunit;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
-using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
+using GetCusts = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
+using GetCust = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using UpdateCust = AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
 using AW.UI.Web.Infrastructure.ApiClients;
+using Moq;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
 {
@@ -29,8 +32,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer> list,
-                CustomerApiClient sut
+                List<GetCusts.StoreCustomer> list,
+                CustomerApiClient sut,
+                Mock<ILogger<CustomerConverter<GetCusts.Customer, GetCusts.StoreCustomer, GetCusts.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -39,9 +43,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Store;
                 }
 
-                var customers = new GetCustomersResponse
+                var customers = new GetCusts.GetCustomersResponse
                 {
-                    Customers = list.ToList<SharedKernel.Customer.Handlers.GetCustomers.Customer>(),
+                    Customers = list.ToList<GetCusts.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -56,9 +60,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            SharedKernel.Customer.Handlers.GetCustomers.Customer,
-                                            SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
-                                            SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>()
+                                            GetCusts.Customer,
+                                            GetCusts.StoreCustomer,
+                                            GetCusts.IndividualCustomer>(
+                                                mockLogger.Object
+                                            )
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -87,8 +93,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer> list,
-                CustomerApiClient sut
+                List<GetCusts.IndividualCustomer> list,
+                CustomerApiClient sut,
+                Mock<ILogger<CustomerConverter<GetCusts.Customer, GetCusts.StoreCustomer, GetCusts.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -97,9 +104,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     item.CustomerType = CustomerType.Individual;
                 }
 
-                var customers = new GetCustomersResponse
+                var customers = new GetCusts.GetCustomersResponse
                 {
-                    Customers = list.ToList<SharedKernel.Customer.Handlers.GetCustomers.Customer>(),
+                    Customers = list.ToList<GetCusts.Customer>(),
                     TotalCustomers = list.Count
                 };
 
@@ -114,9 +121,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            SharedKernel.Customer.Handlers.GetCustomers.Customer,
-                                            SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
-                                            SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>()
+                                            GetCusts.Customer,
+                                            GetCusts.StoreCustomer,
+                                            GetCusts.IndividualCustomer>(
+                                                mockLogger.Object
+                                            )
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -176,8 +185,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer,
-                CustomerApiClient sut
+                GetCust.StoreCustomer customer,
+                CustomerApiClient sut,
+                Mock<ILogger<CustomerConverter<GetCust.Customer, GetCust.StoreCustomer, GetCust.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -193,9 +203,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            SharedKernel.Customer.Handlers.GetCustomer.Customer,
-                                            SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer,
-                                            SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer>()
+                                            GetCust.Customer,
+                                            GetCust.StoreCustomer,
+                                            GetCust.IndividualCustomer>(
+                                                mockLogger.Object
+                                            )
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -309,8 +321,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer customer,
-                CustomerApiClient sut
+                UpdateCust.StoreCustomer customer,
+                CustomerApiClient sut,
+                Mock<ILogger<CustomerConverter<UpdateCust.Customer, UpdateCust.StoreCustomer, UpdateCust.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -326,9 +339,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
+                                            UpdateCust.Customer,
+                                            UpdateCust.StoreCustomer,
+                                            UpdateCust.IndividualCustomer>(
+                                                mockLogger.Object
+                                            )
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -350,8 +365,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer customer,
-                CustomerApiClient sut
+                UpdateCust.IndividualCustomer customer,
+                CustomerApiClient sut,
+                Mock<ILogger<CustomerConverter<UpdateCust.Customer, UpdateCust.StoreCustomer, UpdateCust.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -367,9 +383,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
-                                            SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
+                                            UpdateCust.Customer,
+                                            UpdateCust.StoreCustomer,
+                                            UpdateCust.IndividualCustomer>(
+                                                mockLogger.Object
+                                            )
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase

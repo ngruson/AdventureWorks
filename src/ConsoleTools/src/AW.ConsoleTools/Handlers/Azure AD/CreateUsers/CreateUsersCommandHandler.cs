@@ -30,7 +30,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                 new GetAllEmployeesQuery(),
                 cancellationToken
             );
-            Guard.Against.Null(employees, nameof(employees));
+            Guard.Against.Null(employees, _logger);
 
             foreach (var employee in employees)
             {
@@ -40,7 +40,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                     new GetGroupQuery(groupName!),
                     cancellationToken
                 );
-                Guard.Against.Null(group, nameof(group));
+                Guard.Against.Null(group, _logger);
 
                 var user = await _mediator.Send(
                     new GetUserQuery(employee?.Name?.FullName!),

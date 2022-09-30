@@ -36,7 +36,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
             return statesProvinces;
         }
 
-        public async Task<List<Handlers.GetStatesProvinces.StateProvince>> GetData(Func<Handlers.GetStatesProvinces.StateProvince, bool> predicate)
+        public async Task<List<Handlers.GetStatesProvinces.StateProvince>?> GetData(Func<Handlers.GetStatesProvinces.StateProvince, bool> predicate)
         {
             return (await GetData())!
                 .Where(predicate).ToList();

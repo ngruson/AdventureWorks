@@ -7,9 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Text.Json;
 using System;
-using System.Text.Json.Serialization;
 using AutoMapper.EquivalencyExpression;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,11 +19,13 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
-using AW.SharedKernel.JsonConverters;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 using AW.Services.SharedKernel.Interfaces;
 using Microsoft.Identity.Web;
 using AW.SharedKernel.OpenIdConnect;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using AW.SharedKernel.JsonConverters;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -98,33 +98,20 @@ namespace AW.Services.Customer.REST.API
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
-            })
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-
-                options.JsonSerializerOptions.Converters.Add(
-                    new CustomerConverter<
-                        Core.Models.GetCustomers.Customer,
-                        Core.Models.GetCustomers.StoreCustomer,
-                        Core.Models.GetCustomers.IndividualCustomer>()
-                );
-
-                options.JsonSerializerOptions.Converters.Add(
-                    new CustomerConverter<
-                        Core.Models.GetCustomer.Customer,
-                        Core.Models.GetCustomer.StoreCustomer,
-                        Core.Models.GetCustomer.IndividualCustomer>()
-                );
-
-                options.JsonSerializerOptions.Converters.Add(
-                    new CustomerConverter<
-                        Core.Models.UpdateCustomer.Customer,
-                        Core.Models.UpdateCustomer.StoreCustomer,
-                        Core.Models.UpdateCustomer.IndividualCustomer>()
-                );
             });
+
+            services.AddTransient<CustomerConverter<Core.Models.GetCustomers.Customer,
+                Core.Models.GetCustomers.StoreCustomer,
+                Core.Models.GetCustomers.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Models.GetCustomer.Customer,
+                Core.Models.GetCustomer.StoreCustomer,
+                Core.Models.GetCustomer.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Models.UpdateCustomer.Customer,
+                Core.Models.UpdateCustomer.StoreCustomer,
+                Core.Models.UpdateCustomer.IndividualCustomer>>();
+
+            services.AddOptions<ConfigureJsonOptions>();
+            services.AddSingleton<IConfigureOptions<JsonOptions>, ConfigureJsonOptions>();
 
             return services;
         }

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -7,24 +8,24 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProduct
 {
     public class GetProductQueryHandler : IRequestHandler<GetProductQuery, Product>
     {
-        private readonly ILogger<GetProductQueryHandler> logger;
-        private readonly IProductApiClient client;
+        private readonly ILogger<GetProductQueryHandler> _logger;
+        private readonly IProductApiClient _client;
 
         public GetProductQueryHandler(ILogger<GetProductQueryHandler> logger, IProductApiClient client)
         {
-            this.logger = logger;
-            this.client = client;
+            _logger = logger;
+            _client = client;
         }
 
         public async Task<Product> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting product {ProductNumber} from API", request.ProductNumber);
-            var product = await client.GetProductAsync(
+            _logger.LogInformation("Getting product {ProductNumber} from API", request.ProductNumber);
+            var product = await _client.GetProductAsync(
                 request.ProductNumber
             );
-            Guard.Against.Null(product, nameof(product));
+            Guard.Against.Null(product, _logger);
 
-            logger.LogInformation("Returning product {ProductNumber}", request.ProductNumber);
+            _logger.LogInformation("Returning product {ProductNumber}", request.ProductNumber);
 
             return product;
         }

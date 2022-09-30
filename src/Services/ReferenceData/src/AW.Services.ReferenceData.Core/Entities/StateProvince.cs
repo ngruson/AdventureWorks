@@ -12,12 +12,12 @@ namespace AW.Services.ReferenceData.Core.Entities
         private StateProvince() { }
 
         public int Id { get; set; }
-        public string StateProvinceCode { get; private set; }
+        public string? StateProvinceCode { get; private set; }
 
-        public CountryRegion CountryRegion { get; private set; }
+        public CountryRegion? CountryRegion { get; private set; }
 
         public bool IsOnlyStateProvinceFlag { get; private set; }
 
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
     }
 }
