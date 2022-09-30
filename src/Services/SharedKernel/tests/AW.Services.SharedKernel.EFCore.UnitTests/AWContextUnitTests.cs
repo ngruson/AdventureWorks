@@ -4,6 +4,7 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Linq;
@@ -14,11 +15,12 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 {
     public class AWContextUnitTests
     {
-        private static ItemsContext CreateContext(DbContextOptions<AWContext> options, IMediator mediator)
-            => new(options, mediator);
+        private static ItemsContext CreateContext(ILogger<ItemsContext> logger, DbContextOptions<AWContext> options, IMediator mediator)
+            => new(logger, options, mediator);
 
         [Theory, AutoMoqData]
         public async Task SetModified_EntityStateIsModified(
+            Mock<ILogger<ItemsContext>> mockLogger,
             Mock<IMediator> mockMediator
         )
         {
@@ -27,7 +29,11 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .UseInMemoryDatabase(databaseName: nameof(SetModified_EntityStateIsModified))
                 .Options;
 
-            using var context = CreateContext(options, mockMediator.Object);
+            using var context = CreateContext(
+                mockLogger.Object, 
+                options, 
+                mockMediator.Object
+            );
 
             context.Items.Add(new Item { Name = "Item1" });
             await context.SaveChangesAsync();
@@ -42,6 +48,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 
         [Theory, AutoMoqData]
         public async Task SaveEntitiesAsync_ChangesAreSaved_DomainEventsAreDispatched(
+            Mock<ILogger<ItemsContext>> mockLogger,
             Mock<IMediator> mockMediator
         )
         {
@@ -50,7 +57,11 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .UseInMemoryDatabase(databaseName: nameof(SaveEntitiesAsync_ChangesAreSaved_DomainEventsAreDispatched))
                 .Options;
 
-            using var context = CreateContext(options, mockMediator.Object);
+            using var context = CreateContext(
+                mockLogger.Object,
+                options,
+                mockMediator.Object
+            );
 
             //Act
             context.Items.Add(new Item { Name = "Item1" });
@@ -62,6 +73,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 
         [Theory, AutoMoqData]
         public async Task Execute_FuncIsExecuted(
+            Mock<ILogger<ItemsContext>> mockLogger,
             Mock<IMediator> mockMediator
         )
         {
@@ -70,15 +82,19 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .UseInMemoryDatabase(databaseName: nameof(Execute_FuncIsExecuted))
                 .Options;
 
-            using var context = CreateContext(options, mockMediator.Object);
+            using var context = CreateContext(
+                mockLogger.Object,
+                options,
+                mockMediator.Object
+            );
 
             //Act
             int result = 0;
-            Func<Task> func = () =>
+            Task func()
             {
                 result = 2 + 2;
                 return Task.FromResult(result);
-            };
+            }
             await context.Execute(func);
 
             //Assert
@@ -87,6 +103,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 
         [Theory, AutoMoqData]
         public async Task BeginTransactionAsync_TransactionIsStarted(
+            Mock<ILogger<ItemsContext>> mockLogger,
             Mock<IMediator> mockMediator
         )
         {
@@ -96,7 +113,11 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .ConfigureWarnings(config => config.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
-            using var context = CreateContext(options, mockMediator.Object);
+            using var context = CreateContext(
+                mockLogger.Object,
+                options,
+                mockMediator.Object
+            );
 
             //Act
             Func<Task> func = async() => await context.BeginTransactionAsync();

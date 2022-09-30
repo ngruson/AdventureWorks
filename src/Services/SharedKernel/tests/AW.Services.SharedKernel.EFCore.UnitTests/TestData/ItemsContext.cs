@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace AW.Services.SharedKernel.EFCore.UnitTests.TestData
 {
     public class ItemsContext : AWContext
     {
-        public ItemsContext(DbContextOptions<AWContext> options, IMediator mediator)
-            : base(options, mediator)
+        public ItemsContext(ILogger<ItemsContext> logger, DbContextOptions<AWContext> options, IMediator mediator)
+            : base(logger, options, mediator)
         {
         }
 

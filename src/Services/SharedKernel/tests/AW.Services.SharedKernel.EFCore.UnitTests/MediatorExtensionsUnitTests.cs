@@ -3,6 +3,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,11 +13,12 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 {
     public class MediatorExtensionsUnitTests
     {
-        private static ItemsContext CreateContext(DbContextOptions<AWContext> options, IMediator mediator)
-            => new(options, mediator);
+        private static ItemsContext CreateContext(ILogger<ItemsContext> logger, DbContextOptions<AWContext> options, IMediator mediator)
+            => new(logger, options, mediator);
 
         [Theory, AutoMoqData]
         public async Task DispatchDomainEventsAsync_PublishDomainEvents(
+            Mock<ILogger<ItemsContext>> mockLogger,
             Mock<IMediator> mockMediator,
             Mock<INotification> mockDomainEvent
         )
@@ -26,7 +28,11 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .UseInMemoryDatabase(databaseName: "DispatchDomainEventsAsync_PublishDomainEvents")
                 .Options;
 
-            using var context = CreateContext(options, mockMediator.Object);
+            using var context = CreateContext(
+                mockLogger.Object,
+                options,
+                mockMediator.Object
+            );
 
             //Act
             var item = new Item { Name = "Item1" };

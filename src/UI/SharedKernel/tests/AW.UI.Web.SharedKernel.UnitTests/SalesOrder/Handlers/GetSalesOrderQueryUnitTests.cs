@@ -50,7 +50,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.SalesOrder.Handlers
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Required input SalesOrderNumber was empty. (Parameter 'SalesOrderNumber')");
+                .WithMessage("Required input request.SalesOrderNumber was empty. (Parameter 'request.SalesOrderNumber')");
 
             mockSalesOrderApiClient.Verify(x => x.GetSalesOrderAsync(
                     It.IsAny<string>()
