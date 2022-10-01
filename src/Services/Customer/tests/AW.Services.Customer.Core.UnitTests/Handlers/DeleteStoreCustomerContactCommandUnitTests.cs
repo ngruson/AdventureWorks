@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -68,8 +69,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'storeCustomer')");
+            await func.Should().ThrowAsync<CustomerNotFoundException>()
+                .WithMessage($"Customer {command.AccountNumber} not found");
         }
 
         [Theory]
@@ -83,8 +84,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'contact')");
+            await func.Should().ThrowAsync<StoreContactNotFoundException>()
+                .WithMessage($"Contact (name: {command.CustomerContact.ContactPerson.Name.FullName}, type: {command.CustomerContact.ContactType}) for customer {command.AccountNumber} not found");
         }
     }
 }

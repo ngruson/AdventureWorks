@@ -1,6 +1,7 @@
 using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.GetAllCustomers;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -65,8 +66,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'customers')");
+            await func.Should().ThrowAsync<CustomersNotFoundException>()
+                .WithMessage("Customers not found");
         }
     }
 }

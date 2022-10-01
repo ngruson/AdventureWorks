@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,33 +13,34 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomerAddress
 {
     public class AddCustomerAddressCommandHandler : IRequestHandler<AddCustomerAddressCommand, Unit>
     {
-        private readonly ILogger<AddCustomerAddressCommandHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepository<Entities.Customer> customerRepository;
+        private readonly ILogger<AddCustomerAddressCommandHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly IRepository<Entities.Customer> _customerRepository;
 
         public AddCustomerAddressCommandHandler(
             ILogger<AddCustomerAddressCommandHandler> logger,
             IMapper mapper,
             IRepository<Entities.Customer> customerRepository
-        ) => (this.logger, this.mapper, this.customerRepository) = (logger, mapper, customerRepository);
+        ) => (_logger, _mapper, _customerRepository) = 
+            (logger, mapper, customerRepository);
 
         public async Task<Unit> Handle(AddCustomerAddressCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var customer = await customerRepository.SingleOrDefaultAsync(
+            var customer = await _customerRepository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(customer, logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Adding address to customer");
-            var customerAddress = mapper.Map<Entities.CustomerAddress>(request.CustomerAddress);
+            _logger.LogInformation("Adding address to customer");
+            var customerAddress = _mapper.Map<Entities.CustomerAddress>(request.CustomerAddress);
             customer.AddAddress(customerAddress);
 
-            logger.LogInformation("Saving customer to database");
-            await customerRepository.UpdateAsync(customer, cancellationToken);
+            _logger.LogInformation("Saving customer to database");
+            await _customerRepository.UpdateAsync(customer, cancellationToken);
 
             return Unit.Value;
         }

@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddress;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -8,6 +9,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -82,8 +84,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'individualCustomer')");
+            await func.Should().ThrowAsync<CustomerNotFoundException>()
+                .WithMessage($"Customer {command.AccountNumber} not found");
         }
 
         [Theory]
@@ -114,8 +116,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'emailAddress')");
+            await func.Should().ThrowAsync<EmailAddressNotFoundException>()
+                .WithMessage($"Email address {command.EmailAddress.Value} for customer {command.AccountNumber} not found");
         }
     }
 }

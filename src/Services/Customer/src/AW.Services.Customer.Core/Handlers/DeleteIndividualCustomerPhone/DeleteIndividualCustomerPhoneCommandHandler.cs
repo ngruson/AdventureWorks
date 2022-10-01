@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,36 +13,42 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
 {
     public class DeleteIndividualCustomerPhoneCommandHandler : IRequestHandler<DeleteIndividualCustomerPhoneCommand, Unit>
     {
-        private readonly ILogger<DeleteIndividualCustomerPhoneCommandHandler> logger;
-        private readonly IRepository<Entities.IndividualCustomer> individualCustomerRepository;
+        private readonly ILogger<DeleteIndividualCustomerPhoneCommandHandler> _logger;
+        private readonly IRepository<Entities.IndividualCustomer> _repository;
 
         public DeleteIndividualCustomerPhoneCommandHandler(
             ILogger<DeleteIndividualCustomerPhoneCommandHandler> logger,
-            IRepository<Entities.IndividualCustomer> individualCustomerRepository
-        ) => (this.logger, this.individualCustomerRepository) = (logger, individualCustomerRepository);
+            IRepository<Entities.IndividualCustomer> repository
+        ) => (_logger, _repository) = (logger, repository);
 
         public async Task<Unit> Handle(DeleteIndividualCustomerPhoneCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var individualCustomer = await individualCustomerRepository.SingleOrDefaultAsync(
+            var individualCustomer = await _repository.SingleOrDefaultAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, logger);
+            Guard.Against.CustomerNull(individualCustomer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Removing phone from customer");
+            _logger.LogInformation("Removing phone from customer");
             var phone = individualCustomer.Person.PhoneNumbers.FirstOrDefault(
                 e => e.PhoneNumberType == request.Phone.PhoneNumberType &&
                     e.PhoneNumber == request.Phone.PhoneNumber
             );
-            Guard.Against.Null(phone, logger);
+            Guard.Against.PhoneNumberNull(
+                phone, 
+                request.AccountNumber, 
+                request.Phone.PhoneNumber,
+                request.Phone.PhoneNumberType,
+                _logger
+            );
 
             individualCustomer.Person.RemovePhoneNumber(phone);
 
-            logger.LogInformation("Updating customer to database");
-            await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);
+            _logger.LogInformation("Updating customer to database");
+            await _repository.UpdateAsync(individualCustomer, cancellationToken);
             return Unit.Value;
         }
     }

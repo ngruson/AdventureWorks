@@ -1,10 +1,12 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.UnitTesting;
+using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
 using Moq;
 using System;
@@ -37,6 +39,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     ContactType = contactType,
                     ContactPerson = new PersonDto
                     {
+                        Name = contactPerson.Name,
                         EmailAddresses = new List<EmailAddressDto>
                         {
                             new EmailAddressDto
@@ -105,8 +108,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'storeCustomer')");
+            await func.Should().ThrowAsync<CustomerNotFoundException>()
+                .WithMessage($"Customer {command.AccountNumber} not found");
         }
 
         [Theory]
@@ -114,7 +117,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_ContactDoesNotExist_ThrowArgumentNullException(
             UpdateStoreCustomerContactCommandHandler sut,
             string accountNumber,
-            string contactType
+            string contactType,
+            NameFactory contactName
         )
         {
             //Arrange
@@ -126,6 +130,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     ContactType = contactType,
                     ContactPerson = new PersonDto
                     {
+                        Name = contactName,
                         EmailAddresses = new List<EmailAddressDto>()
                     }
                 }
@@ -135,8 +140,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'contact')");
+            await func.Should().ThrowAsync<StoreContactNotFoundException>()
+                .WithMessage($"Contact (name: {contactName.FullName}, type: {contactType}) for customer {accountNumber} not found");
         }
     }
 }

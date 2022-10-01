@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,33 +13,33 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
 {
     public class AddIndividualCustomerPhoneCommandHandler : IRequestHandler<AddIndividualCustomerPhoneCommand, Unit>
     {
-        private readonly ILogger<AddIndividualCustomerPhoneCommandHandler> logger;
-        private readonly IMapper mapper;
-        private readonly IRepository<Entities.IndividualCustomer> individualCustomerRepository;
+        private readonly ILogger<AddIndividualCustomerPhoneCommandHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly IRepository<Entities.IndividualCustomer> _repository;
 
         public AddIndividualCustomerPhoneCommandHandler(
             ILogger<AddIndividualCustomerPhoneCommandHandler> logger,
             IMapper mapper,
-            IRepository<Entities.IndividualCustomer> individualCustomerRepository
-        ) => (this.logger, this.mapper, this.individualCustomerRepository) = (logger, mapper, individualCustomerRepository);
+            IRepository<Entities.IndividualCustomer> repository
+        ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
         public async Task<Unit> Handle(AddIndividualCustomerPhoneCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var individualCustomer = await individualCustomerRepository.SingleOrDefaultAsync(
+            var individualCustomer = await _repository.SingleOrDefaultAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, logger);
+            Guard.Against.CustomerNull(individualCustomer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Adding phone to customer");
-            var phone = mapper.Map<Entities.PersonPhone>(request.Phone);
+            _logger.LogInformation("Adding phone to customer");
+            var phone = _mapper.Map<Entities.PersonPhone>(request.Phone);
             individualCustomer.Person.AddPhoneNumber(phone);
 
-            logger.LogInformation("Saving customer to database");
-            await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);
+            _logger.LogInformation("Saving customer to database");
+            await _repository.UpdateAsync(individualCustomer, cancellationToken);
 
             return Unit.Value;
         }

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,36 +13,41 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
 {
     public class DeleteStoreCustomerContactCommandHandler : IRequestHandler<DeleteStoreCustomerContactCommand, Unit>
     {
-        private readonly ILogger<DeleteStoreCustomerContactCommandHandler> logger;
-        private readonly IRepository<Entities.StoreCustomer> storeCustomerRepository;
+        private readonly ILogger<DeleteStoreCustomerContactCommandHandler> _logger;
+        private readonly IRepository<Entities.StoreCustomer> _repository;
 
         public DeleteStoreCustomerContactCommandHandler(
             ILogger<DeleteStoreCustomerContactCommandHandler> logger,
             IRepository<Entities.StoreCustomer> storeCustomerRepository
-        ) => (this.logger, this.storeCustomerRepository) = (logger, storeCustomerRepository);
+        ) => (_logger, _repository) = (logger, storeCustomerRepository);
         
         public async Task<Unit> Handle(DeleteStoreCustomerContactCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var storeCustomer = await storeCustomerRepository.SingleOrDefaultAsync(
+            var storeCustomer = await _repository.SingleOrDefaultAsync(
                 new GetStoreCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(storeCustomer, logger);
+            Guard.Against.CustomerNull(storeCustomer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Removing phone from contact");
+            _logger.LogInformation("Removing phone from contact");
             var contact = storeCustomer.Contacts.FirstOrDefault(
                 c => c.ContactType == request.CustomerContact.ContactType &&
                     c.ContactPerson.Name == request.CustomerContact.ContactPerson.Name
             );
-            Guard.Against.Null(contact, logger);
+            Guard.Against.StoreContactNull(contact,
+                request.AccountNumber,
+                request.CustomerContact.ContactPerson.Name.FullName,
+                request.CustomerContact.ContactType,
+                _logger
+            );
 
             storeCustomer.RemoveContact(contact);
 
-            logger.LogInformation("Updating customer to database");
-            await storeCustomerRepository.UpdateAsync(storeCustomer, cancellationToken);
+            _logger.LogInformation("Updating customer to database");
+            await _repository.UpdateAsync(storeCustomer, cancellationToken);
             return Unit.Value;
         }
     }

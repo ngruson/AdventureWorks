@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -35,14 +36,18 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(customer, _logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Getting address from database");
             var customerAddress = customer.Addresses.FirstOrDefault(
                 ca => ca.AddressType == request.CustomerAddress.AddressType
             );
-            Guard.Against.Null(customerAddress, _logger);
-
+            Guard.Against.AddressNull(
+                customerAddress, 
+                request.AccountNumber, 
+                request.CustomerAddress.AddressType,
+                _logger
+            );
 
             var existingAddress = await IsExistingAddress(request.CustomerAddress.Address);
 

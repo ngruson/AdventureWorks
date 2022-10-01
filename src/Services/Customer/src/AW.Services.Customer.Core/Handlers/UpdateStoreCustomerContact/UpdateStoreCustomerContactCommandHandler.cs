@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -15,35 +15,41 @@ namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
     {
         private readonly ILogger<UpdateStoreCustomerContactCommandHandler> _logger;
         private readonly IMapper _mapper;
-        private readonly IRepository<Entities.StoreCustomer> _storeRepository;
+        private readonly IRepository<Entities.StoreCustomer> _repository;
 
         public UpdateStoreCustomerContactCommandHandler(
             ILogger<UpdateStoreCustomerContactCommandHandler> logger,
             IMapper mapper,
-            IRepository<Entities.StoreCustomer> storeRepository
-        ) => (_logger, _mapper, _storeRepository) = (logger, mapper, storeRepository);
+            IRepository<Entities.StoreCustomer> repository
+        ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
         
         public async Task<Unit> Handle(UpdateStoreCustomerContactCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting customer from database");
 
-            var storeCustomer = await _storeRepository.SingleOrDefaultAsync(
+            var storeCustomer = await _repository.SingleOrDefaultAsync(
                 new GetStoreCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(storeCustomer, _logger);
+            Guard.Against.CustomerNull(storeCustomer, request.AccountNumber, _logger);
 
             var contact = storeCustomer.Contacts.FirstOrDefault(c =>
                 c.ContactType == request.CustomerContact.ContactType
             );
-            Guard.Against.Null(contact, _logger);
+            Guard.Against.StoreContactNull(
+                contact,
+                request.AccountNumber,
+                request.CustomerContact.ContactPerson.Name.FullName,
+                request.CustomerContact.ContactType,
+                _logger
+            );
 
             _logger.LogInformation("Updating contact");
             _mapper.Map(request.CustomerContact, contact);
 
             _logger.LogInformation("Saving customer to database");
-            await _storeRepository.UpdateAsync(storeCustomer, cancellationToken);
+            await _repository.UpdateAsync(storeCustomer, cancellationToken);
 
             return Unit.Value;
         }

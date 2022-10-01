@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,35 +13,40 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddres
 {
     public class DeleteIndividualCustomerEmailAddressCommandHandler : IRequestHandler<DeleteIndividualCustomerEmailAddressCommand, Unit>
     {
-        private readonly ILogger<DeleteIndividualCustomerEmailAddressCommandHandler> logger;
-        private readonly IRepository<Entities.IndividualCustomer> individualCustomerRepository;
+        private readonly ILogger<DeleteIndividualCustomerEmailAddressCommandHandler> _logger;
+        private readonly IRepository<Entities.IndividualCustomer> _repository;
 
         public DeleteIndividualCustomerEmailAddressCommandHandler(
             ILogger<DeleteIndividualCustomerEmailAddressCommandHandler> logger,
-            IRepository<Entities.IndividualCustomer> individualCustomerRepository
-        ) => (this.logger, this.individualCustomerRepository) = (logger, individualCustomerRepository);
+            IRepository<Entities.IndividualCustomer> repository
+        ) => (_logger, _repository) = (logger, repository);
 
         public async Task<Unit> Handle(DeleteIndividualCustomerEmailAddressCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var individualCustomer = await individualCustomerRepository.SingleOrDefaultAsync(
+            var individualCustomer = await _repository.SingleOrDefaultAsync(
                 new GetIndividualCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(individualCustomer, logger);
+            Guard.Against.CustomerNull(individualCustomer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Removing address from customer");
+            _logger.LogInformation("Removing address from customer");
             var emailAddress = individualCustomer.Person.EmailAddresses.FirstOrDefault(
                 e => e.EmailAddress == request.EmailAddress
             );
-            Guard.Against.Null(emailAddress, logger);
+            Guard.Against.EmailAddressNull(
+                emailAddress,
+                request.AccountNumber,
+                request.EmailAddress.Value,
+                _logger
+            );
 
             individualCustomer.Person.RemoveEmailAddress(emailAddress);
 
-            logger.LogInformation("Updating customer to database");
-            await individualCustomerRepository.UpdateAsync(individualCustomer, cancellationToken);
+            _logger.LogInformation("Updating customer to database");
+            await _repository.UpdateAsync(individualCustomer, cancellationToken);
             return Unit.Value;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,33 +13,33 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
 {
     public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerDto>
     {
-        private readonly ILogger<UpdateCustomerCommandHandler> logger;
-        private readonly IRepository<Entities.Customer> customerRepository;
-        private readonly IMapper mapper;
+        private readonly ILogger<UpdateCustomerCommandHandler> _logger;
+        private readonly IRepository<Entities.Customer> _repository;
+        private readonly IMapper _mapper;
 
         public UpdateCustomerCommandHandler(
             ILogger<UpdateCustomerCommandHandler> logger,
-            IRepository<Entities.Customer> customerRepository,
+            IRepository<Entities.Customer> repository,
             IMapper mapper) =>
-                (this.logger, this.customerRepository, this.mapper) = (logger, customerRepository, mapper);
+                (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<CustomerDto> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Getting customer from database");
             var spec = new GetCustomerSpecification(request.Customer.AccountNumber);
-            var customer = await customerRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(customer, logger);
+            var customer = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
+            Guard.Against.CustomerNull(customer, request.Customer.AccountNumber, _logger);
 
-            logger.LogInformation("Updating customer");
-            mapper.Map(request.Customer, customer);
+            _logger.LogInformation("Updating customer");
+            _mapper.Map(request.Customer, customer);
 
-            logger.LogInformation("Saving customer to database");
-            await customerRepository.UpdateAsync(customer, cancellationToken);
+            _logger.LogInformation("Saving customer to database");
+            await _repository.UpdateAsync(customer, cancellationToken);
 
-            logger.LogInformation("Returning customer");
-            return mapper.Map<CustomerDto>(customer);
+            _logger.LogInformation("Returning customer");
+            return _mapper.Map<CustomerDto>(customer);
         }
     }
 }

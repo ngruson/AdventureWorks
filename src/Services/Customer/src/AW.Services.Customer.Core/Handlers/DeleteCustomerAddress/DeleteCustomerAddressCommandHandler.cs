@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -12,35 +13,40 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
 {
     public class DeleteCustomerAddressCommandHandler : IRequestHandler<DeleteCustomerAddressCommand, Unit>
     {
-        private readonly ILogger<DeleteCustomerAddressCommandHandler> logger;
-        private readonly IRepository<Entities.Customer> customerRepository;
+        private readonly ILogger<DeleteCustomerAddressCommandHandler> _logger;
+        private readonly IRepository<Entities.Customer> _repository;
 
         public DeleteCustomerAddressCommandHandler(
             ILogger<DeleteCustomerAddressCommandHandler> logger,
-            IRepository<Entities.Customer> customerRepository
-        ) => (this.logger, this.customerRepository) = (logger, customerRepository);
+            IRepository<Entities.Customer> repository
+        ) => (_logger, _repository) = (logger, repository);
         
         public async Task<Unit> Handle(DeleteCustomerAddressCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
-            logger.LogInformation("Getting customer from database");
+            _logger.LogInformation("Handle called");
+            _logger.LogInformation("Getting customer from database");
 
-            var customer = await customerRepository.SingleOrDefaultAsync(
+            var customer = await _repository.SingleOrDefaultAsync(
                 new GetCustomerSpecification(request.AccountNumber),
                 cancellationToken
             );
-            Guard.Against.Null(customer, logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
-            logger.LogInformation("Removing address from customer");
+            _logger.LogInformation("Removing address from customer");
             var customerAddress = customer.Addresses.FirstOrDefault(
                 a => a.AddressType == request.AddressType
             );
-            Guard.Against.Null(customerAddress, logger);
+            Guard.Against.AddressNull(
+                customerAddress, 
+                request.AccountNumber, 
+                request.AddressType, 
+                _logger
+            );
 
             customer.RemoveAddress(customerAddress);
 
-            logger.LogInformation("Updating customer to database");
-            await customerRepository.UpdateAsync(customer, cancellationToken);
+            _logger.LogInformation("Updating customer to database");
+            await _repository.UpdateAsync(customer, cancellationToken);
             return Unit.Value;
         }
     }

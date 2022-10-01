@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
+using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.AddStoreCustomerContact;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -96,8 +97,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'storeCustomer')");
+            await func.Should().ThrowAsync<CustomerNotFoundException>()
+                .WithMessage($"Customer {accountNumber} not found");
         }
     }
 }

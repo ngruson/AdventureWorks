@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -20,7 +21,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
             ILogger<GetCustomerQueryHandler> logger,
             IMapper mapper,
             IRepository<Entities.Customer> repository
-        ) => (this._logger, this._mapper, this._repository) = (logger, mapper, repository);
+        ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
         public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
@@ -32,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
             );
 
             var customer = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(customer, _logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Returning customer");
             return _mapper.Map<CustomerDto>(customer);

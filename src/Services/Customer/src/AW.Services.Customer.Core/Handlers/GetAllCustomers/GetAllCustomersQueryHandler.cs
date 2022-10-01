@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -32,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.GetAllCustomers
                 );
 
             var customers = await _repository.ListAsync(spec, cancellationToken);            
-            Guard.Against.Null(customers, _logger);
+            Guard.Against.CustomersNull(customers, _logger);
 
             _logger.LogInformation("Returning {Count} customers", customers.Count);
 
