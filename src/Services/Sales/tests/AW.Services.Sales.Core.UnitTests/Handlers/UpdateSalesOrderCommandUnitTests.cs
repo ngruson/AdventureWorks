@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -52,8 +53,8 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'salesOrder')");
+            await func.Should().ThrowAsync<SalesOrderNotFoundException>()
+                .WithMessage($"Sales order {command.SalesOrder.SalesOrderNumber} not found");
         }
     }
 }

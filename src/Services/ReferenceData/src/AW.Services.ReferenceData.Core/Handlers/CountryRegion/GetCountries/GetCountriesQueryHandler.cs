@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
+using AW.Services.ReferenceData.Core.GuardClauses;
 
 namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
 {
@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
             _logger.LogInformation("Getting countries from database");
             var countries = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.Null(countries, _logger);
+            Guard.Against.CountriesNull(countries, _logger);
 
             _logger.LogInformation("Returning countries");
             return _mapper.Map<List<Country>>(countries);

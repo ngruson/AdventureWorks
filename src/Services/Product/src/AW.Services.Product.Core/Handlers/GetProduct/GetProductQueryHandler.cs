@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -30,7 +31,7 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
             _logger.LogInformation("Getting product from database");
             var product = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
 
-            Guard.Against.Null(product, _logger);
+            Guard.Against.ProductNull(product, request.ProductNumber, _logger);
 
             _logger.LogInformation("Returning product");
             return _mapper.Map<Product>(product);

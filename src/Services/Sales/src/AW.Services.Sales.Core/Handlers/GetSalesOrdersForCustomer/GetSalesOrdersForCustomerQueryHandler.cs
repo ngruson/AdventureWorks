@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
@@ -11,20 +13,20 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
 {
     public class GetSalesOrdersForCustomerQueryHandler : IRequestHandler<GetSalesOrdersForCustomerQuery, GetSalesOrdersDto>
     {
-        private readonly ILogger<GetSalesOrdersForCustomerQueryHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetSalesOrdersForCustomerQueryHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _repository;
+        private readonly IMapper _mapper;
 
         public GetSalesOrdersForCustomerQueryHandler(
             ILogger<GetSalesOrdersForCustomerQueryHandler> logger,
             IRepository<Entities.SalesOrder> repository, IMapper mapper) =>
-            (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<GetSalesOrdersDto> Handle(GetSalesOrdersForCustomerQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting sales orders from database for customer {Customer}", request.CustomerNumber);
+            _logger.LogInformation("Getting sales orders from database for customer {Customer}", request.CustomerNumber);
             var spec = new GetSalesOrdersForCustomerSpecification(
                 request.CustomerNumber
             );
@@ -32,13 +34,14 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
                 request.CustomerNumber
             );
 
-            var orders = await repository.ListAsync(spec, cancellationToken);
+            var orders = await _repository.ListAsync(spec, cancellationToken);
+            Guard.Against.SalesOrdersNull(orders, _logger);
 
-            logger.LogInformation("Returning sales orders");
+            _logger.LogInformation("Returning sales orders");
             return new GetSalesOrdersDto
             {
-                SalesOrders = mapper.Map<List<SalesOrderDto>>(orders),
-                TotalSalesOrders = await repository.CountAsync(countSpec, cancellationToken)
+                SalesOrders = _mapper.Map<List<SalesOrderDto>>(orders),
+                TotalSalesOrders = await _repository.CountAsync(countSpec, cancellationToken)
             };
         }
     }

@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
@@ -40,7 +41,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_NoContactTypesExists_ThrowException(
+        public async Task Handle_NoContactTypesExists_ThrowContactTypesNotFoundException(
             [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
             GetContactTypesQueryHandler sut,
             GetContactTypesQuery query
@@ -54,7 +55,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<ContactTypesNotFoundException>();
             contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
         }
     }

@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
@@ -40,8 +41,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_NoAddressTypesExists_ThrowException(
-            //List<Entities.AddressType> addressTypes,
+        public async Task Handle_NoAddressTypesExists_ThrowAddressTypesNotFoundException(
             [Frozen] Mock<IRepository<Entities.AddressType>> addressTypeRepoMock,
             GetAddressTypesQueryHandler sut,
             GetAddressTypesQuery query
@@ -55,7 +55,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<AddressTypesNotFoundException>();
             addressTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
         }
     }

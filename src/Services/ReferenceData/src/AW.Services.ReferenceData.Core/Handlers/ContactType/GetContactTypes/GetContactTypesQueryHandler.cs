@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes
             _logger.LogInformation("Getting contact types from database");
             var contactTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.Null(contactTypes, _logger);
+            Guard.Against.ContactTypesNull(contactTypes, _logger);
 
             _logger.LogInformation("Returning contact types");
             return _mapper.Map<List<ContactType>>(contactTypes);

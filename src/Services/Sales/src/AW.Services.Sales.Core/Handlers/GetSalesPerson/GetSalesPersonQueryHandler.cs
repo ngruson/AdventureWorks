@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -28,13 +28,13 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPerson
             logger.LogInformation("Getting sales person from database");
 
             var spec = new GetSalesPersonSpecification(
-                request.FirstName,
-                request.MiddleName,
-                request.LastName
+                request.Name.FirstName,
+                request.Name.MiddleName,
+                request.Name.LastName
             );
 
             var salesPerson = await repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(salesPerson, logger);
+            Guard.Against.SalesPersonNull(salesPerson, request.Name.FullName, logger);
 
             logger.LogInformation("Returning sales persons");
 

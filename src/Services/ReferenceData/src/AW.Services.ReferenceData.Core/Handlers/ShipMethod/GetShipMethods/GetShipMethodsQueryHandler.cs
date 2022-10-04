@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
 
             _logger.LogInformation("Getting shipping methods from database");
             var shipMethods = await _repository.ListAsync(cancellationToken);
-            Guard.Against.Null(shipMethods, _logger);
+            Guard.Against.ShipMethodsNull(shipMethods, _logger);
 
             _logger.LogInformation("Returning shipping methods");
             return _mapper.Map<List<ShipMethod>>(shipMethods);

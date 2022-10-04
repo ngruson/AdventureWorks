@@ -11,27 +11,27 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
 {
     public class DeleteSalesOrderCommandHandler : IRequestHandler<DeleteSalesOrderCommand>
     {
-        private readonly ILogger<DeleteSalesOrderCommandHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> salesOrderRepository;
+        private readonly ILogger<DeleteSalesOrderCommandHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _repository;
 
         public DeleteSalesOrderCommandHandler(
             ILogger<DeleteSalesOrderCommandHandler> logger,
             IRepository<Entities.SalesOrder> salesOrderRepository
-        ) => (this.logger, this.salesOrderRepository) = (logger, salesOrderRepository);
+        ) => (_logger, _repository) = (logger, salesOrderRepository);
 
         public async Task<Unit> Handle(DeleteSalesOrderCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(
+            _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
+            var salesOrder = await _repository.SingleOrDefaultAsync(
                 new GetSalesOrderSpecification(request.SalesOrderNumber),
                 cancellationToken
             );
-            Guard.Against.SalesOrderNull(salesOrder);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
-            logger.LogInformation("Deleting sales order {@SalesOrder}", salesOrder);
-            await salesOrderRepository.DeleteAsync(salesOrder, cancellationToken);
+            _logger.LogInformation("Deleting sales order {@SalesOrder}", salesOrder);
+            await _repository.DeleteAsync(salesOrder, cancellationToken);
 
-            logger.LogInformation("Sales order {SalesOrderNumber} has been deleted", request.SalesOrderNumber);
+            _logger.LogInformation("Sales order {SalesOrderNumber} has been deleted", request.SalesOrderNumber);
             return Unit.Value;
         }
     }

@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos
             _logger.LogInformation("Getting products from database");
             var products = await _repository.ListAsync(spec, cancellationToken);
 
-            Guard.Against.Null(products, _logger);
+            Guard.Against.ProductsNull(products, _logger);
 
             _logger.LogInformation("Returning products");
 

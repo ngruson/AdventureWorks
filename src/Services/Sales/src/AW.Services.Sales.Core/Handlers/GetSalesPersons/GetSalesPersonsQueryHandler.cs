@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
                 salesPersons = await repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.Null(salesPersons, logger);
+            Guard.Against.SalesPersonsNull(salesPersons, logger);
 
             logger.LogInformation("Returning sales persons");
 

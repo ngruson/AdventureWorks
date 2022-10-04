@@ -2,6 +2,7 @@
 using AutoMapper;
 using AW.Services.Product.Core.Common;
 using AW.Services.Product.Core.Extensions;
+using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -44,7 +45,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             );
 
             var products = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.Null(products, _logger);
+            Guard.Against.ProductsNull(products, _logger);
 
             _logger.LogInformation("Returning products");
             return new GetProductsDto

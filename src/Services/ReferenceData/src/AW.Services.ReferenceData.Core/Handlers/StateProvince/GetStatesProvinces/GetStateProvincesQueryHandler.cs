@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
                 statesProvinces = await _repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.Null(statesProvinces, _logger);
+            Guard.Against.StatesProvincesNull(statesProvinces, _logger);
 
             _logger.LogInformation("Returning state/provinces");
             return _mapper.Map<List<StateProvince>>(statesProvinces);

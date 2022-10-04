@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -85,7 +86,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_WithoutCountryRegionCode_NoTerritoriesExists_ThrowArgumentNullException(
+        public async Task Handle_WithoutCountryRegionCode_NoTerritoriesExists_ThrowTerritoriesNotFoundException(
             [Frozen] Mock<IRepository<Entities.Territory>> territoryRepoMock,
             GetTerritoriesQueryHandler sut,
             GetTerritoriesQuery query
@@ -100,7 +101,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<TerritoriesNotFoundException>();
             territoryRepoMock.Verify(x => x.ListAsync(
                     It.IsAny<CancellationToken>()
                 )
@@ -108,21 +109,25 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_WithCountryRegionCode_NoTerritoriesExists_ThrowArgumentNullException(
+        public async Task Handle_WithCountryRegionCode_NoTerritoriesExists_ThrowTerritoriesNotFoundException(
             [Frozen] Mock<IRepository<Entities.Territory>> territoryRepoMock,
             GetTerritoriesQueryHandler sut,
             GetTerritoriesQuery query
         )
         {
             //Arrange
-            territoryRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((List<Entities.Territory>)null);
+            territoryRepoMock.Setup(x => x.ListAsync(
+                    It.IsAny<GetTerritoriesForCountrySpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync((List<Entities.Territory>)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<TerritoriesNotFoundException>();
             territoryRepoMock.Verify(x => x.ListAsync(
                     It.IsAny<GetTerritoriesForCountrySpecification>(),
                     It.IsAny<CancellationToken>()

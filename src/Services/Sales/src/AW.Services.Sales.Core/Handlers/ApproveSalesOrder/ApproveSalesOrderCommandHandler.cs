@@ -1,4 +1,6 @@
-﻿using AW.Services.Sales.Core.Specifications;
+﻿using Ardalis.GuardClauses;
+using AW.Services.Sales.Core.Guards;
+using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -9,34 +11,30 @@ namespace AW.Services.Sales.Core.Handlers.ApproveSalesOrder
 {
     public class ApproveSalesOrderCommandHandler : IRequestHandler<ApproveSalesOrderCommand, bool>
     {
-        private readonly ILogger<ApproveSalesOrderCommandHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> salesOrderRepository;
+        private readonly ILogger<ApproveSalesOrderCommandHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _repository;
 
         public ApproveSalesOrderCommandHandler(
             ILogger<ApproveSalesOrderCommandHandler> logger,
-            IRepository<Entities.SalesOrder> salesOrderRepository
+            IRepository<Entities.SalesOrder> repository
         )
         {
-            this.logger = logger;
-            this.salesOrderRepository = salesOrderRepository;
+            _logger = logger;
+            _repository = repository;
         }
 
         public async Task<bool> Handle(ApproveSalesOrderCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(
+            _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
+            var salesOrder = await _repository.SingleOrDefaultAsync(
                 new GetSalesOrderSpecification(request.SalesOrderNumber),
                 cancellationToken
             );
 
-            if (salesOrder == null)
-            {
-                logger.LogInformation("Sales order {SalesOrderNumber} not found, Result is false", request.SalesOrderNumber);
-                return false;
-            }
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
             salesOrder.SetApprovedStatus();
-            return await salesOrderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }
 }

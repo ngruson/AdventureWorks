@@ -1,26 +1,19 @@
-﻿using System;
+﻿using AW.Services.Infrastructure;
+using System;
 using System.Runtime.Serialization;
 
 namespace AW.Services.Sales.Core.Exceptions
 {
     [Serializable]
-    public class CustomerNotFoundException : SalesDomainException
+    public class CustomerNotFoundException : DomainException
     {
-        public CustomerNotFoundException()
+        public CustomerNotFoundException(string accountNumber)
+            : base($"Customer {accountNumber} not found")
         { }
 
-        protected CustomerNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
-
-        public CustomerNotFoundException(string message)
-            : base(message)
-        { }
-
-        public CustomerNotFoundException(string message, Exception innerException)
-            : base(message, innerException)
-        { }
-
-        public override string Message => "Customer not found";
+        protected CustomerNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :
+            base(serializationInfo, streamingContext)
+        {
+        }
     }
 }

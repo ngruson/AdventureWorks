@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core.Exceptions;
 
 namespace AW.Services.ReferenceData.Core.UnitTests
 {
@@ -82,20 +83,25 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_NoStateProvincesExists_ThrowException(
+        public async Task Handle_NoStateProvincesExists_ThrowStatesProvincesNotFoundException(
             [Frozen] Mock<IRepository<Entities.StateProvince>> stateProvinceRepoMock,
             GetStatesProvincesQueryHandler sut,
             GetStatesProvincesQuery query
         )
         {
             //Arrange
-            query.CountryRegionCode = "";
+            stateProvinceRepoMock.Setup(x => x.ListAsync(
+                    It.IsAny<GetStatesProvincesSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync((List<Entities.StateProvince>)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<StatesProvincesNotFoundException>();
             stateProvinceRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<GetStatesProvincesSpecification>(),
                 It.IsAny<CancellationToken>()

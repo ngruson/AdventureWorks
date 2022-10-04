@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes
             _logger.LogInformation("Getting address types from database");
             var addressTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.Null(addressTypes, _logger);
+            Guard.Against.AddressTypesNull(addressTypes, _logger);
 
             _logger.LogInformation("Returning address types");
             return _mapper.Map<List<AddressType>>(addressTypes);

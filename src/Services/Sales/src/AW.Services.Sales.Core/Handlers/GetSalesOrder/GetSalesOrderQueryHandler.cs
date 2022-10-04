@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
@@ -10,28 +12,29 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {
     public class GetSalesOrderQueryHandler : IRequestHandler<GetSalesOrderQuery, SalesOrderDto>
     {
-        private readonly ILogger<GetSalesOrderQueryHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> repository;
-        private readonly IMapper mapper;
+        private readonly ILogger<GetSalesOrderQueryHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _repository;
+        private readonly IMapper _mapper;
 
         public GetSalesOrderQueryHandler(
             ILogger<GetSalesOrderQueryHandler> logger,
             IRepository<Entities.SalesOrder> repository, IMapper mapper) =>
-            (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
+            (_logger, _repository, _mapper) = (logger, repository, mapper);
 
         public async Task<SalesOrderDto> Handle(GetSalesOrderQuery request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handle called");
+            _logger.LogInformation("Handle called");
 
-            logger.LogInformation("Getting sales order from database");
+            _logger.LogInformation("Getting sales order from database");
             var spec = new GetFullSalesOrderSpecification(
                 request.SalesOrderNumber
             );
 
-            var salesOrder = await repository.SingleOrDefaultAsync(spec, cancellationToken);
+            var salesOrder = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
-            logger.LogInformation("Returning sales orders");
-            return mapper.Map<SalesOrderDto>(salesOrder);
+            _logger.LogInformation("Returning sales orders");
+            return _mapper.Map<SalesOrderDto>(salesOrder);
         }
     }
 }

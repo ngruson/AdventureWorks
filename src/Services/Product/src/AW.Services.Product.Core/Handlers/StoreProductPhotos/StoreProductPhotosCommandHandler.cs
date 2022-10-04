@@ -12,8 +12,8 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
 {
     public class StoreProductPhotosCommandHandler : IRequestHandler<StoreProductPhotosCommand>
     {
-        private readonly IMediator _mediator;
         private readonly ILogger<StoreProductPhotosCommandHandler> _logger;
+        private readonly IMediator _mediator;        
         private readonly IFileHandler _fileWriter;
 
         public StoreProductPhotosCommandHandler(

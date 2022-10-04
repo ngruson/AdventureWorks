@@ -1,26 +1,19 @@
-﻿using System;
+﻿using AW.Services.Infrastructure;
+using System;
 using System.Runtime.Serialization;
 
 namespace AW.Services.Sales.Core.Exceptions
 {
     [Serializable]
-    public class SalesOrderNotFoundException : SalesDomainException
+    public class SalesOrderNotFoundException : DomainException
     {
-        public SalesOrderNotFoundException()
+        public SalesOrderNotFoundException(string salesOrderNumber)
+            : base($"Sales order {salesOrderNumber} not found")
         { }
 
-        protected SalesOrderNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
-
-        public SalesOrderNotFoundException(string message)
-            : base(message)
-        { }
-
-        public SalesOrderNotFoundException(string message, Exception innerException)
-            : base(message, innerException)
-        { }
-
-        public override string Message => "Sales order not found";
+        protected SalesOrderNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :
+            base(serializationInfo, streamingContext)
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
@@ -40,7 +41,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_NoShipMethodsExists_ThrowException(
+        public async Task Handle_NoShipMethodsExists_ThrowShipMethodsNotFoundException(
             [Frozen] Mock<IRepository<Entities.ShipMethod>> shipMethodRepoMock,
             GetShipMethodsQueryHandler sut,
             GetShipMethodsQuery query
@@ -54,7 +55,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<ShipMethodsNotFoundException>();
             shipMethodRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
         }
     }

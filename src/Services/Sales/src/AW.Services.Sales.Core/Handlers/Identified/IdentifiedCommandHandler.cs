@@ -12,19 +12,15 @@ namespace AW.Services.Sales.Core.Handlers.Identified
     public class IdentifiedCommandHandler<T, R> : IRequestHandler<IdentifiedCommand<T, R>, R>
         where T : IRequest<R>
     {
-        private readonly IMediator mediator;
-        private readonly IRequestManager requestManager;
-        private readonly ILogger<IdentifiedCommandHandler<T, R>> logger;
+        private readonly ILogger<IdentifiedCommandHandler<T, R>> _logger;
+        private readonly IMediator _mediator;
+        private readonly IRequestManager _requestManager;
 
         public IdentifiedCommandHandler(
+            ILogger<IdentifiedCommandHandler<T, R>> logger,
             IMediator mediator,
-            IRequestManager requestManager,
-            ILogger<IdentifiedCommandHandler<T, R>> logger)
-        {
-            this.mediator = mediator;
-            this.requestManager = requestManager;
-            this.logger = logger;
-        }
+            IRequestManager requestManager
+        ) => (_logger, _mediator, _requestManager) = (logger, mediator, requestManager);
 
         /// <summary>
         /// Creates the result value to return if a previous request was found
@@ -43,16 +39,16 @@ namespace AW.Services.Sales.Core.Handlers.Identified
         /// <returns>Return value of inner command or default value if request same ID was found</returns>
         public async Task<R> Handle(IdentifiedCommand<T, R> request, CancellationToken cancellationToken)
         {
-            var alreadyExists = await requestManager.ExistAsync(request.Id);
+            var alreadyExists = await _requestManager.ExistAsync(request.Id);
             if (alreadyExists)
             {
-                logger.LogInformation("----- Request {Id} already exists", request.Id);
+                _logger.LogInformation("----- Request {Id} already exists", request.Id);
                 return CreateResultForDuplicateRequest();
             }
             else
             {
-                logger.LogInformation("----- Creating request {Id}", request.Id);
-                await requestManager.CreateRequestForCommandAsync<T>(request.Id);
+                _logger.LogInformation("----- Creating request {Id}", request.Id);
+                await _requestManager.CreateRequestForCommandAsync<T>(request.Id);
                 try
                 {
                     var command = request.Command;
@@ -73,7 +69,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
                             break;
                     }
 
-                    logger.LogInformation(
+                    _logger.LogInformation(
                         "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
                         commandName,
                         idProperty,
@@ -81,9 +77,9 @@ namespace AW.Services.Sales.Core.Handlers.Identified
                         command);
 
                     // Send the embedded business command to mediator so it runs its related CommandHandler 
-                    var result = await mediator.Send(command, cancellationToken);
+                    var result = await _mediator.Send(command, cancellationToken);
 
-                    logger.LogInformation(
+                    _logger.LogInformation(
                         "----- Command result: {@Result} - {CommandName} - {IdProperty}: {CommandId} ({@Command})",
                         result,
                         commandName,
@@ -95,7 +91,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation("Exception occurred: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
+                    _logger.LogInformation("Exception occurred: {Message}, {StackTrace}", ex.Message, ex.StackTrace);
                     return default;
                 }
             }

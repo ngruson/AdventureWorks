@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
+using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -74,8 +75,8 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'employees')");
+            await func.Should().ThrowAsync<EmployeesNotFoundException>()
+                .WithMessage("Employees not found");
         }
     }
 }

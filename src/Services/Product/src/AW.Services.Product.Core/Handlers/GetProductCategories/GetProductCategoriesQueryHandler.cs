@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
@@ -33,7 +34,7 @@ namespace AW.Services.Product.Core.Handlers.GetProductCategories
                 cancellationToken
             );
 
-            Guard.Against.Null(categories, _logger);
+            Guard.Against.ProductCategoriesNull(categories, _logger);
 
             _logger.LogInformation("Returning product categories");
             return _mapper.Map<List<ProductCategory>>(categories);

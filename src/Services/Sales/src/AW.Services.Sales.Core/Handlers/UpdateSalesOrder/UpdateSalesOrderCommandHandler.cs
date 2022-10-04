@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.Sales.Core.Guards;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -32,7 +32,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
             _logger.LogInformation("Getting sales order from database");
             var spec = new GetSalesOrderSpecification(request.SalesOrder.SalesOrderNumber);
             var salesOrder = await _salesOrderRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.Null(salesOrder, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrder.SalesOrderNumber, _logger);
 
             _logger.LogInformation("Updating sales order");
             _mapper.Map(request.SalesOrder, salesOrder);
@@ -45,7 +45,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
                 ),
                 cancellationToken
             );
-            Guard.Against.Null(salesPerson, _logger);
+            Guard.Against.SalesPersonNull(salesPerson, request.SalesOrder.SalesPerson.Name.FullName, _logger);
             if (salesOrder.SalesPerson != salesPerson)
                 salesOrder.SetSalesPerson(salesPerson);
 

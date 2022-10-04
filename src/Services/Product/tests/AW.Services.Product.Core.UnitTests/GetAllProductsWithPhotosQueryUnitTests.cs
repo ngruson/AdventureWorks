@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Product.Core.AutoMapper;
+using AW.Services.Product.Core.Exceptions;
 using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -71,7 +72,7 @@ namespace AW.Services.Product.Core.UnitTests
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert            
-            await func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<ProductsNotFoundException>();
         }
     }
 }

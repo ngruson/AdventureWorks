@@ -1,4 +1,6 @@
-﻿using AW.Services.Sales.Core.Specifications;
+﻿using Ardalis.GuardClauses;
+using AW.Services.Sales.Core.Guards;
+using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -9,34 +11,26 @@ namespace AW.Services.Sales.Core.Handlers.ShipSalesOrder
 {
     public class ShipSalesOrderCommandHandler : IRequestHandler<ShipSalesOrderCommand, bool>
     {
-        private readonly ILogger<ShipSalesOrderCommandHandler> logger;
-        private readonly IRepository<Entities.SalesOrder> salesOrderRepository;
+        private readonly ILogger<ShipSalesOrderCommandHandler> _logger;
+        private readonly IRepository<Entities.SalesOrder> _repository;
 
         public ShipSalesOrderCommandHandler(
             ILogger<ShipSalesOrderCommandHandler> logger,
-            IRepository<Entities.SalesOrder> salesOrderRepository
-        )
-        {
-            this.logger = logger;
-            this.salesOrderRepository = salesOrderRepository;
-        }
+            IRepository<Entities.SalesOrder> repository
+        ) => (_logger, _repository) = (logger, repository);
 
         public async Task<bool> Handle(ShipSalesOrderCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
-            var salesOrder = await salesOrderRepository.SingleOrDefaultAsync(
+            _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
+            var salesOrder = await _repository.SingleOrDefaultAsync(
                 new GetSalesOrderSpecification(request.SalesOrderNumber),
                 cancellationToken
             );
 
-            if (salesOrder == null)
-            {
-                logger.LogInformation("Sales order {SalesOrderNumber} not found, Result is false", request.SalesOrderNumber);
-                return false;
-            }
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
             salesOrder.SetShippedStatus();
-            return await salesOrderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }
 }

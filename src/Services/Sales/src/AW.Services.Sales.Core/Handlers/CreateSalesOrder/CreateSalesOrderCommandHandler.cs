@@ -7,7 +7,6 @@ using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.Sales.Core.ValueTypes;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -73,7 +72,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
                         new GetSpecialOfferProductSpecification(item.ProductNumber),
                         cancellationToken
                     );
-                Guard.Against.Null(specialOfferProduct, _logger);
+                Guard.Against.SpecialOfferProductNull(specialOfferProduct, item.ProductNumber, _logger);
 
                 salesOrder.AddOrderLine(item.ProductNumber, item.ProductName, item.UnitPrice, item.Discount, specialOfferProduct, item.Quantity);
             }
