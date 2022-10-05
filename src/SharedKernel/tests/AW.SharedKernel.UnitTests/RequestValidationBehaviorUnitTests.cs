@@ -31,9 +31,9 @@ namespace AW.SharedKernel.UnitTests
             //Act
             
             var result = await sut.Handle(
-                new GetCustomerQuery { CustomerNumber = "1" },
-                CancellationToken.None,
-                () => Task.FromResult(customer)
+                new GetCustomerQuery { CustomerNumber = "1" },                
+                () => Task.FromResult(customer),
+                CancellationToken.None
             );
 
             //Assert
@@ -54,9 +54,9 @@ namespace AW.SharedKernel.UnitTests
             //Act
             Func<Task> func = async () => 
                 await sut.Handle(
-                    new GetCustomerQuery(),
-                    CancellationToken.None,
-                    () => Task.FromResult(new Customer())
+                    new GetCustomerQuery(),                    
+                    () => Task.FromResult(new Customer()),
+                    CancellationToken.None
                 );
 
             //Assert

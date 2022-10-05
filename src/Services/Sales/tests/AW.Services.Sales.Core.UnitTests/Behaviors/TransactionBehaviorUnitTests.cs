@@ -26,7 +26,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
             //Arrange
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None, next);
+            var result = await sut.Handle(command, next, CancellationToken.None);
 
             //Assert
             mockDbContext.Verify(_ => _.Execute(
@@ -47,7 +47,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
                 .Returns(true);
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None, next);
+            var result = await sut.Handle(command, next, CancellationToken.None);
 
             //Assert
             result.Should().Be(await next.Invoke());
@@ -72,7 +72,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
                 .ThrowsAsync(new Exception());
 
             //Act
-            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None, next);
+            Func<Task> func = async () => await sut.Handle(command, next, CancellationToken.None);
 
             //Assert
             await func.Should().ThrowAsync<Exception>();

@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Behaviors
             this.logger = logger ?? throw new ArgumentException(nameof(ILogger));
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var response = default(TResponse);
             var typeName = request.GetGenericTypeName();

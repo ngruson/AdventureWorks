@@ -6,6 +6,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -14,7 +15,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMoqData]
-        public void TestValidate_ValidCommand_NoValidationError(
+        public async Task TestValidate_ValidCommand_NoValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             AddCustomerCommandValidator sut,
             AddCustomerCommand command
@@ -30,7 +31,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Customer)null);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(command => command.Customer);
@@ -39,7 +40,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutCustomer_ValidationError(
+        public async Task TestValidate_WithoutCustomer_ValidationError(
             AddCustomerCommandValidator sut,
             AddCustomerCommand command
         )
@@ -48,7 +49,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             command.Customer = null;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.Customer)
@@ -57,7 +58,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithEmptyAccountNumber_ValidationError(
+        public async Task TestValidate_WithEmptyAccountNumber_ValidationError(
             AddCustomerCommandValidator sut,
             AddCustomerCommand command
         )
@@ -66,7 +67,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             command.Customer.AccountNumber = null;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
@@ -75,7 +76,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithAccountNumberTooLong_ValidationError(
+        public async Task TestValidate_WithAccountNumberTooLong_ValidationError(
             AddCustomerCommandValidator sut,
             AddCustomerCommand command
         )
@@ -84,7 +85,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             command.Customer.AccountNumber = "AW000000011";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
@@ -93,14 +94,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithAccountNumberAlreadyExists_ValidationError(
+        public async Task TestValidate_WithAccountNumberAlreadyExists_ValidationError(
             //[Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             AddCustomerCommandValidator sut,
             AddCustomerCommand command
         )
         {
+            //Arrange
+            command.Customer.AccountNumber = "AW00000001";
+
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)

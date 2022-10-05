@@ -7,6 +7,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -15,7 +16,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMoqData]
-        public void TestValidate_ValidCommand_NoValidationError(
+        public async Task TestValidate_ValidCommand_NoValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateCustomerAddressCommandValidator sut,
@@ -32,7 +33,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync(customer);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(command => command.AccountNumber);
@@ -41,7 +42,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithEmptyAccountNumber_ValidationError(
+        public async Task TestValidate_WithEmptyAccountNumber_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
@@ -50,7 +51,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             command.AccountNumber = null;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
@@ -59,13 +60,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithAccountNumberTooLong_ValidationError(
+        public async Task TestValidate_WithAccountNumberTooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
@@ -74,12 +75,15 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_CustomerNotFound_ValidationError(
+        public async Task TestValidate_CustomerNotFound_ValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
+            //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -87,7 +91,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.StoreCustomer)null);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
@@ -96,16 +100,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutCustomerAddress_ValidationError(
+        public async Task TestValidate_WithoutCustomerAddress_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
             command.CustomerAddress = null;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress)
@@ -114,16 +119,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutAddressType_ValidationError(
+        public async Task TestValidate_WithoutAddressType_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
             command.CustomerAddress.AddressType = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.AddressType)
@@ -132,16 +138,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutAddress_ValidationError(
+        public async Task TestValidate_WithoutAddress_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
             command.CustomerAddress.Address = null;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address)
@@ -150,16 +157,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutAddressLine1_ValidationError(
+        public async Task TestValidate_WithoutAddressLine1_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
             command.CustomerAddress.Address.AddressLine1 = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.AddressLine1)
@@ -168,18 +176,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_AddressLine1TooLong_ValidationError(
+        public async Task TestValidate_AddressLine1TooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber.Substring(0, 10);
             command.CustomerAddress.Address.AddressLine1 =
                 command.CustomerAddress.Address.AddressLine1 +
                 command.CustomerAddress.Address.AddressLine1;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.AddressLine1)
@@ -188,18 +197,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_AddressLine2TooLong_ValidationError(
+        public async Task TestValidate_AddressLine2TooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber.Substring(0, 10);
             command.CustomerAddress.Address.AddressLine2 =
                 command.CustomerAddress.Address.AddressLine2 +
                 command.CustomerAddress.Address.AddressLine2;
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.AddressLine2)
@@ -208,16 +218,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutPostalCode_ValidationError(
+        public async Task TestValidate_WithoutPostalCode_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
             command.CustomerAddress.Address.PostalCode = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.PostalCode)
@@ -226,13 +237,16 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_PostalCodeTooLong_ValidationError(
+        public async Task TestValidate_PostalCodeTooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
+            //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.PostalCode)
@@ -241,16 +255,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutCity_ValidationError(
+        public async Task TestValidate_WithoutCity_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
             command.CustomerAddress.Address.City = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.City)
@@ -259,13 +275,22 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_CityTooLong_ValidationError(
+        public async Task TestValidate_CityTooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
+            //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
+            command.CustomerAddress.Address.City = command.CustomerAddress.Address.City[..30];
+            command.CustomerAddress.Address.StateProvinceCode = command.CustomerAddress.Address.StateProvinceCode[..3];
+            command.CustomerAddress.Address.CountryRegionCode = command.CustomerAddress.Address.CountryRegionCode[..3];
+
+            command.CustomerAddress.Address.City = "a".PadRight(35, 'b');
+
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.City)
@@ -274,16 +299,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutStateProvince_ValidationError(
+        public async Task TestValidate_WithoutStateProvince_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
+            command.CustomerAddress.Address.City = command.CustomerAddress.Address.City[..30];
             command.CustomerAddress.Address.StateProvinceCode = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.StateProvinceCode)
@@ -292,13 +320,18 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_StateProvinceTooLong_ValidationError(
+        public async Task TestValidate_StateProvinceTooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
+            //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
+            command.CustomerAddress.Address.City = command.CustomerAddress.Address.City[..30];
+
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.StateProvinceCode)
@@ -307,16 +340,20 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_WithoutCountry_ValidationError(
+        public async Task TestValidate_WithoutCountry_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
             //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
+            command.CustomerAddress.Address.City = command.CustomerAddress.Address.City[..30];
+            command.CustomerAddress.Address.StateProvinceCode = command.CustomerAddress.Address.StateProvinceCode[..3];
             command.CustomerAddress.Address.CountryRegionCode = "";
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.CountryRegionCode)
@@ -325,13 +362,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_CountryTooLong_ValidationError(
+        public async Task TestValidate_CountryTooLong_ValidationError(
             UpdateCustomerAddressCommandValidator sut,
             UpdateCustomerAddressCommand command
         )
         {
+            //Arrange
+            command.AccountNumber = command.AccountNumber[..10];
+            command.CustomerAddress.Address.PostalCode = command.CustomerAddress.Address.PostalCode[..15];
+            command.CustomerAddress.Address.City = command.CustomerAddress.Address.City[..30];
+            command.CustomerAddress.Address.StateProvinceCode = command.CustomerAddress.Address.StateProvinceCode[..3];
+
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.CustomerAddress.Address.CountryRegionCode)
@@ -340,15 +383,27 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_AddressAlreadyExists_ValidationError(
+        public async Task TestValidate_AddressAlreadyExists_ValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateCustomerAddressCommandValidator sut,
-            UpdateCustomerAddressCommand command,
-            Entities.CustomerAddress customerAddress
+            UpdateCustomerAddressCommand command
+            //Entities.CustomerAddress customerAddress
         )
         {
             //Arrange
+            var customerAddress = new Entities.CustomerAddress(
+                command.CustomerAddress.AddressType,
+                new Entities.Address(
+                    command.CustomerAddress.Address.AddressLine1,
+                    command.CustomerAddress.Address.AddressLine2,
+                    command.CustomerAddress.Address.PostalCode.Substring(0, 15),
+                    command.CustomerAddress.Address.City.Substring(0, 30),
+                    command.CustomerAddress.Address.StateProvinceCode.Substring(0, 3),
+                    command.CustomerAddress.Address.CountryRegionCode.Substring(0, 3)
+                )
+            );
+            
             customer.AddAddress(customerAddress);
 
             command.AccountNumber = "1";
@@ -368,7 +423,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync(customer);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command)

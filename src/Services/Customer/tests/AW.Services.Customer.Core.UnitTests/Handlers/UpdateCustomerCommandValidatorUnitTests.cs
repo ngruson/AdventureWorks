@@ -8,6 +8,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -16,7 +17,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMoqData]
-        public void TestValidate_ValidCommand_NoValidationError(
+        public async Task TestValidate_ValidCommand_NoValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             Entities.StoreCustomer customer,
             UpdateCustomerCommandValidator sut,
@@ -33,7 +34,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync(customer);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(command => command.Customer);
@@ -96,7 +97,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public void TestValidate_CustomerNotFound_ValidationError(
+        public async Task TestValidate_CustomerNotFound_ValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandValidator sut,
             UpdateCustomerCommand command,
@@ -141,7 +142,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.StoreCustomer)null);
 
             //Act
-            var result = sut.TestValidate(command);
+            var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
