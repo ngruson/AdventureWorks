@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM Product)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table Product...'
+
 	SET IDENTITY_INSERT [Product] ON
 
 	INSERT [Product] ([ProductID], [Name], [ProductNumber], [MakeFlag], [FinishedGoodsFlag], [Color], [SafetyStockLevel], [ReorderPoint], [StandardCost], [ListPrice], [Size], [SizeUnitMeasureCode], [WeightUnitMeasureCode], [Weight], [DaysToManufacture], [ProductLine], [Class], [Style], [ProductSubcategoryID], [ProductModelID], [SellStartDate], [SellEndDate], [DiscontinuedDate]) VALUES (1, N'Adjustable Race', N'AR-5381', 0, 0, NULL, 1000, 750, 0.0000, 0.0000, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, CAST(N'2008-04-30T00:00:00.000' AS DateTime), NULL, NULL)
@@ -509,3 +511,4 @@ BEGIN
 
 	SET IDENTITY_INSERT [Product] OFF
 END
+GO

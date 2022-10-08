@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM UnitMeasure)
 BEGIN
+    PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table UnitMeasure...'
+
 	INSERT INTO UnitMeasure (UnitMeasureCode, Name) VALUES ('BOX', 'Boxes')
 	INSERT INTO UnitMeasure (UnitMeasureCode, Name) VALUES ('BTL', 'Bottle')
 	INSERT INTO UnitMeasure (UnitMeasureCode, Name) VALUES ('C', 'Celsius')
@@ -39,3 +41,4 @@ BEGIN
 	INSERT INTO UnitMeasure (UnitMeasureCode, Name) VALUES ('PCT', 'Percentage')
 	INSERT INTO UnitMeasure (UnitMeasureCode, Name) VALUES ('PT', 'Pint, US liquid')
 END
+GO

@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM ProductSubcategory)
 BEGIN
+    PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table ProductSubcategory...'
+
 	INSERT INTO ProductSubcategory (ProductCategoryID, Name) VALUES (1, 'Mountain Bikes')
 	INSERT INTO ProductSubcategory (ProductCategoryID, Name) VALUES (1, 'Road Bikes')
 	INSERT INTO ProductSubcategory (ProductCategoryID, Name) VALUES (1, 'Touring Bikes')
@@ -38,3 +40,4 @@ BEGIN
 	INSERT INTO ProductSubcategory (ProductCategoryID, Name) VALUES (4, 'Pumps')
 	INSERT INTO ProductSubcategory (ProductCategoryID, Name) VALUES (4, 'Tires and Tubes')
 END
+GO

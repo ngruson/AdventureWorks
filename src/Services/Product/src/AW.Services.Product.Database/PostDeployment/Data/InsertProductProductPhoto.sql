@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM ProductProductPhoto)
 BEGIN
+    PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table ProductProductPhoto...'
+
     INSERT [ProductProductPhoto] ([ProductID], [ProductPhotoID], [Primary]) VALUES (1, 1, 1)
     INSERT [ProductProductPhoto] ([ProductID], [ProductPhotoID], [Primary]) VALUES (2, 1, 1)
     INSERT [ProductProductPhoto] ([ProductID], [ProductPhotoID], [Primary]) VALUES (3, 1, 1)
@@ -505,3 +507,4 @@ BEGIN
     INSERT [ProductProductPhoto] ([ProductID], [ProductPhotoID], [Primary]) VALUES (998, 102, 1)
     INSERT [ProductProductPhoto] ([ProductID], [ProductPhotoID], [Primary]) VALUES (999, 102, 1)
 END
+GO

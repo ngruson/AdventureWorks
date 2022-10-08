@@ -56,25 +56,25 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Schema Objects" />
-    <Folder Include="Scripts" />
-    <Folder Include="Scripts\PostDeployment" />
+    <Folder Include="PostDeployment" />
+    <Folder Include="PostDeployment\Data" />
+    <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema Objects\Product.sql" />
-    <Build Include="Schema Objects\ProductCategory.sql" />
-    <Build Include="Schema Objects\ProductPhoto.sql" />
-    <Build Include="Schema Objects\ProductProductPhoto.sql" />
-    <Build Include="Schema Objects\ProductSubcategory.sql" />
-    <Build Include="Schema Objects\UnitMeasure.sql" />
-    <None Include="Scripts\PostDeployment\InsertProduct.sql" />
-    <None Include="Scripts\PostDeployment\InsertProductCategory.sql" />
-    <None Include="Scripts\PostDeployment\InsertProductPhoto.sql" />
-    <None Include="Scripts\PostDeployment\InsertProductProductPhoto.sql" />
-    <None Include="Scripts\PostDeployment\InsertProductSubcategory.sql" />
-    <None Include="Scripts\PostDeployment\InsertUnitMeasure.sql" />
+    <None Include="PostDeployment\Data\InsertProduct.sql" />
+    <None Include="PostDeployment\Data\InsertProductCategory.sql" />
+    <None Include="PostDeployment\Data\InsertProductPhoto.sql" />
+    <None Include="PostDeployment\Data\InsertProductProductPhoto.sql" />
+    <None Include="PostDeployment\Data\InsertProductSubcategory.sql" />
+    <None Include="PostDeployment\Data\InsertUnitMeasure.sql" />
+    <Build Include="Tables\Product.sql" />
+    <Build Include="Tables\ProductCategory.sql" />
+    <Build Include="Tables\ProductPhoto.sql" />
+    <Build Include="Tables\ProductProductPhoto.sql" />
+    <Build Include="Tables\ProductSubcategory.sql" />
+    <Build Include="Tables\UnitMeasure.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+    <None Include="PostDeployment\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
