@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM CustomerAddress)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table CustomerAddress...'
+
 	SET IDENTITY_INSERT [CustomerAddress] ON
 
 	INSERT [CustomerAddress] ([CustomerAddressID], [CustomerID], [AddressID], [AddressType]) VALUES (1, 1, 832, N'Main Office')
@@ -39736,3 +39738,4 @@ BEGIN
 	
 	SET IDENTITY_INSERT [CustomerAddress] OFF
 END
+GO

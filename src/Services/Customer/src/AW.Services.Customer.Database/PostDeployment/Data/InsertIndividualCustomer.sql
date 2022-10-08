@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM IndividualCustomer)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table IndividualCustomer...'
+
 	SET IDENTITY_INSERT [IndividualCustomer] ON
 
 	INSERT [dbo].[IndividualCustomer] ([CustomerID], [PersonID]) VALUES (11000, 13531)
@@ -36972,3 +36974,4 @@ BEGIN
 	
 	SET IDENTITY_INSERT [IndividualCustomer] OFF
 END
+GO

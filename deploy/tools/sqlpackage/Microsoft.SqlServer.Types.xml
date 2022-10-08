@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.SqlServer.Types</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.SqlServer.Types.SqlGeography">
+            <summary>
+            Provides operations for SqlGeography data types.
+            </summary>
+        </member>
+        <member name="P:Microsoft.SqlServer.Types.SqlGeography.IsNull">
+            <summary>
+            Determines whether the SqlGeography instance is null
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlGeography.Read(System.IO.BinaryReader)">
+            <summary>
+            Reads a binary representation of a geography type into a SqlGeography object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlGeography.Write(System.IO.BinaryWriter)">
+            <summary>
+            Writes a SqlGeography object to a binary stream.
+            </summary>
+        </member>
+        <member name="T:Microsoft.SqlServer.Types.SqlGeometry">
+            <summary>
+            Provides operations for SqlGeometry data types.
+            </summary>
+        </member>
+        <member name="P:Microsoft.SqlServer.Types.SqlGeometry.IsNull">
+            <summary>
+            Determines whether the SqlGeography instance is null
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlGeometry.Read(System.IO.BinaryReader)">
+            <summary>
+            Reads a binary representation of a geography type into a SqlGeometry object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlGeometry.Write(System.IO.BinaryWriter)">
+            <summary>
+            Writes a SqlGeometry object to a binary stream.
+            </summary>
+        </member>
+        <member name="T:Microsoft.SqlServer.Types.SqlHierarchyId">
+            <summary>
+            Provides operations for SqlHierarchyId data types.
+            </summary>
+        </member>
+        <member name="P:Microsoft.SqlServer.Types.SqlHierarchyId.IsNull">
+            <summary>
+            Determines whether the SqlHierarchyId instance is null
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlHierarchyId.CompareTo(System.Object)">
+            <summary>
+            Compares a SqlHierarchyId object with another object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlHierarchyId.Read(System.IO.BinaryReader)">
+            <summary>
+            Reads a binary representation of a SqlHierarchyId type into a SqlHierarchyId object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlHierarchyId.Write(System.IO.BinaryWriter)">
+            <summary>
+            Writes a SqlHierarchyId object to a binary stream.
+            </summary>
+        </member>
+        <member name="M:Microsoft.SqlServer.Types.SqlHierarchyId.ToString">
+            <summary>
+            Returns a SqlHierarchyId type to string format.
+            </summary>
+        </member>
+    </members>
+</doc>

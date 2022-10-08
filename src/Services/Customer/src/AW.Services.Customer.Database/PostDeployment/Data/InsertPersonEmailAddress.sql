@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM PersonEmailAddress)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table PersonEmailAddress...'
+
 	SET IDENTITY_INSERT [PersonEmailAddress] ON
 
 	INSERT [dbo].[PersonEmailAddress] ([PersonEmailAddressID], [PersonID], [EmailAddress]) VALUES (1, 291, N'gustavo0@adventure-works.com')
@@ -38790,3 +38792,4 @@ BEGIN
 	
 	SET IDENTITY_INSERT [PersonEmailAddress] OFF	
 END
+GO

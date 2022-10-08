@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM StoreCustomerContact)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table StoreCustomerContact...'
+
 	SET IDENTITY_INSERT [dbo].[StoreCustomerContact] ON
 	
 	INSERT [dbo].[StoreCustomerContact] ([StoreCustomerContactID], [CustomerID], [PersonID], [ContactType]) VALUES (1, 1, 933, N'Order Administrator')
@@ -2876,6 +2878,6 @@ BEGIN
 	
 	INSERT [dbo].[StoreCustomerContact] ([StoreCustomerContactID], [CustomerID], [PersonID], [ContactType]) VALUES (1437, 30118, 1993, N'Owner')
 	
-	SET IDENTITY_INSERT [dbo].[StoreCustomerContact] OFF
-	
+	SET IDENTITY_INSERT [dbo].[StoreCustomerContact] OFF	
 END
+GO

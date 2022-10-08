@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM PersonPhone)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table PersonPhone...'
+
 	INSERT [dbo].[PersonPhone] ([PersonID], [PhoneNumberType], [PhoneNumber]) VALUES (291, N'Cell', N'398-555-0132')
 	
 	INSERT [dbo].[PersonPhone] ([PersonID], [PhoneNumberType], [PhoneNumber]) VALUES (293, N'Cell', N'747-555-0171')
@@ -1506,3 +1508,4 @@ BEGIN
 	
 	INSERT [dbo].[PersonPhone] ([PersonID], [PhoneNumberType], [PhoneNumber]) VALUES (2050, N'Work', N'842-555-0125')	
 END
+GO

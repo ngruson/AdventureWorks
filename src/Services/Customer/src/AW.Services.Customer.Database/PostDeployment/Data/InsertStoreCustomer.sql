@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM StoreCustomer)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table StoreCustomer...'
+
 	SET IDENTITY_INSERT [StoreCustomer] ON
 
 	INSERT [dbo].[StoreCustomer] ([StoreCustomerID], [Name], [SalesPerson]) VALUES (1, N'A Bike Store', N'Pamela O Ansman-Wolfe')
@@ -2676,3 +2678,4 @@ BEGIN
 	
 	SET IDENTITY_INSERT [StoreCustomer] OFF
 END
+GO

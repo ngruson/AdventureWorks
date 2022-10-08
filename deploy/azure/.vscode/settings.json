@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "aw-sql-4tjh4vtkpt4dy.database.windows.net",
+            "port": 1433,
+            "askForPassword": true,
+            "driver": "MSSQL",
+            "database": "sqldb-adv-customer",
+            "username": "sqladmin",
+            "name": "aw-sql"
+        }
+    ]
+}
