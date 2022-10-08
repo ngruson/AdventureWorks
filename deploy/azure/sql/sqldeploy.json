@@ -45,6 +45,20 @@
             }
         },
         {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2022-02-01-preview",
+            "name": "[concat(variables('sql_server_name'), '/sqldb-adv-hr')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', variables('sql_server_name'))]"
+            ],
+            "sku": {
+                "name": "Basic",
+                "tier": "Basic",
+                "capacity": 5
+            }
+        },
+        {
           "type": "firewallrules",
           "name": "AllowAllWindowsAzureIps",
           "apiVersion": "2014-04-01-preview",

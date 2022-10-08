@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM Employee)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table Employee...'
+
 	INSERT [dbo].[Employee] ([PersonID], [NationalIDNumber], [LoginID], [OrganizationNode], [OrganizationLevel], [JobTitle], [BirthDate], [MaritalStatus], [Gender], [HireDate], [SalariedFlag], [CurrentFlag], [rowguid], [ModifiedDate]) VALUES (1, N'295847284', N'ken0', NULL, NULL, N'Chief Executive Officer', CAST(N'1969-01-29' AS Date), N'S', N'M', CAST(N'2009-01-14' AS Date), 1, 1, N'f01251e5-96a3-448d-981e-0f99d789110d', GETDATE())
 	
 	INSERT [dbo].[Employee] ([PersonID], [NationalIDNumber], [LoginID], [OrganizationNode], [OrganizationLevel], [JobTitle], [BirthDate], [MaritalStatus], [Gender], [HireDate], [SalariedFlag], [CurrentFlag], [rowguid], [ModifiedDate]) VALUES (2, N'245797967', N'terri0', N'/1/', 1, N'Vice President of Engineering', CAST(N'1971-08-01' AS Date), N'S', N'F', CAST(N'2008-01-31' AS Date), 1, 1, N'45e8f437-670d-4409-93cb-f9424a40d6ee', GETDATE())
@@ -580,3 +582,4 @@ BEGIN
 	
 	INSERT [dbo].[Employee] ([PersonID], [NationalIDNumber], [LoginID], [OrganizationNode], [OrganizationLevel], [JobTitle], [BirthDate], [MaritalStatus], [Gender], [HireDate], [SalariedFlag], [CurrentFlag], [rowguid], [ModifiedDate]) VALUES (290, N'134219713', N'ranjit0', N'/6/3/3/', 3, N'Sales Representative', CAST(N'1975-09-30' AS Date), N'S', N'M', CAST(N'2012-05-30' AS Date), 1, 1, N'604213f9-dd0f-43b4-bdd2-c96e93d3f4bf', GETDATE())
 END
+GO

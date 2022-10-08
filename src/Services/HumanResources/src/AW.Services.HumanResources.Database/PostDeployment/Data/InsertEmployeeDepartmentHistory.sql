@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM EmployeeDepartmentHistory)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table EmployeeDepartmentHistory...'
+
 	SET IDENTITY_INSERT [EmployeeDepartmentHistory] ON
 
 	INSERT [dbo].[EmployeeDepartmentHistory] ([EmployeeID], [DepartmentID], [ShiftID], [StartDate], [EndDate], [ModifiedDate]) VALUES (1, 16, 1, CAST(N'2009-01-14' AS Date), NULL, GETDATE())
@@ -596,3 +598,4 @@ BEGIN
 	
 	SET IDENTITY_INSERT [EmployeeDepartmentHistory] OFF
 END
+GO

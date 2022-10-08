@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM Department)
-BEGIN
+BEGIN	
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table Department...'
+
 	SET IDENTITY_INSERT [Department] ON
 
 	INSERT [Department] ([DepartmentID], [Name], [GroupName], [ModifiedDate]) VALUES (1, N'Engineering', N'Research and Development', GETDATE())
@@ -36,3 +38,4 @@ BEGIN
 
 	SET IDENTITY_INSERT [Department] OFF
 END
+GO

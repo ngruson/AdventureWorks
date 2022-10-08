@@ -1,5 +1,7 @@
 ﻿IF NOT EXISTS (SELECT TOP 1 1 FROM Person)
 BEGIN
+	PRINT CONVERT(varchar(20), GETDATE(), 113) + ' Populating table Person...'
+
 	SET IDENTITY_INSERT [Person] ON
 
 	INSERT [dbo].[Person] ([PersonID], [Title], [FirstName], [MiddleName], [LastName], [Suffix]) VALUES (263, NULL, N'Jean', N'E', N'Trenary', NULL)
@@ -585,3 +587,4 @@ BEGIN
 	SET IDENTITY_INSERT [Person] OFF
 
 END
+GO

@@ -242,6 +242,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.HumanResources.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AW.Services.HumanResources.Core.UnitTests", "Services\HumanResources\tests\AW.Services.HumanResources.Core.UnitTests\AW.Services.HumanResources.Core.UnitTests.csproj", "{3369A13B-C034-4101-BD2D-CCC2C67D74E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Services.HumanResources.Database.Build", "Services\HumanResources\src\AW.Services.HumanResources.Database.Build\AW.Services.HumanResources.Database.Build.csproj", "{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -538,6 +540,10 @@ Global
 		{3369A13B-C034-4101-BD2D-CCC2C67D74E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3369A13B-C034-4101-BD2D-CCC2C67D74E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3369A13B-C034-4101-BD2D-CCC2C67D74E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -655,6 +661,7 @@ Global
 		{B8D36538-730F-4985-9BE5-5565D533C242} = {03FBAE0A-B0AC-43F3-B4CE-6061CB9CB4A4}
 		{2361CE2A-802C-49C7-8463-958D82DBB73E} = {03FBAE0A-B0AC-43F3-B4CE-6061CB9CB4A4}
 		{3369A13B-C034-4101-BD2D-CCC2C67D74E7} = {BCAFD866-7676-49C1-AE49-0EF3F0EC7304}
+		{322AEF7C-91DA-4DA8-9913-62B84DE8FCFB} = {03FBAE0A-B0AC-43F3-B4CE-6061CB9CB4A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FB535EF-31B6-4DD8-93D1-498D875ACE02}
