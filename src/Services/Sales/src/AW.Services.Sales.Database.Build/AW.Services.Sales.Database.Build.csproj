@@ -1,0 +1,14 @@
+<Project Sdk="MSBuild.Sdk.SqlProj/2.1.0">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<SqlServerVersion>SqlAzure</SqlServerVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="..\AW.Services.Sales.Database\**\Tables\*.sql" />
+		<None Include="..\AW.Services.Sales.Database\**\Data\*.sql" />
+		<PostDeploy Include="..\AW.Services.Sales.Database\**\Script.PostDeployment.sql" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="..\AW.Services.Sales.Database\obj\Debug\**" />
+	</ItemGroup>
+</Project>

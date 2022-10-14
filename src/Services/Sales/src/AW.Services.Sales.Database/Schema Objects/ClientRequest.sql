@@ -1,6 +1,0 @@
-﻿CREATE TABLE [ClientRequest]
-(
-	[ClientRequestId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [Name] NVARCHAR(50) NOT NULL, 
-    [Time] DATETIME NOT NULL
-)

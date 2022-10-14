@@ -56,42 +56,45 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Schema Objects" />
-    <Folder Include="Scripts" />
-    <Folder Include="Scripts\PostDeployment" />
+    <Folder Include="Tables" />
+    <Folder Include="PostDeployment" />
+    <Folder Include="PostDeployment\Data" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema Objects\Address.sql" />
-    <Build Include="Schema Objects\CreditCard.sql" />
-    <Build Include="Schema Objects\SalesOrder.sql" />
-    <Build Include="Schema Objects\SalesOrderLine.sql" />
-    <Build Include="Schema Objects\SalesOrderSalesReason.sql" />
-    <Build Include="Schema Objects\SalesReason.sql" />
-    <Build Include="Schema Objects\SpecialOffer.sql" />
-    <Build Include="Schema Objects\SpecialOfferProduct.sql" />
-    <None Include="Scripts\PostDeployment\InsertAddress.sql" />
-    <None Include="Scripts\PostDeployment\InsertCreditCard.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesReason.sql" />
-    <None Include="Scripts\PostDeployment\InsertSpecialOffer.sql" />
-    <None Include="Scripts\PostDeployment\InsertSpecialOfferProduct.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesOrder.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesOrderLine.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesOrderSalesReason.sql" />
-    <Build Include="Schema Objects\Customer.sql" />
-    <Build Include="Schema Objects\IntegrationEventLog.sql" />
-    <Build Include="Schema Objects\ClientRequest.sql" />
-    <None Include="Scripts\PostDeployment\InsertCustomer.sql" />
-    <Build Include="Schema Objects\Person.sql" />
-    <None Include="Scripts\PostDeployment\InsertPerson.sql" />
-    <Build Include="Schema Objects\IndividualCustomer.sql" />
-    <None Include="Scripts\PostDeployment\InsertIndividualCustomer.sql" />
-    <Build Include="Schema Objects\StoreCustomer.sql" />
-    <Build Include="Schema Objects\SalesPerson.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesPerson.sql" />
-    <None Include="Scripts\PostDeployment\InsertStoreCustomer.sql" />
-    <Build Include="Schema Objects\SalesPersonEmailAddress.sql" />
-    <Build Include="Schema Objects\SalesPersonPhone.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesPersonEmailAddress.sql" />
-    <None Include="Scripts\PostDeployment\InsertSalesPersonPhone.sql" />
+    <Build Include="Tables\Address.sql" />
+    <Build Include="Tables\CreditCard.sql" />
+    <Build Include="Tables\SalesOrder.sql" />
+    <Build Include="Tables\SalesOrderLine.sql" />
+    <Build Include="Tables\SalesOrderSalesReason.sql" />
+    <Build Include="Tables\SalesReason.sql" />
+    <Build Include="Tables\SpecialOffer.sql" />
+    <Build Include="Tables\SpecialOfferProduct.sql" />
+    <None Include="PostDeployment\Data\InsertAddress.sql" />
+    <None Include="PostDeployment\Data\InsertCreditCard.sql" />
+    <None Include="PostDeployment\Data\InsertSalesReason.sql" />
+    <None Include="PostDeployment\Data\InsertSpecialOffer.sql" />
+    <None Include="PostDeployment\Data\InsertSpecialOfferProduct.sql" />
+    <None Include="PostDeployment\Data\InsertSalesOrder.sql" />
+    <None Include="PostDeployment\Data\InsertSalesOrderLine.sql" />
+    <None Include="PostDeployment\Data\InsertSalesOrderSalesReason.sql" />
+    <Build Include="Tables\Customer.sql" />
+    <Build Include="Tables\IntegrationEventLog.sql" />
+    <Build Include="Tables\ClientRequest.sql" />
+    <None Include="PostDeployment\Data\InsertCustomer.sql" />
+    <Build Include="Tables\Person.sql" />
+    <None Include="PostDeployment\Data\InsertPerson.sql" />
+    <Build Include="Tables\IndividualCustomer.sql" />
+    <None Include="PostDeployment\Data\InsertIndividualCustomer.sql" />
+    <Build Include="Tables\StoreCustomer.sql" />
+    <Build Include="Tables\SalesPerson.sql" />
+    <None Include="PostDeployment\Data\InsertSalesPerson.sql" />
+    <None Include="PostDeployment\Data\InsertStoreCustomer.sql" />
+    <Build Include="Tables\SalesPersonEmailAddress.sql" />
+    <Build Include="Tables\SalesPersonPhone.sql" />
+    <None Include="PostDeployment\Data\InsertSalesPersonEmailAddress.sql" />
+    <None Include="PostDeployment\Data\InsertSalesPersonPhone.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>

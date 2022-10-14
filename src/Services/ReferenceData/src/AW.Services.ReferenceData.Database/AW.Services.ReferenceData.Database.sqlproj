@@ -54,27 +54,25 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Schema Objects" />
-    <Folder Include="Scripts" />
-    <Folder Include="Scripts\PostDeployment" />
+    <Folder Include="PostDeployment" />
+    <Folder Include="PostDeployment\Data" />
+    <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema Objects\AddressType.sql" />
-    <Build Include="Schema Objects\ContactType.sql" />
-    <Build Include="Schema Objects\CountryRegion.sql" />
-    <Build Include="Schema Objects\StateProvince.sql" />
-    <Build Include="Schema Objects\Territory.sql" />
-    <None Include="Scripts\PostDeployment\InsertAddressType.sql" />
-    <None Include="Scripts\PostDeployment\InsertContactType.sql" />
-    <None Include="Scripts\PostDeployment\InsertCountryRegion.sql" />
-    <None Include="Scripts\PostDeployment\InsertStateProvince.sql" />
-    <None Include="Scripts\PostDeployment\InsertTerritory.sql" />
-    <Build Include="Schema Objects\ShipMethod.sql" />
+    <None Include="PostDeployment\Data\InsertAddressType.sql" />
+    <None Include="PostDeployment\Data\InsertContactType.sql" />
+    <None Include="PostDeployment\Data\InsertCountryRegion.sql" />
+    <None Include="PostDeployment\Data\InsertShipMethod.sql" />
+    <None Include="PostDeployment\Data\InsertStateProvince.sql" />
+    <None Include="PostDeployment\Data\InsertTerritory.sql" />
+    <Build Include="Tables\AddressType.sql" />
+    <Build Include="Tables\ContactType.sql" />
+    <Build Include="Tables\CountryRegion.sql" />
+    <Build Include="Tables\ShipMethod.sql" />
+    <Build Include="Tables\StateProvince.sql" />
+    <Build Include="Tables\Territory.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\PostDeployment\InsertShipMethod.sql" />
+    <None Include="PostDeployment\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>

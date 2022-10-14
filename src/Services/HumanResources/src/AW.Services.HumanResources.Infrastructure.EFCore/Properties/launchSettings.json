@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AW.Services.HumanResources.Infrastructure.EFCore": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55350;http://localhost:55352"
+    }
+  }
+}
