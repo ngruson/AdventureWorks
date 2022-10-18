@@ -5,21 +5,28 @@ param(
     [Parameter(Mandatory)]
     [string]$location,
     [Parameter(Mandatory)]
-    [SecureString]$adminPassword
+    [SecureString]$sqlAdminPassword
 )
 
 Write-Host "Creating resource group $resourceGroupName"
 New-AzResourceGroup -Name $resourceGroupName -Location $location -Force
 
-Write-Host "Creating Azure SQL Server..."
+Write-Host "Creating deployment..."
 $deploymentOutput = New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName `
-    -TemplateFile .\sql\sqldeploy.json `
-    -TemplateParameterFile .\sql\sqldeploy.parameters.json `
-    -adminpwd (ConvertFrom-SecureString $adminPassword -AsPlainText)
+    -TemplateFile deploy.json `
+    -TemplateParameterFile deploy.parameters.json `
+    -sqlAdminPwd (ConvertFrom-SecureString $sqlAdminPassword -AsPlainText)
+    
+Write-Host $deploymentOutput.OutputsString
 
-$sqlServer = Get-AzSqlServer -ResourceGroupName $resourceGroupName | Select-Object -ExpandProperty "FullyQualifiedDomainName"
-Write-Host "SQL Server: $sqlServer"
+foreach ($key in $deploymentOutput.Outputs.Keys)
+{
+    if ($key -eq "sqlServer") {
+        $sqlServer = $deploymentOutput.Outputs[$key].Value
+    }
+}
 
-.\sql\sql-import-databases.ps1 `
-    -sqlServer $sqlServer `
-    -adminPassword $adminPassword
+# Write-Host "Importing SQL databases..."
+# .\sql\sql-import-databases.ps1 `
+#     -sqlServer $sqlServer `
+#     -adminPassword $sqlAdminPassword

@@ -2,16 +2,17 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "sql_server": {
-        "value": {
-          "name": "aw-sql"
-        }
+      "sqlServer": {
+        "value": "aw-sql"
       },
-      "admin": {
+      "sqlAdmin": {
         "value": "sqladmin"
       },
-      "adminpwd": {
+      "sqlAdminPwd": {
         "value": "pwd"
+      },
+      "aksClusterName": {
+        "value": "aw-aks"
       }
     }
   }

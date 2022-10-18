@@ -8,7 +8,7 @@
     "admin": {
       "type": "string"
     },
-    "adminpwd":  {
+    "adminpwd": {
       "type": "string"
     }
   },
@@ -88,5 +88,9 @@
     }
   ],
   "outputs": {
+    "sqlServerName": {
+      "type": "string",
+      "value": "[reference(variables('sql_server_name')).fullyQualifiedDomainName]"
+    }
   }
 }

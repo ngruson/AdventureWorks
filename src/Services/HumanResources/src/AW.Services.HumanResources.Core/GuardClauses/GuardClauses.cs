@@ -15,5 +15,15 @@ namespace AW.Services.HumanResources.Core.GuardClauses
                 throw ex;
             }
         }
+
+        public static void EmployeeNull(this IGuardClause guardClause, Entities.Employee? employee, string loginID, ILogger logger)
+        {
+            if (employee == null)
+            {
+                var ex = new EmployeeNotFoundException(loginID);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
     }
 }

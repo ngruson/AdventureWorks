@@ -1,0 +1,176 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlServer": {
+            "type": "string"
+        },
+        "sqlAdmin": {
+            "type": "string"
+        },
+        "sqlAdminPwd": {
+            "type": "string"
+        },
+        "aksClusterName": {
+            "type": "string"
+        }
+    },
+    "functions": [],    
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "sqlTemplate",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "Inner"
+                },            
+                "mode": "Incremental",
+                "parameters": {
+                    "sqlServer": {
+                        "value": "[parameters('sqlServer')]"
+                    },
+                    "sqlAdmin": {
+                        "value": "[parameters('sqlAdmin')]"
+                    },
+                    "sqlAdminPwd": {
+                        "value": "[parameters('sqlAdminPwd')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "sqlServer": {
+                            "type": "string"
+                        },
+                        "sqlAdmin": {
+                            "type": "string"
+                        },
+                        "sqlAdminPwd": {
+                            "type": "string"
+                        }
+                    },
+                    "variables": {
+                        "sqlServer": "[concat(parameters('sqlServer'), '-', uniqueString(resourceGroup().id))]"
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.Sql/servers",
+                            "name": "[variables('sqlServer')]",
+                            "apiVersion": "2022-02-01-preview",
+                            "location": "[resourceGroup().location]",
+                            "kind": "v12.0",
+                            "properties": {
+                                "administratorLogin": "[parameters('sqlAdmin')]",
+                                "administratorLoginPassword": "[parameters('sqlAdminPwd')]",
+                                "version": "12.0"
+                            },
+                            "resources": [
+                                {
+                                    "type": "firewallrules",
+                                    "name": "AllowAllWindowsAzureIps",
+                                    "apiVersion": "2022-02-01-preview",
+                                    "location": "[resourceGroup().location]",
+                                    "properties": {
+                                        "startIpAddress": "0.0.0.0",
+                                        "endIpAddress": "0.0.0.0"
+                                    },
+                                    "dependsOn": [
+                                        "[concat('Microsoft.Sql/servers/', variables('sqlServer'))]"
+                                    ]
+                                },
+                                {
+                                    "type": "firewallrules",
+                                    "name": "AllConnectionsAllowed",
+                                    "apiVersion": "2022-02-01-preview",
+                                    "location": "[resourceGroup().location]",
+                                    "properties": {
+                                        "startIpAddress": "0.0.0.0",
+                                        "endIpAddress": "255.255.255.255"
+                                    },
+                                    "dependsOn": [
+                                        "[concat('Microsoft.Sql/servers/', variables('sqlServer'))]"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "outputs": {
+                        "sqlServer": {
+                            "type": "string",
+                            "value": "[reference(variables('sqlServer')).fullyQualifiedDomainName]"
+                        }
+                    }
+                }                
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "aksTemplate",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "Inner"
+                },            
+                "mode": "Incremental",
+                "parameters": {
+                    "aksClusterName": {
+                        "value": "[parameters('aksClusterName')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "aksClusterName": {
+                            "type": "string"
+                        }
+                    },
+                    "variables": {
+                        "clusterName": "[concat(parameters('aksClusterName'), '-', uniqueString(resourceGroup().id))]",
+                        "osDiskSizeGB": 128,
+                        "agentCount": 2,
+                        "agentVMSize": "Standard_DS2_v2"
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.ContainerService/managedClusters",
+                            "apiVersion": "2022-05-02-preview",
+                            "name": "[variables('clusterName')]",
+                            "location": "[resourceGroup().location]",
+                            "identity": {
+                                "type": "SystemAssigned"
+                            },
+                            "properties": {
+                                "dnsPrefix": "[concat(variables('clusterName'), '-dns')]",
+                                "agentPoolProfiles": [
+                                    {
+                                        "name": "agentpool",
+                                        "osDiskSizeGB": "[variables('osDiskSizeGB')]",
+                                        "count": "[variables('agentCount')]",
+                                        "vmSize": "[variables('agentVMSize')]",
+                                        "osType": "Linux",
+                                        "mode": "System"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "outputs": {
+                        "clusterName": {
+                            "type": "string",
+                            "value": "[reference(variables('clusterName')).clusterName]"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "sqlServer": {
+            "type": "string",
+            "value": "[reference('sqlTemplate').outputs.sqlServer.value]"
+        }
+    }
+}
