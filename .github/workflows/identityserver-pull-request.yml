@@ -1,4 +1,4 @@
-name: identityserver
+name: identityserver-pull-request
 
 on:
   workflow_dispatch:

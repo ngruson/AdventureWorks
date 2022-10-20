@@ -1,4 +1,4 @@
-name: product-api
+name: product-api-pull-request
 
 on:
   workflow_dispatch:

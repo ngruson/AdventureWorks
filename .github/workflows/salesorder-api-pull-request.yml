@@ -1,4 +1,4 @@
-name: salesorder-api
+name: salesorder-api-pull-request
 
 on:
   workflow_dispatch:

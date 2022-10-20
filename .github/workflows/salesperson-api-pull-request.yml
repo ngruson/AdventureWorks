@@ -1,4 +1,4 @@
-name: salesperson-api
+name: salesperson-api-pull-request
 
 on:
   workflow_dispatch:

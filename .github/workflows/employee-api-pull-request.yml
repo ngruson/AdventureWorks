@@ -1,4 +1,4 @@
-name: employee-api
+name: employee-api-pull-request
 
 on:
   workflow_dispatch:
@@ -30,10 +30,7 @@ jobs:
           
           dotnet build tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj
           dotnet test tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore
-          
-          dotnet build tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj
-          dotnet test tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore
-          
+
           dotnet build src/AW.Services.HumanResources.Employee.REST.API/AW.Services.HumanResources.Employee.REST.API.csproj
           dotnet build tests/AW.Services.HumanResources.Employee.REST.API.UnitTests/AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj
           dotnet test tests/AW.Services.HumanResources.Employee.REST.API.UnitTests/AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj --no-build --no-restore

@@ -33,9 +33,6 @@ jobs:
           dotnet build tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj
           dotnet test tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore
           
-          dotnet build tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj
-          dotnet test tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore
-          
           dotnet build src/AW.Services.HumanResources.Department.REST.API/AW.Services.HumanResources.Department.REST.API.csproj
           dotnet build tests/AW.Services.HumanResources.Department.REST.API.UnitTests/AW.Services.HumanResources.Department.REST.API.UnitTests.csproj
           dotnet test tests/AW.Services.HumanResources.Department.REST.API.UnitTests/AW.Services.HumanResources.Department.REST.API.UnitTests.csproj --no-build --no-restore

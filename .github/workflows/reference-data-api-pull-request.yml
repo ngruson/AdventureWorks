@@ -1,4 +1,4 @@
-name: reference-data-api
+name: reference-data-api-pull-request
 
 on:
   workflow_dispatch:  

@@ -1,4 +1,4 @@
-name: ui-web-internal
+name: ui-web-internal-pull-request
 
 on:
   workflow_dispatch:

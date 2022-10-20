@@ -1,4 +1,4 @@
-name: ui-web-store
+name: ui-web-store-pull-request
 
 on:
   workflow_dispatch:
