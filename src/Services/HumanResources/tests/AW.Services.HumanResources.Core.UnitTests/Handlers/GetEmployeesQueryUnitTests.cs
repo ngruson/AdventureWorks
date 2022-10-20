@@ -83,7 +83,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             await func.Should().ThrowAsync<EmployeesNotFoundException>()
-                .WithMessage("Employees not found");
+                .WithMessage("No employees found");
         }
     }
 }

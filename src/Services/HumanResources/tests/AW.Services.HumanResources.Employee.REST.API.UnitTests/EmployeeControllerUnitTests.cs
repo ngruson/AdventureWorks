@@ -1,7 +1,8 @@
 using AutoFixture.Xunit2;
+using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetEmployee;
 using AW.Services.HumanResources.Core.Handlers.GetEmployees;
-using AW.Services.HumanResources.REST.API.Controllers;
+using AW.Services.HumanResources.Employee.REST.API.Controllers;
 using AW.SharedKernel.UnitTesting;
 using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
@@ -9,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace AW.Services.HumanResources.REST.API.UnitTests
+namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
 {
     public class EmployeeControllerUnitTests
     {
@@ -31,7 +32,7 @@ namespace AW.Services.HumanResources.REST.API.UnitTests
                 );
 
                 mockMediator.Setup(x => x.Send(
-                        It.IsAny<GetEmployeesQuery>(), 
+                        It.IsAny<GetEmployeesQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
@@ -63,7 +64,7 @@ namespace AW.Services.HumanResources.REST.API.UnitTests
                     It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((GetEmployeesResult?)null);
+                .Throws<EmployeesNotFoundException>();
 
                 //Act
                 var actionResult = await sut.GetEmployees(query);
@@ -88,7 +89,7 @@ namespace AW.Services.HumanResources.REST.API.UnitTests
             {
                 //Arrange
                 var employee = new Core.Handlers.GetEmployee.Employee(
-                    name, 
+                    name,
                     history
                 );
 
@@ -122,7 +123,7 @@ namespace AW.Services.HumanResources.REST.API.UnitTests
                     It.IsAny<GetEmployeeQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Core.Handlers.GetEmployee.Employee?)null);
+                .Throws(new EmployeeNotFoundException(query.LoginID));
 
                 //Act
                 var actionResult = await sut.GetEmployee(query);

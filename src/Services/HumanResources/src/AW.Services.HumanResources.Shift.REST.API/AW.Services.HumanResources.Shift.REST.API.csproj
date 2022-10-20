@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>4699bcf0-01d2-4a4a-8919-cf3dd4fa08ee</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Elasticsearch" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel.Api\AW.SharedKernel.Api.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel\AW.Services.SharedKernel.csproj" />
+    <ProjectReference Include="..\AW.Services.HumanResources.Core\AW.Services.HumanResources.Core.csproj" />
+    <ProjectReference Include="..\AW.Services.HumanResources.Infrastructure.EFCore\AW.Services.HumanResources.Infrastructure.EFCore.csproj" />
+  </ItemGroup>
+
+</Project>

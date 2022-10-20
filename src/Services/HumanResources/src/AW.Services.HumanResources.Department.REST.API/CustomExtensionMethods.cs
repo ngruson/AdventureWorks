@@ -10,12 +10,12 @@ using AW.SharedKernel.Api;
 using AW.Services.SharedKernel.EFCore;
 using MediatR;
 using AW.Services.SharedKernel.Interfaces;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using AW.Services.HumanResources.Core.Handlers.GetDepartments;
 
-namespace AW.Services.HumanResources.REST.API
+namespace AW.Services.HumanResources.Department.REST.API
 {
     public static class CustomExtensionMethods
     {
@@ -69,7 +69,7 @@ namespace AW.Services.HumanResources.REST.API
                     .AddJwtBearer(options =>
                     {
                         options.Authority = oidcConfig?.Authority;
-                        options.Audience = "humanresources-api";
+                        options.Audience = "department-api";
                         options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
                     });
             }
@@ -79,7 +79,7 @@ namespace AW.Services.HumanResources.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Human Resources API");
+            services.AddSwaggerDocumentation("Department API");
 
             return services;
         }
@@ -94,13 +94,13 @@ namespace AW.Services.HumanResources.REST.API
                 return new AWContext(
                     builder.Options,
                     provider.GetService<IMediator>(),
-                    typeof(EmployeeConfiguration).Assembly
+                    typeof(DepartmentConfiguration).Assembly
                 );
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetAllEmployeesQuery).Assembly);
-            services.AddMediatR(typeof(GetAllEmployeesQuery));
+            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetDepartmentsQuery).Assembly);
+            services.AddMediatR(typeof(GetDepartmentsQuery));
 
             return services;
         }

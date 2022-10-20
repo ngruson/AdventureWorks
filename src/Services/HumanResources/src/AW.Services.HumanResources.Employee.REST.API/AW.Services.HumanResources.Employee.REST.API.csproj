@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>c269e873-5892-4b11-95be-dcbdbe1e74f7</UserSecretsId>
+    <UserSecretsId>aspnet-AW.Services.HumanResources.Employee.REST.API-F5DCE60B-4D53-40AF-85CE-F0B2130EAD5C</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
   </PropertyGroup>
@@ -16,12 +16,13 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.25.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +30,6 @@
     <ProjectReference Include="..\..\..\..\SharedKernel\src\AW.SharedKernel\AW.SharedKernel.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\src\AW.Services.Infrastructure\AW.Services.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
-    <ProjectReference Include="..\AW.Services.HumanResources.Core\AW.Services.HumanResources.Core.csproj" />
     <ProjectReference Include="..\AW.Services.HumanResources.Infrastructure.EFCore\AW.Services.HumanResources.Infrastructure.EFCore.csproj" />
   </ItemGroup>
 

@@ -25,5 +25,45 @@ namespace AW.Services.HumanResources.Core.GuardClauses
                 throw ex;
             }
         }
+
+        public static void ShiftsNull(this IGuardClause guardClause, List<Entities.Shift> shifts, ILogger logger)
+        {
+            if (shifts == null)
+            {
+                var ex = new ShiftsNotFoundException();
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void ShiftNull(this IGuardClause guardClause, Entities.Shift? shift, string name, ILogger logger)
+        {
+            if (shift == null)
+            {
+                var ex = new ShiftNotFoundException(name);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void DepartmentsNull(this IGuardClause guardClause, List<Entities.Department> departments, ILogger logger)
+        {
+            if (departments == null)
+            {
+                var ex = new DepartmentsNotFoundException();
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void DepartmentNull(this IGuardClause guardClause, Entities.Department? department, string name, ILogger logger)
+        {
+            if (department == null)
+            {
+                var ex = new DepartmentNotFoundException(name);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
     }
 }

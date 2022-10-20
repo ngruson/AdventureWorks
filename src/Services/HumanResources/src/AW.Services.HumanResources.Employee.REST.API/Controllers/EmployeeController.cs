@@ -1,11 +1,12 @@
-﻿using AW.Services.HumanResources.Core.Handlers.GetEmployee;
+﻿using AW.Services.HumanResources.Core.Exceptions;
+using AW.Services.HumanResources.Core.Handlers.GetEmployee;
 using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 
-namespace AW.Services.HumanResources.REST.API.Controllers
+namespace AW.Services.HumanResources.Employee.REST.API.Controllers
 {
     [Authorize]
     [ApiController]
@@ -23,18 +24,18 @@ namespace AW.Services.HumanResources.REST.API.Controllers
         public async Task<IActionResult> GetEmployees([FromQuery] GetEmployeesQuery query)
         {
             _logger.LogInformation("GetEmployees called with {@Request}", query);
-
             _logger.LogInformation("Sending the GetEmployees query");
-            var result = await _mediator.Send(query);
 
-            if (result == null || !result.Employees.Any())
+            try
             {
-                _logger.LogInformation("No employees found");
+                var result = await _mediator.Send(query);
+                _logger.LogInformation("Returning employees");
+                return Ok(result);
+            }
+            catch (EmployeesNotFoundException)
+            {
                 return new NotFoundResult();
             }
-
-            _logger.LogInformation("Returning employees");
-            return Ok(result);
         }
 
         [HttpGet]
@@ -43,16 +44,17 @@ namespace AW.Services.HumanResources.REST.API.Controllers
             _logger.LogInformation("GetEmployee called with {@Query}", query);
 
             _logger.LogInformation("Sending the GetEmployee query");
-            var employee = await _mediator.Send(query);
-
-            if (employee == null)
+            
+            try
             {
-                _logger.LogInformation("Employee '{LoginID}' found", query.LoginID);
+                var employee = await _mediator.Send(query);
+                _logger.LogInformation("Returning employee");
+                return Ok(employee);
+            }
+            catch (EmployeeNotFoundException)
+            {
                 return new NotFoundResult();
             }
-
-            _logger.LogInformation("Returning employee");
-            return Ok(employee);
         }
     }
 }

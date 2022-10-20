@@ -1,4 +1,4 @@
-using AW.Services.HumanResources.REST.API;
+using AW.Services.HumanResources.Employee.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -17,7 +17,7 @@ builder.Services
 
 var app = builder.Build();
 
-var virtualPath = "/humanresources-api";
+var virtualPath = "/employee-api";
 
 app.Map(virtualPath, builder =>
 {
@@ -28,7 +28,7 @@ app.Map(virtualPath, builder =>
 
     builder.UseCors("default");
     var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Human Resources API");
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Employee API");
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();

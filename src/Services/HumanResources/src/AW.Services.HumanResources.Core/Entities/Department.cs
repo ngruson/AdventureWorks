@@ -1,6 +1,8 @@
-﻿namespace AW.Services.HumanResources.Core.Entities
+﻿using AW.Services.SharedKernel.Interfaces;
+
+namespace AW.Services.HumanResources.Core.Entities
 {
-    public class Department
+    public class Department : IAggregateRoot
     {
         public int Id { get; set; }
 

@@ -7,7 +7,7 @@ namespace AW.Services.HumanResources.Core.Exceptions
     public class EmployeesNotFoundException : DomainException
     {
         public EmployeesNotFoundException()
-            : base($"Employees not found")
+            : base($"No employees found")
         { }
 
         protected EmployeesNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :

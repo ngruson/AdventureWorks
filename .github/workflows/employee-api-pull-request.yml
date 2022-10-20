@@ -1,0 +1,39 @@
+name: employee-api
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ master ]    
+    paths:
+    - src/Services/HumanResources/**
+    - .github/workflows/employee-api.yml
+
+env:
+  DOTNET_VERSION: 6.0.x
+
+jobs:
+  BuildLinux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build and run unit tests
+        run: |
+          cd src/Services/HumanResources
+          
+          dotnet build tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj
+          dotnet test tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj
+          dotnet test tests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests/AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore
+          
+          dotnet build src/AW.Services.HumanResources.Employee.REST.API/AW.Services.HumanResources.Employee.REST.API.csproj
+          dotnet build tests/AW.Services.HumanResources.Employee.REST.API.UnitTests/AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj
+          dotnet test tests/AW.Services.HumanResources.Employee.REST.API.UnitTests/AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj --no-build --no-restore
