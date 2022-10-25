@@ -1,13 +1,13 @@
 replicaCount: 1
-pathBase: /customer-api/
-serviceName: customer-api
+pathBase: /employee-api/
+serviceName: employee-api
 
 image:
-  repository: adventureworks_customerapi
+  repository: cradventureworks.azurecr.io/adventureworks_employeeapi
   tag: latest
   pullPolicy: Always
 
-db: sqldb-adv-customer
+db: sqldb-adv-hr
 
 service:
   type: ClusterIP
@@ -15,12 +15,12 @@ service:
 
 probes:
   liveness:
-    path: /customer-api/liveness
+    path: /employee-api/liveness
     initialDelaySeconds: 60
     periodSeconds: 15
     port: 80
   readiness:
-    path: /customer-api/hc
+    path: /employee-api/hc
     timeoutSeconds: 5
     initialDelaySeconds: 60
     periodSeconds: 15

@@ -1,7 +1,6 @@
 using AW.Services.HumanResources.Department.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;

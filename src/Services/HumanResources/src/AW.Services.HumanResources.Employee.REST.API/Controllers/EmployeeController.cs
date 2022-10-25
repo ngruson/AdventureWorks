@@ -38,8 +38,8 @@ namespace AW.Services.HumanResources.Employee.REST.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetEmployee([FromQuery] GetEmployeeQuery query)
+        [HttpGet("{loginID}")]
+        public async Task<IActionResult> GetEmployee([FromRoute] GetEmployeeQuery query)
         {
             _logger.LogInformation("GetEmployee called with {@Query}", query);
 

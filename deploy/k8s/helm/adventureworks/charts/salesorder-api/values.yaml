@@ -3,7 +3,7 @@ pathBase: /salesorder-api/
 serviceName: salesorder-api
 
 image:
-  repository: cradventureworks.azurecr.io/adventureworks_salesorderapi
+  repository: adventureworks_salesorderapi
   tag: latest
   pullPolicy: Always
 

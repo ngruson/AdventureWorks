@@ -13,6 +13,9 @@
         },
         "aksClusterName": {
             "type": "string"
+        },
+        "containerRegistry": {
+            "type": "string"
         }
     },
     "functions": [],    
@@ -160,7 +163,87 @@
                     "outputs": {
                         "clusterName": {
                             "type": "string",
-                            "value": "[reference(variables('clusterName')).clusterName]"
+                            "value": "[variables('clusterName')]"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "crTemplate",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "Inner"
+                },            
+                "mode": "Incremental",
+                "parameters": {
+                    "containerRegistry": {
+                        "value": "[parameters('containerRegistry')]"
+                    }
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "containerRegistry": {
+                            "type": "string"
+                        }
+                    },
+                    "variables": {
+                        "containerRegistry": "[concat(parameters('containerRegistry'), uniqueString(resourceGroup().id))]"
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.ContainerRegistry/registries",
+                            "apiVersion": "2022-02-01-preview",
+                            "name": "[variables('containerRegistry')]",
+                            "location": "[resourceGroup().location]",
+                            "sku": {
+                                "name": "Basic",
+                                "tier": "Basic"
+                            },
+                            "properties": {
+                                "adminUserEnabled": false,
+                                "policies": {
+                                    "quarantinePolicy": {
+                                        "status": "disabled"
+                                    },
+                                    "trustPolicy": {
+                                        "type": "Notary",
+                                        "status": "disabled"
+                                    },
+                                    "retentionPolicy": {
+                                        "days": 7,
+                                        "status": "disabled"
+                                    },
+                                    "exportPolicy": {
+                                        "status": "enabled"
+                                    },
+                                    "azureADAuthenticationAsArmPolicy": {
+                                        "status": "enabled"
+                                    },
+                                    "softDeletePolicy": {
+                                        "retentionDays": 7,
+                                        "status": "disabled"
+                                    }
+                                },
+                                "encryption": {
+                                    "status": "disabled"
+                                },
+                                "dataEndpointEnabled": false,
+                                "publicNetworkAccess": "Enabled",
+                                "networkRuleBypassOptions": "AzureServices",
+                                "zoneRedundancy": "Disabled",
+                                "anonymousPullEnabled": false
+                            }
+                        }
+                    ],
+                    "outputs": {
+                        "containerRegistry": {
+                            "type": "string",
+                            "value": "[variables('containerRegistry')]"
                         }
                     }
                 }
@@ -171,6 +254,14 @@
         "sqlServer": {
             "type": "string",
             "value": "[reference('sqlTemplate').outputs.sqlServer.value]"
+        },
+        "aksClusterName": {
+            "type": "string",
+            "value": "[reference('aksTemplate').outputs.clusterName.value]"
+        },
+        "containerRegistry": {
+            "type": "string",
+            "value": "[reference('crTemplate').outputs.containerRegistry.value]"
         }
     }
 }

@@ -131,25 +131,28 @@ namespace AW.Services.IdentityServer
                 context.SaveChanges();
             }
 
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            foreach (var user in InMemoryConfiguration.Users(Configuration))
+            if (Configuration["AddTestUsers"] == bool.TrueString)
             {
-                var appUser = userManager.FindByNameAsync(user.Username).Result;
-                if (appUser == null)
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                foreach (var user in InMemoryConfiguration.Users(Configuration))
                 {
-                    appUser = new ApplicationUser
+                    var appUser = userManager.FindByNameAsync(user.Username).Result;
+                    if (appUser == null)
                     {
-                        UserName = user.Username,
-                        Email = user.Claims.Single(c => c.Type == "email").Value,
-                        EmailConfirmed = true
-                    };
-                    var result = userManager.CreateAsync(appUser, user.Password).Result;
-                    result = userManager.AddClaimsAsync(appUser, new Claim[]{
+                        appUser = new ApplicationUser
+                        {
+                            UserName = user.Username,
+                            Email = user.Claims.Single(c => c.Type == "email").Value,
+                            EmailConfirmed = true
+                        };
+                        var result = userManager.CreateAsync(appUser, user.Password).Result;
+                        result = userManager.AddClaimsAsync(appUser, new Claim[]{
                             new Claim(JwtClaimTypes.Name, Configuration["TestUser:Claims:Name"]),
                             new Claim(JwtClaimTypes.GivenName, Configuration["TestUser:Claims:GivenName"]),
                             new Claim(JwtClaimTypes.FamilyName, Configuration["TestUser:Claims:FamilyName"])
                         }).Result;
-                };
+                    };
+                }
             }
         }
     }

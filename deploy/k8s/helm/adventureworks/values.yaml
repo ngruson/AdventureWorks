@@ -1,4 +1,6 @@
 global: 
+  image:
+    registry: cradventureworks.azurecr.io
   app:
     svc:
       customer: customer-api

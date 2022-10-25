@@ -11,7 +11,7 @@ authN:
     clientSecret: secret
     
 image:
-  repository: cradventureworks.azurecr.io/adventureworks_mvc_internal
+  repository: adventureworks_mvc_internal
   tag: latest
   pullPolicy: Always
 

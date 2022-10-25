@@ -3,7 +3,7 @@ pathBase: /product-api/
 serviceName: product-api
 
 image:
-  repository: cradventureworks.azurecr.io/adventureworks_productapi
+  repository: adventureworks_productapi
   tag: latest
   pullPolicy: Always
 

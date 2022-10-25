@@ -38,8 +38,8 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetDepartment([FromQuery] GetDepartmentQuery query)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetDepartment([FromRoute] GetDepartmentQuery query)
         {
             _logger.LogInformation("GetDepartment called with {@Query}", query);
 

@@ -2,13 +2,8 @@
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
 {
-    public class GetEmployeeQuery : IRequest<Employee?>
+    public class GetEmployeeQuery : IRequest<Employee>
     {
-        public GetEmployeeQuery(string loginID)
-        {
-            LoginID = loginID;
-        }
-
-        public string LoginID { get; init; }
+        public string? LoginID { get; init; }
     }
 }

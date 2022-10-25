@@ -3,7 +3,7 @@ pathBase: /identityserver/
 serviceName: identityserver
 
 image:
-  repository: cradventureworks.azurecr.io/adventureworks_identityserver
+  repository: adventureworks_identityserver
   tag: latest
   pullPolicy: Always
 

@@ -3,7 +3,7 @@ pathBase: /salesperson-api/
 serviceName: salesperson-api
 
 image:
-  repository: cradventureworks.azurecr.io/adventureworks_salespersonapi
+  repository: adventureworks_salespersonapi
   tag: latest
   pullPolicy: Always
 

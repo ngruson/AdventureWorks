@@ -38,8 +38,8 @@ namespace AW.Services.HumanResources.Shift.REST.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetShift([FromQuery] GetShiftQuery query)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetShift([FromRoute] GetShiftQuery query)
         {
             _logger.LogInformation("GetShift called with {@Query}", query);
 

@@ -1,27 +1,27 @@
-{{- $name := include "salesorder-api.fullname" . -}}
+{{- $name := include "employee-api.fullname" . -}}
 {{- $cfgname := printf "%s-%s" $name "config" -}}
 {{- $secretsname := printf "%s-%s" $name "secrets" -}}
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "salesorder-api.fullname" . }}
+  name: {{ include "employee-api.fullname" . }}
   labels:
     ufo: {{ $cfgname}}
-    app: {{ include "salesorder-api.name" . }}
-    chart: {{ include "salesorder-api.chart" . }}
+    app: {{ include "employee-api.name" . }}
+    chart: {{ include "employee-api.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
-      app: {{ include "salesorder-api.name" . }}
+      app: {{ include "employee-api.name" . }}
       release: {{ .Release.Name }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ include "salesorder-api.name" . }}
+        app: {{ include "employee-api.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -47,7 +47,7 @@ spec:
           timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
         {{- end -}}
         {{- end }}
-        image: "{{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         envFrom:
           - configMapRef: 

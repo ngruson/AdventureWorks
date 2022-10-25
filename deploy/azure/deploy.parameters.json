@@ -13,6 +13,9 @@
       },
       "aksClusterName": {
         "value": "aw-aks"
+      },
+      "containerRegistry": {
+        "value": "awcr"
       }
     }
   }

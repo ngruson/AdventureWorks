@@ -54,7 +54,7 @@ spec:
           timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
         {{- end -}}
         {{- end }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.global.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         envFrom:
           - configMapRef: 
