@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.0.1" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.28.1" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.35.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
 
