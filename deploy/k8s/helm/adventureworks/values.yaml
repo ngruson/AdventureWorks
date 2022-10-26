@@ -42,8 +42,8 @@ ingress:
         serviceName: salesperson-api
         servicePort: 80
     - path:
-        value: /mvc-internal/
-        serviceName: mvc-internal
+        value: /ui-web-admin-mvc/
+        serviceName: ui-web-admin-mvc
         servicePort: 80
     - path:
         value: /mvc-store/

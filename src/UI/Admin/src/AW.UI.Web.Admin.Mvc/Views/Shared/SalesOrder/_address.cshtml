@@ -1,0 +1,52 @@
+﻿@{
+    @model AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.AddressViewModel;
+}
+
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.AddressLine1)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.AddressLine1, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.AddressLine2)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.AddressLine2, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.PostalCode)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.PostalCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.City)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.City, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.StateProvinceCode)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.StateProvinceCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        @Html.LabelFor(m => m.CountryRegionCode)
+    </div>
+    <div class="col">
+        @Html.EditorFor(m => m.CountryRegionCode, new { htmlAttributes = new { disabled = "disabled", @class = "form-control"}})
+    </div>
+</div>

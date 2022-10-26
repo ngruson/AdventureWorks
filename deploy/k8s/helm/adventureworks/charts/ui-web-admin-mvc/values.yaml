@@ -1,0 +1,33 @@
+replicaCount: 1
+pathBase: /ui-web-admin-mvc/
+serviceName: ui-web-admin-mvc
+customer_api: /customer-api
+referencedata_api: /referencedata-api
+salesorder_api: /salesorder-api
+salesperson_api: /salesperson-api
+authN:
+  idSrv:     
+    clientId: internal
+    clientSecret: secret
+    
+image:
+  repository: adventureworks_web_admin_mvc
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  liveness:
+    path: /ui-web-admin-mvc/liveness
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    port: 80
+  readiness:
+    path: /ui-web-admin-mvc/hc
+    timeoutSeconds: 5
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    port: 80
