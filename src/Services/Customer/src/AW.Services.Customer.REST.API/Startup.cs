@@ -26,6 +26,7 @@ using AW.SharedKernel.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using AW.SharedKernel.JsonConverters;
+using AW.Services.SharedKernel.Converters;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -109,6 +110,7 @@ namespace AW.Services.Customer.REST.API
             services.AddTransient<CustomerConverter<Core.Models.UpdateCustomer.Customer,
                 Core.Models.UpdateCustomer.StoreCustomer,
                 Core.Models.UpdateCustomer.IndividualCustomer>>();
+            services.AddTransient<EmailAddressConverter>();
 
             services.AddOptions<ConfigureJsonOptions>();
             services.AddSingleton<IConfigureOptions<JsonOptions>, ConfigureJsonOptions>();

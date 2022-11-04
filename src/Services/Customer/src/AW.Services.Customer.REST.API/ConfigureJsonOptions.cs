@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using AW.Services.SharedKernel.Converters;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -23,6 +24,8 @@ namespace AW.Services.Customer.REST.API
             Core.Models.UpdateCustomer.StoreCustomer,
             Core.Models.UpdateCustomer.IndividualCustomer> _converterUpdateCustomer;
 
+        private readonly EmailAddressConverter _emailAddressConverter;
+
         public ConfigureJsonOptions(
             CustomerConverter<Core.Models.GetCustomers.Customer,
                 Core.Models.GetCustomers.StoreCustomer,
@@ -32,9 +35,10 @@ namespace AW.Services.Customer.REST.API
                 Core.Models.GetCustomer.IndividualCustomer> converterGetCustomer,
             CustomerConverter<Core.Models.UpdateCustomer.Customer,
                 Core.Models.UpdateCustomer.StoreCustomer,
-                Core.Models.UpdateCustomer.IndividualCustomer> converterUpdateCustomer
-        ) => (_converterGetCustomers, _converterGetCustomer, _converterUpdateCustomer) = 
-                (converterGetCustomers, converterGetCustomer, converterUpdateCustomer);
+                Core.Models.UpdateCustomer.IndividualCustomer> converterUpdateCustomer,
+            EmailAddressConverter emailAddressConverter
+        ) => (_converterGetCustomers, _converterGetCustomer, _converterUpdateCustomer, _emailAddressConverter) = 
+                (converterGetCustomers, converterGetCustomer, converterUpdateCustomer, emailAddressConverter);
 
         public void Configure(JsonOptions options)
         {
@@ -43,6 +47,7 @@ namespace AW.Services.Customer.REST.API
             options.JsonSerializerOptions.Converters.Add(_converterGetCustomers);
             options.JsonSerializerOptions.Converters.Add(_converterGetCustomer);
             options.JsonSerializerOptions.Converters.Add(_converterUpdateCustomer);
+            options.JsonSerializerOptions.Converters.Add(_emailAddressConverter);
         }
     }
 }
