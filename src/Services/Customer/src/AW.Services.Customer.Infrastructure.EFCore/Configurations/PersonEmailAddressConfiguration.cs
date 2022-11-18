@@ -17,6 +17,9 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
             builder.OwnsOne(_ => _.EmailAddress)
                 .Property(_ => _.Value)
                     .HasColumnName("EmailAddress");
+
+            builder.Property(c => c.PersonId)
+                .HasColumnName("PersonID");
         }
     }
 }

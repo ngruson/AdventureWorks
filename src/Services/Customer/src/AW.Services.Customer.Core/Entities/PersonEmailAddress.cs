@@ -14,5 +14,6 @@ namespace AW.Services.Customer.Core.Entities
 
         public int Id { get; set; }
         public EmailAddress EmailAddress { get; private set; }
+        public int PersonId { get; private set; }
     }
 }
