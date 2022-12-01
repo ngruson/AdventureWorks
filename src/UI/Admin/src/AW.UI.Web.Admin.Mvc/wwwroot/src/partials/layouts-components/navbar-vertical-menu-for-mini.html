@@ -1,0 +1,110 @@
+<div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
+  <!-- Collapse -->
+  <div class="nav-item">
+    <a class="nav-link dropdown-toggle @@if(category=='dashboards'){active}" href="#navbarVerticalMenuDashboards" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards" aria-expanded="@@if(category=='dashboards'){true}@@if(category!=='dashboards'){false}" aria-controls="navbarVerticalMenuDashboards">
+      <i class="bi-house-door nav-icon"></i>
+      <span class="nav-link-title">Dashboards</span>
+    </a>
+
+    <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse @@if(category=='dashboards'){show}" data-bs-parent="#navbarVerticalMenu">
+      <a class="nav-link @@if(link=='index.html'){active}" href="@@autopath/index.html">Default</a>
+      <a class="nav-link @@if(link=='dashboard-alternative.html'){active}" href="@@autopath/dashboard-alternative.html">Alternative</a>
+    </div>
+  </div>
+  <!-- End Collapse -->
+
+  <span class="dropdown-header mt-4">Pages</span>
+  <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+  <!-- Collapse -->
+  <div class="navbar-nav nav-compact">
+
+  </div>
+  <div id="navbarVerticalMenuPagesMenu">
+    <!-- Collapse -->
+    <div class="nav-item">
+      <a class="nav-link dropdown-toggle @@if(category=='users'){active}" href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded="@@if(category=='users'){true}@@if(category!=='users'){false}" aria-controls="navbarVerticalMenuPagesUsersMenu">
+        <i class="bi-people nav-icon"></i>
+        <span class="nav-link-title">Users</span>
+      </a>
+
+      <div id="navbarVerticalMenuPagesUsersMenu" class="nav-collapse collapse @@if(category=='users'){show}" data-bs-parent="#navbarVerticalMenuPagesMenu">
+        <a class="nav-link @@if(link=='users.html'){active}" href="@@autopath/users.html">Overview</a>
+        <a class="nav-link @@if(link=='users-leaderboard.html'){active}" href="@@autopath/users-leaderboard.html">Leaderboard</a>
+        <a class="nav-link @@if(link=='users-add-user.html'){active}" href="@@autopath/users-add-user.html">Add User <span class="badge bg-info rounded-pill ms-1">Hot</span></a>
+      </div>
+    </div>
+    <!-- End Collapse -->
+
+    <!-- Collapse -->
+    <div class="nav-item">
+      <a class="nav-link dropdown-toggle @@if(category=='user-profile'){active}" href="#navbarVerticalMenuPagesUserProfileMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUserProfileMenu" aria-expanded="@@if(category=='user-profile'){true}@@if(category!=='user-profile'){false}" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
+        <i class="bi-person nav-icon"></i>
+        <span class="nav-link-title">User Profile <span class="badge bg-primary rounded-pill ms-1">5</span></span>
+      </a>
+
+      <div id="navbarVerticalMenuPagesUserProfileMenu" class="nav-collapse collapse @@if(category=='user-profile'){show}" data-bs-parent="#navbarVerticalMenuPagesMenu">
+        <a class="nav-link @@if(link=='user-profile.html'){active}" href="@@autopath/user-profile.html">Profile</a>
+        <a class="nav-link @@if(link=='user-profile-teams.html'){active}" href="@@autopath/user-profile-teams.html">Teams</a>
+        <a class="nav-link @@if(link=='user-profile-projects.html'){active}" href="@@autopath/user-profile-projects.html">Projects</a>
+        <a class="nav-link @@if(link=='user-profile-connections.html'){active}" href="@@autopath/user-profile-connections.html">Connections</a>
+        <a class="nav-link @@if(link=='user-profile-my-profile.html'){active}" href="@@autopath/user-profile-my-profile.html">My Profile</a>
+      </div>
+    </div>
+    <!-- End Collapse -->
+
+    <!-- Collapse -->
+    <div class="nav-item">
+      <a class="nav-link dropdown-toggle @@if(category=='account'){active}" href="#navbarVerticalMenuPagesAccountMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesAccountMenu" aria-expanded="@@if(category=='account'){true}@@if(category!=='account'){false}" aria-controls="navbarVerticalMenuPagesAccountMenu">
+        <i class="bi-person-badge nav-icon"></i>
+        <span class="nav-link-title">Account</span>
+      </a>
+
+      <div id="navbarVerticalMenuPagesAccountMenu" class="nav-collapse collapse @@if(category=='account'){show}" data-bs-parent="#navbarVerticalMenuPagesMenu">
+        <a class="nav-link @@if(link=='account-settings.html'){active}" href="@@autopath/account-settings.html">Settings</a>
+        <a class="nav-link @@if(link=='account-billing.html'){active}" href="@@autopath/account-billing.html">Billing</a>
+        <a class="nav-link @@if(link=='account-invoice.html'){active}" href="@@autopath/account-invoice.html">Invoice</a>
+      </div>
+    </div>
+    <!-- End Collapse -->
+
+    <div class="nav-item">
+      <a class="nav-link @@if(link=='api-keys.html'){active}" href="@@autopath/api-keys.html" data-placement="left">
+        <i class="bi-key nav-icon"></i>
+        <span class="nav-link-title">API Keys</span>
+      </a>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link @@if(link=='welcome-page.html'){active}" href="@@autopath/welcome-page.html" data-placement="left">
+        <i class="bi-eye nav-icon"></i>
+        <span class="nav-link-title">Welcome Page</span>
+      </a>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link @@if(link=='landing.html'){active}" href="@@autopath/landing.html" data-placement="left">
+        <i class="bi-box-seam nav-icon"></i>
+        <span class="nav-link-title">Landing Page <span class="badge bg-info rounded-pill ms-1">New</span></span>
+      </a>
+    </div>
+  </div>
+  <!-- End Collapse -->
+
+  <span class="dropdown-header mt-4">Documentation</span>
+  <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+  <div class="nav-item">
+    <a class="nav-link @@if(link=='documentation/index.html'){active}" href="@@autopath/documentation/index.html" data-placement="left">
+      <i class="bi-book nav-icon"></i>
+      <span class="nav-link-title">Documentation <span class="badge bg-primary rounded-pill ms-1">v2.1</span></span>
+    </a>
+  </div>
+
+  <div class="nav-item">
+    <a class="nav-link @@if(link=='documentation/typography.html'){active}" href="@@autopath/documentation/typography.html" data-placement="left">
+      <i class="bi-layers nav-icon"></i>
+      <span class="nav-link-title">Components</span>
+    </a>
+  </div>
+</div>

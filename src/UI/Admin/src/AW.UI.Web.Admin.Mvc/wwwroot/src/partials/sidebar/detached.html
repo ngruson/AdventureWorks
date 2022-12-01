@@ -1,0 +1,41 @@
+<aside id="navbarVerticalNavMenu" class="js-navbar-vertical-aside navbar navbar-vertical navbar-vertical-absolute navbar-vertical-detached navbar-shadow navbar-collapse collapse bg-white rounded-2">
+  <div class="navbar-vertical-container">
+    <div class="navbar-vertical-footer-offset">
+      <!-- Content -->
+      <div class="navbar-vertical-content">
+        @@include("../layouts-components/navbar-vertical-menu.html", {
+          "category": "@@category",
+          "subcategory": "@@subcategory",
+          "link": "@@link"
+        })
+      </div>
+      <!-- End Content -->
+
+      <!-- Footer -->
+      <div class="navbar-vertical-footer">
+        <ul class="navbar-vertical-footer-list">
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Style Switcher -->
+            @@include("../layouts-components/darkmode-switcher.html", {
+              "dropup": "true"
+            })
+            <!-- End Style Switcher -->
+          </li>
+
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Other Links -->
+            @@include("../layouts-components/dropdown-help.html")
+            <!-- End Other Links -->
+          </li>
+
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Language -->
+            @@include("../layouts-components/dropdown-language.html")
+            <!-- End Language -->
+          </li>
+        </ul>
+      </div>
+      <!-- End Footer -->
+    </div>
+  </div>
+</aside>

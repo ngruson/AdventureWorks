@@ -1,0 +1,26 @@
+<aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl @@if(themeAppearance.sidebarSkin === 'default'){navbar-bordered bg-white} @@if(themeAppearance.sidebarSkin === 'dark'){navbar-dark bg-dark} @@if(themeAppearance.sidebarSkin === 'light'){navbar-light bg-light}">
+  <div class="navbar-vertical-container">
+    <div class="navbar-brand d-flex justify-content-center">
+      <!-- Logo -->
+      @@if(themeAppearance.layoutSkin === 'dark') {
+        @@include("../layouts-components/navbar-logo-short-light.html")
+      }
+      @@if(themeAppearance.layoutSkin !== 'dark') {
+        @@include("../layouts-components/navbar-logo-short.html")
+      }
+      <!-- End Logo -->
+    </div>
+
+    <!-- Content -->
+    <div class="navbar-vertical-content">
+      <div class="navbar-nav nav-compact">
+        @@include("../layouts-components/navbar-vertical-menu-compact.html", {
+          "category": "@@category",
+          "subcategory": "@@subcategory",
+          "link": "@@link"
+        })
+      </div>
+    </div>
+    <!-- End Content -->
+  </div>
+</aside>

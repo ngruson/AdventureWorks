@@ -1,0 +1,183 @@
+<div class="modal fade" id="accountUpdatePlanModal" tabindex="-1" aria-labelledby="accountUpdatePlanModalLabel" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="accountUpdatePlanModalLabel">Subscription plan</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <!-- Form Switch -->
+        <div class="d-flex justify-content-center mb-5">
+          <div class="form-check form-switch form-switch-between">
+            <label class="form-check-label">Monthly</label>
+            <input class="js-toggle-switch form-check-input" type="checkbox" checked
+                   data-hs-toggle-switch-options='{
+                     "targetSelector": "#pricingCount1, #pricingCount2, #pricingCount3"
+                   }'>
+            <label class="form-check-label form-switch-promotion">
+              Annually
+              <span class="form-switch-promotion-container">
+                <span class="form-switch-promotion-body">
+                  <svg class="form-switch-promotion-arrow" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 99.3 57" width="48">
+                    <path fill="none" stroke="#bdc5d1" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" d="M2,39.5l7.7,14.8c0.4,0.7,1.3,0.9,2,0.4L27.9,42"></path>
+                    <path fill="none" stroke="#bdc5d1" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" d="M11,54.3c0,0,10.3-65.2,86.3-50"></path>
+                  </svg>
+                  <span class="form-switch-promotion-text">
+                    <span class="badge bg-primary rounded-pill ms-1">Save up to 10%</span>
+                  </span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- End Form Switch -->
+
+        <div class="row mb-3">
+          <div class="col-md mb-3">
+            <!-- Card -->
+            <div class="card card-lg form-check form-check-select-stretched h-100 zi-1">
+              <div class="card-header text-center">
+                <!-- Form Check -->
+                <input type="radio" class="form-check-input" name="billingPricingRadio" id="billingPricingRadio1" value="basic">
+                <label class="form-check-label" for="billingPricingRadio1"></label>
+                <!-- End Form Check -->
+
+                <span class="card-subtitle">Basic</span>
+                <h2 class="card-title display-3 text-dark">Free</h2>
+                <p class="card-text">Forever free</p>
+              </div>
+
+              <div class="card-body d-flex justify-content-center">
+                <!-- List Checked -->
+                <ul class="list-checked list-checked-primary mb-0">
+                  <li class="list-checked-item">1 user</li>
+                  <li class="list-checked-item">Front plan features</li>
+                  <li class="list-checked-item">1 app</li>
+                </ul>
+                <!-- End List Checked -->
+              </div>
+
+              <div class="card-footer border-0 text-center">
+                <div class="d-grid mb-2">
+                  <button type="button" class="form-check-select-stretched-btn btn btn-white">Select plan</button>
+                </div>
+                <p class="card-text small">
+                  <i class="bi-question-circle me-1"></i> Terms &amp; conditions apply
+                </p>
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+          <!-- End Col -->
+
+          <div class="col-md mb-3">
+            <!-- Card -->
+            <div class="card card-lg form-check form-check-select-stretched h-100 zi-1">
+              <div class="card-header text-center">
+                <!-- Form Check -->
+                <input type="radio" class="form-check-input" name="billingPricingRadio" id="billingPricingRadio2" checked value="starter">
+                <label class="form-check-label" for="billingPricingRadio2"></label>
+                <!-- End Form Check -->
+
+                <span class="card-subtitle">Starter</span>
+                <h2 class="card-title display-3 text-dark">
+                  $<span id="pricingCount1"
+                         data-hs-toggle-switch-item-options='{
+                           "min": 22,
+                           "max": 32
+                         }'>32</span>
+                  <span class="fs-6 text-muted">/ mon</span>
+                </h2>
+                <p class="card-text">Or prepay monthly</p>
+              </div>
+
+              <div class="card-body d-flex justify-content-center">
+                <!-- List Checked -->
+                <ul class="list-checked list-checked-primary mb-0">
+                  <li class="list-checked-item">3 users</li>
+                  <li class="list-checked-item">Front plan features</li>
+                  <li class="list-checked-item">3 apps</li>
+                  <li class="list-checked-item">Product support</li>
+                </ul>
+                <!-- End List Checked -->
+              </div>
+
+              <div class="card-footer border-0 text-center">
+                <div class="d-grid mb-2">
+                  <button type="button" class="form-check-select-stretched-btn btn btn-white">Select plan</button>
+                </div>
+                <p class="card-text small">
+                  <i class="bi-question-circle me-1"></i> Terms &amp; conditions apply
+                </p>
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+          <!-- End Col -->
+          
+          <div class="col-md mb-3">
+            <!-- Card -->
+            <div class="card card-lg form-check form-check-select-stretched h-100 zi-1">
+              <div class="card-header text-center">
+                <!-- Form Check -->
+                <input type="radio" class="form-check-input" name="billingPricingRadio" id="billingPricingRadio3" value="enterprise">
+                <label class="form-check-label" for="billingPricingRadio3"></label>
+                <!-- End Form Check -->
+
+                <span class="card-subtitle">Enterprise</span>
+                <h2 class="card-title display-3 text-dark">
+                  $<span id="pricingCount2"
+                         data-hs-toggle-switch-item-options='{
+                           "min": 42,
+                           "max": 54
+                         }'>54</span>
+                  <span class="fs-6 text-muted">/ mon</span>
+                </h2>
+                <p class="card-text">Or prepay annually</p>
+              </div>
+
+              <div class="card-body d-flex justify-content-center">
+                <!-- List Checked -->
+                <ul class="list-checked list-checked-primary mb-0">
+                  <li class="list-checked-item">Unlimited users</li>
+                  <li class="list-checked-item">Front plan features</li>
+                  <li class="list-checked-item">Unlimited apps</li>
+                  <li class="list-checked-item">Product support</li>
+                </ul>
+                <!-- End List Checked -->
+              </div>
+
+              <div class="card-footer border-0 text-center">
+                <div class="d-grid mb-2">
+                  <button type="button" class="form-check-select-stretched-btn btn btn-white">Select plan</button>
+                </div>
+                <p class="card-text small">
+                  <i class="bi-question-circle me-1"></i> Terms &amp; conditions apply
+                </p>
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="text-center mb-2 mb-sm-0">
+          <a class="btn btn-ghost-secondary" href="#">
+            <i class="bi-arrow-left-right me-1"></i> Compare plans
+          </a>
+        </div>
+
+        <div class="d-flex justify-content-center justify-content-sm-end gap-3">
+          <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upgrade plan</button>
+        </div>
+      </div>
+      <!-- End Body -->
+    </div>
+  </div>
+</div>

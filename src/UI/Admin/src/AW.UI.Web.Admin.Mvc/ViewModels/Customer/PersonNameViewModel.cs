@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
-    public class PersonNameViewModel : IMapFrom<NameFactory>
+    public class PersonNameViewModel : IMapFrom<NameFactory>, INameFactory
     {
         [Display(Name = "First name")]
         [Required]
@@ -19,8 +19,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
         public string LastName { get; set; }
 
         [Display(Name = "Full name")]
-        [Required]
-        public string FullName { get; set; }
+        public string FullName => INameFactory.GetFullName(this);
 
         public void Mapping(Profile profile)
         {

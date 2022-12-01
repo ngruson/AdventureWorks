@@ -1,0 +1,49 @@
+<div class="modal fade" id="importCustomersModal" tabindex="-1" aria-labelledby="importCustomersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="importCustomersModalLabel">Import customers by CSV</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <p><a class="link" href="#">Download a sample CSV template</a> to see an example of the format required.</p>
+
+        <!-- Dropzone -->
+        <div id="attachFilesNewProjectLabel" class="js-dropzone dz-dropzone dz-dropzone-card mb-4">
+          <div class="dz-message">
+            <img class="avatar avatar-xl avatar-4x3 mb-3" src="@@autopath/assets/svg/illustrations/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="default">
+            <img class="avatar avatar-xl avatar-4x3 mb-3" src="@@autopath/assets/svg/illustrations-light/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="dark">
+
+            <h5>Drag and drop your file here</h5>
+
+            <p class="mb-2">or</p>
+
+            <span class="btn btn-white btn-sm">Browse files</span>
+          </div>
+        </div>
+        <!-- End Dropzone -->
+
+        <!-- Form Check -->
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="overwriteCurrentCustomersCheckbox">
+          <label class="form-check-label" for="overwriteCurrentCustomersCheckbox">
+            Overwrite existing customers that have the same email or phone
+          </label>
+        </div>
+        <!-- End Form Check -->
+      </div>
+      <!-- End Body -->
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+        <button type="button" class="btn btn-primary">Import customers</button>
+      </div>
+      <!-- End Footer -->
+    </div>
+  </div>
+</div>

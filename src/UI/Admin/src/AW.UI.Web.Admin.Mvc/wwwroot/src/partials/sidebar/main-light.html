@@ -1,0 +1,54 @@
+<aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-light bg-light">
+  <div class="navbar-vertical-container">
+    <div class="navbar-vertical-footer-offset">
+      <!-- Logo -->
+      @@if(themeAppearance.layoutSkin === 'dark') {
+        @@include("../layouts-components/navbar-logo-light.html")
+      }
+      @@if(themeAppearance.layoutSkin !== 'dark') {
+        @@include("../layouts-components/navbar-logo.html")
+      }
+      <!-- End Logo -->
+
+      <!-- Navbar Vertical Toggle -->
+      @@include("../layouts-components/navbar-vertical-aside-toggle.html")
+      <!-- End Navbar Vertical Toggle -->
+
+      <!-- Content -->
+      <div class="navbar-vertical-content">
+        @@include("../layouts-components/navbar-vertical-menu.html", {
+          "category": "@@category",
+          "subcategory": "@@subcategory",
+          "link": "@@link"
+        })
+      </div>
+      <!-- End Content -->
+
+      <!-- Footer -->
+      <div class="navbar-vertical-footer">
+        <ul class="navbar-vertical-footer-list">
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Style Switcher -->
+            @@include("../layouts-components/darkmode-switcher.html", {
+              "dropup": "true"
+            })
+            <!-- End Style Switcher -->
+          </li>
+
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Other Links -->
+            @@include("../layouts-components/dropdown-help.html")
+            <!-- End Other Links -->
+          </li>
+
+          <li class="navbar-vertical-footer-list-item">
+            <!-- Language -->
+            @@include("../layouts-components/dropdown-language.html")
+            <!-- End Language -->
+          </li>
+        </ul>
+      </div>
+      <!-- End Footer -->
+    </div>
+  </div>
+</aside>

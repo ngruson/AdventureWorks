@@ -1,0 +1,32 @@
+<!-- Nav -->
+<div class="js-nav-scroller hs-nav-scroller-horizontal">
+  <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+    <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+      <i class="bi-chevron-left"></i>
+    </a>
+  </span>
+
+  <span class="hs-nav-scroller-arrow-next" style="display: none;">
+    <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+      <i class="bi-chevron-right"></i>
+    </a>
+  </span>
+
+  <ul class="nav nav-tabs page-header-tabs" id="projectsTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link @@if(link=='project.html'){active}" href="@@autopath/project.html">Overview</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link @@if(link=='project-files.html'){active}" href="@@autopath/project-files.html">Files</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link @@if(link=='project-activity.html'){active}" href="@@autopath/project-activity.html">Activity</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link @@if(link=='project-teams.html'){active}" href="@@autopath/project-teams.html">Teams</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link @@if(link=='project-settings.html'){active}" href="@@autopath/project-settings.html">Settings</a>
+    </li>
+  </ul>
+</div>

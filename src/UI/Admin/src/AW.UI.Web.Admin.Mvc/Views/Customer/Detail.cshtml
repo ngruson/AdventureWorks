@@ -3,28 +3,58 @@
     @model CustomerDetailViewModel;
 }
 
-<div class="container-fluid">
-    <form class="detail">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab" aria-controls="nav-general" aria-selected="true">General</a>
-                <a class="nav-link" id="nav-sales-orders-tab" data-toggle="tab" href="#nav-sales-orders" role="tab" aria-controls="nav-sales-orders" aria-selected="false">Sales orders</a>
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
-                @if (Model.Customer.CustomerType == CustomerType.Individual)
-                {
-                    <partial name="_customerIndividual" for="@Model.Customer" />
+@if (Model.Customer.CustomerType == CustomerType.Individual)
+{
+    <partial name="_customerIndividual" for="@Model.Customer" />
+}
+else if (Model.Customer.CustomerType == CustomerType.Store)
+{
+    <partial name="_customerStore" for="@Model.Customer" />
+}
+
+@section Scripts
+{
+    <script>
+        $(document).on('ready', function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init($('#datatableContacts'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableContactsCheckAll',
+                        counter: '#datatableContactsCounter',
+                        counterInfo: '#datatableContactsCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                      <img class="mb-3" src="../assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                      <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                    <p class="mb-0">No data to show</p>
+                                                    </div>`
                 }
-                else if (Model.Customer.CustomerType == CustomerType.Store)
-                {
-                    <partial name="_customerStore" for="@Model.Customer" />
+            });
+
+            HSCore.components.HSDatatables.init($('#datatableSalesOrders'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableSalesOrdersCheckAll',
+                        counter: '#datatableSalesOrdersCounter',
+                        counterInfo: '#datatableSalesOrdersCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                              <img class="mb-3" src="../assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                              <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                            <p class="mb-0">No data to show</p>
+                                                            </div>`
                 }
-            </div>
-            <div class="tab-pane fade" id="nav-sales-orders" role="tabpanel" aria-labelledby="nav-sales-orders-tab">
-                <partial name="_customerSalesOrders" for="@Model.Customer.SalesOrders" />
-            </div>
-        </div>
-    </form>
-</div>
+            });
+        });
+    </script>
+}

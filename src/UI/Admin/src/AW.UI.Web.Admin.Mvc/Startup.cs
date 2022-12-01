@@ -1,4 +1,5 @@
 using AW.SharedKernel.Caching;
+using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Infrastructure.ApiClients;
@@ -62,7 +63,7 @@ namespace AW.UI.Web.Admin.Mvc
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var virtualPath = "/mvc-internal";
+            var virtualPath = "/ui-web-admin-mvc";
 
             app.Map(virtualPath, builder =>
             {
@@ -150,6 +151,16 @@ namespace AW.UI.Web.Admin.Mvc
             services.AddScoped<ICache<ShipMethod>, ShipMethodCache>();
             services.AddScoped<ICache<StateProvince>, StatesProvinceCache>();
             services.AddScoped<ICache<Territory>, TerritoryCache>();
+
+            services.AddScoped<CustomerConverter<SharedKernel.Customer.Handlers.GetCustomers.Customer,
+                SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer,
+                SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer>>();
+            services.AddScoped<CustomerConverter<SharedKernel.Customer.Handlers.GetCustomer.Customer,
+                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer,
+                SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer>>();
+            services.AddScoped<CustomerConverter<SharedKernel.Customer.Handlers.UpdateCustomer.Customer,
+                SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
+                SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>>();
 
             return services;
         }

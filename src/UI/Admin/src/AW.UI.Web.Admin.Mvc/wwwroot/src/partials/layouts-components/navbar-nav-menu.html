@@ -1,0 +1,232 @@
+<ul class="navbar-nav">
+  <!-- Dashboards -->
+  <li class="hs-has-sub-menu nav-item">
+    <a id="dashboardsMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle @@if(category=='dashboards'){active}" href="#" role="button"><i class="bi-house-door dropdown-item-icon"></i> Dashboards</a>
+
+    <!-- Mega Menu -->
+    <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="dashboardsMegaMenu" style="min-width: 14rem;">
+      <a class="dropdown-item @@if(link=='index.html'){active}" href="@@autopath/index.html">Default</a>
+      <a class="dropdown-item @@if(link=='dashboard-alternative.html'){active}" href="@@autopath/dashboard-alternative.html">Alternative</a>
+    </div>
+    <!-- End Mega Menu -->
+  </li>
+  <!-- End Dashboards -->
+
+  <!-- Pages -->
+  <li class="hs-has-sub-menu nav-item">
+    <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle @@if(category=='pages'){active}" href="#" role="button"><i class="bi-files-alt dropdown-item-icon"></i> Pages</a>
+
+    <!-- Mega Menu -->
+    <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="pagesMegaMenu" style="min-width: 14rem;">
+      <!-- Users -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="usersMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='users'){active}" href="#" role="button">Users</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="usersMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='users.html'){active}" href="@@autopath/users.html">Overview</a>
+          <a class="dropdown-item @@if(link=='users-leaderboard.html'){active}" href="@@autopath/users-leaderboard.html">Leaderboard</a>
+          <a class="dropdown-item @@if(link=='users-add-user.html'){active}" href="@@autopath/users-add-user.html">Add User <span class="badge bg-info rounded-pill ms-1">Hot</span></a>
+        </div>
+      </div>
+      <!-- End Users -->
+
+      <!-- User Profile -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="userProfileMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='user-profile'){active}" href="#" role="button">User Profile <span class="badge bg-primary rounded-pill ms-1">5</span></a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="userProfileMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='user-profile.html'){active}" href="@@autopath/user-profile.html">Profile</a>
+          <a class="dropdown-item @@if(link=='user-profile-teams.html'){active}" href="@@autopath/user-profile-teams.html">Teams</a>
+          <a class="dropdown-item @@if(link=='user-profile-projects.html'){active}" href="@@autopath/user-profile-projects.html">Projects</a>
+          <a class="dropdown-item @@if(link=='user-profile-connections.html'){active}" href="@@autopath/user-profile-connections.html">Connections</a>
+          <a class="dropdown-item @@if(link=='user-profile-my-profile.html'){active}" href="@@autopath/user-profile-my-profile.html">My Profile</a>
+        </div>
+      </div>
+      <!-- End User Profile -->
+
+      <!-- Account -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="accountMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='account'){active}" href="#" role="button">Account</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="accountMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='account-settings.html'){active}" href="@@autopath/account-settings.html">Settings</a>
+          <a class="dropdown-item @@if(link=='account-billing.html'){active}" href="@@autopath/account-billing.html">Billing</a>
+          <a class="dropdown-item @@if(link=='account-invoice.html'){active}" href="@@autopath/account-invoice.html">Invoice</a>
+        </div>
+      </div>
+      <!-- End Account -->
+
+      <!-- E-commerce -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="ecommerceMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='ecommerce'){active}" href="#" role="button">E-commerce</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="ecommerceMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='ecommerce.html'){active}" href="@@autopath/ecommerce.html">Overview</a>
+
+          <!-- Products -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="productsMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='products'){active}" href="#" role="button">Products</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="productsMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='ecommerce-products.html'){active}" href="@@autopath/ecommerce-products.html">Products</a>
+              <a class="dropdown-item @@if(link=='ecommerce-product-details.html'){active}" href="@@autopath/ecommerce-product-details.html">Product Details</a>
+              <a class="dropdown-item @@if(link=='ecommerce-add-product.html'){active}" href="@@autopath/ecommerce-add-product.html">Add Product</a>
+            </div>
+          </div>
+          <!-- End Products -->
+
+          <!-- Products -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="ordersMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='orders'){active}" href="#" role="button">Orders</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="ordersMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='ecommerce-orders.html'){active}" href="@@autopath/ecommerce-orders.html">Orders</a>
+              <a class="dropdown-item @@if(link=='ecommerce-order-details.html'){active}" href="@@autopath/ecommerce-order-details.html">Order Details</a>
+            </div>
+          </div>
+          <!-- End Products -->
+
+          <!-- Customers -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="customersMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='customers'){active}" href="#" role="button">Customers</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="customersMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='ecommerce-customers.html'){active}" href="@@autopath/ecommerce-customers.html">Customers</a>
+              <a class="dropdown-item @@if(link=='ecommerce-customer-details.html'){active}" href="@@autopath/ecommerce-customer-details.html">Customer Details</a>
+              <a class="dropdown-item @@if(link=='ecommerce-add-customers.html'){active}" href="@@autopath/ecommerce-add-customers.html">Add Customers</a>
+            </div>
+          </div>
+          <!-- End Customers -->
+
+          <a class="dropdown-item @@if(link=='ecommerce-referrals.html'){active}" href="@@autopath/ecommerce-referrals.html">Referrals</a>
+          <a class="dropdown-item @@if(link=='ecommerce-manage-reviews.html'){active}" href="@@autopath/ecommerce-manage-reviews.html">Manage Reviews</a>
+          <a class="dropdown-item @@if(link=='ecommerce-checkout.html'){active}" href="@@autopath/ecommerce-checkout.html">Checkout</a>
+        </div>
+      </div>
+      <!-- End E-commerce -->
+
+      <!-- Projects -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="projectsMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='projects'){active}" href="#" role="button">Projects</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="projectsMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='projects.html'){active}" href="@@autopath/projects.html">Overview</a>
+          <a class="dropdown-item @@if(link=='projects-timeline.html'){active}" href="@@autopath/projects-timeline.html">Timeline</a>
+        </div>
+      </div>
+      <!-- End Projects -->
+
+      <!-- Project -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="projectMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='project'){active}" href="#" role="button">Project</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="projectMegaMenu" style="min-width: 14rem;">
+          <a class="dropdown-item @@if(link=='project.html'){active}" href="@@autopath/project.html">Overview</a>
+          <a class="dropdown-item @@if(link=='project-files.html'){active}" href="@@autopath/project-files.html">Files</a>
+          <a class="dropdown-item @@if(link=='project-activity.html'){active}" href="@@autopath/project-activity.html">Activity</a>
+          <a class="dropdown-item @@if(link=='project-teams.html'){active}" href="@@autopath/project-teams.html">Teams</a>
+          <a class="dropdown-item @@if(link=='project-settings.html'){active}" href="@@autopath/project-settings.html">Settings</a>
+        </div>
+      </div>
+      <!-- End Project -->
+
+      <!-- Authentication -->
+      <div class="hs-has-sub-menu nav-item">
+        <a id="authenticationMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='authentication'){active}" href="#" role="button">Authentication</a>
+
+        <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="authenticationMegaMenu" style="min-width: 14rem;">
+          <!-- Log In -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="loginMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='login'){active}" href="#" role="button">Log In</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="loginMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='authentication-login-basic.html'){active}" href="@@autopath/authentication-login-basic.html">Basic</a>
+              <a class="dropdown-item @@if(link=='authentication-login-cover.html'){active}" href="@@autopath/authentication-login-cover.html">Cover</a>
+            </div>
+          </div>
+          <!-- End Log In -->
+
+          <!-- Sign Up -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="signupMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='signup'){active}" href="#" role="button">Sign Up</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="signupMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='authentication-signup-basic.html'){active}" href="@@autopath/authentication-signup-basic.html">Basic</a>
+              <a class="dropdown-item @@if(link=='authentication-signup-cover.html'){active}" href="@@autopath/authentication-signup-cover.html">Cover</a>
+            </div>
+          </div>
+          <!-- End Sign Up -->
+
+          <!-- Reset Password -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="resetPasswordMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='resetPassword'){active}" href="#" role="button">Reset Password</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="resetPasswordMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='authentication-reset-password-basic.html'){active}" href="@@autopath/authentication-reset-password-basic.html">Basic</a>
+              <a class="dropdown-item @@if(link=='authentication-reset-password-cover.html'){active}" href="@@autopath/authentication-reset-password-cover.html">Cover</a>
+            </div>
+          </div>
+          <!-- End Reset Password -->
+
+          <!-- Email Verification -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="emailVerificationMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='emailVerification'){active}" href="#" role="button">Email Verification</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="emailVerificationMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='authentication-email-verification-basic.html'){active}" href="@@autopath/authentication-email-verification-basic.html">Basic</a>
+              <a class="dropdown-item @@if(link=='authentication-email-verification-cover.html'){active}" href="@@autopath/authentication-email-verification-cover.html">Cover</a>
+            </div>
+          </div>
+          <!-- End Email Verification -->
+
+          <!-- 2-step Verification -->
+          <div class="hs-has-sub-menu nav-item">
+            <a id="2stepVerificationMegaMenu" class="hs-mega-menu-invoker dropdown-item dropdown-toggle @@if(subcategory=='2stepVerification'){active}" href="#" role="button">2-step Verification</a>
+
+            <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="2stepVerificationMegaMenu" style="min-width: 14rem;">
+              <a class="dropdown-item @@if(link=='authentication-2-step-verification-basic.html'){active}" href="@@autopath/authentication-2-step-verification-basic.html">Basic</a>
+              <a class="dropdown-item @@if(link=='authentication-2-step-verification-cover.html'){active}" href="@@autopath/authentication-2-step-verification-cover.html">Cover</a>
+            </div>
+          </div>
+          <!-- End 2-step Verification -->
+
+          <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#welcomeMessageModal">Welcome Message</a>
+          <a class="dropdown-item @@if(link=='error-404.html'){active}" href="@@autopath/error-404.html">Error 404</a>
+          <a class="dropdown-item @@if(link=='error-500.html'){active}" href="@@autopath/error-500.html">Error 500</a>
+        </div>
+      </div>
+      <!-- End Authentication -->
+
+      <a class="dropdown-item @@if(link=='api-keys.html'){active}" href="@@autopath/api-keys.html" data-placement="left">API Keys</a>
+      <a class="dropdown-item @@if(link=='welcome-page.html'){active}" href="@@autopath/welcome-page.html" data-placement="left">Welcome Page</a>
+      <a class="dropdown-item @@if(link=='landing.html'){active}" href="@@autopath/landing.html" data-placement="left">Landing Page <span class="badge bg-info rounded-pill ms-1">New</span></a>
+    </div>
+    <!-- End Mega Menu -->
+  </li>
+  <!-- End Pages -->
+
+  <!-- Apps -->
+  <li class="hs-has-sub-menu nav-item">
+    <a id="appsMegaMenu" class="hs-mega-menu-invoker nav-link dropdown-toggle @@if(category=='apps'){active}" href="#" role="button"><i class="bi-app-indicator dropdown-item-icon"></i> Apps</a>
+
+    <div class="hs-sub-menu dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="appsMegaMenu" style="min-width: 14rem;">
+      <a class="dropdown-item @@if(link=='apps-kanban.html'){active}" href="@@autopath/apps-kanban.html">Kanban</a>
+      <a class="dropdown-item @@if(link=='apps-calendar.html'){active}" href="@@autopath/apps-calendar.html">Calendar</a>
+      <a class="dropdown-item @@if(link=='apps-invoice-generator.html'){active}" href="@@autopath/apps-invoice-generator.html">Invoice Generator</a>
+      <a class="dropdown-item @@if(link=='apps-file-manager.html'){active}" href="@@autopath/apps-file-manager.html">File Manager</a>
+    </div>
+  </li>
+  <!-- End Apps -->
+
+  <li class="nav-item">
+    <a class="nav-link @@if(link=='layouts/index.html'){active}" href="@@autopath/layouts/index.html">
+      <i class="bi-grid-1x2 dropdown-item-icon"></i> Layouts
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link @@if(link=='documentation/index.html'){active}" href="@@autopath/documentation/index.html" data-placement="left">
+      <i class="bi-book dropdown-item-icon"></i> Docs
+    </a>
+  </li>
+</ul>

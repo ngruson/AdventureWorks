@@ -30,3 +30,9 @@ function getSalesPersons(territory, dropdown, url) {
         });
     }
 }
+
+function getFlag(countryRegionCode) {
+    if (countryRegionCode == "US") {
+        return "../assets/vendor/flag-icon-css/flags/1x1/us.svg"
+    }
+}

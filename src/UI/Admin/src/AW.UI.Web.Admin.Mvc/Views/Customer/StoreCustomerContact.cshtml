@@ -1,0 +1,276 @@
+﻿@{
+    if (Model.IsNewContact)
+        ViewData["Title"] = "New store customer contact";
+    else
+        ViewData["Title"] = $"Store customer contact - {Model.CustomerContact.ContactPerson.Name.FullName}";
+    @model StoreCustomerContactViewModel;
+
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">@Html.ActionLink("Customers", "Index", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item">@Html.ActionLink(Model.CustomerName, "Detail", new { Model.AccountNumber }, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item active" aria-current="page">Customer contact</li>
+                </ol>
+            </nav>
+
+            @if (Model.IsNewContact)
+            {
+                <h1 class="page-header-title">New contact</h1>
+            }
+            else
+            {
+                <h1 class="page-header-title">@Model.CustomerContact.ContactPerson.Name.FullName</h1>
+            }
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Page Header-->
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.AccountNumber)
+                <div class="card-body">
+                    <!-- Media -->
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="flex-grow-1 mx-3">
+                            <div class="d-flex mb-1">
+                                <h3 class="mb-0 me-3">Contact info</h3>
+                            </div>
+                        </div>
+
+                        <div class="d-none d-sm-inline-block ms-auto text-end">
+                            <!-- Dropdown -->
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-white btn-sm" id="actionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions <i class="bi-chevron-down"></i>
+                                </button>
+
+                                <div class="dropdown-menu mt-1" aria-labelledby="actionsDropdown">
+                                    <a class="dropdown-item text-danger" href="#">
+                                        <i class="bi-trash dropdown-item-icon text-danger"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End Dropdown -->
+                        </div>
+                    </div>
+                    <!-- End Media -->
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Title, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact.ContactPerson.Title" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.FirstName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact.ContactPerson.Name.FirstName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact.ContactPerson.Name.MiddleName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.LastName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact.ContactPerson.Name.LastName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact.ContactPerson.Suffix" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Suffix, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @if (Model.IsNewContact)
+                    {
+                        <div class="js-add-field row mb-4"
+                     data-hs-add-field-options='{
+                                "template": "#addEmailFieldTemplate",
+                                "container": "#addEmailFieldContainer0",
+                                "defaultCreated": 0
+                              }'>
+                            <label class="col-sm-3 col-form-label form-label">Email address</label>
+                            <div class="col-sm-9">
+                                <input name="newEmail[0]" class="form-control" />
+                                <div id="addEmailFieldContainer0"></div>
+                                <a href="javascript:;" class="js-create-field form-link">
+                                    <i class="bi-plus-circle me-1"></i> Add email address
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <!-- Add Email Input Field -->
+                    <div id="addEmailFieldTemplate" style="display: none;">
+                        <div class="input-group-add-field">
+                            <input type="email" class="js-input-mask form-control" data-name="email" placeholder="Enter email" aria-label="Enter email">
+                        </div>
+
+                        <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                            <i class="bi-x-lg"></i>
+                        </a>
+                    </div>
+                    <!-- End Email Input Field -->
+                    <div class="js-add-field row mb-4"
+                     data-hs-add-field-options='{
+                                "template": "#addEmailFieldTemplate",
+                                "container": "#addEmailFieldContainer",
+                                "defaultCreated": 0
+                              }'>
+                        <label class="col-sm-3 col-form-label form-label">
+                            Email
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.CustomerContact.ContactPerson.EmailAddresses.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-white" asp-action="DeleteContactEmailAddress" asp-route-accountnumber="@Model.AccountNumber" asp-route-contactname="@Model.CustomerContact.ContactPerson.Name.FullName" asp-route-emailaddress="@Model.CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress">
+                                            <i class="bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                @if (i == Model.CustomerContact.ContactPerson.EmailAddresses.Count - 1)
+                                {
+                                    <div id="addEmailFieldContainer"></div>
+                                    <a href="javascript:;" class="js-create-field form-link">
+                                        <i class="bi-plus-circle me-1"></i> Add email address
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="js-add-field row mb-4"
+                     data-hs-add-field-options='{
+                                "template": "#addPhoneFieldTemplate",
+                                "container": "#addPhoneFieldContainer",
+                                "defaultCreated": 0
+                              }'>
+                        <label class="col-sm-3 col-form-label form-label">
+                            Phone
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.CustomerContact.ContactPerson.PhoneNumbers.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumber" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        <div class="tom-select-custom">
+                                            @Html.DropDownListFor(m => m.CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div id="addPhoneFieldContainer"></div>
+                            <a href="javascript:;" class="js-create-field form-link">
+                                <i class="bi-plus-circle me-1"></i> Add phone number
+                            </a>
+                        </div>
+                        <!-- Add Phone Input Field -->
+                        <div id="addPhoneFieldTemplate" class="input-group-add-field" style="display: none;">
+                            <div class="input-group input-group-sm-vertical align-items-center">
+                                <input class="js-input-mask form-control" data-name="phone" placeholder="Enter phone number" aria-label="Enter phone number">
+
+                                <div class="input-group-append">
+                                    <!-- Select -->
+                                    <div class="tom-select-custom tom-select-custom-end">
+                                        <select class="js-select-dynamic form-select" autocomplete="off" name="phoneSelect" data-name="phoneSelect"
+                                            data-hs-tom-select-options='{
+                                                "searchInDropdown": false,
+                                                "hideSearch": true,
+                                                "dropdownWidth": "8rem"
+                                              }'>
+                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                            {
+                                                if (phoneNumberType.Value == "Work")
+                                                {
+                                                    <option value="@phoneNumberType.Value" selected>@phoneNumberType.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@phoneNumberType.Value">@phoneNumberType.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- End Select -->
+                                </div>
+                            </div>
+
+                            <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                                <i class="bi-x-lg"></i>
+                            </a>
+                        </div>
+                        <!-- End Phone Input Field -->                        
+                    </div>
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact.ContactType, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <!-- Select -->
+                            <div class="tom-select-custom">
+                                @Html.DropDownListFor(m => m.CustomerContact.ContactType, Model.ContactTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            </div>
+                            <!-- End Select-->
+                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end gap-3">
+                        @if (!Model.IsNewContact)
+                        {
+                            <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@Model.CustomerContact.ContactPerson.Name.FullName" class="btn btn-white">Discard</a>
+                        }
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                <!-- End Footer -->
+            }
+        </div>
+        <!-- End Card-->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // INITIALIZATION OF ADD FIELD
+            // =======================================================
+            new HSAddField('.js-add-field')
+        })();
+    </script>
+}

@@ -1,0 +1,81 @@
+<div class="modal fade" id="exportOrdersModal" tabindex="-1" aria-labelledby="exportOrdersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="exportOrdersModalLabel">Export orders</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="d-grid gap-2 mb-4">
+          <!-- Form Check -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio1" checked>
+            <label class="form-check-label" for="exportProductsRadio1">
+              Current page
+            </label>
+          </div>
+          <!-- End Form Check -->
+
+          <!-- Form Check -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio2">
+            <label class="form-check-label" for="exportProductsRadio2">
+              All products
+            </label>
+          </div>
+          <!-- End Form Check -->
+          
+          <!-- Form Check -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio3">
+            <label class="form-check-label" for="exportProductsRadio3">
+              Selected: 20 products
+            </label>
+          </div>
+          <!-- End Form Check -->
+          
+          <!-- Form Check -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio4">
+            <label class="form-check-label" for="exportProductsRadio4">
+              Order by date
+            </label>
+          </div>
+          <!-- End Form Check -->
+        </div>
+  
+        <label class="form-label">Export as</label>
+
+        <!-- Form Check -->
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exportOrdersAsRadio" id="exportOrdersAsRadio1" checked>
+          <label class="form-check-label" for="exportOrdersAsRadio1">
+            CSV for Excel, Numbers, or other spreadsheet programs
+          </label>
+        </div>
+        <!-- End Form Check -->
+
+        <!-- Form Check -->
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exportOrdersAsRadio" id="exportOrdersAsRadio2">
+          <label class="form-check-label" for="exportOrdersAsRadio2">
+            Plain CSV file
+          </label>
+        </div>
+        <!-- End Form Check -->
+      </div>
+      <!-- End Body -->
+
+      <!-- Footer -->
+      <div class="modal-footer gap-3">
+        <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+        <button type="button" class="btn btn-primary">Export orders</button>
+      </div>
+      <!-- End Footer -->
+    </div>
+  </div>
+</div>

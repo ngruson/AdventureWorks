@@ -1,0 +1,201 @@
+<div class="modal fade" id="addEventToCalendarModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <label for="eventTitleLabel" class="visually-hidden form-label">Title</label>
+        <textarea id="eventTitleLabel" class="form-control form-control-title" placeholder="Add title"></textarea>
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-list-ul nav-icon"></i>
+              <div class="flex-grow-1">Event type</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <!-- Select -->
+            <div class="tom-select-custom">
+              <select class="js-select form-select w-auto" autocomplete="off" id="eventColorLabel"
+                      data-hs-tom-select-options='{
+                        "searchInDropdown": false,
+                        "placeholder": "Select event color"
+                      }'>
+                <option value="" data-option-template='<span class="d-flex align-items-center">Select event color</span>'>Select event color</option>
+                <option value="fullcalendar-custom-event-hs-team" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-primary me-2"></span>HS Team</span>'>HS Team</option>
+                <option value="fullcalendar-custom-event-reminders" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-danger me-2"></span>Reminders</span>'>Reminders</option>
+                <option value="fullcalendar-custom-event-tasks" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-warning me-2"></span>Tasks</span>'>Tasks</option>
+                <option value="fullcalendar-custom-event-holidays" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-dark me-2"></span>Success</span>'>Success</option>
+              </select>
+            </div>
+            <!-- End Select -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-calendar-event nav-icon"></i>
+              <div class="flex-grow-1">Date</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <label for="eventDateRangeLabel" class="visually-hidden form-label">Date</label>
+
+            <!-- Flatpickr -->
+            <input type="text" id="eventDateRangeLabel" class="flatpickr-custom form-control mb-2" placeholder="Select dates"
+                   data-hs-flatpickr-options='{
+                     "dateFormat": "m/d/Y",
+                     "mode": "range",
+                     "minDate": "12/01/2020"
+                   }'>
+            <!-- End Flatpickr -->
+
+            <div class="d-flex align-items-center">
+              <label for="eventRepeatLabel" class="text-body me-2 mb-0">Repeat:</label>
+
+              <!-- Select -->
+              <div class="tom-select-custom">
+                <select class="js-select form-select form-select-sm w-auto" id="eventRepeatLabel"
+                        data-hs-tom-select-options='{
+                          "searchInDropdown": false,
+                          "hideSearch": true
+                        }'>
+                  <option value="everyday" selected>Everyday</option>
+                  <option value="weekdays">Weekdays</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+              <!-- End Select -->
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-people nav-icon"></i>
+              <div class="flex-grow-1">Guests</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <label for="eventGuestsLabel" class="visually-hidden form-label">Add guests</label>
+            <div class="tom-select-custom">
+              <select class="form-select" id="eventGuestsLabel" placeholder="Add guests" aria-label="Add guests" multiple
+                      data-hs-tom-select-options='{
+                        "placeholder": "Select a person...",
+                        "hideSearch": true
+                      }'>
+              </select>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-camera-reels nav-icon"></i>
+              <div class="flex-grow-1">Conference call</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <a class="btn btn-primary" href="#">
+              <i class="bi-camera-video-fill me-1"></i> Add Zoom video conferencing
+            </a>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-geo-alt nav-icon"></i>
+              <div class="flex-grow-1">Location</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <label for="eventLocationLabel" class="visually-hidden form-label">Add location</label>
+
+            <input type="text" class="form-control" id="eventLocationLabel" placeholder="Add location" aria-label="Add location">
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row mb-4">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-text-left nav-icon"></i>
+              <div class="flex-grow-1">Description</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <label for="eventDescriptionLabel" class="visually-hidden form-label">Add description</label>
+
+            <textarea id="eventDescriptionLabel" class="form-control" placeholder="Add description"></textarea>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row">
+          <div class="col-sm-3 mb-2 mb-sm-0">
+            <div class="d-flex align-items-center mt-2">
+              <i class="bi-person nav-icon"></i>
+              <div class="flex-grow-1">Created by</div>
+            </div>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-sm">
+            <!-- Media -->
+            <a class="d-inline-flex align-items-center" href="@@autopath/user-profile.html">
+              <div class="avatar avatar-sm avatar-circle me-3">
+                <img class="avatar-img" src="@@autopath/assets/img/160x160/img6.jpg" alt="Image Description">
+              </div>
+              <div class="flex-grow-1">
+                <h5 class="text-inherit mb-0">Mark Williams</h5>
+              </div>
+            </a>
+            <!-- End Media -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- End Body -->
+
+      <!-- Footer -->
+      <div class="modal-footer gap-3">
+        <button type="button" id="discardFormt" class="btn btn-white" data-bs-dismiss="modal">Discard</button>
+        <button type="button" id="processEvent" class="btn btn-primary">Create event</button>
+      </div>
+      <!-- End Footer -->
+    </div>
+  </div>
+</div>

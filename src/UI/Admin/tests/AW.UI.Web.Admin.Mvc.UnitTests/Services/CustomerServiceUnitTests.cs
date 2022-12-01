@@ -22,6 +22,7 @@ using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer;
 using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
 using System;
+using AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 {
@@ -141,7 +142,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 var viewModel = await sut.GetCustomer(customer.AccountNumber);
 
                 //Assert
-                viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
+                viewModel.AccountNumber.Should().Be(customer.AccountNumber);
 
                 mockMediator.Verify(_ => _.Send(
                         It.IsAny<GetCustomerQuery>(),
@@ -189,10 +190,8 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert
                 viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
-                viewModel.SalesPersons.ToList().Count.Should().Be(4);
-                viewModel.SalesPersons.ToList()[0].Text.Should().Be("All");
+                viewModel.Territories.ToList().Count.Should().Be(3);                
+                viewModel.SalesPersons.ToList().Count.Should().Be(3);
             }
         }
 
@@ -226,8 +225,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert
                 viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.Territories.ToList().Count.Should().Be(3);
                 viewModel.EmailPromotions.Count().Should().Be(4);
                 viewModel.EmailPromotions.ToList()[0].Text.Should().Be("All");
             }
@@ -674,7 +672,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task AddContact_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                EditCustomerContactViewModel viewModel,
+                StoreCustomerContactViewModel viewModel,
                 SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
@@ -726,7 +724,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(customer);
 
                 //Act
-                var viewModel = await sut.GetCustomerContact(customer.AccountNumber, contactName, contactType);
+                var viewModel = await sut.GetCustomerContact(customer.AccountNumber, contactName);
 
                 //Assert            
                 viewModel.IsNewContact.Should().Be(false);
@@ -740,13 +738,17 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateContact_OK(
                 [Frozen] Mock<IMediator> mockMediator,
+                IMapper mapper,
                 CustomerService sut,
                 SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
-                EditCustomerContactViewModel viewModel
+                StoreCustomerContactViewModel viewModel
             )
             {
                 //Arrange
-                viewModel.CustomerContact.ContactType = customer.Contacts[0].ContactType;
+                mapper.Map(
+                    customer.Contacts[0].ContactPerson.Name,
+                    viewModel.CustomerContact.ContactPerson.Name
+                );
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetStoreCustomerQuery>(),
@@ -767,37 +769,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             }
         }
 
-        public class GetCustomerContactForDelete
-        {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task GetCustomerContactForDelete_OK(
-                [Frozen] Mock<IMediator> mockMediator,
-                CustomerService sut,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
-            )
-            {
-                //Arrange
-                mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetStoreCustomerQuery>(),
-                    It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(customer);
-
-                //Act
-                var viewModel = await sut.GetCustomerContactForDelete(
-                    customer.AccountNumber,
-                    customer.Contacts[0].ContactPerson.Name.FullName,
-                    customer.Contacts[0].ContactType
-                );
-
-                //Assert
-                viewModel.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.CustomerName.Should().Be(customer.Name);
-                viewModel.ContactType.Should().Be(customer.Contacts[0].ContactType);
-            }
-        }
-
         public class DeleteContact
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -805,12 +776,11 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
-                DeleteCustomerContactViewModel viewModel
+                string accountNumber,
+                string contactName
             )
             {
                 //Arrange
-                viewModel.ContactType = customer.Contacts[0].ContactType;
-
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetStoreCustomerQuery>(),
                         It.IsAny<CancellationToken>()
@@ -819,7 +789,10 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(customer);
 
                 //Act
-                await sut.DeleteContact(viewModel);
+                await sut.DeleteContact(
+                    customer.AccountNumber,
+                    customer.Contacts[0].ContactPerson.Name.FullName
+                );
 
                 //Assert
                 mockMediator.Verify(_ => _.Send(

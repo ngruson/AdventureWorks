@@ -11,6 +11,9 @@ using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using AW.UI.Web.Admin.Mvc;
 using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.Services;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using System.Collections.Generic;
+using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -44,9 +47,26 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         {
             var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
-            ViewData["customerName"] = viewModel.Customer.CustomerName;
+            ViewData["customerName"] = viewModel.CustomerName;
             ViewData["countries"] = await mediator.Send(new GetCountriesQuery());
             ViewData["statesProvinces"] = await mediator.Send(new GetStatesProvincesQuery("US"));
+            ViewData["territories"] = await customerService.GetTerritories(true);
+            ViewData["salesPersons"] = await customerService.GetSalesPersons(
+                viewModel.Territory
+            );
+
+            return View("_customerStore", viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Detail(StoreCustomerViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customerService.UpdateStore(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
             return View(viewModel);
         }
 
@@ -189,66 +209,69 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         }
         #endregion
 
-        #region Store contacts
+        #region Store contacts        
 
-        public async Task<IActionResult> AddContact(string accountNumber, string customerName)
+        public async Task<IActionResult> StoreCustomerContact(string accountNumber, string contactName)
         {
-            return View("Contact",
-                await customerService.AddContact(accountNumber, customerName)
-            );
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddContact(EditCustomerContactViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.AddContact(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
-            }
-
-            return View(viewModel);
-        }
-
-        public async Task<IActionResult> EditContact(string accountNumber, string contactName, string contactType)
-        {
-            return View("Contact",
+            return View(
                 await customerService.GetCustomerContact(
                     accountNumber,
-                    contactName,
-                    contactType
+                    contactName
                 )
             );
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditContact(EditCustomerContactViewModel viewModel)
+        public async Task<IActionResult> StoreCustomerContact([ModelBinder(BinderType = typeof(StoreCustomerContactViewModelBinder))] StoreCustomerContactViewModel viewModel, List<string> email)
         {
             if (ModelState.IsValid)
             {
                 await customerService.UpdateContact(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 
-            return View(viewModel);
+            return RedirectToAction("StoreCustomerContact",
+                new { viewModel.AccountNumber, ContactName = viewModel.CustomerContact.ContactPerson.Name.FullName }
+            );
         }
 
-        public async Task<IActionResult> DeleteContact(string accountNumber, string contactName, string contactType)
+        public async Task<IActionResult> AddStoreCustomerContact(string accountNumber, string customerName)
         {
-            var viewModel = await customerService.GetCustomerContactForDelete(accountNumber, contactName, contactType);
-            return View(viewModel);
+            return View("StoreCustomerContact",
+                await customerService.AddContact(accountNumber, customerName)
+            );
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteContact(DeleteCustomerContactViewModel viewModel)
+        public async Task<IActionResult> AddStoreCustomerContact(StoreCustomerContactViewModel viewModel, List<string> newEmail)
         {
             if (ModelState.IsValid)
             {
-                await customerService.DeleteContact(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+                if (newEmail != null)
+                {
+                    viewModel.CustomerContact.ContactPerson.EmailAddresses = new();
+                    viewModel.CustomerContact.ContactPerson.EmailAddresses
+                        .AddRange(newEmail.Select(_ => new PersonEmailAddressViewModel { EmailAddress = _ }));
+                }
+
+                await customerService.AddContact(viewModel);
+                return RedirectToAction("StoreCustomerContact", 
+                    new { 
+                        viewModel.AccountNumber,
+                        ContactName = viewModel.CustomerContact.ContactPerson.Name.FullName
+                    });
             }
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> DeleteContact(string accountNumber, string contactName)
+        {
+            if (ModelState.IsValid)
+            {
+                await customerService.DeleteContact(accountNumber, contactName);                
+            }
+
+            return RedirectToAction("Detail", new { accountNumber });
         }
         #endregion
 
@@ -291,22 +314,16 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> DeleteContactEmailAddress(string accountNumber, string contactType, string contactName, string emailAddress)
+        public async Task<IActionResult> DeleteContactEmailAddress(string accountNumber, string contactName, string emailAddress)
         {
-            var viewModel = await customerService.GetContactEmailAddressForDelete(accountNumber, contactType, contactName, emailAddress);
-            return View(viewModel);
-        }
+            await customerService.DeleteContactEmailAddress(accountNumber, contactName, emailAddress);
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteContactEmailAddress(DeleteContactEmailAddressViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.DeleteContactEmailAddress(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
-            }
-
-            return View(viewModel);
+            return RedirectToAction("StoreCustomerContact",
+                new
+                {
+                    accountNumber,
+                    contactName
+                });
         }
 
         #endregion

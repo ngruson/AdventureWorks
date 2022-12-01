@@ -1,84 +1,433 @@
 ﻿@{
     @model StoreCustomerViewModel;
+    
+    var territories = ViewData["territories"] as IEnumerable<SelectListItem>;
+    var salesPersons = ViewData["salesPersons"] as IEnumerable<SelectListItem>;
 }
 
-<div class="actions">
-    @Html.ActionLink("Edit", "EditStore", new { Model.AccountNumber }, new { @class = "btn btn-primary" })
-</div>
-<div class="row">
-    <div class="col-2">
-        <label>Account number</label>
-    </div>
-    <div class="col">
-        @Model.AccountNumber
-    </div>
-</div>
-<div class="row">
-    <div class="col-2">
-        <label>Name</label>
-    </div>
-    <div class="col">
-        @Model.CustomerName
-    </div>
-</div>
-<div class="row">
-    <div class="col-2">
-        <label>Sales territory</label>
-    </div>
-    <div class="col">
-        @Model.Territory
-    </div>
-</div>
-<div class="row">
-    <div class="col-2">
-        <label>Sales person</label>
-    </div>
-    <div class="col">
-        @Model.SalesPerson
-    </div>
-</div>
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">@Html.ActionLink("Customers", "Index", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item active" aria-current="page">Customer details</li>
+                </ol>
+            </nav>
 
-<partial name="Customer/_customerAddresses" for="@Model.Addresses" />
+            <h1 class="page-header-title">@Model.CustomerName</h1>
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Page Header-->
 
-<h4>Contacts</h4>
-@if (Model.Contacts.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Contact type</th>
-                <th>Contact name</th>
-            </tr>
-        </thead>
-        @foreach (var contact in Model.Contacts)
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            @using (Html.BeginForm())
             {
-        <tr>
-            <td>
-                @Html.ActionLink("Edit", "EditContact", new
-                    {
-                        accountNumber = ViewData["accountNumber"],
-                        contactName = contact.ContactPerson.Name.FullName,
-                        contact.ContactType
-                    })
-                |
-                @Html.ActionLink("Delete", "DeleteContact", new
-                   {
-                       accountNumber = ViewData["accountNumber"],
-                       contactName = contact.ContactPerson.Name.FullName,
-                       contact.ContactType
-                   })
-            </td>
-            <td>@contact.ContactType</td>
-            <td>@contact.ContactPerson.Name.FullName</td>
-        </tr>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.AccountNumber)
+                <div class="card-body">
+                    <!-- Media -->
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="flex-grow-1 mx-3">
+                            <div class="d-flex mb-1">
+                                <h3 class="mb-0 me-3">@Model.CustomerName</h3>
+                                @Html.HiddenFor(m => m.CustomerName)
+
+                                <!-- Dropdown -->
+                                <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top">
+                                    <button type="button" class="btn btn-white btn-icon btn-xs rounded-circle" id="editDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi-pencil-fill"></i>
+                                    </button>
+
+                                    <div class="dropdown-menu dropdown-card mt-1" aria-labelledby="editDropdown" style="min-width: 20rem;">
+                                        <!-- Card -->
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row gx-3">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <label for="customerNameLabel" class="form-label">Customer name</label>
+                                                        <input type="text" class="form-control" name="customerName" id="customerNameLabel">
+                                                    </div>
+                                                    <!-- End Col -->
+                                                </div>
+                                                <!-- End Row -->
+
+                                                <div class="d-flex justify-content-end gap-2 mt-3">
+                                                    <button type="button" class="btn btn-white btn-sm">Cancel</button>
+                                                    <button type="button" class="btn btn-primary btn-sm">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Body -->
+                                    </div>
+                                </div>
+                                <!-- End Dropdown -->
+                            </div>
+                        </div>
+
+                        <div class="d-none d-sm-inline-block ms-auto text-end">
+                            <!-- Dropdown -->
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-white btn-sm" id="actionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions <i class="bi-chevron-down"></i>
+                                </button>
+
+                                <div class="dropdown-menu mt-1" aria-labelledby="actionsDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bi-envelope dropdown-item-icon"></i> Email
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="#">
+                                        <i class="bi-trash dropdown-item-icon text-danger"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End Dropdown -->
+                        </div>
+                    </div>
+                    <!-- End Media -->
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.AccountNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="AccountNumber" class="form-control" disabled />
+                            @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Territory, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <!-- Select -->
+                            <div class="tom-select-custom">
+                                @Html.DropDownListFor(m => m.Territory, territories, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            </div>
+                            <!-- End Select-->
+                            @Html.ValidationMessageFor(m => m.Territory, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.SalesPerson, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <!-- Select -->
+                            <div class="tom-select-custom">
+                                @Html.DropDownListFor(m => m.SalesPerson, salesPersons, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            </div>
+                            <!-- End Select-->
+                            @Html.ValidationMessageFor(m => m.SalesPerson, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <!-- Footer -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end gap-3">
+                        <button type="submit" class="btn btn-white">Discard</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                <!-- End Footer -->
             }
-    </table>
-}
-else
-{
-    <div class="row">
-        No contacts found
+        </div>
+        <!-- End Card -->
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header card-header-content-sm-between">
+                <div class="mb-2 mb-sm-0">
+                    <h4 class="card-header-title">Contacts</h4>
+                </div>
+                <div class="d-grid d-sm-flex justify-content-sm-between align-items-sm-center gap-2">
+                    <!-- Datatable Info -->
+                    <div id="datatableContactsCounterInfo" style="display: none;">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-5 me-3">
+                                <span id="datatableContactsCounter">0</span>
+                                Selected
+                            </span>
+                            <a class="btn btn-outline-danger btn-sm">
+                                <i class="bi-trash"></i> Delete
+                            </a>                            
+                        </div>
+                    </div>
+                    <!-- End Datatable Info -->
+
+                    <a class="js-create-field btn btn-ghost-secondary btn-sm" asp-action="AddStoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-customername="@Model.CustomerName">
+                        <i class="bi-plus"></i> Add contact
+                    </a>
+                </div>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                
+                <!-- Table -->
+                <div class="table-responsive datatable-custom">
+                    <table id="datatableContacts" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                    "columnDefs": [{
+                        "targets": [0],
+                        "orderable": false
+                    }],
+                    "order": [],
+                    "pageLength": 12,
+                    "isResponsive": false,
+                    "isShowPaging": false
+                    }'>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="table-column-pe-0">
+                                    <div class="form-check">
+                                        <input id="datatableContactsCheckAll" type="checkbox" class="form-check-input">
+                                        <label class="form-check-label" for="datatableContactsCheckAll"></label>
+                                    </div>
+                                </th>                                
+                                <th class="table-column-ps-0">Contact name</th>
+                                <th class="table-column-ps-0">Contact type</th>
+                                <th class="table-column-ps-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+
+                                foreach (var contact in Model.Contacts)
+                                {
+                                    i++;
+                                    <tr>                                        
+                                        <td class="table-column-pe-0">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="contactCheck-@i.ToString()">
+                                                <label class="form-check-label" for="contactCheck-@i.ToString()"></label>
+                                            </div>
+                                        </td>
+                                        <td>                                                
+                                            <div class="flex-grow-1 ms-3">
+                                                <span class="d-block h5 text-inherit mb-0">
+                                                    <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName">
+                                                        @contact.ContactPerson.Name.FullName
+                                                    </a>
+                                                </span>
+                                                @if (contact.ContactPerson.EmailAddresses.Count > 0)
+                                                {
+                                                    <span class="d-block fs-5 text-body">@contact.ContactPerson.EmailAddresses[0].EmailAddress</span>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>@contact.ContactType</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Edit group">
+                                                <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName" class="btn btn-white">
+                                                    <i class="bi-pencil me-1"></i> Edit
+                                                </a>
+                                                <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#deleteContactModal-@i">
+                                                    <i class="bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deleteContactModal-@i" tabindex="-1" role="dialog" aria-labelledby="deleteContactModalLabel-@i" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteContactModalLabel-@i">Delete Contact</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                                                            <a asp-action="DeleteContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName" class="btn btn-primary">Delete contact</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Modal -->
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->                
+            </div>
+        </div>
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header card-header-content-sm-between">
+                <div class="d-grid gap-2 mb-2 mb-sm-0">
+                    <h4 class="card-header-title">Sales orders</h4>
+
+                    <!-- Datatable Info -->
+                    <div id="datatableSalesOrdersCounterInfo" style="display: none;">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-5 me-3">
+                                <span id="datatableSalesOrdersCounter">0</span>
+                                Selected
+                            </span>
+                            <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                                <i class="bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Datatable Info -->
+                </div>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                
+                <!-- Table -->
+                <div class="table-responsive datatable-custom">
+                    <table id="datatableSalesOrders" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                    "columnDefs": [{
+                        "targets": [0, 5],
+                        "orderable": false
+                    }],
+                    "order": [],
+                    "info": {
+                        "totalQty": "#datatableWithPaginationInfoTotalQty"
+                    },
+                    "search": "#datatableSearch",
+                    "entries": "#datatableEntries",
+                    "pageLength": 12,
+                    "isResponsive": false,
+                    "isShowPaging": false,
+                    "pagination": "datatablePagination"
+                    }'>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="table-column-pe-0">
+                                    <div class="form-check">
+                                        <input id="datatableSalesOrdersCheckAll" type="checkbox" class="form-check-input">
+                                        <label class="form-check-label" for="datatableSalesOrdersCheckAll"></label>
+                                    </div>
+                                </th>
+                                <th class="table-column-ps-0">Sales order number</th>
+                                <th>Order date</th>
+                                <th>Ship date</th>
+                                <th>Due date</th>
+                                <th>Status</th>
+                                <th>Online ordered</th>
+                                <th>Total due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var salesOrder in Model.SalesOrders)
+                            {
+                                <tr>
+                                    <td class="table-column-pe-0">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="ordersCheck-@salesOrder.SalesOrderNumber">
+                                            <label class="form-check-label" for="ordersCheck-@salesOrder.SalesOrderNumber"></label>
+                                        </div>
+                                    </td>
+                                    <td class="table-column-ps-0">
+                                        @Html.ActionLink(salesOrder.SalesOrderNumber, "Detail", "SalesOrder", new { salesOrder.SalesOrderNumber })
+                                    </td>
+                                    <td>@salesOrder.OrderDate</td>
+                                    <td>@salesOrder.ShipDate</td>
+                                    <td>@salesOrder.DueDate</td>
+                                    <td>@salesOrder.Status</td>
+                                    <td>@salesOrder.OnlineOrderFlag</td>
+                                    <td>@salesOrder.TotalDue</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </div>
+        </div>
     </div>
+    <div class="col-lg-4">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            <div class="card-body">
+                <!-- List Group -->
+                <ul class="list-group list-group-flush list-group-no-gutters">
+                    @foreach (var address in Model.Addresses)
+                    {
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>@address.AddressType address</h5>
+                                <a class="link" href="javascript:;">Edit</a>
+                            </div>
+
+                            <span class="d-block text-body">
+                                @address.Address.AddressLine1<br>
+                                @if (!string.IsNullOrEmpty(address.Address.AddressLine2))
+                                {
+                                    @address.Address.AddressLine2
+
+                                    <br>
+                                }
+                                @(address.Address.PostalCode), @(address.Address.City)<br>
+                                @(address.Address.CountryRegionCode) <img class="avatar avatar-xss avatar-circle ms-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" onload="this.onload=null; this.src=getFlag('@address.Address.CountryRegionCode')">
+                            </span>
+                        </li>
+                    }
+                </ul>
+                <!-- End List Group -->
+            </div>
+            <!-- End Body -->
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $(document).on('ready', function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init($('#datatableContacts'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableContactsCheckAll',
+                        counter: '#datatableContactsCounter',
+                        counterInfo: '#datatableContactsCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                              <img class="mb-3" src="../assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                              <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                            <p class="mb-0">No data to show</p>
+                                                            </div>`
+                }
+            });
+
+            HSCore.components.HSDatatables.init($('#datatableSalesOrders'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableSalesOrdersCheckAll',
+                        counter: '#datatableSalesOrdersCounter',
+                        counterInfo: '#datatableSalesOrdersCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                                      <img class="mb-3" src="../assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                                      <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                                    <p class="mb-0">No data to show</p>
+                                                                    </div>`
+                }
+            });
+        });
+    </script>
 }
-@Html.ActionLink("Add contact", "AddContact", new { AccountNumber = ViewData["accountNumber"], CustomerName = ViewData["customerName"] })

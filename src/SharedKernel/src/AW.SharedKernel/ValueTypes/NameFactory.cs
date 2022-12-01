@@ -1,19 +1,10 @@
 ﻿namespace AW.SharedKernel.ValueTypes
 {
-    public record NameFactory(string FirstName, string? MiddleName, string LastName)
+    public record NameFactory(string FirstName, string? MiddleName, string LastName) : INameFactory
     {
-        public string FullName
-        {
-            get
-            {
-                string fullName = FirstName;
-                if (!string.IsNullOrEmpty(MiddleName))
-                    fullName += $" {MiddleName}";
-                if (!string.IsNullOrEmpty(LastName))
-                    fullName += $" {LastName}";
-
-                return fullName;
-            }
-        }
+        public string FirstName { get; set; } = FirstName;
+        public string? MiddleName { get; set; } = MiddleName;
+        public string LastName { get; set; } = LastName;
+        public string FullName => INameFactory.GetFullName(this);
     }
 }

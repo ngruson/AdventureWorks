@@ -12,8 +12,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public string Suffix { get; set; }
 
-        public List<PersonEmailAddressViewModel> EmailAddresses { get; set; }
-        public List<PersonPhoneViewModel> PhoneNumbers { get; set; }
+        public List<PersonEmailAddressViewModel> EmailAddresses { get; set; } = new();
+        public List<PersonPhoneViewModel> PhoneNumbers { get; set; } = new();
 
         public void Mapping(Profile profile)
         {
