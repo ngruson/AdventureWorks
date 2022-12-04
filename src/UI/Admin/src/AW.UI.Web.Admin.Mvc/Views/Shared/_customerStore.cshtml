@@ -1,8 +1,11 @@
 ﻿@{
     @model StoreCustomerViewModel;
-    
+
+    var addressTypes = ViewData["addressTypes"] as IEnumerable<SelectListItem>;
+    var countries = ViewData["countries"] as IEnumerable<SelectListItem>;
     var territories = ViewData["territories"] as IEnumerable<SelectListItem>;
     var salesPersons = ViewData["salesPersons"] as IEnumerable<SelectListItem>;
+    var statesProvinces = ViewData["statesProvinces"] as IEnumerable<SelectListItem>;
 }
 
 <!-- Page Header-->
@@ -225,7 +228,7 @@
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Edit group">
                                                 <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName" class="btn btn-white">
-                                                    <i class="bi-pencil me-1"></i> Edit
+                                                    <i class="bi-pencil me-1"></i>
                                                 </a>
                                                 <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#deleteContactModal-@i">
                                                     <i class="bi-trash"></i>
@@ -359,10 +362,21 @@
                     @foreach (var address in Model.Addresses)
                     {
                         <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5>@address.AddressType address</h5>
-                                <a class="link" href="javascript:;">Edit</a>
+                            <div class="d-flex">
+                                <div class="me-auto">
+                                    <h5>@address.AddressType address</h5>
+                                </div>
+                                <div>
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#editAddressModal-@address.AddressType.Replace(" ", "-")" href="#">
+                                        <i class="bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#deleteAddressModal-@address.AddressType.Replace(" ", "-")" href="#">
+                                        <i class="bi-trash"></i>
+                                    </a>
+                                </div>
                             </div>
+                            <partial name="Modals/editAddress" for="@address" />
+                            <partial name="Modals/deleteAddress" for="@address" />
 
                             <span class="d-block text-body">
                                 @address.Address.AddressLine1<br>
@@ -372,11 +386,19 @@
 
                                     <br>
                                 }
-                                @(address.Address.PostalCode), @(address.Address.City)<br>
+                                @(address.Address.PostalCode), @(address.Address.City), @(address.Address.StateProvinceCode)<br>
                                 @(address.Address.CountryRegionCode) <img class="avatar avatar-xss avatar-circle ms-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" onload="this.onload=null; this.src=getFlag('@address.Address.CountryRegionCode')">
                             </span>
                         </li>
                     }
+                    <li class="list-group-item">
+                        <a data-bs-toggle="modal" data-bs-target="#addAddressModal" href="#">Add new address</a>
+                        @{
+                            var newAddress = new CustomerAddressViewModel();
+                            newAddress.Address.CountryRegionCode = "US";
+                        }
+                        <partial name="Modals/addAddress" for="@newAddress" />
+                    </li>
                 </ul>
                 <!-- End List Group -->
             </div>

@@ -1,4 +1,4 @@
-﻿function getStateProvinces(country, dropdown, url) {
+﻿function getStatesProvinces(country, dropdown, url) {
     if (country === "") {
         dropdown.empty();
         dropdown.append('<option selected="true" disabled>--Select--</option>');

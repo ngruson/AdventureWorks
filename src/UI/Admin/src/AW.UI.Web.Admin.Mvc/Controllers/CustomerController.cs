@@ -48,12 +48,13 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
             ViewData["customerName"] = viewModel.CustomerName;
-            ViewData["countries"] = await mediator.Send(new GetCountriesQuery());
-            ViewData["statesProvinces"] = await mediator.Send(new GetStatesProvincesQuery("US"));
-            ViewData["territories"] = await customerService.GetTerritories(true);
+            ViewData["addressTypes"] = await customerService.GetAddressTypes();
+            ViewData["countries"] = await customerService.GetCountries();
+            ViewData["territories"] = await customerService.GetTerritories();
             ViewData["salesPersons"] = await customerService.GetSalesPersons(
                 viewModel.Territory
             );
+            ViewData["statesProvinces"] = await customerService.GetStatesProvinces("US");
 
             return View("_customerStore", viewModel);
         }
@@ -112,70 +113,59 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
         #region Address
 
-        public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
-        {
-            var vm = customerService.AddAddress(accountNumber, customerName);
+        //public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
+        //{
+        //    var vm = customerService.AddAddress(accountNumber, customerName);
 
-            ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
-                .OrderBy(a => a.Name)
-                .ToList()
-                .ToSelectList(a => a.Name, a => a.Name);
+        //    ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
+        //        .OrderBy(a => a.Name)
+        //        .ToList()
+        //        .ToSelectList(a => a.Name, a => a.Name);
 
-            ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
-                .OrderBy(c => c.Name)
-                .ToList()
-                .ToSelectList(x => x.CountryRegionCode, x => x.Name);
+        //    ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
+        //        .OrderBy(c => c.Name)
+        //        .ToList()
+        //        .ToSelectList(x => x.CountryRegionCode, x => x.Name);
 
-            ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery("US")))
-                .OrderBy(s => s.Name)
-                .ToList()
-                .ToSelectList(x => x.StateProvinceCode, x => x.Name);
+        //    ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery("US")))
+        //        .OrderBy(s => s.Name)
+        //        .ToList()
+        //        .ToSelectList(x => x.StateProvinceCode, x => x.Name);
 
-            return View("Address", vm);
-        }
+        //    return View("Address", vm);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> AddAddress(CustomerAddressViewModel viewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await customerService.AddAddress(viewModel);
+        //        return RedirectToAction("Detail", new { viewModel.AccountNumber });
+        //    }
+
+        //    return View(viewModel);
+        //}
 
         [HttpPost]
-        public async Task<IActionResult> AddAddress(EditCustomerAddressViewModel viewModel)
+        public async Task<IActionResult> AddAddress(CustomerAddressViewModel viewModel, string accountNumber)
         {
             if (ModelState.IsValid)
             {
-                await customerService.AddAddress(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+                await customerService.AddAddress(viewModel, accountNumber);
+                return RedirectToAction("Detail", new { accountNumber });
             }
 
             return View(viewModel);
         }
 
-        public async Task<IActionResult> EditAddress(string accountNumber, string addressType)
-        {
-            var vm = await customerService.GetCustomerAddress(accountNumber, addressType);
-            var countryRegionCode = vm.CustomerAddress.Address.CountryRegionCode;
-
-            ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
-                .OrderBy(a => a.Name)
-                .ToList()
-                .ToSelectList(a => a.Name, a => a.Name);
-
-            ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
-                .OrderBy(c => c.Name)
-                .ToList()
-                .ToSelectList(c => c.CountryRegionCode, c => c.Name);
-
-            ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery(countryRegionCode)))
-                .OrderBy(s => s.Name)
-                .ToList()
-                .ToSelectList(s => s.StateProvinceCode, s => s.Name);
-
-            return View("Address", vm);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> EditAddress(EditCustomerAddressViewModel viewModel)
+        public async Task<IActionResult> UpdateAddress(CustomerAddressViewModel viewModel, string accountNumber)
         {
             if (ModelState.IsValid)
             {
-                await customerService.UpdateAddress(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+                await customerService.UpdateAddress(viewModel, accountNumber);
+                return RedirectToAction("Detail", new { accountNumber });
             }
 
             return View(viewModel);
@@ -189,29 +179,14 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
         public async Task<IActionResult> DeleteAddress(string accountNumber, string addressType)
         {
-            var viewModel = await customerService.GetCustomerAddressForDelete(accountNumber, addressType);
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteAddress(DeleteCustomerAddressViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.DeleteAddress(
-                    viewModel.AccountNumber,
-                    viewModel.AddressType
-                );
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
-            }
-
-            return View(viewModel);
+            await customerService.DeleteAddress(accountNumber, addressType);
+            return RedirectToAction("Detail", new { accountNumber });
         }
         #endregion
 
         #region Store contacts        
 
-        public async Task<IActionResult> StoreCustomerContact(string accountNumber, string contactName)
+        public async Task<IActionResult> StoreCustomerContact(string accountNumber, string contactName) 
         {
             return View(
                 await customerService.GetCustomerContact(

@@ -15,12 +15,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task<EditIndividualCustomerViewModel> GetIndividualCustomerForEdit(string accountNumber);
         Task UpdateStore(StoreCustomerViewModel viewModel);
         Task UpdateIndividual(IndividualCustomerViewModel viewModel);
-        EditCustomerAddressViewModel AddAddress(string accountNumber, string customerName);
-        Task AddAddress(EditCustomerAddressViewModel viewModel);
-        Task<EditCustomerAddressViewModel> GetCustomerAddress(string accountNumber, string addressType);
-        Task UpdateAddress(EditCustomerAddressViewModel viewModel);
+        Task AddAddress(CustomerAddressViewModel viewModel, string accountNumber);
+        Task UpdateAddress(CustomerAddressViewModel viewModel, string accountNumber);
         Task<IEnumerable<StateProvince>> GetStatesProvincesJson(string country);
-        Task<DeleteCustomerAddressViewModel> GetCustomerAddressForDelete(string accountNumber, string addressType);
         Task DeleteAddress(string accountNumber, string addressType);
         Task<StoreCustomerContactViewModel> AddContact(string accountNumber, string customerName);
         Task AddContact(StoreCustomerContactViewModel viewModel);
@@ -33,7 +30,10 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task<DeleteIndividualCustomerEmailAddressViewModel> GetIndividualCustomerEmailAddressForDelete(string accountNumber, string emailAddress);
         Task DeleteIndividualCustomerEmailAddress(DeleteIndividualCustomerEmailAddressViewModel viewModel);
         Task DeleteContactEmailAddress(string accountNumber, string contactName, string emailAddress);
-        Task<IEnumerable<SelectListItem>> GetTerritories(bool edit);
+        Task<IEnumerable<SelectListItem>> GetAddressTypes();
+        Task<IEnumerable<SelectListItem>> GetCountries();
+        Task<IEnumerable<SelectListItem>> GetTerritories();
         Task<IEnumerable<SelectListItem>> GetSalesPersons(string territory);
+        Task<IEnumerable<SelectListItem>> GetStatesProvinces(string countryRegionCode);
     }
 }

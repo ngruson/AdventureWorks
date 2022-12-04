@@ -64,7 +64,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 //Assert
                 viewModel.Customers.Count.Should().Be(10);
                 viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("All");
+                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
                 viewModel.CustomerTypes.Count().Should().Be(3);
                 viewModel.PaginationInfo.Should().NotBeNull();
                 viewModel.PaginationInfo.ActualPage.Should().Be(0);
@@ -109,7 +109,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 //Assert
                 viewModel.Customers.Count.Should().Be(10);
                 viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("All");
+                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
                 viewModel.CustomerTypes.Count().Should().Be(3);
                 viewModel.PaginationInfo.Should().NotBeNull();
                 viewModel.PaginationInfo.ActualPage.Should().Be(9);
@@ -190,7 +190,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert
                 viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.Territories.ToList().Count.Should().Be(3);                
+                viewModel.Territories.ToList().Count.Should().Be(4);
                 viewModel.SalesPersons.ToList().Count.Should().Be(3);
             }
         }
@@ -225,7 +225,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert
                 viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.Territories.ToList().Count.Should().Be(3);
+                viewModel.Territories.ToList().Count.Should().Be(4);
                 viewModel.EmailPromotions.Count().Should().Be(4);
                 viewModel.EmailPromotions.ToList()[0].Text.Should().Be("All");
             }
@@ -332,29 +332,11 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
         public class AddAddress
         {
-            [Theory, AutoMoqData]
-            public void AddAddress_ReturnsViewModel(
-                CustomerService sut,
-                string accountNumber,
-                string customerName
-            )
-            {
-                //Arrange
-
-                //Act
-                var viewModel = sut.AddAddress(accountNumber, customerName);
-
-                //Assert
-                viewModel.IsNewAddress.Should().Be(true);
-                viewModel.AccountNumber.Should().Be(accountNumber);
-                viewModel.CustomerName.Should().Be(customerName);
-            }
-
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task AddAddress_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                EditCustomerAddressViewModel viewModel,
+                CustomerAddressViewModel viewModel,
                 SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
@@ -367,7 +349,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(customer);
 
                 //Act
-                await sut.AddAddress(viewModel);
+                await sut.AddAddress(viewModel, customer.AccountNumber);
 
                 //Assert
                 mockMediator.Verify(_ => _.Send(
@@ -378,48 +360,18 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             }
         }
 
-        public class GetCustomerAddress
-        {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task GetCustomerAddress_ReturnsViewModel(
-                [Frozen] Mock<IMediator> mockMediator,
-                CustomerService sut,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
-            )
-            {
-                //Arrange
-                mockMediator.Setup(_ => _.Send(
-                        It.IsAny<GetCustomerQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(customer);
-
-                //Act
-                var viewModel = await sut.GetCustomerAddress(
-                    customer.AccountNumber,
-                    customer.Addresses[0].AddressType
-                );
-
-                //Assert
-                viewModel.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.CustomerName.Should().Be(customer.Name);
-                viewModel.CustomerAddress.Should().NotBeNull();
-            }
-        }
-
         public class UpdateAddress
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task UpdateAddress_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                EditCustomerAddressViewModel viewModel,
+                CustomerAddressViewModel viewModel,
                 SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                viewModel.CustomerAddress.AddressType = customer.Addresses[0].AddressType;
+                viewModel.AddressType = customer.Addresses[0].AddressType;
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomerQuery>(),
@@ -429,7 +381,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(customer);
 
                 //Act
-                await sut.UpdateAddress(viewModel);
+                await sut.UpdateAddress(viewModel, customer.AccountNumber);
 
                 //Assert
                 mockMediator.Verify(_ => _.Send(
@@ -443,12 +395,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task UpdateAddress_CustomerNotFound_ThrowsArgumentNullException(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                EditCustomerAddressViewModel viewModel,
+                CustomerAddressViewModel viewModel,
                 SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
-                viewModel.CustomerAddress.AddressType = customer.Addresses[0].AddressType;
+                viewModel.AddressType = customer.Addresses[0].AddressType;
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomerQuery>(),
@@ -459,7 +411,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Act
 
-                Func<Task> func = async () => await sut.UpdateAddress(viewModel);
+                Func<Task> func = async () => await sut.UpdateAddress(viewModel, customer.AccountNumber);
 
                 //Assert
                 await func.Should().ThrowAsync<ArgumentNullException>()
@@ -476,7 +428,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task UpdateAddress_AddressNotFound_ThrowsArgumentNullException(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                EditCustomerAddressViewModel viewModel,
+                CustomerAddressViewModel viewModel,
                 SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
@@ -490,7 +442,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Act
 
-                Func<Task> func = async () => await sut.UpdateAddress(viewModel);
+                Func<Task> func = async () => await sut.UpdateAddress(viewModel, customer.AccountNumber);
 
                 //Assert
                 await func.Should().ThrowAsync<ArgumentNullException>()
@@ -501,54 +453,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                         It.IsAny<CancellationToken>()
                     )
                 );
-            }
-        }
-
-        public class GetCustomerAddressForDelete
-        {
-            [Theory, AutoMoqData]
-            public async Task GetCustomerAddressForDelete_Store_ReturnsViewModel(
-                [Frozen] Mock<IMediator> mockMediator,
-                CustomerService sut,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
-            )
-            {
-                //Arrange
-                mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetCustomerQuery>(),
-                    It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(customer);
-
-                //Act
-                var viewModel = await sut.GetCustomerAddressForDelete(customer.AccountNumber, "Main Office");
-
-                //Assert
-                viewModel.CustomerName.Should().Be(customer.Name);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task GetCustomerAddressForDelete_Person_ReturnsViewModel(
-                [Frozen] Mock<IMediator> mockMediator,
-                CustomerService sut,
-                SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer customer
-            )
-            {
-                //Arrange
-                mockMediator
-                    .Setup(_ => _.Send(
-                        It.IsAny<GetCustomerQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(customer);
-
-                //Act
-                var viewModel = await sut.GetCustomerAddressForDelete(customer.AccountNumber, "Home");
-
-                //Assert
-                viewModel.CustomerName.Should().Be(customer.CustomerName);
             }
         }
 
@@ -704,8 +608,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 CustomerService sut,
                 List<ContactType> contactTypes,
                 SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
-                string contactName,
-                string contactType
+                string contactName
             )
             {
                 //Arrange
@@ -775,9 +678,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task DeleteContact_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
-                string accountNumber,
-                string contactName
+                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
