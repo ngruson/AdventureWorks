@@ -13,6 +13,9 @@ namespace AW.Services.Customer.Infrastructure.EFCore.Configurations
 
             builder.Property(_ => _.Id)
                 .HasColumnName("CustomerAddressID");
+
+            builder.Property(c => c.CustomerId)
+                .HasColumnName("CustomerID");
         }
     }
 }
