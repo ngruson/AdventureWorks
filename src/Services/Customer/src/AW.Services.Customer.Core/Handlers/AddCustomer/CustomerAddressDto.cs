@@ -12,6 +12,7 @@ namespace AW.Services.Customer.Core.Handlers.AddCustomer
         {
             profile.CreateMap<CustomerAddressDto, Entities.CustomerAddress>()
                 .ForMember(_ => _.Id, opt => opt.Ignore())
+                .ForMember(_ => _.CustomerId, opt => opt.Ignore())
                 .ReverseMap();
         }
     }
