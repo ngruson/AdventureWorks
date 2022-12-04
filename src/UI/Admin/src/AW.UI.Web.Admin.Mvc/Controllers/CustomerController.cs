@@ -71,81 +71,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> EditStore(string accountNumber)
-        {
-            return View(
-                await customerService.GetStoreCustomerForEdit(
-                    accountNumber)
-            );
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditStore(EditStoreCustomerViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.UpdateStore(viewModel.Customer);
-                return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
-            }
-
-            return View(viewModel);
-        }
-
-        public async Task<IActionResult> EditIndividual(string accountNumber)
-        {
-            return View(
-                await customerService.GetIndividualCustomerForEdit(
-                    accountNumber)
-            );
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditIndividual(EditIndividualCustomerViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.UpdateIndividual(viewModel.Customer);
-                return RedirectToAction("Detail", new { viewModel.Customer.AccountNumber });
-            }
-
-            return View(viewModel);
-        }
-
         #region Address
-
-        //public async Task<IActionResult> AddAddress(string accountNumber, string customerName)
-        //{
-        //    var vm = customerService.AddAddress(accountNumber, customerName);
-
-        //    ViewData["addressTypes"] = (await mediator.Send(new GetAddressTypesQuery()))
-        //        .OrderBy(a => a.Name)
-        //        .ToList()
-        //        .ToSelectList(a => a.Name, a => a.Name);
-
-        //    ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
-        //        .OrderBy(c => c.Name)
-        //        .ToList()
-        //        .ToSelectList(x => x.CountryRegionCode, x => x.Name);
-
-        //    ViewData["statesProvinces"] = (await mediator.Send(new GetStatesProvincesQuery("US")))
-        //        .OrderBy(s => s.Name)
-        //        .ToList()
-        //        .ToSelectList(x => x.StateProvinceCode, x => x.Name);
-
-        //    return View("Address", vm);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> AddAddress(CustomerAddressViewModel viewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await customerService.AddAddress(viewModel);
-        //        return RedirectToAction("Detail", new { viewModel.AccountNumber });
-        //    }
-
-        //    return View(viewModel);
-        //}
 
         [HttpPost]
         public async Task<IActionResult> AddAddress(CustomerAddressViewModel viewModel, string accountNumber)
@@ -250,45 +176,6 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         }
         #endregion
 
-        #region Individual contact information
-
-        public IActionResult AddContactEmailAddress(string accountNumber, string customerName)
-        {
-            return View("ContactInfo",
-                customerService.AddEmailAddress(accountNumber, customerName)
-            );
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddContactEmailAddress(EditEmailAddressViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.AddContactEmailAddress(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
-            }
-
-            return View(viewModel);
-        }
-
-        public async Task<IActionResult> DeleteIndividualCustomerEmailAddress(string accountNumber, string emailAddress)
-        {
-            var viewModel = await customerService.GetIndividualCustomerEmailAddressForDelete(accountNumber, emailAddress);
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteIndividualCustomerEmailAddress(DeleteIndividualCustomerEmailAddressViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await customerService.DeleteIndividualCustomerEmailAddress(viewModel);
-                return RedirectToAction("Detail", new { viewModel.AccountNumber });
-            }
-
-            return View(viewModel);
-        }
-
         public async Task<IActionResult> DeleteContactEmailAddress(string accountNumber, string contactName, string emailAddress)
         {
             await customerService.DeleteContactEmailAddress(accountNumber, contactName, emailAddress);
@@ -299,8 +186,6 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                     accountNumber,
                     contactName
                 });
-        }
-
-        #endregion
+        }        
     }
 }

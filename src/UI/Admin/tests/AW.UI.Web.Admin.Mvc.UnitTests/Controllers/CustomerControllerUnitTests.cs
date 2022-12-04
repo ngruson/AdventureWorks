@@ -108,122 +108,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             }
         }
 
-        public class EditStore
-        {
-            [Theory, AutoMoqData]
-            public async Task EditStoreGet_ReturnsViewModel(
-                [Frozen] Mock<ICustomerService> customerService,
-                EditStoreCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                customerService.Setup(x => x.GetStoreCustomerForEdit(
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(viewModel);
-
-                //Act
-                var actionResult = await sut.EditStore(viewModel.Customer.AccountNumber);
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task EditStorePost_ValidModelState_ReturnsRedirect(
-                EditStoreCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Act
-                var actionResult = await sut.EditStore(viewModel);
-
-                //Assert
-                var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
-                redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(viewModel.Customer.AccountNumber);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task EditStorePost_InvalidModelState_ReturnsViewModel(
-                EditStoreCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                sut.ModelState.AddModelError("AccountNumber", "AW00000001");
-
-                //Act
-                var actionResult = await sut.EditStore(viewModel);
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-            }
-        }
-
-        public class EditIndividual
-        {
-            [Theory, AutoMoqData]
-            public async Task EditIndividualGet_ReturnsViewModel(
-                [Frozen] Mock<ICustomerService> customerService,
-                EditIndividualCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                customerService.Setup(x => x.GetIndividualCustomerForEdit(
-                    It.IsAny<string>()
-                ))
-                .ReturnsAsync(viewModel);
-
-                //Act
-                var actionResult = await sut.EditIndividual("AW00000001");
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task EditIndividualPost_ValidModelState_ReturnsRedirect(
-                EditIndividualCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Act
-                var actionResult = await sut.EditIndividual(viewModel);
-
-                //Assert
-                var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
-                redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(viewModel.Customer.AccountNumber);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task EditIndividualPost_InvalidModelState_ReturnsViewModel(
-                EditIndividualCustomerViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                sut.ModelState.AddModelError("AccountNumber", "AW00000001");
-
-                //Act
-                var actionResult = await sut.EditIndividual(viewModel);
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-            }
-        }
-
         public class AddAddress
         {
             [Theory, AutoMoqData]
@@ -311,7 +195,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
             [Theory, AutoMoqData]
             public async Task DeleteAddress_InvalidModelState_ReturnsViewModel(
-                DeleteCustomerAddressViewModel viewModel,
                 string accountNumber,
                 string addressType,
                 [Greedy] CustomerController sut
@@ -496,173 +379,23 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
         {
             [Theory, AutoMoqData]
             public async Task DeleteContact_ReturnsViewModel(
-                DeleteCustomerContactViewModel viewModel,
-                [Greedy] CustomerController sut
+                [Greedy] CustomerController sut,
+                string accountNumber,
+                string contactName
             )
             {
                 //Arrange
 
                 //Act
                 var actionResult = await sut.DeleteContact(
-                    viewModel.AccountNumber,
-                    viewModel.ContactPerson.Name.FullName
+                    accountNumber,
+                    contactName
                 );
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 viewResult.ActionName.Should().Be("Detail");
                 viewResult.RouteValues.Should().ContainKey("accountNumber");
-            }
-        }
-
-        public class AddContactEmailAddress
-        {
-            [Theory, AutoMoqData]
-            public void AddContactEmailAddressGet_ReturnsViewModel(
-                [Frozen] Mock<ICustomerService> customerService,
-                EditEmailAddressViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                customerService.Setup(x => x.AddEmailAddress(
-                    It.IsAny<string>(), It.IsAny<string>()
-                ))
-                .Returns(viewModel);
-
-                //Act
-                var actionResult = sut.AddContactEmailAddress(
-                    viewModel.AccountNumber,
-                    viewModel.PersonName
-                );
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-
-                customerService.Verify(x => x.AddEmailAddress(
-                    It.IsAny<string>(), It.IsAny<string>())
-                );
-            }
-
-            [Theory, AutoMoqData]
-            public async Task AddContactEmailAddressPost_ValidModelState_ReturnsRedirect(
-                [Frozen] Mock<ICustomerService> customerService,
-                StoreCustomerContactViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Act
-                var actionResult = await sut.AddStoreCustomerContact(
-                    viewModel, 
-                    new List<string>()
-                );
-
-                //Assert
-                customerService.Verify(x => x.AddContact(
-                    It.IsAny<StoreCustomerContactViewModel>()
-                ));
-
-                var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
-                redirectResult.ActionName.Should().Be("StoreCustomerContact");
-                redirectResult.RouteValues.Count.Should().Be(2);
-                redirectResult.RouteValues.Should().ContainKey("AccountNumber");
-                redirectResult.RouteValues.Should().ContainValue(viewModel.AccountNumber);
-                redirectResult.RouteValues.Should().ContainKey("ContactName");
-                redirectResult.RouteValues.Should().ContainValue(viewModel.CustomerContact.ContactPerson.Name.FullName);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task AddContactEmailAddressPost_InvalidModelState_ReturnsViewModel(
-                [Frozen] Mock<ICustomerService> customerService,
-                EditEmailAddressViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                customerService.Setup(x => x.AddEmailAddress(
-                    It.IsAny<string>(), It.IsAny<string>()
-                ))
-                .Returns(viewModel);
-
-                sut.ModelState.AddModelError("AccountNumber", viewModel.AccountNumber);
-
-                //Act
-                var actionResult = await sut.AddContactEmailAddress(viewModel);
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-            }
-        }
-
-        public class DeleteIndividualCustomerEmailAddress
-        {
-            [Theory, AutoMoqData]
-            public async Task DeleteIndividualCustomerEmailAddressGet_ReturnsViewModel(
-                [Frozen] Mock<ICustomerService> customerService,
-                DeleteIndividualCustomerEmailAddressViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                customerService.Setup(x => x.GetIndividualCustomerEmailAddressForDelete(
-                    It.IsAny<string>(), It.IsAny<string>()
-                ))
-                .ReturnsAsync(viewModel);
-
-                //Act
-                var actionResult = await sut.DeleteIndividualCustomerEmailAddress(
-                    viewModel.AccountNumber,
-                    viewModel.EmailAddress
-                );
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
-
-                customerService.Verify(x => x.GetIndividualCustomerEmailAddressForDelete(
-                    It.IsAny<string>(), It.IsAny<string>())
-                );
-            }
-
-            [Theory, AutoMoqData]
-            public async Task DeleteIndividualCustomerEmailAddressPost_ValidModelState_ReturnsRedirect(
-                [Frozen] Mock<ICustomerService> customerService,
-                DeleteIndividualCustomerEmailAddressViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Act
-                var actionResult = await sut.DeleteIndividualCustomerEmailAddress(viewModel);
-
-                //Assert
-                customerService.Verify(x => x.DeleteIndividualCustomerEmailAddress(
-                    It.IsAny<DeleteIndividualCustomerEmailAddressViewModel>()
-                ));
-
-                var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
-                redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(viewModel.AccountNumber);
-            }
-
-            [Theory, AutoMoqData]
-            public async Task DeleteIndividualCustomerEmailAddressPost_InvalidModelState_ReturnsViewModel(
-                DeleteIndividualCustomerEmailAddressViewModel viewModel,
-                [Greedy] CustomerController sut
-            )
-            {
-                //Arrange
-                sut.ModelState.AddModelError("AccountNumber", viewModel.AccountNumber);
-
-                //Act
-                var actionResult = await sut.DeleteIndividualCustomerEmailAddress(viewModel);
-
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(viewModel);
             }
         }
 

@@ -11,8 +11,6 @@ namespace AW.UI.Web.Admin.Mvc.Services
     {
         Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, CustomerType? customerType, string accountNumber);
         Task<CustomerViewModel> GetCustomer(string accountNumber);
-        Task<EditStoreCustomerViewModel> GetStoreCustomerForEdit(string accountNumber);
-        Task<EditIndividualCustomerViewModel> GetIndividualCustomerForEdit(string accountNumber);
         Task UpdateStore(StoreCustomerViewModel viewModel);
         Task UpdateIndividual(IndividualCustomerViewModel viewModel);
         Task AddAddress(CustomerAddressViewModel viewModel, string accountNumber);
@@ -24,11 +22,6 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task<StoreCustomerContactViewModel> GetCustomerContact(string accountNumber, string contactName);
         Task UpdateContact(StoreCustomerContactViewModel viewModel);
         Task DeleteContact(string accountNumber, string contactName);
-        EditEmailAddressViewModel AddEmailAddress(string accountNumber, string customerName);
-        Task AddIndividualCustomerEmailAddress(EditEmailAddressViewModel viewModel);
-        Task AddContactEmailAddress(EditEmailAddressViewModel viewModel);
-        Task<DeleteIndividualCustomerEmailAddressViewModel> GetIndividualCustomerEmailAddressForDelete(string accountNumber, string emailAddress);
-        Task DeleteIndividualCustomerEmailAddress(DeleteIndividualCustomerEmailAddressViewModel viewModel);
         Task DeleteContactEmailAddress(string accountNumber, string contactName, string emailAddress);
         Task<IEnumerable<SelectListItem>> GetAddressTypes();
         Task<IEnumerable<SelectListItem>> GetCountries();
