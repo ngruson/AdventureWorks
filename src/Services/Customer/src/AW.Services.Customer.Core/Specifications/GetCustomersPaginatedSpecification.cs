@@ -14,11 +14,12 @@ namespace AW.Services.Customer.Core.Specifications
             Query.Include("Person");
             Query.Include("Contacts.ContactPerson.EmailAddresses");
             Query.Include("Contacts.ContactPerson.PhoneNumbers");
+            Query.Include(_ => _.SalesOrders);
 
             Query
                 .Where(c =>
                     (string.IsNullOrEmpty(territory) || c.Territory == territory) &&
-                    (!customerType.HasValue || (customerType == Entities.CustomerType.Individual ?
+                    (!customerType.HasValue || (customerType == CustomerType.Individual ?
                         c is IndividualCustomer : c is StoreCustomer)
                     ) &&
                     (string.IsNullOrEmpty(accountNumber) || c.AccountNumber == accountNumber)
