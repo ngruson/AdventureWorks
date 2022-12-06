@@ -32,7 +32,7 @@
         <!-- Card -->
         <div class="card mb-3 mb-lg-5">
             <!-- Body -->
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("UpdateStore", "Customer"))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.AccountNumber)
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Body -->
+                <!-- End Body -->
                 <!-- Footer -->
                 <div class="card-footer">
                     <div class="d-flex justify-content-end gap-3">
@@ -448,6 +448,22 @@
                                                                       <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
                                                                     <p class="mb-0">No data to show</p>
                                                                     </div>`
+                }
+            });
+
+            $('.js-select-country-new').change(function (e) {
+                alert('test');
+                var dropdown = $('.js-select-stateprovince-new');
+
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getStatesProvinces(this.value, dropdown, "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                    );
                 }
             });
         });

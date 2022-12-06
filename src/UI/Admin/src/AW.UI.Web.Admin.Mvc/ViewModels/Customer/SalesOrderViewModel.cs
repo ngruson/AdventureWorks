@@ -5,7 +5,7 @@ using System;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
-    public class SalesOrderViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.SalesOrder>
     {
         public DateTime OrderDate { get; set; }
 
@@ -27,8 +27,12 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.SalesOrder, SalesOrderViewModel>();
+
             profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
+
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.SalesOrder, SalesOrderViewModel>();
 
             profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));

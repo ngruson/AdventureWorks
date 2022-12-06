@@ -3,15 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AW.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using MediatR;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.Admin.Mvc;
-using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.Services;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using System.Collections.Generic;
 using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 
@@ -21,23 +14,21 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService customerService;
-        private readonly IMediator mediator;
 
-        public CustomerController(ICustomerService customerService, IMediator mediator
+        public CustomerController(ICustomerService customerService
         )
         {
             this.customerService = customerService;
-            this.mediator = mediator;
         }
 
-        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, CustomerType? customerTypeFilterApplied, string accountNumber)
+        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, CustomerType? customerType, string accountNumber)
         {
             return View(
                 await customerService.GetCustomers(
                     pageId ?? 0,
                     Constants.ITEMS_PER_PAGE,
                     territoryFilterApplied,
-                    customerTypeFilterApplied,
+                    customerType,
                     accountNumber
                 )
             );
@@ -56,15 +47,30 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             );
             ViewData["statesProvinces"] = await customerService.GetStatesProvinces("US");
 
-            return View("_customerStore", viewModel);
+            if (viewModel is StoreCustomerViewModel)
+                return View("_customerStore", viewModel);
+            
+            return View("_customerIndividual", viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Detail(StoreCustomerViewModel viewModel)
+        public async Task<IActionResult> UpdateStore(StoreCustomerViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 await customerService.UpdateStore(viewModel);
+                return RedirectToAction("Detail", new { viewModel.AccountNumber });
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateIndividual(IndividualCustomerViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await customerService.UpdateIndividual(viewModel);
                 return RedirectToAction("Detail", new { viewModel.AccountNumber });
             }
 

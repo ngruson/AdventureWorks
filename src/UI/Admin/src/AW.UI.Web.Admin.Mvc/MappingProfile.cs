@@ -13,7 +13,7 @@ namespace AW.UI.Web.Admin.Mvc
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
             CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Customer, CustomerViewModel>()
-                .ForMember(m => m.SalesOrders, opt => opt.Ignore())
+                //.ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .Include<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>()
                 .Include<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
 

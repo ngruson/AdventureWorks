@@ -2,6 +2,9 @@
     ViewData["Title"] = "Customers";
     @model CustomersIndexViewModel;
 
+    string customerType = "";
+    if (Context.Request.Query.ContainsKey("customerType"))
+        customerType = Context.Request.Query["customerType"];
 }
 
 <div class="page-header">
@@ -63,19 +66,34 @@
         <!-- Nav -->
         <ul class="nav nav-tabs page-header-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#">All</a>
+                @if (string.IsNullOrEmpty(customerType))
+                {
+                    @Html.ActionLink("All", "Index", "Customer", null, new { @class="nav-link active" })
+                }
+                else
+                {
+                    @Html.ActionLink("All", "Index", "Customer", null, new { @class="nav-link" })
+                }
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">New</a>
+                @if (customerType == "store")
+                {
+                    @Html.ActionLink("Stores", "Index", "Customer", new { customerType = "store" }, new { @class="nav-link active" })
+                }
+                else
+                {
+                    @Html.ActionLink("Stores", "Index", "Customer", new { customerType = "store" }, new { @class="nav-link" })
+                }
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Returning</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Abandoned checkouts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Email subscribers</a>
+                @if (customerType == "individual")
+                {
+                    @Html.ActionLink("Individuals", "Index", "Customer", new { customerType = "individual" }, new { @class="nav-link active" })
+                }
+                else
+                {
+                    @Html.ActionLink("Individuals", "Index", "Customer", new { customerType = "individual" }, new { @class="nav-link" })
+                }
             </li>
         </ul>
         <!-- End Nav -->

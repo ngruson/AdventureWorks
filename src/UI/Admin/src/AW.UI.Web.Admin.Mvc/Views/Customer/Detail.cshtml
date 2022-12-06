@@ -55,6 +55,22 @@ else if (Model.Customer.CustomerType == CustomerType.Store)
                                                             </div>`
                 }
             });
+
+            $('.js-select-country-new').change(function (e) {
+                alert('test');
+                var dropdown = $('.js-select-stateprovince-new');
+
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getStatesProvinces(this.value, dropdown, "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                    );
+                }
+            });
         });
     </script>
 }

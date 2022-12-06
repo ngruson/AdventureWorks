@@ -12,5 +12,6 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers
         public virtual string? CustomerName { get; }
         public string? Territory { get; set; }
         public List<CustomerAddress>? Addresses { get; set; }
+        public List<SalesOrder>? SalesOrders { get; set; }
     }
 }
