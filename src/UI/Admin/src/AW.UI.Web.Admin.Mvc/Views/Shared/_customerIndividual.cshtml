@@ -41,8 +41,48 @@
                     <div class="d-flex align-items-center mb-5">
                         <div class="flex-grow-1 mx-3">
                             <div class="d-flex mb-1">
-                                <h3 class="mb-0 me-3">@Model.CustomerName</h3>
-                                @Html.HiddenFor(m => m.CustomerName)
+                                <h3 class="mb-0 me-3">@Model.Person.Name.FullName</h3>
+                                @Html.HiddenFor(m => m.Person.Name.FullName)
+
+                                <!-- Dropdown -->
+                                <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top">
+                                    <button type="button" class="btn btn-white btn-icon btn-xs rounded-circle" id="editDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi-pencil-fill"></i>
+                                    </button>
+
+                                    <div class="dropdown-menu dropdown-card mt-1" aria-labelledby="editDropdown" style="min-width: 20rem;">
+                                        <!-- Card -->
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Person.Name.FirstName, new { @class = "form-label" })
+                                                        <input asp-for="Person.Name.FirstName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Person.Name.MiddleName, new { @class = "form-label" })
+                                                        <input asp-for="Person.Name.MiddleName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Person.Name.LastName, new { @class = "form-label" })
+                                                        <input asp-for="Person.Name.LastName" class="form-control" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-end gap-2 mt-3">
+                                                    <button type="button" class="btn btn-white btn-sm">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Body -->
+                                    </div>
+                                </div>
+                                <!-- End Dropdown -->
                             </div>
                         </div>
 
@@ -83,7 +123,7 @@
                             @Html.ValidationMessageFor(m => m.Person.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-sm-4">
                             <div class="mb-4">
                                 @Html.LabelFor(m => m.Person.Name.FirstName, new { @class = "form-label" })
@@ -105,7 +145,7 @@
                                 @Html.ValidationMessageFor(m => m.Person.Name.LastName, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row mb-4">
                         @Html.LabelFor(m => m.Person.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
@@ -124,12 +164,171 @@
                         @Html.ValidationMessageFor(m => m.Territory, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <!-- Add Email Input Field -->
+                    <div id="addEmailFieldTemplate" style="display: none;">
+                        <div class="input-group-add-field">
+                            <input type="email" class="js-input-mask form-control" data-name="email" placeholder="Enter email" aria-label="Enter email">
+                        </div>
+
+                        <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                            <i class="bi-x-lg"></i>
+                        </a>
+                    </div>
+                    <!-- End Email Input Field -->
+                    <div class="js-add-field row mb-4"
+                     data-hs-add-field-options='{
+                                "template": "#addEmailFieldTemplate",
+                                "container": "#addEmailFieldContainer",
+                                "defaultCreated": 0
+                              }'>
+                        <label class="col-sm-3 col-form-label form-label">
+                            Email
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.Person.EmailAddresses.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="Person.EmailAddresses[i].EmailAddress" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Person.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-white" asp-action="DeleteIndividualCustomerEmailAddress" asp-route-accountnumber="@Model.AccountNumber" asp-route-emailaddress="@Model.Person.EmailAddresses[i].EmailAddress">
+                                            <i class="bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                @if (i == Model.Person.EmailAddresses.Count - 1)
+                                {
+                                    <div id="addEmailFieldContainer"></div>
+                                    <a href="javascript:;" class="js-create-field form-link">
+                                        <i class="bi-plus-circle me-1"></i> Add email address
+                                    </a>
+                                }
+                            }
+                            @if (Model.Person.EmailAddresses.Count == 0)
+                            {
+                                <input type="email" class="js-input-mask form-control" name="email_0" data-name="email" placeholder="Enter email" aria-label="Enter email">
+                                <div id="addEmailFieldContainer0"></div>
+                                <a href="javascript:;" class="js-create-field form-link">
+                                    <i class="bi-plus-circle me-1"></i> Add email address
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="js-add-field row mb-4"
+                     data-hs-add-field-options='{
+                                "template": "#addPhoneFieldTemplate",
+                                "container": "#addPhoneFieldContainer",
+                                "defaultCreated": 0
+                              }'>
+                        <label class="col-sm-3 col-form-label form-label">
+                            Phone
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.Person.PhoneNumbers.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="Person.PhoneNumbers[i].PhoneNumber" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Person.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        <div class="tom-select-custom">
+                                            @Html.DropDownListFor(m => m.Person.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (i == Model.Person.PhoneNumbers.Count - 1)
+                                {
+                                    <div id="addPhoneFieldContainer"></div>
+                                    <a href="javascript:;" class="js-create-field form-link">
+                                        <i class="bi-plus-circle me-1"></i> Add phone number
+                                    </a>
+                                }
+                            }
+                            @if (Model.Person.PhoneNumbers.Count == 0)
+                            {
+                                <div class="input-group input-group-sm-vertical align-items-center">
+                                    <input class="js-input-mask form-control" name="phone_0" data-name="phone" placeholder="Enter phone number" aria-label="Enter phone number">
+
+                                    <div class="input-group-append">
+                                        <!-- Select -->
+                                        <div class="tom-select-custom tom-select-custom-end">
+                                            <select class="js-select-dynamic form-select" autocomplete="off" name="phoneSelect" data-name="phoneSelect"
+                                            data-hs-tom-select-options='{
+                                                "searchInDropdown": false,
+                                                "hideSearch": true,
+                                                "dropdownWidth": "8rem"
+                                              }'>
+                                                @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                                {
+                                                    if (phoneNumberType.Value == "Home")
+                                                    {
+                                                        <option value="@phoneNumberType.Value" selected>@phoneNumberType.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@phoneNumberType.Value">@phoneNumberType.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <!-- End Select -->
+                                    </div>
+                                </div>
+                                <div id="addPhoneFieldContainer"></div>
+                                    <a href="javascript:;" class="js-create-field form-link">
+                                        <i class="bi-plus-circle me-1"></i> Add phone number
+                                    </a>
+                            }
+                        </div>
+                        <!-- Add Phone Input Field -->
+                        <div id="addPhoneFieldTemplate" class="input-group-add-field" style="display: none;">
+                            <div class="input-group input-group-sm-vertical align-items-center">
+                                <input class="js-input-mask form-control" data-name="phone" placeholder="Enter phone number" aria-label="Enter phone number">
+
+                                <div class="input-group-append">
+                                    <!-- Select -->
+                                    <div class="tom-select-custom tom-select-custom-end">
+                                        <select class="js-select-dynamic form-select" autocomplete="off" name="phoneSelect" data-name="phoneSelect"
+                                            data-hs-tom-select-options='{
+                                                "searchInDropdown": false,
+                                                "hideSearch": true,
+                                                "dropdownWidth": "8rem"
+                                              }'>
+                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                            {
+                                                if (phoneNumberType.Value == "Home")
+                                                {
+                                                    <option value="@phoneNumberType.Value" selected>@phoneNumberType.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@phoneNumberType.Value">@phoneNumberType.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <!-- End Select -->
+                                </div>
+                            </div>
+
+                            <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                                <i class="bi-x-lg"></i>
+                            </a>
+                        </div>
+                        <!-- End Phone Input Field -->
+                    </div>
                 </div>
                 <!-- End Body -->
                 <!-- Footer -->
                 <div class="card-footer">
                     <div class="d-flex justify-content-end gap-3">
-                        <button type="submit" class="btn btn-white">Discard</button>
+                        @*@if (!Model.IsNewContact)
+                        {
+                            <a asp-action="Detail" asp-route-accountNumber="@Model.AccountNumber" class="btn btn-white">Discard</a>
+                        }*@
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
@@ -308,7 +507,6 @@
         });
 
         $('.js-select-country-new').change(function (e) {
-            alert('test');
             var dropdown = $('.js-select-stateprovince-new');
 
             if (this.value == "--Select--") {
@@ -322,5 +520,11 @@
                 );
             }
         });
+
+        (function () {
+            // INITIALIZATION OF ADD FIELD
+            // =======================================================
+            new HSAddField('.js-add-field')
+        })();
     </script>
 }

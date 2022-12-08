@@ -49,8 +49,13 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             if (viewModel is StoreCustomerViewModel)
                 return View("_customerStore", viewModel);
-            
-            return View("_customerIndividual", viewModel);
+            else if (viewModel is IndividualCustomerViewModel v)
+            {
+                v.PhoneNumberTypes = customerService.GetPhoneNumberTypes();
+                return View("_customerIndividual", v);
+            }
+
+            return null;
         }
 
         [HttpPost]
@@ -66,7 +71,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateIndividual(IndividualCustomerViewModel viewModel)
+        public async Task<IActionResult> UpdateIndividual([ModelBinder(BinderType = typeof(IndividualCustomerViewModelBinder))] IndividualCustomerViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -192,6 +197,17 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                     accountNumber,
                     contactName
                 });
-        }        
+        }
+
+        public async Task<IActionResult> DeleteIndividualCustomerEmailAddress(string accountNumber, string emailAddress)
+        {
+            await customerService.DeleteIndividualCustomerEmailAddress(accountNumber, emailAddress);
+
+            return RedirectToAction("Detail",
+                new
+                {
+                    accountNumber,
+                });
+        }
     }
 }

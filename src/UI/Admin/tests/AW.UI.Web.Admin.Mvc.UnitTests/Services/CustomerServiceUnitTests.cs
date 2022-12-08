@@ -152,42 +152,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             }
         }
 
-        public class GetIndividualCustomerForEdit
-        {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task GetIndividualCustomerForEdit_ReturnsViewModel(
-                [Frozen] Mock<IMediator> mockMediator,
-                List<Territory> territories,
-                CustomerService sut,
-                SharedKernel.Customer.Handlers.GetIndividualCustomer.IndividualCustomer customer
-            )
-            {
-                //Arrange
-                mockMediator.Setup(_ => _.Send(
-                        It.IsAny<GetIndividualCustomerQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                )
-               .ReturnsAsync(customer);
-
-                mockMediator.Setup(x => x.Send(
-                        It.IsAny<GetTerritoriesQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(territories);
-
-                //Act
-                var viewModel = await sut.GetIndividualCustomerForEdit(customer.AccountNumber);
-
-                //Assert
-                viewModel.Customer.AccountNumber.Should().Be(customer.AccountNumber);
-                viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.EmailPromotions.Count().Should().Be(4);
-                viewModel.EmailPromotions.ToList()[0].Text.Should().Be("All");
-            }
-        }
-
         public class UpdateStore
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -651,54 +615,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     customer.AccountNumber,
                     customer.Contacts[0].ContactPerson.Name.FullName
                 );
-
-                //Assert
-                mockMediator.Verify(_ => _.Send(
-                        It.IsAny<GetStoreCustomerQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-        }
-
-        public class AddContactPhoneNumber
-        {
-            [Theory, AutoMoqData]
-            public void AddContactPhoneNumber_ReturnsViewModel(
-                CustomerService sut,
-                string accountNumber,
-                string personName
-            )
-            {
-                //Arrange
-
-                //Act
-                var viewModel = sut.AddPhoneNumber(accountNumber, personName);
-
-                //Assert
-                viewModel.IsNewPhoneNumber.Should().Be(true);
-            }
-
-            [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task AddContactPhoneNumber_OK(
-                [Frozen] Mock<IMediator> mockMediator,
-                CustomerService sut,
-                EditPhoneNumberViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
-            )
-            {
-                //Arrange
-                viewModel.PersonName = customer.Contacts[0].ContactPerson.Name.FullName;
-
-                mockMediator.Setup(_ => _.Send(
-                        It.IsAny<GetStoreCustomerQuery>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                )
-                .ReturnsAsync(customer);
-
-                //Act
-                await sut.AddContactPhoneNumber(viewModel);
 
                 //Assert
                 mockMediator.Verify(_ => _.Send(

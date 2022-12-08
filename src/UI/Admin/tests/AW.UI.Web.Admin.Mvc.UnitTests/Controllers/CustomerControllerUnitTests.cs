@@ -54,9 +54,63 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
         public class Detail
         {
             [Theory, AutoMoqData]
-            public async Task Detail_ReturnsViewModel(
+            public async Task Detail_Store_ReturnsViewModel(
                 [Frozen] Mock<ICustomerService> customerService,
-                CustomerViewModel viewModel,
+                StoreCustomerViewModel viewModel,
+                List<SelectListItem> addressTypes,
+                List<SelectListItem> countries,
+                List<SelectListItem> salesPersons,
+                List<SelectListItem> statesProvinces,
+                List<SelectListItem> territories,
+                [Greedy] CustomerController sut
+            )
+            {
+                //Arrange
+                customerService.Setup(_ => _.GetCustomer(
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(viewModel);
+
+                customerService.Setup(_ => _.GetAddressTypes())
+                    .ReturnsAsync(addressTypes);
+
+                customerService.Setup(_ => _.GetCountries())
+                    .ReturnsAsync(countries);
+
+                customerService.Setup(_ => _.GetSalesPersons(
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(salesPersons);
+
+                customerService.Setup(_ => _.GetStatesProvinces(
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(statesProvinces);
+
+                customerService.Setup(_ => _.GetTerritories())
+                    .ReturnsAsync(territories);
+
+                //Act
+                var actionResult = await sut.Detail(viewModel.AccountNumber);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
+                var result = viewResult.Model.Should().Be(viewModel);
+
+                viewResult.ViewData["accountNumber"].Should().Be(viewModel.AccountNumber);
+                viewResult.ViewData["customerName"] = viewModel.CustomerName;
+
+                viewResult.ViewData["addressTypes"].Should().Be(addressTypes);
+                viewResult.ViewData["countries"].Should().Be(countries);
+                viewResult.ViewData["salesPersons"].Should().Be(salesPersons);
+                viewResult.ViewData["statesProvinces"].Should().Be(statesProvinces);
+                viewResult.ViewData["territories"].Should().Be(territories);
+            }
+
+            [Theory, AutoMoqData]
+            public async Task Detail_Individual_ReturnsViewModel(
+                [Frozen] Mock<ICustomerService> customerService,
+                IndividualCustomerViewModel viewModel,
                 List<SelectListItem> addressTypes,
                 List<SelectListItem> countries,
                 List<SelectListItem> salesPersons,

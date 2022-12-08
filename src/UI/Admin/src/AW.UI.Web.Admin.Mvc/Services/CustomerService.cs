@@ -82,24 +82,6 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return _mapper.Map<CustomerViewModel>(customer);
         }
 
-        public async Task<EditIndividualCustomerViewModel> GetIndividualCustomerForEdit(string accountNumber)
-        {
-            _logger.LogInformation("GetIndividualCustomerForEdit called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetIndividualCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-
-            var vm = new EditIndividualCustomerViewModel
-            {
-                Customer = _mapper.Map<IndividualCustomerViewModel>(customer),
-                Territories = await GetTerritories(),
-                EmailPromotions = GetEmailPromotions()
-            };
-
-            return vm;
-        }
-
         public async Task<IEnumerable<SelectListItem>> GetTerritories()
         {
             _logger.LogInformation("GetTerritories called.");
@@ -200,7 +182,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var storeCustomer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
             var storeCustomerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
 
-            storeCustomerToUpdate.Name = viewModel.CustomerName;
+            storeCustomerToUpdate.Name = viewModel.Name;
             storeCustomerToUpdate.Territory = viewModel.Territory;
             storeCustomerToUpdate.SalesPerson = viewModel.SalesPerson;
 
@@ -214,10 +196,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, _logger);
 
-            var individualCustomer = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(viewModel);
+            var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
+            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
+
+            customerToUpdate.Person = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Person>(viewModel.Person);
 
             _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, individualCustomer));
+            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer successfully updated");
         }
 
@@ -339,7 +324,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        private static IEnumerable<SelectListItem> GetPhoneNumberTypes()
+        public IEnumerable<SelectListItem> GetPhoneNumberTypes()
         {
             var phoneNumberTypes = new[] { "Cell", "Home", "Work" };
             var items = phoneNumberTypes.Select(
@@ -489,66 +474,27 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public EditPhoneNumberViewModel AddPhoneNumber(string accountNumber, string personName)
+        public async Task DeleteIndividualCustomerEmailAddress(string accountNumber, string emailAddress)
         {
-            _logger.LogInformation("AddPhoneNumber called");
+            _logger.LogInformation("DeleteContactEmailAddress called");
 
-            var vm = new EditPhoneNumberViewModel
-            {
-                IsNewPhoneNumber = true,
-                AccountNumber = accountNumber,
-                PersonName = personName
-            };
-
-            return vm;
-        }
-
-        public async Task AddIndividualCustomerPhoneNumber(EditPhoneNumberViewModel viewModel)
-        {
-            _logger.LogInformation("AddIndividualCustomerPhoneNumber called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
+            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
+            var customer = await _mediator.Send(new GetIndividualCustomerQuery(accountNumber));
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
 
-            customerToUpdate.Person.PhoneNumbers.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonPhone
-            {
-                PhoneNumberType = viewModel.PhoneNumberType,
-                PhoneNumber = viewModel.PhoneNumber
-            });
+            var personEmailAddress = customerToUpdate.Person.EmailAddresses.FirstOrDefault(c =>
+                c.EmailAddress == emailAddress
+            );
+            Guard.Against.Null(personEmailAddress, _logger);
+
+            customerToUpdate.Person.EmailAddresses.Remove(personEmailAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task AddContactPhoneNumber(EditPhoneNumberViewModel viewModel)
-        {
-            _logger.LogInformation("AddContactPhoneNumber called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.PersonName);
-            Guard.Against.Null(contact, _logger);
-
-            contact.ContactPerson.PhoneNumbers.Add(new SharedKernel.Customer.Handlers.UpdateCustomer.PersonPhone
-            {
-                PhoneNumberType = viewModel.PhoneNumberType,
-                PhoneNumber = viewModel.PhoneNumber
-            });
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
     }

@@ -54,18 +54,16 @@
                                         <!-- Card -->
                                         <div class="card">
                                             <div class="card-body">
-                                                <div class="row gx-3">
-                                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <label for="customerNameLabel" class="form-label">Customer name</label>
-                                                        <input type="text" class="form-control" name="customerName" id="customerNameLabel">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                                                        <input asp-for="Name" class="form-control" />
                                                     </div>
-                                                    <!-- End Col -->
                                                 </div>
-                                                <!-- End Row -->
 
                                                 <div class="d-flex justify-content-end gap-2 mt-3">
                                                     <button type="button" class="btn btn-white btn-sm">Cancel</button>
-                                                    <button type="button" class="btn btn-primary btn-sm">Save</button>
+                                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -452,7 +450,6 @@
             });
 
             $('.js-select-country-new').change(function (e) {
-                alert('test');
                 var dropdown = $('.js-select-stateprovince-new');
 
                 if (this.value == "--Select--") {
