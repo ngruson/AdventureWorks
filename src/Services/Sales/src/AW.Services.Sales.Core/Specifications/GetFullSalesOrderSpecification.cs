@@ -8,6 +8,7 @@ namespace AW.Services.Sales.Core.Specifications
         {
             Query.Include(_ => _.Customer);
             Query.Include("Customer.Person");
+            Query.Include(_ => _.CreditCard);
             Query.Include(_ => _.BillToAddress);
             Query.Include(_ => _.ShipToAddress);
             Query.Include(_ => _.OrderLines);
