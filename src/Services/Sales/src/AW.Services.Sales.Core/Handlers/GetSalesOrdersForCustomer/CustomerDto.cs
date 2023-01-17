@@ -6,5 +6,6 @@
         public string CustomerNumber { get; set; }
         public string FullName { get; set; }
         public string Territory { get; set; }
+        public int SalesOrderCount { get; set; }
     }    
 }

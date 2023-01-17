@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:60181",
+      "applicationUrl": "http://localhost:6000",
       "sslPort": 0
     }
   },
@@ -20,7 +20,7 @@
     "AW.Services.SalesOrder.REST.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "salesorder-api/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

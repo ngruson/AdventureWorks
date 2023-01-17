@@ -7,6 +7,7 @@ namespace AW.Services.Sales.Core.Specifications
         public GetFullSalesOrderSpecification(string salesOrderNumber) : base()
         {
             Query.Include(_ => _.Customer);
+            Query.Include(_ => _.Customer.SalesOrders);
             Query.Include("Customer.Person");
             Query.Include(_ => _.CreditCard);
             Query.Include(_ => _.BillToAddress);

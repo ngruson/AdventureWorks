@@ -9,5 +9,6 @@ namespace AW.Services.Sales.Core.Models
         public CustomerType CustomerType { get; set; }
 
         public string CustomerNumber { get; set; }
+        public int SalesOrderCount { get; set; }
     }
 }

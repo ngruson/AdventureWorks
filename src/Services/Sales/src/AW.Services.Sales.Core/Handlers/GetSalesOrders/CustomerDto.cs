@@ -5,5 +5,6 @@
         public CustomerType CustomerType { get; }
         public string CustomerNumber { get; set; }
         public string FullName { get; set; }
+        public int SalesOrderCount { get; set; }
     }    
 }
