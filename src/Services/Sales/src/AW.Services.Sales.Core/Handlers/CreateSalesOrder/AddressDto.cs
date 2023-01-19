@@ -16,6 +16,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
         {
             profile.CreateMap<AddressDto, ValueTypes.Address>();
             profile.CreateMap<Models.Address, AddressDto>();
+            profile.CreateMap<GetSalesOrder.AddressDto, AddressDto>();
         }
     }
 }

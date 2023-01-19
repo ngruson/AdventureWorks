@@ -20,6 +20,9 @@ using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
 using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
+using AW.Services.Sales.Core.Handlers.DuplicateSalesOrder;
+using AW.Services.Sales.Core.Exceptions;
+using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
 {
@@ -460,6 +463,54 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
 
                 //Act
                 var actionResult = await sut.ShipSalesOrderAsync(command, requestId);
+
+                //Assert
+                actionResult.Should().BeOfType<BadRequestResult>();
+            }
+        }
+
+        public class DuplicateSalesOrder
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DuplicateSalesOrder_Succeeds_ReturnOk(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                DuplicateSalesOrderCommand command
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DuplicateSalesOrderAsync(command);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        It.IsAny<DuplicateSalesOrderCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DuplicateSalesOrder_Fails_ReturnBadRequest(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] SalesOrderController sut,
+                DuplicateSalesOrderCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<DuplicateSalesOrderCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ThrowsAsync(new DuplicateSalesOrderException(command.SalesOrderNumber));
+
+                //Act
+                var actionResult = await sut.DuplicateSalesOrderAsync(command);
+
+                //Assert
 
                 //Assert
                 actionResult.Should().BeOfType<BadRequestResult>();

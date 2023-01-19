@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using AW.Services.Infrastructure.EventBus.Extensions;
+using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
 using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
 using AW.Services.Sales.Core.Handlers.DeleteSalesOrder;
+using AW.Services.Sales.Core.Handlers.DuplicateSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer;
@@ -137,7 +139,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             if (!commandResult)
             {
-                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)"); 
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)");
                 return BadRequest();
             }
 
@@ -242,6 +244,28 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
 
             logger.LogInformation("Command succeeded, returning OK (HTTP 200)");
             return Ok();
+        }
+
+        [Route("{salesOrderNumber}/duplicate")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DuplicateSalesOrderAsync([FromRoute] DuplicateSalesOrderCommand command)
+        {
+            logger.LogInformation("DuplicateSalesOrder called");
+
+            try
+            {
+                logger.LogInformation("Sending the DuplicateSalesOrder command");
+                await mediator.Send(command);
+            }
+            catch (DuplicateSalesOrderException)
+            {
+                logger.LogInformation("Command failed, returning Bad Request (HTTP 401)");
+                return BadRequest();
+            }
+
+            return new OkResult();
         }
     }
 }

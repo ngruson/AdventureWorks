@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Sales.Core.Exceptions;
+using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
@@ -18,6 +19,16 @@ namespace AW.Services.Sales.Core.Guards
         }
 
         public static void SalesOrderNull(this IGuardClause guardClause, Entities.SalesOrder input, string salesOrderNumber, ILogger logger)
+        {
+            if (input == null)
+            {
+                var ex = new SalesOrderNotFoundException(salesOrderNumber);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void SalesOrderNull(this IGuardClause guardClause, SalesOrderDto input, string salesOrderNumber, ILogger logger)
         {
             if (input == null)
             {

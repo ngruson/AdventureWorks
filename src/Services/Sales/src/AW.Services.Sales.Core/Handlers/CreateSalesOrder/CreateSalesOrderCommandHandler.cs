@@ -10,6 +10,7 @@ using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -67,14 +68,16 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
             foreach (var item in request.OrderItems)
             {
-                var specialOfferProduct = await _specialOfferProductRepository
-                    .SingleOrDefaultAsync(
+                var specialOffers = await _specialOfferProductRepository
+                    .ListAsync(
                         new GetSpecialOfferProductSpecification(item.ProductNumber),
                         cancellationToken
                     );
+                var specialOfferProduct = specialOffers.SingleOrDefault(_ => _.SpecialOffer.Type == "No Discount");
+
                 Guard.Against.SpecialOfferProductNull(specialOfferProduct, item.ProductNumber, _logger);
 
-                salesOrder.AddOrderLine(item.ProductNumber, item.ProductName, item.UnitPrice, item.Discount, specialOfferProduct, item.Quantity);
+                salesOrder.AddOrderLine(item.ProductNumber, item.ProductName, item.UnitPrice, item.UnitPriceDiscount, specialOfferProduct, item.OrderQty);
             }
 
             _logger.LogInformation("----- Saving sales order to database - Sales Order: {@SalesOrder}", salesOrder);
