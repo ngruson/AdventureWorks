@@ -42,6 +42,7 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
                 _mapper.Map<List<SalesOrderItemDto>>(salesOrder.OrderLines),
                 null,
                 null,
+                salesOrder.AccountNumber,
                 salesOrder.Customer.CustomerNumber,
                 salesOrder.ShipMethod,
                 _mapper.Map<CreateSalesOrder.AddressDto>(salesOrder.BillToAddress),

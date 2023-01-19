@@ -8,7 +8,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
     {
         public CreateSalesOrderCommand() { }
         public CreateSalesOrderCommand(List<SalesOrderItemDto> items, string userId, string userName,
-            string customerNumber, string shipMethod,
+            string accountNumber, string customerNumber, string shipMethod,
             AddressDto billToAddress, AddressDto shipToAddress,
             string cardNumber, string cardHolderName, DateTime cardExpiration,
             string cardSecurityNumber, string cardType) : this()
@@ -16,6 +16,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             OrderItems = items;
             UserId = userId;
             UserName = userName;
+            AccountNumber= accountNumber;
             CustomerNumber = customerNumber;
             ShipMethod = shipMethod;
             BillToAddress = billToAddress;
@@ -30,6 +31,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
         public string UserId { get; set; }
         public string UserName { get; set; }
+        public string AccountNumber { get; set; }
         public string CustomerNumber { get; set; }
         public string ShipMethod { get; set; }
         public AddressDto BillToAddress { get; set; }

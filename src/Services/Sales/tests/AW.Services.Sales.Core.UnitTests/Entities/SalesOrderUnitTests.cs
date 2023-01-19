@@ -33,6 +33,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             var salesOrder = new SalesOrder(
                 userId,
                 userName,
+                null,
                 customer,
                 shipMethod,
                 address,

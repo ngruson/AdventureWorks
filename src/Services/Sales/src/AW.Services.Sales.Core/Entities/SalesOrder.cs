@@ -12,7 +12,7 @@ namespace AW.Services.Sales.Core.Entities
     public class SalesOrder : Entity, IAggregateRoot
     {
         public SalesOrder() { }
-        public SalesOrder(string userId, string userName, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, CreditCard creditCard, string cardSecurityNumber,
+        public SalesOrder(string userId, string userName, string accountNumber, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, CreditCard creditCard, string cardSecurityNumber,
                 string cardHolderName)
         {
             RevisionNumber = 1;
@@ -20,6 +20,7 @@ namespace AW.Services.Sales.Core.Entities
             DueDate = OrderDate.AddDays(12);
             Status = SalesOrderStatus.InProcess;
             OnlineOrderFlag = true;
+            AccountNumber = accountNumber;
             Customer = customer;
             ShipMethod = shipMethod;
             TaxRate = 8;

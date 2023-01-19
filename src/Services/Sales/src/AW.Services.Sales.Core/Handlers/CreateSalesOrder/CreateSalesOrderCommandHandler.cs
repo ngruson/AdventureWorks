@@ -64,7 +64,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             var billToAddress = _mapper.Map<Address>(request.BillToAddress);
             var shipToAddress = _mapper.Map<Address>(request.ShipToAddress);
 
-            var salesOrder = new SalesOrder(request.UserId, request.UserName, customer, request.ShipMethod, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber, request.CardHolderName);
+            var salesOrder = new SalesOrder(request.UserId, request.UserName, request.AccountNumber, customer, request.ShipMethod, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber, request.CardHolderName);
 
             foreach (var item in request.OrderItems)
             {

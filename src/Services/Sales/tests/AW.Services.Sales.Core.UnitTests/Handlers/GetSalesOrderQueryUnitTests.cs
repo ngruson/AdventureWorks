@@ -38,6 +38,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             var salesOrder = new Core.Entities.SalesOrder(
                 userId,
                 userName,
+                null,
                 customer,
                 shipMethod,
                 billToAddress,
@@ -88,6 +89,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             var salesOrder = new Core.Entities.SalesOrder(
                 userId,
                 userName,
+                null,
                 customer,
                 shipMethod,
                 billToAddress,

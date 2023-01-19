@@ -55,6 +55,7 @@ namespace AW.Services.Sales.Core.IntegrationEvents.EventHandling
                     {
                         var createSalesOrderCommand = new CreateSalesOrderCommand(
                             @event.BasketItems, @event.UserId, @event.UserName,
+                            null,
                             @event.CustomerNumber, @event.ShipMethod,
                             mapper.Map<AddressDto>(@event.BillToAddress),
                             mapper.Map<AddressDto>(@event.ShipToAddress),

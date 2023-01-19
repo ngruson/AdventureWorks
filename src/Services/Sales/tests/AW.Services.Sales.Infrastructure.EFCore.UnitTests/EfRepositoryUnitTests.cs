@@ -111,6 +111,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
                     new Core.Entities.SalesOrder(
                         userId,
                         userName,
+                        null,
                         customer,
                         shipMethod,
                         address,
@@ -215,6 +216,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
                     new Core.Entities.SalesOrder(
                         userId,
                         userName,
+                        null,
                         customer,
                         shipMethod,
                         address,
