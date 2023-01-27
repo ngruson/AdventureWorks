@@ -7,6 +7,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
     {
         public string CarrierTrackingNumber { get; set; }
         public int OrderQty { get; set; }
+        public string ProductNumber { get; set; }
         public string ProductName { get; set; }
         public string SpecialOfferDescription { get; set; }
         public decimal UnitPrice { get; set; }

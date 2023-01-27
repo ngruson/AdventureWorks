@@ -88,6 +88,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     .ExcludingMissingMembers()
                     .Excluding(_ => _.RevisionNumber)
                     .Excluding(_ => _.Status)
+                    .Excluding(_ => _.CreditCard)
             );
         }
     }

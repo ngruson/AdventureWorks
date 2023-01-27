@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DuplicateSalesOrder;
+using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DeleteSalesOrder;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -163,6 +165,20 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Approving sales order {SalesOrderNumber}", salesOrderNumber);
             await _mediator.Send(new ApproveSalesOrderCommand(salesOrderNumber));
             _logger.LogInformation("Sales order approved successfully");
+        }
+
+        public async Task DuplicateSalesOrder(string salesOrderNumber)
+        {
+            _logger.LogInformation("Duplicating sales order {SalesOrderNumber}", salesOrderNumber);
+            await _mediator.Send(new DuplicateSalesOrderCommand(salesOrderNumber));
+            _logger.LogInformation("Sales order duplicated successfully");
+        }
+
+        public async Task DeleteSalesOrder(string salesOrderNumber)
+        {
+            _logger.LogInformation("Deleting sales order {SalesOrderNumber}", salesOrderNumber);
+            await _mediator.Send(new DeleteSalesOrderCommand(salesOrderNumber));
+            _logger.LogInformation("Sales order deleted successfully");
         }
     }
 }

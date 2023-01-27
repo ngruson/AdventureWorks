@@ -10,5 +10,7 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 
         [JsonIgnore]
         public virtual string? CustomerName { get; }
+
+        public int SalesOrderCount { get; set; }
     }
 }

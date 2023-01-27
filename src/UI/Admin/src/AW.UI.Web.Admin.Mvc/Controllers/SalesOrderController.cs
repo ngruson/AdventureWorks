@@ -8,6 +8,7 @@ using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
+using System.Collections.Generic;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -89,6 +90,37 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             return RedirectToAction(
                 nameof(Detail),
                 new { salesOrderNumber = viewModel.SalesOrderNumber }
+            );
+        }
+
+        public async Task<IActionResult> DuplicateSalesOrder(string salesOrderNumber)
+        {
+            await salesOrderService.DuplicateSalesOrder(salesOrderNumber);
+
+            return RedirectToAction(
+                nameof(Index)
+            );
+        }
+
+        public async Task<IActionResult> DeleteSalesOrder(string salesOrderNumber)
+        {
+            await salesOrderService.DeleteSalesOrder(salesOrderNumber);
+
+            return RedirectToAction(
+                nameof(Index)
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSalesOrders([FromBody] string[] salesOrderNumbers)
+        {
+            foreach (var salesOrderNumber in salesOrderNumbers)
+            {
+                await salesOrderService.DeleteSalesOrder(salesOrderNumber);
+            }
+
+            return RedirectToAction(
+                nameof(Index)
             );
         }
 

@@ -26,10 +26,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
         [DisplayFormat(DataFormatString = "{0:d}", ConvertEmptyStringToNull = true)]
         public DateTime? ShipDate { get; set; }
 
-        public string Status { get; set; }
+        public SalesOrderStatus Status { get; set; }
 
         [Display(Name = "Ordered online")]
-        public string OnlineOrdered { get; set; }
+        public bool OnlineOrderFlag { get; set; }
 
         [Display(Name = "Sales order number")]
         public string SalesOrderNumber { get; set; }
@@ -40,11 +40,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
         [Display(Name = "Account number")]
         public string AccountNumber { get; set; }
 
-        [Display(Name = "Customer name")]
-        public string CustomerName { get; set; }
-
-        [Display(Name = "Customer type")]
-        public string CustomerType { get; set; }
+        public CustomerViewModel Customer { get; set; }
 
         [Display(Name = "Sales person")]
         [Required]
@@ -77,6 +73,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
         [Display(Name = "Shipping method")]
         public string ShipMethod { get; set; }
 
+        public CreditCardViewModel CreditCard { get; set; }
+
         public List<SalesOrderLineViewModel> OrderLines { get; set; }
 
         public List<SalesReasonViewModel> SalesReasons { get; set; }
@@ -84,29 +82,17 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder, SalesOrderViewModel>()
-                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
+                .ForMember(m => m.Status, opt => opt.MapFrom(src => SalesOrderStatus.FromName(src.Status.ToString(), false)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
-                .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName))
-                .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Customer.CustomerType))
                 .ReverseMap();
 
             profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder, SalesOrderViewModel>()
+                .ForMember(m => m.Status, opt => opt.MapFrom(src => SalesOrderStatus.FromName(src.Status.ToString(), false)))
                 .ForMember(m => m.RevisionNumber, opt => opt.MapFrom(src => src.RevisionNumber.ToString()))
-                .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson.Name.FullName)))
-                .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer.CustomerName))
-                .ForMember(m => m.CustomerType, opt => opt.MapFrom(src => src.Customer.CustomerType))
                 .ReverseMap();
-        }
-
-        private static string MapOnlineOrderFlag(bool onlineOrderFlag)
-        {
-            if (onlineOrderFlag)
-                return "Yes";
-
-            return "No";
         }
 
         private static string MapPurchaseOrderNumber(string purchaseOrderNumber)

@@ -162,6 +162,16 @@ namespace AW.UI.Web.Admin.Mvc
                 SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer,
                 SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>>();
 
+            services.AddScoped<CustomerConverter<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Customer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrders.StoreCustomer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer>>();
+            services.AddScoped<CustomerConverter<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>>();
+            services.AddScoped<CustomerConverter<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Customer,
+                SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer,
+                SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>>();
+
             return services;
         }
 

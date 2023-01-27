@@ -12,5 +12,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task UpdateSalesOrder(SalesOrderViewModel viewModel);
         Task UpdateSalesOrder(ApproveSalesOrderViewModel viewModel);
         Task ApproveSalesOrder(string salesOrderNumber);
+        Task DuplicateSalesOrder(string salesOrderNumber);
+        Task DeleteSalesOrder(string salesOrderNumber);
     }
 }

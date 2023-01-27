@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
+﻿namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 {
     public class SalesOrder
     {
@@ -33,6 +30,7 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
         public Address? ShipToAddress { get; set; }
 
         public string? ShipMethod { get; set; }
+        public CreditCard? CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 

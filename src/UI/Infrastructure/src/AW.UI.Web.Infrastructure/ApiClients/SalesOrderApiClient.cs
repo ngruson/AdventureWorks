@@ -11,7 +11,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
@@ -149,6 +148,38 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
 
             _logger.LogInformation("Sales order {SalesOrderNumber} succesfully approved", salesOrderNumber);
+        }
+
+        public async Task DuplicateSalesOrderAsync(string salesOrderNumber)
+        {
+            _logger.LogInformation("Duplicating sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
+            string requestUri = $"SalesOrder/{salesOrderNumber}/duplicate?&api-version=1.0";
+
+            _logger.LogInformation("Calling POST method on {RequestUri}", requestUri);
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
+            request.Headers.Add("x-requestid", Guid.NewGuid().ToString());
+
+            using var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            _logger.LogInformation("Sales order {SalesOrderNumber} succesfully duplicated", salesOrderNumber);
+        }
+
+        public async Task DeleteSalesOrderAsync(string salesOrderNumber)
+        {
+            _logger.LogInformation("Deleting sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
+            string requestUri = $"SalesOrder/{salesOrderNumber}?&api-version=1.0";
+
+            _logger.LogInformation("Calling DELETE method on {RequestUri}", requestUri);
+
+            using var request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+            request.Headers.Add("x-requestid", Guid.NewGuid().ToString());
+
+            using var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            _logger.LogInformation("Sales order {SalesOrderNumber} succesfully deleted", salesOrderNumber);
         }
     }
 }

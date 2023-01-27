@@ -8,5 +8,7 @@ namespace AW.UI.Web.SharedKernel.Interfaces.Api
         Task<SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrderAsync(string? salesOrderNumber);
         Task<SalesOrder.Handlers.UpdateSalesOrder.SalesOrder> UpdateSalesOrderAsync(SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder);
         Task ApproveSalesOrderAsync(string salesOrderNumber);
+        Task DuplicateSalesOrderAsync(string salesOrderNumber);
+        Task DeleteSalesOrderAsync(string salesOrderNumber);
     }
 }

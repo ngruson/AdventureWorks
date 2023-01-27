@@ -35,6 +35,9 @@ function getFlag(countryRegionCode) {
     if (countryRegionCode == "AU") {
         return "../assets/vendor/flag-icon-css/flags/1x1/au.svg"
     }
+    else if (countryRegionCode == "CA") {
+        return "../assets/vendor/flag-icon-css/flags/1x1/ca.svg"
+    }
     else if (countryRegionCode == "US") {
         return "../assets/vendor/flag-icon-css/flags/1x1/us.svg"
     }

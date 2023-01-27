@@ -1,4 +1,6 @@
-﻿namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
 {
     public class SalesOrder
     {
@@ -30,6 +32,7 @@
         public Address? ShipToAddress { get; set; }
 
         public string? ShipMethod { get; set; }
+        public CreditCard? CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 
