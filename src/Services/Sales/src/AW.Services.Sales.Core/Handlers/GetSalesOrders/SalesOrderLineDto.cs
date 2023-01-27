@@ -8,6 +8,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
         public string CarrierTrackingNumber { get; set; }
 
         public short OrderQty { get; set; }
+        public string ProductNumber { get; set; }
 
         public string ProductName { get; set; }
 
