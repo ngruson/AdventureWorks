@@ -24,7 +24,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.SalesOrder.Handlers
             //Assert
             result.Should().Be(Unit.Value);
             
-            mockSalesOrderApiClient.Verify(x => x.ApproveSalesOrderAsync(
+            mockSalesOrderApiClient.Verify(x => x.DuplicateSalesOrderAsync(
                     It.IsAny<string>()
                 )
             );
