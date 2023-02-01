@@ -1,6 +1,8 @@
-﻿namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
+﻿using AW.SharedKernel.AutoMapper;
+
+namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
 {
-    public class Address
+    public class Address : IMapFrom<GetSalesOrder.Address>
     {
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
+﻿namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
 {
     public class SalesOrder
     {

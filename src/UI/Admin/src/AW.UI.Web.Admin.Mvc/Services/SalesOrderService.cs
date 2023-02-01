@@ -180,5 +180,28 @@ namespace AW.UI.Web.Admin.Mvc.Services
             await _mediator.Send(new DeleteSalesOrderCommand(salesOrderNumber));
             _logger.LogInformation("Sales order deleted successfully");
         }
+
+        public async Task UpdateOrderlines(UpdateOrderlinesViewModel viewModel)
+        {
+            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrder.SalesOrderNumber);
+            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrder.SalesOrderNumber));
+            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
+            Guard.Against.Null(salesOrder, _logger);
+
+            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            Guard.Against.Null(salesOrderToUpdate, _logger);
+
+            foreach (var updatedOrderLine in viewModel.SalesOrder.OrderLines)
+            {
+                var orderLine = salesOrderToUpdate.OrderLines.SingleOrDefault(_ => _.ProductNumber == updatedOrderLine.ProductNumber);
+                Guard.Against.Null(orderLine);
+
+                orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty);
+            }
+
+            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
+            await _mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
+            _logger.LogInformation("Sales order updated successfully");
+        }
     }
 }

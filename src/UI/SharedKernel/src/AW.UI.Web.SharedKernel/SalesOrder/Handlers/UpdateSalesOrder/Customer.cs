@@ -1,4 +1,5 @@
-﻿using AW.SharedKernel.Interfaces;
+﻿using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.Interfaces;
 using System.Text.Json.Serialization;
 
 namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder

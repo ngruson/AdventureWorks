@@ -1,6 +1,8 @@
-﻿namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
+﻿using AW.SharedKernel.AutoMapper;
+
+namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
 {
-    public class SalesOrder
+    public class SalesOrder : IMapFrom<GetSalesOrder.SalesOrder>
     {
         public byte RevisionNumber { get; set; }
 

@@ -8,7 +8,6 @@ using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
-using System.Collections.Generic;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -128,6 +127,16 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         {
             var result = await salesPersonViewModelService.GetSalesPersons(territory);
             return Json(result.SalesPersons);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderlines([ModelBinder(BinderType = typeof(UpdateOrderlinesViewModelBinder))] UpdateOrderlinesViewModel viewModel)
+        {
+            await salesOrderService.UpdateOrderlines(viewModel);
+
+            return RedirectToAction(
+                nameof(Index)
+            );
         }
     }
 }

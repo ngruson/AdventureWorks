@@ -11,9 +11,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateOrderlines"))
+                @using (Html.BeginForm("UpdateOrderlines", "SalesOrder"))
                 {
-                    <input type="hidden" name="accountNumber" value="@Model.SalesOrderNumber" />
+                    @Html.HiddenFor(_ => _.SalesOrderNumber);
                     
                     <table class="table">
                         <thead class="thead-light">
@@ -28,18 +28,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var orderLine in Model.OrderLines)
+                            @for (int i = 0; i < Model.OrderLines.Count; i++)
                             {
                                 <tr>
-                                    <th scope="row">@orderLine.ProductNumber</th>
-                                    <td>@orderLine.ProductName</td>
+                                    <th scope="row">@Html.HiddenFor(m => m.OrderLines[i].ProductNumber)</th>
+                                    <td>@Model.OrderLines[i].ProductName</td>
                                     <td class="col-1">
-                                        <input type="text" data-productNumber="@orderLine.ProductNumber" class="form-control" value="@orderLine.OrderQty" onchange="updateOrderline(this)" />
+                                        <input asp-for="@Model.OrderLines[i].OrderQty" data-productNumber="@Model.OrderLines[i].ProductNumber" class="form-control" value="@Model.OrderLines[i].OrderQty" onchange="updateOrderline(this)" />
                                     </td>
-                                    <td>@orderLine.SpecialOfferDescription</td>
-                                    <td>@string.Format("{0:C}", @orderLine.UnitPrice)</td>
-                                    <td>@string.Format("{0:C}", @orderLine.UnitPriceDiscount)</td>
-                                    <td>@string.Format("{0:C}", @orderLine.LineTotal)</td>
+                                    <td>@Model.OrderLines[i].SpecialOfferDescription</td>
+                                    <td class="unitprice">@string.Format("{0:C}", @Model.OrderLines[i].UnitPrice)</td>
+                                    <td class="unitpriceDiscount">@string.Format("{0:C}", @Model.OrderLines[i].UnitPriceDiscount)</td>
+                                    <td class="lineTotal">@string.Format("{0:C}", @Model.OrderLines[i].LineTotal)</td>
                                 </tr>
                             }
                         </tbody>
@@ -47,7 +47,7 @@
 
                     <div class="d-flex justify-content-end gap-sm-3">
                         <button type="button" class="btn btn-white me-2 me-sm-0" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Update sales order</button>
                     </div>
                 }
             </div>

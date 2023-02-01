@@ -1,26 +1,25 @@
 ﻿using AW.SharedKernel.UnitTesting;
 using AW.SharedKernel.ValueTypes;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using System.Linq;
+using FluentAssertions;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
 {
-    public class ViewModelModelBinderUnitTests
+    public class UpdateOrderlinesViewModelBinderUnitTests
     {
         [Theory, AutoMoqData]
         public async Task Test(
-            StoreCustomerContactViewModelBinder sut,
+            UpdateOrderlinesViewModelBinder sut,
             string accountNumber,
             NameFactory name,
             string title,
@@ -59,7 +58,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
                     HttpContext = contextMock.Object
                 },
                 ModelMetadata = new TestModelMetadata(
-                    ModelMetadataIdentity.ForType(typeof(StoreCustomerContactViewModel))
+                    ModelMetadataIdentity.ForType(typeof(UpdateOrderlinesViewModel))
                 )
             };
 

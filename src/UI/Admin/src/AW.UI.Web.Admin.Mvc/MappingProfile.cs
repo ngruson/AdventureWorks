@@ -26,6 +26,13 @@ namespace AW.UI.Web.Admin.Mvc
                 .Include<SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer, SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>();
 
             CreateMap<SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer, SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>();
+
+
+            CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Customer>()
+                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>()
+                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
+            //CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>();
+            //CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
         }
     }
 }

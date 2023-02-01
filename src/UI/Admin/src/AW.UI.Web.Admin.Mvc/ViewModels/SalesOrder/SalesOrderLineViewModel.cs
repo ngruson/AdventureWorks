@@ -6,7 +6,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
     public class SalesOrderLineViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrderLine>
     {
         public string CarrierTrackingNumber { get; set; }
-        public int OrderQty { get; set; }
+        public short OrderQty { get; set; }
         public string ProductNumber { get; set; }
         public string ProductName { get; set; }
         public string SpecialOfferDescription { get; set; }

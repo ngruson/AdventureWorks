@@ -1,4 +1,5 @@
-﻿using AW.SharedKernel.ValueTypes;
+﻿using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.ValueTypes;
 
 namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
 {

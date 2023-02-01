@@ -347,8 +347,21 @@
 @section Scripts {
     <script>
         function updateOrderline(e) {
-            var productNumber = $(e).attr('data-productnumber');
-            alert(productNumber);
+            //var productNumber = $(e).attr('data-productnumber');
+            //alert(productNumber);
+
+            var qty = $(e).val();
+            var currency = $(e).closest("tr").find("td.unitprice").html().substring(0, 1);
+            var unitPrice = $(e).closest("tr").find("td.unitprice").html().substring(1).trim();
+            var decSep = unitPrice.split('').reverse().join('');
+            decSep = decSep.substring(2, 3);
+
+            var unitPrice = unitPrice.replace(",", ".");
+            var unitPriceDiscount = $(e).closest("tr").find("td.unitpriceDiscount").html().substring(1).trim().replace(",", ".");
+
+            var newLineTotal = (qty * (unitPrice - unitPriceDiscount)).toString();
+            newLineTotal = currency + ' ' + newLineTotal.replace(".", decSep);
+            $(e).closest("tr").find("td.lineTotal").html(newLineTotal);
         }
     </script>
 }
