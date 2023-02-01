@@ -18,8 +18,6 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 
         public decimal UnitPriceDiscount { get; set; }
 
-        public decimal LineTotal { get; set; }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesOrderLine, SalesOrderLineDto>()
