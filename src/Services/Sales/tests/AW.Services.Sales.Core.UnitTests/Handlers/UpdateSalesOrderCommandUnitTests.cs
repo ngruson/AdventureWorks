@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Specification;
+using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
 using AW.Services.Sales.Core.Specifications;
@@ -19,10 +20,27 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_ExistingSalesOrder_ReturnUpdatedSalesOrder(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
+            Core.Entities.SalesOrder salesOrder,
             UpdateSalesOrderCommandHandler sut,
             UpdateSalesOrderCommand command
         )
         {
+            //Arrange
+            for (int i = 0; i < command.SalesOrder.OrderLines.Count; i++)
+            {
+                salesOrder.OrderLines.Add(new Core.Entities.SalesOrderLine
+                {
+                    ProductNumber = command.SalesOrder.OrderLines[i].ProductNumber
+                });
+            }
+
+            salesOrderRepoMock.Setup(_ => _.SingleOrDefaultAsync(
+                    It.IsAny<ISingleResultSpecification<Core.Entities.SalesOrder>>(),
+                    It.IsAny<CancellationToken>()
+                )
+            ).
+            ReturnsAsync(salesOrder);
+
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
 

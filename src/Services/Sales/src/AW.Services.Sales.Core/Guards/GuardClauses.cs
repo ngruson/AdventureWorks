@@ -38,6 +38,16 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
+        public static void SalesOrderLineNull(this IGuardClause guardClause, Entities.SalesOrderLine input, string productNumber, ILogger logger)
+        {
+            if (input == null)
+            {
+                var ex = new SalesOrderLineNotFoundException(productNumber);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
         public static void CustomerNull(this IGuardClause guardClause, Entities.Customer input, string customerNumber, ILogger logger)
         {
             if (input == null)
