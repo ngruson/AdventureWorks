@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AW.SharedKernel.JsonConverters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 {
-    public abstract class ViewModelModelBinder<T> : IModelBinder
+    public class ViewModelModelBinder<T> : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
@@ -21,17 +24,26 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
         protected virtual T BuildViewModel(ModelBindingContext bindingContext)
         {
             var json = BuildJson(bindingContext.HttpContext.Request.Form);
-            var viewModel = JsonSerializer.Deserialize<T>(json);
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new BooleanConverter());
+            options.Converters.Add(new DateTimeConverter());
+
+            var viewModel = JsonSerializer.Deserialize<T>(
+                json, 
+                options
+            );
+            
             return viewModel;
         }
 
-        private static string BuildJson(IFormCollection form)
+        private string BuildJson(IFormCollection form)
         {
             var json = new Dictionary<string, object>();
 
             //Simple properties
             foreach (var item in form.Where(x => !x.Key.Contains('.')))
             {
+                var value = GetValueForKey(item.Key, item.Value);
                 json.Add(item.Key, item.Value.ToString());
             }
 
@@ -52,13 +64,21 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             return JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
         }
 
-        private static void AddItemsForPath(IFormCollection form, Dictionary<string, object> dict, string path)
+        protected virtual string GetValueForKey(string key, StringValues value)
+        {
+            return value.ToString();
+        }
+
+        private void AddItemsForPath(IFormCollection form, Dictionary<string, object> dict, string path)
         {
             var itemsForPath = form.Where(x => Path(x.Key) == path).ToList();
             itemsForPath.ForEach(x =>
             {
                 if (!dict.ContainsKey(Name(x.Key)))
-                    dict.Add(Name(x.Key), x.Value.ToString());
+                {
+                    var value = GetValueForKey(Name(x.Key), x.Value);
+                    dict.Add(Name(x.Key), value);
+                }
             });
 
             var paths = FindPaths(form, path);

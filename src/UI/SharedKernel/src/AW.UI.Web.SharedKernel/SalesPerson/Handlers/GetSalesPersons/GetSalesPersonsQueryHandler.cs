@@ -4,14 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons
 {
-    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<SalesPerson>>
+    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<SalesPerson>?>
     {
         private readonly ILogger<GetSalesPersonsQueryHandler> logger;
         private readonly ICache<SalesPerson> cache;
 
         public GetSalesPersonsQueryHandler(ILogger<GetSalesPersonsQueryHandler> logger, ICache<SalesPerson> cache) => (this.logger, this.cache) = (logger, cache);
 
-        public async Task<List<SalesPerson>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
+        public async Task<List<SalesPerson>?> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.Territory))
             {

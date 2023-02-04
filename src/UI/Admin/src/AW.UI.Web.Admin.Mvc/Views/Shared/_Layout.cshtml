@@ -20,6 +20,7 @@
 
     <!-- CSS Implementing Plugins -->
     <link rel="stylesheet" href="~/assets/css/vendor.min.css">
+    <link rel="stylesheet" href="~/assets/vendor/flatpickr/flatpickr.min.css">
 
     <!-- Bootstrap Icons-->
     <link rel="stylesheet" href="~/assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
@@ -1880,10 +1881,12 @@
     <script src="~/assets/js/vendor.min.js"></script>
     <script src="~/assets/vendor/hs-add-field/dist/hs-add-field.min.js"></script>
     <script src="~/node_modules/imask/dist/imask.min.js"></script>
+    <script src="~/assets/vendor/flatpickr/flatpickr.min.js"></script>
 
     <!-- JS Front -->
     <script src="~/assets/js/theme.min.js"></script>
     <script src="~/assets/js/hs.imask.js"></script>
+    <script src="~/assets/js/hs.flatpickr.js"></script>
 
     @RenderSection("Scripts", required: false)
 
@@ -1931,6 +1934,10 @@
                 // INITIALIZATION OF INPUT MASK
                 // =======================================================
                 HSCore.components.HSMask.init('.js-input-mask')
+
+                // INITIALIZATION OF FLATPICKR
+                // =======================================================
+                HSCore.components.HSFlatpickr.init('.js-flatpickr')
 
                 // INITIALIZATION OF CHARTJS
                 // =======================================================

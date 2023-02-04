@@ -10,6 +10,10 @@ namespace AW.UI.Web.Store
         {
             ApplyMappingsFromAssembly(typeof(IProductApiClient).Assembly);
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+
+            CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Customer>()
+                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>()
+                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
         }
     }
 }

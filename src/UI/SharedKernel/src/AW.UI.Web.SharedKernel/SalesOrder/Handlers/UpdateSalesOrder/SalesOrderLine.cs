@@ -11,6 +11,5 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
         public string? SpecialOfferDescription { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal UnitPriceDiscount { get; set; }
-        public decimal LineTotal { get; set; }
     }
 }

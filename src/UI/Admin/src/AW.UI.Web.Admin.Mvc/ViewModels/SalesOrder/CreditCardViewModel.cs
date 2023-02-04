@@ -25,6 +25,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         private static string MaskCardNumber(string cardNumber)
         {
+            if (cardNumber.Length < 4)
+                return cardNumber;
+
             string maskPart = cardNumber[..^4];
             return cardNumber[maskPart.Length..].PadLeft(cardNumber.Length, '*');
         }

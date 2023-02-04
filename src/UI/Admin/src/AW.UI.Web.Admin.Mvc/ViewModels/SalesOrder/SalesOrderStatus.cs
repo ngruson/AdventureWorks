@@ -1,9 +1,13 @@
 ﻿using Ardalis.SmartEnum;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
     public sealed class SalesOrderStatus : SmartEnum<SalesOrderStatus>
     {
+        [Display(Name = "In Process")]
         public static readonly SalesOrderStatus InProcess = new(nameof(InProcess), 1);
         public static readonly SalesOrderStatus Approved = new(nameof(Approved), 2);
         public static readonly SalesOrderStatus Backordered = new(nameof(Backordered), 3);
@@ -30,6 +34,19 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
                 nameof(Cancelled) => "warning",
                 _ => "dark",
             };
+        }
+
+        public string GetDisplayName()
+        {
+            var displayAttribute = GetType()
+                .GetMember(Name)
+                .First()
+                .GetCustomAttribute<DisplayAttribute>();
+
+            if (displayAttribute == null)
+                return Name;
+
+            return displayAttribute.Name;
         }
     }
 }

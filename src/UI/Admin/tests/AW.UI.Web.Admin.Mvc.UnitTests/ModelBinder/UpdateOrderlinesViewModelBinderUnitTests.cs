@@ -1,6 +1,4 @@
 ﻿using AW.SharedKernel.UnitTesting;
-using AW.SharedKernel.ValueTypes;
-using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -10,7 +8,6 @@ using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using System.Linq;
 using FluentAssertions;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
@@ -18,30 +15,24 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
     public class UpdateOrderlinesViewModelBinderUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task Test(
+        public async Task BindModel_Should_ReturnViewModel(
             UpdateOrderlinesViewModelBinder sut,
-            string accountNumber,
-            NameFactory name,
-            string title,
-            string suffix,
-            List<string> emailAddresses,
-            string contactType
+            string salesOrderNumber,
+            List<string> productNumbers,
+            List<string> quantities
         )
         {
             //Arrange
             var formData = new FormCollection(
                 new Dictionary<string, StringValues>
                 {
-                    { "AccountNumber", accountNumber },
-                    { "CustomerContact.ContactPerson.Title", title },
-                    { "CustomerContact.ContactPerson.Name.FirstName", name.FirstName },
-                    { "CustomerContact.ContactPerson.Name.MiddleName", name.MiddleName },
-                    { "CustomerContact.ContactPerson.Name.LastName", name.LastName },
-                    { "CustomerContact.ContactPerson.Suffix", suffix },
-                    { "CustomerContact.ContactPerson.EmailAddresses[0].EmailAddress", emailAddresses[0] },
-                    { "CustomerContact.ContactPerson.EmailAddresses[1].EmailAddress", emailAddresses[1] },
-                    { "CustomerContact.ContactPerson.EmailAddresses[2].EmailAddress", emailAddresses[2] },
-                    { "CustomerContact.ContactType", contactType }
+                    { "SalesOrder.SalesOrderNumber", salesOrderNumber },
+                    { "SalesOrder.OrderLines[0].ProductNumber", productNumbers[0] },
+                    { "SalesOrder.OrderLines[0].OrderQty", quantities[0] },
+                    { "SalesOrder.OrderLines[1].ProductNumber", productNumbers[1] },
+                    { "SalesOrder.OrderLines[1].OrderQty", quantities[1] },
+                    { "SalesOrder.OrderLines[2].ProductNumber", productNumbers[2] },
+                    { "SalesOrder.OrderLines[2].OrderQty", quantities[2] }
                 }
             );
 
@@ -67,29 +58,28 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
 
             //Assert
 
-            var expected = new StoreCustomerContactViewModel
+            var expected = new UpdateOrderlinesViewModel
             {
-                AccountNumber = accountNumber,
-                CustomerContact = new CustomerContactViewModel
+                SalesOrder = new UpdateOrderlinesSalesOrderViewModel
                 {
-                    ContactType = contactType,
-                    ContactPerson = new PersonViewModel
+                    SalesOrderNumber = salesOrderNumber,
+                    OrderLines = new List<UpdateOrderlinesSalesOrderlineViewModel>
                     {
-                        Title = title,
-                        Name = new PersonNameViewModel
+                        new UpdateOrderlinesSalesOrderlineViewModel
                         {
-                            FirstName = name.FirstName,
-                            MiddleName = name.MiddleName,
-                            LastName = name.LastName
+                            ProductNumber = productNumbers[0],
+                            OrderQty = quantities[0]
                         },
-                        Suffix = suffix,
-                        EmailAddresses = emailAddresses.Select(_ =>
-                                new PersonEmailAddressViewModel
-                                {
-                                    EmailAddress = _
-                                }
-                            )
-                            .ToList()
+                        new UpdateOrderlinesSalesOrderlineViewModel
+                        {
+                            ProductNumber = productNumbers[1],
+                            OrderQty = quantities[1]
+                        },
+                        new UpdateOrderlinesSalesOrderlineViewModel
+                        {
+                            ProductNumber = productNumbers[2],
+                            OrderQty = quantities[2]
+                        }
                     }
                 }
             };

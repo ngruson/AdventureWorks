@@ -69,7 +69,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             )
             {
                 //Arrange
-                mockSalesOrderService.Setup(x => x.GetSalesOrder(
+                mockSalesOrderService.Setup(x => x.GetSalesOrderDetail(
                     It.IsAny<string>()
                 ))
                 .ReturnsAsync(viewModel);
@@ -87,7 +87,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
                 viewResult.Model.Should().BeEquivalentTo(viewModel);
 
-                mockSalesOrderService.Verify(x => x.GetSalesOrder(
+                mockSalesOrderService.Verify(x => x.GetSalesOrderDetail(
                     It.IsAny<string>()
                 ));
             }

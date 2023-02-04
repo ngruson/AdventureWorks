@@ -71,6 +71,23 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
+        private async Task<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string salesOrderNumber)
+        {
+            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", salesOrderNumber);
+            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
+            Guard.Against.Null(salesOrder, _logger);
+
+            return salesOrder;
+        }
+
+        private async Task UpdateSalesOrder(SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
+        {
+            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
+            await _mediator.Send(new UpdateSalesOrderCommand(salesOrder));
+            _logger.LogInformation("Sales order updated successfully");
+        }
+
         private async Task<List<SelectListItem>> GetTerritories()
         {
             _logger.LogInformation("GetTerritories called.");
@@ -101,7 +118,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task<SalesOrderDetailViewModel> GetSalesOrder(string salesOrderNumber)
+        public async Task<SalesOrderDetailViewModel> GetSalesOrderDetail(string salesOrderNumber)
         {
             _logger.LogInformation("GetSalesOrder called");
             var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
@@ -124,10 +141,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateSalesOrder(SalesOrderViewModel viewModel)
         {
-            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrderNumber);
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrderNumber));
-            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
-            Guard.Against.Null(salesOrder, _logger);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
@@ -141,10 +155,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateSalesOrder(ApproveSalesOrderViewModel viewModel)
         {
-            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrderNumber);
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrderNumber));
-            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
-            Guard.Against.Null(salesOrder, _logger);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
@@ -155,9 +166,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             salesOrderToUpdate.Territory = viewModel.Territory;
             salesOrderToUpdate.SalesPerson = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
 
-            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await _mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
-            _logger.LogInformation("Sales order updated successfully");
+            await UpdateSalesOrder(salesOrderToUpdate);
         }
 
         public async Task ApproveSalesOrder(string salesOrderNumber)
@@ -183,10 +192,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateOrderlines(UpdateOrderlinesViewModel viewModel)
         {
-            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", viewModel.SalesOrder.SalesOrderNumber);
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(viewModel.SalesOrder.SalesOrderNumber));
-            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
-            Guard.Against.Null(salesOrder, _logger);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
@@ -199,9 +205,38 @@ namespace AW.UI.Web.Admin.Mvc.Services
                 orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty);
             }
 
-            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await _mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
-            _logger.LogInformation("Sales order updated successfully");
+            await UpdateSalesOrder(salesOrderToUpdate);
+        }
+
+        public async Task UpdateOrderInfo(UpdateOrderInfoViewModel viewModel)
+        {
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+
+            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            Guard.Against.Null(salesOrderToUpdate, _logger);
+
+            salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel.SalesOrder.RevisionNumber);
+            salesOrderToUpdate.OnlineOrderFlag = viewModel.SalesOrder.OnlineOrderFlag;
+            salesOrderToUpdate.DueDate = viewModel.SalesOrder.DueDate;
+            salesOrderToUpdate.ShipDate = viewModel.SalesOrder.ShipDate;
+            salesOrderToUpdate.PurchaseOrderNumber = viewModel.SalesOrder.PurchaseOrderNumber;
+            salesOrderToUpdate.AccountNumber = viewModel.SalesOrder.AccountNumber;
+            salesOrderToUpdate.ShipMethod = viewModel.SalesOrder.ShipMethod;
+            salesOrderToUpdate.Territory = viewModel.SalesOrder.Territory;
+
+            if (!string.IsNullOrEmpty(viewModel.SalesOrder.SalesPerson))
+            {
+                var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(salesOrderToUpdate.Territory));
+                var salesPerson = salesPersons.SingleOrDefault(_ => _.Name.FullName == viewModel.SalesOrder.SalesPerson);
+                Guard.Against.Null(salesPerson, _logger, nameof(salesPerson));
+
+                salesOrderToUpdate.SalesPerson = new SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
+                {
+                    Name = salesPerson.Name
+                };
+            }
+
+            await UpdateSalesOrder(salesOrderToUpdate);
         }
     }
 }

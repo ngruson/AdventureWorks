@@ -18,7 +18,7 @@
                 <h1 class="page-header-title">Order @Model.SalesOrder.SalesOrderNumber</h1>
                 <span class="badge bg-soft- text-info ms-2 ms-sm-3">
                     <span class="legend-indicator bg-info"></span>
-                    @Model.SalesOrder.Status
+                    @Model.SalesOrder.Status.GetDisplayName()
                 </span>
                 <span class="ms-2 ms-sm-3">
                     <i class="bi-calendar-week"></i>
@@ -147,78 +147,67 @@
         </div>
         <div class="card">
             <!-- Header -->
-            <div class="card-header">
+            <div class="card-header card-header-content-between">
               <h4 class="card-header-title">
-                Other
+                Order info
               </h4>
+                <a class="link" data-bs-toggle="modal" data-bs-target="#editOrderInfo" href="#">Edit</a>
             </div>
             <!-- End Header -->
             <!-- Body -->
             <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.RevisionNumber)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.RevisionNumber" readonly />
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.OnlineOrderFlag, new { @class = "form-check-label" })
-                            <div>
-                                @Html.CheckBoxFor(m => m.SalesOrder.OnlineOrderFlag, new { @class = "form-check-input", disabled = "disabled" })
-                            </div>
-                        </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.RevisionNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.RevisionNumber</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.DueDate)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.DueDate.ToShortDateString()" readonly />
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.ShipDate)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.ShipDate?.ToShortDateString()" readonly />
-                        </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.OnlineOrderFlag, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        @Html.CheckBoxFor(m => m.SalesOrder.OnlineOrderFlag, new { @class = "form-check-input", disabled = "disabled" })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.PurchaseOrderNumber)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.PurchaseOrderNumber" readonly />
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.AccountNumber)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.AccountNumber" readonly />
-                        </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.DueDate, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.DueDate.ToShortDateString()</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.ShipMethod)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.ShipMethod" readonly />
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.SalesPerson)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.SalesPerson" readonly />
-                        </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.ShipDate, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.ShipDate?.ToShortDateString()</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-4">
-                            @Html.LabelFor(m => m.SalesOrder.Territory)
-                            <input type="text" class="form-control" value="@Model.SalesOrder.Territory" readonly />
-                        </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.PurchaseOrderNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.PurchaseOrderNumber</p>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.AccountNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.AccountNumber</p>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.ShipMethod, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.ShipMethod</p>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.Territory, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.Territory</p>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.SalesOrder.SalesPerson, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9">
+                        <p class="form-label col-form-label">@Model.SalesOrder.SalesPerson</p>
                     </div>
                 </div>
             </div>
@@ -343,13 +332,28 @@
 <!-- End Modal -->
 
 <partial name="EditOrderlines" for="@Model.SalesOrder" />
+<partial name="EditOrderInfo" for="@Model.SalesOrder" />
 
 @section Scripts {
     <script>
-        function updateOrderline(e) {
-            //var productNumber = $(e).attr('data-productnumber');
-            //alert(productNumber);
+        $(document).ready(function () {
+            $('#SalesOrder_Territory').change(function () {
+                var dropdown = $('#SalesOrder_SalesPerson');
 
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getSalesPersons(this.value, dropdown, "@Url.Action("GetSalesPersons", new { territory = "js-territory" })"
+                        .replace("js-territory", this.value)
+                    );
+                }
+            });
+        });
+
+        function updateOrderline(e) {
             var qty = $(e).val();
             var currency = $(e).closest("tr").find("td.unitprice").html().substring(0, 1);
             var unitPrice = $(e).closest("tr").find("td.unitprice").html().substring(1).trim();

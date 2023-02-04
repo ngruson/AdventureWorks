@@ -8,6 +8,10 @@ using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetShipMethods;
+using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
+using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -42,10 +46,26 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
         public async Task<IActionResult> Detail(string salesOrderNumber)
         {
-            return View(
-                await salesOrderService.GetSalesOrder(
-                    salesOrderNumber)
+            var salesOrder = await salesOrderService.GetSalesOrderDetail(
+                salesOrderNumber
             );
+
+            ViewData["territories"] = (await mediator.Send(new GetTerritoriesQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.Name, _ => _.Name);
+
+            ViewData["salesPersons"] = (await mediator.Send(new GetSalesPersonsQuery(salesOrder.SalesOrder.Territory)))
+                .OrderBy(_ => _.Name.FullName)
+                .ToList()
+                .ToSelectList(_ => _.Name.FullName, _ => _.Name.FullName);
+
+            ViewData["shipMethods"] = (await mediator.Send(new GetShipMethodsQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.Name, _ => _.Name);
+
+            return View(salesOrder);
         }
 
         public async Task<IActionResult> ApproveSalesOrder(string salesOrderNumber)
@@ -135,7 +155,19 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             await salesOrderService.UpdateOrderlines(viewModel);
 
             return RedirectToAction(
-                nameof(Index)
+                nameof(Detail),
+                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderInfo([ModelBinder(BinderType = typeof(UpdateOrderInfoViewModelBinder))] UpdateOrderInfoViewModel viewModel)
+        {
+            await salesOrderService.UpdateOrderInfo(viewModel);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
             );
         }
     }

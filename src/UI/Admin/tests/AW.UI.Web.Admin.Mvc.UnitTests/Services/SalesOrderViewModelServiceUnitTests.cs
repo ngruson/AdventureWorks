@@ -65,7 +65,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task GetSalesOrder_ReturnsViewModel(
+        public async Task GetSalesOrderDetail_ReturnsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
             SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
             SalesOrderService sut
@@ -80,7 +80,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             .ReturnsAsync(salesOrder);
 
             //Act
-            var result = await sut.GetSalesOrder("123");
+            var result = await sut.GetSalesOrderDetail("123");
 
             //Assert
             result.SalesOrder.Should().BeEquivalentTo(salesOrder, opt =>

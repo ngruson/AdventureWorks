@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories
 {
-    public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQuery, List<ProductCategory>>
+    public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQuery, List<ProductCategory>?>
     {
         private readonly ILogger<GetProductCategoriesQueryHandler> logger;
         private readonly ICache<ProductCategory> cache;
@@ -15,7 +15,7 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories
             this.cache = cache;
         }
 
-        public async Task<List<ProductCategory>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProductCategory>?> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting all product categories from cache");
             return await cache.GetData();
