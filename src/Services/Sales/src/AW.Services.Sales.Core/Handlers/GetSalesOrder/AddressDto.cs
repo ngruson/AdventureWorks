@@ -15,7 +15,8 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, AddressDto>();
+            profile.CreateMap<Address, AddressDto>()
+                .ForMember(_ => _.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()));
         }
     }
 }
