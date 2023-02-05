@@ -8,6 +8,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,6 +26,8 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         )
         {
             //Arrange
+            territories = territories.OrderBy(x => x.Name).ToList();
+
             territoryRepoMock.Setup(x => x.ListAsync(
                     It.IsAny<CancellationToken>()
                 )
@@ -59,6 +62,8 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         )
         {
             //Arrange
+            territories = territories.OrderBy( x => x.Name ).ToList();
+
             territoryRepoMock.Setup(x => x.ListAsync(
                     It.IsAny<GetTerritoriesForCountrySpecification>(),
                     It.IsAny<CancellationToken>()

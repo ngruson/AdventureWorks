@@ -7,6 +7,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,6 +25,8 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         )
         {
             //Arrange
+            shipMethods = shipMethods.OrderBy(_ => _.Name).ToList();
+
             shipMethodRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(shipMethods);
 

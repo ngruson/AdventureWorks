@@ -122,6 +122,7 @@ namespace AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests
         )
         {
             //Arrange
+            addressTypes = addressTypes.OrderBy(_ => _.Name).ToList();
             var mockSet = addressTypes.AsQueryable().BuildMockDbSet();
 
             mockContext.Setup(x => x.Set<AddressType>())
