@@ -10,8 +10,10 @@ using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetShipMethods;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
-using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -50,6 +52,11 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 salesOrderNumber
             );
 
+            ViewData["countries"] = (await mediator.Send(new GetCountriesQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.CountryRegionCode, _ => _.Name);
+
             ViewData["territories"] = (await mediator.Send(new GetTerritoriesQuery()))
                 .OrderBy(_ => _.Name)
                 .ToList()
@@ -64,6 +71,20 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 .OrderBy(_ => _.Name)
                 .ToList()
                 .ToSelectList(_ => _.Name, _ => _.Name);
+
+            ViewData["statesProvincesShipTo"] = (await mediator.Send(
+                    new GetStatesProvincesQuery(salesOrder.SalesOrder.ShipToAddress.CountryRegionCode)
+                ))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.StateProvinceCode, _ => _.Name);
+
+            ViewData["statesProvincesBillTo"] = (await mediator.Send(
+                    new GetStatesProvincesQuery(salesOrder.SalesOrder.BillToAddress.CountryRegionCode)
+                ))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.StateProvinceCode, _ => _.Name);
 
             return View(salesOrder);
         }
@@ -164,6 +185,34 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         public async Task<IActionResult> UpdateOrderInfo([ModelBinder(BinderType = typeof(UpdateOrderInfoViewModelBinder))] UpdateOrderInfoViewModel viewModel)
         {
             await salesOrderService.UpdateOrderInfo(viewModel);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+            );
+        }
+
+        public async Task<JsonResult> GetStatesProvinces(string country)
+        {
+            var statesProvinces = await mediator.Send(new GetStatesProvincesQuery(country));
+            return Json(statesProvinces);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateShipToAddress([ModelBinder(BinderType = typeof(ViewModelModelBinder<UpdateAddressViewModel>))] UpdateAddressViewModel viewModel)
+        {
+            await salesOrderService.UpdateShipToAddress(viewModel);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+            );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBillToAddress([ModelBinder(BinderType = typeof(ViewModelModelBinder<UpdateAddressViewModel>))] UpdateAddressViewModel viewModel)
+        {
+            await salesOrderService.UpdateBillToAddress(viewModel);
 
             return RedirectToAction(
                 nameof(Detail),

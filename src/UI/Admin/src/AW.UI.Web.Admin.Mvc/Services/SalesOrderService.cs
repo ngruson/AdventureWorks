@@ -238,5 +238,29 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             await UpdateSalesOrder(salesOrderToUpdate);
         }
+
+        public async Task UpdateShipToAddress(UpdateAddressViewModel viewModel)
+        {
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+
+            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            Guard.Against.Null(salesOrderToUpdate, _logger);
+
+            _mapper.Map(viewModel.SalesOrder.ShipToAddress, salesOrderToUpdate.ShipToAddress);
+
+            await UpdateSalesOrder(salesOrderToUpdate);
+        }
+
+        public async Task UpdateBillToAddress(UpdateAddressViewModel viewModel)
+        {
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+
+            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            Guard.Against.Null(salesOrderToUpdate, _logger);
+
+            _mapper.Map(viewModel.SalesOrder.BillToAddress, salesOrderToUpdate.BillToAddress);
+
+            await UpdateSalesOrder(salesOrderToUpdate);
+        }
     }
 }

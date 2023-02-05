@@ -16,5 +16,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task ApproveSalesOrder(string salesOrderNumber);
         Task DuplicateSalesOrder(string salesOrderNumber);
         Task DeleteSalesOrder(string salesOrderNumber);
+        Task UpdateShipToAddress(UpdateAddressViewModel viewModel);
+        Task UpdateBillToAddress(UpdateAddressViewModel viewModel);
     }
 }

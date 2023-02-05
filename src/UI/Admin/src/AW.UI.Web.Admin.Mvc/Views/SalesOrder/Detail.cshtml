@@ -264,7 +264,7 @@
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5>Shipping address</h5>
-                            <a class="link" href="javascript:;">Edit</a>
+                            <a class="link" data-bs-toggle="modal" data-bs-target="#editShipToAddress" href="#">Edit</a>
                         </div>
 
                         <span class="d-block text-body">
@@ -282,7 +282,7 @@
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5>Billing address</h5>
-                            <a class="link" href="javascript:;">Edit</a>
+                            <a class="link" data-bs-toggle="modal" data-bs-target="#editBillToAddress" href="#">Edit</a>
                         </div>
 
                         <span class="d-block text-body">
@@ -331,8 +331,11 @@
 </div>
 <!-- End Modal -->
 
-<partial name="EditOrderlines" for="@Model.SalesOrder" />
-<partial name="EditOrderInfo" for="@Model.SalesOrder" />
+<partial name="Modals/EditOrderlines" for="@Model.SalesOrder" />
+<partial name="Modals/EditOrderInfo" for="@Model.SalesOrder" />
+<partial name="Modals/EditShipToAddress" for="@Model.SalesOrder" />
+<partial name="Modals/EditBillToAddress" for="@Model.SalesOrder" />
+
 
 @section Scripts {
     <script>
@@ -350,6 +353,26 @@
                         .replace("js-territory", this.value)
                     );
                 }
+            });
+
+            $('#SalesOrder_ShipToAddress_CountryRegionCode').change(function () {
+                var dropdown = $('#SalesOrder_ShipToAddress_StateProvinceCode');
+                getStatesProvinces(
+                    this.value, 
+                    dropdown, 
+                    "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                );
+            });
+
+            $('#SalesOrder_BillToAddress_CountryRegionCode').change(function () {
+                var dropdown = $('#SalesOrder_BillToAddress_StateProvinceCode');
+                getStatesProvinces(
+                    this.value,
+                    dropdown,
+                    "@Url.Action("GetStatesProvinces", new { country = "js-country" })"
+                        .replace("js-country", this.value)
+                );
             });
         });
 

@@ -20,13 +20,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Address, AddressViewModel>()
-                .ForMember(m => m.AddressLine2, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"));
-
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Address, AddressViewModel>()
-                .ForMember(m => m.AddressLine2, opt => opt.MapFrom(src =>
-                    !string.IsNullOrEmpty(src.AddressLine2) ? src.AddressLine2 : "-"));
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Address, AddressViewModel>();
+            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Address, AddressViewModel>();
+            profile.CreateMap<AddressViewModel, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Address>();
         }
     }
 }

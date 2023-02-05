@@ -36,4 +36,4 @@ bld/
 **/inf.dev*.yaml
 /src/Services/Product/productphotos
 /src/UI/Admin/src/AW.UI.Web.Admin.Mvc/wwwroot/node_modules/puppeteer/.local-chromium/win64-1022525/chrome-win
-/src/Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/appsettings.Development.json
+**/appsettings.Development.json

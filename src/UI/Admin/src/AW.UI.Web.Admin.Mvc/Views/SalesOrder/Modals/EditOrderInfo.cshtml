@@ -17,7 +17,6 @@
                 @using (Html.BeginForm("UpdateOrderInfo", "SalesOrder"))
                 {
                     @Html.HiddenFor(_ => _.SalesOrderNumber)
-                    ;
 
                     <div class="row mb-4">
                         @Html.LabelFor(m => m.RevisionNumber, new { @class = "col-sm-6 col-form-label form-label" })
@@ -34,18 +33,6 @@
                     <div class="row mb-4">
                         @Html.LabelFor(m => m.DueDate, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6">
-                            @*@Html.EditorFor(
-                                m => m.DueDate, 
-                                new 
-                                { 
-                                    htmlAttributes = new 
-                                    { 
-                                        @class = "js-flatpickr form-control flatpickr-custom",
-                                        placeholder = "Select due date",
-                                        value = @Model.DueDate,
-                                        data_hs_flatpickr_options = "{ 'dateFormat': 'd/m/Y' }"
-                                    }
-                                })*@
                             <input type="text" id="SalesOrder.DueDate" name="SalesOrder.DueDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select due date" value="@Model.DueDate"
                                data-hs-flatpickr-options='{
                                  "dateFormat": "d/m/Y"
@@ -93,7 +80,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end gap-sm-3">
-                        <button type="button" class="btn btn-white me-2 me-sm-0" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Update Order Info</button>
                     </div>
                 }
