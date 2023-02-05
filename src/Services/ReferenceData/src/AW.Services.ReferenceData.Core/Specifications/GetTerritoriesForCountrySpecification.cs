@@ -8,6 +8,8 @@ namespace AW.Services.ReferenceData.Core.Specifications
         {
             Query
                 .Where(p => p.CountryRegionCode == countryRegionCode);
+
+            Query.OrderBy(_ => _.Name);
         }
     }
 }

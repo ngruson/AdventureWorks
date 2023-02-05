@@ -6,6 +6,7 @@ using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
             Guard.Against.TerritoriesNull(territories, _logger);
 
             _logger.LogInformation("Returning territories");
-            return _mapper.Map<List<Territory>>(territories);
+            return _mapper.Map<List<Territory>>(territories).OrderBy(_ => _.Name).ToList();
         }
     }
 }

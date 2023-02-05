@@ -11,6 +11,8 @@ namespace AW.Services.ReferenceData.Core.Specifications
 
             Query
                 .Include(p => p.CountryRegion);
+
+            Query.OrderBy(_ => _.Name);
         }
     }
 }

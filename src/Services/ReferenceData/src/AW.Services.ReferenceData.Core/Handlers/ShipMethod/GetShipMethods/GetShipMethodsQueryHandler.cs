@@ -5,6 +5,7 @@ using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
             Guard.Against.ShipMethodsNull(shipMethods, _logger);
 
             _logger.LogInformation("Returning shipping methods");
-            return _mapper.Map<List<ShipMethod>>(shipMethods);
+            return _mapper.Map<List<ShipMethod>>(shipMethods).OrderBy(_ => _.Name).ToList();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace AW.Services.ReferenceData.Core.Specifications
 
         public GetAddressTypesNameSpecification()
         {
-            Query.Select(p => p.Name);
+            Query.Select(p => p.Name).OrderBy(_ => _.Name);
         }
     }
 }

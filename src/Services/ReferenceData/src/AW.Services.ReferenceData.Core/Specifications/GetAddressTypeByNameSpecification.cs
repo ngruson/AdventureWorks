@@ -9,6 +9,8 @@ namespace AW.Services.ReferenceData.Core.Specifications
         {
             Query
                 .Where(p => p.Name == name);
+
+            Query.OrderBy(_ => _.Name);
         }
     }
 }
