@@ -8,7 +8,7 @@
     <PackageReference Include="Ardalis.SmartEnum.EFCore" Version="2.1.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.1.0" />
     <PackageReference Include="Azure.Identity" Version="1.7.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
