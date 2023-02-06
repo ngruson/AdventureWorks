@@ -1,109 +1,26 @@
-using AW.Services.Basket.Core;
-using AW.Services.Basket.Core.Handlers.GetBasket;
-using AW.Services.Basket.Core.IntegrationEvents.Events;
+﻿using AW.Services.Basket.Core;
 using AW.Services.Basket.Infrastructure.Repositories;
 using AW.Services.Basket.REST.API.Services;
-using AW.Services.Infrastructure.EventBus;
 using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.Services.Infrastructure.EventBus.AzureServiceBus;
 using AW.Services.Infrastructure.EventBus.RabbitMQ;
+using AW.Services.Infrastructure.EventBus;
 using AW.Services.Infrastructure.Filters;
 using AW.SharedKernel.Api;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.OpenIdConnect;
-using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Identity.Web;
 using RabbitMQ.Client;
 using StackExchange.Redis;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using Microsoft.Identity.Web;
+using AW.Services.Basket.Core.Handlers.GetBasket;
 
 namespace AW.Services.Basket.REST.API
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services
-                .AddCustomMvc()
-                .AddVersioning()
-                .AddCustomAuthentication(Configuration)
-                .AddCustomSwagger()
-                .AddCustomIntegrations(Configuration)
-                .AddEventBus(Configuration)
-                .AddCustomHealthCheck(Configuration);
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
-        {
-            var virtualPath = "/basket-api";
-
-            app.Map(virtualPath, builder =>
-            {
-                if (env.IsDevelopment())
-                {
-                    builder.UseDeveloperExceptionPage();
-                }
-
-                builder.UseForwardedHeaders(new ForwardedHeadersOptions
-                {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
-
-                builder.UseCors("default");
-                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Basket API");
-                builder.UseRouting();
-                builder.UseAuthentication();
-                builder.UseAuthorization();
-                builder.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
-                    {
-                        Predicate = _ => true,
-                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                    });
-                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
-                    {
-                        Predicate = r => r.Name.Contains("self")
-                    });
-                });
-            });
-
-            ConfigureEventBus(app);
-        }
-
-        private static void ConfigureEventBus(IApplicationBuilder app)
-        {
-            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<OrderStartedIntegrationEvent, IIntegrationEventHandler<OrderStartedIntegrationEvent>>();
-        }
-    }
-
     public static class CustomExtensionMethods
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
@@ -150,7 +67,7 @@ namespace AW.Services.Basket.REST.API
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
-                        options.Authority = oidcConfig.Authority;
+                        options.Authority = oidcConfig?.Authority;
                         options.Audience = "basket-api";
                         options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
                     });
@@ -230,7 +147,7 @@ namespace AW.Services.Basket.REST.API
                     var serviceBusConnectionString = configuration["EventBusConnection"];
 
                     var subscriptionClientName = configuration["SubscriptionClientName"];
-                    return new DefaultServiceBusPersisterConnection(serviceBusConnectionString, subscriptionClientName);
+                    return new DefaultServiceBusPersisterConnection(serviceBusConnectionString!, subscriptionClientName!);
                 });
 
                 services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
@@ -245,7 +162,7 @@ namespace AW.Services.Basket.REST.API
                         serviceBusPersisterConnection,
                         logger,
                         eventBusSubcriptionsManager,
-                        topicName
+                        topicName!
                     );
                 });
             }
@@ -274,7 +191,7 @@ namespace AW.Services.Basket.REST.API
                     var retryCount = 5;
                     if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
                     {
-                        retryCount = int.Parse(configuration["EventBusRetryCount"]);
+                        retryCount = int.Parse(configuration["EventBusRetryCount"]!);
                     }
 
                     return new DefaultRabbitMQPersistentConnection(factory, logger, retryCount);
@@ -290,14 +207,15 @@ namespace AW.Services.Basket.REST.API
                     var retryCount = 5;
                     if (!string.IsNullOrEmpty(configuration["EventBusRetryCount"]))
                     {
-                        retryCount = int.Parse(configuration["EventBusRetryCount"]);
+                        retryCount = int.Parse(configuration["EventBusRetryCount"]!);
                     }
 
-                    return new EventBusRabbitMQ(sp.GetService<IServiceScopeFactory>(),
+                    return new EventBusRabbitMQ(sp.GetRequiredService<IServiceScopeFactory>(),
                         rabbitMQPersistentConnection,
                         logger,
                         eventBusSubcriptionsManager,
-                        queueName, retryCount
+                        queueName!, 
+                        retryCount
                     );
                 });
             }
@@ -323,7 +241,7 @@ namespace AW.Services.Basket.REST.API
             {
                 hcBuilder
                     .AddAzureServiceBusTopic(
-                        configuration["EventBusConnection"],
+                        configuration["EventBusConnection"]!,
                         topicName: "event_bus",
                         name: "basket-servicebus-check",
                         tags: new string[] { "servicebus" });
@@ -338,9 +256,9 @@ namespace AW.Services.Basket.REST.API
             }
 
             if (configuration["AuthN:IdP"] == "IdSrv")
-                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]!));
 
-            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]!);
 
             return services;
         }
