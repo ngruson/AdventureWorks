@@ -7,10 +7,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -22,11 +18,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomersExists_ReturnCustomers(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomersQueryHandler sut,
-            List<Entities.IndividualCustomer> customers,
+            List<Entities.Customer> customers,
             GetCustomersQuery query
         )
         {
             // Arrange
+            customerRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetCustomersPaginatedSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(customers);
+
             customerRepoMock.Setup(x => x.CountAsync(
                 It.IsAny<CountCustomersSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -46,7 +48,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<ISpecification<Entities.Customer>>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.TotalCustomers.Should().Be(customers.Count);
+            result!.TotalCustomers.Should().Be(customers.Count);
         }
 
         [Theory]
@@ -62,7 +64,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetCustomersPaginatedSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((List<Entities.Customer>)null);
+            .ReturnsAsync(new List<Entities.Customer>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

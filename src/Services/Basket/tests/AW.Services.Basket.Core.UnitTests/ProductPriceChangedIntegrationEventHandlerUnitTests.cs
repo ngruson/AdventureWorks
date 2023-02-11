@@ -5,8 +5,6 @@ using AW.Services.Basket.Core.Models;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Basket.Core.UnitTests
@@ -158,7 +156,7 @@ namespace AW.Services.Basket.Core.UnitTests
                 .Returns(new string[] { user1 });
 
             mockBasketRepository.Setup(_ => _.GetBasketAsync(It.Is<string>(_ => _ == user1)))
-                .ReturnsAsync((CustomerBasket)null);
+                .ReturnsAsync((CustomerBasket?)null);
 
             //Act
             await sut.Handle(productPriceChangedEvent);

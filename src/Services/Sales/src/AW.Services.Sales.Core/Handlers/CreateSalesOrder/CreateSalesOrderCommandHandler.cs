@@ -51,33 +51,33 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
             _logger.LogInformation("----- Creating OrderStarted domain event");
             // Add Integration event to clean the basket
-            var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserId);
+            var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(request.UserId!);
             await _salesOrderIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
 
-            var customer = await GetCustomer(request.CustomerNumber);
+            var customer = await GetCustomer(request.CustomerNumber!);
             var creditCard = await GetCreditCard(
-                request.CardType,
-                request.CardNumber,
+                request.CardType!,
+                request.CardNumber!,
                 request.CardExpiration
             );
 
             var billToAddress = _mapper.Map<Address>(request.BillToAddress);
             var shipToAddress = _mapper.Map<Address>(request.ShipToAddress);
 
-            var salesOrder = new SalesOrder(request.UserId, request.UserName, request.AccountNumber, customer, request.ShipMethod, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber, request.CardHolderName);
+            var salesOrder = new SalesOrder(request.UserId!, request.UserName!, request.AccountNumber, customer, request.ShipMethod!, billToAddress, shipToAddress, creditCard, request.CardSecurityNumber!, request.CardHolderName!);
 
-            foreach (var item in request.OrderItems)
+            foreach (var item in request.OrderItems!)
             {
                 var specialOffers = await _specialOfferProductRepository
                     .ListAsync(
-                        new GetSpecialOfferProductSpecification(item.ProductNumber),
+                        new GetSpecialOfferProductSpecification(item.ProductNumber!),
                         cancellationToken
                     );
-                var specialOfferProduct = specialOffers.SingleOrDefault(_ => _.SpecialOffer.Type == "No Discount");
+                var specialOfferProduct = specialOffers.SingleOrDefault(_ => _?.SpecialOffer?.Type == "No Discount");
 
-                Guard.Against.SpecialOfferProductNull(specialOfferProduct, item.ProductNumber, _logger);
+                Guard.Against.SpecialOfferProductNull(specialOfferProduct, item.ProductNumber!, _logger);
 
-                salesOrder.AddOrderLine(item.ProductNumber, item.ProductName, item.UnitPrice, item.UnitPriceDiscount, specialOfferProduct, item.OrderQty);
+                salesOrder.AddOrderLine(item.ProductNumber!, item.ProductName!, item.UnitPrice, item.UnitPriceDiscount, specialOfferProduct!, item.OrderQty);
             }
 
             _logger.LogInformation("----- Saving sales order to database - Sales Order: {@SalesOrder}", salesOrder);
@@ -97,7 +97,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
             Guard.Against.CustomerNull(customer, customerNumber, _logger);
 
-            return customer;
+            return customer!;
         }
 
         private async Task<CreditCard> GetCreditCard(

@@ -7,10 +7,6 @@
 
         public static OrderProcessAction Ship { get; private set; }
 
-        protected OrderProcessAction()
-        {
-        }
-
         static OrderProcessAction()
         {
             Ship = new(nameof(Ship).ToLowerInvariant(), "Ship");

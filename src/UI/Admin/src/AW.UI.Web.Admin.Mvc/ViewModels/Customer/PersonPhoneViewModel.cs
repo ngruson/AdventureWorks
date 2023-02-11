@@ -9,11 +9,11 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         [Display(Name = "Phone number type")]
         [Required]
-        public string PhoneNumberType { get; set; }
+        public string? PhoneNumberType { get; set; }
 
         [Display(Name = "Phone number")]
         [Required]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public void Mapping(Profile profile)
         {

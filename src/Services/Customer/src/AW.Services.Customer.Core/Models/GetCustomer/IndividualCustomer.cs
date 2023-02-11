@@ -6,7 +6,7 @@ namespace AW.Services.Customer.Core.Models.GetCustomer
 {
     public class IndividualCustomer : Customer, IMapFrom<IndividualCustomerDto>
     {
-        public PersonDto Person { get; set; }
+        public PersonDto? Person { get; set; }
 
         public void Mapping(Profile profile)
         {

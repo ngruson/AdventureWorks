@@ -61,8 +61,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
                 //Assert
                 response.Should().NotBeNull();
-                response.TotalProducts.Should().Be(list.Count);
-                response.Products.Should().BeEquivalentTo(list);
+                response?.TotalProducts.Should().Be(list.Count);
+                response?.Products.Should().BeEquivalentTo(list);
             }
 
             [Theory, MockHttpData]

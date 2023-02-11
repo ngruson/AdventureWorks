@@ -6,6 +6,6 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer
     {
         public CustomerType CustomerType { get; set; }
         public string? Territory { get; set; }
-        public List<CustomerAddress>? Addresses { get; set; }
+        public List<CustomerAddress?>? Addresses { get; set; }
     }
 }

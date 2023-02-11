@@ -6,8 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -74,7 +72,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Entities.SalesOrder)null);
+            .ReturnsAsync((Core.Entities.SalesOrder?)null);
 
             //Act
             var result = await sut.TestValidateAsync(query);

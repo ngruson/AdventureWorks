@@ -2,11 +2,21 @@
 {
     public class PaginationInfoViewModel
     {
-        public int TotalItems { get; set; }
-        public int ItemsPerPage { get; set; }
-        public int ActualPage { get; set; }
-        public int TotalPages { get; set; }
-        public string Previous { get; set; }
-        public string Next { get; set; }
+        public PaginationInfoViewModel(int totalItems, int itemsPerPage, int actualPage, int totalPages, string previous, string next)
+        {
+            TotalItems = totalItems;
+            ItemsPerPage = itemsPerPage;
+            ActualPage = actualPage;
+            TotalPages = totalPages;
+            Previous = previous;
+            Next = next;
+        }
+
+        public int TotalItems { get; private init; }
+        public int ItemsPerPage { get; private init; }
+        public int ActualPage { get; private init; }
+        public int TotalPages { get; private init; }
+        public string Previous { get; private init; }
+        public string Next { get; private init; }
     }
 }

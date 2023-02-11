@@ -30,14 +30,14 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await sut.GetTerritories(dto[0].CountryRegionCode);
+            var actionResult = await sut.GetTerritories(dto[0].CountryRegionCode!);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var territories = okObjectResult.Value as List<Territory>;
-            territories.Count.Should().Be(dto.Count);
+            var territories = okObjectResult?.Value as List<Territory>;
+            territories?.Count.Should().Be(dto.Count);
         }
     }
 }

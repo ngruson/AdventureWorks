@@ -9,10 +9,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
         public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
 
         [Display(Name = "Customer number")]
-        public string CustomerNumber { get; set; }
+        public string? CustomerNumber { get; set; }
 
         [Display(Name = "Customer name")]
-        public string CustomerName { get; set;  }
+        public string? CustomerName { get; set;  }
         public int SalesOrderCount { get; set; }
 
         public void Mapping(Profile profile)

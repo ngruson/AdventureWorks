@@ -11,11 +11,6 @@ using AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DuplicateSalesOrder;
 using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DeleteSalesOrder;
 
@@ -51,19 +46,23 @@ namespace AW.UI.Web.Admin.Mvc.Services
                 )
             );
 
-            var vm = new SalesOrderIndexViewModel
-            {
-                SalesOrders = _mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
-                Territories = await GetTerritories(),
-                CustomerTypes = GetCustomerTypes(),
-                PaginationInfo = new PaginationInfoViewModel()
-                {
-                    ActualPage = pageIndex,
-                    ItemsPerPage = response.SalesOrders.Count,
-                    TotalItems = response.TotalSalesOrders,
-                    TotalPages = int.Parse(Math.Ceiling((decimal)response.TotalSalesOrders / pageSize).ToString())
-                }
-            };
+            var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalSalesOrders / pageSize).ToString());
+
+            var vm = new SalesOrderIndexViewModel(
+                _mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
+                await GetTerritories(),
+                GetCustomerTypes(),
+                territory,
+                string.Empty,
+                new PaginationInfoViewModel(
+                    response.TotalSalesOrders,
+                    response.SalesOrders!.Count,
+                    pageIndex,
+                    totalPages,
+                    pageIndex == 0 ? "disabled" : "",
+                    pageIndex == totalPages - 1 ? "disabled" : ""
+                )
+            );
 
             vm.PaginationInfo.Next = vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1 ? "disabled" : "";
             vm.PaginationInfo.Previous = vm.PaginationInfo.ActualPage == 0 ? "disabled" : "";
@@ -71,7 +70,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
-        private async Task<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string salesOrderNumber)
+        private async Task<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string? salesOrderNumber)
         {
             _logger.LogInformation("Getting sales order for {SalesOrderNumber}", salesOrderNumber);
             var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
@@ -161,7 +160,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(viewModel.Territory));
-            var salesPerson = salesPersons.SingleOrDefault(_ => _.Name.FullName == viewModel.SalesPerson);
+            var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesPerson);
 
             salesOrderToUpdate.Territory = viewModel.Territory;
             salesOrderToUpdate.SalesPerson = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
@@ -192,17 +191,17 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateOrderlines(UpdateOrderlinesViewModel viewModel)
         {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
-            foreach (var updatedOrderLine in viewModel.SalesOrder.OrderLines)
+            foreach (var updatedOrderLine in viewModel.SalesOrder?.OrderLines!)
             {
-                var orderLine = salesOrderToUpdate.OrderLines.SingleOrDefault(_ => _.ProductNumber == updatedOrderLine.ProductNumber);
+                var orderLine = salesOrderToUpdate.OrderLines?.SingleOrDefault(_ => _.ProductNumber == updatedOrderLine.ProductNumber);
                 Guard.Against.Null(orderLine);
 
-                orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty);
+                orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty!);
             }
 
             await UpdateSalesOrder(salesOrderToUpdate);
@@ -210,13 +209,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateOrderInfo(UpdateOrderInfoViewModel viewModel)
         {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+            var salesOrder = await GetSalesOrder(viewModel?.SalesOrder?.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
-            salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel.SalesOrder.RevisionNumber);
-            salesOrderToUpdate.OnlineOrderFlag = viewModel.SalesOrder.OnlineOrderFlag;
+            salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel?.SalesOrder?.RevisionNumber!);
+            salesOrderToUpdate.OnlineOrderFlag = viewModel!.SalesOrder!.OnlineOrderFlag;
             salesOrderToUpdate.DueDate = viewModel.SalesOrder.DueDate;
             salesOrderToUpdate.ShipDate = viewModel.SalesOrder.ShipDate;
             salesOrderToUpdate.PurchaseOrderNumber = viewModel.SalesOrder.PurchaseOrderNumber;
@@ -227,12 +226,12 @@ namespace AW.UI.Web.Admin.Mvc.Services
             if (!string.IsNullOrEmpty(viewModel.SalesOrder.SalesPerson))
             {
                 var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(salesOrderToUpdate.Territory));
-                var salesPerson = salesPersons.SingleOrDefault(_ => _.Name.FullName == viewModel.SalesOrder.SalesPerson);
+                var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesOrder.SalesPerson);
                 Guard.Against.Null(salesPerson, _logger, nameof(salesPerson));
 
                 salesOrderToUpdate.SalesPerson = new SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
                 {
-                    Name = salesPerson.Name
+                    Name = salesPerson?.Name
                 };
             }
 
@@ -241,24 +240,24 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateShipToAddress(UpdateAddressViewModel viewModel)
         {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
-            _mapper.Map(viewModel.SalesOrder.ShipToAddress, salesOrderToUpdate.ShipToAddress);
+            _mapper.Map(viewModel.SalesOrder?.ShipToAddress, salesOrderToUpdate.ShipToAddress);
 
             await UpdateSalesOrder(salesOrderToUpdate);
         }
 
         public async Task UpdateBillToAddress(UpdateAddressViewModel viewModel)
         {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder.SalesOrderNumber);
+            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
             var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
-            _mapper.Map(viewModel.SalesOrder.BillToAddress, salesOrderToUpdate.BillToAddress);
+            _mapper.Map(viewModel.SalesOrder?.BillToAddress, salesOrderToUpdate.BillToAddress);
 
             await UpdateSalesOrder(salesOrderToUpdate);
         }

@@ -7,9 +7,6 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -49,7 +46,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Entities.SalesOrder)null);
+            .ReturnsAsync((Core.Entities.SalesOrder?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

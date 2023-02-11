@@ -57,7 +57,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.IndividualCustomer)null);
+            .ReturnsAsync((Entities.IndividualCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

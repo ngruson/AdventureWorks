@@ -4,11 +4,6 @@ using AW.SharedKernel.UnitTests.Validators;
 using AW.SharedKernel.Validation;
 using FluentAssertions;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.SharedKernel.UnitTests
@@ -17,7 +12,8 @@ namespace AW.SharedKernel.UnitTests
     {
         [Theory, AutoMoqData]
         public async Task Handle_ValidValidator_ReturnsResponse(
-            Customer customer
+            Customer customer,
+            string customerNumber
         )
         {
             //Arrange
@@ -31,7 +27,7 @@ namespace AW.SharedKernel.UnitTests
             //Act
             
             var result = await sut.Handle(
-                new GetCustomerQuery { CustomerNumber = "1" },                
+                new GetCustomerQuery(customerNumber),
                 () => Task.FromResult(customer),
                 CancellationToken.None
             );
@@ -54,7 +50,7 @@ namespace AW.SharedKernel.UnitTests
             //Act
             Func<Task> func = async () => 
                 await sut.Handle(
-                    new GetCustomerQuery(),                    
+                    new GetCustomerQuery(string.Empty),
                     () => Task.FromResult(new Customer()),
                     CancellationToken.None
                 );

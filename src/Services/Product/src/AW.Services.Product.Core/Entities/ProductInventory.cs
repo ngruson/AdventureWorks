@@ -8,7 +8,7 @@ namespace AW.Services.Product.Core.Entities
 
         public short LocationID { get; set; }
 
-        public string Shelf { get; private set; }
+        public string? Shelf { get; private set; }
 
         public byte Bin { get; private set; }
 
@@ -18,6 +18,6 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime ModifiedDate { get; private set; }
 
-        public virtual Location Location { get; private set; }
+        public virtual Location? Location { get; private set; }
     }
 }

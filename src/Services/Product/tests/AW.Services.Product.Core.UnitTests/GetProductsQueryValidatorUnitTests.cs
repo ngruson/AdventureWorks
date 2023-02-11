@@ -11,11 +11,12 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_ValidAscOrderBy_NoValidationError(
             GetProductsQueryValidator sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
-            query.OrderBy = "asc(name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name)");
             
             //Act
             var result = sut.TestValidate(query);
@@ -27,11 +28,12 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_ValidDescOrderBy_NoValidationError(
             GetProductsQueryValidator sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
-            query.OrderBy = "desc(name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "desc(name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -43,11 +45,12 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_InvalidDirectionOrderBy_ValidationError(
             GetProductsQueryValidator sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
-            query.OrderBy = "fail(name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "fail(name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -60,11 +63,12 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_NoOpeningBracketOrderBy_ValidationError(
             GetProductsQueryValidator sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
-            query.OrderBy = "asc_name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "asc_name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -77,11 +81,12 @@ namespace AW.Services.Product.Core.UnitTests
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_NoClosingBracketOrderBy_ValidationError(
             GetProductsQueryValidator sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
-            query.OrderBy = "asc(name";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name");
 
             //Act
             var result = sut.TestValidate(query);

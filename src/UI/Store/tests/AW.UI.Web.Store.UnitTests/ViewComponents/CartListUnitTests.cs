@@ -7,8 +7,6 @@ using AW.UI.Web.Store.ViewModels.Cart;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Store.UnitTests.ViewComponents
@@ -32,7 +30,7 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
 
             //Assert
             var viewResult = result.Should().BeAssignableTo<ViewViewComponentResult>().Subject;
-            var viewModel = viewResult.ViewData.Model.Should().Be(basket);
+            var viewModel = viewResult?.ViewData?.Model.Should().Be(basket);
         }
 
         [Theory, AutoMoqData]
@@ -51,8 +49,8 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
 
             //Assert
             var viewResult = result.Should().BeAssignableTo<ViewViewComponentResult>().Subject;
-            var viewModel = viewResult.ViewData.Model.Should().BeOfType<Basket>();
-            var msg = viewResult.ViewData["BasketInoperativeMsg"].Should().BeAssignableTo<string>().Subject;
+            var viewModel = viewResult?.ViewData?.Model.Should().BeOfType<Basket>();
+            var msg = viewResult?.ViewData?["BasketInoperativeMsg"].Should().BeAssignableTo<string>().Subject;
             msg.Should().Match(_ => _.StartsWith("Basket Service is inoperative"));
         }
     }

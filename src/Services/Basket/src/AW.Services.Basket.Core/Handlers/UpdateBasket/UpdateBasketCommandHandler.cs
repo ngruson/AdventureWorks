@@ -20,7 +20,7 @@ namespace AW.Services.Basket.Core.Handlers.UpdateBasket
             var basket = await repository.UpdateBasketAsync(request.Basket);
 
             logger.LogInformation("Returning basket");
-            return basket;
+            return basket!;
         }
     }
 }

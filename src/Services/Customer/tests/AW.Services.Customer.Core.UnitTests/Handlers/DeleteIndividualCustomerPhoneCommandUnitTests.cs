@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -27,8 +24,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             //Arrange
             person.AddPhoneNumber(
                 new Entities.PersonPhone(
-                    command.Phone.PhoneNumberType,
-                    command.Phone.PhoneNumber
+                    command.Phone.PhoneNumberType!,
+                    command.Phone.PhoneNumber!
                 )
             );
 
@@ -62,7 +59,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.IndividualCustomer)null);
+            .ReturnsAsync((Entities.IndividualCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

@@ -17,8 +17,8 @@ namespace AW.Services.Customer.Core.Entities
         }
 
         public override CustomerType CustomerType => CustomerType.Store;
-        public string Name { get; private set; }
-        public string SalesPerson { get; private set; }
+        public string? Name { get; private set; }
+        public string? SalesPerson { get; private set; }
 
         public List<StoreCustomerContact> Contacts { get; internal set; } = new();
 

@@ -5,12 +5,10 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {
-    public class GetSalesOrderQueryHandler : IRequestHandler<GetSalesOrderQuery, SalesOrderDto>
+    public class GetSalesOrderQueryHandler : IRequestHandler<GetSalesOrderQuery, SalesOrderDto?>
     {
         private readonly ILogger<GetSalesOrderQueryHandler> _logger;
         private readonly IRepository<Entities.SalesOrder> _repository;
@@ -21,7 +19,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
             IRepository<Entities.SalesOrder> repository, IMapper mapper) =>
             (_logger, _repository, _mapper) = (logger, repository, mapper);
 
-        public async Task<SalesOrderDto> Handle(GetSalesOrderQuery request, CancellationToken cancellationToken)
+        public async Task<SalesOrderDto?> Handle(GetSalesOrderQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
 

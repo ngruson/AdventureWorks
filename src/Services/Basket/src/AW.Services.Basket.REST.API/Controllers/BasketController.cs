@@ -6,10 +6,7 @@ using AW.Services.Basket.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace AW.Services.Basket.REST.API.Controllers
 {
@@ -31,7 +28,7 @@ namespace AW.Services.Basket.REST.API.Controllers
         public async Task<IActionResult> GetBasketByIdAsync(string id)
         {
             logger.LogInformation("Sending GetBasket query for {UserId}", id);
-            var basket = await mediator.Send(new GetBasketQuery { Id = id });
+            var basket = await mediator.Send(new GetBasketQuery(id));
 
             logger.LogInformation("Returning HTTP 200 (OK) with basket");
             return Ok(basket ?? new CustomerBasket(id));
@@ -42,7 +39,7 @@ namespace AW.Services.Basket.REST.API.Controllers
         public async Task<IActionResult> UpdateBasketAsync([FromBody] CustomerBasket value)
         {
             logger.LogInformation("Sending UpdateBasket command for {UserId}", value.BuyerId);
-            var basket = await mediator.Send(new UpdateBasketCommand { Basket = value });
+            var basket = await mediator.Send(new UpdateBasketCommand(value));
 
             logger.LogInformation("Returning HTTP 200 (OK) with basket");
             return Ok(basket);
@@ -59,10 +56,9 @@ namespace AW.Services.Basket.REST.API.Controllers
 
             logger.LogInformation("Sending Checkout command for {UserId}", basketCheckout.Buyer);
             var basket = await mediator.Send(
-                new CheckoutCommand 
-                {
-                    BasketCheckout = basketCheckout 
-                }
+                new CheckoutCommand(
+                    basketCheckout                
+                )
             );
 
             if (basket == null)
@@ -80,7 +76,7 @@ namespace AW.Services.Basket.REST.API.Controllers
         public async Task DeleteBasketByIdAsync(string id)
         {
             logger.LogInformation("Deleting basket for {UserId}", id);
-            await mediator.Send(new DeleteBasketCommand { Id = id });
+            await mediator.Send(new DeleteBasketCommand(id));
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Store.ViewModels;
 using AW.UI.Web.Store.ViewModels.Cart;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MediatR;
@@ -34,7 +29,7 @@ namespace AW.UI.Web.Store.Services
         ) => 
             (_logger, _mediator, _mapper) = (logger, mediator, mapper);
 
-        public async Task<T> GetBasketAsync<T>(string userID)
+        public async Task<T> GetBasketAsync<T>(string? userID)
         {
             _logger.LogInformation("GetBasket called");
             var dto = await _mediator.Send(new GetBasketQuery(userID));
@@ -43,7 +38,7 @@ namespace AW.UI.Web.Store.Services
             return response;
         }
 
-        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket> AddBasketItemAsync(ApplicationUser user, string productNumber, int quantity)
+        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket> AddBasketItemAsync(ApplicationUser user, string? productNumber, int quantity)
         {
             _logger.LogInformation("Getting product for {ProductNumber}", productNumber);
             var product = await _mediator.Send(new GetProductQuery(productNumber));
@@ -52,7 +47,7 @@ namespace AW.UI.Web.Store.Services
             _logger.LogInformation("Getting basket for {UserId}", user.Id);
             var currentBasket = (await _mediator.Send(new GetBasketQuery(user.Id))) ?? new SharedKernel.Basket.Handlers.GetBasket.Basket { BuyerId = user.Id };
 
-            var basketItem = currentBasket.Items.SingleOrDefault(i => i.ProductNumber == product.ProductNumber);
+            var basketItem = currentBasket.Items.SingleOrDefault(i => i.ProductNumber == product?.ProductNumber);
             if (basketItem != null)
             {
                 _logger.LogInformation("Updating basket item with {Quantity}", quantity);
@@ -62,7 +57,7 @@ namespace AW.UI.Web.Store.Services
             {
                 basketItem = new SharedKernel.Basket.Handlers.GetBasket.BasketItem
                 {
-                    UnitPrice = product.ListPrice,
+                    UnitPrice = product!.ListPrice,
                     ThumbnailPhoto = product.ThumbnailPhoto,
                     ProductNumber = product.ProductNumber,
                     ProductName = product.Name,
@@ -91,10 +86,10 @@ namespace AW.UI.Web.Store.Services
 
             currentBasket.Items.ForEach(item => 
                 {
-                    if (quantities.ContainsKey(item.Id))
+                    if (quantities.ContainsKey(item.Id!))
                     {
                         _logger.LogInformation("Updating quantity for {BasketItemId}", item.Id);
-                        item.Quantity = quantities[item.Id];
+                        item.Quantity = quantities[item.Id!];
                     }
                 });
 
@@ -152,7 +147,7 @@ namespace AW.UI.Web.Store.Services
             {
                 _logger.LogInformation("Setting shipping address");
                 vm.Basket.ShipToAddress = _mapper.Map<ViewModels.Cart.Address>(address);
-                vm.StatesProvinces_Shipping = await GetStatesProvincesAsync(address.CountryRegionCode);
+                vm.StatesProvinces_Shipping = await GetStatesProvincesAsync(address?.CountryRegionCode);
             }
             else
                 vm.StatesProvinces_Shipping = await GetStatesProvincesAsync();
@@ -175,7 +170,7 @@ namespace AW.UI.Web.Store.Services
             return items;
         }
 
-        private async Task<List<SelectListItem>> GetStatesProvincesAsync(string countryRegionCode = null)
+        private async Task<List<SelectListItem>> GetStatesProvincesAsync(string? countryRegionCode = null)
         {
             var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(countryRegionCode));
 

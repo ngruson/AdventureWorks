@@ -1,8 +1,6 @@
 ﻿using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.Models;
-using System;
-using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.IntegrationEvents.Events
 {
@@ -10,8 +8,8 @@ namespace AW.Services.Sales.Core.IntegrationEvents.Events
     {
         public string UserId { get; }
         public string UserName { get; }
-        public string CustomerNumber { get; set; }
-        public string ShipMethod { get; set; }
+        public string? CustomerNumber { get; set; }
+        public string? ShipMethod { get; set; }
         public Address BillToAddress { get; set; }
         public Address ShipToAddress { get; set; }
         public string CardNumber { get; set; }

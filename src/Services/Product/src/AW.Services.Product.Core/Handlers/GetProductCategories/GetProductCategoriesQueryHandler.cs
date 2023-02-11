@@ -33,7 +33,6 @@ namespace AW.Services.Product.Core.Handlers.GetProductCategories
                 new GetProductCategoriesSpecification(),
                 cancellationToken
             );
-
             Guard.Against.ProductCategoriesNull(categories, _logger);
 
             _logger.LogInformation("Returning product categories");

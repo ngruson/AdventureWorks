@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers
 {
-    public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersResponse>
+    public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersResponse?>
     {
         private readonly ILogger<GetCustomersQueryHandler> _logger;
         private readonly ICustomerApiClient _client;
@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers
             _client = client;
         }
 
-        public async Task<GetCustomersResponse> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<GetCustomersResponse?> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting customers from API with {@Query}", request);
             var customers = await _client.GetCustomersAsync(

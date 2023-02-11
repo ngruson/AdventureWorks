@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket
 {
-    public class UpdateBasketCommandHandler : IRequestHandler<UpdateBasketCommand, Basket>
+    public class UpdateBasketCommandHandler : IRequestHandler<UpdateBasketCommand, Basket?>
     {
         private readonly ILogger<UpdateBasketCommandHandler> _logger;
         private readonly IBasketApiClient _client;
@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket
             _client = client;
         }
 
-        public async Task<Basket> Handle(UpdateBasketCommand request, CancellationToken cancellationToken)
+        public async Task<Basket?> Handle(UpdateBasketCommand request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request.Basket, _logger);
 

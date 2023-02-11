@@ -112,7 +112,7 @@ namespace AW.UI.Web.Store.Controllers
                     var user = appUserParser.Parse(HttpContext.User);
                     await basketService.Checkout(
                         mapper.Map<SharedKernel.Basket.Handlers.Checkout.BasketCheckout>(model.Basket), 
-                        user.CustomerNumber
+                        user.CustomerNumber!
                     );
 
                     //Redirect to historic list.

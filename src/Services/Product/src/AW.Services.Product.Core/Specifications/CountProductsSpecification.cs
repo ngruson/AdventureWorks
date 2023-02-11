@@ -8,8 +8,8 @@ namespace AW.Services.Product.Core.Specifications
         {
             Query
                 .Where(c =>
-                    (string.IsNullOrEmpty(category) || c.ProductSubcategory.ProductCategory.Name == category) &&
-                    (string.IsNullOrEmpty(subcategory) || c.ProductSubcategory.Name == subcategory)
+                    (string.IsNullOrEmpty(category) || c.ProductSubcategory!.ProductCategory!.Name == category) &&
+                    (string.IsNullOrEmpty(subcategory) || c.ProductSubcategory!.Name == subcategory)
                 );
         }
     }

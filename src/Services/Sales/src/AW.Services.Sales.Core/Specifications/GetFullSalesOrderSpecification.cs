@@ -7,14 +7,14 @@ namespace AW.Services.Sales.Core.Specifications
         public GetFullSalesOrderSpecification(string salesOrderNumber) : base()
         {
             Query.Include(_ => _.Customer);
-            Query.Include(_ => _.Customer.SalesOrders);
+            Query.Include(_ => _.Customer!.SalesOrders);
             Query.Include("Customer.Person");
             Query.Include(_ => _.CreditCard);
             Query.Include(_ => _.BillToAddress);
             Query.Include(_ => _.ShipToAddress);
             Query.Include(_ => _.OrderLines)
                 .ThenInclude(_ => _.SpecialOfferProduct)
-                    .ThenInclude(_ => _.SpecialOffer);
+                    .ThenInclude(_ => _!.SpecialOffer);
             Query.Include(_ => _.SalesPerson);
             Query.Include(_ => _.SalesReasons)
                 .ThenInclude(_ => _.SalesReason);

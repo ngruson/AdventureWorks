@@ -51,7 +51,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                         It.IsAny<Guid>(),
                         It.IsAny<CancellationToken>()
                     ))
-                    .ReturnsAsync((ClientRequest)null);
+                    .ReturnsAsync((ClientRequest?)null);
 
                 //Act
                 var result = await sut.ExistAsync(id);
@@ -81,7 +81,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                         It.IsAny<Guid>(),
                         It.IsAny<CancellationToken>()
                     ))
-                    .ReturnsAsync((ClientRequest)null);
+                    .ReturnsAsync((ClientRequest?)null);
 
                 //Act
                 await sut.CreateRequestForCommandAsync<CreateSalesOrderCommand>(id);

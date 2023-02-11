@@ -1,9 +1,6 @@
 ﻿using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using FluentValidation;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 {
@@ -25,39 +22,39 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             RuleFor(cmd => cmd.CustomerAddress)
                 .NotNull().WithMessage("Customer address is required");
 
-            RuleFor(cmd => cmd.CustomerAddress.AddressType)
+            RuleFor(cmd => cmd.CustomerAddress!.AddressType)
                 .NotEmpty().WithMessage("Address type is required")
                 .When(cmd => cmd.CustomerAddress != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address)
+            RuleFor(cmd => cmd.CustomerAddress!.Address)
                 .NotNull().WithMessage("Address is required")
                 .When(cmd => cmd.CustomerAddress != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.AddressLine1)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.AddressLine1)
                 .NotEmpty().WithMessage("Address line 1 is required")
                 .MaximumLength(60).WithMessage("Address line 1 must not exceed 60 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.AddressLine2)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.AddressLine2)
                 .MaximumLength(60).WithMessage("Address line 2 must not exceed 60 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.PostalCode)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.PostalCode)
                 .NotEmpty().WithMessage("Postal code is required")
                 .MaximumLength(15).WithMessage("Postal code must not exceed 15 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.City)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.City)
                 .NotEmpty().WithMessage("City is required")
                 .MaximumLength(30).WithMessage("City must not exceed 30 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.StateProvinceCode)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.StateProvinceCode)
                 .NotEmpty().WithMessage("State/province is required")
                 .MaximumLength(3).WithMessage("State/province must not exceed 3 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
 
-            RuleFor(cmd => cmd.CustomerAddress.Address.CountryRegionCode)
+            RuleFor(cmd => cmd.CustomerAddress!.Address!.CountryRegionCode)
                 .NotEmpty().WithMessage("Country is required")
                 .MaximumLength(3).WithMessage("Country must not exceed 3 characters")
                 .When(cmd => cmd.CustomerAddress != null && cmd.CustomerAddress.Address != null);
@@ -78,13 +75,13 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
                 return true;
 
             var address = customer.Addresses.FirstOrDefault(a =>
-                a.AddressType == command.CustomerAddress.AddressType &&
-                a.Address.AddressLine1 == command.CustomerAddress.Address.AddressLine1 &&
-                a.Address.AddressLine2 == command.CustomerAddress.Address.AddressLine2 &&
-                a.Address.PostalCode == command.CustomerAddress.Address.PostalCode &&
-                a.Address.City == command.CustomerAddress.Address.City &&
-                a.Address.StateProvinceCode == command.CustomerAddress.Address.StateProvinceCode &&
-                a.Address.CountryRegionCode == command.CustomerAddress.Address.CountryRegionCode
+                a.AddressType == command.CustomerAddress?.AddressType &&
+                a.Address?.AddressLine1 == command.CustomerAddress?.Address?.AddressLine1 &&
+                a.Address?.AddressLine2 == command.CustomerAddress?.Address?.AddressLine2 &&
+                a.Address?.PostalCode == command.CustomerAddress?.Address?.PostalCode &&
+                a.Address?.City == command.CustomerAddress?.Address?.City &&
+                a.Address?.StateProvinceCode == command.CustomerAddress?.Address?.StateProvinceCode &&
+                a.Address?.CountryRegionCode == command.CustomerAddress?.Address?.CountryRegionCode
             );
 
             return address == null;

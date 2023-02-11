@@ -7,7 +7,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Threading.Tasks;
 using Xunit;
 using AW.UI.Web.Admin.Mvc.Services;
 
@@ -42,7 +41,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
                 //Act
                 var actionResult = await sut.Index(
-                    0, null, null
+                    0, string.Empty, string.Empty
                 );
 
                 //Assert

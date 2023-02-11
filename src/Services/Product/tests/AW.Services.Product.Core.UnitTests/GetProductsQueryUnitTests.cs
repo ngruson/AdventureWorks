@@ -1,16 +1,13 @@
 using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.Product.Core.AutoMapper;
+using AW.Services.Product.Core.Exceptions;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Core.UnitTests
@@ -22,7 +19,8 @@ namespace AW.Services.Product.Core.UnitTests
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             // Arrange
@@ -32,7 +30,7 @@ namespace AW.Services.Product.Core.UnitTests
             ))
             .ReturnsAsync(products);
 
-            query.OrderBy = null;
+            var query = new GetProductsQuery(0, 10, category, subcategory, "");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -44,35 +42,43 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Products.Count; i++)
+            for (int i = 0; i < result.Products!.Count; i++)
             {
                 result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
             }
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public void Handle_NoProductsExists_ThrowArgumentNullException(
+        public async Task Handle_NoProductsExists_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             // Arrange
-            query.OrderBy = "";
+            var query = new GetProductsQuery(
+                0,
+                10,
+                category,
+                subcategory,
+                ""
+            );
 
             productRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetProductsPaginatedSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((List<Entities.Product>)null);
+            .ReturnsAsync(new List<Entities.Product>());
 
             //Act
             Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            func.Should().ThrowAsync<ArgumentNullException>();
+            await func.Should().ThrowAsync<ProductsNotFoundException>()
+                .WithMessage("Products not found");
             productRepoMock.Verify(x => x.ListAsync(
-                It.IsAny<ISpecification<Entities.Product>>(), 
+                It.IsAny<GetProductsPaginatedSpecification>(), 
                 It.IsAny<CancellationToken>()
             ));
         }
@@ -82,7 +88,8 @@ namespace AW.Services.Product.Core.UnitTests
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
@@ -92,7 +99,7 @@ namespace AW.Services.Product.Core.UnitTests
             ))
             .ReturnsAsync(products);
 
-            query.OrderBy = "asc(name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name)");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -104,7 +111,7 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Products.Count; i++)
+            for (int i = 0; i < result.Products!.Count; i++)
             {
                 result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
             }
@@ -115,7 +122,8 @@ namespace AW.Services.Product.Core.UnitTests
             List<Entities.Product> products,
             [Frozen] Mock<IRepository<Entities.Product>> productRepoMock,
             GetProductsQueryHandler sut,
-            GetProductsQuery query
+            string category,
+            string subcategory
         )
         {
             //Arrange
@@ -125,7 +133,7 @@ namespace AW.Services.Product.Core.UnitTests
             ))
             .ReturnsAsync(products);
 
-            query.OrderBy = "desc(name)";
+            var query = new GetProductsQuery(0, 10, category, subcategory, "desc(name)");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -137,7 +145,7 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Products.Count; i++)
+            for (int i = 0; i < result.Products!.Count; i++)
             {
                 result.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
             }

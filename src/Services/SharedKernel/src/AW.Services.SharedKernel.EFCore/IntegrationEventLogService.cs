@@ -1,11 +1,7 @@
 ﻿using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace AW.Services.SharedKernel.EFCore
 {
@@ -29,7 +25,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task<IEnumerable<IntegrationEventLogEntry>> RetrieveEventLogsPendingToPublishAsync(Guid transactionId)
         {
-            var tid = transactionId.ToString();
+            var tid = transactionId;
 
             var result = await dbContext.Set<IntegrationEventLogEntry>()
                 .Where(e => e.TransactionId == tid && e.State == EventState.NotPublished)
@@ -38,7 +34,7 @@ namespace AW.Services.SharedKernel.EFCore
             if (result != null && result.Any())
             {
                 return result.OrderBy(o => o.CreationTime)
-                    .Select(e => e.DeserializeJsonContent(eventTypes.Find(t => t.Name == e.EventTypeShortName)));
+                    .Select(e => e.DeserializeJsonContent(eventTypes.Find(t => t.Name == e.EventTypeShortName)!));
             }
 
             return new List<IntegrationEventLogEntry>();

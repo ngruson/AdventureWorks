@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace AW.Services.Customer.Core.Entities.PreferredAddress
+﻿namespace AW.Services.Customer.Core.Entities.PreferredAddress
 {
     public class StorePreferredAddressFactory : IPreferredAddressFactory
     {
@@ -11,7 +9,7 @@ namespace AW.Services.Customer.Core.Entities.PreferredAddress
         ) =>
             this.customer = customer;
 
-        public Address GetPreferredAddress(string addressType)
+        public Address? GetPreferredAddress(string addressType)
         {
             if (addressType == "Billing")
                 return GetPreferredAddressForBilling();
@@ -21,7 +19,7 @@ namespace AW.Services.Customer.Core.Entities.PreferredAddress
             return null;
         }
 
-        private Address GetPreferredAddressForBilling()
+        private Address? GetPreferredAddressForBilling()
         {
             var customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Billing");
             if (customerAddress != null)
@@ -38,7 +36,7 @@ namespace AW.Services.Customer.Core.Entities.PreferredAddress
             return null;
         }
 
-        private Address GetPreferredAddressForShipping()
+        private Address? GetPreferredAddressForShipping()
         {
             var customerAddress = customer.Addresses.SingleOrDefault(_ => _.AddressType == "Shipping");
             if (customerAddress != null)

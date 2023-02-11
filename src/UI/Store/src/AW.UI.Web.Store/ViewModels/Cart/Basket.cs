@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.UI.Web.Store.ViewModels.Cart
 {
@@ -10,7 +7,7 @@ namespace AW.UI.Web.Store.ViewModels.Cart
     {
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
         
-        public string BuyerId { get; set; }
+        public string? BuyerId { get; set; }
 
         public decimal Total => Math.Round(Items.Sum(x => x.UnitPrice * x.Quantity), 2);
 

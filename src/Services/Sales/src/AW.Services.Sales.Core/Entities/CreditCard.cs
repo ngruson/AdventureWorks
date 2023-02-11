@@ -6,9 +6,9 @@ namespace AW.Services.Sales.Core.Entities
     {
         public int Id { get; set; }
 
-        public string CardType { get; set; }
+        public string? CardType { get; set; }
 
-        public string CardNumber { get; set; }
+        public string? CardNumber { get; set; }
 
         public byte ExpMonth { get; set; }
 

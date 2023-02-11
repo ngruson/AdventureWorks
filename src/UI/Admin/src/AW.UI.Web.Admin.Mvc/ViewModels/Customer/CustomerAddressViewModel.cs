@@ -8,7 +8,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         [Display(Name = "Address type")]
         [Required]
-        public string AddressType { get; set; }
+        public string? AddressType { get; set; }
         public AddressViewModel Address { get; set; } = new AddressViewModel();
 
         public void Mapping(Profile profile)

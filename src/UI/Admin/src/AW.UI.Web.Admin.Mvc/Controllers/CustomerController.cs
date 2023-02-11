@@ -21,7 +21,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             this.customerService = customerService;
         }
 
-        public async Task<IActionResult> Index(int? pageId, string territoryFilterApplied, CustomerType? customerType, string accountNumber)
+        public async Task<IActionResult> Index(int? pageId, string? territoryFilterApplied, CustomerType? customerType, string? accountNumber)
         {
             return View(
                 await customerService.GetCustomers(
@@ -34,7 +34,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             );
         }
 
-        public async Task<IActionResult> Detail(string accountNumber)
+        public async Task<IActionResult?> Detail(string accountNumber)
         {
             var viewModel = await customerService.GetCustomer(accountNumber);
             ViewData["accountNumber"] = accountNumber;
@@ -43,7 +43,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             ViewData["countries"] = await customerService.GetCountries();
             ViewData["territories"] = await customerService.GetTerritories();
             ViewData["salesPersons"] = await customerService.GetSalesPersons(
-                viewModel.Territory
+                viewModel.Territory!
             );
             ViewData["statesProvinces"] = await customerService.GetStatesProvinces("US");
 
@@ -123,7 +123,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
         #region Store contacts        
 
-        public async Task<IActionResult> StoreCustomerContact(string accountNumber, string contactName) 
+        public async Task<IActionResult> StoreCustomerContact(string? accountNumber, string? contactName) 
         {
             return View(
                 await customerService.GetCustomerContact(
@@ -142,11 +142,11 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             }
 
             return RedirectToAction("StoreCustomerContact",
-                new { viewModel.AccountNumber, ContactName = viewModel.CustomerContact.ContactPerson.Name.FullName }
+                new { viewModel.AccountNumber, ContactName = viewModel.CustomerContact!.ContactPerson.Name!.FullName }
             );
         }
 
-        public async Task<IActionResult> AddStoreCustomerContact(string accountNumber, string customerName)
+        public async Task<IActionResult> AddStoreCustomerContact(string? accountNumber, string? customerName)
         {
             return View("StoreCustomerContact",
                 await customerService.AddContact(accountNumber, customerName)
@@ -160,8 +160,8 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             {
                 if (newEmail != null)
                 {
-                    viewModel.CustomerContact.ContactPerson.EmailAddresses = new();
-                    viewModel.CustomerContact.ContactPerson.EmailAddresses
+                    viewModel.CustomerContact!.ContactPerson.EmailAddresses = new();
+                    viewModel.CustomerContact?.ContactPerson.EmailAddresses
                         .AddRange(newEmail.Select(_ => new PersonEmailAddressViewModel { EmailAddress = _ }));
                 }
 
@@ -169,7 +169,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 return RedirectToAction("StoreCustomerContact", 
                     new { 
                         viewModel.AccountNumber,
-                        ContactName = viewModel.CustomerContact.ContactPerson.Name.FullName
+                        ContactName = viewModel.CustomerContact?.ContactPerson.Name!.FullName
                     });
             }
 

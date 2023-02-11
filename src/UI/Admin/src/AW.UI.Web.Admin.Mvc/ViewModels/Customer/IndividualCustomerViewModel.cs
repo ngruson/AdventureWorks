@@ -3,7 +3,6 @@ using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
@@ -11,9 +10,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         public override CustomerType CustomerType => CustomerType.Individual;
 
-        public PersonViewModel Person { get; set; }
+        public PersonViewModel? Person { get; set; }
 
-        public IEnumerable<SelectListItem> PhoneNumberTypes { get; set; }
+        public IEnumerable<SelectListItem>? PhoneNumberTypes { get; set; }
 
         public void Mapping(Profile profile)
         {

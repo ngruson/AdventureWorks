@@ -13,9 +13,9 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
             DepartmentHistory = departmentHistory;
         }
 
-        public string Title { get; internal set; }        
+        public string? Title { get; internal set; }        
         public NameFactory? Name { get; internal set; }
-        public string Suffix { get; internal set; }
+        public string? Suffix { get; internal set; }
         public string? NationalIDNumber { get; internal set; }
 
         public string? LoginID { get; internal set; }

@@ -10,7 +10,7 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[ClientProperties]  WITH CHECK ADD  CONSTRAINT [FK_ClientProperties_Clients_ClientId] FOREIGN KEY([ClientId])
+ALTER TABLE [dbo].[ClientProperties] ADD CONSTRAINT [FK_ClientProperties_Clients_ClientId] FOREIGN KEY([ClientId])
 REFERENCES [dbo].[Clients] ([Id])
 ON DELETE CASCADE
 GO

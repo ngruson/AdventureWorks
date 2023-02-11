@@ -6,7 +6,7 @@
         <h5 class="card-title">@Model.Name</h5>
         <p>@Model.ListPrice</p>
         <div class="btn-group">
-            <a asp-controller="Cart" asp-action="AddToCart" asp-route-productNumber="@Model.ProductNumber" type="submit" class="addtocart @((!User.Identity.IsAuthenticated) ? "is-disabled" : "")" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+            <a asp-controller="Cart" asp-action="AddToCart" asp-route-productNumber="@Model.ProductNumber" type="submit" class="addtocart @((!User.Identity!.IsAuthenticated) ? "is-disabled" : "")" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
             <!--<button asp-controller="Cart" asp-action="AddToCart" asp-route-productNumber="@Model.ProductNumber" type="submit" class="addtocart @((!User.Identity.IsAuthenticated) ? "is-disabled" : "")" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>-->
         </div>
     </div>

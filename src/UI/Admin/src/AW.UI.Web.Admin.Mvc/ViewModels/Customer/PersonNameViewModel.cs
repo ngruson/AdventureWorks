@@ -9,17 +9,17 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         [Display(Name = "First name")]
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Display(Name = "Middle name")]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [Display(Name = "Last name")]
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Display(Name = "Full name")]
-        public string FullName => INameFactory.GetFullName(this);
+        public string? FullName => INameFactory.GetFullName(this);
 
         public void Mapping(Profile profile)
         {

@@ -13,7 +13,7 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
         public SalesPersonCache(IMemoryCache cache, ISalesPersonApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task<List<Handlers.GetSalesPersons.SalesPerson>> Initialize()
+        public async Task<List<Handlers.GetSalesPersons.SalesPerson>?> Initialize()
         {
             var salesPersons = await client.GetSalesPersonsAsync();
 
@@ -28,7 +28,7 @@ namespace AW.UI.Web.SharedKernel.SalesPerson.Caching
 
         public async Task<List<Handlers.GetSalesPersons.SalesPerson>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.SalesPersons, out List<Handlers.GetSalesPersons.SalesPerson> salesPersons))
+            if (!cache.TryGetValue(CacheKeys.SalesPersons, out List<Handlers.GetSalesPersons.SalesPerson>? salesPersons))
             {
                 salesPersons = await Initialize();
             }

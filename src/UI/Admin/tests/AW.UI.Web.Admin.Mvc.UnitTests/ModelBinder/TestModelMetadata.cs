@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
-using System;
-using System.Collections.Generic;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
 {
@@ -81,6 +79,6 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
 
         public override Func<object, object> PropertyGetter => throw new NotImplementedException();
 
-        public override Action<object, object> PropertySetter => throw new NotImplementedException();
+        public override Action<object, object?> PropertySetter => throw new NotImplementedException();
     }
 }

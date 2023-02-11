@@ -8,11 +8,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -60,7 +55,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetAllCustomersSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((List<Entities.Customer>)null);
+            .ReturnsAsync(new List<Entities.Customer>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

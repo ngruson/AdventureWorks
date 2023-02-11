@@ -50,7 +50,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Caching
                 object value = categories;
                 cacheMock.Setup(_ => _.TryGetValue(
                         It.IsAny<object>(),
-                        out value
+                        out value!
                     )
                 )
                 .Returns(true);

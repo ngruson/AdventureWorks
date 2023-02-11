@@ -16,24 +16,24 @@ namespace AW.SharedKernel.OpenIdConnect
             {
                 return new OpenIdConnectConfiguration(
                     identityProvider: IdentityProvider.AzureAd,
-                    authority: _configuration["AuthN:AzureAd:Instance"],
+                    authority: _configuration["AuthN:AzureAd:Instance"]!,
                     wellKnownEndpoint: $"https://login.microsoftonline.com/{_configuration["AuthN:AzureAd:TenantId"]}/v2.0/.well-known/openid-configuration",
-                    clientId: _configuration["AuthN:AzureAd:ClientId"],
-                    clientSecret: _configuration["AuthN:AzureAd:ClientSecret"],
-                    scopes: _configuration["AuthN:Scopes"],
-                    openIdClientId: _configuration["AuthN:OpenIdClientId"]
+                    clientId: _configuration["AuthN:AzureAd:ClientId"]!,
+                    clientSecret: _configuration["AuthN:AzureAd:ClientSecret"]!,
+                    scopes: _configuration["AuthN:Scopes"]!,
+                    openIdClientId: _configuration["AuthN:OpenIdClientId"]!
                 );
             }
             else if (_configuration["AuthN:IdP"] == "IdSrv")
             {
                 return new OpenIdConnectConfiguration(
                     identityProvider: IdentityProvider.IdentityServer,
-                    authority: _configuration["AuthN:IdSrv:Authority"],
-                    wellKnownEndpoint: _configuration["AuthN:IdSrv:Authority"],
-                    clientId: _configuration["AuthN:IdSrv:ClientId"],
-                    clientSecret: _configuration["AuthN:IdSrv:ClientSecret"],
-                    scopes: _configuration["AuthN:Scopes"],
-                    openIdClientId: _configuration["AuthN:OpenIdClientId"]
+                    authority: _configuration["AuthN:IdSrv:Authority"]!,
+                    wellKnownEndpoint: _configuration["AuthN:IdSrv:Authority"]!,
+                    clientId: _configuration["AuthN:IdSrv:ClientId"]!,
+                    clientSecret: _configuration["AuthN:IdSrv:ClientSecret"]!,
+                    scopes: _configuration["AuthN:Scopes"]!,
+                    openIdClientId: _configuration["AuthN:OpenIdClientId"]!
                 );
             }
 

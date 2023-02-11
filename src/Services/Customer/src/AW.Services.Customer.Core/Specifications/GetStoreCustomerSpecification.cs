@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using System.Linq;
 
 namespace AW.Services.Customer.Core.Specifications
 {

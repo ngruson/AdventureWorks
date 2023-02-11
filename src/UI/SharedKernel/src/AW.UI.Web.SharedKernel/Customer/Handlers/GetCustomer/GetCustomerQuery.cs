@@ -2,7 +2,7 @@
 
 namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer
 {
-    public class GetCustomerQuery : IRequest<Customer>
+    public class GetCustomerQuery : IRequest<Customer?>
     {
         public GetCustomerQuery(string? accountNumber)
         {

@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.SharedKernel.EFCore.UnitTests
@@ -21,7 +18,8 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
         [Theory, AutoMoqData]
         public async Task SetModified_EntityStateIsModified(
             Mock<ILogger<ItemsContext>> mockLogger,
-            Mock<IMediator> mockMediator
+            Mock<IMediator> mockMediator,
+            Item item
         )
         {
             //Arrange
@@ -35,11 +33,10 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 mockMediator.Object
             );
 
-            context.Items.Add(new Item { Name = "Item1" });
+            context.Items.Add(item);
             await context.SaveChangesAsync();
 
             //Act
-            var item = context.Items.Single(i => i.Name == "Item1");
             context.SetModified(item);
 
             //Assert
@@ -49,7 +46,8 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
         [Theory, AutoMoqData]
         public async Task SaveEntitiesAsync_ChangesAreSaved_DomainEventsAreDispatched(
             Mock<ILogger<ItemsContext>> mockLogger,
-            Mock<IMediator> mockMediator
+            Mock<IMediator> mockMediator,
+            Item item
         )
         {
             //Arrange
@@ -64,7 +62,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
             );
 
             //Act
-            context.Items.Add(new Item { Name = "Item1" });
+            context.Items.Add(item);
             var result = await context.SaveEntitiesAsync();
 
             //Assert

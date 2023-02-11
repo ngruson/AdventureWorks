@@ -7,9 +7,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -26,7 +23,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            for (int i = 0; i < command.SalesOrder.OrderLines.Count; i++)
+            for (int i = 0; i < command.SalesOrder!.OrderLines?.Count; i++)
             {
                 salesOrder.OrderLines.Add(new Core.Entities.SalesOrderLine
                 {
@@ -65,14 +62,14 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Entities.SalesOrder)null);
+            .ReturnsAsync((Core.Entities.SalesOrder?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             await func.Should().ThrowAsync<SalesOrderNotFoundException>()
-                .WithMessage($"Sales order {command.SalesOrder.SalesOrderNumber} not found");
+                .WithMessage($"Sales order {command.SalesOrder!.SalesOrderNumber} not found");
         }
     }
 }

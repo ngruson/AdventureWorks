@@ -1,7 +1,4 @@
 ﻿using AW.Services.Infrastructure.EventBus.Events;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AW.Services.Infrastructure.EventBus.IntegrationEventLog
 {

@@ -4,8 +4,6 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.RejectSalesOrder
 {
@@ -23,13 +21,13 @@ namespace AW.Services.Sales.Core.Handlers.RejectSalesOrder
         {
             _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
             var salesOrder = await _repository.SingleOrDefaultAsync(
-                new GetSalesOrderSpecification(request.SalesOrderNumber),
+                new GetSalesOrderSpecification(request.SalesOrderNumber!),
                 cancellationToken
             );
 
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
-            salesOrder.SetRejectedStatus();
+            salesOrder!.SetRejectedStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }

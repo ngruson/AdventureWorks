@@ -3,12 +3,8 @@ using AutoMapper;
 using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 {
@@ -39,27 +35,27 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Getting address from database");
-            var customerAddress = customer.Addresses.FirstOrDefault(
-                ca => ca.AddressType == request.CustomerAddress.AddressType
+            var customerAddress = customer!.Addresses.FirstOrDefault(
+                ca => ca.AddressType == request.CustomerAddress?.AddressType
             );
             Guard.Against.AddressNull(
                 customerAddress, 
                 request.AccountNumber, 
-                request.CustomerAddress.AddressType,
+                request.CustomerAddress!.AddressType!,
                 _logger
             );
 
-            var existingAddress = await IsExistingAddress(request.CustomerAddress.Address);
+            var existingAddress = await IsExistingAddress(request.CustomerAddress.Address!);
 
             if (existingAddress != null)
             {
                 _logger.LogInformation("Found existing address");
-                customerAddress.Address = existingAddress;
+                customerAddress!.Address = existingAddress;
             }
             else
             {
                 _logger.LogInformation("Add new address");
-                customerAddress.Address = _mapper.Map<Entities.Address>(request.CustomerAddress.Address);
+                customerAddress!.Address = _mapper.Map<Entities.Address>(request.CustomerAddress.Address);
             }
 
             _logger.LogInformation("Saving customer to database");
@@ -68,16 +64,16 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             return Unit.Value;
         }
 
-        private async Task<Entities.Address> IsExistingAddress(AddressDto addressDto)
+        private async Task<Entities.Address?> IsExistingAddress(AddressDto addressDto)
         {
             var address = await _addressRepository.SingleOrDefaultAsync(
                 new GetAddressSpecification(
-                    addressDto.AddressLine1,
-                    addressDto.AddressLine2,
-                    addressDto.PostalCode,
-                    addressDto.City,
-                    addressDto.StateProvinceCode,
-                    addressDto.CountryRegionCode
+                    addressDto.AddressLine1!,
+                    addressDto.AddressLine2!,
+                    addressDto.PostalCode!,
+                    addressDto.City!,
+                    addressDto.StateProvinceCode!,
+                    addressDto.CountryRegionCode!
                 )
             );
 

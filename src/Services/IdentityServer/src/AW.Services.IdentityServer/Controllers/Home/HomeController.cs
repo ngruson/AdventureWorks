@@ -4,11 +4,7 @@
 
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace AW.Services.IdentityServer.Controllers.Home
 {
@@ -44,22 +40,23 @@ namespace AW.Services.IdentityServer.Controllers.Home
         /// </summary>
         public async Task<IActionResult> Error(string errorId)
         {
-            var vm = new ErrorViewModel();
+            //var vm = new ErrorViewModel();
 
             // retrieve error details from identityserver
             var message = await _interaction.GetErrorContextAsync(errorId);
             if (message != null)
             {
-                vm.Error = message;
-
                 if (!_environment.IsDevelopment())
                 {
                     // only show in development
                     message.ErrorDescription = null;
                 }
+
+                var vm = new ErrorViewModel(message);
+                return View("Error", vm);
             }
 
-            return View("Error", vm);
+            return View("Error", null);
         }
     }
 }

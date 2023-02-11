@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -28,7 +25,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             //Arrange
             customer.AddAddress(
                 new Entities.CustomerAddress(
-                    command.CustomerAddress.AddressType,
+                    command.CustomerAddress!.AddressType!,
                     address
                 )
             );
@@ -66,11 +63,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetAddressSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.Address)null);
+            .ReturnsAsync((Entities.Address?)null);
 
             customer.AddAddress(
                 new Entities.CustomerAddress(
-                    command.CustomerAddress.AddressType,
+                    command.CustomerAddress!.AddressType!,
                     address
                 )
             );
@@ -105,7 +102,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.Customer)null);
+            .ReturnsAsync((Entities.Customer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
@@ -127,7 +124,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
             //Assert
             await func.Should().ThrowAsync<AddressNotFoundException>()
-                .WithMessage($"{command.CustomerAddress.AddressType} address for customer {command.AccountNumber} not found");
+                .WithMessage($"{command.CustomerAddress!.AddressType} address for customer {command.AccountNumber} not found");
         }
     }
 }

@@ -72,15 +72,15 @@ namespace AW.Services.IdentityServer.Controllers.Consent
                 {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage("Redirect", result.RedirectUri);
+                    return this.LoadingPage("Redirect", result.RedirectUri!);
                 }
 
-                return Redirect(result.RedirectUri);
+                return Redirect(result.RedirectUri!);
             }
 
             if (result.HasValidationError)
             {
-                ModelState.AddModelError(string.Empty, result.ValidationError);
+                ModelState.AddModelError(string.Empty, result.ValidationError!);
             }
 
             if (result.ShowView)
@@ -102,7 +102,7 @@ namespace AW.Services.IdentityServer.Controllers.Consent
             var request = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
             if (request == null) return result;
 
-            ConsentResponse grantedConsent = null;
+            ConsentResponse? grantedConsent = null;
 
             // user clicked 'no' - send back the standard 'access_denied' response
             if (model?.Button == "no")
@@ -150,19 +150,19 @@ namespace AW.Services.IdentityServer.Controllers.Consent
                 await _interaction.GrantConsentAsync(request, grantedConsent);
 
                 // indicate that's it ok to redirect back to authorization endpoint
-                result.RedirectUri = model.ReturnUrl;
+                result.RedirectUri = model!.ReturnUrl;
                 result.Client = request.Client;
             }
             else
             {
                 // we need to redisplay the consent UI
-                result.ViewModel = await BuildViewModelAsync(model.ReturnUrl, model);
+                result.ViewModel = await BuildViewModelAsync(model!.ReturnUrl!, model);
             }
 
             return result;
         }
 
-        private async Task<ConsentViewModel> BuildViewModelAsync(string returnUrl, ConsentInputModel model = null)
+        private async Task<ConsentViewModel?> BuildViewModelAsync(string returnUrl, ConsentInputModel? model = null)
         {
             var request = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (request != null)
@@ -171,14 +171,14 @@ namespace AW.Services.IdentityServer.Controllers.Consent
             }
             else
             {
-                _logger.LogError("No consent request matching request: {0}", returnUrl);
+                _logger.LogError("No consent request matching request: {ReturnUrl}", returnUrl);
             }
 
             return null;
         }
 
         private ConsentViewModel CreateConsentViewModel(
-            ConsentInputModel model, string returnUrl,
+            ConsentInputModel? model, string returnUrl,
             AuthorizationRequest request)
         {
             var vm = new ConsentViewModel
@@ -186,9 +186,7 @@ namespace AW.Services.IdentityServer.Controllers.Consent
                 RememberConsent = model?.RememberConsent ?? true,
                 ScopesConsented = model?.ScopesConsented ?? Enumerable.Empty<string>(),
                 Description = model?.Description,
-
                 ReturnUrl = returnUrl,
-
                 ClientName = request.Client.ClientName ?? request.Client.ClientId,
                 ClientUrl = request.Client.ClientUri,
                 ClientLogoUrl = request.Client.LogoUri,

@@ -15,11 +15,11 @@ namespace AW.Services.Customer.Core.Entities
 
         public bool OnlineOrderFlag { get; private set; }
 
-        public string SalesOrderNumber { get; private set; }
+        public string? SalesOrderNumber { get; private set; }
 
-        public string PurchaseOrderNumber { get; private set; }
+        public string? PurchaseOrderNumber { get; private set; }
 
-        public string AccountNumber { get; private set; }
+        public string? AccountNumber { get; private set; }
 
         public decimal TotalDue { get; private set; }
     }

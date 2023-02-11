@@ -6,9 +6,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.ReferenceData.REST.API.UnitTests
@@ -36,8 +33,8 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var adressTypes = okObjectResult.Value as List<AddressType>;
-            adressTypes.Count.Should().Be(dto.Count);
+            var addressTypes = okObjectResult?.Value as List<AddressType>;
+            addressTypes?.Count.Should().Be(dto.Count);
         }
     }
 }

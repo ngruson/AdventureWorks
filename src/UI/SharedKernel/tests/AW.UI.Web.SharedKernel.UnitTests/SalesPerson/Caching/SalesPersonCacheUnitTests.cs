@@ -48,7 +48,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.SalesPerson.Caching
                 object value = salesPersons;
                 cacheMock.Setup(_ => _.TryGetValue(
                         It.IsAny<object>(),
-                        out value
+                        out value!
                     )
                 )
                 .Returns(true);

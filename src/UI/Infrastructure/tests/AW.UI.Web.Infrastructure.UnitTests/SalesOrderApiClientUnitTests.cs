@@ -2,8 +2,7 @@
 using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.ApiClients;
-using getsalesorders = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
-using getsalesorder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
+using GetSalesOrder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -28,22 +27,22 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             public async Task GetSalesOrders_SalesOrdersFound_ReturnsSalesOrders(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
-                Mock<ILogger<CustomerConverter<getsalesorders.Customer, getsalesorders.StoreCustomer, getsalesorders.IndividualCustomer>>> mockLogger,
+                Mock<ILogger<CustomerConverter<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Customer, SharedKernel.SalesOrder.Handlers.GetSalesOrders.StoreCustomer, SharedKernel.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer>>> mockLogger,
                 Uri uri,
-                List<getsalesorders.SalesOrder> salesOrders,
-                getsalesorders.IndividualCustomer customer,
+                List<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder> salesOrders,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer customer,
                 SalesOrderApiClient sut,
                 int pageIndex,
                 int pageSize,
                 string territory,
-                getsalesorders.CustomerType customerType
+                SharedKernel.SalesOrder.Handlers.GetSalesOrders.CustomerType customerType
             )
             {
                 //Arrange
                 httpClient.BaseAddress = uri;
                 salesOrders.ForEach(_ => _.Customer = customer);
 
-                var salesOrdersResult = new getsalesorders.SalesOrdersResult
+                var salesOrdersResult = new SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrdersResult
                 {
                     SalesOrders = salesOrders,
                     TotalSalesOrders = salesOrders.Count
@@ -60,9 +59,9 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            getsalesorders.Customer,
-                                            getsalesorders.StoreCustomer,
-                                            getsalesorders.IndividualCustomer>(
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrders.Customer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrders.StoreCustomer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer>(
                                                 mockLogger.Object
                                         )
                                     },
@@ -110,10 +109,10 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             public async Task GetSalesOrder_SalesOrderFound_ReturnsSalesOrder(
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
-                Mock<ILogger<CustomerConverter<getsalesorder.Customer, getsalesorder.StoreCustomer, getsalesorder.IndividualCustomer>>> mockLogger,
+                Mock<ILogger<CustomerConverter<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>>> mockLogger,
                 Uri uri,
-                getsalesorder.SalesOrder salesOrder,
-                getsalesorder.IndividualCustomer customer,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
+                SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer customer,
                 SalesOrderApiClient sut
             )
             {
@@ -132,11 +131,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                                     {
                                         new JsonStringEnumConverter(),
                                         new CustomerConverter<
-                                            getsalesorder.Customer,
-                                            getsalesorder.StoreCustomer,
-                                            getsalesorder.IndividualCustomer>(
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer,
+                                            SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>(
                                                 mockLogger.Object
-                                        )
+                                            )
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

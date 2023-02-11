@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 {
@@ -8,7 +6,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
     {
         public CreateSalesOrderCommand() { }
         public CreateSalesOrderCommand(List<SalesOrderItemDto> items, string userId, string userName,
-            string accountNumber, string customerNumber, string shipMethod,
+            string accountNumber, string? customerNumber, string? shipMethod,
             AddressDto billToAddress, AddressDto shipToAddress,
             string cardNumber, string cardHolderName, DateTime cardExpiration,
             string cardSecurityNumber, string cardType) : this()
@@ -29,19 +27,19 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
             CardExpiration = cardExpiration;
         }
 
-        public string UserId { get; set; }
-        public string UserName { get; set; }
-        public string AccountNumber { get; set; }
-        public string CustomerNumber { get; set; }
-        public string ShipMethod { get; set; }
-        public AddressDto BillToAddress { get; set; }
-        public AddressDto ShipToAddress { get; set; }
+        public string? UserId { get; set; }
+        public string? UserName { get; set; }
+        public string? AccountNumber { get; set; }
+        public string? CustomerNumber { get; set; }
+        public string? ShipMethod { get; set; }
+        public AddressDto? BillToAddress { get; set; }
+        public AddressDto? ShipToAddress { get; set; }
 
-        public string CardNumber { get; set; }
-        public string CardHolderName { get; set; }
+        public string? CardNumber { get; set; }
+        public string? CardHolderName { get; set; }
         public DateTime CardExpiration { get; set; }
-        public string CardSecurityNumber { get; set; }
-        public string CardType { get; set; }
-        public List<SalesOrderItemDto> OrderItems { get; set; }
+        public string? CardSecurityNumber { get; set; }
+        public string? CardType { get; set; }
+        public List<SalesOrderItemDto>? OrderItems { get; set; }
     }
 }

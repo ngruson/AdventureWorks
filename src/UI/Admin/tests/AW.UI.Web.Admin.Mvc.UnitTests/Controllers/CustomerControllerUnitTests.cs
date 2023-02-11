@@ -91,7 +91,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                     .ReturnsAsync(territories);
 
                 //Act
-                var actionResult = await sut.Detail(viewModel.AccountNumber);
+                var actionResult = await sut.Detail(viewModel.AccountNumber!);
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
@@ -145,7 +145,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                     .ReturnsAsync(territories);
 
                 //Act
-                var actionResult = await sut.Detail(viewModel.AccountNumber);
+                var actionResult = await sut.Detail(viewModel.AccountNumber!);
 
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
@@ -177,9 +177,9 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 //Assert
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(accountNumber);
+                redirectResult.RouteValues?.Count.Should().Be(1);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.Values.Contains(accountNumber);
             }
 
             [Theory, AutoMoqData]
@@ -242,9 +242,9 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(accountNumber);
+                redirectResult.RouteValues?.Count.Should().Be(1);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.Values.Contains(accountNumber);
             }
 
             [Theory, AutoMoqData]
@@ -263,9 +263,9 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 //Assert
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("Detail");
-                redirectResult.RouteValues.Count.Should().Be(1);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.Values.Contains(accountNumber);
+                redirectResult.RouteValues?.Count.Should().Be(1);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.Values.Contains(accountNumber);
             }
         }
 
@@ -317,12 +317,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("StoreCustomerContact");
-                redirectResult.RouteValues.Count.Should().Be(2);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.ContainsKey("ContactName");
-                var values = redirectResult.RouteValues.Values.ToList();
-                values[0].Should().Be(viewModel.AccountNumber);
-                values[1].Should().Be(viewModel.CustomerContact.ContactPerson.Name.FullName);
+                redirectResult.RouteValues?.Count.Should().Be(2);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.ContainsKey("ContactName");
+                var values = redirectResult.RouteValues?.Values.ToList();
+                values?[0].Should().Be(viewModel.AccountNumber);
+                values?[1].Should().Be(viewModel.CustomerContact?.ContactPerson.Name!.FullName);
             }
 
             [Theory, AutoMoqData]
@@ -362,7 +362,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 //Act
                 var actionResult = await sut.StoreCustomerContact(
                     viewModel.AccountNumber,
-                    viewModel.CustomerContact.ContactPerson.Name.FullName
+                    viewModel.CustomerContact?.ContactPerson.Name!.FullName
                 );
 
                 //Assert
@@ -396,12 +396,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("StoreCustomerContact");
-                redirectResult.RouteValues.Count.Should().Be(2);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.ContainsKey("ContactName");
-                var values = redirectResult.RouteValues.Values.ToList();
-                values[0].Should().Be(viewModel.AccountNumber);
-                values[1].Should().Be(viewModel.CustomerContact.ContactPerson.Name.FullName);
+                redirectResult.RouteValues?.Count.Should().Be(2);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.ContainsKey("ContactName");
+                var values = redirectResult.RouteValues?.Values.ToList();
+                values?[0].Should().Be(viewModel.AccountNumber);
+                values?[1].Should().Be(viewModel.CustomerContact?.ContactPerson.Name!.FullName);
             }
 
             [Theory, AutoMoqData]
@@ -412,7 +412,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             )
             {
                 //Arrange
-                sut.ModelState.AddModelError("AccountNumber", viewModel.AccountNumber);
+                sut.ModelState.AddModelError("AccountNumber", viewModel.AccountNumber!);
 
                 //Act
                 var actionResult = await sut.StoreCustomerContact(viewModel, email);
@@ -420,12 +420,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 //Assert
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("StoreCustomerContact");
-                redirectResult.RouteValues.Count.Should().Be(2);
-                redirectResult.RouteValues.ContainsKey("AccountNumber");
-                redirectResult.RouteValues.ContainsKey("ContactName");
-                var values = redirectResult.RouteValues.Values.ToList();
-                values[0].Should().Be(viewModel.AccountNumber);
-                values[1].Should().Be(viewModel.CustomerContact.ContactPerson.Name.FullName);
+                redirectResult.RouteValues?.Count.Should().Be(2);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber");
+                redirectResult.RouteValues?.ContainsKey("ContactName");
+                var values = redirectResult.RouteValues?.Values.ToList();
+                values?[0].Should().Be(viewModel.AccountNumber);
+                values?[1].Should().Be(viewModel.CustomerContact?.ContactPerson.Name!.FullName);
             }
         }
 
@@ -480,11 +480,11 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 
                 var redirectResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectResult.ActionName.Should().Be("StoreCustomerContact");
-                redirectResult.RouteValues.Count.Should().Be(2);
-                redirectResult.RouteValues.ContainsKey("AccountNumber").Should().BeTrue();
-                redirectResult.RouteValues.Values.Contains(accountNumber).Should().BeTrue();
-                redirectResult.RouteValues.ContainsKey("ContactName").Should().BeTrue();
-                redirectResult.RouteValues.Values.Contains(contactName).Should().BeTrue();
+                redirectResult.RouteValues?.Count.Should().Be(2);
+                redirectResult.RouteValues?.ContainsKey("AccountNumber").Should().BeTrue();
+                redirectResult.RouteValues?.Values.Contains(accountNumber).Should().BeTrue();
+                redirectResult.RouteValues?.ContainsKey("ContactName").Should().BeTrue();
+                redirectResult.RouteValues?.Values.Contains(contactName).Should().BeTrue();
             }
         }
     }

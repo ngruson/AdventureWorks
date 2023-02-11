@@ -5,7 +5,7 @@ namespace AW.Services.Sales.Core.Models
 {
     public class StoreCustomer : Customer, IMapFrom<Handlers.GetSalesOrders.StoreCustomerDto>
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public void Mapping(Profile profile)
         {

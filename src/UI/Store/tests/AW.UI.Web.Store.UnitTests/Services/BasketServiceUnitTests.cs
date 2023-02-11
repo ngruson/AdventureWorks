@@ -195,7 +195,7 @@ namespace AW.UI.Web.Store.UnitTests.Services
                 Dictionary<string, int> quantities = new();
                 for (int i = 0; i < basket.Items.Count; i++)
                 {
-                    quantities.Add(basket.Items[i].Id, quantityValues[i]);
+                    quantities.Add(basket.Items[i].Id!, quantityValues[i]);
                 }
 
                 mockMediator.Setup(_ => _.Send(

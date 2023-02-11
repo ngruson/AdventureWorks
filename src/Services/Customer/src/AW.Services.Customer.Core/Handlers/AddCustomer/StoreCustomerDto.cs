@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Customer.Core.Handlers.AddCustomer
 {
     public class StoreCustomerDto : CustomerDto, IMapFrom<Entities.StoreCustomer>
     {
-        public string Name { get; set; }
-        public string SalesPerson { get; set; }
-        public List<StoreCustomerContactDto> Contacts { get; set; }
+        public string? Name { get; set; }
+        public string? SalesPerson { get; set; }
+        public List<StoreCustomerContactDto> Contacts { get; set; } = new();
 
         public void Mapping(Profile profile)
         {

@@ -52,7 +52,7 @@ namespace AW.SharedKernel.UnitTests.FileHandling
             {
                 //Arrange
                 var fileName = Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location!)!,
                     "writeFile.txt"
                 );
 

@@ -92,8 +92,9 @@ namespace AW.Services.HumanResources.Department.REST.API
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
 
                 return new AWContext(
+                    provider.GetRequiredService<ILogger<AWContext>>(),
                     builder.Options,
-                    provider.GetService<IMediator>(),
+                    provider.GetRequiredService<IMediator>(),
                     typeof(DepartmentConfiguration).Assembly
                 );
             });
@@ -110,12 +111,12 @@ namespace AW.Services.HumanResources.Department.REST.API
             var hcBuilder = services.AddHealthChecks();
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
-            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]!);
 
             if (configuration["AuthN:IdP"] == "IdSrv")
-                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]!));
 
-            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
+            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection")!);
 
             return services;
         }

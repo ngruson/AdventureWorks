@@ -4,8 +4,6 @@ using AW.Services.Sales.Core.Events;
 using AW.Services.Sales.Core.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Entities
@@ -44,7 +42,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
             );
 
             //Assert
-            salesOrder.DomainEvents.ToList()[0]
+            salesOrder?.DomainEvents?.ToList()[0]
                 .Should().BeAssignableTo<SalesOrderStartedDomainEvent>();
         }
 
@@ -111,8 +109,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
         {
             //Arrange
             salesOrder.AddOrderLine(
-                salesOrderLine.ProductNumber,
-                salesOrderLine.ProductName,
+                salesOrderLine.ProductNumber!,
+                salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
                 specialOfferProduct
@@ -124,8 +122,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
             //Act
             salesOrder.AddOrderLine(
-                existingOrderLine.ProductNumber,
-                existingOrderLine.ProductName,
+                existingOrderLine.ProductNumber!,
+                existingOrderLine.ProductName!,
                 existingOrderLine.UnitPriceDiscount,
                 0,
                 specialOfferProduct
@@ -146,8 +144,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
         {
             //Arrange
             salesOrder.AddOrderLine(
-                salesOrderLine.ProductNumber,
-                salesOrderLine.ProductName,
+                salesOrderLine.ProductNumber!,
+                salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
                 specialOfferProduct
@@ -159,8 +157,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
             //Act
             salesOrder.AddOrderLine(
-                existingOrderLine.ProductNumber,
-                existingOrderLine.ProductName,
+                existingOrderLine.ProductNumber!,
+                existingOrderLine.ProductName!,
                 existingOrderLine.UnitPrice,
                 existingOrderLine.UnitPriceDiscount,
                 specialOfferProduct,
@@ -181,8 +179,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
         {
             //Arrange
             salesOrder.AddOrderLine(
-                salesOrderLine.ProductNumber,
-                salesOrderLine.ProductName,
+                salesOrderLine.ProductNumber!,
+                salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
                 specialOfferProduct
@@ -194,8 +192,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
 
             //Act
             salesOrder.AddOrderLine(
-                existingOrderLine.ProductNumber,
-                existingOrderLine.ProductName,
+                existingOrderLine.ProductNumber!,
+                existingOrderLine.ProductName!,
                 existingOrderLine.UnitPrice,
                 existingOrderLine.UnitPriceDiscount + 1,
                 specialOfferProduct

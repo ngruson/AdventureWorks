@@ -33,7 +33,7 @@ namespace AW.ConsoleTools.Handlers.CreateLoginsForCustomers
             int i = 1;
             foreach (var customer in customers.Cast<IndividualCustomerDto>())
             {
-                if (customer.Person.EmailAddresses.Count > 0)
+                if (customer.Person!.EmailAddresses.Count > 0)
                 {
                     var command = mapper.Map<CreateLoginCommand>(customer);
 

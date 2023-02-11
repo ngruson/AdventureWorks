@@ -6,7 +6,7 @@ namespace AW.Services.Sales.Core.Models
 {
     public class SalesOrderSalesPerson : IMapFrom<Handlers.GetSalesOrders.SalesPersonDto>
     {
-        public NameFactory Name { get; set; }
+        public NameFactory? Name { get; set; }
 
         public void Mapping(Profile profile)
         {

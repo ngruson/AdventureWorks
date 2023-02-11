@@ -33,7 +33,7 @@ namespace AW.Services.Sales.Core.Handlers.ApproveSalesOrder
 
             Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
-            salesOrder.SetApprovedStatus();
+            salesOrder!.SetApprovedStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }

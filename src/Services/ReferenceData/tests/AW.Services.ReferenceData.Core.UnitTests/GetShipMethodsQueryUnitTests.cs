@@ -52,7 +52,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         {
             //Arrange
             shipMethodRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((List<Entities.ShipMethod>)null);
+                .ReturnsAsync(new List<Entities.ShipMethod>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

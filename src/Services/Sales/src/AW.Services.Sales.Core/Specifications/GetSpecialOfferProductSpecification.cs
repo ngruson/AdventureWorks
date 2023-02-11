@@ -5,7 +5,7 @@ namespace AW.Services.Sales.Core.Specifications
 {
     public class GetSpecialOfferProductSpecification : Specification<SpecialOfferProduct>
     {
-        public GetSpecialOfferProductSpecification(string productNumber, string description = null)
+        public GetSpecialOfferProductSpecification(string productNumber, string? description = null)
         {
             Query.Include(_ => _.SpecialOffer);
             Query
@@ -14,7 +14,7 @@ namespace AW.Services.Sales.Core.Specifications
             if (!string.IsNullOrEmpty(description))
             {
                 Query
-                    .Where(_ => _.SpecialOffer.Description == description);
+                    .Where(_ => _.SpecialOffer!.Description == description);
             }
         }
     }

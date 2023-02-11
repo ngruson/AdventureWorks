@@ -6,8 +6,10 @@
 
 @{
     ViewData["Title"] = "My Cart";
-    var headerList = new List<Header>() {
-          new Header() { Controller = "Product", Text = "Back to products" }};
+    var headerList = new List<Header>()
+    {
+          new Header("Product", "Back to products")
+    };
 }
 
 <form method="post" id="cartForm">

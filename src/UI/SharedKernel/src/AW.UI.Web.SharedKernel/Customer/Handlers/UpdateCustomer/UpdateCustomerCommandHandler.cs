@@ -25,13 +25,13 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer
             _logger.LogInformation("Updating customer {AccountNumber}", request.AccountNumber);
             var customer = await _client.UpdateCustomerAsync(
                 request.AccountNumber,
-                request.Customer
+                request.Customer!
             );
             Guard.Against.Null(customer, _logger);
 
             _logger.LogInformation("Returning updated customer {AccountNumber}", request.AccountNumber);
 
-            return customer;
+            return customer!;
         }
     }
 }

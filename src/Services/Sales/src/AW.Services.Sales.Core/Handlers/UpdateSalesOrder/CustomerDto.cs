@@ -3,6 +3,6 @@
     public abstract class CustomerDto
     {
         public CustomerType CustomerType { get; set; }
-        public string CustomerNumber { get; set; }
+        public string? CustomerNumber { get; set; }
     }    
 }

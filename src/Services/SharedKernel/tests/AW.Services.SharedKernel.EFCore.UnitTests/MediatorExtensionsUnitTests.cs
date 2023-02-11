@@ -5,8 +5,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.SharedKernel.EFCore.UnitTests
@@ -35,7 +33,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
             );
 
             //Act
-            var item = new Item { Name = "Item1" };
+            var item = new Item(-1, "Item1");
             item.AddDomainEvent(mockDomainEvent.Object);
             item.AddDomainEvent(mockDomainEvent.Object);
             context.Items.Add(item);

@@ -8,10 +8,6 @@ using AW.UI.Web.Store.ViewModels.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Controllers
 {
@@ -36,7 +32,7 @@ namespace AW.UI.Web.Store.Controllers
             };
         }
 
-        public async Task<IActionResult> Index(int? page, int? pageSize, string productCategory, string productSubcategory)
+        public async Task<IActionResult> Index(int? page, int? pageSize, string productCategory, string? productSubcategory)
         {
             Guard.Against.NullOrEmpty(productCategory, _logger);
             ViewData["pageSizeList"] = GetPageSizeList();
@@ -46,24 +42,24 @@ namespace AW.UI.Web.Store.Controllers
                 )
             );
 
+            var totalPages = int.Parse(Math.Ceiling(((decimal)products.TotalProducts / (pageSize ?? 12))).ToString());
+
             var vm = new ProductsViewModel
             {
                 Title = productSubcategory ?? productCategory,
                 ProductCategory = productCategory,
-                ProductSubcategory = productSubcategory,
+                ProductSubcategory = productSubcategory!,
                 ProductCategories = await _mediator.Send(new GetProductCategoriesQuery()),
                 Products = _mapper.Map<List<ProductViewModel>>(products.Products),
-                PaginationInfo = new PaginationInfoViewModel()
-                {
-                    ActualPage = page ?? 0,
-                    ItemsPerPage = products.Products.Count,
-                    TotalItems = products.TotalProducts,
-                    TotalPages = int.Parse(Math.Ceiling(((decimal)products.TotalProducts / (pageSize ?? 12))).ToString())
-                }
+                PaginationInfo = new PaginationInfoViewModel(
+                    products.TotalProducts,
+                    products.Products.Count,
+                    page ?? 0,
+                    totalPages,
+                    ((page ?? 0) == 0) ? "disabled" : "",
+                    ((page ?? 0) == totalPages - 1) ? "disabled" : ""
+                )
             };
-
-            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "disabled" : "";
-            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "disabled" : "";
 
             return View(vm);
         }

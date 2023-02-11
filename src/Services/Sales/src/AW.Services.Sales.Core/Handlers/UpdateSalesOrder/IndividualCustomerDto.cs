@@ -6,9 +6,9 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
     public class IndividualCustomerDto : CustomerDto, IMapFrom<Entities.IndividualCustomer>
     {
-        public string Title { get; set; }
-        public NameFactory Name { get; private set; }
-        public string Suffix { get; set; }
+        public string? Title { get; set; }
+        public NameFactory? Name { get; private set; }
+        public string? Suffix { get; set; }
 
         public void Mapping(Profile profile)
         {

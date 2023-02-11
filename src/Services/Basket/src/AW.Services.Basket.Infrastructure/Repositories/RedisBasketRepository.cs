@@ -2,10 +2,7 @@
 using AW.Services.Basket.Core.Models;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AW.Services.Basket.Infrastructure.Repositories
 {
@@ -32,10 +29,10 @@ namespace AW.Services.Basket.Infrastructure.Repositories
             var server = GetServer();
             var data = server.Keys();
 
-            return data?.Select(k => k.ToString());
+            return data.Select(k => k.ToString());
         }
 
-        public async Task<CustomerBasket> GetBasketAsync(string customerId)
+        public async Task<CustomerBasket?> GetBasketAsync(string customerId)
         {
             var data = await database.StringGetAsync(customerId);
 
@@ -44,13 +41,13 @@ namespace AW.Services.Basket.Infrastructure.Repositories
                 return null;
             }
 
-            return JsonSerializer.Deserialize<CustomerBasket>(data, new JsonSerializerOptions
+            return JsonSerializer.Deserialize<CustomerBasket?>(data!, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
         }
 
-        public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
+        public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket basket)
         {
             var created = await database.StringSetAsync(basket.BuyerId, JsonSerializer.Serialize(basket));
 
@@ -62,7 +59,7 @@ namespace AW.Services.Basket.Infrastructure.Repositories
 
             logger.LogInformation("Basket item persisted succesfully.");
 
-            return await GetBasketAsync(basket.BuyerId);
+            return await GetBasketAsync(basket.BuyerId!);
         }
 
         private IServer GetServer()

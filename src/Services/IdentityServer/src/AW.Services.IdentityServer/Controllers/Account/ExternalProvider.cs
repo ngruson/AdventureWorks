@@ -5,7 +5,13 @@ namespace AW.Services.IdentityServer.Controllers.Account
 {
     public class ExternalProvider
     {
-        public string DisplayName { get; set; }
-        public string AuthenticationScheme { get; set; }
+        public ExternalProvider(string displayName, string authenticationScheme)
+        {
+            DisplayName = displayName;
+            AuthenticationScheme = authenticationScheme;
+        }
+
+        public string DisplayName { get; private init; }
+        public string AuthenticationScheme { get; private init; }
     }
 }

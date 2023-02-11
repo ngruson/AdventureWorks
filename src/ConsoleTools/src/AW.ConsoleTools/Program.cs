@@ -60,7 +60,7 @@ using (var scope = host.Services.CreateScope())
     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
     if (args[0] == "store-product-photos")
-        await mediator.Send(new StoreProductPhotosCommand { TargetFolder = targetFolder });
+        await mediator.Send(new StoreProductPhotosCommand(targetFolder));
     else if (args[0] == "create-customer-logins")
         await mediator.Send(new CreateLoginsForCustomersCommand());
     else if (args[0] == "create-aad-groups")

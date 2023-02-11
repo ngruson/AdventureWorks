@@ -4,11 +4,9 @@ using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
-using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Infrastructure.EventBus.Extensions;
@@ -25,14 +23,14 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
         private readonly IEventBusSubscriptionsManager subsManager;
         private readonly int retryCount;
 
-        private IModel consumerChannel;
+        private IModel? consumerChannel;
         private string queueName;
 
         public EventBusRabbitMQ(IServiceScopeFactory serviceScopeFactory,
             IRabbitMQPersistentConnection persistentConnection,
             ILogger<EventBusRabbitMQ> logger,
             IEventBusSubscriptionsManager subsManager,
-            string queueName = null,
+            string queueName,
             int retryCount = 5)
         {
             this.serviceScopeFactory = serviceScopeFactory;
@@ -45,7 +43,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             subsManager.OnEventRemoved += SubsManager_OnEventRemoved;
         }
 
-        private void SubsManager_OnEventRemoved(object sender, string eventName)
+        private void SubsManager_OnEventRemoved(object? sender, string eventName)
         {
             if (!persistentConnection.IsConnected)
             {
@@ -60,7 +58,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             if (subsManager.IsEmpty)
             {
                 queueName = string.Empty;
-                consumerChannel.Close();
+                consumerChannel?.Close();
             }
         }
 
@@ -229,7 +227,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             // Even on exception we take the message off the queue.
             // in a REAL WORLD app this should be handled with a Dead Letter Exchange (DLX). 
             // For more information see: https://www.rabbitmq.com/dlx.html
-            consumerChannel.BasicAck(eventArgs.DeliveryTag, multiple: false);
+            consumerChannel?.BasicAck(eventArgs.DeliveryTag, multiple: false);
         }
 
         private IModel CreateConsumerChannel()
@@ -256,7 +254,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             {
                 logger.LogWarning(ea.Exception, "Recreating RabbitMQ consumer channel");
 
-                consumerChannel.Dispose();
+                consumerChannel?.Dispose();
                 consumerChannel = CreateConsumerChannel();
                 StartBasicConsume();
             };
@@ -275,8 +273,8 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
                     if (subscription.IsDynamic)
                     {
                         using var scope = serviceScopeFactory.CreateScope();
-                        var handler = scope.ServiceProvider.GetService(subscription.HandlerType) as IDynamicIntegrationEventHandler;
-                        if (handler == null) continue;
+                        if (scope.ServiceProvider.GetService(subscription.HandlerType) is not IDynamicIntegrationEventHandler handler) 
+                            continue;
                         using dynamic eventData = JsonDocument.Parse(message);
                         await Task.Yield();
                         await handler.Handle(eventData);
@@ -284,14 +282,14 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
                     else
                     {
                         using var scope = serviceScopeFactory.CreateScope();
-                        var handler = scope.ServiceProvider.GetService(subscription.HandlerType);
+                        var handler = scope.ServiceProvider.GetRequiredService(subscription.HandlerType);
                         if (handler == null) continue;
                         var eventType = subsManager.GetEventTypeByName(eventName);
                         var integrationEvent = JsonSerializer.Deserialize(message, eventType, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                         var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
                         await Task.Yield();
-                        await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { integrationEvent });
+                        await (Task)concreteType?.GetMethod("Handle")?.Invoke(handler, new object[] { integrationEvent! })!;
                     }
                 }
             }

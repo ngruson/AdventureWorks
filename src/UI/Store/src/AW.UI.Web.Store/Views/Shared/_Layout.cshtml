@@ -48,7 +48,7 @@
                         <a href="#" class="m-2"><i class="fa-solid fa-magnifying-glass"></i></a>
                         <div class="dropdown m-2">
                             <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                @if (User.Identity.IsAuthenticated)
+                                @if (User.Identity!.IsAuthenticated)
                                 {
                                     @User.Claims.Single(_ => _.Type == "given_name").Value
                                 }

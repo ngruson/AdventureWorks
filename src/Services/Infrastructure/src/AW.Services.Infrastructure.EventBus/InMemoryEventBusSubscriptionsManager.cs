@@ -1,8 +1,5 @@
 ﻿using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.Services.Infrastructure.EventBus.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Infrastructure.EventBus
 {
@@ -11,7 +8,7 @@ namespace AW.Services.Infrastructure.EventBus
         private readonly Dictionary<string, List<SubscriptionInfo>> _handlers;
         private readonly List<Type> _eventTypes;
 
-        public event EventHandler<string> OnEventRemoved;
+        public event EventHandler<string>? OnEventRemoved;
 
         public InMemoryEventBusSubscriptionsManager()
         {
@@ -70,7 +67,7 @@ namespace AW.Services.Infrastructure.EventBus
             where TH : IDynamicIntegrationEventHandler
         {
             var handlerToRemove = FindDynamicSubscriptionToRemove<TH>(eventName);
-            DoRemoveHandler(eventName, handlerToRemove);
+            DoRemoveHandler(eventName, handlerToRemove!);
         }
 
 
@@ -80,7 +77,7 @@ namespace AW.Services.Infrastructure.EventBus
         {
             var handlerToRemove = FindSubscriptionToRemove<T, TH>();
             var eventName = GetEventKey<T>();
-            DoRemoveHandler(eventName, handlerToRemove);
+            DoRemoveHandler(eventName, handlerToRemove!);
         }
 
 
@@ -117,14 +114,14 @@ namespace AW.Services.Infrastructure.EventBus
         }
 
 
-        private SubscriptionInfo FindDynamicSubscriptionToRemove<TH>(string eventName)
+        private SubscriptionInfo? FindDynamicSubscriptionToRemove<TH>(string eventName)
             where TH : IDynamicIntegrationEventHandler
         {
             return DoFindSubscriptionToRemove(eventName, typeof(TH));
         }
 
 
-        private SubscriptionInfo FindSubscriptionToRemove<T, TH>()
+        private SubscriptionInfo? FindSubscriptionToRemove<T, TH>()
              where T : IntegrationEvent
              where TH : IIntegrationEventHandler<T>
         {
@@ -132,7 +129,7 @@ namespace AW.Services.Infrastructure.EventBus
             return DoFindSubscriptionToRemove(eventName, typeof(TH));
         }
 
-        private SubscriptionInfo DoFindSubscriptionToRemove(string eventName, Type handlerType)
+        private SubscriptionInfo? DoFindSubscriptionToRemove(string eventName, Type handlerType)
         {
             if (!HasSubscriptionsForEvent(eventName))
             {
@@ -150,7 +147,7 @@ namespace AW.Services.Infrastructure.EventBus
         }
         public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
 
-        public Type GetEventTypeByName(string eventName) => _eventTypes.SingleOrDefault(t => t.Name == eventName);
+        public Type GetEventTypeByName(string eventName) => _eventTypes.SingleOrDefault(t => t.Name == eventName)!;
 
         public string GetEventKey<T>()
         {

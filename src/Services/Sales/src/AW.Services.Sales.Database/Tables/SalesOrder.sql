@@ -36,21 +36,21 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_Customer_CustomerID] FOREIGN KEY([CustomerID])
+ALTER TABLE [SalesOrder] ADD CONSTRAINT [FK_SalesOrder_Customer_CustomerID] FOREIGN KEY([CustomerID])
 REFERENCES [Customer] ([CustomerID])
 GO
 
 ALTER TABLE [SalesOrder] CHECK CONSTRAINT [FK_SalesOrder_Customer_CustomerID]
 GO
 
-ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
+ALTER TABLE [SalesOrder] ADD CONSTRAINT [FK_SalesOrder_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
 REFERENCES [SalesPerson] ([PersonID])
 GO
 
 ALTER TABLE [SalesOrder] CHECK CONSTRAINT [FK_SalesOrder_SalesPerson_SalesPersonID]
 GO
 
-ALTER TABLE [SalesOrder] WITH CHECK ADD CONSTRAINT [FK_SalesOrder_CreditCard_CreditCardID] FOREIGN KEY([CreditCardID])
+ALTER TABLE [SalesOrder] ADD CONSTRAINT [FK_SalesOrder_CreditCard_CreditCardID] FOREIGN KEY([CreditCardID])
 REFERENCES [CreditCard] ([CreditCardID])
 GO
 

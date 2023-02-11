@@ -23,7 +23,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
             cache.Set(CacheKeys.ShipMethods, shipMethods, cacheEntryOptions);
 
-            return shipMethods;
+            return shipMethods!;
         }
 
         public async Task<List<Handlers.GetShipMethods.ShipMethod>?> GetData()

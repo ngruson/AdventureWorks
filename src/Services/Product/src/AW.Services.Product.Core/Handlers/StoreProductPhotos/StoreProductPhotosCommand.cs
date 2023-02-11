@@ -4,6 +4,11 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
 {
     public class StoreProductPhotosCommand : IRequest
     {
-        public string TargetFolder { get; set; }
+        public StoreProductPhotosCommand(string targetFolder)
+        {
+            TargetFolder = targetFolder;
+        }
+
+        public string TargetFolder { get; private init; }
     }
 }

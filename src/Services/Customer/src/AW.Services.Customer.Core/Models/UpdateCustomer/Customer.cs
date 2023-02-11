@@ -1,5 +1,4 @@
 ﻿using AW.SharedKernel.Interfaces;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace AW.Services.Customer.Core.Models.UpdateCustomer
@@ -8,8 +7,8 @@ namespace AW.Services.Customer.Core.Models.UpdateCustomer
     {
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CustomerType CustomerType { get; set; }
-        public string AccountNumber { get; set; }
-        public string Territory { get; set; }
-        public List<CustomerAddress> Addresses { get; set; }
+        public string? AccountNumber { get; set; }
+        public string? Territory { get; set; }
+        public List<CustomerAddress> Addresses { get; set; } = new(); 
     }
 }

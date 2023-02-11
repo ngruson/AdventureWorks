@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Store.UnitTests.Controllers
@@ -31,17 +29,17 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             var controller = new AccountController(mockApplication.Object, mockLogger.Object);
 
             var authResult = AuthenticateResult.Success(
-                new AuthenticationTicket(new ClaimsPrincipal(), null)
+                new AuthenticationTicket(new ClaimsPrincipal(), string.Empty)
             );
 
-            authResult.Properties.StoreTokens(new[]
+            authResult!.Properties?.StoreTokens(new[]
             {
                 new AuthenticationToken { Name = "access_token", Value = accessToken }
             });
 
             var mockAuthenticationService = new Mock<IAuthenticationService>();
             mockAuthenticationService
-                .Setup(x => x.AuthenticateAsync(It.IsAny<HttpContext>(), null))
+                .Setup(x => x.AuthenticateAsync(It.IsAny<HttpContext>(), string.Empty))
                 .ReturnsAsync(authResult);
 
             var mockUrlHelperFactory = new Mock<IUrlHelperFactory>();

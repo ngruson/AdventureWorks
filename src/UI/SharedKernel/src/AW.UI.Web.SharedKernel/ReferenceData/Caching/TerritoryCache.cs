@@ -13,7 +13,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
         public TerritoryCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task<List<Handlers.GetTerritories.Territory>> Initialize()
+        public async Task<List<Handlers.GetTerritories.Territory>?> Initialize()
         {
             var territories = await client.GetTerritoriesAsync();
 
@@ -28,7 +28,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
         public async Task<List<Handlers.GetTerritories.Territory>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.Territories, out List<Handlers.GetTerritories.Territory> territories))
+            if (!cache.TryGetValue(CacheKeys.Territories, out List<Handlers.GetTerritories.Territory>? territories))
             {
                 territories = await Initialize();
             }

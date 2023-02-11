@@ -5,8 +5,6 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RabbitMQ.Client;
-using System;
-using System.IO;
 using Xunit;
 
 namespace AW.Services.Infrastructure.EventBus.UnitTests.RabbitMQ
@@ -134,7 +132,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.RabbitMQ
                         It.Is<EventId>(eventId => eventId.Id == 0),
                         It.IsAny<It.IsAnyType>(),
                         It.IsAny<Exception>(),
-                        It.IsAny<Func<It.IsAnyType, Exception, string>>()
+                        It.IsAny<Func<It.IsAnyType, Exception?, string>>()
                     ),
                     Times.Never
                 );
@@ -158,7 +156,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.RabbitMQ
                         It.Is<EventId>(eventId => eventId.Id == 0),
                         It.IsAny<It.IsAnyType>(),
                         It.IsAny<Exception>(),
-                        It.IsAny<Func<It.IsAnyType, Exception, string>>()
+                        It.IsAny<Func<It.IsAnyType, Exception?, string>>()
                     ),
                     Times.Never
                 );
@@ -192,7 +190,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.RabbitMQ
                         It.Is<EventId>(eventId => eventId.Id == 0),
                         It.IsAny<It.IsAnyType>(),
                         It.IsAny<Exception>(),
-                        (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+                        (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()
                     ),
                     Times.Once
                 );

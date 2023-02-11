@@ -45,7 +45,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.ReferenceData.Caching
                 object value = addressTypes;
                 cacheMock.Setup(_ => _.TryGetValue(
                         It.IsAny<object>(),
-                        out value
+                        out value!
                     )
                 )
                 .Returns(true);

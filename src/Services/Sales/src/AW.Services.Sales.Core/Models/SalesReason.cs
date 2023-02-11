@@ -6,8 +6,8 @@ namespace AW.Services.Sales.Core.Models
 {
     public class SalesReason : IMapFrom<Handlers.GetSalesOrders.SalesReasonDto>
     {
-        public string Name { get; set; }
-        public string ReasonType { get; set; }
+        public string? Name { get; set; }
+        public string? ReasonType { get; set; }
 
         public void Mapping(Profile profile)
         {

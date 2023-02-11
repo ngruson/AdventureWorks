@@ -3,11 +3,8 @@ using AutoMapper;
 using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
 {
@@ -36,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
 
             _logger.LogInformation("Adding contact to store");
             var contact = _mapper.Map<Entities.StoreCustomerContact>(request.CustomerContact);
-            storeCustomer.AddContact(contact);
+            storeCustomer!.AddContact(contact);
 
             _logger.LogInformation("Saving customer to database");
             await _repository.UpdateAsync(storeCustomer, cancellationToken);

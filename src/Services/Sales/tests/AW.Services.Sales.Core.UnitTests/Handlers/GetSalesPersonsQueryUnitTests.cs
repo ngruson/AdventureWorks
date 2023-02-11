@@ -3,14 +3,9 @@ using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests
@@ -21,8 +16,7 @@ namespace AW.Services.Sales.Core.UnitTests
         public async Task Handle_SalesPersonsExists_ReturnSalesPersons(
             List<Core.Entities.SalesPerson> salesPersons,
             [Frozen] Mock<IRepository<Core.Entities.SalesPerson>> salesPersonRepoMock,
-            GetSalesPersonsQueryHandler sut,
-            GetSalesPersonsQuery query
+            GetSalesPersonsQueryHandler sut
         )
         {
             //Arrange
@@ -32,7 +26,7 @@ namespace AW.Services.Sales.Core.UnitTests
             ))
             .ReturnsAsync(salesPersons);
 
-            query.Territory = "";
+            GetSalesPersonsQuery query = new(null);
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -44,9 +38,9 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < result?.Count; i++)
             {
-                result[i].Name.FullName.Should().Be(salesPersons[i].Name.FullName);
+                result![i].Name!.FullName.Should().Be(salesPersons[i].Name!.FullName);
             }
         }
 
@@ -75,9 +69,9 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < result?.Count; i++)
             {
-                result[i].Name.FullName.Should().Be(salesPersons[i].Name.FullName);
+                result![i].Name!.FullName.Should().Be(salesPersons[i].Name!.FullName);
             }
         }
 
@@ -89,11 +83,15 @@ namespace AW.Services.Sales.Core.UnitTests
         )
         {
             //Arrange
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             salesPersonRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<GetSalesPersonsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((List<Core.Entities.SalesPerson>)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

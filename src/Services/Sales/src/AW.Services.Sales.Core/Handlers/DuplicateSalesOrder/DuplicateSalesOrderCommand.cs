@@ -4,6 +4,11 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
 {
     public class DuplicateSalesOrderCommand : IRequest
     {
-        public string SalesOrderNumber { get; set; }
+        public DuplicateSalesOrderCommand(string salesOrderNumber)
+        {
+            SalesOrderNumber = salesOrderNumber;
+        }
+
+        public string SalesOrderNumber { get; private init; }
     }
 }

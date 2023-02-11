@@ -3,22 +3,19 @@ using AW.Services.Infrastructure.EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using AW.Services.Sales.Core.IntegrationEvents;
 
 namespace AW.Services.Sales.Core.Behaviors
 {
     public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly ILogger<TransactionBehavior<TRequest, TResponse>> logger;
+        private readonly ILogger<TransactionBehavior<TRequest, TResponse?>> logger;
         private readonly IDbContext dbContext;
         private readonly ISalesOrderIntegrationEventService salesOrderIntegrationEventService;
 
         public TransactionBehavior(IDbContext dbContext,
             ISalesOrderIntegrationEventService salesOrderIntegrationEventService,
-            ILogger<TransactionBehavior<TRequest, TResponse>> logger)
+            ILogger<TransactionBehavior<TRequest, TResponse?>> logger)
         {
             this.dbContext = dbContext ?? throw new ArgumentException(nameof(IDbContext));
             this.salesOrderIntegrationEventService = salesOrderIntegrationEventService ?? throw new ArgumentException(nameof(ISalesOrderIntegrationEventService));
@@ -56,7 +53,7 @@ namespace AW.Services.Sales.Core.Behaviors
                     }
                 });
 
-                return response;
+                return response!;
             }
             catch (Exception ex)
             {

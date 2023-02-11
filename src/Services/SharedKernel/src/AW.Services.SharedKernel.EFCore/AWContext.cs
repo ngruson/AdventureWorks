@@ -7,24 +7,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using SmartEnum.EFCore;
-using System;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.SharedKernel.EFCore
 {
     public class AWContext : DbContext, IDbContext, IUnitOfWork
     {
-        private readonly ILogger<AWContext> _logger;
-        private readonly Assembly _configurationsAssembly;
-        private readonly IMediator _mediator;
-        private IDbContextTransaction _currentTransaction;
+        private readonly ILogger<AWContext>? _logger;
+        private readonly Assembly? _configurationsAssembly;
+        private readonly IMediator? _mediator;
+        private IDbContextTransaction? _currentTransaction;
 
         public AWContext() { }
-
         public AWContext(
             ILogger<AWContext> logger,
             DbContextOptions<AWContext> options,
@@ -36,17 +32,17 @@ namespace AW.Services.SharedKernel.EFCore
         }
 
         public AWContext(
+            ILogger<AWContext> logger,
             DbContextOptions<AWContext> options,             
             IMediator mediator,
             Assembly configurationsAssembly
-        ) : base(options)
+        ) : this(logger, options, mediator)
         {
             _configurationsAssembly = configurationsAssembly;
-            _mediator = mediator;
         }
 
-        public DbTransaction CurrentTransaction => _currentTransaction.GetDbTransaction();
-        public Guid CurrentTransactionId => _currentTransaction.TransactionId;
+        public DbTransaction CurrentTransaction => _currentTransaction!.GetDbTransaction();
+        public Guid CurrentTransactionId => _currentTransaction!.TransactionId;
 
         public bool HasActiveTransaction => _currentTransaction != null;
 
@@ -61,7 +57,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         public static bool IsDerived(Type objectType, Type mainType)
         {
-            Type currentType = objectType.BaseType;
+            var currentType = objectType.BaseType;
 
             if (currentType == null)
             {
@@ -70,7 +66,7 @@ namespace AW.Services.SharedKernel.EFCore
 
             while (currentType != typeof(object))
             {
-                if (currentType.IsGenericType && currentType.GetGenericTypeDefinition() == mainType)
+                if (currentType!.IsGenericType && currentType.GetGenericTypeDefinition() == mainType)
                     return true;
 
                 currentType = currentType.BaseType;
@@ -86,7 +82,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            await _mediator.DispatchDomainEventsAsync(this);
+            await _mediator!.DispatchDomainEventsAsync(this);
 
             // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
             // performed through the DbContext will be committed
@@ -103,7 +99,6 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task<DbTransaction> BeginTransactionAsync()
         {
-            if (_currentTransaction != null) return null;
             _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
 
             return CurrentTransaction;
@@ -111,7 +106,7 @@ namespace AW.Services.SharedKernel.EFCore
 
         public async Task CommitTransactionAsync(DbTransaction transaction)
         {
-            Guard.Against.Null(transaction, _logger);
+            Guard.Against.Null(transaction, _logger!);
 
             if (transaction != CurrentTransaction)
                 throw new InvalidOperationException($"Transaction {CurrentTransactionId} is not current");

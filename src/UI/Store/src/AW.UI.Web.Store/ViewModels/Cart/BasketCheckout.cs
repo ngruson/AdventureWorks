@@ -10,27 +10,27 @@ namespace AW.UI.Web.Store.ViewModels.Cart
     public class BasketCheckout : Basket, IMapFrom<SharedKernel.Basket.Handlers.GetBasket.Basket>
     {
         [Required]
-        public string ShipMethod { get; set; }
+        public string? ShipMethod { get; set; }
 
         public Address BillToAddress { get; set; } = new();
         public Address ShipToAddress { get; set; } = new();
 
         [Required]
         [DisplayName("Card number")]
-        public string CardNumber { get; set; }
+        public string? CardNumber { get; set; }
         [Required]
         [DisplayName("Cardholder name")]
-        public string CardHolderName { get; set; }
+        public string? CardHolderName { get; set; }
 
         [RegularExpression(@"(0[1-9]|1[0-2])\/[0-9]{2}", ErrorMessage = "Expiration should match a valid MM/YY value")]
         [CardExpiration(ErrorMessage = "The card is expired"), Required]
         [DisplayName("Card expiration")]
-        public string CardExpirationShort { get; set; }
+        public string? CardExpirationShort { get; set; }
         [Required]
         [DisplayName("Card security number")]
-        public string CardSecurityNumber { get; set; }
+        public string? CardSecurityNumber { get; set; }
         [Required]
-        public string CardType { get; set; }
+        public string? CardType { get; set; }
         
         [Required]
         public Guid RequestId { get; set; }
@@ -53,7 +53,7 @@ namespace AW.UI.Web.Store.ViewModels.Cart
                 .ForMember(m => m.BuyerId, opt => opt.MapFrom(src => src.Buyer))
                 .ForMember(m => m.Items, opt => opt.MapFrom(src => src.Items))
                 .ReverseMap()
-                .ForMember(m => m.CardExpiration, opt => opt.MapFrom(src => MapCardExpiration(src.CardExpirationShort)))
+                .ForMember(m => m.CardExpiration, opt => opt.MapFrom(src => MapCardExpiration(src.CardExpirationShort!)))
                 .ForMember(m => m.CustomerNumber, opt => opt.Ignore());
         }
 

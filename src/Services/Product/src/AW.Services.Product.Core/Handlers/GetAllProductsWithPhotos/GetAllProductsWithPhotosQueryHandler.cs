@@ -30,7 +30,7 @@ namespace AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos
             _logger.LogInformation("Getting products from database");
             var products = await _repository.ListAsync(spec, cancellationToken);
 
-            Guard.Against.ProductsNull(products, _logger);
+            Guard.Against.ProductsNullOrEmpty(products, _logger);
 
             _logger.LogInformation("Returning products");
 

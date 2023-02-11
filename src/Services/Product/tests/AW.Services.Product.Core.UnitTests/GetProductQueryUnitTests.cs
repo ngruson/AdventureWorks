@@ -55,7 +55,7 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<GetProductSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.Product)null);
+            .ReturnsAsync((Entities.Product?)null);
 
             //Act
             Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);

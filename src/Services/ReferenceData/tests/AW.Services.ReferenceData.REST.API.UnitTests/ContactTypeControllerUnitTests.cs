@@ -5,11 +5,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.ReferenceData.REST.API.UnitTests
@@ -37,8 +33,8 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var contactTypes = okObjectResult.Value as List<ContactType>;
-            contactTypes.Count.Should().Be(dto.Count);
+            var contactTypes = okObjectResult?.Value as List<ContactType>;
+            contactTypes?.Count.Should().Be(dto.Count);
         }
     }
 }

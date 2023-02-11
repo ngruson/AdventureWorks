@@ -2,8 +2,6 @@
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -18,7 +16,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         ) =>
             (this.logger, this.mediator) = (logger, mediator);
 
-        public async Task<SalesPersonIndexViewModel> GetSalesPersons(string territory = null)
+        public async Task<SalesPersonIndexViewModel> GetSalesPersons(string? territory = null)
         {
             logger.LogInformation("GetSalesPersons called");
 

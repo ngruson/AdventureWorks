@@ -4,19 +4,15 @@ using GetSalesOrders = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders
 using GetSalesOrder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
 using UpdateSalesOrder = AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
     public class SalesOrderApiClient : ISalesOrderApiClient
     {
-        private readonly ILogger<SalesOrderApiClient> _logger;
+        private readonly ILogger<SalesOrderApiClient?> _logger;
         private readonly HttpClient _httpClient;
 
         private readonly CustomerConverter<
@@ -35,7 +31,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             UpdateSalesOrder.IndividualCustomer> _converterUpdateSalesOrder;
 
         public SalesOrderApiClient(
-            ILogger<SalesOrderApiClient> logger, 
+            ILogger<SalesOrderApiClient?> logger, 
             HttpClient httpClient,
             CustomerConverter<GetSalesOrders.Customer, GetSalesOrders.StoreCustomer, GetSalesOrders.IndividualCustomer> converterGetSalesOrders,
             CustomerConverter<GetSalesOrder.Customer, GetSalesOrder.StoreCustomer, GetSalesOrder.IndividualCustomer> converterGetSalesOrder,
@@ -43,7 +39,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
         ) => (_httpClient, _logger, _converterGetSalesOrders, _converterGetSalesOrder, _converterUpdateSalesOrder) = 
                 (httpClient, logger, converterGetSalesOrders, converterGetSalesOrder, converterUpdateSalesOrder);
 
-        public async Task<GetSalesOrders.SalesOrdersResult> GetSalesOrdersAsync(int pageIndex, int pageSize, string territory, GetSalesOrders.CustomerType? customerType)
+        public async Task<GetSalesOrders.SalesOrdersResult?> GetSalesOrdersAsync(int pageIndex, int pageSize, string? territory, GetSalesOrders.CustomerType? customerType)
         {
             string requestUri = $"/salesorder-api/SalesOrder?&api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting sales orders with page index {PageIndex}, page size {PageSize}";
@@ -71,7 +67,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<GetSalesOrders.SalesOrdersResult>(new JsonSerializerOptions
+            return await stream.DeserializeAsync<GetSalesOrders.SalesOrdersResult?>(new JsonSerializerOptions
             {
                 Converters =
                 {
@@ -83,7 +79,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             });
         }
 
-        public async Task<GetSalesOrder.SalesOrder> GetSalesOrderAsync(string salesOrderNumber)
+        public async Task<GetSalesOrder.SalesOrder?> GetSalesOrderAsync(string? salesOrderNumber)
         {
             _logger.LogInformation("Getting sales order with sales order number {SalesOrderNumber}", salesOrderNumber);
             var requestUri = $"SalesOrder/{salesOrderNumber}?&api-version=1.0";
@@ -93,7 +89,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<GetSalesOrder.SalesOrder>(new JsonSerializerOptions
+            return await stream.DeserializeAsync<GetSalesOrder.SalesOrder?>(new JsonSerializerOptions
             {
                 Converters =
                 {
@@ -105,7 +101,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             });
         }
 
-        public async Task<UpdateSalesOrder.SalesOrder> UpdateSalesOrderAsync(SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
+        public async Task<UpdateSalesOrder.SalesOrder?> UpdateSalesOrderAsync(UpdateSalesOrder.SalesOrder salesOrder)
         {
             _logger.LogInformation("Updating sales order with sales order number {SalesOrderNumber}", salesOrder.SalesOrderNumber);
             string requestUri = $"SalesOrder/{salesOrder.SalesOrderNumber}?&api-version=1.0";
@@ -128,7 +124,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             );
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
-            var updatedSalesOrder = await stream.DeserializeAsync<UpdateSalesOrder.SalesOrder>(options);
+            var updatedSalesOrder = await stream.DeserializeAsync<UpdateSalesOrder.SalesOrder?>(options);
 
             _logger.LogInformation("Returning sales order {@SalesOrder}", updatedSalesOrder);
             return updatedSalesOrder;

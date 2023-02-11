@@ -5,7 +5,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
 {
     public class SalesPersonEmailAddressDto : IMapFrom<Entities.SalesPersonEmailAddress>
     {
-        public string EmailAddress { get; set; }
+        public string? EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

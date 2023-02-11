@@ -6,8 +6,8 @@ namespace AW.Services.Customer.Core.Models.UpdateStoreCustomerContact
 {
     public class StoreCustomerContact : IMapFrom<StoreCustomerContactDto>
     {
-        public string ContactType { get; set; }
-        public Person ContactPerson { get; set; }
+        public string? ContactType { get; set; }
+        public Person? ContactPerson { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -41,7 +41,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
                 statesProvinces = await _repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.StatesProvincesNull(statesProvinces, _logger);
+            Guard.Against.StatesProvincesNullOrEmpty(statesProvinces, _logger);
 
             _logger.LogInformation("Returning state/provinces");
             return _mapper.Map<List<StateProvince>>(statesProvinces);

@@ -1,9 +1,4 @@
 ﻿using Microsoft.Graph;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.SharedKernel.UnitTesting.Graph
 {
@@ -13,7 +8,7 @@ namespace AW.SharedKernel.UnitTesting.Graph
 
         public TimeSpan OverallTimeout { get; set; } = TimeSpan.FromSeconds(10);
         public Dictionary<string, object> Responses { get; set; } = new Dictionary<string, object>();
-        public event EventHandler<MockRequestExecutingEventArgs> OnRequestExecuting;
+        public event EventHandler<MockRequestExecutingEventArgs>? OnRequestExecuting;
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -23,7 +18,7 @@ namespace AW.SharedKernel.UnitTesting.Graph
         {
             return Task.Run(() =>
             {
-                string key = "GET:" + request.RequestUri.ToString();
+                string key = "GET:" + request.RequestUri!.ToString();
                 var response = new HttpResponseMessage();
                 if (OnRequestExecuting != null)
                 {

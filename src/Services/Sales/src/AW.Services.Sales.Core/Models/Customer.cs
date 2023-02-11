@@ -8,7 +8,7 @@ namespace AW.Services.Sales.Core.Models
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CustomerType CustomerType { get; set; }
 
-        public string CustomerNumber { get; set; }
+        public string? CustomerNumber { get; set; }
         public int SalesOrderCount { get; set; }
     }
 }

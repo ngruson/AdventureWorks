@@ -5,9 +5,6 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
 {
@@ -38,11 +35,10 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
             Guard.Against.SalesOrdersNull(orders, _logger);
 
             _logger.LogInformation("Returning sales orders");
-            return new GetSalesOrdersDto
-            {
-                SalesOrders = _mapper.Map<List<SalesOrderDto>>(orders),
-                TotalSalesOrders = await _repository.CountAsync(countSpec, cancellationToken)
-            };
+            return new GetSalesOrdersDto(
+                _mapper.Map<List<SalesOrderDto>>(orders),
+                await _repository.CountAsync(countSpec, cancellationToken)
+            );
         }
     }
 }

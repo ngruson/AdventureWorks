@@ -14,7 +14,7 @@ namespace AW.Services.Customer.Core.Entities
             Person = person;
         }
 
-        public Person Person { get; private set; }
+        public Person? Person { get; private set; }
 
         public override CustomerType CustomerType => CustomerType.Individual;
     }

@@ -1,5 +1,4 @@
-﻿using Ardalis.Specification;
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetShifts;
@@ -47,10 +46,12 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         )
         {
             // Arrange            
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             shiftRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((List<Entities.Shift>?)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

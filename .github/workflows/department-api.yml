@@ -9,7 +9,7 @@ on:
     - .github/workflows/department-api.yml
 
 env:
-  DOTNET_VERSION: 6.0.x
+  DOTNET_VERSION: 7.0.x
   REGISTRY_NAME: cradventureworks
   APP_NAME: adventureworks_departmentapi
 

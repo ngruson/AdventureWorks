@@ -7,10 +7,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Core.UnitTests
@@ -49,7 +45,7 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
             result.Count.Should().Be(products.Count);
-            result.ForEach(x => x.Photos.Count.Should().BeGreaterThan(0));
+            result.ForEach(x => x.Photos!.Count.Should().BeGreaterThan(0));
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -66,7 +62,7 @@ namespace AW.Services.Product.Core.UnitTests
                     It.IsAny<CancellationToken>()
                 )
             )
-            .ReturnsAsync((List<Entities.Product>)null);
+            .ReturnsAsync(new List<Entities.Product>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

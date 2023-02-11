@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests
@@ -40,7 +37,7 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            result.Name.FullName.Should().Be(salesPerson.Name.FullName);
+            result!.Name!.FullName.Should().Be(salesPerson!.Name!.FullName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -55,7 +52,7 @@ namespace AW.Services.Sales.Core.UnitTests
                 It.IsAny<GetSalesPersonSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Entities.SalesPerson)null);
+            .ReturnsAsync((Core.Entities.SalesPerson?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

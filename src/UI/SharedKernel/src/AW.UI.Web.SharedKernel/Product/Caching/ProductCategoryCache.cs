@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
         public async Task<List<ProductCategory>?> GetData()
         {
 
-            if (!cache.TryGetValue(CacheKeys.ProductCategories, out List<ProductCategory> categories))
+            if (!cache.TryGetValue(CacheKeys.ProductCategories, out List<ProductCategory>? categories))
             {
                 categories = await Initialize();
             }
@@ -31,7 +31,7 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
                 .Where(predicate).ToList();
         }
 
-        private async Task<List<ProductCategory>> Initialize()
+        private async Task<List<ProductCategory>?> Initialize()
         {
             var categories = await client.GetCategoriesAsync();
 

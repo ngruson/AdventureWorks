@@ -10,7 +10,7 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[ApiScopeProperties]  WITH CHECK ADD  CONSTRAINT [FK_ApiScopeProperties_ApiScopes_ScopeId] FOREIGN KEY([ScopeId])
+ALTER TABLE [dbo].[ApiScopeProperties] ADD CONSTRAINT [FK_ApiScopeProperties_ApiScopes_ScopeId] FOREIGN KEY([ScopeId])
 REFERENCES [dbo].[ApiScopes] ([Id])
 ON DELETE CASCADE
 GO

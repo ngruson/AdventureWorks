@@ -6,10 +6,10 @@ namespace AW.Services.Sales.Core.Entities
     public partial class SpecialOffer
     {
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public decimal DiscountPct { get; set; }
-        public string Type { get; set; }
-        public string Category { get; set; }
+        public string? Type { get; set; }
+        public string? Category { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int MinQty { get; set; }

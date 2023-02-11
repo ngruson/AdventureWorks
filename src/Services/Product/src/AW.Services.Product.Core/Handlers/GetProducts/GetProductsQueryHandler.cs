@@ -5,13 +5,9 @@ using AW.Services.Product.Core.Extensions;
 using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Product.Core.Handlers.GetProducts
 {
@@ -45,7 +41,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             );
 
             var products = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.ProductsNull(products, _logger);
+            Guard.Against.ProductsNullOrEmpty(products, _logger);
 
             _logger.LogInformation("Returning products");
             return new GetProductsDto
@@ -55,7 +51,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             };
         }
 
-        private static OrderByClause<Entities.Product> OrderBy(string orderBy)
+        private static OrderByClause<Entities.Product>? OrderBy(string orderBy)
         {
             if (string.IsNullOrEmpty(orderBy))
                 return null;
@@ -71,11 +67,10 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             var memberExpression = Expression.Property(parameter, propertyName);
             var expr = Expression.Lambda(memberExpression, parameter);
 
-            return new OrderByClause<Core.Entities.Product>
-            {
-                Expression = expr.ToUntypedPropertyExpression<Entities.Product>(),
-                Direction = direction == "asc" ? OrderByDirection.Ascending : OrderByDirection.Descending
-            };
+            return new OrderByClause<Entities.Product>(
+                expr.ToUntypedPropertyExpression<Entities.Product>(),
+                direction == "asc" ? OrderByDirection.Ascending : OrderByDirection.Descending
+            );
         }
     }
 }

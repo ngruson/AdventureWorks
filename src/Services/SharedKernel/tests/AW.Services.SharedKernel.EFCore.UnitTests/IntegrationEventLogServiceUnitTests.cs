@@ -40,7 +40,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 );
 
                 //Act
-                var guid = Guid.Parse(entries[0].TransactionId);
+                var guid = entries[0].TransactionId;
                 var eventLogs = await sut.RetrieveEventLogsPendingToPublishAsync(guid);
 
                 //Assert

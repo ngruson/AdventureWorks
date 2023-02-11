@@ -6,11 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.ReferenceData.Core.UnitTests
@@ -99,7 +94,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         {
             //Arrange
             territoryRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((List<Entities.Territory>)null);
+                .ReturnsAsync(new List<Entities.Territory>());
 
             //Act
             query.CountryRegionCode = null;
@@ -126,7 +121,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
                     It.IsAny<CancellationToken>()
                 )
             )
-            .ReturnsAsync((List<Entities.Territory>)null);
+            .ReturnsAsync(new List<Entities.Territory>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

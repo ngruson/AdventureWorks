@@ -9,10 +9,6 @@ using AW.SharedKernel.UnitTesting;
 using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -31,10 +27,9 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var command = new UpdateStoreCustomerContactCommand
-            {
-                AccountNumber = accountNumber,
-                CustomerContact = new StoreCustomerContactDto
+            var command = new UpdateStoreCustomerContactCommand(
+                accountNumber,
+                new StoreCustomerContactDto
                 {
                     ContactType = contactType,
                     ContactPerson = new PersonDto
@@ -49,11 +44,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                         }
                     }
                 }
-            };
+            );
 
             customer.AddContact(
                 new Entities.StoreCustomerContact(
-                    command.CustomerContact.ContactType,
+                    command.CustomerContact.ContactType!,
                     contactPerson
                 )
             );
@@ -85,10 +80,9 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            var command = new UpdateStoreCustomerContactCommand
-            {
-                AccountNumber = accountNumber,
-                CustomerContact = new StoreCustomerContactDto
+            var command = new UpdateStoreCustomerContactCommand(
+                accountNumber,
+                new StoreCustomerContactDto
                 {
                     ContactType = contactType,
                     ContactPerson = new PersonDto
@@ -96,13 +90,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                         EmailAddresses = new List<EmailAddressDto>()
                     }
                 }
-            };
+            );
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.StoreCustomer)null);
+            .ReturnsAsync((Entities.StoreCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
@@ -122,10 +116,9 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var command = new UpdateStoreCustomerContactCommand
-            {
-                AccountNumber = accountNumber,
-                CustomerContact = new StoreCustomerContactDto
+            var command = new UpdateStoreCustomerContactCommand(
+                accountNumber,
+                new StoreCustomerContactDto
                 {
                     ContactType = contactType,
                     ContactPerson = new PersonDto
@@ -134,7 +127,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                         EmailAddresses = new List<EmailAddressDto>()
                     }
                 }
-            };
+            );
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

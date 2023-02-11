@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using System.Linq;
 
 namespace AW.Services.Customer.Core.Specifications
 {
@@ -7,7 +6,7 @@ namespace AW.Services.Customer.Core.Specifications
     {
         public GetCustomersAccountNumberSpecification() : base()
         {
-            Query.Select(c => c.AccountNumber);
+            Query!.Select(c => c.AccountNumber);
 
         }
     }

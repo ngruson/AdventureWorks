@@ -5,12 +5,10 @@ using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
 {
-    public class GetPreferredAddressQueryHandler : IRequestHandler<GetPreferredAddressQuery, AddressDto>
+    public class GetPreferredAddressQueryHandler : IRequestHandler<GetPreferredAddressQuery, AddressDto?>
     {
         private readonly ILogger<GetPreferredAddressQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -23,7 +21,7 @@ namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
         ) => 
             (_logger, _mapper, _repository) = (logger, mapper, repository);
 
-        public async Task<AddressDto> Handle(GetPreferredAddressQuery request, CancellationToken cancellationToken)
+        public async Task<AddressDto?> Handle(GetPreferredAddressQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Getting preferred {AddressType} address for customer {AccountNumber} from database",
@@ -36,7 +34,7 @@ namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
             );
             Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
-            var address = customer.GetPreferredAddress(request.AddressType);
+            var address = customer!.GetPreferredAddress(request.AddressType);
 
             _logger.LogInformation("Returning address");
             return _mapper.Map<AddressDto>(address);

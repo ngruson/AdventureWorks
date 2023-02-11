@@ -5,6 +5,11 @@ namespace AW.Services.Basket.Core.Handlers.UpdateBasket
 {
     public class UpdateBasketCommand : IRequest<CustomerBasket>
     {
-        public CustomerBasket Basket { get; set; }
+        public CustomerBasket Basket { get; private init; }
+
+        public UpdateBasketCommand(CustomerBasket basket)
+        {
+            Basket = basket;
+        }
     }
 }

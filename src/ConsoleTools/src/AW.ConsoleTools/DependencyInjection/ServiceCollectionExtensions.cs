@@ -12,6 +12,7 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Azure.Identity;
 using Microsoft.Graph;
+using Microsoft.Extensions.Logging;
 
 namespace AW.ConsoleTools.DependencyInjection
 {
@@ -56,8 +57,9 @@ namespace AW.ConsoleTools.DependencyInjection
                 var factory = provider.GetRequiredService<IRepositoryFactory<T>>();
 
                 return factory.Create(
+                    provider.GetRequiredService<ILogger<AWContext>>(),
                     provider.GetRequiredService<IAWContextFactory>(),
-                    configuration["ConnectionStrings:CustomerDb"],
+                    configuration["ConnectionStrings:CustomerDb"]!,
                     provider.GetRequiredService<IMediator>(),
                     typeof(CustomerConfiguration).Assembly
                 );
@@ -82,8 +84,9 @@ namespace AW.ConsoleTools.DependencyInjection
                 var factory = provider.GetRequiredService<IRepositoryFactory<T>>();
 
                 return factory.Create(
+                    provider.GetRequiredService<ILogger<AWContext>>(),
                     provider.GetRequiredService<IAWContextFactory>(),
-                    configuration["ConnectionStrings:HumanResourcesDb"],
+                    configuration["ConnectionStrings:HumanResourcesDb"]!,
                     provider.GetRequiredService<IMediator>(),
                     typeof(EmployeeConfiguration).Assembly
                 );
@@ -112,8 +115,9 @@ namespace AW.ConsoleTools.DependencyInjection
                 var factory = provider.GetRequiredService<IRepositoryFactory<T>>();
 
                 return factory.Create(
+                    provider.GetRequiredService<ILogger<AWContext>>(),
                     provider.GetRequiredService<IAWContextFactory>(),
-                    configuration["ConnectionStrings:ProductDb"],
+                    configuration["ConnectionStrings:ProductDb"]!,
                     provider.GetRequiredService<IMediator>(),
                     typeof(ProductConfiguration).Assembly
                 );

@@ -12,12 +12,8 @@ using Duende.IdentityServer.Stores;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AW.Services.IdentityServer.Controllers.Account
 {
@@ -96,10 +92,10 @@ namespace AW.Services.IdentityServer.Controllers.Account
                     {
                         // The client is native, so this change in how to
                         // return the response is for better UX for the end user.
-                        return this.LoadingPage("Redirect", model.ReturnUrl);
+                        return this.LoadingPage("Redirect", model.ReturnUrl!);
                     }
 
-                    return Redirect(model.ReturnUrl);
+                    return Redirect(model.ReturnUrl!);
                 }
                 else
                 {
@@ -110,11 +106,11 @@ namespace AW.Services.IdentityServer.Controllers.Account
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(model.Username!, model.Password!, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                    var user = await _userManager.FindByNameAsync(model.Username!);
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user!.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
                     if (context != null)
                     {
@@ -122,11 +118,11 @@ namespace AW.Services.IdentityServer.Controllers.Account
                         {
                             // The client is native, so this change in how to
                             // return the response is for better UX for the end user.
-                            return this.LoadingPage("Redirect", model.ReturnUrl);
+                            return this.LoadingPage("Redirect", model.ReturnUrl!);
                         }
 
                         // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        return Redirect(model.ReturnUrl);
+                        return Redirect(model.ReturnUrl!);
                     }
 
                     // request for a local page
@@ -182,9 +178,9 @@ namespace AW.Services.IdentityServer.Controllers.Account
         public async Task<IActionResult> Logout(LogoutInputModel model)
         {
             // build a model so the logged out page knows what to display
-            var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
+            var vm = await BuildLoggedOutViewModelAsync(model.LogoutId!);
 
-            if (User?.Identity.IsAuthenticated == true)
+            if (User!.Identity!.IsAuthenticated == true)
             {
                 // delete local authentication cookie
                 await HttpContext.SignOutAsync();
@@ -199,10 +195,10 @@ namespace AW.Services.IdentityServer.Controllers.Account
                 // build a return URL so the upstream provider will redirect back
                 // to us after the user has logged out. this allows us to then
                 // complete our single sign-out processing.
-                string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
+                var url = Url.Action("Logout", new { logoutId = vm.LogoutId });
 
                 // this triggers a redirect to the external provider for sign-out
-                return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
+                return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme!);
             }
 
             return View("LoggedOut", vm);
@@ -235,7 +231,13 @@ namespace AW.Services.IdentityServer.Controllers.Account
 
                 if (!local)
                 {
-                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+                    vm.ExternalProviders = new[]
+                    {
+                        new ExternalProvider(
+                            string.Empty,
+                            context!.IdP
+                        )
+                    };
                 }
 
                 return vm;
@@ -245,11 +247,12 @@ namespace AW.Services.IdentityServer.Controllers.Account
 
             var providers = schemes
                 .Where(x => x.DisplayName != null)
-                .Select(x => new ExternalProvider
-                {
-                    DisplayName = x.DisplayName ?? x.Name,
-                    AuthenticationScheme = x.Name
-                }).ToList();
+                .Select(x => new ExternalProvider(
+                        x.DisplayName ?? x.Name,
+                        x.Name
+                    )
+                )
+                .ToList();
 
             var allowLocal = true;
             if (context?.Client.ClientId != null)
@@ -278,7 +281,7 @@ namespace AW.Services.IdentityServer.Controllers.Account
 
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
-            var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
+            var vm = await BuildLoginViewModelAsync(model.ReturnUrl!);
             vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
             return vm;
@@ -288,7 +291,7 @@ namespace AW.Services.IdentityServer.Controllers.Account
         {
             var vm = new LogoutViewModel { LogoutId = logoutId, ShowLogoutPrompt = AccountOptions.ShowLogoutPrompt };
 
-            if (User?.Identity.IsAuthenticated != true)
+            if (User!.Identity!.IsAuthenticated != true)
             {
                 // if the user is not authenticated, then just show logged out page
                 vm.ShowLogoutPrompt = false;
@@ -322,12 +325,14 @@ namespace AW.Services.IdentityServer.Controllers.Account
                 LogoutId = logoutId
             };
 
-            if (User?.Identity.IsAuthenticated == true)
+            if (User!.Identity!.IsAuthenticated == true)
             {
                 var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
                 if (idp != null && idp != IdentityServerConstants.LocalIdentityProvider)
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
+#pragma warning restore CS0618 // Type or member is obsolete
                     if (providerSupportsSignout)
                     {
                         if (vm.LogoutId == null)

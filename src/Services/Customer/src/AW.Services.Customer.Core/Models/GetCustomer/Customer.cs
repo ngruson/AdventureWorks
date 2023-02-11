@@ -10,9 +10,9 @@ namespace AW.Services.Customer.Core.Models.GetCustomer
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
 
-        public string AccountNumber { get; set; }
-        public string Territory { get; set; }
-        public List<CustomerAddressDto> Addresses { get; set; }
-        public List<SalesOrder> SalesOrders { get; set; }
+        public string? AccountNumber { get; set; }
+        public string? Territory { get; set; }
+        public List<CustomerAddressDto> Addresses { get; set; } = new();
+        public List<SalesOrder> SalesOrders { get; set; } = new();
     }
 }

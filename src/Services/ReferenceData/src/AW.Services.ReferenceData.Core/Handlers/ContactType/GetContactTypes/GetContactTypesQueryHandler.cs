@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes
             _logger.LogInformation("Getting contact types from database");
             var contactTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.ContactTypesNull(contactTypes, _logger);
+            Guard.Against.ContactTypesNullOrEmpty(contactTypes, _logger);
 
             _logger.LogInformation("Returning contact types");
             return _mapper.Map<List<ContactType>>(contactTypes);

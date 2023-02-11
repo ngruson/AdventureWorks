@@ -4,6 +4,14 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
 {
     public class UpdateCustomerCommand : IRequest<CustomerDto>
     {
-        public CustomerDto Customer { get; set; }
+        public UpdateCustomerCommand()
+        {
+        }
+        public UpdateCustomerCommand(CustomerDto? customer)
+        {
+            Customer = customer;
+        }
+
+        public CustomerDto? Customer { get; private init; }
     }
 }

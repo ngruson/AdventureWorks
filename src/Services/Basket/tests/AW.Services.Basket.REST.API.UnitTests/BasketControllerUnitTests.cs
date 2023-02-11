@@ -39,7 +39,7 @@ namespace AW.Services.Basket.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var resultBasket = okObjectResult.Value.Should().BeAssignableTo<CustomerBasket>().Subject;
+                var resultBasket = okObjectResult?.Value.Should().BeAssignableTo<CustomerBasket>().Subject;
                 resultBasket.Should().Be(basket);
             }
 
@@ -52,7 +52,7 @@ namespace AW.Services.Basket.REST.API.UnitTests
             {
                 //Arrange
                 mockMediator.Setup(x => x.Send(It.IsAny<GetBasketQuery>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync((CustomerBasket)null);
+                    .ReturnsAsync((CustomerBasket?)null);
 
                 //Act
                 var actionResult = await sut.GetBasketByIdAsync(basketId);
@@ -61,8 +61,8 @@ namespace AW.Services.Basket.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var resultBasket = okObjectResult.Value.Should().BeAssignableTo<CustomerBasket>().Subject;
-                resultBasket.BuyerId.Should().Be(basketId);
+                var resultBasket = okObjectResult?.Value.Should().BeAssignableTo<CustomerBasket?>().Subject;
+                resultBasket?.BuyerId.Should().Be(basketId);
             }
         }
  
@@ -86,7 +86,7 @@ namespace AW.Services.Basket.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var resultBasket = okObjectResult.Value.Should().BeAssignableTo<CustomerBasket>().Subject;
+                var resultBasket = okObjectResult?.Value.Should().BeAssignableTo<CustomerBasket?>().Subject;
                 resultBasket.Should().Be(basket);
             }
         }
@@ -124,7 +124,7 @@ namespace AW.Services.Basket.REST.API.UnitTests
             {
                 //Arrange
                 mockMediator.Setup(x => x.Send(It.IsAny<CheckoutCommand>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync((CustomerBasket)null);
+                    .ReturnsAsync((CustomerBasket?)null);
 
                 //Act
                 var actionResult = await sut.CheckoutAsync(checkout, requestId);

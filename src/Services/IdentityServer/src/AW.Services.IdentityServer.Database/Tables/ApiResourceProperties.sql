@@ -10,7 +10,7 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[ApiResourceProperties]  WITH CHECK ADD  CONSTRAINT [FK_ApiResourceProperties_ApiResources_ApiResourceId] FOREIGN KEY([ApiResourceId])
+ALTER TABLE [dbo].[ApiResourceProperties] ADD CONSTRAINT [FK_ApiResourceProperties_ApiResources_ApiResourceId] FOREIGN KEY([ApiResourceId])
 REFERENCES [dbo].[ApiResources] ([Id])
 ON DELETE CASCADE
 GO

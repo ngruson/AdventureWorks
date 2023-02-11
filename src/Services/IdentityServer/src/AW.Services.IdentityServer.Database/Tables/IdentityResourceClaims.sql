@@ -9,7 +9,7 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[IdentityResourceClaims]  WITH CHECK ADD  CONSTRAINT [FK_IdentityResourceClaims_IdentityResources_IdentityResourceId] FOREIGN KEY([IdentityResourceId])
+ALTER TABLE [dbo].[IdentityResourceClaims] ADD CONSTRAINT [FK_IdentityResourceClaims_IdentityResources_IdentityResourceId] FOREIGN KEY([IdentityResourceId])
 REFERENCES [dbo].[IdentityResources] ([Id])
 ON DELETE CASCADE
 GO

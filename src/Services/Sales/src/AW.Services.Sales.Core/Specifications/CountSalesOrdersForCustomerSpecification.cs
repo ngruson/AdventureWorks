@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using System.Linq;
 
 namespace AW.Services.Sales.Core.Specifications
 {
@@ -7,7 +6,7 @@ namespace AW.Services.Sales.Core.Specifications
     {
         public CountSalesOrdersForCustomerSpecification(string customerNumber) : base()
         {
-            Query.Where(_ => _.Customer.CustomerNumber == customerNumber);
+            Query.Where(_ => _.Customer!.CustomerNumber == customerNumber);
         }
     }
 }

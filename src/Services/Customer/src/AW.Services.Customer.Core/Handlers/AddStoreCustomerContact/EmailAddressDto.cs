@@ -6,7 +6,7 @@ namespace AW.Services.Customer.Core.Handlers.AddStoreCustomerContact
 {
     public class EmailAddressDto : IMapFrom<Entities.PersonEmailAddress>
     {
-        public EmailAddress EmailAddress { get; set; }
+        public EmailAddress? EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -7,6 +7,6 @@ namespace AW.Services.Customer.Core.Handlers.GetAllCustomers
     public class IndividualCustomerDto : CustomerDto, IMapFrom<IndividualCustomer>
     {
         public override CustomerType CustomerType => CustomerType.Individual;
-        public PersonDto Person { get; set; }
+        public PersonDto? Person { get; set; }
     }
 }

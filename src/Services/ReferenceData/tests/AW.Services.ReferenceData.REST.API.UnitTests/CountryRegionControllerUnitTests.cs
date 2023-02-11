@@ -6,9 +6,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.ReferenceData.REST.API.UnitTests
@@ -36,8 +33,8 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var countries = okObjectResult.Value as List<Country>;
-            countries.Count.Should().Be(dto.Count);
+            var countries = okObjectResult?.Value as List<Country>;
+            countries?.Count.Should().Be(dto.Count);
         }
     }
 }

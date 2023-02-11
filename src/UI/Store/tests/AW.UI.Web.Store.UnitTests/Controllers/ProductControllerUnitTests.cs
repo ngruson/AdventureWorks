@@ -9,10 +9,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Store.UnitTests.Controllers
@@ -61,13 +57,13 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             viewModel.ProductCategory.Should().Be(productCategory);
             viewModel.ProductSubcategory.Should().BeNull();
             viewModel.ProductCategories.Should().BeEquivalentTo(categories);
-            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
-            viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
-            viewModel.PaginationInfo.TotalItems.Should().Be(productsResult.TotalProducts);
-            viewModel.PaginationInfo.TotalPages.Should().Be(4);
-            viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
-            viewModel.PaginationInfo.Previous.Should().Be("disabled");
+            viewModel.Products?.Count.Should().Be(productsResult.Products.Count);
+            viewModel.PaginationInfo?.ActualPage.Should().Be(0);
+            viewModel.PaginationInfo?.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo?.TotalItems.Should().Be(productsResult.TotalProducts);
+            viewModel.PaginationInfo?.TotalPages.Should().Be(4);
+            viewModel.PaginationInfo?.Next.Should().BeNullOrEmpty();
+            viewModel.PaginationInfo?.Previous.Should().Be("disabled");
         }
 
         [Theory, AutoMoqData]
@@ -103,15 +99,15 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             );
 
             //Act
-            var actionResult = await sut.Index(0, 5, productCategory, null);
+            var actionResult = await sut.Index(0, 5, productCategory, string.Empty);
 
             //Assert
             var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
             var viewModel = viewResult.Model.Should().BeAssignableTo<ProductsViewModel>().Subject;
-            viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
-            viewModel.PaginationInfo.TotalItems.Should().Be(21);
-            viewModel.PaginationInfo.TotalPages.Should().Be(5);            
+            viewModel.PaginationInfo?.ActualPage.Should().Be(0);
+            viewModel.PaginationInfo?.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo?.TotalItems.Should().Be(21);
+            viewModel.PaginationInfo?.TotalPages.Should().Be(5);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -158,13 +154,13 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             viewModel.ProductCategory.Should().Be(productCategory);
             viewModel.ProductSubcategory.Should().Be(productSubcategory);
             viewModel.ProductCategories.Should().BeEquivalentTo(categories);
-            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
-            viewModel.PaginationInfo.ActualPage.Should().Be(0);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
-            viewModel.PaginationInfo.TotalItems.Should().Be(20);
-            viewModel.PaginationInfo.TotalPages.Should().Be(4);
-            viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
-            viewModel.PaginationInfo.Previous.Should().Be("disabled");
+            viewModel.Products?.Count.Should().Be(productsResult?.Products?.Count);
+            viewModel.PaginationInfo?.ActualPage.Should().Be(0);
+            viewModel.PaginationInfo?.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo?.TotalItems.Should().Be(20);
+            viewModel.PaginationInfo?.TotalPages.Should().Be(4);
+            viewModel.PaginationInfo?.Next.Should().BeNullOrEmpty();
+            viewModel.PaginationInfo?.Previous.Should().Be("disabled");
         }
 
         [Theory, AutoMoqData]
@@ -210,13 +206,13 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             viewModel.ProductCategory.Should().Be(productCategory);
             viewModel.ProductSubcategory.Should().Be(productSubcategory);
             viewModel.ProductCategories.Should().BeEquivalentTo(categories);
-            viewModel.Products.Count.Should().Be(productsResult.Products.Count);
-            viewModel.PaginationInfo.ActualPage.Should().Be(1);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
-            viewModel.PaginationInfo.TotalItems.Should().Be(20);
-            viewModel.PaginationInfo.TotalPages.Should().Be(4);
-            viewModel.PaginationInfo.Next.Should().BeNullOrEmpty();
-            viewModel.PaginationInfo.Previous.Should().BeNullOrEmpty();
+            viewModel.Products?.Count.Should().Be(productsResult.Products.Count);
+            viewModel.PaginationInfo?.ActualPage.Should().Be(1);
+            viewModel.PaginationInfo?.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo?.TotalItems.Should().Be(20);
+            viewModel.PaginationInfo?.TotalPages.Should().Be(4);
+            viewModel.PaginationInfo?.Next.Should().BeNullOrEmpty();
+            viewModel.PaginationInfo?.Previous.Should().BeNullOrEmpty();
         }
 
         [Theory, AutoMoqData]
@@ -262,13 +258,13 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             viewModel.ProductCategory.Should().Be(productCategory);
             viewModel.ProductSubcategory.Should().Be(productSubcategory);
             viewModel.ProductCategories.Should().BeEquivalentTo(categories);
-            viewModel.Products.Count.Should().Be(3);
-            viewModel.PaginationInfo.ActualPage.Should().Be(3);
-            viewModel.PaginationInfo.ItemsPerPage.Should().Be(3);
-            viewModel.PaginationInfo.TotalItems.Should().Be(20);
-            viewModel.PaginationInfo.TotalPages.Should().Be(4);
-            viewModel.PaginationInfo.Next.Should().Be("disabled");
-            viewModel.PaginationInfo.Previous.Should().BeNullOrEmpty();
+            viewModel.Products?.Count.Should().Be(3);
+            viewModel.PaginationInfo?.ActualPage.Should().Be(3);
+            viewModel.PaginationInfo?.ItemsPerPage.Should().Be(3);
+            viewModel.PaginationInfo?.TotalItems.Should().Be(20);
+            viewModel.PaginationInfo?.TotalPages.Should().Be(4);
+            viewModel.PaginationInfo?.Next.Should().Be("disabled");
+            viewModel.PaginationInfo?.Previous.Should().BeNullOrEmpty();
         }
 
         [Theory, AutoMoqData]
@@ -286,7 +282,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
             );
 
             //Act
-            Func<Task> func = async () => await sut.Index(0, 5, null, null);
+            Func<Task> func = async () => await sut.Index(0, 5, string.Empty, string.Empty);
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()

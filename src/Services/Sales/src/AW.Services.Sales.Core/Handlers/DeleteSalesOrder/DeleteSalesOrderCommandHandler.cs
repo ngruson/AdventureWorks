@@ -29,7 +29,7 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
             Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
             _logger.LogInformation("Deleting sales order {@SalesOrder}", salesOrder);
-            await _repository.DeleteAsync(salesOrder, cancellationToken);
+            await _repository.DeleteAsync(salesOrder!, cancellationToken);
 
             _logger.LogInformation("Sales order {SalesOrderNumber} has been deleted", request.SalesOrderNumber);
             return Unit.Value;

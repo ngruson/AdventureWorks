@@ -7,6 +7,6 @@ namespace AW.Services.Product.Core.Entities
 
         public bool Primary { get; internal set; }
 
-        public ProductPhoto ProductPhoto { get; private set; }
+        public ProductPhoto? ProductPhoto { get; private set; }
     }
 }

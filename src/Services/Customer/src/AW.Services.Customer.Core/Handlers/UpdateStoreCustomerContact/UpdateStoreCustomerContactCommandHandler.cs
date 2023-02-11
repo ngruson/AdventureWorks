@@ -5,9 +5,6 @@ using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
 {
@@ -34,14 +31,14 @@ namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
             );
             Guard.Against.CustomerNull(storeCustomer, request.AccountNumber, _logger);
 
-            var contact = storeCustomer.Contacts.FirstOrDefault(c =>
+            var contact = storeCustomer?.Contacts.FirstOrDefault(c =>
                 c.ContactType == request.CustomerContact.ContactType
             );
             Guard.Against.StoreContactNull(
                 contact,
                 request.AccountNumber,
-                request.CustomerContact.ContactPerson.Name.FullName,
-                request.CustomerContact.ContactType,
+                request.CustomerContact.ContactPerson?.Name!.FullName,
+                request.CustomerContact.ContactType!,
                 _logger
             );
 
@@ -49,7 +46,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact
             _mapper.Map(request.CustomerContact, contact);
 
             _logger.LogInformation("Saving customer to database");
-            await _repository.UpdateAsync(storeCustomer, cancellationToken);
+            await _repository.UpdateAsync(storeCustomer!, cancellationToken);
 
             return Unit.Value;
         }

@@ -29,7 +29,7 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer
 
             _logger.LogInformation("Returning store customer {AccountNumber}", request.AccountNumber);
 
-            return customer;
+            return customer!;
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace AW.UI.Web.Store.ViewModels.Converters
 {
-    public class NumberToStringConverter : JsonConverter<string>
+    public class NumberToStringConverter : JsonConverter<string?>
     {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Number)
             {
@@ -23,7 +22,7 @@ namespace AW.UI.Web.Store.ViewModels.Converters
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value);
         }

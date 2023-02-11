@@ -440,10 +440,10 @@
                                     <h5>@address.AddressType address</h5>
                                 </div>
                                 <div>
-                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#editAddressModal-@address.AddressType.Replace(" ", "-")" href="#">
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#editAddressModal-@address.AddressType?.Replace(" ", "-")" href="#">
                                         <i class="bi-pencil-fill"></i>
                                     </a>
-                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#deleteAddressModal-@address.AddressType.Replace(" ", "-")" href="#">
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#deleteAddressModal-@address.AddressType?.Replace(" ", "-")" href="#">
                                         <i class="bi-trash"></i>
                                     </a>
                                 </div>
@@ -460,7 +460,7 @@
                                     <br>
                                 }
                                 @(address.Address.PostalCode), @(address.Address.City), @(address.Address.StateProvinceCode)<br>
-                                @(countries.SingleOrDefault(_ => _.Value == address.Address.CountryRegionCode).Text) <img class="avatar avatar-xss avatar-circle ms-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" onload="this.onload=null; this.src=getFlag('@address.Address.CountryRegionCode')">
+                                @(countries?.SingleOrDefault(_ => _.Value == address.Address.CountryRegionCode)?.Text) <img class="avatar avatar-xss avatar-circle ms-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" onload="this.onload=null; this.src=getFlag('@address.Address.CountryRegionCode')">
                             </span>
                         </li>
                     }

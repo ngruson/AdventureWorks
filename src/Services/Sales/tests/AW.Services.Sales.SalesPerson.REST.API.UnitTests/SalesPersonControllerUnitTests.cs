@@ -2,15 +2,11 @@ using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.Handlers.GetSalesPerson;
 using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using AW.Services.Sales.SalesPerson.REST.API.Controllers;
-using AW.SharedKernel.Extensions;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
@@ -39,8 +35,8 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as List<Core.Models.SalesPerson>;
-            result.Count.Should().Be(salesPersons.Count);
+            var result = okObjectResult?.Value as List<Core.Models.SalesPerson>;
+            result?.Count.Should().Be(salesPersons.Count);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -79,8 +75,8 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult.Value as Core.Models.SalesPerson;
-            result.Name.FullName.Should().Be(salesPerson.Name.FullName);
+            var result = okObjectResult?.Value as Core.Models.SalesPerson;
+            result!.Name!.FullName.Should().Be(salesPerson.Name!.FullName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -95,7 +91,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
                 It.IsAny<GetSalesPersonQuery>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Core.Handlers.GetSalesPerson.SalesPersonDto)null);
+            .ReturnsAsync((Core.Handlers.GetSalesPerson.SalesPersonDto?)null);
 
             //Act
             var actionResult = await sut.GetSalesPerson(query);

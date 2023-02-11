@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.OrderItems.ForEach(_ => _.UnitPriceDiscount = 0);
+            command.OrderItems?.ForEach(_ => _.UnitPriceDiscount = 0);
 
             creditCard.ExpMonth = byte.Parse(expirationDate.Month.ToString());
             creditCard.ExpYear = short.Parse(expirationDate.Year.ToString());
@@ -45,7 +45,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             ))
             .ReturnsAsync(creditCard);
 
-            specialOffers[0].SpecialOffer.Type = "No Discount";
+            specialOffers[0].SpecialOffer!.Type = "No Discount";
             specialOfferProductRepositoryMock.Setup(_ => _.ListAsync(
                 It.IsAny<ISpecification<SpecialOfferProduct>>(),
                 It.IsAny<CancellationToken>()
@@ -79,15 +79,15 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.OrderItems.ForEach(_ => _.UnitPriceDiscount = 0);
+            command.OrderItems?.ForEach(_ => _.UnitPriceDiscount = 0);
 
             creditCardRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetCreditCardSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((CreditCard)null);
+            .ReturnsAsync((CreditCard?)null);
 
-            specialOffers[0].SpecialOffer.Type = "No Discount";
+            specialOffers[0].SpecialOffer!.Type = "No Discount";
             specialOfferProductRepositoryMock.Setup(_ => _.ListAsync(
                 It.IsAny<ISpecification<SpecialOfferProduct>>(),
                 It.IsAny<CancellationToken>()

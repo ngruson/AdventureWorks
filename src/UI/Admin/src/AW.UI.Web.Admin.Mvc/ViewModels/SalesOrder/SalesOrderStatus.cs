@@ -1,6 +1,5 @@
 ﻿using Ardalis.SmartEnum;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
@@ -46,7 +45,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
             if (displayAttribute == null)
                 return Name;
 
-            return displayAttribute.Name;
+            return displayAttribute!.Name!;
         }
     }
 }

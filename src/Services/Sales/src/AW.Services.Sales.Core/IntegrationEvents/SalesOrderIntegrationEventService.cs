@@ -4,8 +4,6 @@ using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.SharedKernel.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.IntegrationEvents
 {
@@ -53,7 +51,7 @@ namespace AW.Services.Sales.Core.IntegrationEvents
                 try
                 {
                     await eventLogService.MarkEventAsInProgressAsync(logEvt.EventId);
-                    eventBus.Publish(logEvt.IntegrationEvent);
+                    eventBus.Publish(logEvt!.IntegrationEvent!);
                     await eventLogService.MarkEventAsPublishedAsync(logEvt.EventId);
                 }
                 catch (Exception ex)

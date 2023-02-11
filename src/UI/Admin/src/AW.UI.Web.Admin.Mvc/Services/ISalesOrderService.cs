@@ -1,6 +1,5 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
 using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {

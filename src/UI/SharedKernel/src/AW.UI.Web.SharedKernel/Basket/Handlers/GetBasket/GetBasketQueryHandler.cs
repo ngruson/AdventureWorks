@@ -27,7 +27,7 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.GetBasket
 
             _logger.LogInformation("Returning shopping basket for user ID {UserID}", request.UserID);
 
-            return basket;
+            return basket!;
         }
     }
 }

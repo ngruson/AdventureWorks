@@ -30,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomer
             Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Deleting customer from database");
-            await _repository.DeleteAsync(customer, cancellationToken);
+            await _repository.DeleteAsync(customer!, cancellationToken);
 
             return Unit.Value;
         }

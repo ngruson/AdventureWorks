@@ -7,36 +7,36 @@ namespace AW.UI.Web.Infrastructure.ApiClients
 {
     public static class StreamExtensions
     {
-        public static async Task<T> DeserializeAsync<T>(
+        public static async Task<T?> DeserializeAsync<T>(
             this Stream stream
         )
         {
-            return await JsonSerializer.DeserializeAsync<T>(stream);
+            return await JsonSerializer.DeserializeAsync<T?>(stream);
         }
 
-        public static async Task<T> DeserializeAsync<T>(
+        public static async Task<T?> DeserializeAsync<T>(
             this Stream stream,
             JsonSerializerOptions options
         )
         {
-            return await JsonSerializer.DeserializeAsync<T>(stream, options);
+            return await JsonSerializer.DeserializeAsync<T?>(stream, options);
         }
 
-        public static async Task<T> DeserializeAsync<T>(
+        public static async Task<T?> DeserializeAsync<T>(
             this Stream stream,
             CancellationToken cancellationToken
         )
         {
-            return await JsonSerializer.DeserializeAsync<T>(stream, (JsonSerializerOptions)null, cancellationToken);
+            return await JsonSerializer.DeserializeAsync<T?>(stream, (JsonSerializerOptions?)null, cancellationToken);
         }
 
-        public static async Task<T> DeserializeAsync<T>(
+        public static async Task<T?> DeserializeAsync<T>(
             this Stream stream,
             JsonSerializerOptions options,
             CancellationToken cancellationToken
         )
         {
-            return await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken);
+            return await JsonSerializer.DeserializeAsync<T?>(stream, options, cancellationToken);
         }
     }
 }

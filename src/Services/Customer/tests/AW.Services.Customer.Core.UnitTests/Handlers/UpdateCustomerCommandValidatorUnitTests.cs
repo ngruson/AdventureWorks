@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -19,37 +16,43 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task TestValidate_ValidCommand_NoValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
-            Entities.StoreCustomer customer,
             UpdateCustomerCommandValidator sut,
-            UpdateCustomerCommand command
+            string name,
+            string accountNumber
         )
         {
             //Arrange
-            command.Customer.AccountNumber = "1";
+            accountNumber = accountNumber[..10];
+
+            var command = new UpdateCustomerCommand(
+                new StoreCustomerDto
+                {
+                    AccountNumber = accountNumber
+                }
+            );
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(customer);
+            .ReturnsAsync(new Entities.StoreCustomer(name, accountNumber));
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(command => command.Customer);
-            result.ShouldNotHaveValidationErrorFor(command => command.Customer.AccountNumber);
+            result.ShouldNotHaveValidationErrorFor(command => command.Customer!.AccountNumber);
         }
 
         [Theory]
         [AutoMoqData]
         public void TestValidate_WithoutCustomer_ValidationError(
-            UpdateCustomerCommandValidator sut,
-            UpdateCustomerCommand command
+            UpdateCustomerCommandValidator sut
         )
         {
             //Arrange
-            command.Customer = null;
+            var command = new UpdateCustomerCommand(null);
 
             //Act
             var result = sut.TestValidate(command);
@@ -62,18 +65,17 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [Theory]
         [AutoMoqData]
         public void TestValidate_WithEmptyAccountNumber_ValidationError(
-            UpdateCustomerCommandValidator sut,
-            UpdateCustomerCommand command
+            UpdateCustomerCommandValidator sut
         )
         {
             //Arrange
-            command.Customer.AccountNumber = null;
+            var command = new UpdateCustomerCommand(new StoreCustomerDto());
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
+            result.ShouldHaveValidationErrorFor(command => command.Customer!.AccountNumber)
                 .WithErrorMessage("Account number is required");
         }
 
@@ -81,17 +83,19 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         [AutoMoqData]
         public void TestValidate_WithAccountNumberTooLong_ValidationError(
             UpdateCustomerCommandValidator sut,
-            UpdateCustomerCommand command
+            string accountNumber
         )
         {
             //Arrange
-            command.Customer.AccountNumber = "AW000000011";
+            var command = new UpdateCustomerCommand(
+                new StoreCustomerDto {  AccountNumber = accountNumber }
+            );
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
+            result.ShouldHaveValidationErrorFor(command => command.Customer!.AccountNumber)
                 .WithErrorMessage("Account number must not exceed 10 characters");
         }
 
@@ -100,7 +104,6 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task TestValidate_CustomerNotFound_ValidationError(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandValidator sut,
-            UpdateCustomerCommand command,
             string accountNumber,
             List<CustomerAddressDto> addresses,
             string contactType,
@@ -110,7 +113,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             //Arrange
             var customerDto = new StoreCustomerDto
             {
-                AccountNumber = accountNumber,
+                AccountNumber = accountNumber[..10],
                 Addresses = addresses,
                 Contacts = new List<StoreCustomerContactDto>
                 {
@@ -132,20 +135,21 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 }
             };
 
-            command.Customer = customerDto;
-            command.Customer.AccountNumber = command.Customer.AccountNumber.Substring(0, 10);
+            var command = new UpdateCustomerCommand(
+                customerDto
+            );
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.StoreCustomer)null);
+            .ReturnsAsync((Entities.StoreCustomer?)null);
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Customer.AccountNumber)
+            result.ShouldHaveValidationErrorFor(command => command.Customer!.AccountNumber)
                 .WithErrorMessage("Customer does not exist");
         }
     }

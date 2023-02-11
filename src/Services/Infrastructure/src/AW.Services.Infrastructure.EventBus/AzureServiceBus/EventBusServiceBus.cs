@@ -203,8 +203,8 @@ namespace AW.Services.Infrastructure.EventBus.AzureServiceBus
                         if (handler == null) continue;
                         var eventType = subsManager.GetEventTypeByName(eventName);
                         var integrationEvent = JsonSerializer.Deserialize(message, eventType);
-                        var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
-                        await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { integrationEvent });
+                        var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType!)!;
+                        await (Task)concreteType.GetMethod("Handle")!.Invoke(handler!, new object[] { integrationEvent! })!;
                     }
                 }
                 processed = true;

@@ -23,12 +23,12 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
             cache.Set(CacheKeys.Countries, countries, cacheEntryOptions);
 
-            return countries;
+            return countries!;
         }
 
         public async Task<List<Handlers.GetCountries.CountryRegion>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.Countries, out List<Handlers.GetCountries.CountryRegion> countries))
+            if (!cache.TryGetValue(CacheKeys.Countries, out List<Handlers.GetCountries.CountryRegion>? countries))
             {
                 countries = await Initialize();
             }

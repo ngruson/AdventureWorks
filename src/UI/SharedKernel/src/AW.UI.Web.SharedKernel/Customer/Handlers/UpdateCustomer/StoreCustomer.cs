@@ -7,7 +7,7 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer
     {
         public string? Name { get; set; }
         public string? SalesPerson { get; set; }
-        public List<StoreCustomerContact>? Contacts { get; set; }
+        public List<StoreCustomerContact?>? Contacts { get; set; }
 
         public void Mapping(Profile profile)
         {

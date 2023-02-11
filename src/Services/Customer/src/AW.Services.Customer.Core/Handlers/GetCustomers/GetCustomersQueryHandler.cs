@@ -4,16 +4,12 @@ using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomers
 {
-    public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersDto>
+    public class GetCustomersQueryHandler : IRequestHandler<GetCustomersQuery, GetCustomersDto?>
     {
         private readonly ILogger<GetCustomersQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -25,7 +21,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers
             IRepository<Entities.Customer> repository
         ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
-        public async Task<GetCustomersDto> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<GetCustomersDto?> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting customers from database");
@@ -44,14 +40,13 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers
             );
 
             var customers = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.CustomersNull(customers, _logger);
+            Guard.Against.CustomersNullOrEmpty(customers, _logger);
 
             _logger.LogInformation("Returning customers");
-            return new GetCustomersDto
-            {
-                Customers = _mapper.Map<List<CustomerDto>>(customers),
-                TotalCustomers = await _repository.CountAsync(countSpec, cancellationToken)
-            };
+            return new GetCustomersDto(
+                _mapper.Map<List<CustomerDto>>(customers),
+                await _repository.CountAsync(countSpec, cancellationToken)
+            );
         }
     }
 }

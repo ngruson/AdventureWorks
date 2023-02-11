@@ -5,8 +5,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
     public class SalesReasonViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesReason>
     {
-        public string Name { get; set; }
-        public string ReasonType { get; set; }
+        public string? Name { get; set; }
+        public string? ReasonType { get; set; }
 
         public void Mapping(Profile profile)
         {

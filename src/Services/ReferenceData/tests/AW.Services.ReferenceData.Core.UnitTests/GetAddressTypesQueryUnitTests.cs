@@ -49,7 +49,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
         {
             //Arrange
             addressTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((List<Entities.AddressType>)null);
+                .ReturnsAsync(new List<Entities.AddressType>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

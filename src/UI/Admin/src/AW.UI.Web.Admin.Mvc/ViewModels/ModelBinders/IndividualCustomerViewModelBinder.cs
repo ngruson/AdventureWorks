@@ -1,19 +1,18 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Linq;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 {
     public class IndividualCustomerViewModelBinder : ViewModelModelBinder<IndividualCustomerViewModel>
     {
-        protected override IndividualCustomerViewModel BuildViewModel(ModelBindingContext bindingContext)
+        protected override IndividualCustomerViewModel? BuildViewModel(ModelBindingContext bindingContext)
         {
             var form = bindingContext.HttpContext.Request.Form;
             var viewModel = base.BuildViewModel(bindingContext);
 
             foreach (var item in form.Where(_ => _.Key.StartsWith("email_")))
             {
-                viewModel.Person.EmailAddresses.Add(
+                viewModel?.Person?.EmailAddresses.Add(
                     new PersonEmailAddressViewModel
                     {
                         EmailAddress = item.Value
@@ -23,7 +22,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 
             foreach (var item in form.Where(_ => _.Key.StartsWith("phone_")))
             {
-                viewModel.Person.PhoneNumbers.Add(
+                viewModel?.Person?.PhoneNumbers.Add(
                     new PersonPhoneViewModel
                     {
                         PhoneNumber = item.Value,

@@ -7,9 +7,9 @@ namespace AW.Services.Customer.Core.Models.DeleteStoreCustomerContact
 {
     public class Person : IMapFrom<PersonDto>
     {
-        public string Title { get; set; }
-        public NameFactory Name { get; set; }
-        public string Suffix { get; set; }
+        public string? Title { get; set; }
+        public NameFactory? Name { get; set; }
+        public string? Suffix { get; set; }
 
         public void Mapping(Profile profile)
         {

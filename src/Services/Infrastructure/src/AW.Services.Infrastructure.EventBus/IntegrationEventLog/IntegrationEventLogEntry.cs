@@ -1,8 +1,6 @@
 ﻿using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.SharedKernel.Interfaces;
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text.Json;
 
 namespace AW.Services.Infrastructure.EventBus.IntegrationEventLog
@@ -15,29 +13,37 @@ namespace AW.Services.Infrastructure.EventBus.IntegrationEventLog
             EventId = @event.Id;
             CreationTime = @event.CreationDate;
             EventTypeName = @event.GetType().FullName;
-            Content = JsonSerializer.Serialize(@event, @event.GetType(), new JsonSerializerOptions
+            Content = JsonSerializer.Serialize(@event, @event!.GetType(), new JsonSerializerOptions
             {
                 WriteIndented = true
             });
             State = EventState.NotPublished;
             TimesSent = 0;
-            TransactionId = transactionId.ToString();
+            TransactionId = transactionId;
+            IntegrationEvent = @event;
         }
         public Guid EventId { get; private set; }
-        public string EventTypeName { get; private set; }
+        public string? EventTypeName { get; private set; }
         [NotMapped]
-        public string EventTypeShortName => EventTypeName.Split('.')?.Last();
+        public string? EventTypeShortName => EventTypeName?.Split('.')?.Last();
         [NotMapped]
-        public IntegrationEvent IntegrationEvent { get; private set; }
+        public IntegrationEvent? IntegrationEvent { get; private set; }
         public EventState State { get; set; }
         public int TimesSent { get; set; }
         public DateTime CreationTime { get; private set; }
-        public string Content { get; private set; }
-        public string TransactionId { get; private set; }
+        public string? Content { get; private set; }
+        public Guid TransactionId { get; private set; }
 
         public IntegrationEventLogEntry DeserializeJsonContent(Type type)
         {
-            IntegrationEvent = JsonSerializer.Deserialize(Content, type, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }) as IntegrationEvent;
+            IntegrationEvent = JsonSerializer.Deserialize(
+                Content!,
+                type,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }) as IntegrationEvent;
+
             return this;
         }
     }

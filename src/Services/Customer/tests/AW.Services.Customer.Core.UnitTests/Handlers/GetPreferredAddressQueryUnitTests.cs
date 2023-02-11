@@ -143,7 +143,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Entities.IndividualCustomer)null);
+                .ReturnsAsync((Entities.IndividualCustomer?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
@@ -285,7 +285,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Entities.IndividualCustomer)null);
+                .ReturnsAsync((Entities.IndividualCustomer?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
@@ -467,7 +467,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Entities.StoreCustomer)null);
+                .ReturnsAsync((Entities.StoreCustomer?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
@@ -649,7 +649,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                     It.IsAny<GetCustomerAddressesSpecification>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Entities.StoreCustomer)null);
+                .ReturnsAsync((Entities.StoreCustomer?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

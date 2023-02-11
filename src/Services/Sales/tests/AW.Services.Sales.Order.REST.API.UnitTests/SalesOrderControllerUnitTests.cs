@@ -8,13 +8,9 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
-using System;
 using AW.Services.Sales.Core.Handlers.Identified;
 using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
 using AW.Services.Sales.Core.Handlers.CancelSalesOrder;
@@ -22,7 +18,6 @@ using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
 using AW.Services.Sales.Core.Handlers.DuplicateSalesOrder;
 using AW.Services.Sales.Core.Exceptions;
-using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 
 namespace AW.Services.Sales.Order.REST.API.UnitTests
 {
@@ -61,8 +56,8 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Core.Models.SalesOrdersResult;
-                result.SalesOrders.Count.Should().Be(salesOrders.Count);
+                var result = okObjectResult!.Value as Core.Models.SalesOrdersResult;
+                result!.SalesOrders!.Count.Should().Be(salesOrders.Count);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -94,11 +89,10 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 //Arrange
                 salesOrders.ForEach(_ => _.Customer = customer);
 
-                var dto = new salesOrdersForCustomers.GetSalesOrdersDto
-                {
-                    SalesOrders = salesOrders,
-                    TotalSalesOrders = salesOrders.Count
-                };
+                var dto = new salesOrdersForCustomers.GetSalesOrdersDto(
+                    salesOrders,
+                    salesOrders.Count
+                );
 
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<salesOrdersForCustomers.GetSalesOrdersForCustomerQuery>(),
@@ -113,8 +107,8 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Core.Models.SalesOrdersResult;
-                result.SalesOrders.Count.Should().Be(salesOrders.Count);
+                var result = okObjectResult!.Value as Core.Models.SalesOrdersResult;
+                result!.SalesOrders!.Count.Should().Be(salesOrders.Count);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -155,8 +149,8 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Core.Models.SalesOrder;
-                result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
+                var result = okObjectResult?.Value as Core.Models.SalesOrder;
+                result?.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -168,7 +162,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             {
                 //Arrange            
                 mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync((Core.Handlers.GetSalesOrder.SalesOrderDto)null);
+                    .ReturnsAsync((Core.Handlers.GetSalesOrder.SalesOrderDto?)null);
 
                 //Act
                 var actionResult = await sut.GetSalesOrder(query);
@@ -202,13 +196,13 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 .ReturnsAsync(dto);
 
                 //Act
-                var actionResult = await sut.UpdateSalesOrder(salesOrder.SalesOrderNumber, salesOrder);
+                var actionResult = await sut.UpdateSalesOrder(salesOrder.SalesOrderNumber!, salesOrder);
 
                 //Assert
                 var okResult = actionResult as OkObjectResult;
                 okResult.Should().NotBeNull();
 
-                var updatedSalesOrder = okResult.Value as Core.Models.SalesOrder;
+                var updatedSalesOrder = okResult!.Value as Core.Models.SalesOrder;
                 updatedSalesOrder.Should().NotBeNull();
             }
         }

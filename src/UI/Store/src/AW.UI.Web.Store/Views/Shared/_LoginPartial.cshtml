@@ -6,7 +6,7 @@
     <div class="text_account_wrapper pull-right">
         @if (User.FindFirst(x => x.Type == "given_name") != null)
         {
-            <div class="header_transaction">Welcome @User.FindFirst(x => x.Type == "given_name").Value</div>
+            <div class="header_transaction">Welcome @User.FindFirst(x => x.Type == "given_name")!.Value</div>
 
             <div class="header_transaction header_account">
                 <a href="#" title="My Account" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-o faicons"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span> <span class="caret"></span></a>

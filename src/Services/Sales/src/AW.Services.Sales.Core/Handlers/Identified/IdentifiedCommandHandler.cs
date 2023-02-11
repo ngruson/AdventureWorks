@@ -3,14 +3,11 @@ using AW.Services.Sales.Core.Idempotency;
 using AW.Services.Infrastructure.EventBus.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.Identified
 {
-    public class IdentifiedCommandHandler<T, R> : IRequestHandler<IdentifiedCommand<T, R>, R>
-        where T : IRequest<R>
+    public class IdentifiedCommandHandler<T, R> : IRequestHandler<IdentifiedCommand<T, R?>, R?>
+        where T : IRequest<R?>
     {
         private readonly ILogger<IdentifiedCommandHandler<T, R>> _logger;
         private readonly IMediator _mediator;
@@ -26,7 +23,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
         /// Creates the result value to return if a previous request was found
         /// </summary>
         /// <returns></returns>
-        protected virtual R CreateResultForDuplicateRequest()
+        protected virtual R? CreateResultForDuplicateRequest()
         {
             return default;
         }
@@ -37,7 +34,7 @@ namespace AW.Services.Sales.Core.Handlers.Identified
         /// </summary>
         /// <param name="request">IdentifiedCommand which contains both original command & request ID</param>
         /// <returns>Return value of inner command or default value if request same ID was found</returns>
-        public async Task<R> Handle(IdentifiedCommand<T, R> request, CancellationToken cancellationToken)
+        public async Task<R?> Handle(IdentifiedCommand<T, R?> request, CancellationToken cancellationToken)
         {
             var alreadyExists = await _requestManager.ExistAsync(request.Id);
             if (alreadyExists)

@@ -1,18 +1,13 @@
 ﻿using sh_int = AW.SharedKernel.Interfaces;
 using AW.SharedKernel.JsonConverters;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System;
 using GetCustomers = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
 using GetCustomer = AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using UpdateCustomer = AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
@@ -44,18 +39,18 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             CustomerConverter<UpdateCustomer.Customer, UpdateCustomer.StoreCustomer, UpdateCustomer.IndividualCustomer> converterUpdateCustomer
         ) => (_client, _logger, _converterGetCustomers, _converterGetCustomer, _converterUpdateCustomer) = (client, logger, converterGetCustomers, converterGetCustomer, converterUpdateCustomer);
 
-        public async Task<GetCustomers.GetCustomersResponse> GetCustomersAsync(
+        public async Task<GetCustomers.GetCustomersResponse?> GetCustomersAsync(
             int pageIndex,
             int pageSize,
-            string territory,
+            string? territory,
             sh_int.CustomerType? customerType,
-            string accountNumber
+            string? accountNumber
         )
         {
             string requestUri = $"Customer?api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
             string logMessage = "Getting customers with page index {PageIndex}, page size {PageSize}";
 
-            var args = new List<object> { pageIndex, pageSize };
+            var args = new List<object?> { pageIndex, pageSize };
 
             if (!string.IsNullOrEmpty(territory))
             {
@@ -84,7 +79,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<GetCustomers.GetCustomersResponse>(
+            return await stream.DeserializeAsync<GetCustomers.GetCustomersResponse?>(
                 new JsonSerializerOptions
                 {
                     Converters =
@@ -97,12 +92,12 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             );
         }
 
-        public async Task<GetCustomer.Customer> GetCustomerAsync(string accountNumber)
+        public async Task<GetCustomer.Customer?> GetCustomerAsync(string? accountNumber)
         {
-            return await GetCustomerAsync<GetCustomer.Customer>(accountNumber);
+            return await GetCustomerAsync<GetCustomer.Customer?>(accountNumber);
         }
 
-        public async Task<T> GetCustomerAsync<T>(string accountNumber)
+        public async Task<T?> GetCustomerAsync<T>(string? accountNumber)
         {
             _logger.LogInformation("Getting customer with account number {AccountNumber}", accountNumber);
 
@@ -112,7 +107,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
 
-                return await stream.DeserializeAsync<T>(
+                return await stream.DeserializeAsync<T?>(
                     new JsonSerializerOptions
                     {
                         Converters =
@@ -131,7 +126,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             }
         }
 
-        public async Task<SharedKernel.Customer.Handlers.GetPreferredAddress.Address> GetPreferredAddressAsync(string accountNumber, string addressType)
+        public async Task<SharedKernel.Customer.Handlers.GetPreferredAddress.Address?> GetPreferredAddressAsync(string? accountNumber, string? addressType)
         {
             _logger.LogInformation("Getting preferred address for address type {AddressType} for customer {AccountNumber}", addressType, accountNumber);
 
@@ -141,7 +136,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
 
-                return await stream.DeserializeAsync<SharedKernel.Customer.Handlers.GetPreferredAddress.Address>(
+                return await stream.DeserializeAsync<SharedKernel.Customer.Handlers.GetPreferredAddress.Address?>(
                     new JsonSerializerOptions
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -155,7 +150,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             }
         }
 
-        public async Task<UpdateCustomer.Customer> UpdateCustomerAsync(string accountNumber, UpdateCustomer.Customer customer)
+        public async Task<UpdateCustomer.Customer?> UpdateCustomerAsync(string? accountNumber, UpdateCustomer.Customer customer)
         {
             _logger.LogInformation("Updating customer with account number {AccountNumber}", accountNumber);
             string requestUri = $"Customer/{accountNumber}?&api-version=1.0";

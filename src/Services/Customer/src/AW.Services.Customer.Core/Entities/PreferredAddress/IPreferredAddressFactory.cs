@@ -2,6 +2,6 @@
 {
     public interface IPreferredAddressFactory
     {
-        Address GetPreferredAddress(string addressType);
+        Address? GetPreferredAddress(string addressType);
     }
 }

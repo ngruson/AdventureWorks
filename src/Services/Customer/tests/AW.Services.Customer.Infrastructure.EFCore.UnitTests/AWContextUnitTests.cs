@@ -1,14 +1,13 @@
 ﻿using Entities = AW.Services.Customer.Core.Entities;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using Xunit;
 using AW.Services.SharedKernel.EFCore;
 using AW.SharedKernel.UnitTesting;
 using Moq;
 using MediatR;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
+using Microsoft.Extensions.Logging;
 
 namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
 {
@@ -16,7 +15,8 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
     {
         [Theory, AutoMoqData]
         public void CreateDatabase_ModelConfigurationsAreApplied(
-            Mock<IMediator> mockMediator
+            Mock<IMediator> mockMediator,
+            Mock<ILogger<AWContext>> mockLogger
         )
         {
             //Arrange
@@ -25,6 +25,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
                 .Options;
                 
             var context = new AWContext(
+                mockLogger.Object,
                 contextOptions,
                 mockMediator.Object,
                 typeof(CustomerConfiguration).Assembly

@@ -6,9 +6,9 @@ namespace AW.Services.Sales.Core.Models
 {
     public class IndividualCustomer : Customer, IMapFrom<Handlers.GetSalesOrders.IndividualCustomerDto>
     {
-        public string Title { get; set; }
-        public NameFactory Name { get; set; }
-        public string Suffix { get; set; }
+        public string? Title { get; set; }
+        public NameFactory? Name { get; set; }
+        public string? Suffix { get; set; }
 
         public void Mapping(Profile profile)
         {

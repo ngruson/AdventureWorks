@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System;
-using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Models
 {
@@ -15,28 +13,28 @@ namespace AW.Services.Sales.Core.Models
 
         public DateTime? ShipDate { get; set; }
 
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string? SalesOrderNumber { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string? PurchaseOrderNumber { get; set; }
 
-        public string AccountNumber { get; set; }
-        public Customer Customer { get; set; }
+        public string? AccountNumber { get; set; }
+        public Customer? Customer { get; set; }
 
-        public SalesOrderSalesPerson SalesPerson { get; set; }
+        public SalesOrderSalesPerson? SalesPerson { get; set; }
 
-        public string Territory { get; set; }
+        public string? Territory { get; set; }
 
-        public Address BillToAddress { get; set; }
+        public Address? BillToAddress { get; set; }
 
-        public Address ShipToAddress { get; set; }
+        public Address? ShipToAddress { get; set; }
 
-        public string ShipMethod { get; set; }
+        public string? ShipMethod { get; set; }
 
-        public CreditCard CreditCard { get; set; }
+        public CreditCard? CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 
@@ -46,11 +44,11 @@ namespace AW.Services.Sales.Core.Models
 
         public decimal TotalDue { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
-        public List<SalesOrderLine> OrderLines { get; set; }
+        public List<SalesOrderLine>? OrderLines { get; set; }
 
-        public List<SalesReason> SalesReasons { get; set; }
+        public List<SalesReason>? SalesReasons { get; set; }
 
         public void Mapping(Profile profile)
         {

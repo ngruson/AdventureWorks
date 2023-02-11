@@ -1,16 +1,10 @@
 ﻿using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.IntegrationEvents.EventHandling;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
-using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
-using FluentAssertions;
 using MediatR;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
@@ -54,80 +48,6 @@ namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
                 It.IsAny<IRequest<bool>>(),
                 It.IsAny<CancellationToken>()
             ), Times.Never);
-        }
-
-        [Fact]
-        public void Create_ApplicationParamIsNull_ThrowArgumentNullException()
-        {
-            //Arrange
-
-            //Act
-            Action act = () => _ = new UserCheckoutAcceptedIntegrationEventHandler(
-                null,
-                null,
-                null,
-                null
-            );
-
-            //Assert
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        [Theory, AutoMoqData]
-        public void Create_MediatorParamIsNull_ThrowArgumentNullException(
-            Mock<IApplication> mockApplication
-        )
-        {
-            //Arrange
-
-            //Act
-            Action act = () => _ = new UserCheckoutAcceptedIntegrationEventHandler(
-                mockApplication.Object,
-                null, null, null
-            );
-
-            //Assert
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        [Theory, AutoMoqData]
-        public void Create_MapperParamIsNull_ThrowArgumentNullException(
-            Mock<IApplication> mockApplication,
-            Mock<IMediator> mockMediator
-        )
-        {
-            //Arrange
-
-            //Act
-            Action act = () => _ = new UserCheckoutAcceptedIntegrationEventHandler(
-                mockApplication.Object,
-                mockMediator.Object,
-                null, null
-            );
-
-            //Assert
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        [Theory, AutoMoqData]
-        public void Create_LoggerParamIsNull_ThrowArgumentNullException(
-            Mock<IApplication> mockApplication,
-            Mock<IMediator> mockMediator,
-            Mock<IMapper> mockMapper
-        )
-        {
-            //Arrange
-
-            //Act
-            Action act = () => _ = new UserCheckoutAcceptedIntegrationEventHandler(
-                mockApplication.Object,
-                mockMediator.Object,
-                mockMapper.Object,
-                null
-            );
-
-            //Assert
-            act.Should().Throw<ArgumentNullException>();
         }
     }
 }

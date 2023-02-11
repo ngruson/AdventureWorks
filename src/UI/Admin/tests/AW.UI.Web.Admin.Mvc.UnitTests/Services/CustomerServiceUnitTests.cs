@@ -62,17 +62,17 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 var viewModel = await sut.GetCustomers(0, 10, null, CustomerType.Store, null);
 
                 //Assert
-                viewModel.Customers.Count.Should().Be(10);
-                viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
-                viewModel.CustomerTypes.Count().Should().Be(3);
+                viewModel.Customers?.Count.Should().Be(10);
+                viewModel.Territories?.ToList().Count.Should().Be(4);
+                viewModel.Territories?.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.CustomerTypes?.Count().Should().Be(3);
                 viewModel.PaginationInfo.Should().NotBeNull();
-                viewModel.PaginationInfo.ActualPage.Should().Be(0);
-                viewModel.PaginationInfo.ItemsPerPage.Should().Be(10);
-                viewModel.PaginationInfo.TotalItems.Should().Be(100);
-                viewModel.PaginationInfo.TotalPages.Should().Be(10);
-                viewModel.PaginationInfo.Next.Should().Be("");
-                viewModel.PaginationInfo.Previous.Should().Be("disabled");
+                viewModel.PaginationInfo?.ActualPage.Should().Be(0);
+                viewModel.PaginationInfo?.ItemsPerPage.Should().Be(10);
+                viewModel.PaginationInfo?.TotalItems.Should().Be(100);
+                viewModel.PaginationInfo?.TotalPages.Should().Be(10);
+                viewModel.PaginationInfo?.Next.Should().Be("");
+                viewModel.PaginationInfo?.Previous.Should().Be("disabled");
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -107,17 +107,17 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 var viewModel = await sut.GetCustomers(9, 10, null, CustomerType.Store, null);
 
                 //Assert
-                viewModel.Customers.Count.Should().Be(10);
-                viewModel.Territories.ToList().Count.Should().Be(4);
-                viewModel.Territories.ToList()[0].Text.Should().Be("--Select--");
-                viewModel.CustomerTypes.Count().Should().Be(3);
-                viewModel.PaginationInfo.Should().NotBeNull();
-                viewModel.PaginationInfo.ActualPage.Should().Be(9);
-                viewModel.PaginationInfo.ItemsPerPage.Should().Be(10);
-                viewModel.PaginationInfo.TotalItems.Should().Be(100);
-                viewModel.PaginationInfo.TotalPages.Should().Be(10);
-                viewModel.PaginationInfo.Next.Should().Be("disabled");
-                viewModel.PaginationInfo.Previous.Should().Be("");
+                viewModel.Customers?.Count.Should().Be(10);
+                viewModel.Territories?.ToList().Count.Should().Be(4);
+                viewModel.Territories?.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.CustomerTypes?.Count().Should().Be(3);
+                viewModel.PaginationInfo?.Should().NotBeNull();
+                viewModel.PaginationInfo?.ActualPage.Should().Be(9);
+                viewModel.PaginationInfo?.ItemsPerPage.Should().Be(10);
+                viewModel.PaginationInfo?.TotalItems.Should().Be(100);
+                viewModel.PaginationInfo?.TotalPages.Should().Be(10);
+                viewModel.PaginationInfo?.Next.Should().Be("disabled");
+                viewModel.PaginationInfo?.Previous.Should().Be("");
             }
         }
 
@@ -292,7 +292,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             )
             {
                 //Arrange
-                viewModel.AddressType = customer.Addresses[0].AddressType;
+                viewModel.AddressType = customer.Addresses?[0].AddressType;
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomerQuery>(),
@@ -321,7 +321,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             )
             {
                 //Arrange
-                viewModel.AddressType = customer.Addresses[0].AddressType;
+                viewModel.AddressType = customer.Addresses?[0].AddressType;
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomerQuery>(),
@@ -397,12 +397,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Act
                 var selectListItems = await sut.GetStatesProvinces(countryRegionCode);
-                var list = selectListItems.ToList();
+                var list = selectListItems?.ToList();
 
                 //Assert
-                list.Count.Should().Be(4);
-                list[0].Value.Should().Be("");
-                list[0].Text.Should().Be("--Select--");
+                list?.Count.Should().Be(4);
+                list?[0].Value.Should().Be("");
+                list?[0].Text.Should().Be("--Select--");
             }
         }
 
@@ -453,7 +453,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 //Act
                 await sut.DeleteAddress(
                     customer.AccountNumber,
-                    customer.Addresses[0].AddressType
+                    customer.Addresses?[0].AddressType
                 );
 
                 //Assert
@@ -489,8 +489,8 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert
                 viewModel.IsNewContact.Should().Be(true);
-                viewModel.ContactTypes.Count().Should().Be(4);
-                viewModel.ContactTypes.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.ContactTypes?.Count().Should().Be(4);
+                viewModel.ContactTypes?.ToList()[0].Text.Should().Be("--Select--");
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -552,8 +552,8 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 
                 //Assert            
                 viewModel.IsNewContact.Should().Be(false);
-                viewModel.ContactTypes.Count().Should().Be(4);
-                viewModel.ContactTypes.ToList()[0].Text.Should().Be("--Select--");
+                viewModel.ContactTypes?.Count().Should().Be(4);
+                viewModel.ContactTypes?.ToList()[0].Text.Should().Be("--Select--");
             }
         }
 
@@ -570,8 +570,8 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             {
                 //Arrange
                 mapper.Map(
-                    customer.Contacts[0].ContactPerson.Name,
-                    viewModel.CustomerContact.ContactPerson.Name
+                    customer.Contacts?[0].ContactPerson?.Name,
+                    viewModel.CustomerContact?.ContactPerson.Name
                 );
 
                 mockMediator.Setup(_ => _.Send(
@@ -613,7 +613,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 //Act
                 await sut.DeleteContact(
                     customer.AccountNumber,
-                    customer.Contacts[0].ContactPerson.Name.FullName
+                    customer.Contacts?[0].ContactPerson?.Name?.FullName
                 );
 
                 //Assert

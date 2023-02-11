@@ -1,8 +1,6 @@
 ﻿using AW.UI.Web.SharedKernel.Interfaces.Api;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
@@ -11,10 +9,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients
         private readonly HttpClient client;
         private readonly ILogger logger;
 
-        public BasketApiClient(HttpClient client, ILogger<BasketApiClient> logger) =>
+        public BasketApiClient(HttpClient client, ILogger<BasketApiClient?> logger) =>
             (this.client, this.logger) = (client, logger);
 
-        public async Task CheckoutAsync(SharedKernel.Basket.Handlers.Checkout.BasketCheckout basket)
+        public async Task CheckoutAsync(SharedKernel.Basket.Handlers.Checkout.BasketCheckout? basket)
         {
             string requestUri = "Basket/checkout?api-version=1.0";
 
@@ -23,7 +21,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket> GetBasketAsync(string userID)
+        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket?> GetBasketAsync(string? userID)
         {
             string requestUri = $"Basket/{userID}?api-version=1.0";
             logger.LogInformation("Getting basket");
@@ -40,7 +38,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 });
         }
 
-        public async Task<SharedKernel.Basket.Handlers.UpdateBasket.Basket> UpdateBasketAsync(SharedKernel.Basket.Handlers.UpdateBasket.Basket basket)
+        public async Task<SharedKernel.Basket.Handlers.UpdateBasket.Basket?> UpdateBasketAsync(SharedKernel.Basket.Handlers.UpdateBasket.Basket? basket)
         {
             string requestUri = "Basket?api-version=1.0";
 

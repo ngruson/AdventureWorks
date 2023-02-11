@@ -5,13 +5,10 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
 {
-    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<SalesPersonDto>>
+    public class GetSalesPersonsQueryHandler : IRequestHandler<GetSalesPersonsQuery, List<SalesPersonDto>?>
     {
         private readonly ILogger<GetSalesPersonsQueryHandler> logger;
         private readonly IMapper mapper;
@@ -20,7 +17,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
         public GetSalesPersonsQueryHandler(ILogger<GetSalesPersonsQueryHandler> logger, IRepository<Entities.SalesPerson> repository, IMapper mapper) =>
             (this.logger, this.repository, this.mapper) = (logger, repository, mapper);
         
-        public async Task<List<SalesPersonDto>> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
+        public async Task<List<SalesPersonDto>?> Handle(GetSalesPersonsQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handle called");            
 

@@ -29,7 +29,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.AddressType.GetAddressTypes
             _logger.LogInformation("Getting address types from database");
             var addressTypes = await _repository.ListAsync(cancellationToken);
 
-            Guard.Against.AddressTypesNull(addressTypes, _logger);
+            Guard.Against.AddressTypesNullOrEmpty(addressTypes, _logger);
 
             _logger.LogInformation("Returning address types");
             return _mapper.Map<List<AddressType>>(addressTypes);

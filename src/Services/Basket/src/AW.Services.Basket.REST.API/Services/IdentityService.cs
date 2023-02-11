@@ -1,9 +1,4 @@
 ﻿using AW.Services.Basket.Core;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Linq;
-using System.Security.Claims;
 
 namespace AW.Services.Basket.REST.API.Services
 {
@@ -16,14 +11,14 @@ namespace AW.Services.Basket.REST.API.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public string GetUserIdentity()
+        public string? GetUserIdentity()
         {            
-            return context.HttpContext.User.FindFirst("sub").Value;
+            return context.HttpContext?.User.FindFirst("sub")?.Value;
         }
 
-        public string GetUserName()
+        public string? GetUserName()
         {
-            return context.HttpContext.User.FindFirst(x => x.Type == "name").Value;
+            return context.HttpContext?.User.FindFirst(x => x.Type == "name")?.Value;
         }
     }
 }

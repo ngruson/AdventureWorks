@@ -1,15 +1,14 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.ReferenceData.Core.Exceptions;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace AW.Services.ReferenceData.Core.GuardClauses
 {
     public static class GuardClauses
     {
-        public static void AddressTypesNull(this IGuardClause guardClause, List<Entities.AddressType> addressTypes, ILogger logger)
+        public static void AddressTypesNullOrEmpty(this IGuardClause guardClause, List<Entities.AddressType> addressTypes, ILogger logger)
         {
-            if (addressTypes == null)
+            if (addressTypes == null || addressTypes.Count == 0)
             {
                 var ex = new AddressTypesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -17,9 +16,9 @@ namespace AW.Services.ReferenceData.Core.GuardClauses
             }
         }
 
-        public static void ContactTypesNull(this IGuardClause guardClause, List<Entities.ContactType> contactTypes, ILogger logger)
+        public static void ContactTypesNullOrEmpty(this IGuardClause guardClause, List<Entities.ContactType> contactTypes, ILogger logger)
         {
-            if (contactTypes == null)
+            if (contactTypes == null || contactTypes.Count == 0)
             {
                 var ex = new ContactTypesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -27,9 +26,9 @@ namespace AW.Services.ReferenceData.Core.GuardClauses
             }
         }
 
-        public static void CountriesNull(this IGuardClause guardClause, List<Entities.CountryRegion> countries, ILogger logger)
+        public static void CountriesNullOrEmpty(this IGuardClause guardClause, List<Entities.CountryRegion> countries, ILogger logger)
         {
-            if (countries == null)
+            if (countries == null || countries.Count == 0 )
             {
                 var ex = new CountriesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -37,9 +36,9 @@ namespace AW.Services.ReferenceData.Core.GuardClauses
             }
         }
 
-        public static void ShipMethodsNull(this IGuardClause guardClause, List<Entities.ShipMethod> shipMethods, ILogger logger)
+        public static void ShipMethodsNullOrEmpty(this IGuardClause guardClause, List<Entities.ShipMethod> shipMethods, ILogger logger)
         {
-            if (shipMethods == null)
+            if (shipMethods == null || shipMethods.Count == 0 )
             {
                 var ex = new ShipMethodsNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -47,9 +46,9 @@ namespace AW.Services.ReferenceData.Core.GuardClauses
             }
         }
 
-        public static void StatesProvincesNull(this IGuardClause guardClause, List<Entities.StateProvince> statesProvinces, ILogger logger)
+        public static void StatesProvincesNullOrEmpty(this IGuardClause guardClause, List<Entities.StateProvince> statesProvinces, ILogger logger)
         {
-            if (statesProvinces == null)
+            if (statesProvinces == null || statesProvinces.Count == 0 )
             {
                 var ex = new StatesProvincesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -57,9 +56,9 @@ namespace AW.Services.ReferenceData.Core.GuardClauses
             }
         }
 
-        public static void TerritoriesNull(this IGuardClause guardClause, List<Entities.Territory> territories, ILogger logger)
+        public static void TerritoriesNullOrEmpty(this IGuardClause guardClause, List<Entities.Territory> territories, ILogger logger)
         {
-            if (territories == null)
+            if ((territories == null) || territories.Count == 0)
             {
                 var ex = new TerritoriesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);

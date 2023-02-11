@@ -11,10 +11,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.REST.API.UnitTests
@@ -33,11 +29,10 @@ namespace AW.Services.Customer.REST.API.UnitTests
             )
             {
                 //Arrange
-                var dto = new GetCustomersDto
-                {
-                    TotalCustomers = customers.Count,
-                    Customers = customers.ToList<Core.Handlers.GetCustomer.CustomerDto>()
-                };
+                var dto = new GetCustomersDto(
+                    customers.ToList<Core.Handlers.GetCustomer.CustomerDto>(),
+                    customers.Count
+                );
 
                 mockMediator.Setup(x => x.Send(It.IsAny<GetCustomersQuery>(), It.IsAny<CancellationToken>()))
                     .ReturnsAsync(dto);
@@ -49,11 +44,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult.Value as Models.GetCustomers.GetCustomersResult;
-                response.TotalCustomers.Should().Be(customers.Count);
-                response.Customers.Count.Should().Be(customers.Count);
-                response.Customers[0].AccountNumber.Should().Be(customers[0].AccountNumber);
-                response.Customers[1].AccountNumber.Should().Be(customers[1].AccountNumber);
+                var response = okObjectResult?.Value as Models.GetCustomers.GetCustomersResult;
+                response?.TotalCustomers.Should().Be(customers.Count);
+                response?.Customers!.Count.Should().Be(customers.Count);
+                response?.Customers![0].AccountNumber.Should().Be(customers[0].AccountNumber);
+                response?.Customers![1].AccountNumber.Should().Be(customers[1].AccountNumber);
             }
 
             [Theory]
@@ -69,7 +64,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     It.IsAny<GetCustomersQuery>(), 
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((GetCustomersDto)null);
+                .ReturnsAsync((GetCustomersDto?)null);
 
                 //Act
                 var actionResult = await sut.GetCustomers(query);
@@ -105,7 +100,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Core.Models.GetCustomer.Customer;
+                var result = okObjectResult?.Value as Core.Models.GetCustomer.Customer;
                 result.Should().NotBeNull();
             }
 
@@ -118,11 +113,13 @@ namespace AW.Services.Customer.REST.API.UnitTests
             )
             {
                 //Arrange
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<GetCustomerQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Core.Handlers.GetCustomer.CustomerDto)null);
+                .ReturnsAsync((Core.Handlers.GetCustomer.CustomerDto?)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
                 //Act
                 var actionResult = await sut.GetCustomer(query);
@@ -158,7 +155,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult.Value as Core.Handlers.GetPreferredAddress.AddressDto;
+                var result = okObjectResult?.Value as Core.Handlers.GetPreferredAddress.AddressDto;
                 result.Should().Be(address);
             }
 
@@ -175,7 +172,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     It.IsAny<GetPreferredAddressQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Core.Handlers.GetPreferredAddress.AddressDto)null);
+                .ReturnsAsync((Core.Handlers.GetPreferredAddress.AddressDto?)null);
 
                 //Act
                 var actionResult = await sut.GetPreferredAddress(query);
@@ -202,7 +199,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var createdResult = actionResult as CreatedResult;
                 createdResult.Should().NotBeNull();
 
-                var customer = createdResult.Value as Core.Handlers.AddCustomer.CustomerDto;
+                var customer = createdResult?.Value as Core.Handlers.AddCustomer.CustomerDto;
                 customer.Should().NotBeNull();
             }
         }
@@ -244,7 +241,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okResult = actionResult as OkObjectResult;
                 okResult.Should().NotBeNull();
 
-                var updatedCustomer = okResult.Value as Core.Models.UpdateCustomer.Customer;
+                var updatedCustomer = okResult?.Value as Core.Models.UpdateCustomer.Customer;
                 updatedCustomer.Should().NotBeNull();
             }
         }

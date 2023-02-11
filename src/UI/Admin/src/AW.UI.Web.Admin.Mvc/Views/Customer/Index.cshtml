@@ -2,7 +2,7 @@
     ViewData["Title"] = "Customers";
     @model CustomersIndexViewModel;
 
-    string customerType = "";
+    string? customerType = "";
     if (Context.Request.Query.ContainsKey("customerType"))
         customerType = Context.Request.Query["customerType"];
 }

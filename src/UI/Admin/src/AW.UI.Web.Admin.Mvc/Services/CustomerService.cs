@@ -2,11 +2,6 @@
 using AutoMapper;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
 using MediatR;
@@ -42,7 +37,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _mediator = mediator;
         }
 
-        public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string territory, CustomerType? customerType, string accountNumber)
+        public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string? territory, CustomerType? customerType, string? accountNumber)
         {
             _logger.LogInformation("GetCustomers called");
             var response = await _mediator.Send(new GetCustomersQuery(
@@ -54,27 +49,27 @@ namespace AW.UI.Web.Admin.Mvc.Services
                 )
             );
 
+            var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalCustomers / pageSize).ToString());
+
             var vm = new CustomersIndexViewModel
             {
                 Customers = _mapper.Map<List<CustomerViewModel>>(response.Customers),
                 Territories = await GetTerritories(),
                 CustomerTypes = GetCustomerTypes(),
-                PaginationInfo = new PaginationInfoViewModel()
-                {
-                    ActualPage = pageIndex,
-                    ItemsPerPage = response.Customers.Count,
-                    TotalItems = response.TotalCustomers,
-                    TotalPages = int.Parse(Math.Ceiling((decimal)response.TotalCustomers / pageSize).ToString())
-                }
+                PaginationInfo = new PaginationInfoViewModel(
+                    response.TotalCustomers,
+                    response.Customers!.Count,
+                    pageIndex,
+                    totalPages,
+                    pageIndex == 0 ? "disabled" : "",
+                    pageIndex == totalPages - 1 ? "disabled" : ""
+                )
             };
-
-            vm.PaginationInfo.Next = vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1 ? "disabled" : "";
-            vm.PaginationInfo.Previous = vm.PaginationInfo.ActualPage == 0 ? "disabled" : "";
 
             return vm;
         }
 
-        public async Task<CustomerViewModel> GetCustomer(string accountNumber)
+        public async Task<CustomerViewModel> GetCustomer(string? accountNumber)
         {
             _logger.LogInformation("GetCustomer called");
             var customer = await _mediator.Send(new GetCustomerQuery(accountNumber));
@@ -82,7 +77,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return _mapper.Map<CustomerViewModel>(customer);
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetTerritories()
+        public async Task<IEnumerable<SelectListItem>?> GetTerritories()
         {
             _logger.LogInformation("GetTerritories called.");
             var territories = await _mediator.Send(new GetTerritoriesQuery());
@@ -95,26 +90,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             items.Insert(0, new SelectListItem { Value = "", Text = "--Select--", Selected = true });
 
             return items;
-        }
-
-        private static IEnumerable<SelectListItem> GetEmailPromotions()
-        {
-            var items = new List<SelectListItem>();
-
-            foreach (EmailPromotionViewModel emailPromotion in (EmailPromotionViewModel[])Enum.GetValues(typeof(EmailPromotionViewModel)))
-            {
-                items.Add(new SelectListItem(
-                        Enum<EmailPromotionViewModel>.GetDisplayValue(emailPromotion),
-                        emailPromotion.ToString()
-                    )
-                );
-            }
-
-            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
-        }
+        }       
 
         private List<SelectListItem> GetCustomerTypes()
         {
@@ -130,20 +106,20 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetSalesPersons(string territory)
+        public async Task<IEnumerable<SelectListItem>?> GetSalesPersons(string territory)
         {
             _logger.LogInformation("GetSalesPersons called.");
             var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(territory));
 
             var items = salesPersons
-                .Select(t => new SelectListItem() { Value = t.Name.FullName, Text = t.Name.FullName })
+                .Select(t => new SelectListItem() { Value = t.Name?.FullName, Text = t.Name?.FullName })
                 .OrderBy(b => b.Text)
                 .ToList();
 
             return items;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetAddressTypes()
+        public async Task<IEnumerable<SelectListItem>?> GetAddressTypes()
         {
             _logger.LogInformation("GetAddressTypes called.");
             var addressTypes = await _mediator.Send(new GetAddressTypesQuery());
@@ -158,7 +134,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetCountries()
+        public async Task<IEnumerable<SelectListItem>?> GetCountries()
         {
             _logger.LogInformation("GetCountries called.");
             var countries = await _mediator.Send(new GetCountriesQuery());
@@ -173,36 +149,36 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task UpdateStore(StoreCustomerViewModel viewModel)
+        public async Task UpdateStore(StoreCustomerViewModel? viewModel)
         {
             _logger.LogInformation("UpdateStore called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, _logger);
 
             _logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var storeCustomer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
+            var storeCustomer = await _mediator.Send(new GetStoreCustomerQuery(viewModel?.AccountNumber));
             var storeCustomerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
 
-            storeCustomerToUpdate.Name = viewModel.Name;
-            storeCustomerToUpdate.Territory = viewModel.Territory;
-            storeCustomerToUpdate.SalesPerson = viewModel.SalesPerson;
+            storeCustomerToUpdate.Name = viewModel?.Name;
+            storeCustomerToUpdate.Territory = viewModel?.Territory;
+            storeCustomerToUpdate.SalesPerson = viewModel?.SalesPerson;
 
             _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, storeCustomerToUpdate));
+            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, storeCustomerToUpdate));
             _logger.LogInformation("Customer successfully updated");
         }
 
-        public async Task UpdateIndividual(IndividualCustomerViewModel viewModel)
+        public async Task UpdateIndividual(IndividualCustomerViewModel? viewModel)
         {
             _logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
             Guard.Against.Null(viewModel, _logger);
 
-            var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel.AccountNumber));
+            var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel?.AccountNumber));
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
 
-            customerToUpdate.Person = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Person>(viewModel.Person);
+            customerToUpdate.Person = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Person>(viewModel?.Person);
 
             _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer successfully updated");
         }
 
@@ -227,7 +203,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         //    return vm;
         //}
 
-        public async Task AddAddress(CustomerAddressViewModel viewModel, string accountNumber)
+        public async Task AddAddress(CustomerAddressViewModel viewModel, string? accountNumber)
         {
             _logger.LogInformation("AddAddress called");
 
@@ -240,14 +216,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             Guard.Against.Null(customerToUpdate, _logger);
             var newAddress = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.CustomerAddress>(viewModel);
             Guard.Against.Null(newAddress, _logger);
-            customerToUpdate.Addresses.Add(newAddress);
+            customerToUpdate.Addresses?.Add(newAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task UpdateAddress(CustomerAddressViewModel viewModel, string accountNumber)
+        public async Task UpdateAddress(CustomerAddressViewModel viewModel, string? accountNumber)
         {
             _logger.LogInformation("UpdateAddress called");
 
@@ -258,16 +234,16 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var addressToUpdate = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == viewModel.AddressType);
+            var addressToUpdate = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == viewModel.AddressType);
             Guard.Against.Null(addressToUpdate, _logger);
-            _mapper.Map(viewModel.Address, addressToUpdate.Address);
+            _mapper.Map(viewModel.Address, addressToUpdate?.Address);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetStatesProvinces(string countryRegionCode)
+        public async Task<IEnumerable<SelectListItem>?> GetStatesProvinces(string countryRegionCode)
         {
             _logger.LogInformation("GetStateProvinces called.");
             var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(countryRegionCode));
@@ -282,13 +258,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task<IEnumerable<StateProvince>> GetStatesProvincesJson(string country)
+        public async Task<IEnumerable<StateProvince>?> GetStatesProvincesJson(string? country)
         {
             var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(country));
             return statesProvinces;
         }
 
-        public async Task DeleteAddress(string accountNumber, string addressType)
+        public async Task DeleteAddress(string? accountNumber, string? addressType)
         {
             _logger.LogInformation("DeleteAddress called");
 
@@ -299,9 +275,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var addressToDelete = customerToUpdate.Addresses.FirstOrDefault(a => a.AddressType == addressType);
+            var addressToDelete = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == addressType);
             Guard.Against.Null(addressToDelete, _logger);
-            customerToUpdate.Addresses.Remove(addressToDelete);
+            customerToUpdate.Addresses?.Remove(addressToDelete);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
@@ -338,13 +314,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return items;
         }
 
-        public async Task<StoreCustomerContactViewModel> GetCustomerContact(string accountNumber, string contactName)
+        public async Task<StoreCustomerContactViewModel> GetCustomerContact(string? accountNumber, string? contactName)
         {
             _logger.LogInformation("GetCustomerContact called");
             var customer = await _mediator.Send(new GetStoreCustomerQuery(accountNumber));
 
             var contact = customer.Contacts.FirstOrDefault(c =>
-                c.ContactPerson.Name.FullName == contactName
+                c.ContactPerson?.Name?.FullName == contactName
             );
 
             var vm = new StoreCustomerContactViewModel
@@ -360,7 +336,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
-        public async Task<StoreCustomerContactViewModel> AddContact(string accountNumber, string customerName)
+        public async Task<StoreCustomerContactViewModel> AddContact(string? accountNumber, string? customerName)
         {
             _logger.LogInformation("AddContact called");
 
@@ -398,34 +374,34 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var contactToAdd = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomerContact>(
                 viewModel.CustomerContact
             );
-            customerToUpdate.Contacts.Add(contactToAdd);
+            customerToUpdate.Contacts?.Add(contactToAdd);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task UpdateContact(StoreCustomerContactViewModel viewModel)
+        public async Task UpdateContact(StoreCustomerContactViewModel? viewModel)
         {
             _logger.LogInformation("UpdateContact called");
 
-            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
+            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel?.AccountNumber);
+            var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel?.AccountNumber));
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == viewModel.CustomerContact.ContactPerson.Name.FullName);
+            var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == viewModel?.CustomerContact?.ContactPerson.Name!.FullName);
             Guard.Against.Null(contact, _logger);
-            _mapper.Map(viewModel.CustomerContact, contact);
+            _mapper.Map(viewModel?.CustomerContact, contact);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task DeleteContact(string accountNumber, string contactName)
+        public async Task DeleteContact(string? accountNumber, string? contactName)
         {
             _logger.LogInformation("DeleteContact called");
 
@@ -436,16 +412,16 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c => c.ContactPerson.Name.FullName == contactName);
+            var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == contactName);
             Guard.Against.Null(contact, _logger);
-            customerToUpdate.Contacts.Remove(contact);
+            customerToUpdate.Contacts?.Remove(contact);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task DeleteContactEmailAddress(string accountNumber, string contactName, string emailAddress)
+        public async Task DeleteContactEmailAddress(string? accountNumber, string? contactName, string? emailAddress)
         {
             _logger.LogInformation("DeleteContactEmailAddress called");
 
@@ -457,24 +433,24 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
 
-            var contact = customerToUpdate.Contacts.FirstOrDefault(c =>
-                c.ContactPerson.Name.FullName == contactName
+            var contact = customerToUpdate?.Contacts?.FirstOrDefault(c =>
+                c?.ContactPerson?.Name?.FullName == contactName
             );
             Guard.Against.Null(contact, _logger);
 
-            var personEmailAddress = contact.ContactPerson.EmailAddresses.FirstOrDefault(c =>
-                c.EmailAddress == emailAddress
+            var personEmailAddress = contact?.ContactPerson?.EmailAddresses?.FirstOrDefault(c =>
+                c?.EmailAddress == emailAddress
             );
             Guard.Against.Null(personEmailAddress, _logger);
 
-            contact.ContactPerson.EmailAddresses.Remove(personEmailAddress);
+            contact?.ContactPerson?.EmailAddresses?.Remove(personEmailAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
-        public async Task DeleteIndividualCustomerEmailAddress(string accountNumber, string emailAddress)
+        public async Task DeleteIndividualCustomerEmailAddress(string? accountNumber, string? emailAddress)
         {
             _logger.LogInformation("DeleteContactEmailAddress called");
 
@@ -486,12 +462,12 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
 
-            var personEmailAddress = customerToUpdate.Person.EmailAddresses.FirstOrDefault(c =>
-                c.EmailAddress == emailAddress
+            var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.FirstOrDefault(c =>
+                c?.EmailAddress == emailAddress
             );
             Guard.Against.Null(personEmailAddress, _logger);
 
-            customerToUpdate.Person.EmailAddresses.Remove(personEmailAddress);
+            customerToUpdate.Person?.EmailAddresses?.Remove(personEmailAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
             await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));

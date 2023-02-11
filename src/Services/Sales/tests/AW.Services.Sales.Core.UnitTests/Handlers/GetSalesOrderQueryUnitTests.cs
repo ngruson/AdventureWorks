@@ -63,7 +63,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
+            result!.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -114,7 +114,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-            result.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
+            result!.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
         }
     }
 }

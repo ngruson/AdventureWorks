@@ -6,9 +6,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.REST.API.UnitTests
@@ -38,10 +35,10 @@ namespace AW.Services.Product.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult.Value as List<ProductCategory>;
-                response.Count.Should().Be(categories.Count);
+                var response = okObjectResult?.Value as List<ProductCategory>;
+                response?.Count.Should().Be(categories.Count);
 
-                for (int i = 0; i < response.Count; i++)
+                for (int i = 0; i < response?.Count; i++)
                 {
                     response[i].Name.Should().Be(categories[i].Name);
                 }

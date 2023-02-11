@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using AW.Services.Sales.Core.Entities;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
@@ -17,28 +14,28 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public DateTime? ShipDate { get; set; }
 
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string? SalesOrderNumber { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string? PurchaseOrderNumber { get; set; }
 
-        public string AccountNumber { get; set; }
-        public CustomerDto Customer { get; set; }
+        public string? AccountNumber { get; set; }
+        public CustomerDto? Customer { get; set; }
 
-        public SalesPersonDto SalesPerson { get; set; }
+        public SalesPersonDto? SalesPerson { get; set; }
 
-        public string Territory { get; set; }
+        public string? Territory { get; set; }
 
-        public AddressDto BillToAddress { get; set; }
+        public AddressDto? BillToAddress { get; set; }
 
-        public AddressDto ShipToAddress { get; set; }
+        public AddressDto? ShipToAddress { get; set; }
 
-        public string ShipMethod { get; set; }
+        public string? ShipMethod { get; set; }
 
-        public CreditCardDto CreditCard { get; set; }
+        public CreditCardDto? CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 
@@ -48,16 +45,16 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public decimal TotalDue { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
-        public List<SalesOrderLineDto> OrderLines { get; set; }
+        public List<SalesOrderLineDto>? OrderLines { get; set; }
 
-        public List<SalesReasonDto> SalesReasons { get; set; }
+        public List<SalesReasonDto>? SalesReasons { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesOrder, SalesOrderDto>()
-                .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status.Name))
+                .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status!.Name))
                 .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
                     .Select(r => r.SalesReason))
                 );

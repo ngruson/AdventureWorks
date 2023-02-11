@@ -1,6 +1,5 @@
 ﻿using Ardalis.Specification;
 using AW.Services.Customer.Core.Entities;
-using System.Linq;
 
 namespace AW.Services.Customer.Core.Specifications
 {

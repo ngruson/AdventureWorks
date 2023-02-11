@@ -4,15 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace AW.SharedKernel.Api
 {
@@ -49,7 +43,7 @@ namespace AW.SharedKernel.Api
                         options.RoutePrefix = string.Empty;
                     }
                     options.DocumentTitle = $"{apiName} Documentation";
-                    options.OAuthClientId(oidcConfig.OpenIdClientId);
+                    options.OAuthClientId(oidcConfig?.OpenIdClientId);
                     options.OAuthAppName("AdventureWorks");
                     options.OAuthUsePkce();
                 });
@@ -62,7 +56,7 @@ namespace AW.SharedKernel.Api
     {
         private readonly IApiVersionDescriptionProvider provider;
         private readonly string apiName;
-        private readonly OpenIdConnectConfiguration oidcConfig;
+        private readonly OpenIdConnectConfiguration? oidcConfig;
 
         public ConfigureSwaggerOptions(IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
         {
@@ -76,8 +70,8 @@ namespace AW.SharedKernel.Api
             var disco = GetDiscoveryDocument().GetAwaiter().GetResult();
 
             var oauthScopeDic = new Dictionary<string, string>();
-            var scopes = oidcConfig.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            foreach (var scope in scopes)
+            var scopes = oidcConfig?.Scopes.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var scope in scopes!)
             {
                 oauthScopeDic.Add(scope, $"Resource access: {scope}");
             }
@@ -125,10 +119,10 @@ namespace AW.SharedKernel.Api
             
             var request = new DiscoveryDocumentRequest
             {
-                Address = oidcConfig.WellKnownEndpoint
+                Address = oidcConfig?.WellKnownEndpoint
             };
 
-            if (oidcConfig.IdentityProvider == IdentityProvider.AzureAd)
+            if (oidcConfig?.IdentityProvider == IdentityProvider.AzureAd)
             {
                 request.Policy.ValidateIssuerName = false;
                 request.Policy.ValidateEndpoints = false;

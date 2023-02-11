@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System.Linq;
 
 namespace AW.Services.Product.Core.Handlers.GetProductCategories
 {
     public class ProductSubcategory : IMapFrom<Entities.ProductSubcategory>
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int ProductCount { get; set; }
 
         public void Mapping(Profile profile)

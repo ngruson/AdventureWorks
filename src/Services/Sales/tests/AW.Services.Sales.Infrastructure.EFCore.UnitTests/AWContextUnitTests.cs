@@ -6,9 +6,8 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
@@ -17,7 +16,8 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
     {
         [Theory, AutoMoqData]
         public void CreateDatabase_ModelConfigurationsAreApplied(
-            Mock<IMediator> mockMediator
+            Mock<IMediator> mockMediator,
+            Mock<ILogger<AWContext>> mockLogger
         )
         {
             //Arrange
@@ -26,6 +26,7 @@ namespace AW.Services.Sales.Infrastructure.EFCore.UnitTests
                 .Options;
 
             var context = new AWContext(
+                mockLogger.Object,
                 contextOptions,
                 mockMediator.Object,
                 typeof(SalesOrderConfiguration).Assembly

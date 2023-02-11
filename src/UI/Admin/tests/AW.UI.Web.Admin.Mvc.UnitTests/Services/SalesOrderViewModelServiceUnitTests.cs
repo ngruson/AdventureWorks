@@ -8,9 +8,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
@@ -45,19 +42,19 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             var result = await sut.GetSalesOrders(
                 0,
                 10,
-                null,
+                string.Empty,
                 null
             );
 
             //Assert
-            result.SalesOrders.Count.Should().Be(salesOrdersResult.SalesOrders.Count);
+            result.SalesOrders.Count.Should().Be(salesOrdersResult.SalesOrders?.Count);
             result.Territories[0].Should().BeEquivalentTo(new SelectListItem("All", "", true));
             result.Territories.Count.Should().Be(territories.Count + 1);
             result.CustomerTypes[0].Should().BeEquivalentTo(new SelectListItem("All", "", true));
             result.CustomerTypes[1].Should().BeEquivalentTo(new SelectListItem("Individual", "Individual"));
             result.CustomerTypes[2].Should().BeEquivalentTo(new SelectListItem("Store", "Store"));
             result.PaginationInfo.ActualPage.Should().Be(0);
-            result.PaginationInfo.ItemsPerPage.Should().Be(salesOrdersResult.SalesOrders.Count);
+            result.PaginationInfo.ItemsPerPage.Should().Be(salesOrdersResult.SalesOrders?.Count);
             result.PaginationInfo.TotalItems.Should().Be(salesOrdersResult.TotalSalesOrders);
             result.PaginationInfo.TotalPages.Should().Be(3);
             result.PaginationInfo.Previous.Should().Be("disabled");

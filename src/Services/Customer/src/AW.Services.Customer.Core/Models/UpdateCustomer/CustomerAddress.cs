@@ -6,8 +6,8 @@ namespace AW.Services.Customer.Core.Models.UpdateCustomer
 {
     public class CustomerAddress : IMapFrom<CustomerAddressDto>
     {
-        public string AddressType { get; set; }
-        public Address Address { get; set; }
+        public string? AddressType { get; set; }
+        public Address? Address { get; set; }
 
         public void Mapping(Profile profile)
         {

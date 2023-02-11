@@ -8,7 +8,7 @@ namespace AW.UI.Web.Admin.Mvc.Extensions
 {
     public static class UIExtensions
     {
-        public static List<SelectListItem> ToSelectList<T>(this List<T> list, Expression<Func<T, string>> valueExpr, Expression<Func<T, string>> textExpr)
+        public static List<SelectListItem> ToSelectList<T>(this List<T> list, Expression<Func<T, string?>> valueExpr, Expression<Func<T, string?>> textExpr)
         {
             var items = list
             .Select(item => new SelectListItem()

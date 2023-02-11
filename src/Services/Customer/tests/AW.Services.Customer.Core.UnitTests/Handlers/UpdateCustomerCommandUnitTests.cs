@@ -2,9 +2,6 @@
 using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
@@ -20,10 +17,15 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_ExistingCustomer_ReturnUpdatedCustomer(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandHandler sut,
-            UpdateCustomerCommand command
+            string accountNumber
         )
         {
             //Act
+            var command = new UpdateCustomerCommand(new StoreCustomerDto
+            {
+                AccountNumber = accountNumber
+            });
+
             var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
@@ -39,22 +41,27 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         public async Task Handle_CustomerDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandHandler sut,
-            UpdateCustomerCommand command
+            string accountNumber
         )
         {
             // Arrange
+            var command = new UpdateCustomerCommand(new StoreCustomerDto
+            {
+                AccountNumber = accountNumber
+            });
+
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.Customer)null);
+            .ReturnsAsync((Entities.Customer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             await func.Should().ThrowAsync<CustomerNotFoundException>()
-                .WithMessage($"Customer {command.Customer.AccountNumber} not found");
+                .WithMessage($"Customer {command.Customer!.AccountNumber} not found");
         }
     }
 }

@@ -3,11 +3,8 @@ using AutoMapper;
 using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
 {
@@ -36,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerPhone
 
             _logger.LogInformation("Adding phone to customer");
             var phone = _mapper.Map<Entities.PersonPhone>(request.Phone);
-            individualCustomer.Person.AddPhoneNumber(phone);
+            individualCustomer!.Person?.AddPhoneNumber(phone);
 
             _logger.LogInformation("Saving customer to database");
             await _repository.UpdateAsync(individualCustomer, cancellationToken);

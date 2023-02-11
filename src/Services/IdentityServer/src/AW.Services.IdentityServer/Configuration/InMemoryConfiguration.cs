@@ -116,7 +116,7 @@ namespace AW.Services.IdentityServer.Configuration
                     Password = configuration["TestUser:Password"],
                     Claims = new []
                     {
-                        new Claim("email", configuration["TestUser:Email"])
+                        new Claim("email", configuration["TestUser:Email"]!)
                     }
                 }
             };

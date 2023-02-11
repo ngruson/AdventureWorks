@@ -29,7 +29,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrder.Customer = new StoreCustomerDto();
-            salesOrder.CreditCard.ExpYear = Convert.ToInt16(DateTime.Now.Year);
+            salesOrder.CreditCard!.ExpYear = Convert.ToInt16(DateTime.Now.Year);
             salesOrder.CreditCard.ExpMonth = Convert.ToByte(DateTime.Now.Month);
 
             mockMediator.Setup(_ => _.Send(
@@ -73,7 +73,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetSalesOrderQuery>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((SalesOrderDto)null);
+            .ReturnsAsync((SalesOrderDto?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
@@ -99,7 +99,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         {
             //Arrange
             salesOrder.Customer = new StoreCustomerDto();
-            salesOrder.CreditCard.ExpYear = Convert.ToInt16(DateTime.Now.Year);
+            salesOrder.CreditCard!.ExpYear = Convert.ToInt16(DateTime.Now.Year);
             salesOrder.CreditCard.ExpMonth = Convert.ToByte(DateTime.Now.Month);
 
             mockMediator.Setup(_ => _.Send(

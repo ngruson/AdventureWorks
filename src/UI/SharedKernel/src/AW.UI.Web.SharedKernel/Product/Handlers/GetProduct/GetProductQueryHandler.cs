@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProduct
 {
-    public class GetProductQueryHandler : IRequestHandler<GetProductQuery, Product>
+    public class GetProductQueryHandler : IRequestHandler<GetProductQuery, Product?>
     {
         private readonly ILogger<GetProductQueryHandler> _logger;
         private readonly IProductApiClient _client;
@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProduct
             _client = client;
         }
 
-        public async Task<Product> Handle(GetProductQuery request, CancellationToken cancellationToken)
+        public async Task<Product?> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting product {ProductNumber} from API", request.ProductNumber);
             var product = await _client.GetProductAsync(

@@ -1,6 +1,7 @@
 ﻿using AW.Services.SharedKernel.EFCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace AW.ConsoleTools.DependencyInjection
@@ -9,6 +10,7 @@ namespace AW.ConsoleTools.DependencyInjection
     {
         public AWContext Create(
             string connectionString, 
+            ILogger<AWContext> logger,
             IMediator mediator, 
             Assembly configurationsAssembly
         )
@@ -19,6 +21,7 @@ namespace AW.ConsoleTools.DependencyInjection
                 .AddInterceptors(new AzureAdAuthenticationDbConnectionInterceptor());
 
             return new AWContext(
+                logger,
                 builder.Options,
                 mediator,
                 configurationsAssembly

@@ -13,9 +13,9 @@ namespace AW.ConsoleTools.AutoMapper
 
             CreateMap<IndividualCustomerDto, CreateLoginCommand>()
                 .ForMember(m => m.CustomerNumber, opt => opt.MapFrom(src => src.AccountNumber))
-                .ForMember(m => m.Username, opt => opt.MapFrom(src => GetUserName(src.Person)))
-                .ForMember(m => m.Email, opt => opt.MapFrom(src => GetEmailAddress(src.Person)))
-                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Person.Name));
+                .ForMember(m => m.Username, opt => opt.MapFrom(src => GetUserName(src.Person!)))
+                .ForMember(m => m.Email, opt => opt.MapFrom(src => GetEmailAddress(src.Person!)))
+                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Person!.Name));
         }
 
         private static string? GetUserName(PersonDto person)

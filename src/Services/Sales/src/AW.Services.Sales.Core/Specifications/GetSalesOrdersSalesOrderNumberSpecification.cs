@@ -7,7 +7,7 @@ namespace AW.Services.Sales.Core.Specifications
 
         public GetSalesOrdersSalesOrderNumberSpecification()
         {
-            Query.Select(p => p.SalesOrderNumber);
+            Query.Select(p => p.SalesOrderNumber!);
         }
     }
 }

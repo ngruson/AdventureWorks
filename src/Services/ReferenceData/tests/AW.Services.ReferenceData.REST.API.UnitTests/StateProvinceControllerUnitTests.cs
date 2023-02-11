@@ -1,16 +1,11 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.Services.ReferenceData.REST.API.Controllers;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.ReferenceData.REST.API.UnitTests
@@ -32,14 +27,14 @@ namespace AW.Services.ReferenceData.REST.API.UnitTests
             .ReturnsAsync(dto);
 
             //Act
-            var actionResult = await sut.GetStatesProvinces(dto[0].CountryRegionCode);
+            var actionResult = await sut.GetStatesProvinces(dto[0].CountryRegionCode!);
 
             //Assert
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var statesProvinces = okObjectResult.Value as List<StateProvince>;
-            statesProvinces.Count.Should().Be(dto.Count);
+            var statesProvinces = okObjectResult?.Value as List<StateProvince>;
+            statesProvinces?.Count.Should().Be(dto.Count);
         }
     }
 }

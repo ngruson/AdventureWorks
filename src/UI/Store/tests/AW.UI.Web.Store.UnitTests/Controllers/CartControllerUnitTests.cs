@@ -9,10 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Store.UnitTests.Controllers
@@ -174,7 +171,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
                 //Arrange
 
                 //Act
-                var actionResult = await sut.AddToCart(null);
+                var actionResult = await sut.AddToCart(string.Empty);
 
                 //Assert
                 var redirectActionResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
@@ -203,7 +200,7 @@ namespace AW.UI.Web.Store.UnitTests.Controllers
                 var redirectActionResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
                 redirectActionResult.ControllerName.Should().Be("Home");
                 redirectActionResult.ActionName.Should().Be("Index");
-                redirectActionResult.RouteValues.ContainsKey("errorMsg").Should().Be(true);
+                redirectActionResult.RouteValues?.ContainsKey("errorMsg").Should().Be(true);
             }
         }
     }

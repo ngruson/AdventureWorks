@@ -1,96 +1,24 @@
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using AutoMapper.EquivalencyExpression;
+﻿using AutoMapper.EquivalencyExpression;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Logging;
-using AW.SharedKernel.Api;
-using AW.Services.SharedKernel.EFCore;
-using AW.Services.Infrastructure.Filters;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using HealthChecks.UI.Client;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
-using AW.Services.SharedKernel.Interfaces;
-using Microsoft.Identity.Web;
-using AW.SharedKernel.OpenIdConnect;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using AW.SharedKernel.JsonConverters;
+using AW.Services.Infrastructure.Filters;
 using AW.Services.SharedKernel.Converters;
+using AW.Services.SharedKernel.EFCore;
+using AW.Services.SharedKernel.Interfaces;
+using AW.SharedKernel.Api;
+using AW.SharedKernel.JsonConverters;
+using AW.SharedKernel.OpenIdConnect;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AW.Services.Customer.REST.API
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }    
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services
-                .AddCustomMvc()
-                .AddCors()
-                .AddVersioning()
-                .AddCustomAuthentication(Configuration)
-                .AddCustomSwagger()
-                .AddCustomIntegrations(Configuration)
-                .AddCustomHealthCheck(Configuration);            
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider, ILoggerFactory loggerFactory)
-        {
-            var virtualPath = "/customer-api";
-
-            app.Map(virtualPath, builder =>
-            {
-                if (env.IsDevelopment())
-                {
-                    builder.UseDeveloperExceptionPage();
-                }
-
-                builder.UseForwardedHeaders(new ForwardedHeadersOptions
-                {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
-
-                builder.UseCors("default");
-                builder.UseSwaggerDocumentation(virtualPath, Configuration, provider, "Customer API");
-                builder.UseRouting();
-                builder.UseAuthentication();
-                builder.UseAuthorization();
-                builder.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
-                    {
-                        Predicate = _ => true,
-                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                    });
-                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
-                    {
-                        Predicate = r => r.Name.Contains("self")
-                    });
-                });
-            });
-        }
-    }
-
     public static class CustomExtensionMethods
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
@@ -166,7 +94,7 @@ namespace AW.Services.Customer.REST.API
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
-                        options.Authority = oidcConfig.Authority;
+                        options.Authority = oidcConfig?.Authority;
                         options.Audience = "customer-api";
                         options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
                     });
@@ -190,8 +118,9 @@ namespace AW.Services.Customer.REST.API
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
 
                 return new AWContext(
-                    builder.Options,                    
-                    provider.GetService<IMediator>(),
+                    provider.GetRequiredService<ILogger<AWContext>>(),
+                    builder.Options,
+                    provider.GetRequiredService<IMediator>(),
                     typeof(CustomerConfiguration).Assembly
                 );
             });
@@ -208,12 +137,12 @@ namespace AW.Services.Customer.REST.API
             var hcBuilder = services.AddHealthChecks();
 
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
-            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
+            hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]!);
 
             if (configuration["AuthN:IdP"] == "IdSrv")
-                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]));
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]!));
 
-            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
+            hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection")!);
 
             return services;
         }

@@ -36,7 +36,7 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
                 };
 
                 logger.LogInformation("Creating login for user {User}", request.Username);
-                var result = await userManager.CreateAsync(appUser, configuration["DefaultUserPassword"]);
+                var result = await userManager.CreateAsync(appUser, configuration["DefaultUserPassword"]!);
 
                 if (result.Succeeded)
                 {

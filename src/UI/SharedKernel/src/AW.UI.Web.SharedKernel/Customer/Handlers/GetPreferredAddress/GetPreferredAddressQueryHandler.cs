@@ -31,7 +31,7 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress
 
             _logger.LogInformation("Returning preferred address for {@Query}", request);
 
-            return address;
+            return address!;
         }
     }
 }

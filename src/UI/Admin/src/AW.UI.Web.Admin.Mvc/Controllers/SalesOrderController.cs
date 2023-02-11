@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using MediatR;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
@@ -62,10 +59,10 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 .ToList()
                 .ToSelectList(_ => _.Name, _ => _.Name);
 
-            ViewData["salesPersons"] = (await mediator.Send(new GetSalesPersonsQuery(salesOrder.SalesOrder.Territory)))
-                .OrderBy(_ => _.Name.FullName)
+            ViewData["salesPersons"] = (await mediator.Send(new GetSalesPersonsQuery(salesOrder.SalesOrder!.Territory)))
+                .OrderBy(_ => _.Name?.FullName)
                 .ToList()
-                .ToSelectList(_ => _.Name.FullName, _ => _.Name.FullName);
+                .ToSelectList(_ => _.Name!.FullName, _ => _.Name!.FullName);
 
             ViewData["shipMethods"] = (await mediator.Send(new GetShipMethodsQuery()))
                 .OrderBy(_ => _.Name)
@@ -73,14 +70,14 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 .ToSelectList(_ => _.Name, _ => _.Name);
 
             ViewData["statesProvincesShipTo"] = (await mediator.Send(
-                    new GetStatesProvincesQuery(salesOrder.SalesOrder.ShipToAddress.CountryRegionCode)
+                    new GetStatesProvincesQuery(salesOrder.SalesOrder.ShipToAddress!.CountryRegionCode)
                 ))
                 .OrderBy(_ => _.Name)
                 .ToList()
                 .ToSelectList(_ => _.StateProvinceCode, _ => _.Name);
 
             ViewData["statesProvincesBillTo"] = (await mediator.Send(
-                    new GetStatesProvincesQuery(salesOrder.SalesOrder.BillToAddress.CountryRegionCode)
+                    new GetStatesProvincesQuery(salesOrder.SalesOrder.BillToAddress!.CountryRegionCode)
                 ))
                 .OrderBy(_ => _.Name)
                 .ToList()
@@ -97,7 +94,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             ViewData["territories"] =
                 (await mediator.Send(new GetTerritoriesQuery(
-                        salesOrder.BillToAddress.CountryRegionCode
+                        salesOrder.BillToAddress!.CountryRegionCode
                     )
                 ))
                 .OrderBy(c => c.Name)
@@ -108,10 +105,10 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 (await salesPersonViewModelService.GetSalesPersons(
                     salesOrder.Territory
                 ))
-                .SalesPersons
-                .OrderBy(s => s.Name.FullName)
+                .SalesPersons!
+                .OrderBy(s => s.Name?.FullName)
                 .ToList()
-                .ToSelectList(sp => sp.Name.FullName, sp => sp.Name.FullName);
+                .ToSelectList(sp => sp.Name!.FullName, sp => sp.Name!.FullName);
 
             return View(salesOrder);
         }
@@ -125,7 +122,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             }
 
             await salesOrderService.UpdateSalesOrder(viewModel);
-            await salesOrderService.ApproveSalesOrder(viewModel.SalesOrderNumber);
+            await salesOrderService.ApproveSalesOrder(viewModel.SalesOrderNumber!);
 
             return RedirectToAction(
                 nameof(Detail),
@@ -177,7 +174,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             return RedirectToAction(
                 nameof(Detail),
-                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+                new { salesOrderNumber = viewModel.SalesOrder!.SalesOrderNumber }
             );
         }
 
@@ -188,7 +185,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             return RedirectToAction(
                 nameof(Detail),
-                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+                new { salesOrderNumber = viewModel.SalesOrder!.SalesOrderNumber }
             );
         }
 
@@ -205,7 +202,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             return RedirectToAction(
                 nameof(Detail),
-                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+                new { salesOrderNumber = viewModel.SalesOrder!.SalesOrderNumber }
             );
         }
 
@@ -216,7 +213,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
 
             return RedirectToAction(
                 nameof(Detail),
-                new { salesOrderNumber = viewModel.SalesOrder.SalesOrderNumber }
+                new { salesOrderNumber = viewModel.SalesOrder!.SalesOrderNumber }
             );
         }
     }

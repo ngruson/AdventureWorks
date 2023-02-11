@@ -4,5 +4,11 @@
     {
         public string ElasticSearchUri { get; set; }
         public string RedisConnectionString { get; set; }
+
+        public BasketSettings(string elasticSearchUri, string redisConnectionString)
+        {
+            ElasticSearchUri = elasticSearchUri;
+            RedisConnectionString = redisConnectionString;
+        }
     }
 }

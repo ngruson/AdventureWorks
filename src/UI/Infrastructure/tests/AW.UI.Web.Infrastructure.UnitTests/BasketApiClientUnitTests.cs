@@ -52,8 +52,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 var response = await sut.GetBasketAsync(basket.BuyerId);
 
                 //Assert
-                response.BuyerId.Should().Be(basket.BuyerId);
-                response.Items.Count.Should().Be(basket.Items.Count);
+                response?.BuyerId.Should().Be(basket.BuyerId);
+                response?.Items.Count.Should().Be(basket.Items.Count);
             }
 
             [Theory, MockHttpData]
@@ -115,8 +115,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 var response = await sut.UpdateBasketAsync(basket);
 
                 //Assert
-                response.BuyerId.Should().Be(basket.BuyerId);
-                response.Items.Count.Should().Be(basket.Items.Count);
+                response?.BuyerId.Should().Be(basket.BuyerId);
+                response?.Items.Count.Should().Be(basket.Items.Count);
             }
 
             [Theory, MockHttpData]

@@ -2,9 +2,6 @@
 using AW.Services.Basket.Core.Models;
 using AW.Services.Infrastructure.EventBus.Abstractions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
 {
@@ -31,17 +28,17 @@ namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
             {
                 var basket = await repository.GetBasketAsync(id);
 
-                await UpdatePriceInBasketItems(@event.ProductNumber, @event.NewPrice, @event.OldPrice, basket);
+                await UpdatePriceInBasketItems(@event.ProductNumber, @event.NewPrice, @event.OldPrice, basket!);
             }
         }
 
         private async Task UpdatePriceInBasketItems(string productNumber, decimal newPrice, decimal oldPrice, CustomerBasket basket)
         {
-            var itemsToUpdate = basket?.Items?.Where(x => x.ProductNumber == productNumber).ToList();
+            var itemsToUpdate = basket?.Items.Where(x => x.ProductNumber == productNumber).ToList();
 
             if (itemsToUpdate?.Count > 0)
             {
-                logger.LogInformation("----- ProductPriceChangedIntegrationEventHandler - Updating items in basket for user: {BuyerId} ({@Items})", basket.BuyerId, itemsToUpdate);
+                logger.LogInformation("----- ProductPriceChangedIntegrationEventHandler - Updating items in basket for user: {BuyerId} ({@Items})", basket?.BuyerId, itemsToUpdate);
 
                 foreach (var item in itemsToUpdate)
                 {
@@ -52,7 +49,7 @@ namespace AW.Services.Basket.Core.IntegrationEvents.EventHandling
                         item.OldUnitPrice = originalPrice;
                     }
                 }
-                await repository.UpdateBasketAsync(basket);
+                await repository.UpdateBasketAsync(basket!);
             }
         }
     }

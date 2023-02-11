@@ -6,9 +6,9 @@ namespace AW.UI.Web.Store.ViewModels
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string LastName { get; set; }
-        public string CustomerNumber { get; set; }
+        public string? LastName { get; set; }
+        public string? CustomerNumber { get; set; }
     }
 }

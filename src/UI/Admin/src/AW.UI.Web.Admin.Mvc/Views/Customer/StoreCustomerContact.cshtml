@@ -14,7 +14,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-no-gutter">
                     <li class="breadcrumb-item">@Html.ActionLink("Customers", "Index", null, new { @class="breadcrumb-link" })</li>
-                    <li class="breadcrumb-item">@Html.ActionLink(Model.CustomerName, "Detail", new { Model.AccountNumber }, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item">@Html.ActionLink(Model.CustomerName!, "Detail", new { Model.AccountNumber }, new { @class="breadcrumb-link" })</li>
                     <li class="breadcrumb-item active" aria-current="page">Customer contact</li>
                 </ol>
             </nav>
@@ -25,7 +25,7 @@
             }
             else
             {
-                <h1 class="page-header-title">@Model.CustomerContact.ContactPerson.Name.FullName</h1>
+                <h1 class="page-header-title">@Model.CustomerContact?.ContactPerson.Name.FullName</h1>
             }
         </div>
         <!-- End Col -->
@@ -145,7 +145,7 @@
                             Email
                         </label>
                         <div class="col-sm-9">
-                            @for (int i = 0; i < Model.CustomerContact.ContactPerson.EmailAddresses.Count; i++)
+                            @for (int i = 0; i < Model.CustomerContact?.ContactPerson.EmailAddresses.Count; i++)
                             {
                                 <div class="row mb-4">
                                     <div class="col">
@@ -178,7 +178,7 @@
                             Phone
                         </label>
                         <div class="col-sm-9">
-                            @for (int i = 0; i < Model.CustomerContact.ContactPerson.PhoneNumbers.Count; i++)
+                            @for (int i = 0; i < Model.CustomerContact?.ContactPerson.PhoneNumbers.Count; i++)
                             {
                                 <div class="row mb-4">
                                     <div class="col">
@@ -211,15 +211,15 @@
                                                 "hideSearch": true,
                                                 "dropdownWidth": "8rem"
                                               }'>
-                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes!)
                                             {
-                                                if (phoneNumberType.Value == "Work")
+                                                if (phoneNumberType?.Value == "Work")
                                                 {
-                                                    <option value="@phoneNumberType.Value" selected>@phoneNumberType.Text</option>
+                                                    <option value="@phoneNumberType?.Value" selected>@phoneNumberType?.Text</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="@phoneNumberType.Value">@phoneNumberType.Text</option>
+                                                    <option value="@phoneNumberType?.Value">@phoneNumberType?.Text</option>
                                                 }
                                             }
                                         </select>
@@ -236,14 +236,14 @@
                     </div>
 
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactType, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactType, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
                             <!-- Select -->
                             <div class="tom-select-custom">
-                                @Html.DropDownListFor(m => m.CustomerContact.ContactType, Model.ContactTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                @Html.DropDownListFor(m => m.CustomerContact!.ContactType, Model.ContactTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                             </div>
                             <!-- End Select-->
-                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactType, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.CustomerContact!.ContactType, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

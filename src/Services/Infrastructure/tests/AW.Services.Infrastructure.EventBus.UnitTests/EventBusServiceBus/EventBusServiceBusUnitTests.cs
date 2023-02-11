@@ -1,16 +1,11 @@
 ﻿using AutoFixture.Xunit2;
-using AW.Services.Infrastructure.EventBus;
 using AW.Services.Infrastructure.EventBus.AzureServiceBus;
 using AW.SharedKernel.UnitTesting;
 using Azure;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
-using sb = AW.Services.Infrastructure.EventBus.AzureServiceBus;
 
 namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
 {
@@ -23,7 +18,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
                 [Frozen] Mock<ServiceBusClient> mockServiceBusClient,
                 [Frozen] Mock<ServiceBusSender> mockServiceBusSender,
-                sb.EventBusServiceBus sut,
+                AzureServiceBus.EventBusServiceBus sut,
                 TestIntegrationEvent integrationEvent
             )
             {
@@ -55,7 +50,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
             [Theory, AutoMoqData]
             public void SubscribeDynamic_OK(
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -78,7 +73,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
                 Mock<Response<SubscriptionProperties>> mockResponse,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -112,7 +107,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -144,7 +139,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -177,7 +172,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
             [Theory, AutoMoqData]
             public void UnsubscribeDynamic_OK(
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -199,7 +194,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -226,7 +221,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
                 [Frozen] Mock<ServiceBusAdministrationClient> mockAdminClient,
                 [Frozen] Mock<IServiceBusPersisterConnection> mockConnection,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange
@@ -257,7 +252,7 @@ namespace AW.Services.Infrastructure.EventBus.UnitTests.EventBusServiceBus
             [Theory, AutoMoqData]
             public void Dispose_Ok(
                 [Frozen] Mock<IEventBusSubscriptionsManager> mockSubsManager,
-                sb.EventBusServiceBus sut
+                AzureServiceBus.EventBusServiceBus sut
             )
             {
                 //Arrange

@@ -9,9 +9,6 @@ using AW.Services.Customer.Core.Handlers.UpdateCustomer;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.REST.API.Controllers
 {
@@ -111,7 +108,7 @@ namespace AW.Services.Customer.REST.API.Controllers
 
             logger.LogInformation("Sending the UpdateCustomer command");
             var command = mapper.Map<UpdateCustomerCommand>(customer);
-            command.Customer.AccountNumber = accountNumber;
+            command.Customer!.AccountNumber = accountNumber;
             var updatedCustomer = await mediator.Send(command);
 
             logger.LogInformation("Returning customer");

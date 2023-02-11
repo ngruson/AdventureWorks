@@ -2,7 +2,12 @@
 {
     public record Header
     {
-        public string Controller { get; init; }
-        public string Text { get; init; }
+        public Header(string controller, string text)
+        {
+            Controller = controller;
+            Text = text;
+        }
+        public string Controller { get; private init; }
+        public string Text { get; private init; }
     }
 }

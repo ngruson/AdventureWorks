@@ -6,11 +6,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
@@ -36,7 +31,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.UnitMeasure>(mockContext.Object);
 
             //Act
-            var result = await repository.GetByIdAsync(unitMeasure.UnitMeasureCode);
+            var result = await repository.GetByIdAsync(unitMeasure.UnitMeasureCode!);
 
             //Assert
             result.Should().BeEquivalentTo(unitMeasure);
@@ -83,7 +78,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductsByColorSpecification(products[0].Color);
+            var spec = new GetProductsByColorSpecification(products[0].Color!);
             var list = await repository.ListAsync(spec);
 
             //Assert
@@ -136,7 +131,7 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductsByColorSpecification(products[0].Color);
+            var spec = new GetProductsByColorSpecification(products[0].Color!);
             var count = await repository.CountAsync(spec);
 
             //Assert
@@ -157,9 +152,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var newProduct = new Core.Entities.Product( 
-                products[0].ProductNumber,
-                products[0].Color
+            var newProduct = new Core.Entities.Product(
+                products[0].ProductNumber!,
+                products[0].Color!
             );
             var savedProduct = await repository.AddAsync(newProduct);
 
@@ -187,11 +182,11 @@ namespace AW.Services.Product.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Core.Entities.Product>(mockContext.Object);
 
             //Act
-            var spec = new GetProductByProductNumberSpecification(products[0].ProductNumber);
+            var spec = new GetProductByProductNumberSpecification(products[0].ProductNumber!);
             var product = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
-            product.ProductNumber.Should().Be(products[0].ProductNumber);
+            product?.ProductNumber.Should().Be(products[0].ProductNumber);
         }
     }
 }

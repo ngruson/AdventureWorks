@@ -1,15 +1,14 @@
 ﻿using Ardalis.GuardClauses;
 using AW.Services.Product.Core.Exceptions;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace AW.Services.Product.Core.GuardClauses
 {
     public static class GuardClauses
     {
-        public static void ProductsNull(this IGuardClause guardClause, List<Entities.Product> products, ILogger logger)
+        public static void ProductsNullOrEmpty(this IGuardClause guardClause, List<Entities.Product> products, ILogger logger)
         {
-            if (products == null)
+            if (products == null || products.Count == 0)
             {
                 var ex = new ProductsNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
@@ -17,7 +16,7 @@ namespace AW.Services.Product.Core.GuardClauses
             }
         }
 
-        public static void ProductNull(this IGuardClause guardClause, Entities.Product product, string productNumber, ILogger logger)
+        public static void ProductNull(this IGuardClause guardClause, Entities.Product? product, string productNumber, ILogger logger)
         {
             if (product == null)
             {

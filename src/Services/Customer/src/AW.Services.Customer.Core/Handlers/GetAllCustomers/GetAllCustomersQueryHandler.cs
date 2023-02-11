@@ -33,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.GetAllCustomers
                 );
 
             var customers = await _repository.ListAsync(spec, cancellationToken);            
-            Guard.Against.CustomersNull(customers, _logger);
+            Guard.Against.CustomersNullOrEmpty(customers, _logger);
 
             _logger.LogInformation("Returning {Count} customers", customers.Count);
 

@@ -6,6 +6,6 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer
 {
     public class SalesPersonDto : IMapFrom<SalesPerson>
     {
-        public NameFactory Name { get; set; }
+        public NameFactory? Name { get; set; }
     }
 }

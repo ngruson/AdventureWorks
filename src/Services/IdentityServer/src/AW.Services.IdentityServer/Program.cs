@@ -1,67 +1,60 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using AW.Services.IdentityServer;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
-using System;
-using System.IO;
 
-namespace AW.Services.IdentityServer
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddCustomMvc()
+    .AddDatabase(builder.Configuration)
+    .AddIdentity(builder.Configuration)
+    .AddCustomHealthCheck(builder.Configuration);
+
+var app = builder.Build();
+
+var virtualPath = "/identityserver";
+
+app.Map(virtualPath, builder =>
 {
-    public class Program
+    builder.UseForwardedHeaders();
+
+    builder.Use(async (context, next) =>
     {
-        public static void Main(string[] args)
+        context.Request.Scheme = "https";
+        await next();
+    });
+
+    builder.UseStaticFiles();
+    builder.UseRouting();
+    builder.UseIdentityServer();
+    builder.UseAuthorization();
+    builder.UseEndpoints(endpoints =>
+    {
+        endpoints.MapDefaultControllerRoute();
+        endpoints.MapRazorPages();
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
-            Log.Logger = CreateSerilogLogger(GetConfiguration());
-
-            try
-            {
-                Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        private static IConfiguration GetConfiguration()
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables();
+            Predicate = r => r.Name.Contains("self")
+        });
+    });
+});
 
-            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json")))
-                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
-
-            return builder.Build();
-        }
-
-        private static ILogger CreateSerilogLogger(IConfiguration configuration)
-        {
-            return new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .Enrich.WithProperty("ApplicationContext", new Application().AppName)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Elasticsearch(
-                    configuration["ElasticSearchUri"],
-                    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
-                )
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-            .UseSerilog();
-    }
+try
+{
+    Log.Information("Starting web host");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

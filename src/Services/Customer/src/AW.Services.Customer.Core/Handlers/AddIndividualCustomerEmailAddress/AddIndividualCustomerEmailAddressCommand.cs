@@ -5,7 +5,13 @@ namespace AW.Services.Customer.Core.Handlers.AddIndividualCustomerEmailAddress
 {
     public class AddIndividualCustomerEmailAddressCommand : IRequest<Unit>
     {
-        public string AccountNumber { get; set; }
-        public EmailAddress EmailAddress { get; set; }
+        public AddIndividualCustomerEmailAddressCommand(string accountNumber, EmailAddress emailAddress)
+        {
+            AccountNumber = accountNumber;
+            EmailAddress = emailAddress;
+        }
+
+        public string AccountNumber { get; private init; }
+        public EmailAddress EmailAddress { get; private init; }
     }
 }

@@ -13,10 +13,10 @@ namespace AW.Services.Customer.Core.Entities
         private Person() { }
         public int Id { get; set; }
 
-        public string Title { get; private set; }
+        public string? Title { get; private set; }
 
-        public NameFactory Name { get; private set; }
-        public string Suffix { get; private set; }
+        public NameFactory? Name { get; private set; }
+        public string? Suffix { get; private set; }
 
         public List<PersonEmailAddress> EmailAddresses { get; internal set; } = new();
 

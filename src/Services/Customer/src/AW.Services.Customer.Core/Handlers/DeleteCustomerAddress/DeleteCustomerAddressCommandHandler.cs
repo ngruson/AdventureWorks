@@ -33,7 +33,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
             Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Removing address from customer");
-            var customerAddress = customer.Addresses.FirstOrDefault(
+            var customerAddress = customer!.Addresses.FirstOrDefault(
                 a => a.AddressType == request.AddressType
             );
             Guard.Against.AddressNull(
@@ -43,7 +43,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
                 _logger
             );
 
-            customer.RemoveAddress(customerAddress);
+            customer.RemoveAddress(customerAddress!);
 
             _logger.LogInformation("Updating customer to database");
             await _repository.UpdateAsync(customer, cancellationToken);

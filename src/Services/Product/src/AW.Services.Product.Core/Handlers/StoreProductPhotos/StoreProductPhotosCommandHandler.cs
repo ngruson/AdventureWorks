@@ -2,11 +2,6 @@
 using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
 {
@@ -27,10 +22,10 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
             _logger.LogInformation("Retrieving products from database");
             var products = await _mediator.Send(new GetAllProductsWithPhotosQuery(), cancellationToken);
 
-            foreach (var photo in products.SelectMany(_ => _.Photos))
+            foreach (var photo in products.SelectMany(_ => _.Photos!))
             {
-                WriteFile(Path.Combine(request.TargetFolder, photo.ThumbnailPhotoFileName), photo.ThumbNailPhoto);
-                WriteFile(Path.Combine(request.TargetFolder, photo.LargePhotoFileName), photo.LargePhoto);
+                WriteFile(Path.Combine(request.TargetFolder, photo.ThumbnailPhotoFileName!), photo.ThumbNailPhoto!);
+                WriteFile(Path.Combine(request.TargetFolder, photo.LargePhotoFileName!), photo.LargePhoto!);
             }
 
             return Unit.Value;

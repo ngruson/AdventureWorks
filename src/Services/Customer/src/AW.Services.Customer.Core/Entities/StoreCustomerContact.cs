@@ -12,11 +12,11 @@
         }
 
         public int Id { get; set; }
-        public string ContactType { get; private set; }
+        public string? ContactType { get; private set; }
 
         public int StoreCustomerId { get; private set; }
 
-        public Person ContactPerson { get; private set; }
+        public Person? ContactPerson { get; private set; }
         public int ContactPersonId { get; private set; }
     }
 }

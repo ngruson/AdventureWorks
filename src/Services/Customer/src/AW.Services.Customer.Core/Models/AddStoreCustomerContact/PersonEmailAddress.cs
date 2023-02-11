@@ -7,7 +7,7 @@ namespace AW.Services.Customer.Core.Models.AddStoreCustomerContact
 {
     public class PersonEmailAddress : IMapFrom<EmailAddressDto>
     {
-        public EmailAddress EmailAddress { get; set; }
+        public EmailAddress? EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

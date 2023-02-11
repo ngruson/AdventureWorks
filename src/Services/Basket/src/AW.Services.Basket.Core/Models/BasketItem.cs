@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AW.Services.Basket.Core.Models
 {
     public class BasketItem : IValidatableObject
     {
-        public string Id { get; set; }
-        public string ProductNumber { get; set; }
-        public string ProductName { get; set; }
+        public string? Id { get; set; }
+        public string? ProductNumber { get; set; }
+        public string? ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal OldUnitPrice { get; set; }
         public int Quantity { get; set; }
-        public byte[] ThumbnailPhoto { get; set; }
+        public byte[]? ThumbnailPhoto { get; set; }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var results = new List<ValidationResult>();

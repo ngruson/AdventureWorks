@@ -4,7 +4,13 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 {
     public class UpdateCustomerAddressCommand : IRequest<Unit>
     {
-        public string AccountNumber { get; set; }
-        public CustomerAddressDto CustomerAddress { get; set; }
+        public UpdateCustomerAddressCommand(string accountNumber, CustomerAddressDto? customerAddress)
+        {
+            AccountNumber = accountNumber;
+            CustomerAddress = customerAddress;
+        }
+
+        public string AccountNumber { get; private init; }
+        public CustomerAddressDto? CustomerAddress { get; private init; }
     }
 }

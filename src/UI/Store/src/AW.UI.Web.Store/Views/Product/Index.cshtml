@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach (var product in Model.Products)
+                    @foreach (var product in Model.Products!)
                     {
                         <partial name="_product" model="product" />
                     }

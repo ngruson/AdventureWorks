@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -52,7 +49,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
             //Act
             var result = await sut.Handle(
-                new AddCustomerCommand { Customer = customer }, 
+                new AddCustomerCommand(customer),
                 CancellationToken.None
             );
 

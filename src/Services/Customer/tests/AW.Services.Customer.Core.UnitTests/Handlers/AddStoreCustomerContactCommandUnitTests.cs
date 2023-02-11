@@ -8,10 +8,6 @@ using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -28,10 +24,9 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var command = new AddStoreCustomerContactCommand
-            {
-                AccountNumber = accountNumber,
-                CustomerContact = new StoreCustomerContactDto
+            var command = new AddStoreCustomerContactCommand(
+                accountNumber,
+                new StoreCustomerContactDto
                 {
                     ContactType = contactType,
                     ContactPerson = new PersonDto
@@ -45,7 +40,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                         }
                     }
                 }
-            };
+            );
 
             //Act
             var result = await sut.Handle(command, CancellationToken.None);
@@ -68,10 +63,9 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            var command = new AddStoreCustomerContactCommand
-            {
-                AccountNumber = accountNumber,
-                CustomerContact = new StoreCustomerContactDto
+            var command = new AddStoreCustomerContactCommand(
+                accountNumber,
+                new StoreCustomerContactDto
                 {
                     ContactType = contactType,
                     ContactPerson = new PersonDto
@@ -85,13 +79,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                         }
                     }
                 }
-            };
+            );
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.StoreCustomer)null);
+            .ReturnsAsync((Entities.StoreCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

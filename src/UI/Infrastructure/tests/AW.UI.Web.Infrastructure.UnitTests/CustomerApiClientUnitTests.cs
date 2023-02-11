@@ -84,8 +84,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 );
 
                 //Assert
-                response.TotalCustomers.Should().Be(list.Count);
-                response.Customers.Should().BeEquivalentTo(list);
+                response?.TotalCustomers.Should().Be(list.Count);
+                response?.Customers.Should().BeEquivalentTo(list);
             }
 
             [Theory, MockHttpData]
@@ -145,8 +145,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                 );
 
                 //Assert
-                response.TotalCustomers.Should().Be(list.Count);
-                response.Customers.Should().BeEquivalentTo(list);
+                response?.TotalCustomers.Should().Be(list.Count);
+                response?.Customers.Should().BeEquivalentTo(list);
             }
 
             [Theory, MockHttpData]

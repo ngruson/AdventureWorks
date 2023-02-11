@@ -2,6 +2,6 @@
 {
     public class UpdateAddressViewModel
     {
-        public UpdateAddressSalesOrderViewModel SalesOrder { get; set; }
+        public UpdateAddressSalesOrderViewModel? SalesOrder { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer
 
             _logger.LogInformation("Returning individual customer {AccountNumber}", request.AccountNumber);
 
-            return customer;
+            return customer!;
         }
     }
 }

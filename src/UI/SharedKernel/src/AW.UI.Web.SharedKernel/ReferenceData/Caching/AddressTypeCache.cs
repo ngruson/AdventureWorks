@@ -23,12 +23,12 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
             cache.Set(CacheKeys.AddressTypes, addressTypes, cacheEntryOptions);
 
-            return addressTypes;
+            return addressTypes!;
         }
 
         public async Task<List<Handlers.GetAddressTypes.AddressType>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.AddressTypes, out List<Handlers.GetAddressTypes.AddressType> addressTypes))
+            if (!cache.TryGetValue(CacheKeys.AddressTypes, out List<Handlers.GetAddressTypes.AddressType>? addressTypes))
             {
                 addressTypes = await Initialize();
             }

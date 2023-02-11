@@ -1,12 +1,7 @@
 ﻿using AW.SharedKernel.JsonConverters;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 {
@@ -21,7 +16,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             return Task.CompletedTask;
         }
 
-        protected virtual T BuildViewModel(ModelBindingContext bindingContext)
+        protected virtual T? BuildViewModel(ModelBindingContext bindingContext)
         {
             var json = BuildJson(bindingContext.HttpContext.Request.Form);
             var options = new JsonSerializerOptions();
@@ -153,7 +148,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             return string.Empty;
         }
 
-        private static string ArrayPath(string key)
+        private static string? ArrayPath(string key)
         {
             if (key.Contains('['))
                 return key[..key.IndexOf('[')];
@@ -184,7 +179,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             if (key.Contains('.'))
                 return key[(key.LastIndexOf('.') + 1)..];
 
-            return null;
+            return string.Empty;
         }
     }
 }

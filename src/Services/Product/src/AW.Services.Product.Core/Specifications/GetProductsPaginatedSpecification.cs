@@ -10,11 +10,11 @@ namespace AW.Services.Product.Core.Specifications
             int pageSize, 
             string category,
             string subcategory,
-            OrderByClause<Entities.Product> orderByClause) : base()
+            OrderByClause<Entities.Product>? orderByClause) : base()
         {
             Query
                 .Include(p => p.ProductSubcategory)
-                    .ThenInclude(s => s.ProductCategory);
+                    .ThenInclude(s => s!.ProductCategory);
 
             Query.Include(p => p.ProductProductPhotos)
                 .ThenInclude(ppp => ppp.ProductPhoto);
@@ -25,17 +25,17 @@ namespace AW.Services.Product.Core.Specifications
                 .Take(pageSize);
 
             if (!string.IsNullOrEmpty(category))
-                Query.Where(p => p.ProductSubcategory.ProductCategory.Name == category);
+                Query.Where(p => p.ProductSubcategory!.ProductCategory!.Name == category);
 
             if (!string.IsNullOrEmpty(subcategory))
-                Query.Where(p => p.ProductSubcategory.Name == subcategory);
+                Query.Where(p => p.ProductSubcategory!.Name == subcategory);
 
             if (orderByClause != null)
             {
                 if (orderByClause.Direction == OrderByDirection.Ascending)
-                    Query.OrderBy(orderByClause.Expression);
+                    Query.OrderBy(orderByClause.Expression!);
                 else if (orderByClause.Direction == OrderByDirection.Descending)
-                    Query.OrderByDescending(orderByClause.Expression);
+                    Query.OrderByDescending(orderByClause.Expression!);
             }
         }
     }

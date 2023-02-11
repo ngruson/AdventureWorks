@@ -4,9 +4,6 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.CancelSalesOrder
 {
@@ -34,7 +31,7 @@ namespace AW.Services.Sales.Core.Handlers.CancelSalesOrder
 
             Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
-            salesOrder.SetCancelledStatus();
+            salesOrder!.SetCancelledStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }

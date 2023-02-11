@@ -3,8 +3,6 @@ using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
-using System;
-using System.IO;
 using System.Net.Sockets;
 
 namespace AW.Services.Infrastructure.EventBus.RabbitMQ
@@ -14,7 +12,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
         private readonly IConnectionFactory connectionFactory;
         private readonly ILogger<DefaultRabbitMQPersistentConnection> logger;
         private readonly int retryCount;
-        private IConnection connection;
+        private IConnection? connection;
         private bool disposed;
         private readonly object sync_root = new();
 
@@ -40,7 +38,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
                 throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
             }
 
-            return connection.CreateModel();
+            return connection!.CreateModel();
         }
 
         public void Dispose()
@@ -88,7 +86,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
 
                 if (IsConnected)
                 {
-                    connection.ConnectionShutdown += OnConnectionShutdown;
+                    connection!.ConnectionShutdown += OnConnectionShutdown;
                     connection.CallbackException += OnCallbackException;
                     connection.ConnectionBlocked += OnConnectionBlocked;
 
@@ -105,7 +103,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             }
         }
 
-        private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)
+        private void OnConnectionBlocked(object? sender, ConnectionBlockedEventArgs e)
         {
             if (disposed) return;
 
@@ -114,7 +112,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             TryConnect();
         }
 
-        void OnCallbackException(object sender, CallbackExceptionEventArgs e)
+        void OnCallbackException(object? sender, CallbackExceptionEventArgs e)
         {
             if (disposed) return;
 
@@ -123,7 +121,7 @@ namespace AW.Services.Infrastructure.EventBus.RabbitMQ
             TryConnect();
         }
 
-        void OnConnectionShutdown(object sender, ShutdownEventArgs reason)
+        void OnConnectionShutdown(object? sender, ShutdownEventArgs reason)
         {
             if (disposed) return;
 

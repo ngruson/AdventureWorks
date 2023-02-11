@@ -31,7 +31,7 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProducts
 
             _logger.LogInformation("Returning products");
 
-            return productsResult;
+            return productsResult!;
         }
     }
 }

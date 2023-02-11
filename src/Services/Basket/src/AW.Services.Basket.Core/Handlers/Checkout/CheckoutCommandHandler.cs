@@ -3,13 +3,10 @@ using AW.Services.Basket.Core.Models;
 using AW.Services.Infrastructure.EventBus.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Basket.Core.Handlers.Checkout
 {
-    public class CheckoutCommandHandler : IRequestHandler<CheckoutCommand, CustomerBasket>
+    public class CheckoutCommandHandler : IRequestHandler<CheckoutCommand, CustomerBasket?>
     {
         private readonly ILogger<CheckoutCommandHandler> logger;
         private readonly IIdentityService identityService;
@@ -19,13 +16,13 @@ namespace AW.Services.Basket.Core.Handlers.Checkout
         public CheckoutCommandHandler(ILogger<CheckoutCommandHandler> logger, IIdentityService identityService, IBasketRepository repository, IEventBus eventBus) =>
             (this.logger, this.identityService, this.repository, this.eventBus) = (logger, identityService, repository, eventBus);
 
-        public async Task<CustomerBasket> Handle(CheckoutCommand request, CancellationToken cancellationToken)
+        public async Task<CustomerBasket?> Handle(CheckoutCommand request, CancellationToken cancellationToken)
         {
             var userId = identityService.GetUserIdentity();
             logger.LogInformation("Retrieved identity for {UserId}", userId);
 
             logger.LogInformation("Getting basket for {UserId}", userId);
-            var basket = await repository.GetBasketAsync(userId);
+            var basket = await repository.GetBasketAsync(userId!);
 
             if (basket == null)
                 return basket;

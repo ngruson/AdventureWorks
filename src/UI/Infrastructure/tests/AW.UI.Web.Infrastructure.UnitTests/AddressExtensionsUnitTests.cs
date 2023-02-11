@@ -3,8 +3,6 @@ using AW.UI.Web.Infrastructure.Extensions;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
@@ -17,8 +15,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         )
         {
             //Act
-            string result = AddressExtensions.StateProvinceName(
-                statesProvinces[0].StateProvinceCode,
+            var result = AddressExtensions.StateProvinceName(
+                statesProvinces[0].StateProvinceCode!,
                 statesProvinces
             );
 
@@ -32,8 +30,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             )
         {
             //Act
-            Func<string> func = () => AddressExtensions.StateProvinceName(
-                stateProvince.StateProvinceCode,
+            Func<string?> func = () => AddressExtensions.StateProvinceName(
+                stateProvince.StateProvinceCode!,
                 new List<StateProvince>()
             );
 
@@ -48,8 +46,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
         )
         {
             //Act
-            string result = AddressExtensions.CountryRegionName(
-                list[0].CountryRegionCode, list);
+            var result = AddressExtensions.CountryRegionName(
+                list[0].CountryRegionCode!, list);
 
             //Assert
             result.Should().Be(list[0].Name);
@@ -61,8 +59,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             )
         {
             //Act
-            Func<string> func = () => AddressExtensions.CountryRegionName(
-                countryRegion.CountryRegionCode,
+            Func<string?> func = () => AddressExtensions.CountryRegionName(
+                countryRegion.CountryRegionCode!,
                 new List<CountryRegion>()
             );
 

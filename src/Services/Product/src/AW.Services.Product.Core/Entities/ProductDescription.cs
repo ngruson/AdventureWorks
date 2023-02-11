@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-
 namespace AW.Services.Product.Core.Entities
 {
     public class ProductDescription
     {
         public int Id { get; set; }
         
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         public Guid Rowguid { get; private set; }
 

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using System;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomer
 {
@@ -16,11 +15,11 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
 
         public bool OnlineOrderFlag { get; set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string? SalesOrderNumber { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string? PurchaseOrderNumber { get; set; }
 
-        public string AccountNumber { get; set; }
+        public string? AccountNumber { get; set; }
 
         public decimal TotalDue { get; set; }
 

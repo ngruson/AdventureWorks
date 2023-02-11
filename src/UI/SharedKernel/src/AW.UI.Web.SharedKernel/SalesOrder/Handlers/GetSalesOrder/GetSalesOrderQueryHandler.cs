@@ -27,7 +27,7 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
 
             _logger.LogInformation("Return sales order {SalesOrderNumber}", request.SalesOrderNumber);
 
-            return salesOrder;
+            return salesOrder!;
         }
     }
 }

@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Specifications;
@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -46,7 +43,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.SalesOrders.Count; i++)
+            for (int i = 0; i < result.SalesOrders!.Count; i++)
             {
                 result.SalesOrders[i].SalesOrderNumber.Should().Be(salesOrders[i].SalesOrderNumber);
             }

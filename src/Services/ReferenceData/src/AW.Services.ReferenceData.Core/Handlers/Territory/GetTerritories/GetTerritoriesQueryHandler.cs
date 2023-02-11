@@ -1,14 +1,11 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
 {
@@ -41,7 +38,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
                 territories = await _repository.ListAsync(spec, cancellationToken);
             }
             
-            Guard.Against.TerritoriesNull(territories, _logger);
+            Guard.Against.TerritoriesNullOrEmpty(territories, _logger);
 
             _logger.LogInformation("Returning territories");
             return _mapper.Map<List<Territory>>(territories).OrderBy(_ => _.Name).ToList();

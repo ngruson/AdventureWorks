@@ -4,12 +4,11 @@ namespace AW.Services.SharedKernel.Domain
 {
     public abstract class Entity
     {
-        private List<INotification>? domainEvents;
-        public IReadOnlyCollection<INotification>? DomainEvents => domainEvents?.AsReadOnly();
+        private List<INotification> domainEvents = new();
+        public IReadOnlyCollection<INotification> DomainEvents => domainEvents.AsReadOnly();
 
         public void AddDomainEvent(INotification eventItem)
         {
-            domainEvents ??= new List<INotification>();
             domainEvents.Add(eventItem);
         }
 
@@ -20,7 +19,7 @@ namespace AW.Services.SharedKernel.Domain
 
         public void ClearDomainEvents()
         {
-            domainEvents?.Clear();
+            domainEvents.Clear();
         }
     }
 }

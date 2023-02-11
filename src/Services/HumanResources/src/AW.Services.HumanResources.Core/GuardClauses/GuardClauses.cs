@@ -6,9 +6,9 @@ namespace AW.Services.HumanResources.Core.GuardClauses
 {
     public static class GuardClauses
     {
-        public static void EmployeesNull(this IGuardClause guardClause, List<Entities.Employee> employees, ILogger logger)
+        public static void EmployeesNullOrEmpty(this IGuardClause guardClause, List<Entities.Employee> employees, ILogger logger)
         {
-            if (employees == null)
+            if (employees == null || employees.Count == 0)
             {
                 var ex = new EmployeesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);

@@ -33,7 +33,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetAllEmployees
             var spec = new GetAllEmployeesSpecification();
 
             var employees = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.EmployeesNull(employees, _logger);
+            Guard.Against.EmployeesNullOrEmpty(employees, _logger);
 
             _logger.LogInformation("Returning {Count} employees", employees.Count);
 

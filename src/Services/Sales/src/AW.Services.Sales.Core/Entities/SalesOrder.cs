@@ -3,16 +3,13 @@ using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.ValueTypes;
 using AW.Services.SharedKernel.Domain;
 using AW.Services.SharedKernel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AW.Services.Sales.Core.Entities
 {
     public class SalesOrder : Entity, IAggregateRoot
     {
         public SalesOrder() { }
-        public SalesOrder(string userId, string userName, string accountNumber, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, CreditCard creditCard, string cardSecurityNumber,
+        public SalesOrder(string userId, string userName, string? accountNumber, Customer customer, string shipMethod, Address billToAddress, Address shipToAddress, CreditCard creditCard, string cardSecurityNumber,
                 string cardHolderName)
         {
             RevisionNumber = 1;
@@ -30,7 +27,7 @@ namespace AW.Services.Sales.Core.Entities
             CreditCard = creditCard;
 
             AddOrderStartedDomainEvent(userId, userName, 
-                creditCard.CardType, creditCard.CardNumber,
+                creditCard.CardType!, creditCard.CardNumber!,
                 cardSecurityNumber, cardHolderName, 
                 new DateTime(
                     creditCard.ExpYear,
@@ -54,19 +51,19 @@ namespace AW.Services.Sales.Core.Entities
 
         public DateTime? ShipDate { get; private set; }
 
-        public SalesOrderStatus Status { get; private set; }
+        public SalesOrderStatus? Status { get; private set; }
 
         public bool OnlineOrderFlag { get; private set; }
 
-        public string SalesOrderNumber { get; private set; }
+        public string? SalesOrderNumber { get; private set; }
 
-        public string PurchaseOrderNumber { get; private set; }
+        public string? PurchaseOrderNumber { get; private set; }
 
-        public string AccountNumber { get; private set; }
-        public Customer Customer { get; private set; }
-        public int CustomerID { get; private set; }
+        public string? AccountNumber { get; private set; }
+        public Customer? Customer { get; private set; }
+        public int? CustomerID { get; private set; }
 
-        public SalesPerson SalesPerson { get; private set; }
+        public SalesPerson? SalesPerson { get; private set; }
         public int? SalesPersonID { get; private set; }
 
         internal void SetSalesPerson(SalesPerson salesPerson)
@@ -74,16 +71,16 @@ namespace AW.Services.Sales.Core.Entities
             SalesPerson = salesPerson;
         }
 
-        public string Territory { get; private set; }
+        public string? Territory { get; private set; }
 
-        public Address BillToAddress { get; private set; }
+        public Address? BillToAddress { get; private set; }
 
-        public Address ShipToAddress { get; private set; }
+        public Address? ShipToAddress { get; private set; }
 
-        public string ShipMethod { get; private set; }
+        public string? ShipMethod { get; private set; }
 
-        public CreditCard CreditCard { get; private set; }
-        public int CreditCardID { get; private set; }
+        public CreditCard? CreditCard { get; private set; }
+        public int? CreditCardID { get; private set; }
 
         public decimal SubTotal
         {
@@ -99,7 +96,7 @@ namespace AW.Services.Sales.Core.Entities
 
         public decimal Freight { get; private set; }
 
-        public decimal TotalDue
+        public decimal? TotalDue
         {
             get
             {
@@ -107,7 +104,7 @@ namespace AW.Services.Sales.Core.Entities
             }
         }
 
-        public string Comment { get; private set; }
+        public string? Comment { get; private set; }
 
         public List<SalesOrderLine> OrderLines { get; internal set; } = new();
 
@@ -150,7 +147,7 @@ namespace AW.Services.Sales.Core.Entities
 
         private void StatusChangeException(SalesOrderStatus orderStatusToChange)
         {
-            throw new SalesDomainException($"Is not possible to change the order status from {Status.Name} to {orderStatusToChange.Name}.");
+            throw new SalesDomainException($"Is not possible to change the order status from {Status?.Name} to {orderStatusToChange.Name}.");
         }
 
         public void SetApprovedStatus()

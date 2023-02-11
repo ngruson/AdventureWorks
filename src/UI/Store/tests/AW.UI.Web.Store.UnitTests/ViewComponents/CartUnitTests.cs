@@ -3,14 +3,11 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Store.ViewComponents;
 using AW.UI.Web.Store.ViewModels;
 using Moq;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 using AW.UI.Web.Store.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using AW.UI.Web.Store.ViewModels.Cart;
-using System;
 
 namespace AW.UI.Web.Store.UnitTests.ViewComponents
 {
@@ -33,9 +30,9 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
 
             //Assert
             var viewResult = result.Should().BeAssignableTo<ViewViewComponentResult>().Subject;
-            var viewModel = viewResult.ViewData.Model.Should().BeAssignableTo<CartComponentViewModel>().Subject;
-            viewModel.ItemsCount.Should().Be(basket.Items.Count);
-            viewModel.Disabled.Should().BeNullOrEmpty();
+            var viewModel = viewResult?.ViewData?.Model.Should().BeAssignableTo<CartComponentViewModel>().Subject;
+            viewModel?.ItemsCount.Should().Be(basket.Items.Count);
+            viewModel?.Disabled.Should().BeNullOrEmpty();
         }
 
         [Theory, AutoMoqData]
@@ -54,10 +51,10 @@ namespace AW.UI.Web.Store.UnitTests.ViewComponents
 
             //Assert            
             var viewResult = result.Should().BeAssignableTo<ViewViewComponentResult>().Subject;
-            var viewModel = viewResult.ViewData.Model.Should().BeAssignableTo<CartComponentViewModel>().Subject;            
-            viewModel.ItemsCount.Should().Be(0);
-            viewModel.Disabled.Should().Be("is-disabled");
-            viewResult.ViewData["IsBasketInoperative"].Should().Be(true);
+            var viewModel = viewResult?.ViewData?.Model.Should().BeAssignableTo<CartComponentViewModel>().Subject;            
+            viewModel?.ItemsCount.Should().Be(0);
+            viewModel?.Disabled.Should().Be("is-disabled");
+            viewResult?.ViewData?["IsBasketInoperative"].Should().Be(true);
 
             mockBasketService.Verify(_ => _.GetBasketAsync<Basket>(It.IsAny<string>()));
         }

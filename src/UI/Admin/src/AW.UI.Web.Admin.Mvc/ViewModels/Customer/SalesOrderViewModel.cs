@@ -17,11 +17,11 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public bool OnlineOrderFlag { get; set; }
 
-        public string SalesOrderNumber { get; set; }
+        public string? SalesOrderNumber { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string? PurchaseOrderNumber { get; set; }
 
-        public string AccountNumber { get; set; }
+        public string? AccountNumber { get; set; }
 
         public decimal TotalDue { get; set; }
 
@@ -30,12 +30,12 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
             profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.SalesOrder, SalesOrderViewModel>();
 
             profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder, SalesOrderViewModel>()
-                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber!)));
 
             profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.SalesOrder, SalesOrderViewModel>();
 
             profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.SalesOrder, SalesOrderViewModel>()
-                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)));
+                .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber!)));
         }
 
         private static string MapPurchaseOrderNumber(string purchaseOrderNumber)

@@ -4,6 +4,11 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
 {
     public class DeleteSalesOrderCommand : IRequest
     {
-        public string SalesOrderNumber { get; set; }
+        public DeleteSalesOrderCommand(string salesOrderNumber)
+        {
+            SalesOrderNumber = salesOrderNumber;
+        }
+
+        public string SalesOrderNumber { get; private init; }
     }
 }

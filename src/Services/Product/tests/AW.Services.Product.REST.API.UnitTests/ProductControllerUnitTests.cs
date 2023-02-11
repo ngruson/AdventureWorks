@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.REST.API.Controllers;
@@ -7,12 +6,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.REST.API.UnitTests
@@ -32,8 +26,8 @@ namespace AW.Services.Product.REST.API.UnitTests
                 //Arrange
                 var dto = new GetProductsDto
                 {
-                    TotalProducts = products.Count,
-                    Products = products
+                    Products = products,
+                    TotalProducts = products.Count
                 };
 
                 mockMediator.Setup(x => x.Send(It.IsAny<GetProductsQuery>(), It.IsAny<CancellationToken>()))
@@ -46,13 +40,13 @@ namespace AW.Services.Product.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult.Value as Models.GetProductsResult;
-                response.TotalProducts.Should().Be(products.Count);
-                response.Products.Count.Should().Be(products.Count);
+                var response = okObjectResult?.Value as Models.GetProductsResult;
+                response?.TotalProducts.Should().Be(products.Count);
+                response?.Products!.Count.Should().Be(products.Count);
 
                 for (int i = 0; i < products.Count; i++)
                 {
-                    response.Products[i].ProductNumber.Should().Be(products[i].ProductNumber);
+                    response?.Products![i].ProductNumber.Should().Be(products[i].ProductNumber);
                 }
             }
 
@@ -92,8 +86,8 @@ namespace AW.Services.Product.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult.Value as Core.Models.Product;
-                response.ProductNumber.Should().Be(product.ProductNumber);
+                var response = okObjectResult?.Value as Core.Models.Product;
+                response?.ProductNumber.Should().Be(product.ProductNumber);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -104,8 +98,14 @@ namespace AW.Services.Product.REST.API.UnitTests
             )
             {
                 //Arrange
-                mockMediator.Setup(x => x.Send(It.IsAny<GetProductQuery>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync((Core.Handlers.GetProduct.Product)null);
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<GetProductQuery>(), 
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync((Core.Handlers.GetProduct.Product?)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
                 //Act
                 var actionResult = await sut.GetProduct(query);

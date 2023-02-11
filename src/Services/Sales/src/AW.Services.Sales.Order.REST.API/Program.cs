@@ -1,67 +1,79 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using AW.Services.Sales.Order.REST.API;
+using AW.SharedKernel.Api;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
-using System;
-using System.IO;
 
-namespace AW.Services.Sales.Order.REST.API
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 {
-    public static class Program
+    var config = serviceProvider.GetRequiredService<IConfiguration>();
+    var uri = config["ElasticSearchUri"];
+
+    configuration
+        .MinimumLevel.Verbose()
+        .Enrich.WithProperty("ApplicationContext", new Application().AppName)
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(
+            config["ElasticSearchUri"],
+            indexFormat: "aw-logs-{0:yyyy.MM.dd}"
+        )
+        .ReadFrom.Configuration(config);
+});
+
+builder.Services
+    .AddCustomMvc()
+    .AddVersioning()
+    .AddCustomAuthentication(builder.Configuration)
+    .AddCustomSwagger()
+    .AddCustomIntegrations(builder.Configuration)
+    .AddCustomHealthCheck(builder.Configuration);
+
+var app = builder.Build();
+
+var virtualPath = "/salesorder-api";
+
+app.Map(virtualPath, builder =>
+{
+    builder.UseForwardedHeaders(new ForwardedHeadersOptions
     {
-        public static void Main(string[] args)
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
+
+    builder.UseCors("default");
+    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Sales Order API");
+    builder.UseRouting();
+    builder.UseAuthentication();
+    builder.UseAuthorization();
+    builder.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+        endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
-            Log.Logger = CreateSerilogLogger(GetConfiguration());
-
-            try
-            {
-                Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        private static IConfiguration GetConfiguration()
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables();
+            Predicate = r => r.Name.Contains("self")
+        });
+    });
+});
 
-            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json")))
-                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
-
-            return builder.Build();
-        }
-
-        private static ILogger CreateSerilogLogger(IConfiguration configuration)
-        {
-            return new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .Enrich.WithProperty("ApplicationContext", new Application().AppName)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Elasticsearch(
-                    configuration["ElasticSearchUri"],
-                    indexFormat: "aw-logs-{0:yyyy.MM.dd}"
-                )
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-            .UseSerilog();
-    }
+try
+{
+    Log.Information("Starting web host");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

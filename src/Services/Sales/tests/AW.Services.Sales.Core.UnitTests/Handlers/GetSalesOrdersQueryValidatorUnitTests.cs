@@ -24,12 +24,11 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_WithInvalidPageSize_ValidationError(
-            GetSalesOrdersQueryValidator sut,
-            GetSalesOrdersQuery query
+            GetSalesOrdersQueryValidator sut
         )
         {
             //Arrange
-            query.PageSize = 0;
+            var query = new GetSalesOrdersQuery(0, 0, string.Empty);
 
             //Act
             var result = sut.TestValidate(query);
@@ -41,12 +40,11 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public void TestValidate_WithInvalidPageIndex_ValidationError(
-            GetSalesOrdersQueryValidator sut,
-            GetSalesOrdersQuery query
+            GetSalesOrdersQueryValidator sut
         )
         {
             //Arrange
-            query.PageIndex = -1;
+            var query = new GetSalesOrdersQuery(-1, 0, string.Empty);
 
             //Act
             var result = sut.TestValidate(query);

@@ -3,10 +3,6 @@ using AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
 using AW.Services.SharedKernel.Interfaces;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
@@ -95,7 +91,7 @@ namespace AW.Services.ReferenceData.Core.UnitTests
                     It.IsAny<CancellationToken>()
                 )
             )
-            .ReturnsAsync((List<Entities.StateProvince>)null);
+            .ReturnsAsync(new List<Entities.StateProvince>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

@@ -13,7 +13,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
         public StatesProvinceCache(IMemoryCache cache, IReferenceDataApiClient client) =>
             (this.cache, this.client) = (cache, client);
 
-        public async Task<List<Handlers.GetStatesProvinces.StateProvince>> Initialize()
+        public async Task<List<Handlers.GetStatesProvinces.StateProvince>?> Initialize()
         {
             var statesProvinces = await client.GetStatesProvincesAsync();
 
@@ -28,7 +28,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
         public async Task<List<Handlers.GetStatesProvinces.StateProvince>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.StatesProvinces, out List<Handlers.GetStatesProvinces.StateProvince> statesProvinces))
+            if (!cache.TryGetValue(CacheKeys.StatesProvinces, out List<Handlers.GetStatesProvinces.StateProvince>? statesProvinces))
             {
                 statesProvinces = await Initialize();
             }

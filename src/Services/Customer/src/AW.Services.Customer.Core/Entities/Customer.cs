@@ -1,6 +1,5 @@
 ﻿using AW.Services.Customer.Core.Entities.PreferredAddress;
 using AW.Services.SharedKernel.Interfaces;
-using System.Collections.Generic;
 
 namespace AW.Services.Customer.Core.Entities
 {
@@ -12,20 +11,20 @@ namespace AW.Services.Customer.Core.Entities
             AccountNumber = accountNumber;
         }
 
-        protected IPreferredAddressFactory preferredAddressFactory;
+        protected IPreferredAddressFactory? preferredAddressFactory;
 
         public int Id { get; set; }
         public abstract CustomerType CustomerType { get; }
-        public string AccountNumber { get; protected set; }
-        public string Territory { get; private set; }
+        public string? AccountNumber { get; protected set; }
+        public string? Territory { get; private set; }
 
         public List<CustomerAddress> Addresses { get; internal set; } = new();
 
         public List<SalesOrder> SalesOrders { get; set; } = new();
 
-        public Address GetPreferredAddress(string addressType)
+        public Address? GetPreferredAddress(string addressType)
         {
-            return preferredAddressFactory.GetPreferredAddress(addressType);
+            return preferredAddressFactory!.GetPreferredAddress(addressType);
         }
 
         public void AddAddress(CustomerAddress customerAddress)

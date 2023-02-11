@@ -8,7 +8,7 @@
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [SalesPerson] WITH CHECK ADD CONSTRAINT [FK_SalesPerson_Person_PersonID] FOREIGN KEY([PersonID])
+ALTER TABLE [SalesPerson] ADD CONSTRAINT [FK_SalesPerson_Person_PersonID] FOREIGN KEY([PersonID])
 REFERENCES [Person] ([PersonID])
 GO
 

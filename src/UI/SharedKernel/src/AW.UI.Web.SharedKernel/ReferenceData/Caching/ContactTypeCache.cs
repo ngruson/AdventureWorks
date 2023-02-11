@@ -23,12 +23,12 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
             cache.Set(CacheKeys.ContactTypes, contactTypes, cacheEntryOptions);
 
-            return contactTypes;
+            return contactTypes!;
         }
 
         public async Task<List<Handlers.GetContactTypes.ContactType>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.ContactTypes, out List<Handlers.GetContactTypes.ContactType> contactTypes))
+            if (!cache.TryGetValue(CacheKeys.ContactTypes, out List<Handlers.GetContactTypes.ContactType>? contactTypes))
             {
                 contactTypes = await Initialize();
             }

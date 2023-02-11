@@ -30,7 +30,7 @@ namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
 
             _logger.LogInformation("Getting shipping methods from database");
             var shipMethods = await _repository.ListAsync(cancellationToken);
-            Guard.Against.ShipMethodsNull(shipMethods, _logger);
+            Guard.Against.ShipMethodsNullOrEmpty(shipMethods, _logger);
 
             _logger.LogInformation("Returning shipping methods");
             return _mapper.Map<List<ShipMethod>>(shipMethods).OrderBy(_ => _.Name).ToList();

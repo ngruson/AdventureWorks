@@ -18,7 +18,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SalesOrderNull(this IGuardClause guardClause, Entities.SalesOrder input, string salesOrderNumber, ILogger logger)
+        public static void SalesOrderNull(this IGuardClause guardClause, Entities.SalesOrder? input, string salesOrderNumber, ILogger logger)
         {
             if (input == null)
             {
@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SalesOrderNull(this IGuardClause guardClause, SalesOrderDto input, string salesOrderNumber, ILogger logger)
+        public static void SalesOrderNull(this IGuardClause guardClause, SalesOrderDto? input, string salesOrderNumber, ILogger logger)
         {
             if (input == null)
             {
@@ -38,7 +38,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SalesOrderLineNull(this IGuardClause guardClause, Entities.SalesOrderLine input, string productNumber, ILogger logger)
+        public static void SalesOrderLineNull(this IGuardClause guardClause, Entities.SalesOrderLine? input, string productNumber, ILogger logger)
         {
             if (input == null)
             {
@@ -48,7 +48,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void CustomerNull(this IGuardClause guardClause, Entities.Customer input, string customerNumber, ILogger logger)
+        public static void CustomerNull(this IGuardClause guardClause, Entities.Customer? input, string customerNumber, ILogger logger)
         {
             if (input == null)
             {
@@ -58,7 +58,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SpecialOfferProductNull(this IGuardClause guardClause, Entities.SpecialOfferProduct input, string productNumber, ILogger logger)
+        public static void SpecialOfferProductNull(this IGuardClause guardClause, Entities.SpecialOfferProduct? input, string productNumber, ILogger logger)
         {
             if (input == null)
             {
@@ -78,7 +78,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SalesPersonNull(this IGuardClause guardClause, Entities.SalesPerson input, string name, ILogger logger)
+        public static void SalesPersonNull(this IGuardClause guardClause, Entities.SalesPerson? input, string name, ILogger logger)
         {
             if (input == null)
             {

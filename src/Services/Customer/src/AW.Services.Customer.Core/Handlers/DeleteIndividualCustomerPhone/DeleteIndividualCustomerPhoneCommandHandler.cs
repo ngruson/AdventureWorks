@@ -2,12 +2,8 @@
 using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
 {
@@ -33,19 +29,19 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
             Guard.Against.CustomerNull(individualCustomer, request.AccountNumber, _logger);
 
             _logger.LogInformation("Removing phone from customer");
-            var phone = individualCustomer.Person.PhoneNumbers.FirstOrDefault(
+            var phone = individualCustomer!.Person!.PhoneNumbers.FirstOrDefault(
                 e => e.PhoneNumberType == request.Phone.PhoneNumberType &&
                     e.PhoneNumber == request.Phone.PhoneNumber
             );
             Guard.Against.PhoneNumberNull(
                 phone, 
                 request.AccountNumber, 
-                request.Phone.PhoneNumber,
-                request.Phone.PhoneNumberType,
+                request.Phone.PhoneNumber!,
+                request.Phone.PhoneNumberType!,
                 _logger
             );
 
-            individualCustomer.Person.RemovePhoneNumber(phone);
+            individualCustomer.Person.RemovePhoneNumber(phone!);
 
             _logger.LogInformation("Updating customer to database");
             await _repository.UpdateAsync(individualCustomer, cancellationToken);

@@ -39,19 +39,19 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
             Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
 
             var createSalesOrderCommand = new CreateSalesOrderCommand(
-                _mapper.Map<List<SalesOrderItemDto>>(salesOrder.OrderLines),
-                null,
-                null,
-                salesOrder.AccountNumber,
-                salesOrder.Customer.CustomerNumber,
+                _mapper.Map<List<SalesOrderItemDto>>(salesOrder!.OrderLines),
+                string.Empty,
+                string.Empty,
+                salesOrder!.AccountNumber!,
+                salesOrder!.Customer!.CustomerNumber,
                 salesOrder.ShipMethod,
                 _mapper.Map<CreateSalesOrder.AddressDto>(salesOrder.BillToAddress),
                 _mapper.Map<CreateSalesOrder.AddressDto>(salesOrder.ShipToAddress),
-                salesOrder.CreditCard.CardNumber,
-                null,
+                salesOrder!.CreditCard!.CardNumber!,
+                string.Empty,
                 new DateTime(salesOrder.CreditCard.ExpYear, salesOrder.CreditCard.ExpMonth, 1),
-                null,
-                salesOrder.CreditCard.CardType
+                string.Empty,
+                salesOrder.CreditCard.CardType!
             );
 
             _logger.LogInformation("Creating new sales order");

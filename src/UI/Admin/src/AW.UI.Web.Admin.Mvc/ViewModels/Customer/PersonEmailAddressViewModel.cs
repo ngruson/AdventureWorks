@@ -9,7 +9,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         [Display(Name = "Email address")]
         [Required]
-        public string EmailAddress { get; set; }
+        public string? EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

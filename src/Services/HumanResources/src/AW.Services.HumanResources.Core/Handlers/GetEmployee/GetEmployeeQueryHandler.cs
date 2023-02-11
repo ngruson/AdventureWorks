@@ -5,11 +5,6 @@ using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
 {
@@ -31,7 +26,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
             _logger.LogInformation("Getting employee from database");
 
             var spec = new GetEmployeeSpecification(
-                request.LoginID
+                request.LoginID!
             );
 
             var employee = await _repository.SingleOrDefaultAsync(spec, cancellationToken);

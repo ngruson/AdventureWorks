@@ -9,7 +9,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     {
         [Display(Name = "Contact type")]
         [Required]
-        public string ContactType { get; set; }
+        public string? ContactType { get; set; }
         public PersonViewModel ContactPerson { get; set; } = new PersonViewModel();
 
         public void Mapping(Profile profile)

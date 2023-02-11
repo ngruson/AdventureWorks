@@ -8,8 +8,6 @@ using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using System;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.IntegrationEvents.EventHandling
 {
@@ -26,10 +24,10 @@ namespace AW.Services.Sales.Core.IntegrationEvents.EventHandling
             IMapper mapper,
             ILogger<UserCheckoutAcceptedIntegrationEventHandler> logger)
         {
-            this.application = application ?? throw new ArgumentNullException(nameof(application));
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.application = application;
+            this.mediator = mediator;
+            this.mapper = mapper;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace AW.Services.Sales.Core.IntegrationEvents.EventHandling
                     {
                         var createSalesOrderCommand = new CreateSalesOrderCommand(
                             @event.BasketItems, @event.UserId, @event.UserName,
-                            null,
+                            string.Empty,
                             @event.CustomerNumber, @event.ShipMethod,
                             mapper.Map<AddressDto>(@event.BillToAddress),
                             mapper.Map<AddressDto>(@event.ShipToAddress),

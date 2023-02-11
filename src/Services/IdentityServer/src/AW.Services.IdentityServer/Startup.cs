@@ -89,13 +89,13 @@ namespace AW.Services.IdentityServer
 
         public void MigrateInMemoryDataToSqlServer(IApplicationBuilder app)
         {
-            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
+            scope?.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
-            var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            var context = scope!.ServiceProvider.GetRequiredService<ConfigurationDbContext>()!;
             context.Database.Migrate();
 
-            if (!context.Clients.Any())
+            if (!(context.Clients.Any()))
             {
                 foreach (var client in InMemoryConfiguration.Clients())
                 {
@@ -147,78 +147,13 @@ namespace AW.Services.IdentityServer
                         };
                         var result = userManager.CreateAsync(appUser, user.Password).Result;
                         result = userManager.AddClaimsAsync(appUser, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, Configuration["TestUser:Claims:Name"]),
-                            new Claim(JwtClaimTypes.GivenName, Configuration["TestUser:Claims:GivenName"]),
-                            new Claim(JwtClaimTypes.FamilyName, Configuration["TestUser:Claims:FamilyName"])
+                            new Claim(JwtClaimTypes.Name, Configuration["TestUser:Claims:Name"]!),
+                            new Claim(JwtClaimTypes.GivenName, Configuration["TestUser:Claims:GivenName"]!),
+                            new Claim(JwtClaimTypes.FamilyName, Configuration["TestUser:Claims:FamilyName"]!)
                         }).Result;
                     };
                 }
             }
         }
-    }
-}
-
-public static class CustomExtensionMethods
-{
-    public static IServiceCollection AddCustomMvc(this IServiceCollection services)
-    {
-        services.AddMvc(opt => opt.EnableEndpointRouting = false);
-
-        services.Configure<ForwardedHeadersOptions>(options =>
-        {
-            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            options.RequireHeaderSymmetry = false;
-            options.KnownNetworks.Clear();
-            options.KnownProxies.Clear();
-        });
-        services.AddRazorPages();
-
-        return services;
-    }
-
-    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DbConnection")));
-
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
-        return services;
-    }
-
-    public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
-    {
-        var migrationsAssembly = typeof(Startup).Assembly.GetName().Name;
-        services.AddIdentityServer()
-            .AddSigningCredential(new X509Certificate2("identityserver.pfx"))
-            .AddAspNetIdentity<ApplicationUser>()
-            .AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(
-                    configuration.GetConnectionString("DbConnection"),
-                    options => options.MigrationsAssembly(migrationsAssembly)
-                );
-            })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = b => b.UseSqlServer(
-                    configuration.GetConnectionString("DbConnection"),
-                    options => options.MigrationsAssembly(migrationsAssembly)
-                );
-            });
-
-        return services;
-    }
-
-    public static IServiceCollection AddCustomHealthCheck(this IServiceCollection services, IConfiguration configuration)
-    {
-        var hcBuilder = services.AddHealthChecks();
-        hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
-        hcBuilder.AddSqlServer(configuration.GetConnectionString("DbConnection"));
-        hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]);
-
-        return services;
     }
 }

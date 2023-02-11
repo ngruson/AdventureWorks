@@ -123,7 +123,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                     It.IsAny<GetEmployeeQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .Throws(new EmployeeNotFoundException(query.LoginID));
+                .Throws(new EmployeeNotFoundException(query.LoginID!));
 
                 //Act
                 var actionResult = await sut.GetEmployee(query);

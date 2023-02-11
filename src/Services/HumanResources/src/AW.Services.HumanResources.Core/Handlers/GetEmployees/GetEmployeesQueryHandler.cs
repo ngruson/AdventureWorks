@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
 {
-    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, GetEmployeesResult>
+    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, GetEmployeesResult?>
     {
         private readonly ILogger<GetEmployeesQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
             IRepository<Entities.Employee> repository
         ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
         
-        public async Task<GetEmployeesResult> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+        public async Task<GetEmployeesResult?> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting customers from database");
@@ -32,7 +32,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
             var countSpec = new CountEmployeesSpecification();
 
             var employees = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.EmployeesNull(employees, _logger);
+            Guard.Against.EmployeesNullOrEmpty(employees, _logger);
 
             _logger.LogInformation("Returning customers");
             return new GetEmployeesResult(

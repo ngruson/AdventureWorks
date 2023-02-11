@@ -69,7 +69,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
                 It.IsAny<GetAllEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((List<Entities.Employee>?)null);
+            .ReturnsAsync(new List<Entities.Employee>());
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);

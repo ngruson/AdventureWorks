@@ -5,9 +5,6 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
@@ -33,43 +30,43 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
             _logger.LogInformation("Handle called");
 
             _logger.LogInformation("Getting sales order from database");
-            var spec = new GetSalesOrderSpecification(request.SalesOrder.SalesOrderNumber);
+            var spec = new GetSalesOrderSpecification(request.SalesOrder!.SalesOrderNumber!);
             var salesOrder = await _salesOrderRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrder.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrder.SalesOrderNumber!, _logger);
 
             _logger.LogInformation("Updating sales order");
             _mapper.Map(request.SalesOrder, salesOrder);
 
-            foreach (var orderLine in request.SalesOrder.OrderLines)
+            foreach (var orderLine in request.SalesOrder.OrderLines!)
             {
-                var specialOfferSpec = new GetSpecialOfferProductSpecification(orderLine.ProductNumber, orderLine.SpecialOfferDescription);
+                var specialOfferSpec = new GetSpecialOfferProductSpecification(orderLine.ProductNumber!, orderLine.SpecialOfferDescription);
                 var specialOfferProduct = await _specialOfferProductRepository.FirstOrDefaultAsync(specialOfferSpec);
-                Guard.Against.SpecialOfferProductNull(specialOfferProduct, orderLine.ProductNumber, _logger);
+                Guard.Against.SpecialOfferProductNull(specialOfferProduct, orderLine.ProductNumber!, _logger);
 
-                var existingOrderLine = salesOrder.OrderLines.SingleOrDefault(_ => _.ProductNumber == orderLine.ProductNumber);
-                Guard.Against.SalesOrderLineNull(existingOrderLine, existingOrderLine.ProductNumber, _logger);
+                var existingOrderLine = salesOrder!.OrderLines.SingleOrDefault(_ => _.ProductNumber == orderLine.ProductNumber);
+                Guard.Against.SalesOrderLineNull(existingOrderLine, orderLine.ProductNumber!, _logger);
 
-                existingOrderLine.SpecialOfferProduct = specialOfferProduct;
-                existingOrderLine.SpecialOfferProductId = specialOfferProduct.Id;
+                existingOrderLine!.SpecialOfferProduct = specialOfferProduct!;
+                existingOrderLine.SpecialOfferProductId = specialOfferProduct!.Id;
             }
 
             if (request.SalesOrder.SalesPerson != null)
             {
                 var salesPerson = await _salesPersonRepository.SingleOrDefaultAsync(
                 new GetSalesPersonSpecification(
-                    request.SalesOrder.SalesPerson.Name.FirstName,
+                    request.SalesOrder.SalesPerson.Name!.FirstName!,
                     request.SalesOrder.SalesPerson.Name.MiddleName,
-                    request.SalesOrder.SalesPerson.Name.LastName
+                    request.SalesOrder.SalesPerson.Name.LastName!
                 ),
                 cancellationToken
             );
-                Guard.Against.SalesPersonNull(salesPerson, request.SalesOrder.SalesPerson.Name.FullName, _logger);
-                if (salesOrder.SalesPerson != salesPerson)
-                    salesOrder.SetSalesPerson(salesPerson);
+                Guard.Against.SalesPersonNull(salesPerson, request.SalesOrder.SalesPerson.Name!.FullName!, _logger);
+                if (salesOrder!.SalesPerson != salesPerson)
+                    salesOrder.SetSalesPerson(salesPerson!);
             }
 
             _logger.LogInformation("Saving sales order to database");
-            await _salesOrderRepository.UpdateAsync(salesOrder, cancellationToken);
+            await _salesOrderRepository.UpdateAsync(salesOrder!, cancellationToken);
 
             _logger.LogInformation("Returning sales order");
             return _mapper.Map<SalesOrderDto>(salesOrder);

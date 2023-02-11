@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -26,10 +23,10 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         {
             // Arrange
             customer.AddContact(new Entities.StoreCustomerContact(
-                command.CustomerContact.ContactType,
+                command.CustomerContact!.ContactType!,
                 new Entities.Person(
-                    command.CustomerContact.ContactPerson.Title,
-                    command.CustomerContact.ContactPerson.Name
+                    command.CustomerContact.ContactPerson!.Title!,
+                    command.CustomerContact.ContactPerson.Name!
                 )
             ));
 
@@ -63,7 +60,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 It.IsAny<GetStoreCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.StoreCustomer)null);
+            .ReturnsAsync((Entities.StoreCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
@@ -85,7 +82,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
             //Assert
             await func.Should().ThrowAsync<StoreContactNotFoundException>()
-                .WithMessage($"Contact (name: {command.CustomerContact.ContactPerson.Name.FullName}, type: {command.CustomerContact.ContactType}) for customer {command.AccountNumber} not found");
+                .WithMessage($"Contact (name: {command.CustomerContact!.ContactPerson!.Name!.FullName}, type: {command.CustomerContact.ContactType}) for customer {command.AccountNumber} not found");
         }
     }
 }

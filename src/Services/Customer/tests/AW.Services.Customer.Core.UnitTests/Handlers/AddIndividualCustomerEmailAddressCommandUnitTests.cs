@@ -7,9 +7,6 @@ using AW.Services.SharedKernel.ValueTypes;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
@@ -26,11 +23,10 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var command = new AddIndividualCustomerEmailAddressCommand
-            {
-                AccountNumber = accountNumber,
-                EmailAddress = EmailAddress.Create("test@test.com").Value
-            };
+            var command = new AddIndividualCustomerEmailAddressCommand(
+                accountNumber,
+                EmailAddress.Create("test@test.com").Value
+            );
 
             //Act
             customerRepoMock.Setup(_ =>
@@ -60,17 +56,16 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             // Arrange
-            var command = new AddIndividualCustomerEmailAddressCommand
-            {
-                AccountNumber = accountNumber,
-                EmailAddress = EmailAddress.Create("test@test.com").Value
-            };
+            var command = new AddIndividualCustomerEmailAddressCommand(
+                accountNumber,
+                EmailAddress.Create("test@test.com").Value
+            );
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetIndividualCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((Entities.IndividualCustomer)null);
+            .ReturnsAsync((Entities.IndividualCustomer?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);

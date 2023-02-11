@@ -1,5 +1,3 @@
-using System;
-
 namespace AW.Services.Product.Core.Entities
 {
     public class ProductModelIllustration
@@ -9,6 +7,6 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime ModifiedDate { get; private set; }
 
-        public Illustration Illustration { get; private set; }
+        public Illustration? Illustration { get; private set; }
     }
 }

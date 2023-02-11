@@ -1,10 +1,14 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesPersons
 {
-    public class GetSalesPersonsQuery : IRequest<List<SalesPersonDto>>
+    public class GetSalesPersonsQuery : IRequest<List<SalesPersonDto>?>
     {
-        public string Territory { get; set; }
+        public GetSalesPersonsQuery(string? territory)
+        {
+            Territory = territory;
+        }
+
+        public string? Territory { get; private init; }
     }
 }

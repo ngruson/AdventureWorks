@@ -2,7 +2,7 @@
 {
     public interface IIdentityService
     {
-        string GetUserIdentity();
-        string GetUserName();
+        string? GetUserIdentity();
+        string? GetUserName();
     }
 }

@@ -7,7 +7,7 @@ namespace AW.Services.Product.Core.Specifications
 
         public GetProductsNameSpecification()
         {
-            Query.Select(p => p.Name);
+            Query!.Select(p => p.Name);
         }
     }
 }

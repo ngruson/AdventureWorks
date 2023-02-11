@@ -7,7 +7,7 @@ namespace AW.Services.Customer.Core.Models.UpdateCustomer
 {
     public class PersonEmailAddress : IMapFrom<PersonEmailAddressDto>
     {
-        public EmailAddress EmailAddress { get; set; }
+        public EmailAddress? EmailAddress { get; set; }
 
         public void Mapping(Profile profile)
         {

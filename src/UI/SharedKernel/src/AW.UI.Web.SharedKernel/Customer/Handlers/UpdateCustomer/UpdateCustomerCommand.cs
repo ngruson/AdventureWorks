@@ -4,13 +4,13 @@ namespace AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer
 {
     public class UpdateCustomerCommand : IRequest<Customer>
     {
-        public UpdateCustomerCommand(string? accountNumber, Customer customer)
+        public UpdateCustomerCommand(string? accountNumber, Customer? customer)
         {
             AccountNumber = accountNumber;
             Customer = customer;
         }
 
         public string? AccountNumber { get; set; }
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

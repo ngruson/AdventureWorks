@@ -7,10 +7,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
     public class PersonViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.Person>
     {
-        public string Title { get; set; }
-        public PersonNameViewModel Name { get; set; }
+        public string? Title { get; set; }
+        public PersonNameViewModel? Name { get; set; }
 
-        public string Suffix { get; set; }
+        public string? Suffix { get; set; }
 
         public List<PersonEmailAddressViewModel> EmailAddresses { get; set; } = new();
         public List<PersonPhoneViewModel> PhoneNumbers { get; set; } = new();
