@@ -85,6 +85,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 .Returns(accessToken);
 
                 var sut = new AzureAdAuthenticationDbConnectionInterceptor(
+                    mockCredential.Object,
                     mockCredential.Object
                 );
 
@@ -140,8 +141,8 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
 
             [Theory, AutoMoqData]
             public async Task SetAccessTokenGivenAzureSqlConnection(
-                //AccessToken accessToken,
-                //Mock<TokenCredential> mockCredential,
+                AccessToken accessToken,
+                Mock<TokenCredential> mockCredential,
                 Mock<EventDefinitionBase> mockEventDefinition,
                 Func<EventDefinitionBase, EventData, string> messageGenerator,
                 [Frozen] Mock<DbContext> mockContext,
@@ -164,15 +165,16 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                     startTime
                 );
 
-                //mockCredential.Setup(_ => _.GetToken(
-                //    It.IsAny<TokenRequestContext>(),
-                //    It.IsAny<CancellationToken>()
-                //    )
-                //)
-                //.Returns(accessToken);
+                mockCredential.Setup(_ => _.GetTokenAsync(
+                    It.IsAny<TokenRequestContext>(),
+                    It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(accessToken);
 
                 var sut = new AzureAdAuthenticationDbConnectionInterceptor(
-                    //mockCredential.Object
+                    mockCredential.Object,
+                    mockCredential.Object
                 );
 
                 //Act
@@ -183,7 +185,7 @@ namespace AW.Services.SharedKernel.EFCore.UnitTests
                 );
 
                 //Assert
-                connection.AccessToken.Should().NotBeEmpty();
+                connection.AccessToken.Should().Be(accessToken.Token);
             }
         }
     }
