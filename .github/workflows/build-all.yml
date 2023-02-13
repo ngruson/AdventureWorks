@@ -82,6 +82,21 @@ jobs:
           dotnet build src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
           dotnet test src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
+        - name: Build Human Resources services and run unit tests
+        run: |
+          dotnet build src\Services\HumanResources\tests\AW.Services.HumanResources.Core.UnitTests\AW.Services.HumanResources.Core.UnitTests.csproj --no-restore
+          dotnet test src\Services\HumanResources\tests\AW.Services.HumanResources.Core.UnitTests\AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build src\Services\HumanResources\tests\AW.Services.HumanResources.Infrastructure.EFCore.UnitTests\AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj --no-restore
+          dotnet test src\Services\HumanResources\tests\AW.Services.HumanResources.Infrastructure.EFCore.UnitTests\AW.Services.HumanResources.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          
+          dotnet build src\Services\HumanResources\src\AW.Services.HumanResources.Department.REST.API\AW.Services.HumanResources.Department.REST.API.csproj --no-restore
+          dotnet build src\Services\HumanResources\tests\AW.Services.HumanResources.Employee.REST.API.UnitTests\AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj --no-restore
+          dotnet build src\Services\HumanResources\tests\AW.Services.HumanResources.Shift.REST.API.UnitTests\AW.Services.HumanResources.Shift.REST.API.UnitTests.csproj --no-restore
+          dotnet test src\Services\Customer\tests\AW.Services.HumanResources.Department.REST.API.UnitTests\AW.Services.HumanResources.Department.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\Customer\tests\AW.Services.HumanResources.Employee.REST.API.UnitTests\AW.Services.HumanResources.Employee.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+          dotnet test src\Services\Customer\tests\AW.Services.HumanResources.Shift.REST.API.UnitTests\AW.Services.HumanResources.Shift.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
       - name: Build Product services and run unit tests
         run: |
           dotnet build src\Services\Product\tests\AW.Services.Product.Core.UnitTests\AW.Services.Product.Core.UnitTests.csproj --no-restore

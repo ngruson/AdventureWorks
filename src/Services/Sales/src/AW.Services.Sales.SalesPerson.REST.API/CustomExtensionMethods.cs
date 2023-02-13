@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Identity.Web;
 
-static class CustomExtensionsMethods
+static class CustomExtensionMethods
 {
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {

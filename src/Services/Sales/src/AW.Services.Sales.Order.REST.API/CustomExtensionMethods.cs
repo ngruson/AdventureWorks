@@ -1,4 +1,4 @@
-using AW.Services.Infrastructure.EventBus.Abstractions;
+﻿using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.Services.Infrastructure.EventBus.AzureServiceBus;
 using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.Services.Infrastructure.EventBus.RabbitMQ;
@@ -33,7 +33,7 @@ using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
 
-static class CustomExtensionsMethods
+static class CustomExtensionMethods
 {
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {

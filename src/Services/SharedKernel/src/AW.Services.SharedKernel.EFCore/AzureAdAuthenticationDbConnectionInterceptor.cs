@@ -1,11 +1,8 @@
 ﻿using Azure.Core;
 using Azure.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
 using System.Data.Common;
 using Microsoft.Data.SqlClient;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.SharedKernel.EFCore
 {
@@ -16,9 +13,15 @@ namespace AW.Services.SharedKernel.EFCore
             "https://database.windows.net//.default"
         };
 
-        private static readonly TokenCredential _credential = new ChainedTokenCredential(
+        private static TokenCredential _credential = new ChainedTokenCredential(
             new ManagedIdentityCredential(),
             new EnvironmentCredential());
+
+        public AzureAdAuthenticationDbConnectionInterceptor() { }
+        public AzureAdAuthenticationDbConnectionInterceptor(TokenCredential credential)
+        {
+            _credential = credential;
+        }
 
         public override InterceptionResult ConnectionOpening(
             DbConnection connection,

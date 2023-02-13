@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using AW.Services.SharedKernel.Converters;
+using AW.Services.SharedKernel.JsonConverters;
 
 namespace AW.Services.Customer.REST.API
 {

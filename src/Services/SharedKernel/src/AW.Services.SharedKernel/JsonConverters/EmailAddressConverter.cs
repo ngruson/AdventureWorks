@@ -1,19 +1,11 @@
-﻿using Ardalis.GuardClauses;
-using AW.Services.SharedKernel.ValueTypes;
-using AW.SharedKernel.Extensions;
-using Microsoft.Extensions.Logging;
+﻿using AW.Services.SharedKernel.ValueTypes;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AW.Services.SharedKernel.Converters
+namespace AW.Services.SharedKernel.JsonConverters
 {
     public class EmailAddressConverter : JsonConverter<EmailAddress>
     {
-        private readonly ILogger<EmailAddressConverter> _logger;
-
-        public EmailAddressConverter(ILogger<EmailAddressConverter> logger) =>
-            _logger = logger;
-
         public override EmailAddress? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null) return null;
