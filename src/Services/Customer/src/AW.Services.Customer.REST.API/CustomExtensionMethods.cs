@@ -2,7 +2,7 @@
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Infrastructure.EFCore.Configurations;
 using AW.Services.Infrastructure.Filters;
-using AW.Services.SharedKernel.Converters;
+using AW.Services.SharedKernel.JsonConverters;
 using AW.Services.SharedKernel.EFCore;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.Api;
