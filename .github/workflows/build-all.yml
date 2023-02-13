@@ -82,7 +82,7 @@ jobs:
           dotnet build src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-restore          
           dotnet test src\Services\Customer\tests\AW.Services.Customer.REST.API.UnitTests\AW.Services.Customer.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
-        - name: Build Human Resources services and run unit tests
+      - name: Build Human Resources services and run unit tests
         run: |
           dotnet build src\Services\HumanResources\tests\AW.Services.HumanResources.Core.UnitTests\AW.Services.HumanResources.Core.UnitTests.csproj --no-restore
           dotnet test src\Services\HumanResources\tests\AW.Services.HumanResources.Core.UnitTests\AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
