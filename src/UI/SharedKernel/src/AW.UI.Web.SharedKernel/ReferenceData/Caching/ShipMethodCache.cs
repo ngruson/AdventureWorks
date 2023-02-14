@@ -28,7 +28,7 @@ namespace AW.UI.Web.SharedKernel.ReferenceData.Caching
 
         public async Task<List<Handlers.GetShipMethods.ShipMethod>?> GetData()
         {
-            if (!cache.TryGetValue(CacheKeys.ShipMethods, out List<Handlers.GetShipMethods.ShipMethod> shipMethods))
+            if (!cache.TryGetValue(CacheKeys.ShipMethods, out List<Handlers.GetShipMethods.ShipMethod>? shipMethods))
             {
                 shipMethods = await Initialize();
             }

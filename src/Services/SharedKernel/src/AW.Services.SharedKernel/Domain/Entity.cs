@@ -4,7 +4,7 @@ namespace AW.Services.SharedKernel.Domain
 {
     public abstract class Entity
     {
-        private List<INotification> domainEvents = new();
+        private readonly List<INotification> domainEvents = new();
         public IReadOnlyCollection<INotification> DomainEvents => domainEvents.AsReadOnly();
 
         public void AddDomainEvent(INotification eventItem)

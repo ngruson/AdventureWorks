@@ -1,5 +1,4 @@
 ﻿using AW.Services.Infrastructure;
-using System;
 using System.Runtime.Serialization;
 
 namespace AW.Services.Sales.Core.Exceptions

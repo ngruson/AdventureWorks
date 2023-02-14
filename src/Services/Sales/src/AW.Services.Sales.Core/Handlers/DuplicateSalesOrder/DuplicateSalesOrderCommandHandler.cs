@@ -6,10 +6,6 @@ using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
 {

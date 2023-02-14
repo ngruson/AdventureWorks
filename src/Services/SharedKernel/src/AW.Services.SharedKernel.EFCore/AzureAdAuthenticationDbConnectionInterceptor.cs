@@ -13,15 +13,18 @@ namespace AW.Services.SharedKernel.EFCore
             "https://database.windows.net//.default"
         };
 
-        private static TokenCredential _credential = new ChainedTokenCredential(
+        private static TokenCredential? _credential;
+
+        private static TokenCredential? _defaultCredential;
+
+        public AzureAdAuthenticationDbConnectionInterceptor() 
+        {
+            _credential = new ChainedTokenCredential(
                 new ManagedIdentityCredential(),
                 new EnvironmentCredential()
             );
 
-        private static TokenCredential _defaultCredential = new DefaultAzureCredential();
-
-        public AzureAdAuthenticationDbConnectionInterceptor() 
-        {
+            _defaultCredential = new DefaultAzureCredential();
         }
         public AzureAdAuthenticationDbConnectionInterceptor(
             TokenCredential credential, TokenCredential defaultCredential)
@@ -39,7 +42,7 @@ namespace AW.Services.SharedKernel.EFCore
             if (DoesConnectionNeedAccessToken(sqlConnection))
             {
                 var tokenRequestContext = new TokenRequestContext(_azureSqlScopes);
-                var token = _credential.GetToken(tokenRequestContext, default);
+                var token = _credential!.GetToken(tokenRequestContext, default);
 
                 sqlConnection.AccessToken = token.Token;
             }
@@ -78,7 +81,7 @@ namespace AW.Services.SharedKernel.EFCore
         {
             // See https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-sql
             var tokenRequestContext = new TokenRequestContext(_azureSqlScopes);
-            var tokenRequestResult = await _defaultCredential.GetTokenAsync(tokenRequestContext, cancellationToken);
+            var tokenRequestResult = await _defaultCredential!.GetTokenAsync(tokenRequestContext, cancellationToken);
 
             return tokenRequestResult.Token;
         }

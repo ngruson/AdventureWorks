@@ -1,4 +1,4 @@
-using AW.Services.Sales.Order.REST.API;
+﻿using AW.Services.Sales.Order.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 {
     var config = serviceProvider.GetRequiredService<IConfiguration>();
-    var uri = config["ElasticSearchUri"];
 
     configuration
         .MinimumLevel.Verbose()

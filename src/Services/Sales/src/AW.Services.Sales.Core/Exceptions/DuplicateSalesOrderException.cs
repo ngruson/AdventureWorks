@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace AW.Services.Sales.Core.Exceptions
 {
+    [Serializable]
     public class DuplicateSalesOrderException : DomainException
     {
         public DuplicateSalesOrderException(string salesOrderNumber)

@@ -1,12 +1,9 @@
-using Autofac.Core;
-using AW.SharedKernel.OpenIdConnect;
+﻿using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Store;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.IdentityModel.Logging;
 using Serilog;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 {
     var config = serviceProvider.GetRequiredService<IConfiguration>();
-    var uri = config["ElasticSearchUri"];
 
     configuration
         .MinimumLevel.Verbose()

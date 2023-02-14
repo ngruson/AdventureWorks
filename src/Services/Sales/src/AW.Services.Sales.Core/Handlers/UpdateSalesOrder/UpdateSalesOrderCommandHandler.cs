@@ -40,7 +40,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
             foreach (var orderLine in request.SalesOrder.OrderLines!)
             {
                 var specialOfferSpec = new GetSpecialOfferProductSpecification(orderLine.ProductNumber!, orderLine.SpecialOfferDescription);
-                var specialOfferProduct = await _specialOfferProductRepository.FirstOrDefaultAsync(specialOfferSpec);
+                var specialOfferProduct = await _specialOfferProductRepository.FirstOrDefaultAsync(specialOfferSpec, cancellationToken);
                 Guard.Against.SpecialOfferProductNull(specialOfferProduct, orderLine.ProductNumber!, _logger);
 
                 var existingOrderLine = salesOrder!.OrderLines.SingleOrDefault(_ => _.ProductNumber == orderLine.ProductNumber);

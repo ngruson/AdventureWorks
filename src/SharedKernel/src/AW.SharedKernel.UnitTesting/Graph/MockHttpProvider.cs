@@ -29,9 +29,9 @@ namespace AW.SharedKernel.UnitTesting.Graph
                         response.Content = new StringContent(Serializer.SerializeObject(args.Result));
                     }
                 }
-                if (Responses.ContainsKey(key))
+                if (Responses.TryGetValue(key, out var value))
                 {
-                    response.Content = new StringContent(Serializer.SerializeObject(Responses[key]));
+                    response.Content = new StringContent(Serializer.SerializeObject(value));
                 }
                 return response;
             });

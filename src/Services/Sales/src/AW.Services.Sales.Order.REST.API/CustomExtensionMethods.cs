@@ -112,7 +112,7 @@ namespace AW.Services.Sales.Order.REST.API
                     builder.Options,
                     provider.GetRequiredService<IMediator>(),
                     typeof(SalesOrderConfiguration).Assembly
-                ); ;
+                );
             });
 
             return services;
