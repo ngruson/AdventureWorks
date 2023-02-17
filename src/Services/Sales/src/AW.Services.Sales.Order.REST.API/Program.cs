@@ -1,4 +1,6 @@
-﻿using AW.Services.Sales.Order.REST.API;
+﻿using AW.Services.Infrastructure.EventBus.Abstractions;
+using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Order.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -63,6 +65,8 @@ app.Map(virtualPath, builder =>
     });
 });
 
+ConfigureEventBus(app);
+
 try
 {
     Log.Information("Starting web host");
@@ -75,4 +79,12 @@ catch (Exception ex)
 finally
 {
     Log.CloseAndFlush();
+}
+
+static void ConfigureEventBus(IApplicationBuilder app)
+{
+    var serviceProvider = app.ApplicationServices;
+    var scope = serviceProvider.CreateScope();
+    var eventBus = scope.ServiceProvider.GetRequiredService<IEventBus>();
+    eventBus.Subscribe<UserCheckoutAcceptedIntegrationEvent, IIntegrationEventHandler<UserCheckoutAcceptedIntegrationEvent>>();
 }
