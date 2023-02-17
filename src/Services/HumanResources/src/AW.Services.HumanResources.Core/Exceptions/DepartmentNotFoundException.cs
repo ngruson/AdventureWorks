@@ -6,7 +6,7 @@ namespace AW.Services.HumanResources.Core.Exceptions
     [Serializable]
     public class DepartmentNotFoundException : DomainException
     {
-        public DepartmentNotFoundException(string name)
+        public DepartmentNotFoundException(string? name)
             : base($"Department '{name}' not found")
         { }
 

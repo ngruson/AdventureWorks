@@ -30,7 +30,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
             );
 
             var customer = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber!, _logger);
 
             _logger.LogInformation("Returning customer");
             return _mapper.Map<CustomerDto>(customer);

@@ -8,7 +8,6 @@
 
         public CustomerBasket()
         {
-
         }
 
         public CustomerBasket(string customerId)

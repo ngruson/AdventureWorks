@@ -26,7 +26,7 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
                 new GetSalesOrderSpecification(request.SalesOrderNumber),
                 cancellationToken
             );
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             _logger.LogInformation("Deleting sales order {@SalesOrder}", salesOrder);
             await _repository.DeleteAsync(salesOrder!, cancellationToken);

@@ -29,7 +29,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
             );
 
             var salesOrder = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             _logger.LogInformation("Returning sales orders");
             return _mapper.Map<SalesOrderDto>(salesOrder);

@@ -5,7 +5,7 @@ namespace AW.Services.HumanResources.Core.Specifications
 {
     public class GetEmployeeSpecification : Specification<Entities.Employee>, ISingleResultSpecification<Entities.Employee>
     {
-        public GetEmployeeSpecification(string loginID) : base()
+        public GetEmployeeSpecification(string? loginID) : base()
         {
             Query
                 .Include(_ => _.DepartmentHistory)

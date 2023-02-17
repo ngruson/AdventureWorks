@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Handlers.ShipSalesOrder
                 cancellationToken
             );
 
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             salesOrder!.SetShippedStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

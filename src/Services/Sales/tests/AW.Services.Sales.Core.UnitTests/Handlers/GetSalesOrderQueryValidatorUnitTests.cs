@@ -19,7 +19,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            query.SalesOrderNumber = query.SalesOrderNumber.Substring(0, 25);
+            query.SalesOrderNumber = query.SalesOrderNumber?.Substring(0, 25);
 
             //Act
             var result = await sut.TestValidateAsync(query);
@@ -67,7 +67,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            query.SalesOrderNumber = query.SalesOrderNumber.Substring(0, 25);
+            query.SalesOrderNumber = query.SalesOrderNumber?.Substring(0, 25);
             salesOrderRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetFullSalesOrderSpecification>(),
                 It.IsAny<CancellationToken>()

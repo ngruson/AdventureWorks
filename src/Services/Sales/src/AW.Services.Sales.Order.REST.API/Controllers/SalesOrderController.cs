@@ -16,11 +16,7 @@ using AW.Services.Sales.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Order.REST.API.Controllers
 {

@@ -29,12 +29,12 @@ namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
             );
 
             var customer = await _repository.SingleOrDefaultAsync(                
-                new GetCustomerAddressesSpecification(request.AccountNumber),
+                new GetCustomerAddressesSpecification(request.AccountNumber!),
                 cancellationToken
             );
-            Guard.Against.CustomerNull(customer, request.AccountNumber, _logger);
+            Guard.Against.CustomerNull(customer, request.AccountNumber!, _logger);
 
-            var address = customer!.GetPreferredAddress(request.AddressType);
+            var address = customer!.GetPreferredAddress(request.AddressType!);
 
             _logger.LogInformation("Returning address");
             return _mapper.Map<AddressDto>(address);

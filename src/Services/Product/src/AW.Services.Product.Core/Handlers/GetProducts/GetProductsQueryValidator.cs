@@ -20,9 +20,9 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
                 .When(cmd => !string.IsNullOrEmpty(cmd.OrderBy));
         }
 
-        private bool BeValid(string orderBy)
+        private bool BeValid(string? orderBy)
         {
-            if (!orderBy.Contains('('))
+            if (!orderBy!.Contains('('))
                 return false;
 
             if (!orderBy.Contains(')'))

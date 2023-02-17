@@ -8,8 +8,8 @@ namespace AW.Services.Product.Core.Specifications
         public GetProductsPaginatedSpecification(
             int pageIndex, 
             int pageSize, 
-            string category,
-            string subcategory,
+            string? category,
+            string? subcategory,
             OrderByClause<Entities.Product>? orderByClause) : base()
         {
             Query

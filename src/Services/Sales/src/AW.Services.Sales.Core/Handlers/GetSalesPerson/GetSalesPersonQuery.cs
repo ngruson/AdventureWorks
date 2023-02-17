@@ -5,11 +5,6 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesPerson
 {
     public class GetSalesPersonQuery : IRequest<SalesPersonDto?>
     {
-        public GetSalesPersonQuery(NameFactory name)
-        {
-            Name = name;
-        }
-
-        public NameFactory Name { get; private init; }
+        public NameFactory? Name { get; set; }
     }
 }

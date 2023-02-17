@@ -4,6 +4,9 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
 {
     public class GetSalesOrdersQuery : IRequest<GetSalesOrdersDto>
     {
+        public GetSalesOrdersQuery()
+        {
+        }
         public GetSalesOrdersQuery(int pageIndex, int pageSize, string territory)
         {
             PageIndex = pageIndex;
@@ -11,8 +14,8 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
             Territory = territory;
         }
 
-        public int PageIndex { get; private init; }
-        public int PageSize { get; private init; }
-        public string Territory { get; private init; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public string? Territory { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             };
         }
 
-        private static OrderByClause<Entities.Product>? OrderBy(string orderBy)
+        private static OrderByClause<Entities.Product>? OrderBy(string? orderBy)
         {
             if (string.IsNullOrEmpty(orderBy))
                 return null;

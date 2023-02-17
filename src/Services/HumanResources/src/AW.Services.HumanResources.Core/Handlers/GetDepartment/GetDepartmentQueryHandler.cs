@@ -30,7 +30,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetDepartment
             );
 
             var department = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.DepartmentNull(department, request.Name, _logger);
+            Guard.Against.DepartmentNull(department, request.Name!, _logger);
 
             _logger.LogInformation("Returning department");
             return _mapper.Map<Department>(department);

@@ -4,7 +4,7 @@ namespace AW.Services.Sales.Core.Specifications
 {
     public class GetSalesOrderSpecification : Specification<Entities.SalesOrder>, ISingleResultSpecification<Entities.SalesOrder>
     {
-        public GetSalesOrderSpecification(string salesOrderNumber) : base()
+        public GetSalesOrderSpecification(string? salesOrderNumber) : base()
         {
             Query
                 .Include(s => s.Customer)

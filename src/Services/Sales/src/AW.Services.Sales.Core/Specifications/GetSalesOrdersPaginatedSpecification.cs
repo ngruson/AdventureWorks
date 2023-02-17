@@ -4,7 +4,7 @@ namespace AW.Services.Sales.Core.Specifications
 {
     public class GetSalesOrdersPaginatedSpecification : Specification<Entities.SalesOrder>
     {
-        public GetSalesOrdersPaginatedSpecification(int pageIndex, int pageSize, string territory) : base()
+        public GetSalesOrdersPaginatedSpecification(int pageIndex, int pageSize, string? territory) : base()
         {
             Query.Include(_ => _.Customer);
             Query.Include("Customer.Person");

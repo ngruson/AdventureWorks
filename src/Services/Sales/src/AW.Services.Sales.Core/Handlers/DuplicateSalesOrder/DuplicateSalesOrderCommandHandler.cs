@@ -32,7 +32,7 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
                 new GetSalesOrderQuery(request.SalesOrderNumber),
                 cancellationToken            
             );
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             var createSalesOrderCommand = new CreateSalesOrderCommand(
                 _mapper.Map<List<SalesOrderItemDto>>(salesOrder!.OrderLines),

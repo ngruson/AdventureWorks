@@ -4,7 +4,7 @@ namespace AW.Services.Product.Core.Specifications
 {
     public class CountProductsSpecification : Specification<Core.Entities.Product>
     {
-        public CountProductsSpecification(string category, string subcategory) : base()
+        public CountProductsSpecification(string? category, string? subcategory) : base()
         {
             Query
                 .Where(c =>

@@ -5,7 +5,7 @@ namespace AW.Services.Customer.Core.Specifications
 {
     public class GetCustomersPaginatedSpecification : Specification<Entities.Customer>
     {
-        public GetCustomersPaginatedSpecification(int pageIndex, int pageSize, CustomerType? customerType, string territory, string accountNumber) : base()
+        public GetCustomersPaginatedSpecification(int pageIndex, int pageSize, CustomerType? customerType, string? territory, string? accountNumber) : base()
         {
             Query.Include(c => c.Addresses)
                 .ThenInclude(a => a.Address);

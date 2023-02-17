@@ -5,6 +5,9 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers
 {
     public class GetCustomersQuery : IRequest<GetCustomersDto?>
     {
+        public GetCustomersQuery()
+        {
+        }
         public GetCustomersQuery(int pageIndex, int pageSize, CustomerType? customerType, string territory, string accountNumber)
         {
             PageIndex = pageIndex;
@@ -17,7 +20,7 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public CustomerType? CustomerType { get; set; }
-        public string Territory { get; set; }
-        public string AccountNumber { get; set; }
+        public string? Territory { get; set; }
+        public string? AccountNumber { get; set; }
     }
 }

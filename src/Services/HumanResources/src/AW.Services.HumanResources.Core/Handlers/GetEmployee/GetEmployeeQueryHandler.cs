@@ -26,11 +26,11 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
             _logger.LogInformation("Getting employee from database");
 
             var spec = new GetEmployeeSpecification(
-                request.LoginID!
+                request.LoginID
             );
 
             var employee = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.EmployeeNull(employee, request.LoginID, _logger);
+            Guard.Against.EmployeeNull(employee, request.LoginID!, _logger);
 
             _logger.LogInformation("Returning employee");
             return _mapper.Map<Employee>(employee);

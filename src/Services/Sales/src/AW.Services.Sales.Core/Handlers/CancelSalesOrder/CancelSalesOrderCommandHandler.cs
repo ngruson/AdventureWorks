@@ -29,7 +29,7 @@ namespace AW.Services.Sales.Core.Handlers.CancelSalesOrder
                 cancellationToken
             );
 
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             salesOrder!.SetCancelledStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);

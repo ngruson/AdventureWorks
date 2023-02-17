@@ -31,7 +31,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetShift
             );
 
             var shift = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.ShiftNull(shift, request.Name, _logger);
+            Guard.Against.ShiftNull(shift, request.Name!, _logger);
 
             _logger.LogInformation("Returning shift");
             return _mapper.Map<Shift>(shift);

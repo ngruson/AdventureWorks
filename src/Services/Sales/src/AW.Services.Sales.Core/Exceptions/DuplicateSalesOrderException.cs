@@ -6,7 +6,7 @@ namespace AW.Services.Sales.Core.Exceptions
     [Serializable]
     public class DuplicateSalesOrderException : DomainException
     {
-        public DuplicateSalesOrderException(string salesOrderNumber)
+        public DuplicateSalesOrderException(string? salesOrderNumber)
             : base($"Duplicating sales order {salesOrderNumber} failed")
         { }
 

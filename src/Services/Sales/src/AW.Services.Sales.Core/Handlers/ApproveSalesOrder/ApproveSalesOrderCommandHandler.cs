@@ -31,7 +31,7 @@ namespace AW.Services.Sales.Core.Handlers.ApproveSalesOrder
                 cancellationToken
             );
 
-            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber, _logger);
+            Guard.Against.SalesOrderNull(salesOrder, request.SalesOrderNumber!, _logger);
 
             salesOrder!.SetApprovedStatus();
             return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
