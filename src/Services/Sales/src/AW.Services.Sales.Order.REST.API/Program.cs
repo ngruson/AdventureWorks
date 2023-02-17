@@ -30,6 +30,8 @@ builder.Services
     .AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
+    .AddCustomDbContext(builder.Configuration)
+    .AddEventBus(builder.Configuration)
     .AddCustomIntegrations(builder.Configuration)
     .AddCustomHealthCheck(builder.Configuration);
 
