@@ -20,7 +20,7 @@ namespace AW.Services.ReferenceData.REST.API.Controllers
             (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<IActionResult> GetStatesProvinces(string countryRegionCode)
+        public async Task<IActionResult> GetStatesProvinces(string? countryRegionCode)
         {
             logger.LogInformation("GetStateProvinces called");
 
