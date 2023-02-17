@@ -1,4 +1,4 @@
-using AW.Services.Basket.REST.API;
+﻿using AW.Services.Basket.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -29,6 +29,7 @@ builder.Services
     .AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
+    .AddEventBus(builder.Configuration)
     .AddCustomIntegrations(builder.Configuration)
     .AddCustomHealthCheck(builder.Configuration);
 
