@@ -8,6 +8,11 @@
 	[SpecialOfferProductId] [int] NOT NULL,
 	[UnitPrice] [money] NOT NULL,
 	[UnitPriceDiscount] [money] NOT NULL,
+    [ThumbNailPhoto] [varbinary](max) NULL,
+	[Color] [nvarchar](15) NULL,
+	[ProductLine] [nchar](2) NULL,
+	[Class] [nchar](2) NULL,
+	[Style] [nchar](2) NULL
  CONSTRAINT [PK_SalesOrderLine_SalesOrderLineID] PRIMARY KEY CLUSTERED
 (
 	[SalesOrderLineID] ASC
