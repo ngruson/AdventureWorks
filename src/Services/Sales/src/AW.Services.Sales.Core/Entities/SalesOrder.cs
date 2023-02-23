@@ -73,9 +73,9 @@ namespace AW.Services.Sales.Core.Entities
 
         public string? Territory { get; private set; }
 
-        public Address? BillToAddress { get; private set; }
+        public Address BillToAddress { get; private set; }
 
-        public Address? ShipToAddress { get; private set; }
+        public Address ShipToAddress { get; private set; }
 
         public string? ShipMethod { get; private set; }
 
