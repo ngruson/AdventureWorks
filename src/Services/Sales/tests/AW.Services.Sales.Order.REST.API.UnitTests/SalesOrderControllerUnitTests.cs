@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using salesOrdersForCustomers = AW.Services.Sales.Core.Handlers.GetSalesOrdersForCustomer;
@@ -54,10 +54,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
 
                 //Assert
                 var okObjectResult = actionResult as OkObjectResult;
-                okObjectResult.Should().NotBeNull();
-
-                var result = okObjectResult!.Value as Core.Models.SalesOrdersResult;
-                result!.SalesOrders!.Count.Should().Be(salesOrders.Count);
+                okObjectResult!.Value.Should().Be(dto);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -105,10 +102,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
 
                 //Assert
                 var okObjectResult = actionResult as OkObjectResult;
-                okObjectResult.Should().NotBeNull();
-
-                var result = okObjectResult!.Value as Core.Models.SalesOrdersResult;
-                result!.SalesOrders!.Count.Should().Be(salesOrders.Count);
+                okObjectResult!.Value.Should().Be(dto);
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -200,10 +194,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
 
                 //Assert
                 var okResult = actionResult as OkObjectResult;
-                okResult.Should().NotBeNull();
-
-                var updatedSalesOrder = okResult!.Value as Core.Models.SalesOrder;
-                updatedSalesOrder.Should().NotBeNull();
+                okResult!.Value.Should().Be(dto);
             }
         }
 

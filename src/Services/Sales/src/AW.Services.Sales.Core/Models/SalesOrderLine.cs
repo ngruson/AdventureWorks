@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.Services.Sales.Core.Models
 {
-    public class SalesOrderLine : IMapFrom<Handlers.GetSalesOrders.SalesOrderLineDto>
+    public class SalesOrderLine : IMapFrom<Handlers.UpdateSalesOrder.SalesOrderLineDto>
     {
         public string? CarrierTrackingNumber { get; set; }
         public short OrderQty { get; set; }
@@ -21,8 +21,8 @@ namespace AW.Services.Sales.Core.Models
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Handlers.GetSalesOrders.SalesOrderLineDto, SalesOrderLine>();
-            profile.CreateMap<Handlers.GetSalesOrder.SalesOrderLineDto, SalesOrderLine>();
+            //profile.CreateMap<Handlers.GetSalesOrders.SalesOrderLineDto, SalesOrderLine>();
+            //profile.CreateMap<Handlers.GetSalesOrder.SalesOrderLineDto, SalesOrderLine>();
             profile.CreateMap<SalesOrderLine, Handlers.UpdateSalesOrder.SalesOrderLineDto>()
                 .ReverseMap();
         }

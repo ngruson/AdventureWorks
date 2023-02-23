@@ -65,7 +65,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales orders");
-            return new OkObjectResult(mapper.Map<SalesOrdersResult>(salesOrders));
+            return new OkObjectResult(salesOrders);
         }
 
         [HttpGet("{salesOrderNumber}")]
@@ -96,7 +96,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             var updatedSalesOrder = await mediator.Send(command);
 
             logger.LogInformation("Returning sales order");
-            return Ok(mapper.Map<SalesOrder>(updatedSalesOrder));
+            return Ok(updatedSalesOrder);
         }
 
         [HttpDelete("{salesOrderNumber}")]
