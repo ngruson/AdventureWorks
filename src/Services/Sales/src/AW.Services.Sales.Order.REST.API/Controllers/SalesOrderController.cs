@@ -47,7 +47,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales orders");
-            return new OkObjectResult(mapper.Map<SalesOrdersResult>(salesOrders));
+            return new OkObjectResult(salesOrders);
         }
 
         [HttpGet("customer/{customerNumber}")]
@@ -83,7 +83,7 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales order");
-            return new OkObjectResult(mapper.Map<SalesOrder>(salesOrder));
+            return new OkObjectResult(salesOrder);
         }
 
         [HttpPut("{salesOrderNumber}")]
