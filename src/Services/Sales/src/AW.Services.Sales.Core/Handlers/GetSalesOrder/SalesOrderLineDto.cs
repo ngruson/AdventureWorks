@@ -29,6 +29,8 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SalesOrderLine, SalesOrderLineDto>()
+                .ForMember(m => m.UnitPrice, opt => opt.MapFrom(src => Math.Round(src.UnitPrice, 2)))
+                .ForMember(m => m.UnitPriceDiscount, opt => opt.MapFrom(src => Math.Round(src.UnitPriceDiscount, 2)))
                 .ForMember(m => m.SpecialOfferDescription, opt => opt.MapFrom(src => src.SpecialOfferProduct!.SpecialOffer!.Description));
         }
     }
