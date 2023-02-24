@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.Entities
         public string? ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal UnitPriceDiscount { get; set; }
-        public decimal LineTotal => (Math.Round(UnitPrice, 2) - Math.Round(UnitPriceDiscount, 2)) * OrderQty;
+        public decimal LineTotal => Math.Round(Math.Round(UnitPrice, 2) * (1 - UnitPriceDiscount) * OrderQty, 2);
         public SpecialOfferProduct? SpecialOfferProduct { get; set; }
         public int SpecialOfferProductId { get; set; }
         public byte[]? ThumbNailPhoto { get; set; }
