@@ -23,7 +23,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Entities.SalesOrderLine, SalesOrderLineDto>()
-                .ForMember(m => m.SpecialOfferDescription, opt => opt.MapFrom(src => src.SpecialOfferProduct!.SpecialOffer!.Description));
+                .ForMember(m => m.SpecialOfferDescription, opt => opt.MapFrom(src => src.SpecialOffer!.Description));
         }
     }
 }

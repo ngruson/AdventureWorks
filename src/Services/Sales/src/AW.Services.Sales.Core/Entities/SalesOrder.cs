@@ -73,9 +73,9 @@ namespace AW.Services.Sales.Core.Entities
 
         public string? Territory { get; private set; }
 
-        public Address BillToAddress { get; private set; }
+        public Address? BillToAddress { get; private set; }
 
-        public Address ShipToAddress { get; private set; }
+        public Address? ShipToAddress { get; private set; }
 
         public string? ShipMethod { get; private set; }
 
@@ -120,7 +120,7 @@ namespace AW.Services.Sales.Core.Entities
             AddDomainEvent(orderStartedDomainEvent);
         }
 
-        public void AddOrderLine(string productNumber, string productName, decimal unitPrice, decimal unitPriceDiscount, SpecialOfferProduct specialOfferProduct, short quantity = 1)
+        public void AddOrderLine(string productNumber, string productName, decimal unitPrice, decimal unitPriceDiscount, SpecialOffer specialOffer, short quantity = 1)
         {
             var existingOrderLineForProduct = OrderLines
                 .SingleOrDefault(o => o.ProductNumber == productNumber);
@@ -140,7 +140,7 @@ namespace AW.Services.Sales.Core.Entities
             {
                 //add validated new order item
 
-                var orderLine = new SalesOrderLine(productNumber, productName, unitPrice, unitPriceDiscount, specialOfferProduct, quantity);
+                var orderLine = new SalesOrderLine(productNumber, productName, unitPrice, unitPriceDiscount, specialOffer, quantity);
                 OrderLines.Add(orderLine);
             }
         }

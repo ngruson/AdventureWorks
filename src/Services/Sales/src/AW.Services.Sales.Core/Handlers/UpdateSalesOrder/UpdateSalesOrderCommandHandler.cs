@@ -46,8 +46,8 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
                 var existingOrderLine = salesOrder!.OrderLines.SingleOrDefault(_ => _.ProductNumber == orderLine.ProductNumber);
                 Guard.Against.SalesOrderLineNull(existingOrderLine, orderLine.ProductNumber!, _logger);
 
-                existingOrderLine!.SpecialOfferProduct = specialOfferProduct!;
-                existingOrderLine.SpecialOfferProductId = specialOfferProduct!.Id;
+                existingOrderLine!.SpecialOffer = specialOfferProduct!.SpecialOffer;
+                existingOrderLine.SpecialOfferId = specialOfferProduct.SpecialOffer!.Id;
             }
 
             if (request.SalesOrder.SalesPerson != null)

@@ -5,7 +5,7 @@ namespace AW.Services.Sales.Core.Entities
     public class SalesOrderLine
     {
         public SalesOrderLine() { }
-        public SalesOrderLine(string productNumber, string productName, decimal unitPrice, decimal unitPriceDiscount, SpecialOfferProduct specialOfferProduct, short quantity = 1)
+        public SalesOrderLine(string productNumber, string productName, decimal unitPrice, decimal unitPriceDiscount, SpecialOffer specialOffer, short quantity = 1)
         {
             if (quantity <= 0)
             {
@@ -22,8 +22,8 @@ namespace AW.Services.Sales.Core.Entities
             UnitPrice = unitPrice;
             UnitPriceDiscount = unitPriceDiscount;
             OrderQty = quantity;
-            SpecialOfferProduct = specialOfferProduct;
-            SpecialOfferProductId = specialOfferProduct.Id;
+            SpecialOffer = specialOffer;
+            SpecialOfferId = specialOffer.Id;
         }
 
         public int Id { get; set; }
@@ -35,8 +35,8 @@ namespace AW.Services.Sales.Core.Entities
         public decimal UnitPrice { get; set; }
         public decimal UnitPriceDiscount { get; set; }
         public decimal LineTotal => Math.Round(Math.Round(UnitPrice, 2) * (1 - UnitPriceDiscount) * OrderQty, 2);
-        public SpecialOfferProduct? SpecialOfferProduct { get; set; }
-        public int SpecialOfferProductId { get; set; }
+        public SpecialOffer? SpecialOffer { get; set; }
+        public int SpecialOfferId { get; set; }
         public byte[]? ThumbNailPhoto { get; set; }
         public string? Color { get; set; }
         public string? ProductLine { get; set; }

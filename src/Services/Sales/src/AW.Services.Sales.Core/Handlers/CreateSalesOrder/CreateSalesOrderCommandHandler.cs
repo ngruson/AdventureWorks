@@ -9,10 +9,6 @@ using AW.Services.Sales.Core.ValueTypes;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 {
@@ -77,7 +73,7 @@ namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 
                 Guard.Against.SpecialOfferProductNull(specialOfferProduct, item.ProductNumber!, _logger);
 
-                salesOrder.AddOrderLine(item.ProductNumber!, item.ProductName!, item.UnitPrice, item.UnitPriceDiscount, specialOfferProduct!, item.OrderQty);
+                salesOrder.AddOrderLine(item.ProductNumber!, item.ProductName!, item.UnitPrice, item.UnitPriceDiscount, specialOfferProduct!.SpecialOffer!, item.OrderQty);
             }
 
             _logger.LogInformation("----- Saving sales order to database - Sales Order: {@SalesOrder}", salesOrder);

@@ -13,8 +13,7 @@ namespace AW.Services.Sales.Core.Specifications
             Query.Include(_ => _.BillToAddress);
             Query.Include(_ => _.ShipToAddress);
             Query.Include(_ => _.OrderLines)
-                .ThenInclude(_ => _.SpecialOfferProduct)
-                    .ThenInclude(_ => _!.SpecialOffer);
+                .ThenInclude(_ => _.SpecialOffer);
             Query.Include(_ => _.SalesPerson);
             Query.Include(_ => _.SalesReasons)
                 .ThenInclude(_ => _.SalesReason);

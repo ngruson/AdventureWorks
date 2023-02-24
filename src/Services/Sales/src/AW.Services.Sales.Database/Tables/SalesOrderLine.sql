@@ -5,7 +5,7 @@
 	[OrderQty] [smallint] NOT NULL,
 	[ProductNumber] [nvarchar](25) NOT NULL,
 	[ProductName] [nvarchar](50) NOT NULL,
-	[SpecialOfferProductId] [int] NOT NULL,
+	[SpecialOfferID] [int] NOT NULL,
 	[UnitPrice] [money] NOT NULL,
 	[UnitPriceDiscount] [money] NOT NULL,
     [ThumbNailPhoto] [varbinary](max) NULL,
