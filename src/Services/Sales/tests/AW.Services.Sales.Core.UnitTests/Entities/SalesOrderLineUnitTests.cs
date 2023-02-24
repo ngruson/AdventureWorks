@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                     productName,
                     unitPrice,
                     unitPrice / 2,
-                    specialOfferProduct
+                    specialOfferProduct.SpecialOffer!
                 );
 
                 //Assert
@@ -53,8 +53,8 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                         productName,
                         unitPrice,
                         unitPriceDiscount,
-                        specialOfferProduct,
-                        -1
+                        specialOfferProduct.SpecialOffer!,
+                        - 1
                     );
                 };
 
@@ -80,7 +80,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                         productName,
                         unitPrice,
                         unitPriceDiscount,
-                        specialOfferProduct,
+                        specialOfferProduct.SpecialOffer!,
                         0
                     );
                 };
@@ -106,7 +106,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                         productName,
                         unitPrice,
                         unitPrice + 1,
-                        specialOfferProduct
+                        specialOfferProduct.SpecialOffer!
                     );
                 };
 

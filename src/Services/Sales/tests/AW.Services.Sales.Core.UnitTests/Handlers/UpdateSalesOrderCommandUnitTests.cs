@@ -17,7 +17,9 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_ExistingSalesOrder_ReturnUpdatedSalesOrder(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
+            [Frozen] Mock<IRepository<Core.Entities.SpecialOfferProduct>> specialOfferProductRepoMock,
             Core.Entities.SalesOrder salesOrder,
+            Core.Entities.SpecialOfferProduct specialOfferProduct,
             UpdateSalesOrderCommandHandler sut,
             UpdateSalesOrderCommand command
         )
@@ -37,6 +39,13 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 )
             ).
             ReturnsAsync(salesOrder);
+
+            specialOfferProductRepoMock.Setup(_ => _.FirstOrDefaultAsync(
+                    It.IsAny<GetSpecialOfferProductSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            ).
+            ReturnsAsync(specialOfferProduct);
 
             //Act
             var result = await sut.Handle(command, CancellationToken.None);

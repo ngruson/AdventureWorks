@@ -63,7 +63,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 productName,
                 unitPrice,
                 0,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             //Assert
@@ -90,7 +90,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 productName,
                 unitPrice,
                 0,
-                specialOfferProduct,
+                specialOfferProduct.SpecialOffer!,
                 quantity
             );
 
@@ -113,7 +113,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             var orderLines = salesOrder.OrderLines.ToList();
@@ -126,7 +126,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 existingOrderLine.ProductName!,
                 existingOrderLine.UnitPriceDiscount,
                 0,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             //Assert
@@ -148,7 +148,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             var orderLines = salesOrder.OrderLines.ToList();
@@ -161,7 +161,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 existingOrderLine.ProductName!,
                 existingOrderLine.UnitPrice,
                 existingOrderLine.UnitPriceDiscount,
-                specialOfferProduct,
+                specialOfferProduct.SpecialOffer!,
                 quantity
             );
 
@@ -183,7 +183,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 salesOrderLine.ProductName!,
                 salesOrderLine.UnitPriceDiscount,
                 0,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             var orderLines = salesOrder.OrderLines.ToList();
@@ -196,7 +196,7 @@ namespace AW.Services.Sales.Core.UnitTests.Entities
                 existingOrderLine.ProductName!,
                 existingOrderLine.UnitPrice,
                 existingOrderLine.UnitPriceDiscount + 1,
-                specialOfferProduct
+                specialOfferProduct.SpecialOffer!
             );
 
             //Assert
