@@ -24,6 +24,7 @@ namespace AW.Services.Sales.Core.Entities
             OrderQty = quantity;
             SpecialOffer = specialOffer;
             SpecialOfferId = specialOffer.Id;
+            ProductLine = ProductLine.Mountain;
         }
 
         public int Id { get; set; }
@@ -39,9 +40,9 @@ namespace AW.Services.Sales.Core.Entities
         public int SpecialOfferId { get; set; }
         public byte[]? ThumbNailPhoto { get; set; }
         public string? Color { get; set; }
-        public string? ProductLine { get; set; }
-        public string? Class { get; set; }
-        public string? Style { get; set; }
+        public ProductLine? ProductLine { get; private set; }
+        public Class? Class { get; private set; }
+        public Style? Style { get; private set; }
 
         public void SetNewDiscount(decimal discount)
         {
