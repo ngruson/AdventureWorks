@@ -18,39 +18,39 @@
                     @Html.HiddenFor(_ => _.SalesOrderNumber)
 
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.AddressLine1, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.AddressLine1, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6">
-                            @Html.EditorFor(m => m.BillToAddress.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.BillToAddress!.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.AddressLine2, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.AddressLine2, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6">
-                            @Html.EditorFor(m => m.BillToAddress.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.BillToAddress!.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.PostalCode, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.PostalCode, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6">
-                            @Html.EditorFor(m => m.BillToAddress.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.BillToAddress!.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.City, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.City, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6">
-                            @Html.EditorFor(m => m.BillToAddress.City, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.BillToAddress!.City, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.CountryRegionCode, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.CountryRegionCode, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6 tom-select-custom">
-                            @Html.DropDownListFor(m => m.BillToAddress.CountryRegionCode, countries, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            @Html.DropDownListFor(m => m.BillToAddress!.CountryRegionCode, countries, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.BillToAddress.StateProvinceCode, new { @class = "col-sm-6 col-form-label form-label" })
+                        @Html.LabelFor(m => m.BillToAddress!.StateProvinceCode, new { @class = "col-sm-6 col-form-label form-label" })
                         <div class="col-sm-6 tom-select-custom">
-                            @Html.DropDownListFor(m => m.BillToAddress.StateProvinceCode, statesProvinces, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            @Html.DropDownListFor(m => m.BillToAddress!.StateProvinceCode, statesProvinces, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                         </div>
                     </div>
 

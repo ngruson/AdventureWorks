@@ -40,8 +40,8 @@
                 <td>@address.Address.AddressLine2</td>
                 <td>@address.Address.PostalCode</td>
                 <td>@address.Address.City</td>
-                <td>@address.Address.StateProvinceCode.StateProvinceName(statesProvinces)</td>
-                <td>@address.Address.CountryRegionCode.CountryRegionName(countries)</td>
+                <td>@address.Address.StateProvinceCode!.StateProvinceName(statesProvinces)</td>
+                <td>@address.Address.CountryRegionCode!.CountryRegionName(countries)</td>
             </tr>
         }
     </table>

@@ -1,6 +1,6 @@
 ﻿@{
     @model CustomerAddressViewModel;
-    var addressType = Model.AddressType.Replace(" ", "-");
+    var addressType = Model.AddressType!.Replace(" ", "-");
     var accountNumber = ViewData["accountNumber"] as string;
 
     var addressTypes = ViewData["addressTypes"] as IEnumerable<SelectListItem>;

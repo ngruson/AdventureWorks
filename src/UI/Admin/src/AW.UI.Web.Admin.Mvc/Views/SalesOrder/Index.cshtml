@@ -184,11 +184,11 @@
                             </a>
                         </td>
                         <td>@salesOrder.AccountNumber</td>
-                        <td>@salesOrder.Customer.CustomerName</td>
+                        <td>@salesOrder.Customer!.CustomerName</td>
                         <td>@salesOrder.Territory</td>
                         <td>
                             @{
-                                var badgeCss = salesOrder.Status.GetBadgeCssClass();
+                                var badgeCss = salesOrder.Status!.GetBadgeCssClass();
                             }
                             
                             <span class="badge bg-soft-@badgeCss text-@badgeCss">

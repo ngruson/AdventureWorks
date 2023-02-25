@@ -41,8 +41,8 @@
                     <div class="d-flex align-items-center mb-5">
                         <div class="flex-grow-1 mx-3">
                             <div class="d-flex mb-1">
-                                <h3 class="mb-0 me-3">@Model.Person.Name.FullName</h3>
-                                @Html.HiddenFor(m => m.Person.Name.FullName)
+                                <h3 class="mb-0 me-3">@Model.Person!.Name!.FullName</h3>
+                                @Html.HiddenFor(m => m.Person!.Name!.FullName)
 
                                 <!-- Dropdown -->
                                 <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top">
@@ -56,20 +56,20 @@
                                             <div class="card-body">
                                                 <div class="row mb-4">
                                                     <div class="col">
-                                                        @Html.LabelFor(m => m.Person.Name.FirstName, new { @class = "form-label" })
-                                                        <input asp-for="Person.Name.FirstName" class="form-control" />
+                                                        @Html.LabelFor(m => m.Person!.Name!.FirstName, new { @class = "form-label" })
+                                                        <input asp-for="Person!.Name!.FirstName" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col">
-                                                        @Html.LabelFor(m => m.Person.Name.MiddleName, new { @class = "form-label" })
-                                                        <input asp-for="Person.Name.MiddleName" class="form-control" />
+                                                        @Html.LabelFor(m => m.Person!.Name!.MiddleName, new { @class = "form-label" })
+                                                        <input asp-for="Person!.Name!.MiddleName" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col">
-                                                        @Html.LabelFor(m => m.Person.Name.LastName, new { @class = "form-label" })
-                                                        <input asp-for="Person.Name.LastName" class="form-control" />
+                                                        @Html.LabelFor(m => m.Person!.Name!.LastName, new { @class = "form-label" })
+                                                        <input asp-for="Person!.Name!.LastName" class="form-control" />
                                                     </div>
                                                 </div>
 
@@ -117,10 +117,10 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.Person.Title, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.Person!.Title, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="Person.Title" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.Person.Title, "", new { @class = "text-danger" })
+                            <input asp-for="Person!.Title" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.Person!.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     @*<div class="row">
@@ -147,10 +147,10 @@
                         </div>
                     </div>*@
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.Person.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.Person!.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="Person.Suffix" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.Person.Suffix, "", new { @class = "text-danger" })
+                            <input asp-for="Person!.Suffix" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.Person!.Suffix, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -189,8 +189,8 @@
                             {
                                 <div class="row mb-4">
                                     <div class="col">
-                                        <input asp-for="Person.EmailAddresses[i].EmailAddress" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.Person.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
+                                        <input asp-for="Person!.EmailAddresses[i].EmailAddress" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Person!.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col">
                                         <a class="btn btn-white" asp-action="DeleteIndividualCustomerEmailAddress" asp-route-accountnumber="@Model.AccountNumber" asp-route-emailaddress="@Model.Person.EmailAddresses[i].EmailAddress">
@@ -230,12 +230,12 @@
                             {
                                 <div class="row mb-4">
                                     <div class="col">
-                                        <input asp-for="Person.PhoneNumbers[i].PhoneNumber" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.Person.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
+                                        <input asp-for="Person!.PhoneNumbers[i].PhoneNumber" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Person!.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col">
                                         <div class="tom-select-custom">
-                                            @Html.DropDownListFor(m => m.Person.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                            @Html.DropDownListFor(m => m.Person!.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
                                                 "hideSearch": true,
                                                 "dropdownWidth": "8rem"
                                               }'>
-                                                @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                                @foreach (var phoneNumberType in Model.PhoneNumberTypes!)
                                                 {
                                                     if (phoneNumberType.Value == "Home")
                                                     {
@@ -297,7 +297,7 @@
                                                 "hideSearch": true,
                                                 "dropdownWidth": "8rem"
                                               }'>
-                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes)
+                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes!)
                                             {
                                                 if (phoneNumberType.Value == "Home")
                                                 {

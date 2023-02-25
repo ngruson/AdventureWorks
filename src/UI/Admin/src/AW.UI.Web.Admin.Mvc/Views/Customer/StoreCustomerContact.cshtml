@@ -2,7 +2,7 @@
     if (Model.IsNewContact)
         ViewData["Title"] = "New store customer contact";
     else
-        ViewData["Title"] = $"Store customer contact - {Model.CustomerContact.ContactPerson.Name.FullName}";
+        ViewData["Title"] = $"Store customer contact - {Model.CustomerContact!.ContactPerson.Name!.FullName}";
     @model StoreCustomerContactViewModel;
 
 }
@@ -25,7 +25,7 @@
             }
             else
             {
-                <h1 class="page-header-title">@Model.CustomerContact?.ContactPerson.Name.FullName</h1>
+                <h1 class="page-header-title">@Model.CustomerContact!.ContactPerson.Name!.FullName</h1>
             }
         </div>
         <!-- End Col -->
@@ -72,38 +72,38 @@
                     <!-- End Media -->
 
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Title, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Title, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="CustomerContact.ContactPerson.Title" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Title, "", new { @class = "text-danger" })
+                            <input asp-for="CustomerContact!.ContactPerson.Title" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.FirstName, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.FirstName, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="CustomerContact.ContactPerson.Name.FirstName" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.FirstName, "", new { @class = "text-danger" })
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.FirstName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.Name!.FirstName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.MiddleName, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="CustomerContact.ContactPerson.Name.MiddleName" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.MiddleName, "", new { @class = "text-danger" })
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.MiddleName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.Name!.MiddleName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Name.LastName, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.LastName, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="CustomerContact.ContactPerson.Name.LastName" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Name.LastName, "", new { @class = "text-danger" })
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.LastName" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.Name!.LastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row mb-4">
-                        @Html.LabelFor(m => m.CustomerContact.ContactPerson.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
                         <div class="col-sm-9">
-                            <input asp-for="CustomerContact.ContactPerson.Suffix" class="form-control" />
-                            @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.Suffix, "", new { @class = "text-danger" })
+                            <input asp-for="CustomerContact!.ContactPerson.Suffix" class="form-control" />
+                            @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.Suffix, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     @if (Model.IsNewContact)
@@ -149,11 +149,11 @@
                             {
                                 <div class="row mb-4">
                                     <div class="col">
-                                        <input asp-for="CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
+                                        <input asp-for="CustomerContact!.ContactPerson.EmailAddresses[i].EmailAddress" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.EmailAddresses[i].EmailAddress, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col">
-                                        <a class="btn btn-white" asp-action="DeleteContactEmailAddress" asp-route-accountnumber="@Model.AccountNumber" asp-route-contactname="@Model.CustomerContact.ContactPerson.Name.FullName" asp-route-emailaddress="@Model.CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress">
+                                        <a class="btn btn-white" asp-action="DeleteContactEmailAddress" asp-route-accountnumber="@Model.AccountNumber" asp-route-contactname="@Model.CustomerContact.ContactPerson.Name!.FullName" asp-route-emailaddress="@Model.CustomerContact.ContactPerson.EmailAddresses[i].EmailAddress">
                                             <i class="bi-trash"></i>
                                         </a>
                                     </div>
@@ -182,12 +182,12 @@
                             {
                                 <div class="row mb-4">
                                     <div class="col">
-                                        <input asp-for="CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumber" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
+                                        <input asp-for="CustomerContact!.ContactPerson.PhoneNumbers[i].PhoneNumber" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.CustomerContact!.ContactPerson.PhoneNumbers[i].PhoneNumber, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col">
                                         <div class="tom-select-custom">
-                                            @Html.DropDownListFor(m => m.CustomerContact.ContactPerson.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                            @Html.DropDownListFor(m => m.CustomerContact!.ContactPerson.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +253,7 @@
                     <div class="d-flex justify-content-end gap-3">
                         @if (!Model.IsNewContact)
                         {
-                            <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@Model.CustomerContact.ContactPerson.Name.FullName" class="btn btn-white">Discard</a>
+                            <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@Model.CustomerContact!.ContactPerson.Name!.FullName" class="btn btn-white">Discard</a>
                         }
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>

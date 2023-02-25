@@ -28,17 +28,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < Model.OrderLines.Count; i++)
+                            @for (int i = 0; i < Model.OrderLines!.Count; i++)
                             {
                                 <tr>
-                                    <th scope="row">@Html.HiddenFor(m => m.OrderLines[i].ProductNumber)</th>
+                                    <th scope="row">
+                                        @Html.HiddenFor(m => m.OrderLines![i].ProductNumber)
+                                        @Model.OrderLines[i].ProductNumber
+                                    </th>
                                     <td>@Model.OrderLines[i].ProductName</td>
                                     <td class="col-1">
                                         <input asp-for="@Model.OrderLines[i].OrderQty" data-productNumber="@Model.OrderLines[i].ProductNumber" class="form-control" value="@Model.OrderLines[i].OrderQty" onchange="updateOrderline(this)" />
                                     </td>
                                     <td>@Model.OrderLines[i].SpecialOfferDescription</td>
                                     <td class="unitprice">@string.Format("{0:C}", @Model.OrderLines[i].UnitPrice)</td>
-                                    <td class="unitpriceDiscount">@string.Format("{0:C}", @Model.OrderLines[i].UnitPriceDiscount)</td>
+                                    <td class="unitpriceDiscount">@($"{Model.OrderLines[i].UnitPriceDiscount * 100} %")</td>
                                     <td class="lineTotal">@string.Format("{0:C}", @Model.OrderLines[i].LineTotal)</td>
                                 </tr>
                             }

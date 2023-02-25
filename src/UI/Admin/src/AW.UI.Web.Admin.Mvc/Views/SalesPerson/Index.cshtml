@@ -5,7 +5,7 @@
 
 <div class="container">
     <h2>Sales persons</h2>
-    @if (Model.SalesPersons.Any())
+    @if (Model.SalesPersons!.Any())
     {
         <div class="row">
             <table class="table table-striped listView">
@@ -16,10 +16,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var salesPerson in Model.SalesPersons)
+                    @foreach (var salesPerson in Model.SalesPersons!)
                     {
                         <tr>
-                            <td>@salesPerson.Name.FullName</td>
+                            <td>@salesPerson.Name!.FullName</td>
                             <td>@(!string.IsNullOrEmpty(salesPerson.Territory) ? salesPerson.Territory : "-")</td>
                         </tr>
                     }

@@ -10,7 +10,7 @@
 <div class="page-header">
     <div class="row align-items-center mb-3">
         <div class="col-md mb-2 mb-md-0">
-            <h1 class="page-header-title">Customers <span class="badge bg-soft-dark text-dark ms-2">@Model.PaginationInfo.TotalItems</span></h1>
+            <h1 class="page-header-title">Customers <span class="badge bg-soft-dark text-dark ms-2">@Model.PaginationInfo!.TotalItems</span></h1>
 
             @*<div class="d-sm-flex mt-2">
                 <a class="d-inline-block text-body mb-2 mb-sm-0 me-3" href="javascript:;" data-bs-toggle="modal" data-bs-target="#importCustomersModal">
@@ -225,7 +225,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var customer in Model.Customers)
+                @foreach (var customer in Model.Customers!)
                 {
                     <tr>
                         <td class="table-column-pe-0">

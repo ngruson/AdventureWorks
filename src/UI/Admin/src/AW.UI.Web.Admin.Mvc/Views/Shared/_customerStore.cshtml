@@ -199,7 +199,7 @@
                             @{
                                 int i = 0;
 
-                                foreach (var contact in Model.Contacts)
+                                foreach (var contact in Model.Contacts!)
                                 {
                                     i++;
                                     <tr>                                        
@@ -213,7 +213,7 @@
                                             <div class="flex-grow-1 ms-3">
                                                 <span class="d-block h5 text-inherit mb-0">
                                                     <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName">
-                                                        @contact.ContactPerson.Name.FullName
+                                                        @contact.ContactPerson.Name!.FullName
                                                     </a>
                                                 </span>
                                                 @if (contact.ContactPerson.EmailAddresses.Count > 0)

@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 using AW.SharedKernel.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using AW.UI.Web.Admin.Mvc.Services;
-using System.Collections.Generic;
 using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
+using Microsoft.Identity.Web;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
-    [Authorize]
+    [AuthorizeForScopes(ScopeKeySection = "AuthN:ApiScopes:CustomerApiRead")]
     public class CustomerController : Controller
     {
         private readonly ICustomerService customerService;

@@ -1,4 +1,4 @@
-using AW.SharedKernel.OpenIdConnect;
+﻿using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Admin.Mvc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
