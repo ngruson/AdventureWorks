@@ -1,8 +1,6 @@
 ﻿using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using FluentValidation;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Product.Core.Handlers.GetProduct
 {
@@ -17,15 +15,15 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
             RuleFor(cmd => cmd.ProductNumber)
                 .NotEmpty().WithMessage("Product number is required")
                 .MaximumLength(25).WithMessage("Product number must not exceed 25 characters")
-                .MustAsync(ProductExists).WithMessage("Product does not exist");
+                .Must(ProductExists).WithMessage("Product does not exist");
         }
 
-        private async Task<bool> ProductExists(string productNumber, CancellationToken cancellationToken)
+        private bool ProductExists(string productNumber)
         {
-            var product = await productRepository.SingleOrDefaultAsync(
+            var product = productRepository.SingleOrDefaultAsync(
                 new GetProductSpecification(productNumber),
-                cancellationToken
-            );
+                CancellationToken.None
+            ).GetAwaiter().GetResult();
 
             return product != null;
         }

@@ -1,0 +1,21 @@
+﻿@using AW.UI.Web.Store.Mvc.Services
+@using AW.UI.Web.Store.Mvc.ViewModels;
+@using AW.UI.Web.Store.Mvc.ViewModels.Cart
+@model Basket
+@inject IIdentityParser<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "My Cart";
+    var headerList = new List<Header>()
+    {
+          new Header("Product", "Back to products")
+    };
+}
+
+<form method="post" id="cartForm">
+    <div class="basket">
+        <partial name="_Header" model="headerList" />
+
+        @await Component.InvokeAsync("CartList", new { user = UserManager.Parse(User) })
+    </div>
+</form>

@@ -212,7 +212,7 @@
                                         <td>                                                
                                             <div class="flex-grow-1 ms-3">
                                                 <span class="d-block h5 text-inherit mb-0">
-                                                    <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name.FullName">
+                                                    <a asp-action="StoreCustomerContact" asp-route-accountNumber="@Model.AccountNumber" asp-route-contactName="@contact.ContactPerson.Name!.FullName">
                                                         @contact.ContactPerson.Name!.FullName
                                                     </a>
                                                 </span>

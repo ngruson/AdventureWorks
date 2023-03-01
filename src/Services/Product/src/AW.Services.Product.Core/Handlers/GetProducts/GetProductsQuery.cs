@@ -16,10 +16,10 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             OrderBy = orderBy;
         }
 
-        public int PageIndex { get; private init; }
-        public int PageSize { get; private init; }
-        public string? Category { get; private init; }
-        public string? Subcategory { get; private init; }
-        public string? OrderBy { get; private init; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public string? Category { get; set; }
+        public string? Subcategory { get; set; }
+        public string? OrderBy { get; set; }
     }
 }

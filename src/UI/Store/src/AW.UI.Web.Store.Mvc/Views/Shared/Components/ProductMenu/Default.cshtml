@@ -1,0 +1,18 @@
+﻿@using AW.UI.Web.Store.Mvc.ViewModels.ProductMenu
+@model ProductMenuComponentViewModel
+
+@foreach (var category in Model.Categories!)
+{
+<li class="dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        @category.Name
+    </a>
+    <div class="dropdown-menu">
+        @foreach (var subcategory in category.Subcategories!)
+        {
+            string linkText = $"{subcategory.Name} ({subcategory.ProductCount})";
+            @Html.ActionLink(linkText, "Index", "Product", new { productCategory = category.Name, productSubcategory = subcategory.Name }, new { @class = "dropdown-item" })
+        }
+    </div>
+</li>
+}

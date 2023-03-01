@@ -9,18 +9,59 @@ services:
       depends_on:
         - adventureworks.identityserver        
         - adventureworks.customer-api
+        - adventureworks.hr.department-api
+        - adventureworks.hr.employee-api
+        - adventureworks.hr.shift-api
+        - adventureworks.product-api
+        - adventureworks.referencedata-api
+        - adventureworks.sales.order-api
+        - adventureworks.sales.salesperson-api
+        - adventureworks.ui.admin-mvc
+        - adventureworks.ui.store-mvc
       ports:
         - "44395:44395"
+
+  basketdata:
+    image: redis:alpine
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: elasticsearch
+    environment:
+      - node.name=es-node
+      - discovery.type=single-node
+      - cluster.name=es-data-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - xpack.security.enabled='false'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
 
   adventureworks.identityserver:
     build:
         context: .
         dockerfile: Services/IdentityServer/src/AW.Services.IdentityServer/Dockerfile
     environment:
-    - ASPNETCORE_URLS=http://*:80
-    - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-    - "5005:80"
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  adventureworks.basket-api:
+    build:
+      context: .
+      dockerfile: Services/Basket/src/AW.Services.Basket.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
 
   adventureworks.customer-api:
     build:
@@ -29,5 +70,81 @@ services:
     environment:
         - ASPNETCORE_URLS=http://*:80
         - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-        - "5006:80"
+  
+  adventureworks.hr.department-api:
+    build:
+      context: .
+      dockerfile: Services/HumanResources/src/AW.Services.HumanResources.Department.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+  
+  adventureworks.hr.employee-api:
+    build:
+      context: .
+      dockerfile: Services/HumanResources/src/AW.Services.HumanResources.Employee.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+  
+  adventureworks.hr.shift-api:
+    build:
+      context: .
+      dockerfile: Services/HumanResources/src/AW.Services.HumanResources.Shift.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+  
+  adventureworks.product-api:
+    build:
+      context: .
+      dockerfile: Services/Product/src/AW.Services.Product.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+
+  adventureworks.referencedata-api:
+    build:
+      context: .
+      dockerfile: Services/ReferenceData/src/AW.Services.ReferenceData.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+
+  adventureworks.sales.order-api:
+    build:
+      context: .
+      dockerfile: Services/Sales/src/AW.Services.Sales.Order.REST.API/Dockerfile
+    depends_on:
+      - rabbitmq
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+
+  adventureworks.sales.salesperson-api:
+    build:
+      context: .
+      dockerfile: Services/Sales/src/AW.Services.Sales.SalesPerson.REST.API/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+
+  adventureworks.ui.admin-mvc:
+    build:
+      context: .
+      dockerfile: UI/Admin/src/AW.UI.Web.Admin.Mvc/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+  
+  adventureworks.ui.store-mvc:
+    build:
+      context: .
+      dockerfile: UI/Store/src/AW.UI.Web.Store.Mvc/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=http://*:80
+        - ASPNETCORE_ENVIRONMENT=Development
+
+volumes:
+  esdata:
+    driver: local

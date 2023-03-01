@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetShift;
 using AW.Services.HumanResources.Core.Handlers.GetShifts;
@@ -109,7 +109,7 @@ namespace AW.Services.HumanResources.Shift.REST.API.UnitTests
                     It.IsAny<GetShiftQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ThrowsAsync(new ShiftNotFoundException(query.Name));
+                .ThrowsAsync(new ShiftNotFoundException(query.Name!));
 
                 //Act
                 var actionResult = await sut.GetShift(query);

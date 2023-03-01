@@ -3,11 +3,8 @@ using AutoMapper;
 using AW.Services.Product.Core.GuardClauses;
 using AW.Services.Product.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
-using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Product.Core.Handlers.GetProduct
 {

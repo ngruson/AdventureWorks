@@ -99,10 +99,10 @@ namespace AW.Services.Basket.REST.API
             services.AddScoped(sp =>
             {
                 var settings = sp.GetRequiredService<IOptions<BasketSettings>>().Value;
-                var redisConfig = ConfigurationOptions.Parse(settings.RedisConnectionString, true);
+                var redisConfig = ConfigurationOptions.Parse(settings.RedisConnectionString!, true);
 
-                redisConfig.ResolveDns = true;
-                redisConfig.Password = configuration["RedisPassword"];
+                //redisConfig.ResolveDns = true;
+                //redisConfig.Password = configuration["RedisPassword"];
 
                 return ConnectionMultiplexer.Connect(redisConfig);
             });
