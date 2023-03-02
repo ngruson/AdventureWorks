@@ -9,7 +9,7 @@ on:
     - src/UI/Store/**
     - src/UI/Infrastructure/**
     - src/UI/SharedKernel/**
-    - .github/workflows/ui-web-store.yml
+    - .github/workflows/ui-web-store-mvc-pull-request.yml
 
 env:
   DOTNET_VERSION: 7.0.x
@@ -41,5 +41,5 @@ jobs:
           dotnet build SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj
           dotnet test SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj --no-build --no-restore --verbosity normal
           
-          dotnet build Store/tests/AW.UI.Web.Store.UnitTests/AW.UI.Web.Store.UnitTests.csproj
-          dotnet test Store/tests/AW.UI.Web.Store.UnitTests/AW.UI.Web.Store.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build Store/tests/AW.UI.Web.Store.Mvc.UnitTests/AW.UI.Web.Store.Mvc.UnitTests.csproj
+          dotnet test Store/tests/AW.UI.Web.Store.Mvc.UnitTests/AW.UI.Web.Store.Mvc.UnitTests.csproj --no-build --no-restore --verbosity normal

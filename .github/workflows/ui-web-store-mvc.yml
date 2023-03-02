@@ -1,4 +1,4 @@
-name: ui-web-store
+name: ui-web-store-mvc
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
     - src/UI/Store/**
     - src/UI/Infrastructure/**
     - src/UI/SharedKernel/**
-    - .github/workflows/ui-web-store.yml
+    - .github/workflows/ui-web-store-mvc.yml
 
 env:
   DOTNET_VERSION: 7.0.x
@@ -43,8 +43,8 @@ jobs:
           dotnet build SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj
           dotnet test SharedKernel/tests/AW.UI.Web.SharedKernel.UnitTests/AW.UI.Web.SharedKernel.UnitTests.csproj --no-build --no-restore --verbosity normal
           
-          dotnet build Store/tests/AW.UI.Web.Store.UnitTests/AW.UI.Web.Store.UnitTests.csproj
-          dotnet test Store/tests/AW.UI.Web.Store.UnitTests/AW.UI.Web.Store.UnitTests.csproj --no-build --no-restore --verbosity normal
+          dotnet build Store/tests/AW.UI.Web.Store.Mvc.UnitTests/AW.UI.Web.Store.Mvc.UnitTests.csproj
+          dotnet test Store/tests/AW.UI.Web.Store.Mvc.UnitTests/AW.UI.Web.Store.Mvc.UnitTests.csproj --no-build --no-restore --verbosity normal
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
@@ -56,7 +56,7 @@ jobs:
       - name: Build the Docker image      
         run: |
           cd src
-          docker build -f UI/Store/src/AW.UI.Web.Store/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
+          docker build -f UI/Store/src/AW.UI.Web.Store.Mvc/Dockerfile -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest .
 
       - name: Push Image to Docker
         run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
