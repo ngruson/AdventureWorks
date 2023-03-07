@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
-using AW.SharedKernel.UnitTesting.Graph;
 using AW.SharedKernel.UnitTesting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 using AW.ConsoleTools.Handlers.AzureAD.GetGroup;
 using AW.ConsoleTools.AutoMapper;
 using FluentAssertions;
-using System;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using AutoFixture.Xunit2;
+using Microsoft.Graph.Models;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 
 namespace AW.ConsoleTools.UnitTests
 {
@@ -19,34 +18,35 @@ namespace AW.ConsoleTools.UnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_GroupExists_ReturnGroup(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<GetGroupQueryHandler>> mockLogger,
             IMapper mapper,
             string groupName
         )
         {
             // Arrange
-            var group = new Microsoft.Graph.Group
+            var group = new Microsoft.Graph.Models.Group
             {
                 DisplayName = groupName
             };
 
-            string requestUrl = $"https://graph.microsoft.com/v1.0/groups?$expand=members&$filter=displayName eq %27{groupName}%27";
-            var mockHttpProvider = new MockHttpProvider();
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceGroupsCollectionResponse
-                {
-                    Value = new GraphServiceGroupsCollectionPage { group }
-                }
-            );
+            var groups = new GroupCollectionResponse
+            {
+                Value = new List<Microsoft.Graph.Models.Group> { group }
+            };
 
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(),
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(groups);
 
             var sut = new GetGroupQueryHandler(
                 mockLogger.Object,
-                client,
+                mockGraphServiceClient.Object,
                 mapper
             );
 
@@ -62,29 +62,30 @@ namespace AW.ConsoleTools.UnitTests
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_GroupNotFound_ThrowsArgumentNullException(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<GetGroupQueryHandler>> mockLogger,
             IMapper mapper,
             string groupName
         )
         {
-            // Arrange
-            string requestUrl = $"https://graph.microsoft.com/v1.0/groups?$expand=members&$filter=displayName eq %27{groupName}%27";
-            var mockHttpProvider = new MockHttpProvider();
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceGroupsCollectionResponse
-                {
-                    Value = new GraphServiceGroupsCollectionPage()
-                }
-            );
+            // Arrange            
+            var groups = new GroupCollectionResponse
+            {
+                Value = new List<Microsoft.Graph.Models.Group>()
+            };
 
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(),
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(groups);
 
             var sut = new GetGroupQueryHandler(
                 mockLogger.Object,
-                client,
+                mockGraphServiceClient.Object,
                 mapper
             );
 

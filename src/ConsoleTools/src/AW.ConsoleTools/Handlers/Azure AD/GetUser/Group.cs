@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using AW.SharedKernel.AutoMapper;
+﻿using AW.SharedKernel.AutoMapper;
 
 namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
 {
-    public class Group : IMapFrom<Microsoft.Graph.Group>
+    public class Group : IMapFrom<Microsoft.Graph.Models.Group>
     {
         public Group() { }
         public Group(string id, string displayName)

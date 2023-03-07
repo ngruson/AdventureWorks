@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
 
 namespace AW.ConsoleTools.Handlers.AzureAD.CreateGroups
 {
@@ -23,31 +24,32 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateGroups
             return Unit.Value;
         }
 
-        private async Task<IGraphServiceGroupsCollectionPage> CreateGroups(CancellationToken cancellationToken)
+        private async Task<GroupCollectionResponse?> CreateGroups(CancellationToken cancellationToken)
         {
             var groupNames = GetGroupList();
-            var groups = await _client.Groups.Request()
-                .OrderBy("displayName")
-                .GetAsync(cancellationToken);
+            var groups = await _client.Groups
+                .GetAsync(requestConfiguration =>
+                    requestConfiguration.QueryParameters.Orderby = new[] { "displayName" },
+                    cancellationToken
+                );
 
             groupNames.ForEach(async groupName =>
             {
-                if (!groups.Any(group => group.DisplayName == groupName))
+                if (!groups!.Value!.Any(group => group.DisplayName == groupName))
                 {
                     _logger.LogInformation("Creating AAD group {GroupName}", groupName);
 
-                    var newGroup = await _client.Groups.Request().AddAsync(
+                    var newGroup = await _client.Groups.PostAsync(
                         new Group
                         {
                             DisplayName = groupName,
                             MailEnabled = false,
                             MailNickname = groupName.Replace(" ", "-"),
                             SecurityEnabled = true
-                        },
-                        cancellationToken
+                        }
                     );
 
-                    groups.Add(newGroup);
+                    groups.Value!.Add(newGroup!);
                 }
                 else
                 {
@@ -56,7 +58,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateGroups
             });
 
             return groups;
-        }        
+        }
 
         private static List<string> GetGroupList()
         {

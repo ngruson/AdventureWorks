@@ -4,13 +4,12 @@ using AW.ConsoleTools.AutoMapper;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUser;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.ConsoleTools.UnitTests
@@ -18,9 +17,11 @@ namespace AW.ConsoleTools.UnitTests
     public class CreateUserCommandUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_UserDoesNotExist_CreateUser(
-            Mock<Microsoft.Graph.User> mockUser,
+        public async Task Handle_UserDoesNotExist_CreateUser(            
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
             [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
+            string id,
+            string displayName,
             Mock<ILogger<CreateUserCommandHandler>> mockLogger,
             CreateUserCommand command,
             IMapper mapper,
@@ -28,14 +29,19 @@ namespace AW.ConsoleTools.UnitTests
         )
         {
             // Arrange
-            mockGraphServiceClient.Setup(_ => _.Users
-                .Request()
-                .AddAsync(
-                    It.IsAny<Microsoft.Graph.User>(), 
-                    It.IsAny<CancellationToken>()
-                )
-            )
-            .ReturnsAsync(mockUser.Object);
+            var user = new Microsoft.Graph.Models.User
+            {
+                Id = id,
+                DisplayName = displayName
+            };
+
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Microsoft.Graph.Models.User>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(user);
 
             //Act
             var sut = new CreateUserCommandHandler(
@@ -47,16 +53,15 @@ namespace AW.ConsoleTools.UnitTests
             var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Id.Should().Be(mockUser.Object.Id);
-            result.DisplayName.Should().Be(mockUser.Object.DisplayName);
+            result.Id.Should().Be(user.Id);
+            result.DisplayName.Should().Be(user.DisplayName);
 
-            mockGraphServiceClient.Verify(_ => _.Users
-                .Request()
-                .AddAsync(
-                    It.IsAny<Microsoft.Graph.User>(),
-                    It.IsAny<CancellationToken>()
-                )
-            );
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Microsoft.Graph.Models.User>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
     }
 }

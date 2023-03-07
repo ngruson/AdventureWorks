@@ -1,14 +1,15 @@
-﻿using AutoMapper;
+﻿using AutoFixture.Xunit2;
+using AutoMapper;
 using AW.ConsoleTools.AutoMapper;
 using AW.ConsoleTools.Handlers.AzureAD.GetUser;
 using AW.SharedKernel.UnitTesting;
-using AW.SharedKernel.UnitTesting.Graph;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.ConsoleTools.UnitTests
@@ -17,6 +18,8 @@ namespace AW.ConsoleTools.UnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_UserExists_ReturnUser(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<GetUserQueryHandler>> mockLogger,
             IMapper mapper,
             string userName,
@@ -25,13 +28,13 @@ namespace AW.ConsoleTools.UnitTests
         )
         {
             // Arrange
-            var user = new Microsoft.Graph.User
+            var user = new Microsoft.Graph.Models.User
             {
                 DisplayName = userName,
-                MemberOf = new UserMemberOfCollectionWithReferencesPage
+                MemberOf = new List<DirectoryObject>
                 {
                     
-                    new Microsoft.Graph.Group
+                    new Microsoft.Graph.Models.Group
                     {
                         Id = groupId,
                         DisplayName = groupName
@@ -39,23 +42,22 @@ namespace AW.ConsoleTools.UnitTests
                 }
             };
 
-            string requestUrl = $"https://graph.microsoft.com/v1.0/users?$expand=memberOf&$filter=displayName eq %27{userName}%27";
-            var mockHttpProvider = new MockHttpProvider();
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceUsersCollectionResponse
-                {
-                    Value = new GraphServiceUsersCollectionPage { user }
-                }
-            );
+            var users = new UserCollectionResponse
+            {
+                Value = new List<Microsoft.Graph.Models.User> { user }
+            };
 
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(), 
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<UserCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(users);
 
             var sut = new GetUserQueryHandler(
                 mockLogger.Object,
-                client,
+                mockGraphServiceClient.Object,
                 mapper
             );
 
@@ -66,38 +68,39 @@ namespace AW.ConsoleTools.UnitTests
             );
 
             //Assert
-            result?.DisplayName.Should().BeEquivalentTo(user.DisplayName);
-            var resultGroup = user.MemberOf[0] as Microsoft.Graph.Group;
-            result?.MemberOf!.Count.Should().Be(user.MemberOf.Count);
-            result?.MemberOf![0].Id.Should().BeEquivalentTo(resultGroup!.Id);
-            result?.MemberOf![0].DisplayName.Should().BeEquivalentTo(resultGroup!.DisplayName);
+            result!.DisplayName.Should().BeEquivalentTo(user.DisplayName);
+            var resultGroup = user.MemberOf[0] as Microsoft.Graph.Models.Group;
+            result.MemberOf!.Count.Should().Be(user.MemberOf.Count);
+            result.MemberOf[0].Id.Should().BeEquivalentTo(resultGroup!.Id);
+            result.MemberOf[0].DisplayName.Should().BeEquivalentTo(resultGroup.DisplayName);
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_UserNotFound_ReturnNull(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<GetUserQueryHandler>> mockLogger,
             IMapper mapper,
             string userName
         )
         {
             // Arrange
-            string requestUrl = $"https://graph.microsoft.com/v1.0/users?$expand=memberOf&$filter=displayName eq %27{userName}%27";
-            var mockHttpProvider = new MockHttpProvider();
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceUsersCollectionResponse
-                {
-                    Value = new GraphServiceUsersCollectionPage()
-                }
-            );
+            var users = new UserCollectionResponse
+            {
+                Value = new List<Microsoft.Graph.Models.User>()
+            };
 
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(),
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<UserCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(users);
 
             var sut = new GetUserQueryHandler(
                 mockLogger.Object,
-                client,
+                mockGraphServiceClient.Object,
                 mapper
             );
 
@@ -108,7 +111,7 @@ namespace AW.ConsoleTools.UnitTests
             );
 
             //Assert
-            result?.Should().BeNull();
+            result!.Should().BeNull();
         }
     }
 }

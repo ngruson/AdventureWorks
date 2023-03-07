@@ -11,7 +11,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUser
         public void Mapping(Profile profile)
         {
             profile.CreateMap<GetUser.Group, Group>();
-            profile.CreateMap<Microsoft.Graph.Group, Group>();
+            profile.CreateMap<Microsoft.Graph.Models.Group, Group>();
         }
     }
 }

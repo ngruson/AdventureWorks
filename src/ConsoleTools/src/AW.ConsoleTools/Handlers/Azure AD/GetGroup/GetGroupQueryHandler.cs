@@ -29,12 +29,15 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetGroup
             _logger.LogInformation("Getting Azure AD group {GroupName}", request.GroupName);
 
             var groupsResponse = await _client.Groups
-                    .Request()
-                    .Expand(_ => _.Members)
-                    .Filter($"displayName eq '{request.GroupName}'")
-                    .GetAsync(cancellationToken);
+                .GetAsync(requestConfiguration =>
+                    {
+                        requestConfiguration.QueryParameters.Expand = new[] { "members" };
+                        requestConfiguration.QueryParameters.Filter = $"displayName eq '{request.GroupName}'";
+                    },                    
+                    cancellationToken
+                );
 
-            var group = groupsResponse.FirstOrDefault(_ => _.DisplayName == request.GroupName);
+            var group = groupsResponse!.Value!.FirstOrDefault(_ => _.DisplayName == request.GroupName);
             Guard.Against.Null(group, _logger);
             
             var result = _mapper.Map<Group>(group);

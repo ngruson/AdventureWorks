@@ -1,16 +1,15 @@
-﻿using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
-using AW.ConsoleTools.Handlers.AzureAD.GetGroup;
+﻿using AutoFixture.Xunit2;
+using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
 using AW.SharedKernel.UnitTesting;
-using AW.SharedKernel.UnitTesting.Graph;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Graph.Models;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 
 namespace AW.ConsoleTools.UnitTests
 {
@@ -18,37 +17,37 @@ namespace AW.ConsoleTools.UnitTests
     {
         [Theory, AutoMoqData]
         public async Task Handle_UserExists_AddUserToGroup(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<AddUserToGroupCommandHandler>> mockLogger,
             AddUserToGroupCommand command
         )
         {
             // Arrange
-            string requestUrl = $"https://graph.microsoft.com/v1.0/users?$expand=memberOf&$filter=displayName eq %27{command.UserName}%27";
-            var mockHttpProvider = new MockHttpProvider();
+            var user = new User
+            {
+                DisplayName = command.UserName
+            };
 
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceUsersCollectionResponse
-                {
-                    Value = new GraphServiceUsersCollectionPage 
-                    { 
-                        new User { 
-                            Id = Guid.NewGuid().ToString(),
-                            DisplayName = command.UserName 
-                        }
-                    }
-                }
-            );
+            var users = new UserCollectionResponse
+            {
+                Value = new List<User> { user }
+            };
 
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(),
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<UserCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(users);
 
             //Act
             var sut = new AddUserToGroupCommandHandler(
                 mockLogger.Object,
-                client
+                mockGraphServiceClient.Object
             );
+
             var result = await sut.Handle(
                 command,
                 CancellationToken.None
@@ -60,30 +59,30 @@ namespace AW.ConsoleTools.UnitTests
 
         [Theory, AutoMoqData]
         public async Task Handle_UserDoesNotExist_ThrowArgumentNullException(
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
+            [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<AddUserToGroupCommandHandler>> mockLogger,
             AddUserToGroupCommand command
         )
         {
             // Arrange
-            string requestUrl = $"https://graph.microsoft.com/v1.0/users?$expand=memberOf&$filter=displayName eq %27{command.UserName}%27";
-            var mockHttpProvider = new MockHttpProvider();
+            var users = new UserCollectionResponse
+            {
+                Value = new List<User>()
+            };
 
-            mockHttpProvider.Responses.Add("GET:" + requestUrl,
-                new GraphServiceUsersCollectionResponse
-                {
-                    Value = new GraphServiceUsersCollectionPage()
-                }
-            );
-
-            var client = new GraphServiceClient(
-                new MockAuthenticationHelper(),
-                mockHttpProvider
-            );
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<UserCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(users);
 
             //Act
             var sut = new AddUserToGroupCommandHandler(
                 mockLogger.Object,
-                client
+                mockGraphServiceClient.Object
             );
 
             Func<Task> func = async () => await sut.Handle(

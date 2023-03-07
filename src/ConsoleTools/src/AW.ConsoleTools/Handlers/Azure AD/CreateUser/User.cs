@@ -12,7 +12,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUser
         public void Mapping(Profile profile)
         {
             profile.CreateMap<GetUser.User, User>();
-            profile.CreateMap<Microsoft.Graph.User, User>()
+            profile.CreateMap<Microsoft.Graph.Models.User, User>()
                 .ForMember(_ => _.MemberOf, opt => opt.Ignore());
         }
     }

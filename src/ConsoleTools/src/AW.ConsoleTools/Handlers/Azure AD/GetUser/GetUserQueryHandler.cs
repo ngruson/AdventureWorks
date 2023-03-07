@@ -26,12 +26,16 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
         {
             _logger.LogInformation("Getting Azure AD user {UserName}", request.UserName);
 
-            var usersResponse = await _client.Users.Request()
-                .Expand(_ => _.MemberOf)
-                .Filter($"displayName eq '{request.UserName.Replace("'", "''")}'")
-                .GetAsync(cancellationToken);
+            var usersResponse = await _client.Users
+                .GetAsync(reqInfo =>
+                    {
+                        reqInfo.QueryParameters.Expand = new[] { "memberOf" };
+                        reqInfo.QueryParameters.Filter = $"displayName eq '{request.UserName.Replace("'", "''")}'";
+                    },
+                    cancellationToken
+                );
 
-            var user = usersResponse.FirstOrDefault(_ => _.DisplayName == request.UserName);
+            var user = usersResponse!.Value!.FirstOrDefault(_ => _.DisplayName == request.UserName);
             
             if (user == null)
             {

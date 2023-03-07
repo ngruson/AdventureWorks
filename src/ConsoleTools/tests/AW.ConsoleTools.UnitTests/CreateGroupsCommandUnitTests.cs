@@ -5,9 +5,10 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.ConsoleTools.UnitTests
@@ -16,26 +17,39 @@ namespace AW.ConsoleTools.UnitTests
     {
         [Theory, AutoMoqData]
         public async Task Handle_GroupsDoNotExists_CreateGroups(
-            GraphServiceGroupsCollectionPage page,
-            Mock<Group> mockGroup,
+            string displayName,
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
             [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<CreateGroupsCommandHandler>> mockLogger,
             CreateGroupsCommand command
         )
         {
             // Arrange
-            mockGraphServiceClient.Setup(_ => _.Groups
-                .Request()
-                .OrderBy("displayName")
-                .GetAsync(It.IsAny<CancellationToken>())
-            )
-            .ReturnsAsync(() => page);
+            var response = new GroupCollectionResponse
+            {
+                Value = new List<Group>()
+            };
 
-            mockGraphServiceClient.Setup(_ => _.Groups
-                .Request()
-                .AddAsync(It.IsAny<Group>(), It.IsAny<CancellationToken>())
-            )
-            .ReturnsAsync(mockGroup.Object);
+            var group = new Group
+            {
+                DisplayName = displayName
+            };
+
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(response);
+
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Group>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(group);
 
             //Act
             var sut = new CreateGroupsCommandHandler(
@@ -47,49 +61,65 @@ namespace AW.ConsoleTools.UnitTests
             //Assert
             result.Should().Be(Unit.Value);
 
-            mockGraphServiceClient.Verify(_ => _.Groups
-                .Request()
-                .OrderBy("displayName")
-                .GetAsync(It.IsAny<CancellationToken>())
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+                )
             );
-            mockGraphServiceClient.Verify(_ => _.Groups
-                .Request()
-                .AddAsync(It.IsAny<Group>(), It.IsAny<CancellationToken>()),
+
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Group>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+                ),
                 Times.Exactly(6)
             );
         }
 
         [Theory, AutoMoqData]
         public async Task Handle_SomeGroupsExists_CreateNewGroups(
-            GraphServiceGroupsCollectionPage page,
-            Mock<Group> mockGroup,
+            string displayName,
+            [Frozen] Mock<IRequestAdapter> mockRequestAdapter,
             [Frozen] Mock<GraphServiceClient> mockGraphServiceClient,
             Mock<ILogger<CreateGroupsCommandHandler>> mockLogger,
             CreateGroupsCommand command
         )
         {
             // Arrange
-            page.Add(new Group
-            {
-                DisplayName = "Executive General and Administration"
-            });
-            page.Add(new Group
-            {
-                DisplayName = "Inventory Management"
-            });
-            
-            mockGraphServiceClient.Setup(_ => _.Groups
-                .Request()
-                .OrderBy("displayName")
-                .GetAsync(It.IsAny<CancellationToken>())
-            )
-            .ReturnsAsync(() => page);
 
-            mockGraphServiceClient.Setup(_ => _.Groups
-                .Request()
-                .AddAsync(It.IsAny<Group>(), It.IsAny<CancellationToken>())
-            )
-            .ReturnsAsync(mockGroup.Object);
+            var response = new GroupCollectionResponse
+            {
+                Value = new List<Group>
+                {
+                    new Group
+                    {
+                        DisplayName = "Executive General and Administration"
+                    },
+                    new Group
+                    {
+                        DisplayName = "Inventory Management"
+                    },
+                }
+            };
+
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(response);
+
+            mockRequestAdapter.Setup(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Group>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Group { DisplayName = displayName });
 
             //Act
             var sut = new CreateGroupsCommandHandler(
@@ -101,14 +131,20 @@ namespace AW.ConsoleTools.UnitTests
             //Assert
             result.Should().Be(Unit.Value);
 
-            mockGraphServiceClient.Verify(_ => _.Groups
-                .Request()
-                .OrderBy("displayName")
-                .GetAsync(It.IsAny<CancellationToken>())
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+                )
             );
-            mockGraphServiceClient.Verify(_ => _.Groups
-                .Request()
-                .AddAsync(It.IsAny<Group>(), It.IsAny<CancellationToken>()),
+
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<Group>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+                ),
                 Times.Exactly(4)
             );
         }

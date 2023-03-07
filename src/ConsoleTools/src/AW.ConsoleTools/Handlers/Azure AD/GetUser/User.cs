@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
 {
-    public class User : IMapFrom<Microsoft.Graph.User>
+    public class User : IMapFrom<Microsoft.Graph.Models.User>
     {
         public User() { }
 
@@ -13,7 +13,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Microsoft.Graph.User, User>()
+            profile.CreateMap<Microsoft.Graph.Models.User, User>()
                 .ForMember(_ => _.MemberOf, opt => opt.MapFrom((src, dest, destProp, ctx) =>
                     ctx.Mapper.Map<List<Group>>(src.MemberOf)));
         }

@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
 
 namespace AW.ConsoleTools.Handlers.AzureAD.CreateUser
 {
@@ -31,7 +32,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUser
         {
             _logger.LogInformation("Creating user {DisplayName}", request.DisplayName);
 
-            var user = new Microsoft.Graph.User
+            var user = new Microsoft.Graph.Models.User
             {
                 AccountEnabled = true,
                 DisplayName = request.DisplayName,
@@ -44,7 +45,8 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUser
                 UserPrincipalName = $"{request.MailNickname.NormalizeExt()}@{_configuration["Domain"]}"
             };
 
-            var result = await _client.Users.Request().AddAsync(user, cancellationToken);
+            var result = await _client.Users
+                .PostAsync(user, null, cancellationToken);
 
             _logger.LogInformation("Returning user {DisplayName}", request.DisplayName);
             return _mapper.Map<User>(result);
