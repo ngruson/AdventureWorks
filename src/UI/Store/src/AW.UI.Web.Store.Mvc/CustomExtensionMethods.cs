@@ -60,8 +60,33 @@ namespace AW.UI.Web.Store.Mvc
 
         public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration, OpenIdConnectConfiguration oidcConfig)
         {
+            string basketApiReadScope;
+            string customerApiReadScope;
+            string productApiReadScope;
+            string referenceDataApiReadScope;
+            string salesOrderApiReadScope;
+            string salesPersonApiReadScope;
+
             if (oidcConfig.IdentityProvider == IdentityProvider.IdentityServer)
+            {
                 services.AddOpenIdConnectAccessTokenManagement();
+
+                basketApiReadScope = configuration["AuthN:IdSrv:ApiScopes:BasketApiRead"]!;
+                customerApiReadScope = configuration["AuthN:IdSrv:ApiScopes:CustomerApiRead"]!;
+                productApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ProductApiRead"]!;
+                referenceDataApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ReferenceDataApiRead"]!;
+                salesOrderApiReadScope = configuration["AuthN:IdSrv:ApiScopes:SalesOrderApiRead"]!;
+                salesPersonApiReadScope = configuration["AuthN:IdSrv:ApiScopes:SalesPersonApiRead"]!;
+            }
+            else
+            {
+                basketApiReadScope = configuration["AuthN:AzureAd:ApiScopes:BasketApiRead"]!;
+                customerApiReadScope = configuration["AuthN:AzureAd:ApiScopes:CustomerApiRead"]!;
+                productApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ProductApiRead"]!;
+                referenceDataApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ReferenceDataApiRead"]!;
+                salesOrderApiReadScope = configuration["AuthN:AzureAd:ApiScopes:SalesOrderApiRead"]!;
+                salesPersonApiReadScope = configuration["AuthN:AzureAd:ApiScopes:SalesPersonApiRead"]!;
+            }
 
             services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
             {
@@ -69,7 +94,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:BasketApiRead"]! }
+                new[] { basketApiReadScope }
             );
 
             services.AddHttpClient<ICustomerApiClient, CustomerApiClient>(client =>
@@ -78,7 +103,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:CustomerApiRead"]! }
+                new[] { customerApiReadScope }
             );
 
             services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
@@ -87,7 +112,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:ProductApiRead"]! }
+                new[] { productApiReadScope }
             );
 
             services.AddHttpClient<IReferenceDataApiClient, ReferenceDataApiClient>(client =>
@@ -96,7 +121,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:ReferenceDataApiRead"]! }
+                new[] { referenceDataApiReadScope }
             );
 
             services.AddHttpClient<ISalesOrderApiClient, SalesOrderApiClient>(client =>
@@ -105,7 +130,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:SalesOrderApiRead"]! }
+                new[] { salesOrderApiReadScope }
             );
 
             services.AddHttpClient<ISalesPersonApiClient, SalesPersonApiClient>(client =>
@@ -114,7 +139,7 @@ namespace AW.UI.Web.Store.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:SalesPersonApiRead"]! }
+                new[] { salesPersonApiReadScope }
             );
 
             return services;
@@ -141,9 +166,10 @@ namespace AW.UI.Web.Store.Mvc
                 .AddCookie("cookie")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = configuration["AuthN:Authority"];
-                    options.ClientId = configuration["AuthN:ClientId"];
-                    options.ClientSecret = configuration["AuthN:ClientSecret"];
+                    options.Authority = configuration["AuthN:IdSrv:Authority"];
+                    options.ClientId = configuration["AuthN:IdSrv:ClientId"];
+                    options.ClientSecret = configuration["AuthN:IdSrv:ClientSecret"];
+                    options.RequireHttpsMetadata = false;
                     options.ResponseType = "code";
                     options.UsePkce = true;
                     options.SaveTokens = true;
@@ -172,7 +198,7 @@ namespace AW.UI.Web.Store.Mvc
             hcBuilder.AddCheck("self", () => HealthCheckResult.Healthy());
             hcBuilder.AddElasticsearch(configuration["ElasticSearchUri"]!);
             if (configuration["AuthN:IdP"] == "IdSrv")
-                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:Authority"]!));
+                hcBuilder.AddIdentityServer(new Uri(configuration["AuthN:IdSrv:Authority"]!));
             hcBuilder.AddUrlGroup(new Uri(configuration["BasketAPI:Uri"]!), name: "basket-api");
             hcBuilder.AddUrlGroup(new Uri(configuration["ProductAPI:Uri"]!), name: "product-api");
 
