@@ -50,6 +50,7 @@ static class CustomExtensionsMethods
         services.AddMediatR(typeof(GetSalesPersonsQuery));
 
         services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ISalesOrderService, SalesOrderService>();
         services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
 
@@ -109,7 +110,10 @@ static class CustomExtensionsMethods
         {
             client.BaseAddress = new Uri(configuration["ProductAPI:Uri"]!);
         })
-        .AddUserAccessTokenHandler();
+        .AddUserAccessTokenHandler(
+            oidcConfig.IdentityProvider,
+            new[] { configuration["AuthN:ApiScopes:ProductApiRead"]! }
+        );
 
         services.AddHttpClient<IReferenceDataApiClient, ReferenceDataApiClient>(client =>
         {

@@ -1,0 +1,319 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+@{
+    ViewData["Title"] = "Products";
+    @model ProductIndexViewModel;
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center mb-3">
+        <div class="col-md mb-2 mb-md-0">
+            <h1 class="page-header-title">Products <span class="badge bg-soft-dark text-dark ms-2">@Model.PaginationInfo!.TotalItems</span></h1>
+        </div>
+
+        <div class="col-md-auto">
+            @Html.ActionLink("Add product", "AddProduct", "Product", null, new { @class = "btn btn-primary"})
+        </div>
+        <!-- End Col -->
+    </div>
+</div>
+<!-- End Page Header-->
+
+<div class="card">
+    <!-- Header -->
+    <div class="card-header card-header-content-sm-between">
+        <div class="d-grid d-sm-flex justify-content-sm-end align-items-sm-center gap-2">
+            <!-- Datatable Info -->
+            <div id="datatableCounterInfo" style="display: none;">
+                <div class="d-flex align-items-center">
+                    <span class="fs-5 me-3">
+                        <span id="datatableCounter">0</span>
+                        Selected
+                    </span>
+                    <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                        <i class="bi-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            <!-- End Datatable Info -->
+            <!-- Dropdown -->
+            <div class="dropdown">
+                <button type="button" class="btn btn-white w-100" id="showHideDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <i class="bi-table me-1"></i> Columns <span class="badge bg-soft-dark text-dark rounded-circle ms-1">6</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-end dropdown-card" aria-labelledby="showHideDropdown" style="width: 15rem;">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="d-grid gap-3">
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_name">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">Name</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_name" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_productnumber">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">Product number</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_productnumber" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_listprice">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">List price</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_listprice" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_productline">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">Product line</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_productline" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_class">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">Class</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_class" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                                <!-- Form Switch -->
+                                <label class="row form-check form-switch" for="toggleColumn_style">
+                                    <span class="col-8 col-sm-9 ms-0">
+                                        <span class="me-2">Style</span>
+                                    </span>
+                                    <span class="col-4 col-sm-3 text-end">
+                                        <input type="checkbox" class="form-check-input" id="toggleColumn_style" checked>
+                                    </span>
+                                </label>
+                                <!-- End Form Switch -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Dropdown -->
+        </div>
+    </div>
+    <!-- End Header-->
+    <!-- Table -->
+    <div class="table-responsive datatable-custom">
+        <table id="datatable" class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+               data-hs-datatables-options='{
+                   "columnDefs": [{
+                      "targets": [0],
+                      "orderable": false
+                    }],
+                   "order": [],
+                   "info": {
+                     "totalQty": "#datatableWithPaginationInfoTotalQty"
+                   },
+                   "search": "#datatableSearch",
+                   "entries": "#datatableEntries",
+                   "pageLength": 15,
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatablePagination"
+                 }'>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="table-column-pe-0">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
+                            <label class="form-check-label" for="datatableCheckAll"></label>
+                        </div>
+                    </th>
+                    <th class="table-column-ps-0">Name</th>
+                    <th>Product number</th>
+                    <th>List price</th>
+                    <th>Product line</th>
+                    <th>Class</th>
+                    <th>Style</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products!)
+                {
+                    <tr>
+                        <td class="table-column-pe-0">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="customersDataCheck-@product.ProductNumber">
+                                <label class="form-check-label" for="customersDataCheck-@product.ProductNumber"></label>
+                            </div>
+                        </td>
+                        <td class="table-column-ps-0">
+                            <a asp-action="Detail" asp-route-accountnumber="@product.ProductNumber" class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <img class="avatar avatar-lg" src="@($"data:image;base64,{Convert.ToBase64String(product.ThumbnailPhoto!)}")" alt="@product.Name">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="text-inherit mb-0">@product.Name</h5>
+                                </div>
+                            </a>
+                        </td>
+                        <td>@product.ProductNumber</td>
+                        <td>@string.Format(new CultureInfo("en-US"), "{0:C}", product.ListPrice)</td>
+                        <td>@product.ProductLine</td>
+                        <td>@product.Class</td>
+                        <td>@product.Style</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- End Table -->
+    <!-- Footer -->
+    <div class="card-footer">
+        <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+            <div class="col-sm-auto">
+                <div class="d-flex justify-content-center justify-content-sm-end">
+                    <!-- Pagination -->
+                    <partial name="_pagination" for="@Model.PaginationInfo" />
+                </div>
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Footer -->
+</div>
+
+@section Scripts
+{
+    <!-- JS Plugins Init. -->
+    <script>
+        $(document).on('ready', function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init($('#datatable'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableCheckAll',
+                        counter: '#datatableCounter',
+                        counterInfo: '#datatableCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                      <img class="mb-3" src="~/assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                      <img class="mb-3" src="~/assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                    <p class="mb-0">No data to show</p>
+                                                    </div>`
+                }
+            });
+
+            const datatable = HSCore.components.HSDatatables.getItem('datatable')
+
+            $('.js-datatable-filter').on('change', function () {
+                var $this = $(this),
+                    elVal = $this.val(),
+                    targetColumnIndex = $this.data('target-column-index');
+
+                datatable.column(targetColumnIndex).search(elVal).draw();
+            });
+
+            $('#datatableSearch').on('mouseup', function (e) {
+                var $input = $(this),
+                    oldValue = $input.val();
+
+                if (oldValue == "") return;
+
+                setTimeout(function () {
+                    var newValue = $input.val();
+
+                    if (newValue == "") {
+                        // Gotcha
+                        datatable.search('').draw();
+                    }
+                }, 1);
+            });
+
+            $('#toggleColumn_name').change(function (e) {
+                datatable.columns(1).visible(e.target.checked)
+            })
+
+            $('#toggleColumn_productnumber').change(function (e) {
+                datatable.columns(2).visible(e.target.checked)
+            })
+
+            $('#toggleColumn_listprice').change(function (e) {
+                datatable.columns(3).visible(e.target.checked)
+            })
+
+            $('#toggleColumn_productline').change(function (e) {
+                datatable.columns(4).visible(e.target.checked)
+            })
+
+            $('#toggleColumn_class').change(function (e) {
+                datatable.columns(5).visible(e.target.checked)
+            })
+
+            $('#toggleColumn_style').change(function (e) {
+                datatable.columns(6).visible(e.target.checked)
+            })
+        });
+    </script>
+    <!-- JS Plugins Init. -->
+    <script>
+        (function () {
+            window.onload = function () {
+
+
+                // INITIALIZATION OF NAVBAR VERTICAL ASIDE
+                // =======================================================
+                new HSSideNav('.js-navbar-vertical-aside').init()
+
+
+                // INITIALIZATION OF FORM SEARCH
+                // =======================================================
+                new HSFormSearch('.js-form-search')
+
+
+                // INITIALIZATION OF BOOTSTRAP DROPDOWN
+                // =======================================================
+                HSBsDropdown.init()
+
+
+                // INITIALIZATION OF SELECT
+                // =======================================================
+                HSCore.components.HSTomSelect.init('.js-select')
+
+
+                // INITIALIZATION OF NAV SCROLLER
+                // =======================================================
+                new HsNavScroller('.js-nav-scroller')
+
+
+                // INITIALIZATION OF MODAL ON PAGE LOAD
+                // =======================================================
+                //new bootstrap.Modal(document.getElementById('exportCustomersGuideModal')).show()
+
+
+                // INITIALIZATION OF DROPZONE
+                // =======================================================
+                HSCore.components.HSDropzone.init('.js-dropzone')
+            }
+        })()
+    </script>
+}

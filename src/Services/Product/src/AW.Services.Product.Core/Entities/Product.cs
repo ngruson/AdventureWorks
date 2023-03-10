@@ -1,4 +1,4 @@
-using AW.Services.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -47,11 +47,11 @@ namespace AW.Services.Product.Core.Entities
 
         public int DaysToManufacture { get; private set; }
 
-        public string? ProductLine { get; private set; }
+        public ProductLine? ProductLine { get; private set; }
 
-        public string? Class { get; private set; }
+        public Class? Class { get; private set; }
 
-        public string? Style { get; private set; }
+        public Style? Style { get; private set; }
 
         public int? ProductSubcategoryId { get; private set; }
 
