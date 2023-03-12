@@ -13,7 +13,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
 {
     public class DeleteSalesOrderCommandUnitTests
     {
-        [Theory, AutoMoqData()]
+        [Theory, SalesOrderAutoMoqData()]
         public async Task Handle_SalesOrderExists_DeleteSalesOrder(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepositoryMock,
             DeleteSalesOrderCommandHandler sut,
@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             );
         }
 
-        [Theory, AutoMoqData()]
+        [Theory, SalesOrderAutoMoqData()]
         public async Task Handle_SalesOrderDoesNotExist_ThrowSalesOrderNotFoundException(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepositoryMock,
             DeleteSalesOrderCommandHandler sut,

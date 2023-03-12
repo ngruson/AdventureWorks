@@ -2,8 +2,12 @@
 
 namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class UpdateSalesOrderCommand : IRequest<SalesOrderDto>
+    public class UpdateSalesOrderCommand : IRequest<SalesOrder>
     {
-        public SalesOrderDto? SalesOrder { get; set; }
+        public UpdateSalesOrderCommand(SalesOrder salesOrder)
+        {
+            SalesOrder = salesOrder;
+        }
+        public SalesOrder SalesOrder { get; set; }
     }
 }

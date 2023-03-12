@@ -2,8 +2,9 @@
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {
-    public class StoreCustomerDto : CustomerDto, IMapFrom<Entities.StoreCustomer>
+    public class SalesReason : IMapFrom<Entities.SalesReason>
     {
         public string? Name { get; set; }
-    }    
+        public string? ReasonType { get; set; }
+    }
 }

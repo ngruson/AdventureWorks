@@ -3,8 +3,7 @@
     public class Product
     {
         public string? Name { get; set; }
-        public string? ProductNumber { get; set; }
-        public string? Color { get; set; }
+        public string? ProductNumber { get; set; }        
         public decimal ListPrice { get; set; }
         public string? Size { get; set; }
         public string? SizeUnitMeasureCode { get; set; }

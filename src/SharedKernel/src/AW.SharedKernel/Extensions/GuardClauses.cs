@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Runtime.CompilerServices;
 
 namespace AW.SharedKernel.Extensions

@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.Handlers.GetSalesPerson;
 using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using AW.Services.Sales.SalesPerson.REST.API.Controllers;
@@ -35,7 +35,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult?.Value as List<Core.Models.SalesPerson>;
+            var result = okObjectResult?.Value as List<Core.Handlers.GetSalesPersons.SalesPersonDto>;
             result?.Count.Should().Be(salesPersons.Count);
         }
 
@@ -75,7 +75,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.UnitTests
             var okObjectResult = actionResult as OkObjectResult;
             okObjectResult.Should().NotBeNull();
 
-            var result = okObjectResult?.Value as Core.Models.SalesPerson;
+            var result = okObjectResult?.Value as Core.Handlers.GetSalesPerson.SalesPersonDto;
             result!.Name!.FullName.Should().Be(salesPerson.Name!.FullName);
         }
 

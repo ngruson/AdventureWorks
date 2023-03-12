@@ -2,9 +2,9 @@
 using AW.SharedKernel.AutoMapper;
 using AW.Services.Sales.Core.Entities;
 
-namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
+namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class SalesOrderDto : IMapFrom<SalesOrder>
+    public class SalesOrder : IMapFrom<Entities.SalesOrder>
     {
         public byte RevisionNumber { get; set; }
 
@@ -23,19 +23,19 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
         public string? PurchaseOrderNumber { get; set; }
 
         public string? AccountNumber { get; set; }
-        public CustomerDto? Customer { get; set; }
+        public Customer? Customer { get; set; }
 
-        public SalesPersonDto? SalesPerson { get; set; }
+        public SalesPerson? SalesPerson { get; set; }
 
         public string? Territory { get; set; }
 
-        public AddressDto? BillToAddress { get; set; }
+        public Address? BillToAddress { get; set; }
 
-        public AddressDto? ShipToAddress { get; set; }
+        public Address? ShipToAddress { get; set; }
 
         public string? ShipMethod { get; set; }
 
-        public CreditCardDto? CreditCard { get; set; }
+        public CreditCard? CreditCard { get; set; }
 
         public decimal SubTotal { get; set; }
 
@@ -47,17 +47,18 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public string? Comment { get; set; }
 
-        public List<SalesOrderLineDto>? OrderLines { get; set; }
+        public List<SalesOrderLine>? OrderLines { get; set; }
 
-        public List<SalesReasonDto>? SalesReasons { get; set; }
+        public List<SalesReason>? SalesReasons { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesOrder, SalesOrderDto>()
+            profile.CreateMap<Entities.SalesOrder, SalesOrder>()
                 .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status!.Name))
                 .ForMember(m => m.SalesReasons, opt => opt.MapFrom(src => src.SalesReasons
-                    .Select(r => r.SalesReason))
-                );
+                    .Select(r => r.SalesReason)))
+                .ReverseMap()
+                .ForMember(m => m.Status, opt => opt.MapFrom(src => SalesOrderStatus.FromName(src.Status, false)));
         }
     }
 }

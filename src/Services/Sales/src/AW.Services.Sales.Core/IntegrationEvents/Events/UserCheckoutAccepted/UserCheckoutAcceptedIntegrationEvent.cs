@@ -1,8 +1,7 @@
 ﻿using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
-using AW.Services.Sales.Core.Models;
 
-namespace AW.Services.Sales.Core.IntegrationEvents.Events
+namespace AW.Services.Sales.Core.IntegrationEvents.Events.UserCheckoutAccepted
 {
     public record UserCheckoutAcceptedIntegrationEvent : IntegrationEvent
     {

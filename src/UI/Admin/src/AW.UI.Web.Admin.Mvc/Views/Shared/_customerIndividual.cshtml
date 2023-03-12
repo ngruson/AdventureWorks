@@ -415,7 +415,7 @@
                                     <td>@salesOrder.DueDate.ToShortDateString()</td>
                                     <td>@salesOrder.Status</td>
                                     <td>@Html.CheckBoxFor(m => @salesOrder.OnlineOrderFlag, new { disabled = "disabled"})</td>
-                                    <td>@salesOrder.TotalDue.ToString("C")</td>
+                                    <td>@string.Format(new CultureInfo("en-US"), "{0:C}", @salesOrder.TotalDue)</td>
                                 </tr>
                             }
                         </tbody>

@@ -14,7 +14,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
     public class UpdateSalesOrderCommandUnitTests
     {
         [Theory]
-        [AutoMoqData]
+        [SalesOrderAutoMoqData]
         public async Task Handle_ExistingSalesOrder_ReturnUpdatedSalesOrder(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             [Frozen] Mock<IRepository<Core.Entities.SpecialOfferProduct>> specialOfferProductRepoMock,
@@ -59,7 +59,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         }
 
         [Theory]
-        [AutoMoqData]
+        [SalesOrderAutoMoqData]
         public async Task Handle_SalesOrderDoesNotExist_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Core.Entities.SalesOrder>> salesOrderRepoMock,
             UpdateSalesOrderCommandHandler sut,

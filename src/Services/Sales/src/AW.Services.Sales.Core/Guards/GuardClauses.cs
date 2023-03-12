@@ -28,7 +28,7 @@ namespace AW.Services.Sales.Core.Guards
             }
         }
 
-        public static void SalesOrderNull(this IGuardClause guardClause, SalesOrderDto? input, string salesOrderNumber, ILogger logger)
+        public static void SalesOrderNull(this IGuardClause guardClause, SalesOrder? input, string salesOrderNumber, ILogger logger)
         {
             if (input == null)
             {

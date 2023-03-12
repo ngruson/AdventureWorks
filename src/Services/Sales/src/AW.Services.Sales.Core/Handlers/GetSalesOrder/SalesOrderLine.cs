@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.Services.Sales.Core.Entities;
 
 namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 {
-    public class SalesOrderLineDto : IMapFrom<SalesOrderLine>
+    public class SalesOrderLine : IMapFrom<Entities.SalesOrderLine>
     {
         public string? CarrierTrackingNumber { get; set; }
 
@@ -28,7 +27,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SalesOrderLine, SalesOrderLineDto>()
+            profile.CreateMap<Entities.SalesOrderLine, SalesOrderLine>()
                 .ForMember(m => m.UnitPrice, opt => opt.MapFrom(src => Math.Round(src.UnitPrice, 2)))
                 .ForMember(m => m.UnitPriceDiscount, opt => opt.MapFrom(src => Math.Round(src.UnitPriceDiscount, 2)))
                 .ForMember(m => m.SpecialOfferDescription, opt => opt.MapFrom(src => src.SpecialOffer!.Description));

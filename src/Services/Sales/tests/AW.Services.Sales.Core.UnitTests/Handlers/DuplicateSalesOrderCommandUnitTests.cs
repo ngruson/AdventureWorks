@@ -1,12 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
-using AW.Services.Sales.Core.IntegrationEvents;
-using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using Moq;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
 using Xunit;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Handlers.DuplicateSalesOrder;
@@ -24,11 +19,11 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             [Frozen] Mock<IMediator> mockMediator,
             DuplicateSalesOrderCommandHandler sut,
             DuplicateSalesOrderCommand command,
-            SalesOrderDto salesOrder
+            SalesOrder salesOrder
         )
         {
             //Arrange
-            salesOrder.Customer = new StoreCustomerDto();
+            salesOrder.Customer = new StoreCustomer();
             salesOrder.CreditCard!.ExpYear = Convert.ToInt16(DateTime.Now.Year);
             salesOrder.CreditCard.ExpMonth = Convert.ToByte(DateTime.Now.Month);
 
@@ -73,7 +68,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<GetSalesOrderQuery>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync((SalesOrderDto?)null);
+            .ReturnsAsync((SalesOrder?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
@@ -94,11 +89,11 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             [Frozen] Mock<IMediator> mockMediator,
             DuplicateSalesOrderCommandHandler sut,
             DuplicateSalesOrderCommand command,
-            SalesOrderDto salesOrder
+            SalesOrder salesOrder
         )
         {
             //Arrange
-            salesOrder.Customer = new StoreCustomerDto();
+            salesOrder.Customer = new StoreCustomer();
             salesOrder.CreditCard!.ExpYear = Convert.ToInt16(DateTime.Now.Year);
             salesOrder.CreditCard.ExpMonth = Convert.ToByte(DateTime.Now.Month);
 

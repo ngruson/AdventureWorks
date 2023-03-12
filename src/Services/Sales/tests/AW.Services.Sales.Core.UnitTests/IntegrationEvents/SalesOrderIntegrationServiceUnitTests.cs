@@ -3,7 +3,7 @@ using AW.Services.Infrastructure.EventBus.Abstractions;
 using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Infrastructure.EventBus.IntegrationEventLog;
 using AW.Services.Sales.Core.IntegrationEvents;
-using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Core.IntegrationEvents.Events.UserCheckoutAccepted;
 using AW.SharedKernel.UnitTesting;
 using Moq;
 using System;
@@ -16,7 +16,7 @@ namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
 {
     public class SalesOrderIntegrationServiceUnitTests
     {
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task AddAndSaveEventAsync_SaveEventAsyncIsCalled(
             [Frozen] Mock<IIntegrationEventLogService> mockEventLogService,
             SalesOrderIntegrationEventService sut,
@@ -35,7 +35,7 @@ namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
             ));
         }
 
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task PublishEventsThroughEventBusAsync_PendingEvents_EventsArePublished(
             [Frozen] Mock<IIntegrationEventLogService> mockEventLogService,
             [Frozen] Mock<IEventBus> mockEventBus,
@@ -72,7 +72,7 @@ namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
             );
         }
 
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task PublishEventsThroughEventBusAsync_EventFails_EventIsMarkedAsFailed(
             [Frozen] Mock<IIntegrationEventLogService> mockEventLogService,
             [Frozen] Mock<IEventBus> mockEventBus,
@@ -112,7 +112,7 @@ namespace AW.Services.Sales.Core.UnitTests.IntegrationEvents
             );
         }
 
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task PublishEventsThroughEventBusAsync_FirstEventFails_OtherEventsShouldBePublished(
             [Frozen] Mock<IIntegrationEventLogService> mockEventLogService,
             [Frozen] Mock<IEventBus> mockEventBus,

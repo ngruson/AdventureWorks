@@ -31,6 +31,7 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.Services.Sales.Core.IntegrationEvents.Events;
 using AW.Services.Sales.Core.Handlers.GetSalesOrders;
 using AW.Services.Sales.Core.Handlers.ApproveSalesOrder;
+using AutoMapper.EquivalencyExpression;
 
 namespace AW.Services.Sales.Order.REST.API
 {
@@ -44,9 +45,13 @@ namespace AW.Services.Sales.Order.REST.API
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
             });
 
-            services.AddTransient<CustomerConverter<Core.Models.Customer,
-                Core.Models.StoreCustomer,
-                Core.Models.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Handlers.GetSalesOrder.Customer,
+                Core.Handlers.GetSalesOrder.StoreCustomer,
+                Core.Handlers.GetSalesOrder.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Handlers.UpdateSalesOrder.Customer,
+                Core.Handlers.UpdateSalesOrder.StoreCustomer,
+                Core.Handlers.UpdateSalesOrder.IndividualCustomer>>();
+
             services.AddOptions<ConfigureJsonOptions>();
             services.AddSingleton<IConfigureOptions<JsonOptions>, ConfigureJsonOptions>();
 
@@ -139,7 +144,7 @@ namespace AW.Services.Sales.Order.REST.API
             services.AddScoped<IDbContext>(sp => sp.GetRequiredService<AWContext>());
             services.AddIntegrationEventHandlers();
 
-            services.AddAutoMapper(typeof(GetSalesOrdersQuery).Assembly);
+            services.AddAutoMapper(c => c.AddCollectionMappers(), typeof(GetSalesOrdersQuery).Assembly);
             services.AddScoped(
                 typeof(IRequestHandler<IdentifiedCommand<CreateSalesOrderCommand, bool>, bool>),
                 typeof(IdentifiedCommandHandler<CreateSalesOrderCommand, bool>)

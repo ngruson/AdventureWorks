@@ -12,7 +12,6 @@ using AW.Services.Sales.Core.Handlers.Identified;
 using AW.Services.Sales.Core.Handlers.RejectSalesOrder;
 using AW.Services.Sales.Core.Handlers.ShipSalesOrder;
 using AW.Services.Sales.Core.Handlers.UpdateSalesOrder;
-using AW.Services.Sales.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -87,13 +86,12 @@ namespace AW.Services.Sales.Order.REST.API.Controllers
         }
 
         [HttpPut("{salesOrderNumber}")]
-        public async Task<IActionResult> UpdateSalesOrder(string salesOrderNumber, SalesOrder salesOrder)
+        public async Task<IActionResult> UpdateSalesOrder(string salesOrderNumber, Core.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
         {
-            logger.LogInformation("UpdateSalesOrder called");
+            logger.LogInformation("UpdateSalesOrder called with {SalesOrderNumber}", salesOrderNumber);
 
             logger.LogInformation("Sending the UpdateSalesOrder command");
-            var command = mapper.Map<UpdateSalesOrderCommand>(salesOrder);
-            var updatedSalesOrder = await mediator.Send(command);
+            var updatedSalesOrder = await mediator.Send(new UpdateSalesOrderCommand(salesOrder));
 
             logger.LogInformation("Returning sales order");
             return Ok(updatedSalesOrder);

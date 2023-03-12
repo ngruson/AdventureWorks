@@ -1,0 +1,237 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+@{
+    ViewData["Title"] = $"Product detail - {Model.Product!.Name}";
+    @model ProductDetailViewModel;
+
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">@Html.ActionLink("Products", "Index", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item active" aria-current="page">Product details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.Product.Name</h1>
+            <div class="mt-2">
+                <a class="text-body me-3" href="javascript:;">
+                    <i class="bi-clipboard me-1"></i> Duplicate
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header">
+                <h4 class="card-header-title">Product information</h4>
+            </div>
+            <!-- End Header-->
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Name, new { @class = "col-sm-3 col-form-label form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.Name" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.ProductNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.ProductNumber" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.Product!.MakeFlag, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9 input-group input-group-sm-vertical">
+                        <!-- Radio Check -->
+                        <label class="form-control">
+                            <span class="form-check">
+                                <input type="radio" class="form-check-input" @(!Model.Product.MakeFlag ? "checked" : "")>
+                                <span class="form-check-label">Product is purchased</span>
+                            </span>
+                        </label>
+                        <!-- End Radio Check -->
+                        <!-- Radio Check -->
+                        <label class="form-control">
+                            <span class="form-check">
+                                <input type="radio" class="form-check-input" @(Model.Product.MakeFlag ? "checked" : "")>
+                                <span class="form-check-label">Product is manufactured in-house</span>
+                            </span>
+                        </label>
+                        <!-- End Radio Check -->
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @Html.LabelFor(m => m.Product!.FinishedGoodsFlag, new { @class = "col-sm-3 col-form-label form-label" })
+                    <div class="col-sm-9 input-group input-group-sm-vertical">
+                        <!-- Radio Check -->
+                        <label class="form-control">
+                            <span class="form-check">
+                                <input type="radio" class="form-check-input" @(!Model.Product.FinishedGoodsFlag ? "checked" : "")>
+                                <span class="form-check-label">Product is not a salable item</span>
+                            </span>
+                        </label>
+                        <!-- End Radio Check -->
+                        <!-- Radio Check -->
+                        <label class="form-control">
+                            <span class="form-check">
+                                <input type="radio" class="form-check-input" @(Model.Product.FinishedGoodsFlag ? "checked" : "")>
+                                <span class="form-check-label">Product is salable</span>
+                            </span>
+                        </label>
+                        <!-- End Radio Check -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Color, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.Color" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.DaysToManufacture, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.DaysToManufacture" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.SafetyStockLevel, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.SafetyStockLevel" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.ReorderPoint, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.ReorderPoint" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Size, new { @class = "form-label" })
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="@Model.Product.Size" readonly>
+                                <div class="input-group-append">
+                                    <input type="text" class="form-control" value="@Model.Product.SizeUnitMeasureCode" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Weight, new { @class = "form-label" })
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="@Model.Product.Weight" readonly>
+                                <div class="input-group-append">
+                                    <input type="text" class="form-control" value="@Model.Product.WeightUnitMeasureCode" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.ProductLine, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.ProductLine" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Class, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.Class" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.Style, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.Style" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.SellStartDate, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.SellStartDate.ToShortDateString()" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.SellEndDate, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.SellEndDate?.ToShortDateString()" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.DiscontinuedDate, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.DiscontinuedDate?.ToShortDateString()" readonly>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form -->
+            </div>
+            <!-- End Body -->
+        </div>
+        <!-- End Card -->
+    </div>
+    <div class="col-lg-4">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header">
+                <h4 class="card-header-title">Pricing</h4>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Form -->
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Product!.StandardCost, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@string.Format(new CultureInfo("en-US"), "{0:C}", @Model.Product.StandardCost)" readonly>
+                </div>
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Product!.ListPrice, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@string.Format(new CultureInfo("en-US"), "{0:C}", @Model.Product.ListPrice)" readonly>
+                </div>
+            </div>
+            <!-- End Body -->
+        </div>
+        <!-- Card -->
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header">
+                <h4 class="card-header-title">Organization</h4>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Product!.ProductCategoryName, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Product.ProductCategoryName" readonly>
+                </div>
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Product!.ProductSubcategoryName, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Product.ProductSubcategoryName" readonly>
+                </div>
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+</div>

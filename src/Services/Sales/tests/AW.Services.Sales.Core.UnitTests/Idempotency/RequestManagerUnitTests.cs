@@ -17,7 +17,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
     {
         public class ExistAsync
         {
-            [Theory, AutoMoqData]
+            [Theory, SalesOrderAutoMoqData]
             public async Task ExistAsync_RequestExists_ReturnTrue(
                 [Frozen] Mock<IRepository<ClientRequest>> mockRepository,
                 RequestManager sut,
@@ -39,7 +39,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                 );
             }
 
-            [Theory, AutoMoqData]
+            [Theory, SalesOrderAutoMoqData]
             public async Task ExistAsync_RequestExists_ReturnFalse(
                 [Frozen] Mock<IRepository<ClientRequest>> mockRepository,
                 RequestManager sut,
@@ -69,7 +69,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
 
         public class CreateRequestForCommandAsync
         {
-            [Theory, AutoMoqData]
+            [Theory, SalesOrderAutoMoqData]
             public async Task CreateRequestForCommandAsync_RequestDoesNotExist_AddClientRequest(
                 [Frozen] Mock<IRepository<ClientRequest>> mockRepository,
                 RequestManager sut,
@@ -99,7 +99,7 @@ namespace AW.Services.Sales.Core.UnitTests.Idempotency
                 );
             }
 
-            [Theory, AutoMoqData]
+            [Theory, SalesOrderAutoMoqData]
             public async Task CreateRequestForCommandAsync_RequestExists_ThrowDomainException(
                 [Frozen] Mock<IRepository<ClientRequest>> mockRepository,
                 RequestManager sut,

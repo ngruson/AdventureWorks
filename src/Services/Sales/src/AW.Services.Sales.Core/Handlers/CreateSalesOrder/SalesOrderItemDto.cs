@@ -2,7 +2,7 @@
 
 namespace AW.Services.Sales.Core.Handlers.CreateSalesOrder
 {
-    public class SalesOrderItemDto : IMapFrom<GetSalesOrder.SalesOrderLineDto>
+    public class SalesOrderItemDto : IMapFrom<GetSalesOrder.SalesOrderLine>
     {
         public string? ProductNumber { get; set; }
         public string? ProductName { get; set; }

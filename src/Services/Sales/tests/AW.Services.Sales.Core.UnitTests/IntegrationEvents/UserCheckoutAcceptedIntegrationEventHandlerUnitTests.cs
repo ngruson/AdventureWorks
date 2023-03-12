@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.IntegrationEvents.EventHandling;
-using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Core.IntegrationEvents.Events.UserCheckoutAccepted;
 using AW.SharedKernel.UnitTesting;
 using MediatR;
 using Moq;

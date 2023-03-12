@@ -1,5 +1,5 @@
 ﻿using AW.Services.Infrastructure.EventBus.Abstractions;
-using AW.Services.Sales.Core.IntegrationEvents.Events;
+using AW.Services.Sales.Core.IntegrationEvents.Events.UserCheckoutAccepted;
 using AW.Services.Sales.Order.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;

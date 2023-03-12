@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using MediatR;
 
@@ -21,7 +24,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger = logger;
             _mapper = mapper;
             _mediator = mediator;
-        }
+        }        
 
         public async Task<ProductIndexViewModel> GetProducts(int pageIndex, int pageSize)
         {
@@ -50,6 +53,19 @@ namespace AW.UI.Web.Admin.Mvc.Services
             };
 
             return vm;
+        }
+
+        public async Task<ProductDetailViewModel> GetProduct(string productNumber)
+        {
+            _logger.LogInformation("Getting product for {ProductNumber}", productNumber);
+            var product = await _mediator.Send(new GetProductQuery(productNumber));
+            _logger.LogInformation("Retrieved product {@Product}", product);
+            Guard.Against.Null(product, _logger);
+
+            return new ProductDetailViewModel
+            {
+                Product = _mapper.Map<ProductViewModel>(product)
+            };
         }
     }
 }

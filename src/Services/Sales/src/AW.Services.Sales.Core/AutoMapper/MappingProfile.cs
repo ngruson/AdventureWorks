@@ -15,23 +15,11 @@ namespace AW.Services.Sales.Core.AutoMapper
             CreateMap<Entities.Customer, Handlers.GetSalesOrdersForCustomer.CustomerDto>()
                 .ForMember(m => m.SalesOrderCount, opt => opt.MapFrom(src => src.SalesOrders.Count))
                 .IncludeAllDerived();
-            CreateMap<Entities.Customer, Handlers.GetSalesOrder.CustomerDto>()
+            CreateMap<Entities.Customer, Handlers.GetSalesOrder.Customer>()
                 .ForMember(m => m.SalesOrderCount, opt => opt.MapFrom(src => src.SalesOrders.Count))
                 .IncludeAllDerived();
-            CreateMap<Entities.Customer, Handlers.UpdateSalesOrder.CustomerDto>()
+            CreateMap<Entities.Customer, Handlers.UpdateSalesOrder.Customer>()
                 .IncludeAllDerived();
-
-            //CreateMap<Handlers.GetSalesOrders.CustomerDto, Models.Customer>()
-            //.IncludeAllDerived();
-            //CreateMap<Handlers.GetSalesOrdersForCustomer.CustomerDto, Models.Customer>()
-            //.IncludeAllDerived();
-            //CreateMap<Handlers.GetSalesOrder.CustomerDto, Models.Customer>()
-            //.IncludeAllDerived();
-
-            CreateMap<Models.Customer, Handlers.UpdateSalesOrder.CustomerDto>()
-                .IncludeAllDerived();
-                //.ReverseMap()
-                //.IncludeAllDerived();
         }
     }
 }

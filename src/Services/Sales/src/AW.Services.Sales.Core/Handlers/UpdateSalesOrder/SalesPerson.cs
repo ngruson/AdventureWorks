@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.ValueTypes;
 
 namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class StoreCustomerDto : CustomerDto, IMapFrom<Entities.StoreCustomer>
+    public class SalesPerson : IMapFrom<Entities.SalesPerson>
     {
-        public string? Name { get; set; }
+        public NameFactory? Name { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entities.StoreCustomer, StoreCustomerDto>()
+            profile.CreateMap<Entities.SalesPerson, SalesPerson>()
                 .ReverseMap();
         }
-    }    
+    }
 }

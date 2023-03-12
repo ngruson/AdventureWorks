@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 
-namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
+namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class CreditCardDto : IMapFrom<Entities.CreditCard>
+    public class CreditCard : IMapFrom<Entities.CreditCard>
     {
         public string? CardType { get; set; }
 
@@ -15,7 +15,8 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entities.CreditCard, CreditCardDto>();
+            profile.CreateMap<Entities.CreditCard, CreditCard>()
+                .ReverseMap();
         }
     }
 }

@@ -24,5 +24,14 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 )
             );
         }
+
+        public async Task<IActionResult> Detail(string productNumber)
+        {
+            var product = await _productService.GetProduct(
+                productNumber
+            );
+
+            return View(product);
+        }
     }
 }

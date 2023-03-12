@@ -11,6 +11,7 @@ namespace AW.Services.Sales.Core.Specifications
                 .Include("Customer.Person")
                 .Include(s => s.OrderLines)
                 .Include(s => s.SalesReasons)
+                    .ThenInclude(r => r.SalesReason)
                 .Where(c => c.SalesOrderNumber == salesOrderNumber);
         }
     }

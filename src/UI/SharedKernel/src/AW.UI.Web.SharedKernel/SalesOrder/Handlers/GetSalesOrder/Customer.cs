@@ -8,7 +8,6 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder
         public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
         public string? CustomerNumber { get; set; }
 
-        [JsonIgnore]
         public virtual string? CustomerName { get; }
 
         public int SalesOrderCount { get; set; }

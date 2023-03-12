@@ -8,6 +8,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrders
     {
         public string? Title { get; set; }
         public NameFactory? Name { get; private set; }
+        public override string? CustomerName => Name?.FullName;
         public string? Suffix { get; set; }
 
         public void Mapping(Profile profile)

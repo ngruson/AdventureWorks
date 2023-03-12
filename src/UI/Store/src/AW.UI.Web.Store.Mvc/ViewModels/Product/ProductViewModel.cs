@@ -24,6 +24,7 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Product
         public void Mapping(Profile profile)
         {
             profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.Product, ProductViewModel>()
+                .ForMember(m => m.Color, opt => opt.Ignore())
                 .ForMember(m => m.ListPrice, opt => opt.MapFrom(src => src.ListPrice.ToString("C")))
                 .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom(src => src.ThumbnailPhoto != null ?
                     $"data:image;base64,{Convert.ToBase64String(src.ThumbnailPhoto)}" : null))

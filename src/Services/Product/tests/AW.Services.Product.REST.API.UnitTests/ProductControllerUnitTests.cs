@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.REST.API.Controllers;
@@ -40,7 +40,7 @@ namespace AW.Services.Product.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult?.Value as Models.GetProductsResult;
+                var response = okObjectResult?.Value as GetProductsDto;
                 response?.TotalProducts.Should().Be(products.Count);
                 response?.Products!.Count.Should().Be(products.Count);
 
@@ -86,7 +86,7 @@ namespace AW.Services.Product.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult?.Value as Core.Models.Product;
+                var response = okObjectResult?.Value as Core.Handlers.GetProduct.Product;
                 response?.ProductNumber.Should().Be(product.ProductNumber);
             }
 

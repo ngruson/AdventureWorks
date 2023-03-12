@@ -15,7 +15,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
 {
     public class TransactionBehaviorUnitTests
     {
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task Handle_NoActiveTransaction_InvokeExecute(
             [Frozen] Mock<IDbContext> mockDbContext,
             TransactionBehavior<CreateSalesOrderCommand, bool> sut,
@@ -34,7 +34,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
             ));
         }
 
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task Handle_ActiveTransaction_InvokeNext(
             [Frozen] Mock<IDbContext> mockDbContext,
             TransactionBehavior<CreateSalesOrderCommand, bool> sut,
@@ -57,7 +57,7 @@ namespace AW.Services.Sales.Core.UnitTests.Behaviors
             ), Times.Never);
         }
 
-        [Theory, AutoMoqData]
+        [Theory, SalesOrderAutoMoqData]
         public async Task Handle_ExceptionOccurred_ThrowException(
             [Frozen] Mock<IDbContext> mockDbContext,
             TransactionBehavior<CreateSalesOrderCommand, bool> sut,

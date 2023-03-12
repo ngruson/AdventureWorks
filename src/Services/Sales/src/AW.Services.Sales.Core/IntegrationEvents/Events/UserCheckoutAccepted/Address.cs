@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using AW.Services.Sales.Core.ValueTypes;
+using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.SharedKernel.AutoMapper;
 
-namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
+namespace AW.Services.Sales.Core.IntegrationEvents.Events.UserCheckoutAccepted
 {
-    public class AddressDto : IMapFrom<Address>
+    public class Address : IMapFrom<AddressDto>
     {
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
@@ -16,7 +16,7 @@ namespace AW.Services.Sales.Core.Handlers.GetSalesOrder
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Address, AddressDto>()
-                .ForMember(_ => _.StateProvinceCode, opt => opt.MapFrom(src => src.StateProvinceCode.Trim()));
+                .ReverseMap();
         }
     }
 }

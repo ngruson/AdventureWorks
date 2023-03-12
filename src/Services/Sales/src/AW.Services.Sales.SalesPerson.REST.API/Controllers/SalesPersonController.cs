@@ -4,10 +4,6 @@ using AW.Services.Sales.Core.Handlers.GetSalesPersons;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.SalesPerson.REST.API.Controllers
 {
@@ -18,10 +14,9 @@ namespace AW.Services.Sales.SalesPerson.REST.API.Controllers
     {
         private readonly ILogger<SalesPersonController> logger;
         private readonly IMediator mediator;
-        private readonly IMapper mapper;
 
-        public SalesPersonController(ILogger<SalesPersonController> logger, IMediator mediator, IMapper mapper) =>
-            (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
+        public SalesPersonController(ILogger<SalesPersonController> logger, IMediator mediator) =>
+            (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
         public async Task<IActionResult> GetSalesPersons([FromQuery] GetSalesPersonsQuery query)
@@ -38,7 +33,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales persons");
-            return new OkObjectResult(mapper.Map<List<Core.Models.SalesPerson>>(salesPersons));
+            return new OkObjectResult(salesPersons);
         }
 
         [HttpGet("GetSalesPerson")]
@@ -56,7 +51,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API.Controllers
             }
 
             logger.LogInformation("Returning sales person");
-            return new OkObjectResult(mapper.Map<Core.Models.SalesPerson>(salesPerson));
+            return new OkObjectResult(salesPerson);
         }
     }
 }

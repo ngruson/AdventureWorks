@@ -4,7 +4,7 @@
     {
         public CustomerType CustomerType { get; }
         public string? CustomerNumber { get; set; }
-        public string? FullName { get; set; }
+        public abstract string? CustomerName { get; }
         public int SalesOrderCount { get; set; }
     }    
 }

@@ -124,8 +124,8 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task GetSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder(
-            Core.Handlers.GetSalesOrder.SalesOrderDto salesOrder,
-            Core.Handlers.GetSalesOrder.IndividualCustomerDto customer,
+            Core.Handlers.GetSalesOrder.SalesOrder salesOrder,
+            Core.Handlers.GetSalesOrder.IndividualCustomer customer,
             [Frozen] Mock<IMediator> mockMediator,
             [Greedy] SalesOrderController sut,
             GetSalesOrderQuery query
@@ -143,7 +143,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var result = okObjectResult?.Value as Core.Models.SalesOrder;
+                var result = okObjectResult?.Value as Core.Handlers.GetSalesOrder.SalesOrder;
                 result?.SalesOrderNumber.Should().Be(salesOrder.SalesOrderNumber);
             }
 
@@ -156,7 +156,7 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             {
                 //Arrange            
                 mockMediator.Setup(x => x.Send(It.IsAny<GetSalesOrderQuery>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync((Core.Handlers.GetSalesOrder.SalesOrderDto?)null);
+                    .ReturnsAsync((Core.Handlers.GetSalesOrder.SalesOrder?)null);
 
                 //Act
                 var actionResult = await sut.GetSalesOrder(query);
@@ -173,28 +173,25 @@ namespace AW.Services.Sales.Order.REST.API.UnitTests
             public async Task UpdateSalesOrder_ShouldReturnSalesOrder_GivenSalesOrder(
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] SalesOrderController sut,
-                Core.Handlers.UpdateSalesOrder.SalesOrderDto dto,
-                Core.Handlers.UpdateSalesOrder.IndividualCustomerDto customerDto,
-                Core.Models.SalesOrder salesOrder,
-                Core.Models.IndividualCustomer customer
+                Core.Handlers.UpdateSalesOrder.SalesOrder salesOrder,
+                Core.Handlers.UpdateSalesOrder.IndividualCustomer customer
             )
             {
                 //Arrange
                 salesOrder.Customer = customer;
-                dto.Customer = customerDto;
 
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<UpdateSalesOrderCommand>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync(dto);
+                .ReturnsAsync(salesOrder);
 
                 //Act
                 var actionResult = await sut.UpdateSalesOrder(salesOrder.SalesOrderNumber!, salesOrder);
 
                 //Assert
                 var okResult = actionResult as OkObjectResult;
-                okResult!.Value.Should().Be(dto);
+                okResult!.Value.Should().Be(salesOrder);
             }
         }
 

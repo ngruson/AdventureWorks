@@ -161,7 +161,7 @@
                             </div>
                         </td>
                         <td class="table-column-ps-0">
-                            <a asp-action="Detail" asp-route-accountnumber="@product.ProductNumber" class="d-flex align-items-center">
+                            <a asp-action="Detail" asp-route-productnumber="@product.ProductNumber" class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                     <img class="avatar avatar-lg" src="@($"data:image;base64,{Convert.ToBase64String(product.ThumbnailPhoto!)}")" alt="@product.Name">
                                 </div>

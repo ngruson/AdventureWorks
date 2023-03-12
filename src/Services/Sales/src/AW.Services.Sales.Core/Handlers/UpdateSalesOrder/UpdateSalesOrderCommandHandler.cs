@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
 {
-    public class UpdateSalesOrderCommandHandler : IRequestHandler<UpdateSalesOrderCommand, SalesOrderDto>
+    public class UpdateSalesOrderCommandHandler : IRequestHandler<UpdateSalesOrderCommand, SalesOrder>
     {
         private readonly ILogger<UpdateSalesOrderCommandHandler> _logger;
         private readonly IRepository<Entities.SalesOrder> _salesOrderRepository;
@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
                 (_logger, _salesOrderRepository, _salesPersonRepository, _mapper, _specialOfferProductRepository) 
                     = (logger, salesOrderRepository, salesPersonRepository, mapper, specialOfferProductRepository);
 
-        public async Task<SalesOrderDto> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task<SalesOrder> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
 
@@ -69,7 +69,7 @@ namespace AW.Services.Sales.Core.Handlers.UpdateSalesOrder
             await _salesOrderRepository.UpdateAsync(salesOrder!, cancellationToken);
 
             _logger.LogInformation("Returning sales order");
-            return _mapper.Map<SalesOrderDto>(salesOrder);
+            return _mapper.Map<SalesOrder>(salesOrder);
         }
     }
 }

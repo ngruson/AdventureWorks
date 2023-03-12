@@ -14,13 +14,11 @@ namespace AW.Services.Product.REST.API.Controllers
     {
         private readonly ILogger<ProductController> logger;
         private readonly IMediator mediator;
-        private readonly IMapper mapper;
 
         public ProductController(
             ILogger<ProductController> logger,
-            IMediator mediator,
-            IMapper mapper
-        ) => (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
+            IMediator mediator
+        ) => (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery] GetProductsQuery query)
@@ -51,7 +49,7 @@ namespace AW.Services.Product.REST.API.Controllers
             }
 
             logger.LogInformation("Returning {Count} products", result.Products.Count);
-            return Ok(mapper.Map<Models.GetProductsResult>(result));
+            return Ok(result);
         }
 
         [HttpGet("{productNumber}")]
@@ -71,7 +69,7 @@ namespace AW.Services.Product.REST.API.Controllers
             }
 
             logger.LogInformation("Returning product");
-            return new OkObjectResult(mapper.Map<Core.Models.Product>(product));
+            return new OkObjectResult(product);
         }
     }
 }
