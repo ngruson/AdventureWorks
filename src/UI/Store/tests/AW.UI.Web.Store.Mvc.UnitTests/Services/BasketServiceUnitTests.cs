@@ -58,6 +58,14 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
             )
             {
                 //Arrange
+
+                var i = 0;
+                product.ProductProductPhotos?.ForEach(photo =>
+                    {
+                        photo.Primary = i == 0;
+                        i++;
+                    });
+                
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
                         It.IsAny<CancellationToken>()

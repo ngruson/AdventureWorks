@@ -14,6 +14,9 @@ namespace AW.Services.Product.Core.Specifications
             Query
                 .Include(p => p.ProductSubcategory)
                 .ThenInclude(ps => ps!.ProductCategory);
+
+            Query
+                .Include(_ => _.ProductModel);
         }
     }
 }

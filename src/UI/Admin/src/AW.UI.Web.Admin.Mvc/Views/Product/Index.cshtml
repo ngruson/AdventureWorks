@@ -163,7 +163,7 @@
                         <td class="table-column-ps-0">
                             <a asp-action="Detail" asp-route-productnumber="@product.ProductNumber" class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <img class="avatar avatar-lg" src="@($"data:image;base64,{Convert.ToBase64String(product.ThumbnailPhoto!)}")" alt="@product.Name">
+                                    <img class="avatar avatar-lg" src="@($"data:image;base64,{Convert.ToBase64String(product.GetPrimaryPhoto()?.ThumbNailPhoto!)}")" alt="@product.Name">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <h5 class="text-inherit mb-0">@product.Name</h5>

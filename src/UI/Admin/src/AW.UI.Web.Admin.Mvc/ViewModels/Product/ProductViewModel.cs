@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 
@@ -54,12 +53,22 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
         [Display(Name = "Discontinued date")]
         public DateTime? DiscontinuedDate { get; set; }
 
+        [Display(Name = "Product model")]
+        public string? ProductModelName { get; set; }
+
         [Display(Name = "Subcategory")] 
         public string? ProductSubcategoryName { get; set; }
 
         [Display(Name = "Category")]
         public string? ProductCategoryName { get; set; }
-        public byte[]? ThumbnailPhoto { get; set; }
+
+        public List<ProductProductPhotoViewModel>? ProductProductPhotos { get; set; }
+
+        public ProductPhotoViewModel? GetPrimaryPhoto()
+        {
+            var photo = ProductProductPhotos?.SingleOrDefault(_ => _.Primary);
+            return photo?.ProductPhoto;
+        }
 
         public void Mapping(Profile profile)
         {
@@ -73,7 +82,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
                 .ForMember(m => m.DaysToManufacture, opt => opt.Ignore())
                 .ForMember(m => m.SellStartDate, opt => opt.Ignore())
                 .ForMember(m => m.SellEndDate, opt => opt.Ignore())
-                .ForMember(m => m.DiscontinuedDate, opt => opt.Ignore());
+                .ForMember(m => m.DiscontinuedDate, opt => opt.Ignore())
+                .ForMember(m => m.ProductModelName, opt => opt.Ignore());
 
             profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.Product, ProductViewModel>()
                 .ForMember(m => m.SizeUnitMeasureCode, opt => opt.MapFrom(src => src.SizeUnitMeasureCode!.ToLower()))

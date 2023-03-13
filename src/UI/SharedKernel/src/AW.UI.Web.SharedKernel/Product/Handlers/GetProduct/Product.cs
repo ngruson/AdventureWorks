@@ -24,9 +24,15 @@
         public DateTime? SellEndDate { get; set; }
 
         public DateTime? DiscontinuedDate { get; set; }
+        public string? ProductModelName { get; set; }
         public string? ProductSubcategoryName { get; set; }
         public string? ProductCategoryName { get; set; }
-        public byte[]? ThumbnailPhoto { get; set; }
-        public byte[]? LargePhoto { get; set; }
+        public List<ProductProductPhoto>? ProductProductPhotos { get; set; }
+
+        public ProductPhoto? GetPrimaryPhoto()
+        {
+            var photo = ProductProductPhotos?.SingleOrDefault(_ => _.Primary);
+            return photo?.ProductPhoto;
+        }
     }
 }

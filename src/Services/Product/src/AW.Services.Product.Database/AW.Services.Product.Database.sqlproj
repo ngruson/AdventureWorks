@@ -60,6 +60,7 @@
     <Folder Include="PostDeployment" />
     <Folder Include="PostDeployment\Data" />
     <Folder Include="Tables" />
+    <Folder Include="XML Schema Collections" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PostDeployment\Data\InsertProduct.sql" />
@@ -74,8 +75,24 @@
     <Build Include="Tables\ProductProductPhoto.sql" />
     <Build Include="Tables\ProductSubcategory.sql" />
     <Build Include="Tables\UnitMeasure.sql" />
+    <Build Include="XML Schema Collections\ManuInstructionsSchemaCollection.sql" />
+    <Build Include="XML Schema Collections\ProductDescriptionSchemaCollection.sql" />
+    <None Include="PostDeployment\Data\InsertProductModel.sql" />
+    <None Include="PostDeployment\Data\InsertIllustration.sql" />
+    <None Include="PostDeployment\Data\InsertProductModelIllustration.sql" />
+    <None Include="PostDeployment\Data\InsertProductDescription.sql" />
+    <None Include="PostDeployment\Data\InsertCulture.sql" />
+    <None Include="PostDeployment\Data\InsertProductModelProductDescriptionCulture.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PostDeployment\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\ProductModel.sql" />
+    <Build Include="Tables\Illustration.sql" />
+    <Build Include="Tables\ProductModelIllustration.sql" />
+    <Build Include="Tables\ProductDescription.sql" />
+    <Build Include="Tables\Culture.sql" />
+    <Build Include="Tables\ProductModelProductDescriptionCulture.sql" />
   </ItemGroup>
 </Project>

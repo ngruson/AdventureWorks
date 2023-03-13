@@ -27,6 +27,15 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
             //Arrange
             productsResult.TotalProducts = 20;
 
+            var i = 0;
+            productsResult.Products.ForEach(product =>
+                product.ProductProductPhotos?.ForEach(photo =>
+                {                    
+                    photo.Primary = i == 0;
+                    i++;
+                })
+            );
+
             mockMediator.Setup(_ => _.Send(
                     It.IsAny<GetProductsQuery>(),
                     It.IsAny<CancellationToken>()
@@ -78,6 +87,15 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
             //Arrange
             productsResult.TotalProducts = 21;
 
+            var i = 0;
+            productsResult.Products.ForEach(product =>
+                product.ProductProductPhotos?.ForEach(photo =>
+                {
+                    photo.Primary = i == 0;
+                    i++;
+                })
+            );
+
             mockMediator.Setup(_ => _.Send(
                     It.IsAny<GetProductsQuery>(),
                     It.IsAny<CancellationToken>()
@@ -123,6 +141,14 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
             //Arrange
             productsResult.TotalProducts = 20;
 
+            var i = 0;
+            productsResult.Products.ForEach(product =>
+                product.ProductProductPhotos?.ForEach(photo =>
+                {
+                    photo.Primary = i == 0;
+                    i++;
+                })
+            );
 
             mockMediator.Setup(_ => _.Send(
                     It.IsAny<GetProductsQuery>(),
@@ -176,6 +202,15 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
             //Arrange
             productsResult.TotalProducts = 20;
 
+            var i = 0;
+            productsResult.Products.ForEach(product =>
+                product.ProductProductPhotos?.ForEach(photo =>
+                {
+                    photo.Primary = i == 0;
+                    i++;
+                })
+            );
+
             mockMediator.Setup(_ => _.Send(
                     It.IsAny<GetProductsQuery>(),
                     It.IsAny<CancellationToken>()
@@ -227,6 +262,15 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
         {
             //Arrange
             productsResult.TotalProducts = 20;
+
+            var i = 0;
+            productsResult.Products.ForEach(product =>
+                product.ProductProductPhotos?.ForEach(photo =>
+                {
+                    photo.Primary = i == 0;
+                    i++;
+                })
+            );
 
             mockMediator.Setup(_ => _.Send(
                     It.IsAny<GetProductsQuery>(),

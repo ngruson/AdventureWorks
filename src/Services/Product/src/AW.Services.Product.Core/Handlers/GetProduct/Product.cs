@@ -27,10 +27,12 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
         public DateTime? SellEndDate { get; set; }
 
         public DateTime? DiscontinuedDate { get; set; }
+        public string? ProductModelName { get; set; }
         public string? ProductSubcategoryName { get; set; }
         public string? ProductCategoryName { get; set; }
-        public byte[]? ThumbnailPhoto { get; set; }
-        public byte[]? LargePhoto { get; set; }
+        //public byte[]? ThumbnailPhoto { get; set; }
+        //public byte[]? LargePhoto { get; set; }
+        public List<ProductProductPhoto>? ProductProductPhotos { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -38,28 +40,7 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
                 .ForMember(m => m.SizeUnitMeasureCode, opt => opt.MapFrom(src => src.SizeUnitMeasureCode!.Trim()))
                 .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode!.Trim()))
                 .ForMember(m => m.ProductCategoryName, opt => opt.MapFrom(src =>
-                    src.ProductSubcategory!.ProductCategory!.Name))
-                .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom((src, dest) =>
-                {
-                    var primaryPhoto = src.ProductProductPhotos.SingleOrDefault(p => p.Primary);
-                    return primaryPhoto?.ProductPhoto!.ThumbNailPhoto;
-                }))
-                .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom((src, dest) =>
-                    {
-                        var primaryPhoto = src.ProductProductPhotos.SingleOrDefault(p => p.Primary);
-                        if (primaryPhoto != null)
-                            return primaryPhoto.ProductPhoto!.ThumbNailPhoto;
-                        return null;
-                    })
-                )
-                .ForMember(m => m.LargePhoto, opt => opt.MapFrom((src, dest) =>
-                    {
-                        var primaryPhoto = src.ProductProductPhotos.SingleOrDefault(p => p.Primary);
-                        if (primaryPhoto != null)
-                            return primaryPhoto!.ProductPhoto!.LargePhoto;
-                        return null;
-                    })
-                );
+                    src.ProductSubcategory!.ProductCategory!.Name));
         }
     }
 }

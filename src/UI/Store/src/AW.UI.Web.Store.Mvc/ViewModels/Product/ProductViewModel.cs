@@ -18,7 +18,7 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Product
         public string? Style { get; set; }
         public string? ProductSubcategoryName { get; set; }
         public string? ProductCategoryName { get; set; }
-        public string? ThumbnailPhoto { get; set; }
+        public string? ThumbNailPhoto { get; set; }
         public string? LargePhoto { get; set; }
 
         public void Mapping(Profile profile)
@@ -26,10 +26,10 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Product
             profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.Product, ProductViewModel>()
                 .ForMember(m => m.Color, opt => opt.Ignore())
                 .ForMember(m => m.ListPrice, opt => opt.MapFrom(src => src.ListPrice.ToString("C")))
-                .ForMember(m => m.ThumbnailPhoto, opt => opt.MapFrom(src => src.ThumbnailPhoto != null ?
-                    $"data:image;base64,{Convert.ToBase64String(src.ThumbnailPhoto)}" : null))
-                .ForMember(m => m.LargePhoto, opt => opt.MapFrom(src => src.LargePhoto != null ?
-                    $"data:image;base64,{Convert.ToBase64String(src.LargePhoto)}" : null));
+                .ForMember(m => m.ThumbNailPhoto, opt => opt.MapFrom(src => src.GetPrimaryPhoto()!.ThumbNailPhoto != null ?
+                    $"data:image;base64,{Convert.ToBase64String(src.GetPrimaryPhoto()!.ThumbNailPhoto!)}" : null))
+                .ForMember(m => m.LargePhoto, opt => opt.MapFrom(src => src.GetPrimaryPhoto()!.LargePhoto != null ?
+                    $"data:image;base64,{Convert.ToBase64String(src.GetPrimaryPhoto()!.LargePhoto!)}" : null));
         }
     }
 }

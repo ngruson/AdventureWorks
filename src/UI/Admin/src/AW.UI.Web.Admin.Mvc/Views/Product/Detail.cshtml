@@ -94,13 +94,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
+                        <div class="mb-4">
+                            @Html.LabelFor(m => m.Product!.ProductModelName, new { @class = "form-label" })
+                            <input type="text" class="form-control" value="@Model.Product.ProductModelName" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
                         <div class="mb-4">
                             @Html.LabelFor(m => m.Product!.Color, new { @class = "form-label" })
                             <input type="text" class="form-control" value="@Model.Product.Color" readonly>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="mb-4">
                             @Html.LabelFor(m => m.Product!.DaysToManufacture, new { @class = "form-label" })
                             <input type="text" class="form-control" value="@Model.Product.DaysToManufacture" readonly>
@@ -190,6 +196,86 @@
             <!-- End Body -->
         </div>
         <!-- End Card -->
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header card-header-content-between">
+                <h4 class="card-header-title">Media</h4>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Gallery -->
+                <div id="fancyboxGallery" class="js-fancybox row justify-content-sm-center gx-3">
+                    @foreach (var photo in Model.Product.ProductProductPhotos!)
+                    {
+                        var thumbNailUrl = $"data:image/gif;base64,{Convert.ToBase64String(photo.ProductPhoto!.ThumbNailPhoto!)}";
+                        var largePhotoUrl = $"data:image/gif;base64,{Convert.ToBase64String(photo.ProductPhoto!.LargePhoto!)}";
+
+                        <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
+                            <!-- Card -->
+                            <div class="card card-sm">
+                                <img class="card-img-top" src="@thumbNailUrl" alt="@photo.ProductPhoto.ThumbnailPhotoFileName">
+
+                                <div class="card-body">
+                                    <div class="row col-divider text-center">
+                                        <div class="col">
+                                            <a class="text-body" href="@thumbNailUrl" data-bs-toggle="tooltip" data-bs-placement="top" data-fslightbox="gallery" aria-label="View" data-bs-original-title="View">
+                                                <i class="bi-eye"></i>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+
+                                        <div class="col">
+                                            <a class="text-danger" href="javascript:;" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
+                                                <i class="bi-trash"></i>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+                                    </div>                                    
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-6 col-sm-4 col-md-3 mb-3 mb-lg-5">
+                            <!-- Card -->
+                            <div class="card card-sm">
+                                <img class="card-img-top" src="@largePhotoUrl" alt="@photo.ProductPhoto.LargePhotoFileName">
+
+                                <div class="card-body">
+                                    <div class="row col-divider text-center">
+                                        <div class="col">
+                                            <a class="text-body" href="@largePhotoUrl" data-bs-toggle="tooltip" data-bs-placement="top" data-fslightbox="gallery" aria-label="View" data-bs-original-title="View">
+                                                <i class="bi-eye"></i>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+
+                                        <div class="col">
+                                            <a class="text-danger" href="javascript:;" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
+                                                <i class="bi-trash"></i>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+                                    </div>                                    
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <!-- End Col -->
+                    }
+                </div>
+                <!-- End Gallery -->
+            </div>
+            <!-- End Body -->
+        </div>
+        <!-- End Card -->
     </div>
     <div class="col-lg-4">
         <!-- Card -->
@@ -235,3 +321,7 @@
         <!-- End Card -->
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/assets/vendor/fslightbox/index.js"></script>
+}

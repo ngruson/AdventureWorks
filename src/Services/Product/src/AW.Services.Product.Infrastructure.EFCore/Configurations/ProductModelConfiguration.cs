@@ -11,6 +11,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
             builder.ToTable("ProductModel");
             builder.HasKey(_ => _.Id);
 
+            builder.Property(_ => _.Id)
+                .HasColumnName("ProductModelID");
+
             builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);

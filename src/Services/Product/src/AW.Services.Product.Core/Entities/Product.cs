@@ -63,7 +63,7 @@ namespace AW.Services.Product.Core.Entities
 
         public DateTime? DiscontinuedDate { get; private set; }
 
-        public virtual ProductModel? ProductModel { get; private set; }
+        public ProductModel? ProductModel { get; private set; }
 
         public virtual ProductSubcategory? ProductSubcategory { get; private set; }
 

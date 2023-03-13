@@ -58,7 +58,7 @@ namespace AW.UI.Web.Store.Mvc.Services
                 basketItem = new SharedKernel.Basket.Handlers.GetBasket.BasketItem
                 {
                     UnitPrice = product!.ListPrice,
-                    ThumbnailPhoto = product.ThumbnailPhoto,
+                    ThumbnailPhoto = product.GetPrimaryPhoto()?.ThumbNailPhoto,
                     ProductNumber = product.ProductNumber,
                     ProductName = product.Name,
                     Quantity = quantity,
