@@ -38,5 +38,52 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 viewResult.Model.Should().Be(viewModel);
             }
         }
+
+        public class Detail
+        {
+            [Theory, AutoMoqData]
+            public async Task ReturnsViewModelGivenProductExists(
+                [Frozen] Mock<IProductService> productService,
+                ProductDetailViewModel viewModel,
+                [Greedy] ProductController sut,
+                string productNumber
+            )
+            {
+                //Arrange
+                productService.Setup(x => x.GetProductDetail(
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(viewModel);
+
+                //Act
+                var actionResult = await sut.Detail(productNumber);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
+                viewResult.Model.Should().Be(viewModel);
+            }
+        }
+
+        public class UpdateProduct
+        {
+            [Theory, AutoMoqData]
+            public async Task ReturnsViewModelGivenProductExists(
+                UpdateProductViewModel viewModel,
+                [Greedy] ProductController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.UpdateProduct(viewModel);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
+                viewResult.ActionName.Should().Be(nameof(ProductController.Detail));
+                viewResult.RouteValues!.Count.Should().Be(1);
+                viewResult.RouteValues.ContainsKey("productNumber");
+                viewResult.RouteValues.Values.ToList()[0].Should().Be(viewModel.Product!.ProductNumber);
+            }
+        }
     }
 }

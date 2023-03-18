@@ -30,8 +30,9 @@
         <!-- Card -->
         <div class="card mb-3 mb-lg-5">
             <!-- Header -->
-            <div class="card-header">
+            <div class="card-header card-header-content-between">
                 <h4 class="card-header-title">Product information</h4>
+                <a class="link" data-bs-toggle="modal" data-bs-target="#editProduct" href="#">Edit</a>
             </div>
             <!-- End Header-->
             <!-- Body -->
@@ -52,45 +53,21 @@
                     </div>
                 </div>
                 <div class="row mb-4">
-                    @Html.LabelFor(m => m.Product!.MakeFlag, new { @class = "col-sm-3 col-form-label form-label" })
-                    <div class="col-sm-9 input-group input-group-sm-vertical">
-                        <!-- Radio Check -->
-                        <label class="form-control">
-                            <span class="form-check">
-                                <input type="radio" class="form-check-input" @(!Model.Product.MakeFlag ? "checked" : "")>
-                                <span class="form-check-label">Product is purchased</span>
-                            </span>
-                        </label>
-                        <!-- End Radio Check -->
-                        <!-- Radio Check -->
-                        <label class="form-control">
-                            <span class="form-check">
-                                <input type="radio" class="form-check-input" @(Model.Product.MakeFlag ? "checked" : "")>
-                                <span class="form-check-label">Product is manufactured in-house</span>
-                            </span>
-                        </label>
-                        <!-- End Radio Check -->
+                    <div class="col-sm-6">
+                        <div class="row form-check form-switch">
+                            @Html.LabelFor(m => m.Product!.MakeFlag, new { @class = "col-sm-4 col-form-label form-label" })
+                            <div class="col-sm-8">
+                                @Html.CheckBoxFor(m => m.Product!.MakeFlag, new { @class = "form-check-input", disabled = "disabled" })
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-4">
-                    @Html.LabelFor(m => m.Product!.FinishedGoodsFlag, new { @class = "col-sm-3 col-form-label form-label" })
-                    <div class="col-sm-9 input-group input-group-sm-vertical">
-                        <!-- Radio Check -->
-                        <label class="form-control">
-                            <span class="form-check">
-                                <input type="radio" class="form-check-input" @(!Model.Product.FinishedGoodsFlag ? "checked" : "")>
-                                <span class="form-check-label">Product is not a salable item</span>
-                            </span>
-                        </label>
-                        <!-- End Radio Check -->
-                        <!-- Radio Check -->
-                        <label class="form-control">
-                            <span class="form-check">
-                                <input type="radio" class="form-check-input" @(Model.Product.FinishedGoodsFlag ? "checked" : "")>
-                                <span class="form-check-label">Product is salable</span>
-                            </span>
-                        </label>
-                        <!-- End Radio Check -->
+                    <div class="col-sm-6">
+                        <div class="row form-check form-switch">
+                            @Html.LabelFor(m => m.Product!.FinishedGoodsFlag, new { @class = "col-sm-4 col-form-label form-label" })
+                            <div class="col-sm-8">
+                                @Html.CheckBoxFor(m => m.Product!.FinishedGoodsFlag, new { @class = "form-check-input", disabled = "disabled"})
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -322,6 +299,9 @@
     </div>
 </div>
 
+<partial name="Modals/EditProduct" for="@Model.Product" />
+
 @section Scripts {
     <script src="~/assets/vendor/fslightbox/index.js"></script>
+    <script src="~/assets/vendor/hs-quantity-counter/hs-quantity-counter.min.js"></script>
 }

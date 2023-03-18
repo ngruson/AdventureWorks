@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+﻿using AW.Services.Product.Core.Exceptions;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
+using AW.Services.Product.Core.Handlers.UpdateProduct;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,53 +24,83 @@ namespace AW.Services.Product.REST.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery] GetProductsQuery query)
         {
-            string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
-            var args = new List<object> { query.PageIndex, query.PageSize };
-
-            if (!string.IsNullOrEmpty(query.Category))
+            try
             {
-                logMessage += ", category {Category}";
-                args.Add(query.Category);
+                string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
+                var args = new List<object> { query.PageIndex, query.PageSize };
+
+                if (!string.IsNullOrEmpty(query.Category))
+                {
+                    logMessage += ", category {Category}";
+                    args.Add(query.Category);
+                }
+                if (!string.IsNullOrEmpty(query.Subcategory))
+                {
+                    logMessage += ", subcategory {Subcategory}";
+                    args.Add(query.Subcategory);
+                }
+
+                logger.LogInformation(logMessage, args.ToArray());
+
+                logger.LogInformation("Sending the GetProducts query");
+                var result = await mediator.Send(query);
+
+                if (result == null || result.Products == null || !result.Products.Any())
+                {
+                    logger.LogInformation("No products were found");
+                    return new NotFoundResult();
+                }
+
+                logger.LogInformation("Returning {Count} products", result.Products.Count);
+                return Ok(result);
             }
-            if (!string.IsNullOrEmpty(query.Subcategory))
+            catch (ProductsNotFoundException)
             {
-                logMessage += ", subcategory {Subcategory}";
-                args.Add(query.Subcategory);
-            }
-
-            logger.LogInformation(logMessage, args.ToArray());
-
-            logger.LogInformation("Sending the GetProducts query");
-            var result = await mediator.Send(query);
-
-            if (result == null || result.Products == null || !result.Products.Any())
-            {
-                logger.LogInformation("No products were found");
+                logger.LogInformation("Products not found");
                 return new NotFoundResult();
             }
-
-            logger.LogInformation("Returning {Count} products", result.Products.Count);
-            return Ok(result);
         }
 
         [HttpGet("{productNumber}")]
         public async Task<ActionResult> GetProduct([FromRoute] GetProductQuery query)
         {
-            logger.LogInformation("GetProduct called with product number {ProductNumber}",
-                query.ProductNumber
-            );
-
-            logger.LogInformation("Sending the GetProduct query");
-            var product = await mediator.Send(query);
-
-            if (product == null)
+            try
             {
-                logger.LogInformation("Product was not found");
+                logger.LogInformation("GetProduct called with product number {ProductNumber}",
+                    query.ProductNumber
+                );
+
+                logger.LogInformation("Sending the GetProduct query");
+                var product = await mediator.Send(query);
+
+                logger.LogInformation("Returning product");
+                return new OkObjectResult(product);
+            }
+            catch (ProductNotFoundException)
+            {
+                logger.LogInformation("Product {ProductNumber} was not found", query.ProductNumber);
+                return new NotFoundResult();
+            }           
+        }
+
+        [HttpPut("{productNumber}")]
+        public async Task<IActionResult> UpdateProduct(string productNumber, Core.Handlers.UpdateProduct.Product product)
+        {
+            try
+            {
+                logger.LogInformation("UpdateProduct called with {ProductNumber}", productNumber);
+
+                logger.LogInformation("Sending the UpdateProduct command");
+                var updatedProduct = await mediator.Send(new UpdateProductCommand(product));
+
+                logger.LogInformation("Returning updated product");
+                return Ok(updatedProduct);
+            }
+            catch (ProductNotFoundException)
+            {
+                logger.LogInformation("Product {ProductNumber} was not found", productNumber);
                 return new NotFoundResult();
             }
-
-            logger.LogInformation("Returning product");
-            return new OkObjectResult(product);
         }
     }
 }

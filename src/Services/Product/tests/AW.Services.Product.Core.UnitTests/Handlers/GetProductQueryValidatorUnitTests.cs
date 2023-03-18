@@ -8,7 +8,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using Xunit;
 
-namespace AW.Services.Product.Core.UnitTests
+namespace AW.Services.Product.Core.UnitTests.Handlers
 {
     public class GetProductQueryValidatorUnitTests
     {

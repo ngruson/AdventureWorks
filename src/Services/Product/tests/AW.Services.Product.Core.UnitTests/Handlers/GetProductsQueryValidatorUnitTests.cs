@@ -4,7 +4,7 @@ using AW.SharedKernel.UnitTesting;
 using FluentValidation.TestHelper;
 using Xunit;
 
-namespace AW.Services.Product.Core.UnitTests
+namespace AW.Services.Product.Core.UnitTests.Handlers
 {
     public class GetProductsQueryValidatorUnitTests
     {
@@ -17,7 +17,7 @@ namespace AW.Services.Product.Core.UnitTests
         {
             //Arrange
             var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name)");
-            
+
             //Act
             var result = sut.TestValidate(query);
 

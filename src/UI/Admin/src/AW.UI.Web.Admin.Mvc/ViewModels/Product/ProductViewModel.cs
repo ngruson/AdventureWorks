@@ -20,10 +20,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
         public string? Color { get; set; }
 
         [Display(Name = "Safety stock level")]
-        public short SafetyStockLevel { get; set; }
+        public int SafetyStockLevel { get; set; }
 
         [Display(Name = "Reorder point")]
-        public short ReorderPoint { get; set; }
+        public int ReorderPoint { get; set; }
 
         [Display(Name = "Standard cost")]
         public decimal StandardCost { get; set; }
@@ -33,7 +33,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 
         public string? Size { get; set; }
         public string? SizeUnitMeasureCode { get; set; }
-        public string? Weight { get; set; }
+        public decimal? Weight { get; set; }
         public string? WeightUnitMeasureCode { get; set; }
 
         [Display(Name = "Days to manufacture")]
@@ -85,9 +85,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
                 .ForMember(m => m.DiscontinuedDate, opt => opt.Ignore())
                 .ForMember(m => m.ProductModelName, opt => opt.Ignore());
 
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.Product, ProductViewModel>()
-                .ForMember(m => m.SizeUnitMeasureCode, opt => opt.MapFrom(src => src.SizeUnitMeasureCode!.ToLower()))
-                .ForMember(m => m.WeightUnitMeasureCode, opt => opt.MapFrom(src => src.WeightUnitMeasureCode!.ToLower()));
+            profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.Product, ProductViewModel>();
         }
     }
 }

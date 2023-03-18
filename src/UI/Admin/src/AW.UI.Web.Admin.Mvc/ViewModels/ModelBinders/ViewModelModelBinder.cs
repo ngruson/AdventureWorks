@@ -21,7 +21,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             var json = BuildJson(bindingContext.HttpContext.Request.Form);
             var options = new JsonSerializerOptions();
             options.Converters.Add(new BooleanConverter());
+            options.Converters.Add(new NullableDateTimeConverter());
             options.Converters.Add(new DateTimeConverter());
+            options.Converters.Add(new IntegerConverter());
 
             var viewModel = JsonSerializer.Deserialize<T>(
                 json, 

@@ -57,7 +57,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.GetProductsAsync(0, 10, category, subCategory, orderBy);
+                var response = await sut.GetProducts(0, 10, category, subCategory, orderBy);
 
                 //Assert
                 response.Should().NotBeNull();
@@ -80,7 +80,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetProductsAsync(0, 10, null, null, null);
+                Func<Task> func = async () => await sut.GetProducts(0, 10, null, null, null);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -117,7 +117,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.GetProductAsync(product.ProductNumber);
+                var response = await sut.GetProduct(product.ProductNumber);
 
                 //Assert
                 response.Should().NotBeNull();
@@ -140,7 +140,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetProductAsync(productNumber);
+                Func<Task> func = async () => await sut.GetProduct(productNumber);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -181,7 +181,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                         );
 
                 //Act
-                var response = await sut.GetCategoriesAsync();
+                var response = await sut.GetCategories();
 
                 //Assert
                 response.Should().BeEquivalentTo(categories);

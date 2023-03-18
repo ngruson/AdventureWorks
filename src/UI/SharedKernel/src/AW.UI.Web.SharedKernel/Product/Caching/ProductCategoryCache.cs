@@ -33,7 +33,7 @@ namespace AW.UI.Web.SharedKernel.Product.Caching
 
         private async Task<List<ProductCategory>?> Initialize()
         {
-            var categories = await client.GetCategoriesAsync();
+            var categories = await client.GetCategories();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromHours(1)

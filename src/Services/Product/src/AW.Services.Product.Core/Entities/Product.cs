@@ -48,10 +48,22 @@ namespace AW.Services.Product.Core.Entities
         public int DaysToManufacture { get; private set; }
 
         public ProductLine? ProductLine { get; private set; }
+        public void SetProductLine(ProductLine productLine)
+        {
+            ProductLine = productLine;
+        }
 
         public Class? Class { get; private set; }
+        public void SetClass(Class @class)
+        {
+            Class = @class;
+        }
 
         public Style? Style { get; private set; }
+        public void SetStyle(Style style)
+        {
+            Style = style;
+        }
 
         public int? ProductSubcategoryId { get; private set; }
 
@@ -64,6 +76,10 @@ namespace AW.Services.Product.Core.Entities
         public DateTime? DiscontinuedDate { get; private set; }
 
         public ProductModel? ProductModel { get; private set; }
+        internal void SetProductModel(ProductModel productModel)
+        {
+            ProductModel = productModel;
+        }
 
         public virtual ProductSubcategory? ProductSubcategory { get; private set; }
 

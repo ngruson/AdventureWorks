@@ -1,4 +1,4 @@
-using AW.Services.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -6,7 +6,5 @@ namespace AW.Services.Product.Core.Entities
     {
         public string? UnitMeasureCode { get; private set; }
         public string? Name { get; private set; }
-
-        public DateTime ModifiedDate { get; private set; }
     }
 }

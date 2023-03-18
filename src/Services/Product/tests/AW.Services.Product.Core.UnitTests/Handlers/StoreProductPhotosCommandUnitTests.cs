@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.Services.Product.Core.UnitTests
+namespace AW.Services.Product.Core.UnitTests.Handlers
 {
     public class StoreProductPhotosCommandUnitTests
     {
@@ -42,7 +42,7 @@ namespace AW.Services.Product.Core.UnitTests
                     It.IsAny<byte[]>()
                 ),
                 Times.Exactly(products.Count * 3 * 2)
-                // 3 products * 3 photos * 2 (thumbnail + large photo)
+            // 3 products * 3 photos * 2 (thumbnail + large photo)
             );
         }
 

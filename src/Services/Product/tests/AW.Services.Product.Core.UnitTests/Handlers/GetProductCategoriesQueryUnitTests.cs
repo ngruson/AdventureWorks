@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.Services.Product.Core.UnitTests
+namespace AW.Services.Product.Core.UnitTests.Handlers
 {
     public class GetProductCategoriesQueryUnitTests
     {
@@ -42,7 +42,7 @@ namespace AW.Services.Product.Core.UnitTests
                 It.IsAny<CancellationToken>()
             ));
 
-            for (int i = 0; i < result.Count; i++)
+            for (var i = 0; i < result.Count; i++)
             {
                 result[i].Name.Should().Be(productCategories[i].Name);
             }

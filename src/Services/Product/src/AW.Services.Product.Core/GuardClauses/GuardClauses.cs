@@ -35,5 +35,35 @@ namespace AW.Services.Product.Core.GuardClauses
                 throw ex;
             }
         }
+
+        public static void ProductModelsNullOrEmpty(this IGuardClause guardClause, List<Entities.ProductModel> productModels, ILogger logger)
+        {
+            if (productModels == null || productModels.Count == 0)
+            {
+                var ex = new ProductModelsNotFoundException();
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void ProductModelNull(this IGuardClause guardClause, Entities.ProductModel? productModel, string name, ILogger logger)
+        {
+            if (productModel == null)
+            {
+                var ex = new ProductModelNotFoundException(name);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void UnitMeasuresNullOrEmpty(this IGuardClause guardClause, List<Entities.UnitMeasure> unitMeasures, ILogger logger)
+        {
+            if (unitMeasures == null || unitMeasures.Count == 0)
+            {
+                var ex = new UnitMeasuresNotFoundException();
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
     }
 }

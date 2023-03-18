@@ -1,6 +1,5 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 using Microsoft.Extensions.Primitives;
-using System.Linq;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders
 {

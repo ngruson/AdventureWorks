@@ -1,0 +1,268 @@
+﻿@model AW.UI.Web.Admin.Mvc.ViewModels.Product.ProductViewModel
+@{
+    var classes = ViewData["classes"] as IEnumerable<SelectListItem>;
+    var productLines = ViewData["productLines"] as IEnumerable<SelectListItem>;
+    var productModels = ViewData["productModels"] as IEnumerable<SelectListItem>;
+    var styles = ViewData["styles"] as IEnumerable<SelectListItem>;
+    var unitMeasures = ViewData["unitMeasures"] as IEnumerable<SelectListItem>;
+}
+
+<!-- Modal -->
+<div class="modal fade" id="editProduct" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">Edit Product Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateProduct", "Product"))
+                {
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Name, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProductNumber, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.ProductNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row form-check form-switch">
+                                @Html.LabelFor(m => m.MakeFlag, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(m => m.MakeFlag, new { @class = "form-check-input"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row form-check form-switch">
+                                @Html.LabelFor(m => m.FinishedGoodsFlag, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(m => m.FinishedGoodsFlag, new { @class = "form-check-input"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProductModelName, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.ProductModelName, productModels, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Color, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.Color, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.DaysToManufacture, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <!-- Quantity -->
+                                    <div class="quantity-counter">
+                                        <div class="js-quantity-counter row align-items-center">
+                                            <div class="col">
+                                                <span class="d-block small">Select quantity</span>
+                                                <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.DaysToManufacture" value="@Model.DaysToManufacture">
+                                            </div>
+                                            <!-- End Col -->
+
+                                            <div class="col-auto">
+                                                <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                                <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <!-- End Col -->
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                    <!-- End Quantity -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.SafetyStockLevel, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <!-- Quantity -->
+                                    <div class="quantity-counter">
+                                        <div class="js-quantity-counter row align-items-center">
+                                            <div class="col">
+                                                <span class="d-block small">Select quantity</span>
+                                                <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.SafetyStockLevel" value="@Model.SafetyStockLevel">
+                                            </div>
+                                            <!-- End Col -->
+
+                                            <div class="col-auto">
+                                                <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                                <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <!-- End Col -->
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                    <!-- End Quantity -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ReorderPoint, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <!-- Quantity -->
+                                    <div class="quantity-counter">
+                                        <div class="js-quantity-counter row align-items-center">
+                                            <div class="col">
+                                                <span class="d-block small">Select quantity</span>
+                                                <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.ReorderPoint" value="@Model.ReorderPoint">
+                                            </div>
+                                            <!-- End Col -->
+
+                                            <div class="col-auto">
+                                                <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                                <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <!-- End Col -->
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                    <!-- End Quantity -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Size, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        @Html.EditorFor(m => m.Size, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+                                            @Html.DropDownListFor(m => m.SizeUnitMeasureCode, unitMeasures, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Weight, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        @Html.EditorFor(m => m.Weight, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append">
+                                            @Html.DropDownListFor(m => m.WeightUnitMeasureCode, unitMeasures, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProductLine, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.ProductLine, productLines, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Class, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Class, classes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Style, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Style, styles, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.SellStartDate, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <input type="text" id="Product.SellStartDate" name="Product.SellStartDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select sell start date" value="@Model.SellStartDate.ToShortDateString()"
+                                        data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.SellEndDate, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <input type="text" id="Product.SellEndDate" name="Product.SellEndDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select sell end date" value="@Model.SellEndDate?.ToShortDateString()"
+                                        data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.DiscontinuedDate, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    <input type="text" id="Product.DiscontinuedDate" name="Product.DiscontinuedDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select discontinued date" value="@Model.DiscontinuedDate?.ToShortDateString()"
+                                        data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-sm-3">
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Product Information</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

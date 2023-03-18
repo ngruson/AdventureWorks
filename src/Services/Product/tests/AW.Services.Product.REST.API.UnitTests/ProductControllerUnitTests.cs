@@ -1,6 +1,8 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Product.Core.Exceptions;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
+using AW.Services.Product.Core.Handlers.UpdateProduct;
 using AW.Services.Product.REST.API.Controllers;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -16,7 +18,7 @@ namespace AW.Services.Product.REST.API.UnitTests
         public class GetProducts
         {
             [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
-            public async Task GetProducts_ShouldReturnProducts_WhenProductsExist(
+            public async Task ReturnProductsWhenProductsExist(
                 [Frozen] Mock<IMediator> mockMediator,
                 List<Core.Handlers.GetProduct.Product> products,
                 [Greedy] ProductController sut,
@@ -51,7 +53,7 @@ namespace AW.Services.Product.REST.API.UnitTests
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task GetProducts_ShouldReturnNotFound_WhenNoProductsFound(
+            public async Task ReturnNotFoundWhenProductsDoNotExist(
                 [Greedy] ProductController sut,
                 GetProductsQuery query
             )
@@ -68,7 +70,7 @@ namespace AW.Services.Product.REST.API.UnitTests
         public class GetProduct
         {
             [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
-            public async Task GetProduct_ShouldReturnProduct_WhenProductExist(
+            public async Task ReturnProductWhenProductExists(
                 [Frozen] Core.Handlers.GetProduct.Product product,
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] ProductController sut,
@@ -91,28 +93,75 @@ namespace AW.Services.Product.REST.API.UnitTests
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task GetProduct_ShouldReturnNotFound_WhenProductNotFound(
+            public async Task ReturnNotFoundWhenProductDoesNotExist(
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] ProductController sut,
                 GetProductQuery query
             )
             {
                 //Arrange
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                 mockMediator.Setup(x => x.Send(
-                        It.IsAny<GetProductQuery>(), 
+                        It.IsAny<GetProductQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .ReturnsAsync((Core.Handlers.GetProduct.Product?)null);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                .ThrowsAsync(new ProductNotFoundException(query.ProductNumber!));
 
                 //Act
                 var actionResult = await sut.GetProduct(query);
 
                 //Assert
-                var okObjectResult = actionResult as NotFoundResult;
+                actionResult.Should().BeOfType<NotFoundResult>();
+            }
+        }
+
+        public class UpdateProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnProductWhenProductExists(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                Core.Handlers.UpdateProduct.Product product
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<UpdateProductCommand>(), 
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(product);
+
+                //Act
+                var actionResult = await sut.UpdateProduct(product.ProductNumber!, product);
+
+                //Assert
+                var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
+
+                var response = okObjectResult?.Value as Core.Handlers.UpdateProduct.Product;
+                response?.ProductNumber.Should().Be(product.ProductNumber);
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ReturnNotFoundWhenProductDoesNotExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                Core.Handlers.UpdateProduct.Product product
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<UpdateProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new ProductNotFoundException(product.ProductNumber!));
+
+                //Act
+                var actionResult = await sut.UpdateProduct(product.ProductNumber!, product);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
             }
         }
     }

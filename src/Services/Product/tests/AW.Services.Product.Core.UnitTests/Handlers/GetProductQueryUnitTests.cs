@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.Services.Product.Core.UnitTests
+namespace AW.Services.Product.Core.UnitTests.Handlers
 {
     public class GetProductQueryUnitTests
     {
@@ -58,7 +58,7 @@ namespace AW.Services.Product.Core.UnitTests
             .ReturnsAsync((Entities.Product?)null);
 
             //Act
-            Func<Task> func = async() => await sut.Handle(query, CancellationToken.None);
+            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             func.Should().ThrowAsync<ArgumentNullException>();

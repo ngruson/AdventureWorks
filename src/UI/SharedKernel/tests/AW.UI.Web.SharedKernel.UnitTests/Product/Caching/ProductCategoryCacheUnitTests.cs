@@ -25,7 +25,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Caching
             )
             {
                 //Arrange
-                mockClient.Setup(_ => _.GetCategoriesAsync())
+                mockClient.Setup(_ => _.GetCategories())
                     .ReturnsAsync(categories);
 
                 //Act
@@ -78,7 +78,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Caching
             )
             {
                 //Arrange
-                mockClient.Setup(_ => _.GetCategoriesAsync())
+                mockClient.Setup(_ => _.GetCategories())
                     .ReturnsAsync(categories);
 
                 //Act

@@ -20,7 +20,7 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProduct
         public async Task<Product?> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting product {ProductNumber} from API", request.ProductNumber);
-            var product = await _client.GetProductAsync(
+            var product = await _client.GetProduct(
                 request.ProductNumber
             );
             Guard.Against.Null(product, _logger);

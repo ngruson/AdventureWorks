@@ -20,7 +20,7 @@ namespace AW.SharedKernel.JsonConverters
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
-        {
+        {            
             writer.WriteStringValue(value);
         }
     }

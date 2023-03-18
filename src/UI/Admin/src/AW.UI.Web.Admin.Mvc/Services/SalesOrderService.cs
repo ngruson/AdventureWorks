@@ -23,12 +23,12 @@ namespace AW.UI.Web.Admin.Mvc.Services
         private readonly IMediator _mediator;
 
         public SalesOrderService(
-            ILoggerFactory loggerFactory,
+            ILogger<SalesOrderService> logger,
             IMapper mapper,
             IMediator mediator
         )
         {
-            _logger = loggerFactory.CreateLogger<SalesOrderService>();
+            _logger = logger;
             _mapper = mapper;
             _mediator = mediator;
         }
