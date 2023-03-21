@@ -82,6 +82,10 @@ namespace AW.Services.Product.Core.Entities
         }
 
         public virtual ProductSubcategory? ProductSubcategory { get; private set; }
+        internal void SetSubcategory(ProductSubcategory subcategory)
+        {
+            ProductSubcategory = subcategory;
+        }
 
         public virtual UnitMeasure? SizeUnitMeasure { get; private set; }
 

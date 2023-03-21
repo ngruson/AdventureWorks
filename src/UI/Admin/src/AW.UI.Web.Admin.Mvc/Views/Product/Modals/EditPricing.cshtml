@@ -1,0 +1,50 @@
+﻿@page
+@model AW.UI.Web.Admin.Mvc.ViewModels.Product.ProductViewModel
+@{
+}
+
+<!-- Modal -->
+<div class="modal fade" id="editPricing" tabindex="-1" role="dialog" aria-labelledby="editPricingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPricingModalLabel">Edit Pricing</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdatePricing", "Product"))
+                {
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.StandardCost, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(m => m.StandardCost, new { htmlAttributes = new { @class = "js-input-mask form-control",
+                                        data_hs_mask_options="{ \"mask\": \"$ 0,000.00\" }"} })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                            @Html.LabelFor(m => m.ListPrice, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6">
+                                @Html.EditorFor(m => m.ListPrice, new { htmlAttributes = new { @class = "js-input-mask form-control",
+                                    data_hs_mask_options="{ \"mask\": \"$ 0,000.00\" }"} })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(m => m.ProductNumber)
+
+                    <div class="d-flex justify-content-end gap-sm-3">
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Pricing</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

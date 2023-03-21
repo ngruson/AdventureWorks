@@ -20,10 +20,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
         {
             var json = BuildJson(bindingContext.HttpContext.Request.Form);
             var options = new JsonSerializerOptions();
-            options.Converters.Add(new BooleanConverter());
+            //options.Converters.Add(new BooleanConverter());
             options.Converters.Add(new NullableDateTimeConverter());
             options.Converters.Add(new DateTimeConverter());
-            options.Converters.Add(new IntegerConverter());
+            //options.Converters.Add(new IntegerConverter());
 
             var viewModel = JsonSerializer.Deserialize<T>(
                 json, 
@@ -61,7 +61,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             return JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
         }
 
-        protected virtual string GetValueForKey(string key, StringValues value)
+        protected virtual object GetValueForKey(string key, StringValues value)
         {
             return value.ToString();
         }

@@ -56,6 +56,16 @@ namespace AW.Services.Product.Core.GuardClauses
             }
         }
 
+        public static void ProductSubcategoryNull(this IGuardClause guardClause, Entities.ProductSubcategory? subcategory, string name, ILogger logger)
+        {
+            if (subcategory == null)
+            {
+                var ex = new ProductSubcategoryNotFoundException(name);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
         public static void UnitMeasuresNullOrEmpty(this IGuardClause guardClause, List<Entities.UnitMeasure> unitMeasures, ILogger logger)
         {
             if (unitMeasures == null || unitMeasures.Count == 0)

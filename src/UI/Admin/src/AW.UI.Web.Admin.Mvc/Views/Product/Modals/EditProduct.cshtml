@@ -1,10 +1,11 @@
-﻿@model AW.UI.Web.Admin.Mvc.ViewModels.Product.ProductViewModel
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@model AW.UI.Web.Admin.Mvc.ViewModels.Product.ProductViewModel
 @{
-    var classes = ViewData["classes"] as IEnumerable<SelectListItem>;
-    var productLines = ViewData["productLines"] as IEnumerable<SelectListItem>;
-    var productModels = ViewData["productModels"] as IEnumerable<SelectListItem>;
-    var styles = ViewData["styles"] as IEnumerable<SelectListItem>;
-    var unitMeasures = ViewData["unitMeasures"] as IEnumerable<SelectListItem>;
+    var classes = ViewData[ProductController.CLASSES] as IEnumerable<SelectListItem>;
+    var productLines = ViewData[ProductController.PRODUCTLINES] as IEnumerable<SelectListItem>;
+    var productModels = ViewData[ProductController.PRODUCTMODELS] as IEnumerable<SelectListItem>;
+    var styles = ViewData[ProductController.STYLES] as IEnumerable<SelectListItem>;
+    var unitMeasures = ViewData[ProductController.UNITMEASURES] as IEnumerable<SelectListItem>;
 }
 
 <!-- Modal -->

@@ -5,7 +5,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders
 {
     public class UpdateOrderInfoViewModelBinder : ViewModelModelBinder<UpdateOrderInfoViewModel>
     {
-        protected override string GetValueForKey(string key, StringValues value)
+        protected override object GetValueForKey(string key, StringValues value)
         {
             if (key == nameof(UpdateOrderInfoViewModel.SalesOrder.OnlineOrderFlag))
             {

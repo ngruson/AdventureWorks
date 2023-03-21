@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = $"Product detail - {Model.Product!.Name}";
     @model ProductDetailViewModel;
-
 }
 
 <!-- Page Header-->
@@ -258,8 +257,9 @@
         <!-- Card -->
         <div class="card mb-3 mb-lg-5">
             <!-- Header -->
-            <div class="card-header">
+            <div class="card-header card-header-content-between">
                 <h4 class="card-header-title">Pricing</h4>
+                <a class="link" data-bs-toggle="modal" data-bs-target="#editPricing" href="#">Edit</a>
             </div>
             <!-- End Header -->
             <!-- Body -->
@@ -279,8 +279,9 @@
         <!-- Card -->
         <div class="card">
             <!-- Header -->
-            <div class="card-header">
+            <div class="card-header card-header-content-between">
                 <h4 class="card-header-title">Organization</h4>
+                <a class="link" data-bs-toggle="modal" data-bs-target="#editOrganization" href="#">Edit</a>
             </div>
             <!-- End Header -->
             <!-- Body -->
@@ -300,8 +301,54 @@
 </div>
 
 <partial name="Modals/EditProduct" for="@Model.Product" />
+<partial name="Modals/EditPricing" for="@Model.Product" />
+<partial name="Modals/EditOrganization" for="@Model.Product" />
 
 @section Scripts {
     <script src="~/assets/vendor/fslightbox/index.js"></script>
     <script src="~/assets/vendor/hs-quantity-counter/hs-quantity-counter.min.js"></script>
+    <script src="~/assets/vendor/imask/dist/imask.min.js"></script>
+    <script src="~/assets/js/hs.imask.js"></script>
+
+    <script>
+        (function () {
+            // INITIALIZATION OF INPUT MASK
+            // =======================================================
+            HSCore.components.HSMask.init('.js-input-mask')
+        })();
+
+        function getSubcategories(category, dropdown, url) {
+            if (category === "") {
+                dropdown.empty();
+                dropdown.append('<option selected="true" disabled>--Select--</option>');
+                dropdown.prop('selectedIndex', 0);
+            }
+            else {
+                dropdown.empty();
+                dropdown.append('<option selected="true" disabled>--Select--</option>');
+                $.getJSON(url, function (data) {
+                    $.each(data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
+                    });
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            $('#Product_ProductCategoryName').change(function () {
+                var dropdown = $('#Product_ProductSubcategoryName');
+
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getSubcategories(this.value, dropdown, "@Url.Action("GetSubcategories", new { categoryName = "js-category" })"
+                        .replace("js-category", this.value)
+                    );
+                }
+            });
+        });
+    </script>
 }

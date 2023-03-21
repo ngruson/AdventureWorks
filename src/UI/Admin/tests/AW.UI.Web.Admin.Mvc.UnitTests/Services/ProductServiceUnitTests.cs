@@ -144,10 +144,10 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
         public class UpdateProduct
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task ReturnsProductViewModelGivenProductExists(
+            public async Task UpdateProductGivenProductExists(
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductService sut,
-                UpdateProductViewModel viewModel,
+                EditProductViewModel viewModel,
                 SharedKernel.Product.Handlers.GetProduct.Product product
             )
             {
@@ -171,6 +171,165 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<UpdateProductCommand>(),
                     It.IsAny<CancellationToken>()
                 ));
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ThrowArgumentNullExceptionGivenProductDoesNotExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                EditProductViewModel viewModel
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+
+                //Act
+                Func<Task> func = async () => await sut.UpdateProduct(viewModel);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>();
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<UpdateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ), Times.Never);
+            }
+        }
+
+        public class UpdatePricing
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdatePricingGivenProductExists(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                EditPricingViewModel viewModel,
+                SharedKernel.Product.Handlers.GetProduct.Product product
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(product);
+
+                //Act
+                await sut.UpdatePricing(viewModel);
+
+                //Assert
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<UpdateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ));
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ThrowArgumentNullExceptionGivenProductDoesNotExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                EditPricingViewModel viewModel
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+
+                //Act
+                Func<Task> func = async () => await sut.UpdatePricing(viewModel);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>();
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<UpdateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ), Times.Never);
+            }
+        }
+
+        public class UpdateProductOrganization
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task UpdateProductOrganizationGivenProductExists(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                EditProductOrganizationViewModel viewModel,
+                SharedKernel.Product.Handlers.GetProduct.Product product
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(product);
+
+                //Act
+                await sut.UpdateProductOrganization(viewModel);
+
+                //Assert
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<UpdateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ));
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ThrowArgumentNullExceptionGivenProductDoesNotExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                EditProductOrganizationViewModel viewModel
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+
+                //Act
+                Func<Task> func = async () => await sut.UpdateProductOrganization(viewModel);
+
+                //Assert
+                await func.Should().ThrowAsync<ArgumentNullException>();
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<UpdateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ), Times.Never);
             }
         }
     }

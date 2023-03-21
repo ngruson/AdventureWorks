@@ -11,6 +11,8 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct
         public string? Color { get; set; }
         public short SafetyStockLevel { get; set; }
         public short ReorderPoint { get; set; }
+        public decimal StandardCost { get; set; }
+        public decimal ListPrice { get; set; }
         public string? Size { get; set; }
         public string? SizeUnitMeasureCode { get; set; }
         public decimal Weight { get; set; }
@@ -23,5 +25,6 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct
         public DateTime? SellEndDate { get; set; }
         public DateTime? DiscontinuedDate { get; set; }
         public string? ProductModelName { get; set; }
+        public string? ProductSubcategoryName { get; set; }
     }
 }

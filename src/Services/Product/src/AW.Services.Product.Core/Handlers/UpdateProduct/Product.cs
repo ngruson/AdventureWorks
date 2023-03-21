@@ -28,6 +28,7 @@ namespace AW.Services.Product.Core.Handlers.UpdateProduct
 
         public DateTime? DiscontinuedDate { get; set; }
         public string? ProductModelName { get; set; }
+        public string? ProductSubcategoryName { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -21,9 +21,9 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct
         {
             Guard.Against.Null(request.Product, _logger);
 
-            _logger.LogInformation("Updating product {ProductNumber}", request.Product!.ProductNumber);
+            _logger.LogInformation("Updating product");
             await _client.UpdateProduct(request.Product!);
-            _logger.LogInformation("Updating product {ProductNumber}", request.Product!.ProductNumber);
+            _logger.LogInformation("Product succesfully updated");
 
             return Unit.Value;
         }

@@ -399,7 +399,6 @@
             var unitPriceDiscount = $(e).closest("tr").find("td.unitpriceDiscount").html();
             unitPriceDiscount = unitPriceDiscount.substring(0, unitPriceDiscount.indexOf("%")).trim();
             unitPriceDiscount = parseFloat(unitPriceDiscount) / 100;
-            alert(unitPriceDiscount);
 
             var newLineTotal = (qty * (unitPrice * (1 - unitPriceDiscount))).toFixed(2);
             newLineTotal = currency + ' ' + newLineTotal.replace(".", decSep);

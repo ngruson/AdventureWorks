@@ -1,0 +1,51 @@
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@model AW.UI.Web.Admin.Mvc.ViewModels.Product.ProductViewModel
+@{
+    var categories = ViewData[ProductController.CATEGORIES] as IEnumerable<SelectListItem>;
+    var subcategories = ViewData[ProductController.SUBCATEGORIES] as IEnumerable<SelectListItem>;
+}
+
+<!-- Modal -->
+<div class="modal fade" id="editOrganization" tabindex="-1" role="dialog" aria-labelledby="editOrganizationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editOrganizationModalLabel">Edit Organization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateProductOrganization", "Product"))
+                {
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProductCategoryName, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.ProductCategoryName, categories, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProductSubcategoryName, new { @class = "col-sm-6 col-form-label form-label" })
+                                <div class="col-sm-6 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.ProductSubcategoryName, subcategories, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(m => m.ProductNumber)
+
+                    <div class="d-flex justify-content-end gap-sm-3">
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Organization</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

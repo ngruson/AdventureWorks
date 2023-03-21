@@ -3,8 +3,8 @@ using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
 using MediatR;
@@ -30,7 +30,11 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task<ProductIndexViewModel> GetProducts(int pageIndex, int pageSize)
         {
-            _logger.LogInformation("GetProducts called");
+            _logger.LogInformation(
+                "Getting products with {PageIndex} and {PageSize}",
+                pageIndex,
+                pageSize
+            );
             var response = await _mediator.Send(new GetProductsQuery(
                     pageIndex,
                     pageSize,
@@ -54,14 +58,15 @@ namespace AW.UI.Web.Admin.Mvc.Services
                 )
             };
 
+            _logger.LogInformation("Returning {ViewModel}", vm);
             return vm;
         }
 
         private async Task<SharedKernel.Product.Handlers.GetProduct.Product> GetProduct(string? productNumber)
         {
-            _logger.LogInformation("Getting product for {ProductNumber}", productNumber);
+            _logger.LogInformation("Getting product");
             var product = await _mediator.Send(new GetProductQuery(productNumber));
-            _logger.LogInformation("Retrieved product {@Product}", product);
+            _logger.LogInformation("Retrieved product");
             Guard.Against.Null(product, _logger);
 
             return product!;
@@ -77,17 +82,62 @@ namespace AW.UI.Web.Admin.Mvc.Services
             };
         }
 
+        public async Task<ProductCategory> GetCategory(string categoryName)
+        {
+            var categories = await _mediator.Send(new GetProductCategoriesQuery());
+            var category = categories.Single(c => c.Name == categoryName);
+            return category;
+        }
+
         private async Task UpdateProduct(SharedKernel.Product.Handlers.UpdateProduct.Product product)
         {
-            _logger.LogInformation("Updating product {@Product}", product);
+            _logger.LogInformation("Updating product");
             await _mediator.Send(new UpdateProductCommand(product));
             _logger.LogInformation("Product updated successfully");
         }
 
-        public async Task UpdateProduct(UpdateProductViewModel viewModel)
+        public async Task UpdateProduct(EditProductViewModel viewModel)
         {
             var product = await GetProduct(viewModel!.Product!.ProductNumber);
-            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);            
+            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            _mapper.Map(viewModel.Product, productToUpdate);
+
+            await UpdateProduct(productToUpdate);
+        }
+
+        public async Task UpdatePricing(EditPricingViewModel viewModel)
+        {
+            _logger.LogInformation("Getting product details");
+            var product = await GetProduct(viewModel!.Product!.ProductNumber);
+            _logger.LogInformation("Received product details");
+
+            _logger.LogInformation(
+                "Mapping {Source} to {Target}",
+                viewModel.GetType().Name,
+                typeof(SharedKernel.Product.Handlers.UpdateProduct.Product).Name
+            );
+            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            _mapper.Map(viewModel.Product, productToUpdate);
+
+            _logger.LogInformation("Updating product");
+            await UpdateProduct(productToUpdate);
+        }
+
+        public async Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel)
+        {
+            _logger.LogInformation("Getting product details");
+            var product = await GetProduct(viewModel!.Product!.ProductNumber);
+            _logger.LogInformation("Received product details");
+
+            _logger.LogInformation(
+                "Mapping {Source} to {Target}",
+                viewModel.GetType().Name,
+                typeof(SharedKernel.Product.Handlers.UpdateProduct.Product).Name
+            );
+            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            _mapper.Map(viewModel.Product, productToUpdate);
+
+            _logger.LogInformation("Updating product");
             await UpdateProduct(productToUpdate);
         }
     }

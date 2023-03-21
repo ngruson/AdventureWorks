@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.Core.Entities
 {
-    public class ProductSubcategory
+    public class ProductSubcategory : IAggregateRoot
     {
         public int Id { get; set; }
 
