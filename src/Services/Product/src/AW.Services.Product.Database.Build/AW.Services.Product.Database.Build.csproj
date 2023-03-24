@@ -5,6 +5,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Content Include="..\AW.Services.Product.Database\**\Tables\*.sql" />
+    <Content Include="..\AW.Services.Product.Database\**\XML Schema Collections\*.sql" />
 		<None Include="..\AW.Services.Product.Database\**\Data\*.sql" />
 		<PostDeploy Include="..\AW.Services.Product.Database\**\Script.PostDeployment.sql" />
 	</ItemGroup>

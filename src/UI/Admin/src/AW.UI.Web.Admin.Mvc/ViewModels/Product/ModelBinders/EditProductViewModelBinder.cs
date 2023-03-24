@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
+﻿using AW.UI.Web.Admin.Mvc.ViewModels.Customer.ModelBinders;
 using Microsoft.Extensions.Primitives;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
@@ -17,7 +17,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
                 if (bool.TryParse(stringValue, out var flag))
                     return flag;
 
-                throw new ArgumentException($"{key} value {stringValue} could not be parsed");
+                throw new ArgumentException($"{key} value {value} could not be parsed");
             }
             else if (key == nameof(EditProductViewModel.Product.DaysToManufacture) ||
                 key == nameof(EditProductViewModel.Product.SafetyStockLevel) ||
@@ -26,7 +26,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
                 if (int.TryParse(value.ToString(), out var intValue))
                     return intValue;
 
-                throw new ArgumentException($"{key} value {value.ToString()} could not be parsed");
+                throw new ArgumentException($"{key} value {value} could not be parsed");
             }
 
             return base.GetValueForKey(key, value);

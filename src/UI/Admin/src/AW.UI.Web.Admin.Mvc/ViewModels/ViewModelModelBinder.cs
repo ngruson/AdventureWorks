@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Primitives;
 using System.Text.Json;
 
-namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
+namespace AW.UI.Web.Admin.Mvc.ViewModels
 {
     public class ViewModelModelBinder<T> : IModelBinder
     {
@@ -20,16 +20,14 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
         {
             var json = BuildJson(bindingContext.HttpContext.Request.Form);
             var options = new JsonSerializerOptions();
-            //options.Converters.Add(new BooleanConverter());
             options.Converters.Add(new NullableDateTimeConverter());
             options.Converters.Add(new DateTimeConverter());
-            //options.Converters.Add(new IntegerConverter());
 
             var viewModel = JsonSerializer.Deserialize<T>(
-                json, 
+                json,
                 options
             );
-            
+
             return viewModel;
         }
 
@@ -53,9 +51,19 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 
             foreach (var key in keys)
             {
-                Dictionary<string, object> dict = new();
-                AddItemsForPath(form, dict, key);
-                json.Add(key, dict);
+                if (key.Contains('['))
+                {
+                    var arrayName = key[..key.IndexOf('[')];
+                    var array = AddItemsForArray(form, arrayName);
+                    if (!json.ContainsKey(Name(arrayName)))
+                        json.Add(Name(arrayName), array);
+                }
+                else
+                {
+                    Dictionary<string, object> dict = new();
+                    AddItemsForPath(form, dict, key);
+                    json.Add(key, dict);
+                }
             }
 
             return JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
@@ -102,12 +110,14 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             });
         }
 
-        private static List<object> AddItemsForArray(IFormCollection form, string arrayName)
+        private List<object> AddItemsForArray(IFormCollection form, string arrayName)
         {
             var result = new List<object>();
 
+            var temp = form.Where(x => ArrayPath(x.Key) == arrayName).ToList();
+
             var arrayItems = form.Where(x => ArrayPath(x.Key) == arrayName)
-                .Select(_ => Path(_.Key))
+                .Select(_ => ArrayItem(_.Key))
                 .DistinctBy(_ => _)
                 .ToList();
 
@@ -116,6 +126,27 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
                 var items = form.Where(_ => Path(_.Key) == item).ToList();
                 var dict = new Dictionary<string, object>();
                 items.ForEach(_ => dict.Add(Name(_.Key), _.Value.ToString()));
+
+                var paths = FindPaths(form, item);
+                paths.ForEach(_ =>
+                {
+                    if (Name(_).Contains('['))
+                    {
+
+                    }
+                    else
+                    {
+                        var newDict = new Dictionary<string, object>();
+                        AddItemsForPath(form, newDict, _);
+
+                        var parts = Parts(_);
+                        var propertyKey = parts[^1]; // Get parent object name
+
+                        if (newDict.Count > 0)
+                            dict.Add(propertyKey, newDict);
+                    }
+                });
+
                 result.Add(dict);
             }
 
@@ -124,12 +155,12 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
 
         private static List<string> FindPaths(IFormCollection form, string key)
         {
-            int level = key.Split('.').Length + 1;
+            var level = key.Split('.').Length + 1;
 
             var paths = new List<string>();
             foreach (var item in form.Where(_ => Path(_.Key) != key && Path(_.Key).StartsWith(key)))
             {
-                string path = PathForLevel(item.Key, level);
+                var path = PathForLevel(item.Key, level);
                 if (!string.IsNullOrEmpty(path) && !paths.Contains(path))
                     paths.Add(path);
             }
@@ -153,19 +184,37 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
         private static string? ArrayPath(string key)
         {
             if (key.Contains('['))
-                return key[..key.IndexOf('[')];
+            {
+                var arrayPath = key[..key.IndexOf('[')];
+                return arrayPath;
+            }
 
             return string.Empty;
         }
 
+        private static string ArrayItem(string key)
+        {
+            var parts = Parts(key);
+            var arrayItem = new List<string>();
+
+            foreach (var part in parts)
+            {
+                arrayItem.Add(part);
+                if (part.Contains('['))
+                    break;
+            }
+
+            return string.Join('.', arrayItem);
+        }
+
         private static string PathForLevel(string key, int level)
         {
-            int partCount = key.Split('.').Length;
+            var partCount = key.Split('.').Length;
 
             if (partCount - 1 == level)
             {
-                int index = -1;
-                for (int i = 0; i < level; i++)
+                var index = -1;
+                for (var i = 0; i < level; i++)
                 {
                     index = key.IndexOf('.', index + 1);
                 }
@@ -181,7 +230,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders
             if (key.Contains('.'))
                 return key[(key.LastIndexOf('.') + 1)..];
 
-            return string.Empty;
+            return key;
         }
     }
 }

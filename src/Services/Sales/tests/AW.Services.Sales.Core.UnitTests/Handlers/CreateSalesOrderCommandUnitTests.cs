@@ -3,6 +3,7 @@ using AutoFixture.Xunit2;
 using AW.Services.Infrastructure.EventBus.Events;
 using AW.Services.Sales.Core.AutoMapper;
 using AW.Services.Sales.Core.Entities;
+using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.CreateSalesOrder;
 using AW.Services.Sales.Core.IntegrationEvents;
 using AW.Services.Sales.Core.Specifications;
@@ -10,10 +11,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Sales.Core.UnitTests.Handlers
@@ -21,7 +18,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
     public class CreateSalesOrderCommandUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_CreditCardExists_CreateSalesOrder(
+        public async Task ReturnsTrueGivenCreditCardExists(
             [Frozen] Mock<ISalesOrderIntegrationEventService> salesOrderIntegrationEventServiceMock,
             [Frozen] Mock<IRepository<SalesOrder>> salesOrderRepositoryMock,
             [Frozen] Mock<IRepository<CreditCard>> creditCardRepositoryMock,
@@ -68,7 +65,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_CreditCardDoesNotExist_CreateSalesOrder(
+        public async Task ReturnsTrueGivenCreditCardDoesNotExist(
             [Frozen] Mock<ISalesOrderIntegrationEventService> salesOrderIntegrationEventServiceMock,
             [Frozen] Mock<IRepository<SalesOrder>> salesOrderRepositoryMock,
             [Frozen] Mock<IRepository<CreditCard>> creditCardRepositoryMock,
@@ -107,6 +104,27 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
                 It.IsAny<SalesOrder>(),
                 It.IsAny<CancellationToken>())
             );
+        }
+
+        [Theory, AutoMapperData(typeof(MappingProfile))]
+        public async Task ThrowCustomerNotFoundExceptionGivenCustomerDoesNotExist(
+            [Frozen] Mock<IRepository<Customer>> customerRepositoryMock,
+            CreateSalesOrderCommandHandler sut,
+            CreateSalesOrderCommand command
+        )
+        {
+            //Arrange
+            customerRepositoryMock.Setup(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Customer?)null);
+
+            //Act
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            await func.Should().ThrowAsync<CustomerNotFoundException>();
         }
     }
 }

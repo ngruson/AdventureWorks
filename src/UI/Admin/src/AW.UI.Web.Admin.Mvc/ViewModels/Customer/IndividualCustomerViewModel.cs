@@ -2,7 +2,6 @@
 using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
@@ -12,16 +11,11 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public PersonViewModel? Person { get; set; }
 
-        public IEnumerable<SelectListItem>? PhoneNumberTypes { get; set; }
-
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>()
-                .ForMember(_ => _.PhoneNumberTypes, opt => opt.Ignore());
-            profile.CreateMap<IndividualCustomer, IndividualCustomerViewModel>()
-                .ForMember(_ => _.PhoneNumberTypes, opt => opt.Ignore());
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.IndividualCustomer, IndividualCustomerViewModel>()
-                .ForMember(_ => _.PhoneNumberTypes, opt => opt.Ignore());
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>();
+            profile.CreateMap<IndividualCustomer, IndividualCustomerViewModel>();
+            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.IndividualCustomer, IndividualCustomerViewModel>();
             profile.CreateMap<IndividualCustomerViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>();
         }
     }

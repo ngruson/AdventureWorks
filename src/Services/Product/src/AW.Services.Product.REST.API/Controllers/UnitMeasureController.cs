@@ -24,7 +24,7 @@ namespace AW.Services.Product.REST.API.Controllers
             logger.LogInformation("Sending the GetUnitMeasures query");
             var unitMeasures = await mediator.Send(new GetUnitMeasuresQuery());
 
-            if (unitMeasures == null)
+            if (unitMeasures == null || unitMeasures.Count == 0)
             {
                 logger.LogInformation("No unit measures were found");
                 return new NotFoundResult();

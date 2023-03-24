@@ -24,7 +24,7 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System.IdentityModel.Tokens.Jwt;
 
-static class CustomExtensionsMethods
+static class CustomExtensionMethods
 {
     public static IServiceCollection AddCustomMvc(this IServiceCollection services)
     {

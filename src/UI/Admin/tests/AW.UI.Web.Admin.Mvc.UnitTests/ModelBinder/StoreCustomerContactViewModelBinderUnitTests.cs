@@ -1,7 +1,7 @@
 ﻿using AW.SharedKernel.UnitTesting;
 using AW.SharedKernel.ValueTypes;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
+using AW.UI.Web.Admin.Mvc.ViewModels.Customer.ModelBinders;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +9,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Primitives;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
@@ -19,7 +16,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
     public class StoreCustomerContactViewModelBinderUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task Test(
+        public async Task BindModelGivenFormData(
             StoreCustomerContactViewModelBinder sut,
             string accountNumber,
             NameFactory name,

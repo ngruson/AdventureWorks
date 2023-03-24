@@ -2,7 +2,6 @@
 using AW.Services.Sales.Core.Exceptions;
 using AW.Services.Sales.Core.Handlers.GetSalesOrder;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace AW.Services.Sales.Core.Guards
 {

@@ -143,5 +143,28 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             await func.Should().ThrowAsync<ProductModelNotFoundException>()
                 .WithMessage($"Product model {command.Product!.ProductModelName} not found");
         }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task ThrowProductSubcategoryNotFoundExceptionGivenProductSubcategoryDoesNotExist(
+            [Frozen] Mock<IRepository<Entities.ProductSubcategory>> productSubcategoryRepoMock,
+            UpdateProductCommandHandler sut,
+            UpdateProductCommand command
+        )
+        {
+            // Arrange
+            productSubcategoryRepoMock.Setup(x => x.SingleOrDefaultAsync(
+                It.IsAny<GetProductSubcategorySpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.ProductSubcategory?)null);
+
+            //Act
+            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            await func.Should().ThrowAsync<ProductSubcategoryNotFoundException>()
+                .WithMessage($"Product subcategory {command.Product!.ProductSubcategoryName} not found");
+        }
     }
 }

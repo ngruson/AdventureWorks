@@ -24,13 +24,13 @@ namespace AW.Services.Product.REST.API.Controllers
             logger.LogInformation("Sending the GetProductModels query");
             var productModels = await mediator.Send(new GetProductModelsQuery());
 
-            if (productModels == null)
+            if (productModels == null || productModels?.Count == 0)
             {
                 logger.LogInformation("No product models were found");
                 return new NotFoundResult();
             }
 
-            logger.LogInformation("Returning {Count} product models", productModels.Count);
+            logger.LogInformation("Returning {Count} product models", productModels?.Count);
             return Ok(productModels);
         }
     }

@@ -10,7 +10,8 @@ using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
+using AW.UI.Web.Admin.Mvc.ViewModels.Customer.ModelBinders;
+using AW.UI.Web.Admin.Mvc.ViewModels;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {

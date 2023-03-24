@@ -2,8 +2,8 @@
 using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using AW.UI.Web.Admin.Mvc.Services;
-using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
 using Microsoft.Identity.Web;
+using AW.UI.Web.Admin.Mvc.ViewModels.Customer.ModelBinders;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
@@ -48,7 +48,7 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 return View("_customerStore", viewModel);
             else if (viewModel is IndividualCustomerViewModel v)
             {
-                v.PhoneNumberTypes = customerService.GetPhoneNumberTypes();
+                ViewData["phoneNumberTypes"] = customerService.GetPhoneNumberTypes();
                 return View("_customerIndividual", v);
             }
 

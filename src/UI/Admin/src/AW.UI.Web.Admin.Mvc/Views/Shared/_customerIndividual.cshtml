@@ -6,6 +6,7 @@
     var territories = ViewData["territories"] as IEnumerable<SelectListItem>;
     var salesPersons = ViewData["salesPersons"] as IEnumerable<SelectListItem>;
     var statesProvinces = ViewData["statesProvinces"] as IEnumerable<SelectListItem>;
+    var phoneNumberTypes = ViewData["phoneNumberTypes"] as IEnumerable<SelectListItem>;
 }
 
 <!-- Page Header-->
@@ -235,7 +236,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="tom-select-custom">
-                                            @Html.DropDownListFor(m => m.Person!.PhoneNumbers[i].PhoneNumberType, Model.PhoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                            @Html.DropDownListFor(m => m.Person!.PhoneNumbers[i].PhoneNumberType, phoneNumberTypes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +262,7 @@
                                                 "hideSearch": true,
                                                 "dropdownWidth": "8rem"
                                               }'>
-                                                @foreach (var phoneNumberType in Model.PhoneNumberTypes!)
+                                                @foreach (var phoneNumberType in phoneNumberTypes!)
                                                 {
                                                     if (phoneNumberType.Value == "Home")
                                                     {
@@ -297,7 +298,7 @@
                                                 "hideSearch": true,
                                                 "dropdownWidth": "8rem"
                                               }'>
-                                            @foreach (var phoneNumberType in Model.PhoneNumberTypes!)
+                                            @foreach (var phoneNumberType in phoneNumberTypes!)
                                             {
                                                 if (phoneNumberType.Value == "Home")
                                                 {

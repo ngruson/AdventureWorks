@@ -1,5 +1,4 @@
-﻿using AW.UI.Web.Admin.Mvc.ViewModels.ModelBinders;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders
 {
@@ -12,8 +11,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders
                 var stringValue = value.ToString();
                 if (stringValue.Contains(','))
                 {
-                    return stringValue[..stringValue.IndexOf(',')];
+                    stringValue = stringValue[..stringValue.IndexOf(',')];
                 }
+
+                return bool.Parse(stringValue);
             }
 
             return base.GetValueForKey(key, value);
