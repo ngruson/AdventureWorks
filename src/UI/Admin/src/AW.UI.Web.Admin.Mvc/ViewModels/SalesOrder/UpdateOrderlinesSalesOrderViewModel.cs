@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-
-public class UpdateOrderlinesSalesOrderViewModel
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public string? SalesOrderNumber { get; set; }
-    public List<UpdateOrderlinesSalesOrderlineViewModel>? OrderLines { get; set; }
+    public class UpdateOrderlinesSalesOrderViewModel
+    {
+        public string? SalesOrderNumber { get; set; }
+        public List<UpdateOrderlinesSalesOrderlineViewModel>? OrderLines { get; set; }
+    }
 }

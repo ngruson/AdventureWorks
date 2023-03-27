@@ -1,5 +1,8 @@
-public class UpdateOrderlinesSalesOrderlineViewModel
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public string? ProductNumber { get; set; }
-    public string? OrderQty { get; set; }
+    public class UpdateOrderlinesSalesOrderlineViewModel
+    {
+        public string? ProductNumber { get; set; }
+        public string? OrderQty { get; set; }
+    }
 }

@@ -949,13 +949,36 @@
                         <div id="navbarVerticalMenuPagesMenu">
                             <!-- Collapse -->
                             <div class="nav-item">
-                                <a class="nav-link dropdown-toggle active" href="#navbarVerticalMenuPagesEcommerceMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceMenu" aria-expanded="true" aria-controls="navbarVerticalMenuPagesEcommerceMenu">
+                                <a class="nav-link dropdown-toggle active" href="#navbarCustomerMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomerMenu" aria-expanded="true" aria-controls="navbarCustomerMenu">
+                                    <i class="bi-basket nav-icon"></i>
+                                    <span class="nav-link-title">Customer</span>
+                                </a>
+
+                                <div id="navbarCustomerMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
+                                    <div id="navbarCustomer">
+                                        <!-- Collapse -->
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/Customers" && requestPath != "" ? "collapsed" : "")" href="#navbarCustomerCustomersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomerCustomersMenu" aria-expanded="@(requestPath == "/Customers" || requestPath == "")" aria-controls="navbarCustomerCustomersMenu">
+                                                Customers
+                                            </a>
+
+                                            <div id="navbarCustomerCustomersMenu" class="nav-collapse collapse @(requestPath == "/Customers" || requestPath == "" ? "show" : "")" data-bs-parent="#navbarCustomerMenu" hs-parent-area="#navbarCustomerMenu">
+                                                <a asp-action="Index" asp-controller="Customer" class="nav-link @(requestPath == "/Customers" || requestPath == "" ? "active" : "")">Customers</a>
+                                                <a class="nav-link " href="./ecommerce-add-customers.html">Add Customers</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Collapse -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nav-item">
+                                <a class="nav-link dropdown-toggle active" href="#navbarSalesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesMenu" aria-expanded="true" aria-controls="navbarSalesMenu">
                                     <i class="bi-basket nav-icon"></i>
                                     <span class="nav-link-title">Sales</span>
                                 </a>
 
-                                <div id="navbarVerticalMenuPagesEcommerceMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
-                                    <div id="navbarVerticalMenuPagesMenuEcommerce">
+                                <div id="navbarSalesMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
+                                    <div id="navbarSales">
                                         <!-- Collapse -->
                                         <div class="nav-item">
                                             <a class="nav-link dropdown-toggle collapsed" href="#navbarVerticalMenuPagesEcommerceProductsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceProductsMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceProductsMenu">
@@ -971,28 +994,17 @@
                                         <!-- End Collapse -->
                                         <!-- Collapse -->
                                         <div class="nav-item">
-                                            <a class="nav-link dropdown-toggle @(requestPath != "/SalesOrder" ? "collapsed" : "")" href="#navbarVerticalMenuPagesEcommerceOrdersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceOrdersMenu" aria-expanded="@(requestPath == "/SalesOrder")" aria-controls="navbarVerticalMenuPagesEcommerceOrdersMenu">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/SalesOrder" ? "collapsed" : "")" href="#navbarSalesOrdersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesOrdersMenu" aria-expanded="@(requestPath == "/SalesOrder")" aria-controls="navbarSalesOrdersMenu">
                                                 Orders
                                             </a>
 
-                                            <div id="navbarVerticalMenuPagesEcommerceOrdersMenu" class="nav-collapse collapse @(requestPath == "/SalesOrder" ? "show" : "")" data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce" hs-parent-area="#navbarVerticalMenuPagesEcommerceMenu">
+                                            <div id="navbarSalesOrdersMenu" class="nav-collapse collapse @(requestPath == "/SalesOrder" ? "show" : "")" data-bs-parent="#navbarSalesMenu" hs-parent-area="#navbarSalesMenu">
                                                 <a asp-action="Index" asp-controller="SalesOrder" class="nav-link @(requestPath == "/SalesOrder" ? "active" : "")">Orders</a>
                                                 <a class="nav-link " href="./ecommerce-order-details.html">Order Details</a>
                                             </div>
                                         </div>
                                         <!-- End Collapse -->
-                                        <!-- Collapse -->
-                                        <div class="nav-item">
-                                            <a class="nav-link dropdown-toggle @(requestPath != "/Customers" && requestPath != "" ? "collapsed" : "")" href="#navbarVerticalMenuPagesEcommerceCustomersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceCustomersMenu" aria-expanded="@(requestPath == "/Customers" || requestPath == "")" aria-controls="navbarVerticalMenuPagesEcommerceCustomersMenu">
-                                                Customers
-                                            </a>
-
-                                            <div id="navbarVerticalMenuPagesEcommerceCustomersMenu" class="nav-collapse collapse @(requestPath == "/Customers" || requestPath == "" ? "show" : "")" data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce" hs-parent-area="#navbarVerticalMenuPagesEcommerceMenu">
-                                                <a asp-action="Index" asp-controller="Customer" class="nav-link @(requestPath == "/Customers" || requestPath == "" ? "active" : "")">Customers</a>
-                                                <a class="nav-link " href="./ecommerce-add-customers.html">Add Customers</a>
-                                            </div>
-                                        </div>
-                                        <!-- End Collapse -->
+                                        
                                     </div>
                                 </div>
                             </div>

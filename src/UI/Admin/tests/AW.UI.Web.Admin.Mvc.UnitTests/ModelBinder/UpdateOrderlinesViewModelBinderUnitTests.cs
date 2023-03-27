@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
+using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
 {
