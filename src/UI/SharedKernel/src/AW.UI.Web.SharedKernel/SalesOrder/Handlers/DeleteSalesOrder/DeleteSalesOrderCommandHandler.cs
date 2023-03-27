@@ -17,15 +17,13 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.DeleteSalesOrder
             _client = client;
         }
 
-        public async Task<Unit> Handle(DeleteSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Deleting sales order {SalesOrderNumber}", request.SalesOrderNumber);
             Guard.Against.NullOrEmpty(request.SalesOrderNumber, _logger);
 
             await _client.DeleteSalesOrderAsync(request.SalesOrderNumber!);
             _logger.LogInformation("Deleted sales order {SalesOrderNumber}", request.SalesOrderNumber);
-
-            return Unit.Value;
         }
     }
 }

@@ -17,15 +17,13 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder
             _client = client;
         }
 
-        public async Task<Unit> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
         {            
             Guard.Against.Null(request.SalesOrder, _logger);
             
             _logger.LogInformation("Updating sales order {SalesOrderNumber}", request.SalesOrder!.SalesOrderNumber);
             await _client.UpdateSalesOrderAsync(request.SalesOrder!);
             _logger.LogInformation("Updated sales order {SalesOrderNumber}", request.SalesOrder!.SalesOrderNumber);
-
-            return Unit.Value;
         }
     }
 }

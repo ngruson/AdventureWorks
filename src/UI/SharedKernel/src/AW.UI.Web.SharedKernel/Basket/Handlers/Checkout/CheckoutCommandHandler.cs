@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.Checkout
             _client = client;
         }
 
-        public async Task<Unit> Handle(CheckoutCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CheckoutCommand request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request.Basket, _logger);
 
@@ -25,8 +25,6 @@ namespace AW.UI.Web.SharedKernel.Basket.Handlers.Checkout
             await _client.CheckoutAsync(request.Basket);
 
             _logger.LogInformation("Succesfully checked out shopping basket for user ID {UserID}", request.Basket!.Buyer);
-
-            return Unit.Value;
         }
     }
 }

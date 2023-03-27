@@ -19,10 +19,9 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Basket.Handlers
             //Arrange
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
 
             mockBasketApiClient.Verify(_ => _.CheckoutAsync(
                     It.IsAny<BasketCheckout>()

@@ -44,7 +44,9 @@ namespace AW.UI.Web.Store.Mvc
             services.AddScoped<IApplication, Application>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
-            services.AddMediatR(typeof(GetSalesPersonsQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetSalesPersonsQuery).Assembly)
+            );
 
             services.AddScoped<ICache<AddressType>, AddressTypeCache>();
             services.AddScoped<ICache<ContactType>, ContactTypeCache>();

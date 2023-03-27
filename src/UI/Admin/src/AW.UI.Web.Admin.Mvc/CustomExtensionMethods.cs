@@ -15,7 +15,6 @@ using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.SharedKernel.SalesPerson.Caching;
 using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -49,7 +48,9 @@ namespace AW.UI.Web.Admin.Mvc
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Program));
-            services.AddMediatR(typeof(GetSalesPersonsQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetSalesPersonsQuery).Assembly)
+            );
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();

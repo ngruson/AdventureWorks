@@ -17,15 +17,13 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct
             _client = client;
         }
 
-        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request.Product, _logger);
 
             _logger.LogInformation("Updating product");
             await _client.UpdateProduct(request.Product!);
             _logger.LogInformation("Product succesfully updated");
-
-            return Unit.Value;
         }
     }
 }

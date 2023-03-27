@@ -17,15 +17,13 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.DuplicateSalesOrder
             _client = client;
         }
 
-        public async Task<Unit> Handle(DuplicateSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DuplicateSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Duplicating sales order {SalesOrderNumber}", request.SalesOrderNumber);
             Guard.Against.NullOrEmpty(request.SalesOrderNumber, _logger);
 
             await _client.DuplicateSalesOrderAsync(request.SalesOrderNumber!);
             _logger.LogInformation("Duplicated sales order {SalesOrderNumber}", request.SalesOrderNumber);
-
-            return Unit.Value;
         }
     }
 }

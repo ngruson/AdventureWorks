@@ -17,15 +17,13 @@ namespace AW.UI.Web.SharedKernel.SalesOrder.Handlers.ApproveSalesOrder
             _client = client;
         }
 
-        public async Task<Unit> Handle(ApproveSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(ApproveSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Approving sales order {SalesOrderNumber}", request.SalesOrderNumber);
             Guard.Against.NullOrEmpty(request.SalesOrderNumber, _logger);
 
             await _client.ApproveSalesOrderAsync(request.SalesOrderNumber!);
             _logger.LogInformation("Approved sales order {SalesOrderNumber}", request.SalesOrderNumber);
-
-            return Unit.Value;
         }
     }
 }

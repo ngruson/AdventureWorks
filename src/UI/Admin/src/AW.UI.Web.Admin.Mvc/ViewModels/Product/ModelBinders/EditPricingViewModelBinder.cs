@@ -9,7 +9,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
         {
             if (key == nameof(EditPricingViewModel.Product.StandardCost))
             {
-                var strValue = value.ToString()[1..].Trim();
+                var strValue = value.ToString();
+                if (strValue.StartsWith('$'))
+                    strValue = strValue[1..].Trim();
 
                 if (decimal.TryParse(strValue, out var standardCost))
                     return standardCost;
@@ -18,7 +20,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
             }
             else if (key == nameof(EditPricingViewModel.Product.ListPrice))
             {
-                var strValue = value.ToString()[1..].Trim();
+                var strValue = value.ToString();
+                if (strValue.StartsWith('$'))
+                    strValue = strValue[1..].Trim();
 
                 if (decimal.TryParse(strValue, out var listPrice))
                     return listPrice;

@@ -19,11 +19,9 @@ namespace AW.UI.Web.SharedKernel.UnitTests.SalesOrder.Handlers
             //Arrange
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
-
-            //Assert
-            result.Should().Be(Unit.Value);
+            await sut.Handle(command, CancellationToken.None);
             
+            //Assert
             mockSalesOrderApiClient.Verify(x => x.UpdateSalesOrderAsync(
                     It.IsAny<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>()
                 )
