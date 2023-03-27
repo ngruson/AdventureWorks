@@ -949,7 +949,7 @@
                         <div id="navbarVerticalMenuPagesMenu">
                             <!-- Collapse -->
                             <div class="nav-item">
-                                <a class="nav-link dropdown-toggle active" href="#navbarCustomerMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomerMenu" aria-expanded="true" aria-controls="navbarCustomerMenu">
+                                <a class="nav-link dropdown-toggle @(requestPath == "/Customers" || requestPath == "/" ? "active" : "")" href="#navbarCustomerMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomerMenu" aria-expanded="true" aria-controls="navbarCustomerMenu">
                                     <i class="bi-basket nav-icon"></i>
                                     <span class="nav-link-title">Customer</span>
                                 </a>
@@ -972,7 +972,7 @@
                                 </div>
                             </div>
                             <div class="nav-item">
-                                <a class="nav-link dropdown-toggle active" href="#navbarSalesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesMenu" aria-expanded="true" aria-controls="navbarSalesMenu">
+                                <a class="nav-link dropdown-toggle @(requestPath == "/SalesOrder" ? "active" : "")" href="#navbarSalesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesMenu" aria-expanded="true" aria-controls="navbarSalesMenu">
                                     <i class="bi-basket nav-icon"></i>
                                     <span class="nav-link-title">Sales</span>
                                 </a>

@@ -10,11 +10,12 @@ using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.Admin.Mvc.ViewModels.Customer.ModelBinders;
 using AW.UI.Web.Admin.Mvc.ViewModels;
+using Microsoft.Identity.Web;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {
+    [AuthorizeForScopes(ScopeKeySection = "AuthN:ApiScopes:SalesOrderApiRead")]
     public class SalesOrderController : Controller
     {
         private readonly IMediator mediator;
