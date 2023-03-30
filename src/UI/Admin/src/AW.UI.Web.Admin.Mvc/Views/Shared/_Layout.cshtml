@@ -972,6 +972,30 @@
                                 </div>
                             </div>
                             <div class="nav-item">
+                                <a class="nav-link dropdown-toggle @(requestPath == "/Product" ? "active" : "")" href="#navbarProductionMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarProductionMenu" aria-expanded="true" aria-controls="navbarProductionMenu">
+                                    <i class="bi-basket nav-icon"></i>
+                                    <span class="nav-link-title">Production</span>
+                                </a>
+
+                                <div id="navbarProductionMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
+                                    <div id="navbarProduction">
+                                        <!-- Collapse -->
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/Product" ? "collapsed" : "")" href="#navbarProductionProductsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarProductionProductsMenu" aria-expanded="@(requestPath == "/Product")" aria-controls="navbarProductionProductsMenu">
+                                                Products
+                                            </a>
+
+                                            <div id="navbarProductionProductsMenu" class="nav-collapse collapse @(requestPath == "/Product" ? "show" : "")" data-bs-parent="#navbarProductionMenu" hs-parent-area="#navbarProductionMenu">
+                                                <a asp-action="Index" asp-controller="Product" class="nav-link">Products</a>
+                                                <a class="nav-link " href="./ecommerce-product-details.html">Product Details</a>
+                                                <a class="nav-link " href="./ecommerce-add-product.html">Add Product</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Collapse -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nav-item">
                                 <a class="nav-link dropdown-toggle @(requestPath == "/SalesOrder" ? "active" : "")" href="#navbarSalesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesMenu" aria-expanded="true" aria-controls="navbarSalesMenu">
                                     <i class="bi-basket nav-icon"></i>
                                     <span class="nav-link-title">Sales</span>
@@ -979,19 +1003,6 @@
 
                                 <div id="navbarSalesMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
                                     <div id="navbarSales">
-                                        <!-- Collapse -->
-                                        <div class="nav-item">
-                                            <a class="nav-link dropdown-toggle collapsed" href="#navbarVerticalMenuPagesEcommerceProductsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceProductsMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceProductsMenu">
-                                                Products
-                                            </a>
-
-                                            <div id="navbarVerticalMenuPagesEcommerceProductsMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce" hs-parent-area="#navbarVerticalMenuPagesEcommerceMenu">
-                                                <a asp-action="Index" asp-controller="Product" class="nav-link">Products</a>
-                                                <a class="nav-link " href="./ecommerce-product-details.html">Product Details</a>
-                                                <a class="nav-link " href="./ecommerce-add-product.html">Add Product</a>
-                                            </div>
-                                        </div>
-                                        <!-- End Collapse -->
                                         <!-- Collapse -->
                                         <div class="nav-item">
                                             <a class="nav-link dropdown-toggle @(requestPath != "/SalesOrder" ? "collapsed" : "")" href="#navbarSalesOrdersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarSalesOrdersMenu" aria-expanded="@(requestPath == "/SalesOrder")" aria-controls="navbarSalesOrdersMenu">

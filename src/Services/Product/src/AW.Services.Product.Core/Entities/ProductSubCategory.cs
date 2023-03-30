@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AW.Services.SharedKernel.Interfaces;
+﻿using AW.Services.SharedKernel.Interfaces;
 
 namespace AW.Services.Product.Core.Entities
 {
@@ -7,9 +6,9 @@ namespace AW.Services.Product.Core.Entities
     {
         public int Id { get; set; }
 
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
-        public ProductCategory? ProductCategory { get; private set; }
+        public ProductCategory? ProductCategory { get; set; }
 
         public List<Product> Products { get; internal set; } = new();
     }

@@ -21,7 +21,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup
             _client = client;            
         }
 
-        public async Task<Unit> Handle(AddUserToGroupCommand request, CancellationToken cancellationToken)
+        public async Task Handle(AddUserToGroupCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Adding user {UserName} to group {GroupName}", request.UserName, request.GroupName);
 
@@ -37,8 +37,6 @@ namespace AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup
                 .PostAsync(userRef, null, cancellationToken);
 
             _logger.LogInformation("Succesfully added user {UserName} to group {GroupName}", request.UserName, request.GroupName);
-
-            return Unit.Value;
         }
 
         private async Task<User?> GetUser(AddUserToGroupCommand request, CancellationToken cancellationToken)

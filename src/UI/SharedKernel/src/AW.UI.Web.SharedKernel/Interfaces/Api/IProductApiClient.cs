@@ -13,5 +13,6 @@ namespace AW.UI.Web.SharedKernel.Interfaces.Api
         Task<Product.Handlers.UpdateProduct.Product?> UpdateProduct(Product.Handlers.UpdateProduct.Product product);
         Task<List<ProductModel>?> GetProductModels();
         Task<List<UnitMeasure>?> GetUnitMeasures();
+        Task<Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber);
     }
 }

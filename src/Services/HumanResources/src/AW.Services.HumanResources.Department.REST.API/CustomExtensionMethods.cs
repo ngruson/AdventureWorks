@@ -101,7 +101,9 @@ namespace AW.Services.HumanResources.Department.REST.API
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetDepartmentsQuery).Assembly);
-            services.AddMediatR(typeof(GetDepartmentsQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetDepartmentsQuery).Assembly)
+            );
 
             return services;
         }

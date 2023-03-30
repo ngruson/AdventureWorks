@@ -17,11 +17,9 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateGroups
             _client = client;
         }
 
-        public async Task<Unit> Handle(CreateGroupsCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateGroupsCommand request, CancellationToken cancellationToken)
         {
             await CreateGroups(cancellationToken);
-
-            return Unit.Value;
         }
 
         private async Task<GroupCollectionResponse?> CreateGroups(CancellationToken cancellationToken)

@@ -21,8 +21,16 @@ namespace AW.Services.Product.Core.Entities
         public int Id { get; set; }
         
         public string? Name { get; private set; }
-       
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
         public string? ProductNumber { get; private set; }
+        public void SetProductNumber(string productNumber)
+        {
+            ProductNumber = productNumber;
+        }
 
         public bool MakeFlag { get; private set; }
 
@@ -78,18 +86,30 @@ namespace AW.Services.Product.Core.Entities
         public ProductModel? ProductModel { get; private set; }
         internal void SetProductModel(ProductModel productModel)
         {
-            ProductModel = productModel;
+            //ProductModel = productModel;
+            ProductModelId = productModel.Id;
         }
 
         public virtual ProductSubcategory? ProductSubcategory { get; private set; }
         internal void SetSubcategory(ProductSubcategory subcategory)
         {
-            ProductSubcategory = subcategory;
+            //ProductSubcategory = subcategory;
+            ProductSubcategoryId = subcategory.Id;
         }
 
         public virtual UnitMeasure? SizeUnitMeasure { get; private set; }
+        internal void SetSizeUnitMeasure(UnitMeasure unitMeasure)
+        {
+            SizeUnitMeasure = unitMeasure;
+            SizeUnitMeasureCode = unitMeasure.UnitMeasureCode;
+        }
 
         public virtual UnitMeasure? WeightUnitMeasure { get; private set; }
+        internal void SetWeightUnitMeasure(UnitMeasure unitMeasure)
+        {
+            WeightUnitMeasure = unitMeasure;
+            WeightUnitMeasureCode = unitMeasure.UnitMeasureCode;
+        }
 
         public List<ProductProductPhoto> ProductProductPhotos { get; internal set; } = new();
 

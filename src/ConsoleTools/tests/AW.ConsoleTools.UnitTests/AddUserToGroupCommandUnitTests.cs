@@ -2,7 +2,6 @@
 using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using Moq;
@@ -48,13 +47,18 @@ namespace AW.ConsoleTools.UnitTests
                 mockGraphServiceClient.Object
             );
 
-            var result = await sut.Handle(
+            await sut.Handle(
                 command,
                 CancellationToken.None
             );
 
             //Assert
-            result.Should().Be(Unit.Value);
+            mockRequestAdapter.Verify(_ => _.SendAsync(
+                It.IsAny<RequestInformation>(),
+                It.IsAny<ParsableFactory<UserCollectionResponse>>(),
+                It.IsAny<Dictionary<string, ParsableFactory<IParsable>>>(),
+                It.IsAny<CancellationToken>()
+            ));
         }
 
         [Theory, AutoMoqData]

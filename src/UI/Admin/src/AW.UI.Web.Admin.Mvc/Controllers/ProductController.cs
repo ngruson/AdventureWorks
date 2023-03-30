@@ -146,5 +146,15 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 new { productNumber = viewModel.Product!.ProductNumber }
             );
         }
+
+        public async Task<IActionResult> DuplicateProduct(string productNumber)
+        {
+            var product = await _productService.DuplicateProduct(productNumber);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { product.ProductNumber }
+            );
+        }
     }
 }

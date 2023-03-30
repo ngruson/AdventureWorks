@@ -21,7 +21,7 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
             IConfiguration configuration) =>
                 (this.logger, this.userManager, this.configuration) = (logger, userManager, configuration);
 
-        public async Task<Unit> Handle(CreateLoginCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateLoginCommand request, CancellationToken cancellationToken)
         {
             var appUser = await userManager.FindByNameAsync(request.Username);
             if (appUser == null)
@@ -49,8 +49,6 @@ namespace AW.Services.IdentityServer.Core.Handlers.CreateLogin
             }
             else
                 logger.LogInformation("Login for user {User} already exists", request.Username);
-
-            return Unit.Value;
         }
 
         private static IEnumerable<Claim> CreateClaims(CreateLoginCommand request)

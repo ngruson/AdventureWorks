@@ -1,4 +1,7 @@
-﻿using AW.Services.Product.Core.Exceptions;
+﻿using System.Net;
+using AW.Services.Infrastructure.ActionResults;
+using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Core.Handlers.UpdateProduct;
@@ -100,6 +103,31 @@ namespace AW.Services.Product.REST.API.Controllers
             {
                 logger.LogInformation("Product {ProductNumber} was not found", productNumber);
                 return new NotFoundResult();
+            }
+        }
+
+        [Route("{productNumber}/duplicate")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DuplicateProduct([FromRoute] DuplicateProductCommand command)
+        {
+            try
+            {
+                logger.LogInformation("Sending the DuplicateProduct command");
+                var product = await mediator.Send(command);
+
+                return new OkObjectResult(product);
+            }
+            catch (ProductNotFoundException)
+            {
+                logger.LogError("Product not found");
+                return new NotFoundResult();
+            }
+            catch (DuplicateProductException ex)
+            {
+                logger.LogError("Duplicating product failed");
+                return new InternalServerErrorObjectResult(ex.Message);
             }
         }
     }

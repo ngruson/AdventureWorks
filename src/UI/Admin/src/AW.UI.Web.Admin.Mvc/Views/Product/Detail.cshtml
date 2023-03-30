@@ -16,7 +16,7 @@
             </nav>
             <h1 class="page-header-title">@Model.Product.Name</h1>
             <div class="mt-2">
-                <a class="text-body me-3" href="javascript:;">
+                <a class="text-body me-3" asp-action="DuplicateProduct" asp-route-productnumber="@Model.Product.ProductNumber">
                     <i class="bi-clipboard me-1"></i> Duplicate
                 </a>
             </div>

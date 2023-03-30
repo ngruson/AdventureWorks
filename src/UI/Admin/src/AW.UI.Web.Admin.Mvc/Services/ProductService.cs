@@ -3,6 +3,7 @@ using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+using DuplicateProduct = AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
@@ -139,6 +140,15 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             _logger.LogInformation("Updating product");
             await UpdateProduct(productToUpdate);
+        }
+
+        public async Task<DuplicateProduct.Product> DuplicateProduct(string productNumber)
+        {
+            _logger.LogInformation("Duplicating product");
+            var product = await _mediator.Send(new DuplicateProduct.DuplicateProductCommand(productNumber));
+            _logger.LogInformation("Product duplicated successfully");
+
+            return product;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DuplicateSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DuplicateSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
             var salesOrder = await _mediator.Send(
@@ -58,8 +58,6 @@ namespace AW.Services.Sales.Core.Handlers.DuplicateSalesOrder
                 _logger.LogError(ex, "Duplicating sales order {SalesOrderNumber} failed", request.SalesOrderNumber);
                 throw ex;
             }
-
-            return Unit.Value;
         }
     }
 }

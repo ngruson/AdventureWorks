@@ -40,7 +40,7 @@ namespace AW.Services.Sales.Core.UnitTests.Handlers
             .ReturnsAsync(true);
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
             mockMediator.Verify(_ => _.Send(

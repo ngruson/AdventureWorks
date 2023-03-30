@@ -75,5 +75,15 @@ namespace AW.Services.Product.Core.GuardClauses
                 throw ex;
             }
         }
+
+        public static void UnitMeasureNull(this IGuardClause guardClause, Entities.UnitMeasure? unitMeasure, string code, ILogger logger)
+        {
+            if (unitMeasure == null)
+            {
+                var ex = new UnitMeasureNotFoundException(code);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
     }
 }

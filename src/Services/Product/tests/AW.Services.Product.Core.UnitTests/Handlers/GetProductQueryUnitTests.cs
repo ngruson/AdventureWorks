@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.Product.Core.AutoMapper;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Specifications;
@@ -6,9 +6,6 @@ using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Core.UnitTests.Handlers

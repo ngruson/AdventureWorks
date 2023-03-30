@@ -93,7 +93,9 @@ namespace AW.Services.ReferenceData.REST.API
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
-            services.AddMediatR(typeof(GetAddressTypesQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetAddressTypesQuery).Assembly)  
+            );
 
             return services;
         }

@@ -90,6 +90,8 @@ namespace AW.Services.Product.REST.API
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection")!);
+                builder.EnableSensitiveDataLogging();
+                builder.LogTo(Console.WriteLine);
 
                 return new AWContext(
                     provider.GetRequiredService<ILogger<AWContext>>(),
@@ -98,9 +100,11 @@ namespace AW.Services.Product.REST.API
                     typeof(ProductConfiguration).Assembly
                 );
             });
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetProductsQuery).Assembly);
-            services.AddMediatR(typeof(GetProductsQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetProductsQuery).Assembly)
+            );
             services.AddScoped<IFileHandler, FileHandler>();
 
             return services;

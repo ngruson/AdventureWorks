@@ -56,11 +56,9 @@ namespace AW.ConsoleTools.UnitTests
                 mockLogger.Object,
                 mockGraphServiceClient.Object
             );
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
-
             mockRequestAdapter.Verify(_ => _.SendAsync(
                 It.IsAny<RequestInformation>(),
                 It.IsAny<ParsableFactory<GroupCollectionResponse>>(),
@@ -126,11 +124,9 @@ namespace AW.ConsoleTools.UnitTests
                 mockLogger.Object,
                 mockGraphServiceClient.Object
             );
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
-
             mockRequestAdapter.Verify(_ => _.SendAsync(
                 It.IsAny<RequestInformation>(),
                 It.IsAny<ParsableFactory<GroupCollectionResponse>>(),

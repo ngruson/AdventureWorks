@@ -1,5 +1,7 @@
 ﻿using AutoFixture.Xunit2;
+using AW.Services.Infrastructure.ActionResults;
 using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
 using AW.Services.Product.Core.Handlers.UpdateProduct;
@@ -162,6 +164,78 @@ namespace AW.Services.Product.REST.API.UnitTests
 
                 //Assert
                 actionResult.Should().BeOfType<NotFoundResult>();
+            }
+        }
+
+        public class DuplicateProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnOkObjectResultWhenDuplicateSucceeds(
+                [Frozen] Mock<IMediator> mediator,
+                [Greedy] ProductController sut,
+                DuplicateProductCommand command,
+                Core.Handlers.DuplicateProduct.Product product
+            )
+            {
+                //Arrange
+                mediator.Setup(_ => _.Send(
+                        It.IsAny<DuplicateProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(product);
+
+                //Act
+                var actionResult = await sut.DuplicateProduct(command);
+
+                //Assert
+                var okObjectResult = actionResult.Should().BeAssignableTo<OkObjectResult>().Subject;
+                var returnedProduct = okObjectResult.Value as Core.Handlers.DuplicateProduct.Product;
+                returnedProduct.Should().Be(product);
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnNotFoundResultWhenProductNotFoundExceptionIsThrown(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                DuplicateProductCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<DuplicateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new ProductNotFoundException(command.ProductNumber!));
+
+                //Act
+                var actionResult = await sut.DuplicateProduct(command);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnInternalServerErrorWhenDuplicateProductExceptionIsThrown(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                DuplicateProductCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(_ => _.Send(
+                    It.IsAny<DuplicateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new DuplicateProductException(command.ProductNumber!, new ArgumentException()));
+
+                //Act
+                var actionResult = await sut.DuplicateProduct(command);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
             }
         }
     }

@@ -101,7 +101,9 @@ namespace AW.Services.HumanResources.Shift.REST.API
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetAllEmployeesQuery).Assembly);
-            services.AddMediatR(typeof(GetAllEmployeesQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetAllEmployeesQuery).Assembly)
+            );
 
             return services;
         }

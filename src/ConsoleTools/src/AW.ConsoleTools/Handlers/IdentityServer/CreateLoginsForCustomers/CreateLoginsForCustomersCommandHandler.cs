@@ -20,7 +20,7 @@ namespace AW.ConsoleTools.Handlers.CreateLoginsForCustomers
             => (this.logger, this.mediator, this.mapper) = (logger, mediator, mapper);
         
 
-        public async Task<Unit> Handle(CreateLoginsForCustomersCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateLoginsForCustomersCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting all individual customers");
             var customers = await mediator.Send(
@@ -46,8 +46,6 @@ namespace AW.ConsoleTools.Handlers.CreateLoginsForCustomers
                 }
                 i++;
             }
-
-            return Unit.Value;
         }
     }
 }

@@ -5,14 +5,10 @@ using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
@@ -185,6 +181,122 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
                 //Assert
                 response.Should().BeEquivalentTo(categories);
+            }
+        }
+
+        public class UpdateProduct
+        {
+            [Theory, MockHttpData]
+            public async Task ReturnUpdatedProductGivenProduct(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                SharedKernel.Product.Handlers.UpdateProduct.Product product
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Put, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(product, new JsonSerializerOptions
+                            {
+                                Converters =
+                                {
+                                    new JsonStringEnumConverter()
+                                },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            })
+                        )
+                    );
+
+                //Act
+                var response = await sut.UpdateProduct(product);
+
+                //Assert
+                response.Should().BeEquivalentTo(product);
+            }
+
+            [Theory, MockHttpData]
+            public async Task ThrowHttpRequestExceptionGivenProductNotFound(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                SharedKernel.Product.Handlers.UpdateProduct.Product product
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Put, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.UpdateProduct(product);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class DuplicateProduct
+        {
+            [Theory, MockHttpData]
+            public async Task DuplicateProductGivenProductNumber(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                SharedKernel.Product.Handlers.DuplicateProduct.Product product
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Post, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(product, new JsonSerializerOptions
+                            {
+                                Converters =
+                                {
+                                    new JsonStringEnumConverter()
+                                },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            })
+                        )
+                    );
+
+                //Act
+                var response = await sut.DuplicateProduct(product.ProductNumber!);
+
+                //Assert
+                response.Should().BeEquivalentTo(product);
+            }
+
+            [Theory, MockHttpData]
+            public async Task ThrowHttpRequestExceptionGivenProductNotFound(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                SharedKernel.Product.Handlers.UpdateProduct.Product product
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Put, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.UpdateProduct(product);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
     }

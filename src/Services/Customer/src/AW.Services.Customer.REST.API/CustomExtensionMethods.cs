@@ -127,7 +127,9 @@ namespace AW.Services.Customer.REST.API
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(c => c.AddCollectionMappers(), typeof(MappingProfile).Assembly, typeof(GetCustomersQuery).Assembly);
-            services.AddMediatR(typeof(GetCustomersQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetCustomersQuery).Assembly)
+            );
 
             return services;
         }

@@ -19,7 +19,7 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
             IRepository<Entities.SalesOrder> salesOrderRepository
         ) => (_logger, _repository) = (logger, salesOrderRepository);
 
-        public async Task<Unit> Handle(DeleteSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteSalesOrderCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting sales order {SalesOrderNumber}", request.SalesOrderNumber);
             var salesOrder = await _repository.SingleOrDefaultAsync(
@@ -32,7 +32,6 @@ namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
             await _repository.DeleteAsync(salesOrder!, cancellationToken);
 
             _logger.LogInformation("Sales order {SalesOrderNumber} has been deleted", request.SalesOrderNumber);
-            return Unit.Value;
         }
     }
 }

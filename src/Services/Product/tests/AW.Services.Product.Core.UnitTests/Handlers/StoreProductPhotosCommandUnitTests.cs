@@ -3,13 +3,8 @@ using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
 using AW.Services.Product.Core.Handlers.StoreProductPhotos;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
-using FluentAssertions;
 using MediatR;
 using Moq;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.Services.Product.Core.UnitTests.Handlers
@@ -34,7 +29,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             .ReturnsAsync(products);
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
             fileWriterMock.Verify(_ => _.WriteFile(
@@ -71,7 +66,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             .Throws<IOException>();
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
             fileWriterMock.Verify(_ => _.WriteFile(
@@ -104,7 +99,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
                 .Returns(true);
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
             fileWriterMock.Verify(_ => _.WriteFile(

@@ -91,7 +91,9 @@ namespace AW.Services.Basket.REST.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBasketRepository, RedisBasketRepository>();
             services.AddScoped<IIdentityService, IdentityService>();
-            services.AddMediatR(typeof(GetBasketQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetBasketQuery).Assembly)
+            );
             services.AddIntegrationEventHandlers();
 
             services.AddOptions();

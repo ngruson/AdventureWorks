@@ -24,7 +24,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(CreateUsersCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateUsersCommand request, CancellationToken cancellationToken)
         {
             var employees = await _mediator.Send(
                 new GetAllEmployeesQuery(),
@@ -81,8 +81,6 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                     );
                 }
             }
-
-            return Unit.Value;
         }
     }
 }

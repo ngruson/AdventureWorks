@@ -179,6 +179,33 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 }
             );
-        }        
+        }
+
+        public async Task<SharedKernel.Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber)
+        {
+            string requestUri = $"Product/{productNumber}/duplicate?&api-version=1.0";
+            var options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                },
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            _logger.LogInformation("Calling POST method on {RequestUri}}", requestUri);
+
+            using var response = await _client.PostAsync(
+                requestUri,
+                null
+            );
+            response.EnsureSuccessStatusCode();
+            
+            var stream = await response.Content.ReadAsStreamAsync();
+            var product = await stream.DeserializeAsync<SharedKernel.Product.Handlers.DuplicateProduct.Product?>(options);
+
+            _logger.LogInformation("Returning product {@Product}", product);
+            return product!;
+        }
     }
 }

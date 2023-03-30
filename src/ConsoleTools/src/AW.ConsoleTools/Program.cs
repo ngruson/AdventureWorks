@@ -38,13 +38,13 @@ using IHost host = Host.CreateDefaultBuilder(args)
                 typeof(GetAllCustomersQuery).Assembly,
                 typeof(GetAllEmployeesQuery).Assembly
             )
-            .AddMediatR(
+            .AddMediatR(config => config.RegisterServicesFromAssemblies(
                 typeof(Program).Assembly, 
                 typeof(GetAllProductsWithPhotosQuery).Assembly,
                 typeof(GetAllCustomersQuery).Assembly,
                 typeof(GetAllEmployeesQuery).Assembly,
                 typeof(CreateLoginCommand).Assembly
-             )
+             ))
             .AddScoped<IFileHandler, FileHandler>();
     })
     .UseSerilog()

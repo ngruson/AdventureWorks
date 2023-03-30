@@ -82,11 +82,9 @@ namespace AW.ConsoleTools.UnitTests
             });
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
-
             mockMediator.Verify(_ => _.Send(
                     It.IsAny<GetAllEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
@@ -182,11 +180,9 @@ namespace AW.ConsoleTools.UnitTests
             });
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
-
             mockMediator.Verify(_ => _.Send(
                     It.IsAny<GetAllEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
@@ -294,11 +290,9 @@ namespace AW.ConsoleTools.UnitTests
             });
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(Unit.Value);
-
             mockMediator.Verify(_ => _.Send(
                     It.IsAny<GetAllEmployeesQuery>(),
                     It.IsAny<CancellationToken>()

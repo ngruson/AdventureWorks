@@ -154,7 +154,9 @@ namespace AW.Services.Sales.SalesPerson.REST.API
         {
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetSalesPersonsQuery).Assembly);
-            services.AddMediatR(typeof(GetSalesPersonsQuery));
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(
+                typeof(GetSalesPersonsQuery).Assembly)
+            );
 
             services.AddScoped(typeof(IApplication), typeof(Application));
             services.AddScoped<ISalesOrderIntegrationEventService, SalesOrderIntegrationEventService>();

@@ -17,7 +17,7 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
             IFileHandler fileWriter
         ) => (_mediator, _logger, _fileWriter) = (mediator, logger, fileWriter);
         
-        public async Task<Unit> Handle(StoreProductPhotosCommand request, CancellationToken cancellationToken)
+        public async Task Handle(StoreProductPhotosCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Retrieving products from database");
             var products = await _mediator.Send(new GetAllProductsWithPhotosQuery(), cancellationToken);
@@ -27,8 +27,6 @@ namespace AW.Services.Product.Core.Handlers.StoreProductPhotos
                 WriteFile(Path.Combine(request.TargetFolder, photo.ThumbnailPhotoFileName!), photo.ThumbNailPhoto!);
                 WriteFile(Path.Combine(request.TargetFolder, photo.LargePhotoFileName!), photo.LargePhoto!);
             }
-
-            return Unit.Value;
         }
 
         private void WriteFile(string fileName, byte[] photo)
