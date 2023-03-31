@@ -10,7 +10,8 @@ namespace AW.UI.Web.SharedKernel.Interfaces.Api
         Task<List<ProductCategory>?> GetCategories();
         Task<GetProductsResult?> GetProducts(int pageIndex, int pageSize, string? category, string? subcategory, string? orderBy);
         Task<Product.Handlers.GetProduct.Product?> GetProduct(string? productNumber);
-        Task<Product.Handlers.UpdateProduct.Product?> UpdateProduct(Product.Handlers.UpdateProduct.Product product);
+        Task<Product.Handlers.UpdateProduct.Product?> UpdateProduct(string key, Product.Handlers.UpdateProduct.Product product);
+        Task DeleteProduct(string productNumber);
         Task<List<ProductModel>?> GetProductModels();
         Task<List<UnitMeasure>?> GetUnitMeasures();
         Task<Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber);

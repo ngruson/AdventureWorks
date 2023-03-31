@@ -119,5 +119,71 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 viewResult.RouteValues.Values.ToList()[0].Should().Be(viewModel.Product!.ProductNumber);
             }
         }
+
+        public class DeleteProducts
+        {
+            [Theory, AutoMoqData]
+            public async Task DeleteProductsGivenProductNumbers(
+                string[] productNumbers,
+                [Greedy] ProductController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DeleteProducts(productNumbers);
+
+                //Assert
+                var viewResult = actionResult.Should().BeOfType<OkResult>();
+            }
+        }
+
+        public class DeleteProduct
+        {
+            [Theory, AutoMoqData]
+            public async Task DeleteProductGivenProductExists(
+                string productNumber,
+                [Greedy] ProductController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DeleteProduct(productNumber);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
+                viewResult.ActionName.Should().Be(nameof(ProductController.Index));
+            }
+        }
+
+        public class DuplicateProduct
+        {
+            [Theory, AutoMoqData]
+            public async Task DuplicateProductGivenProductExists(
+                string productNumber,
+                [Frozen] Mock<IProductService> productService,
+                [Greedy] ProductController sut,
+                SharedKernel.Product.Handlers.DuplicateProduct.Product product
+            )
+            {
+                //Arrange
+                productService.Setup(_ => _.DuplicateProduct(
+                        It.IsAny<string>()
+                    )
+                ).
+                ReturnsAsync(product);
+
+                //Act
+                var actionResult = await sut.DuplicateProduct(productNumber);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
+                viewResult.ActionName.Should().Be(nameof(ProductController.Detail));
+                viewResult.RouteValues!.Count.Should().Be(1);
+                viewResult.RouteValues.ContainsKey("productNumber");
+                viewResult.RouteValues.Values.ToList()[0].Should().Be(product!.ProductNumber);
+            }
+        }
     }
 }

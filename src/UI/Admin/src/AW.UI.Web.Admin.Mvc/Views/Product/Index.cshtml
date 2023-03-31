@@ -30,7 +30,7 @@
                         <span id="datatableCounter">0</span>
                         Selected
                     </span>
-                    <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                    <a class="btn btn-outline-danger btn-sm" href="javascript:deleteSelected()">
                         <i class="bi-trash"></i> Delete
                     </a>
                 </div>
@@ -201,6 +201,32 @@
 {
     <!-- JS Plugins Init. -->
     <script>
+        function deleteSelected() {
+            var checked = $('#datatable td:first-child input[type="checkbox"]:checked');
+            if (checked.length > 0) {
+                if (confirm("Do you want to delete " + checked.length + " product(s)?")) {
+                    var productNumbers = [];
+                    checked.each(function () {
+                        var productNumber = $(this).closest("tr").find("td").eq(2).html();
+                        productNumbers.push(productNumber);
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "Product/DeleteProducts",
+                        data: JSON.stringify(productNumbers),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    });
+
+                    checked.each(function () {
+                        var row = $(this).closest("tr");
+                        row.remove();
+                    });
+                }
+            }
+        }
+
         $(document).on('ready', function () {
             // INITIALIZATION OF DATATABLES
             // =======================================================

@@ -332,5 +332,39 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 ), Times.Never);
             }
         }
+
+        public class DeleteProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DeleteProductGivenProductExists(
+                ProductService sut,
+                string productNumber
+            )
+            {
+                //Arrange
+
+                //Act
+                await sut.DeleteProduct(productNumber);
+
+                //Assert
+            }
+        }
+
+        public class DuplicateProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task DuplicateProductGivenProductExists(
+                ProductService sut,
+                string productNumber
+            )
+            {
+                //Arrange
+
+                //Act
+                await sut.DuplicateProduct(productNumber);
+
+                //Assert
+            }
+        }
     }
 }

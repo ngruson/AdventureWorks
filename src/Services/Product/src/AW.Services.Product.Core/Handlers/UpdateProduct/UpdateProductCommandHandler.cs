@@ -31,9 +31,9 @@ namespace AW.Services.Product.Core.Handlers.UpdateProduct
             _logger.LogInformation("Handle called");
 
             _logger.LogInformation("Getting product from database");
-            var spec = new GetProductSpecification(request.Product!.ProductNumber!);
+            var spec = new GetProductSpecification(request.Key);
             var product = await _productRepository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.ProductNull(product, request.Product.ProductNumber!, _logger);
+            Guard.Against.ProductNull(product, request.Product!.ProductNumber!, _logger);
 
             if (request.Product.ProductModelName != product!.ProductModel?.Name)
             {

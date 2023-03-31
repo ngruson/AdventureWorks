@@ -3,6 +3,7 @@ using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+using DeleteProduct = AW.UI.Web.SharedKernel.Product.Handlers.DeleteProduct;
 using DuplicateProduct = AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
@@ -90,20 +91,20 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return category;
         }
 
-        private async Task UpdateProduct(SharedKernel.Product.Handlers.UpdateProduct.Product product)
+        private async Task UpdateProduct(string key, SharedKernel.Product.Handlers.UpdateProduct.Product product)
         {
             _logger.LogInformation("Updating product");
-            await _mediator.Send(new UpdateProductCommand(product));
+            await _mediator.Send(new UpdateProductCommand(key, product));
             _logger.LogInformation("Product updated successfully");
         }
 
         public async Task UpdateProduct(EditProductViewModel viewModel)
         {
-            var product = await GetProduct(viewModel!.Product!.ProductNumber);
+            var product = await GetProduct(viewModel!.Key);
             var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
             _mapper.Map(viewModel.Product, productToUpdate);
 
-            await UpdateProduct(productToUpdate);
+            await UpdateProduct(viewModel.Key!, productToUpdate);
         }
 
         public async Task UpdatePricing(EditPricingViewModel viewModel)
@@ -121,7 +122,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _mapper.Map(viewModel.Product, productToUpdate);
 
             _logger.LogInformation("Updating product");
-            await UpdateProduct(productToUpdate);
+            await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
         }
 
         public async Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel)
@@ -139,14 +140,21 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _mapper.Map(viewModel.Product, productToUpdate);
 
             _logger.LogInformation("Updating product");
-            await UpdateProduct(productToUpdate);
+            await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
+        }
+
+        public async Task DeleteProduct(string productNumber)
+        {
+            _logger.LogInformation("Deleting product");
+            await _mediator.Send(new DeleteProduct.DeleteProductCommand(productNumber));
+            _logger.LogInformation("Product successfully deleted");
         }
 
         public async Task<DuplicateProduct.Product> DuplicateProduct(string productNumber)
         {
             _logger.LogInformation("Duplicating product");
             var product = await _mediator.Send(new DuplicateProduct.DuplicateProductCommand(productNumber));
-            _logger.LogInformation("Product duplicated successfully");
+            _logger.LogInformation("Product successfully duplicated");
 
             return product;
         }

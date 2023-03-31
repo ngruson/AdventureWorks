@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AW.Services.Infrastructure.ActionResults;
 using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.DeleteProduct;
 using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
@@ -91,17 +92,15 @@ namespace AW.Services.Product.REST.API.Controllers
         {
             try
             {
-                logger.LogInformation("UpdateProduct called with {ProductNumber}", productNumber);
-
                 logger.LogInformation("Sending the UpdateProduct command");
-                var updatedProduct = await mediator.Send(new UpdateProductCommand(product));
+                var updatedProduct = await mediator.Send(new UpdateProductCommand(productNumber, product));
 
                 logger.LogInformation("Returning updated product");
                 return Ok(updatedProduct);
             }
             catch (ProductNotFoundException)
             {
-                logger.LogInformation("Product {ProductNumber} was not found", productNumber);
+                logger.LogInformation("Product not found");
                 return new NotFoundResult();
             }
         }
@@ -128,6 +127,31 @@ namespace AW.Services.Product.REST.API.Controllers
             {
                 logger.LogError("Duplicating product failed");
                 return new InternalServerErrorObjectResult(ex.Message);
+            }
+        }
+
+        [Route("{productNumber}")]
+        [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteProduct([FromRoute] DeleteProductCommand command)
+        {
+            try
+            {
+                logger.LogInformation("Sending the DeleteProduct command");
+                await mediator.Send(command);
+
+                return new OkResult();
+            }
+            catch (ProductNotFoundException)
+            {
+                logger.LogError("Product not found");
+                return new NotFoundResult();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Delete product failed");
+                return new InternalServerErrorObjectResult("Delete product failed");
             }
         }
     }

@@ -28,6 +28,13 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders
 
                 throw new ArgumentException($"{key} value {value} could not be parsed");
             }
+            else if (key == nameof(EditProductViewModel.Product.Weight))
+            {
+                if (decimal.TryParse(value.ToString(), out var decimalValue))
+                    return decimalValue;
+
+                throw new ArgumentException($"{key} value {value} could not be parsed");
+            }
 
             return base.GetValueForKey(key, value);
         }

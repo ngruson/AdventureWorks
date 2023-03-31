@@ -12,6 +12,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task UpdateProduct(EditProductViewModel viewModel);
         Task UpdatePricing(EditPricingViewModel viewModel);
         Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel);
+        Task DeleteProduct(string productNumber);
         Task<DuplicateProduct.Product> DuplicateProduct(string productNumber);
     }
 }

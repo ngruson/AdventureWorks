@@ -147,6 +147,26 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             );
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteProducts([FromBody] string[] productNumbers)
+        {
+            foreach (var productNumber in productNumbers)
+            {
+                await _productService.DeleteProduct(productNumber);
+            }
+
+            return new OkResult();
+        }
+
+        public async Task<IActionResult> DeleteProduct(string productNumber)
+        {
+            await _productService.DeleteProduct(productNumber);
+
+            return RedirectToAction(
+                nameof(Index)
+            );
+        }
+
         public async Task<IActionResult> DuplicateProduct(string productNumber)
         {
             var product = await _productService.DuplicateProduct(productNumber);

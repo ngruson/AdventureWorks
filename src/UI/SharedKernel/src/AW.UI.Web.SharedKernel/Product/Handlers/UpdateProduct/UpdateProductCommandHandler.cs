@@ -22,7 +22,7 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct
             Guard.Against.Null(request.Product, _logger);
 
             _logger.LogInformation("Updating product");
-            await _client.UpdateProduct(request.Product!);
+            await _client.UpdateProduct(request.Key, request.Product);
             _logger.LogInformation("Product succesfully updated");
         }
     }

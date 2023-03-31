@@ -2,6 +2,7 @@
 {
     public class EditProductViewModel
     {
+        public string? Key { get; set; }
         public EditProductProductViewModel? Product { get; set; }
     }
 }

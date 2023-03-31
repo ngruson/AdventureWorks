@@ -21,9 +21,9 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct
         {
             Guard.Against.NullOrEmpty(request.ProductNumber, _logger);
 
-            _logger.LogInformation("Updating product");
+            _logger.LogInformation("Duplicating product");
             var product = await _client.DuplicateProduct(request.ProductNumber);
-            _logger.LogInformation("Product succesfully updated");
+            _logger.LogInformation("Product succesfully duplicated");
 
             return product;
         }

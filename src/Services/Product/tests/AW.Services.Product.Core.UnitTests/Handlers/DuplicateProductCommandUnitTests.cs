@@ -33,11 +33,18 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             product.SetProductNumber(productNumber);
 
             productRepoMock.Setup(_ => _.SingleOrDefaultAsync(
-                    It.IsAny<GetProductSpecification>(),
+                    It.Is<GetProductSpecification>(_ => _.ProductNumber == command.ProductNumber),
                     It.IsAny<CancellationToken>()
                 )
             )
             .ReturnsAsync(product);
+
+            productRepoMock.Setup(_ => _.SingleOrDefaultAsync(
+                    It.Is<GetProductSpecification>(_ => _.ProductNumber != command.ProductNumber),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync((Entities.Product?)null);
 
             var createdProduct = mapper.Map<Core.Handlers.CreateProduct.Product>(product);
 
@@ -109,11 +116,18 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             product.SetProductNumber(productNumber);
 
             productRepoMock.Setup(_ => _.SingleOrDefaultAsync(
-                    It.IsAny<GetProductSpecification>(),
+                    It.Is<GetProductSpecification>(_ => _.ProductNumber == command.ProductNumber),
                     It.IsAny<CancellationToken>()
                 )
             )
             .ReturnsAsync(product);
+
+            productRepoMock.Setup(_ => _.SingleOrDefaultAsync(
+                    It.Is<GetProductSpecification>(_ => _.ProductNumber != command.ProductNumber),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync((Entities.Product?)null);
 
             mediatorMock.Setup(_ => _.Send(
                     It.IsAny<CreateProductCommand>(),

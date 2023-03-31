@@ -4,8 +4,6 @@ using AW.Services.Sales.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AW.Services.Sales.Core.Handlers.DeleteSalesOrder
 {

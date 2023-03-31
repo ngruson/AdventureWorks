@@ -213,7 +213,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     );
 
                 //Act
-                var response = await sut.UpdateProduct(product);
+                var response = await sut.UpdateProduct(product.ProductNumber!, product);
 
                 //Assert
                 response.Should().BeEquivalentTo(product);
@@ -234,7 +234,53 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.UpdateProduct(product);
+                Func<Task> func = async () => await sut.UpdateProduct(product.ProductNumber!, product);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class DeleteProduct
+        {
+            [Theory, MockHttpData]
+            public async Task ReturnUpdatedProductGivenProduct(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                string productNumber
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Delete, $"{uri}*")
+                    .Respond(HttpStatusCode.OK);
+
+                //Act
+                await sut.DeleteProduct(productNumber);
+
+                //Assert
+                1.Should().Be(1);
+            }
+
+            [Theory, MockHttpData]
+            public async Task ThrowHttpRequestExceptionGivenProductNotFound(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                string productNumber
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Delete, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.DeleteProduct(productNumber);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -292,7 +338,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.UpdateProduct(product);
+                Func<Task> func = async () => await sut.UpdateProduct(product.ProductNumber!, product);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()

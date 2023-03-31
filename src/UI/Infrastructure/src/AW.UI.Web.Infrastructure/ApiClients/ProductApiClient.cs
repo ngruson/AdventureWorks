@@ -111,10 +111,10 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             );
         }
 
-        public async Task<SharedKernel.Product.Handlers.UpdateProduct.Product?> UpdateProduct(SharedKernel.Product.Handlers.UpdateProduct.Product product)
+        public async Task<SharedKernel.Product.Handlers.UpdateProduct.Product?> UpdateProduct(string key, SharedKernel.Product.Handlers.UpdateProduct.Product product)
         {
-            _logger.LogInformation("Updating product with product number {ProductNumber}", product.ProductNumber);
-            string requestUri = $"Product/{product.ProductNumber}?&api-version=1.0";
+            _logger.LogInformation("Call Product API to update product");
+            string requestUri = $"Product/{key}?&api-version=1.0";
             var options = new JsonSerializerOptions
             {
                 Converters =
@@ -137,6 +137,18 @@ namespace AW.UI.Web.Infrastructure.ApiClients
 
             _logger.LogInformation("Returning product {@Product}", updatedProduct);
             return updatedProduct;
+        }
+
+        public async Task DeleteProduct(string productNumber)
+        {
+            _logger.LogInformation("Deleting product");
+            string requestUri = $"Product/{productNumber}?&api-version=1.0";
+            _logger.LogInformation("Calling DELETE method on {RequestUri}", requestUri);
+
+            using var response = await _client.DeleteAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+        
+            _logger.LogInformation("Product succesfully deleted");
         }
 
         public async Task<List<ProductModel>?> GetProductModels()

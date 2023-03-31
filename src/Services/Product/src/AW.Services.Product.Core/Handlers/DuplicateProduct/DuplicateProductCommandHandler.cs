@@ -33,7 +33,7 @@ namespace AW.Services.Product.Core.Handlers.DuplicateProduct
         {
             _logger.LogInformation("Getting product to duplicate");
             var product = await _productRepository.SingleOrDefaultAsync(
-                new GetProductSpecification(request.ProductNumber),
+                new GetProductSpecification(request.ProductNumber!),
                 cancellationToken
             );
             Guard.Against.ProductNull(product, request.ProductNumber!, _logger);
@@ -45,7 +45,29 @@ namespace AW.Services.Product.Core.Handlers.DuplicateProduct
                     Product = _mapper.Map<CreateProduct.Product>(product)
                 };
 
-                command.Product.ProductNumber = $"Copy of {command.Product.ProductNumber}";
+                int i = 0;
+                while (true)
+                {
+                    string newProductNumber;
+                    if (i == 0)
+                        newProductNumber = $"Copy of {command.Product.ProductNumber}";
+                    else
+                        newProductNumber = $"Copy ({i}) of {command.Product.ProductNumber}";
+
+                    product = await _productRepository.SingleOrDefaultAsync(
+                        new GetProductSpecification(newProductNumber),
+                        cancellationToken
+                    );
+
+                    if (product == null)
+                    {
+                        command.Product.ProductNumber = newProductNumber;
+                        break;
+                    }
+
+                    i++;
+                }
+                
                 command.Product.Name = $"Copy of {command.Product.Name}";
 
                 _logger.LogInformation("Create duplicated product");

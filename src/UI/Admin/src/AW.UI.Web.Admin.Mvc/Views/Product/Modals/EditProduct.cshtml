@@ -19,6 +19,7 @@
             <div class="modal-body">
                 @using (Html.BeginForm("UpdateProduct", "Product"))
                 {
+                    <input name="Key" type="hidden" value="@Model.ProductNumber">
                     <div class="row mb-4">
                         <div class="col-sm-6">
                             <div class="row">

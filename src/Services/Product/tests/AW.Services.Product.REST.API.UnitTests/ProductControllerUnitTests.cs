@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Infrastructure.ActionResults;
 using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.DeleteProduct;
 using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
 using AW.Services.Product.Core.Handlers.GetProducts;
@@ -164,6 +165,68 @@ namespace AW.Services.Product.REST.API.UnitTests
 
                 //Assert
                 actionResult.Should().BeOfType<NotFoundResult>();
+            }
+        }
+
+        public class DeleteProduct
+        {
+            [Theory, AutoMoqData]
+            public async Task ReturnOkResultGivenProductExists(
+                [Greedy] ProductController sut,
+                DeleteProductCommand command
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DeleteProduct(command);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task ReturnNotFoundResultGivenProductDoesNotExist(
+                [Frozen] Mock<IMediator> mediator,
+                [Greedy] ProductController sut,
+                DeleteProductCommand command
+            )
+            {
+                //Arrange
+                mediator.Setup(_ => _.Send(
+                        It.IsAny<DeleteProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new ProductNotFoundException(command.ProductNumber!));
+
+                //Act
+                var actionResult = await sut.DeleteProduct(command);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task ReturnInternalServerErrorGivenOtherExceptionIsThrown(
+                [Frozen] Mock<IMediator> mediator,
+                [Greedy] ProductController sut,
+                DeleteProductCommand command
+            )
+            {
+                //Arrange
+                mediator.Setup(_ => _.Send(
+                        It.IsAny<DeleteProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new Exception());
+
+                //Act
+                var actionResult = await sut.DeleteProduct(command);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
             }
         }
 

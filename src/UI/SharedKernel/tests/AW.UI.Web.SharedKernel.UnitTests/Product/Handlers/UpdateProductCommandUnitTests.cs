@@ -2,7 +2,6 @@
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
 using FluentAssertions;
-using MediatR;
 using Moq;
 
 namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
@@ -23,6 +22,7 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
 
             //Assert
             mockProductApiClient.Verify(_ => _.UpdateProduct(
+                It.IsAny<string>(),
                 It.IsAny<SharedKernel.Product.Handlers.UpdateProduct.Product>()
             ));
         }
@@ -37,13 +37,14 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
 
             //Act
             Func<Task> func = async () => await sut.Handle(
-                new UpdateProductCommand(null!), CancellationToken.None
+                new UpdateProductCommand(null!, null!), CancellationToken.None
             );
 
             //Assert
             await func.Should().ThrowAsync<ArgumentNullException>();
 
             mockProductApiClient.Verify(_ => _.UpdateProduct(
+                    It.IsAny<string>(),
                     It.IsAny<SharedKernel.Product.Handlers.UpdateProduct.Product>()
                 )
                 , Times.Never
