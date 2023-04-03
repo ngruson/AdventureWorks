@@ -24,7 +24,7 @@ namespace AW.Services.Product.Core.Handlers.GetProduct
         {
             _logger.LogInformation("Handle called");
 
-            var spec = new GetProductSpecification(request.ProductNumber);
+            var spec = new GetProductSpecification(request.ProductNumber!);
             _logger.LogInformation("Getting product from database");
             var product = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
 

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AW.Services.Infrastructure.ActionResults;
 using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.CreateProduct;
 using AW.Services.Product.Core.Handlers.DeleteProduct;
 using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
@@ -87,6 +88,34 @@ namespace AW.Services.Product.REST.API.Controllers
             }           
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(Core.Handlers.CreateProduct.Product product)
+        {
+            try
+            {
+                logger.LogInformation("Sending the CreateProduct command");
+                var createdProduct = await mediator.Send(new CreateProductCommand(product));
+
+                logger.LogInformation("Returning created product");
+                return Ok(createdProduct);
+            }
+            catch (ProductModelNotFoundException)
+            {
+                logger.LogInformation("Product model not found");
+                return new NotFoundResult();
+            }
+            catch (ProductSubcategoryNotFoundException)
+            {
+                logger.LogInformation("Product subcategory not found");
+                return new NotFoundResult();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Create product failed");
+                return new InternalServerErrorObjectResult("Create product failed");
+            }
+        }
+
         [HttpPut("{productNumber}")]
         public async Task<IActionResult> UpdateProduct(string productNumber, Core.Handlers.UpdateProduct.Product product)
         {
@@ -102,31 +131,6 @@ namespace AW.Services.Product.REST.API.Controllers
             {
                 logger.LogInformation("Product not found");
                 return new NotFoundResult();
-            }
-        }
-
-        [Route("{productNumber}/duplicate")]
-        [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> DuplicateProduct([FromRoute] DuplicateProductCommand command)
-        {
-            try
-            {
-                logger.LogInformation("Sending the DuplicateProduct command");
-                var product = await mediator.Send(command);
-
-                return new OkObjectResult(product);
-            }
-            catch (ProductNotFoundException)
-            {
-                logger.LogError("Product not found");
-                return new NotFoundResult();
-            }
-            catch (DuplicateProductException ex)
-            {
-                logger.LogError("Duplicating product failed");
-                return new InternalServerErrorObjectResult(ex.Message);
             }
         }
 
@@ -154,5 +158,30 @@ namespace AW.Services.Product.REST.API.Controllers
                 return new InternalServerErrorObjectResult("Delete product failed");
             }
         }
+
+        [Route("{productNumber}/duplicate")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DuplicateProduct([FromRoute] DuplicateProductCommand command)
+        {
+            try
+            {
+                logger.LogInformation("Sending the DuplicateProduct command");
+                var product = await mediator.Send(command);
+
+                return new OkObjectResult(product);
+            }
+            catch (ProductNotFoundException)
+            {
+                logger.LogError("Product not found");
+                return new NotFoundResult();
+            }
+            catch (DuplicateProductException ex)
+            {
+                logger.LogError("Duplicating product failed");
+                return new InternalServerErrorObjectResult(ex.Message);
+            }
+        }        
     }
 }

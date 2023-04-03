@@ -7,7 +7,6 @@ using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetUnitMeasures;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Web;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
@@ -54,6 +53,8 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 productNumber
             );
 
+            await GetViewData();
+
             var categories = (await _mediator.Send(new GetProductCategoriesQuery()))
                 .OrderBy(_ => _.Name)
                 .ToList();
@@ -61,50 +62,52 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             ViewData[CATEGORIES] = categories
                 .ToSelectList(_ => _.Name, _ => _.Name);
 
-            ViewData[SUBCATEGORIES] = categories
-                .Single(c => c.Name == product.Product!.ProductCategoryName)
-                .Subcategories!
-                .ToSelectList(_ => _.Name, _ => _.Name);
-
-            ViewData[CLASSES] = new List<SelectListItem>
-            {
-                new SelectListItem("High", "High"),
-                new SelectListItem("Medium", "Medium"),
-                new SelectListItem("Low", "Low")
-            };
-
-            ViewData[PRODUCTLINES] = new List<SelectListItem>
-            {
-                new SelectListItem("Mountain", "Mountain"),
-                new SelectListItem("Road", "Road"),
-                new SelectListItem("Standard", "Standard"),
-                new SelectListItem("Touring", "Touring")
-            };
-
-            ViewData[PRODUCTMODELS] = (await _mediator.Send(new GetProductModelsQuery()))
-                .OrderBy(_ => _.Name)
-                .ToList()
-                .ToSelectList(_ => _.Name, _ => _.Name);
-
-            ViewData[STYLES] = new List<SelectListItem>
-            {
-                new SelectListItem("Mens", "Mens"),
-                new SelectListItem("Womens", "Womens"),
-                new SelectListItem("Universal", "Universal")
-            };
-
-            ViewData[UNITMEASURES] = (await _mediator.Send(new GetUnitMeasuresQuery()))
-                .OrderBy(_ => _.Name)
-                .ToList()
-                .ToSelectList(_ => _.UnitMeasureCode!.Trim(), _ => $"{_.UnitMeasureCode!.Trim()} ({_.Name})");
+            if (!string.IsNullOrEmpty(product.Product!.ProductCategoryName))
+                ViewData[SUBCATEGORIES] = categories
+                    .Single(c => c.Name == product.Product!.ProductCategoryName)
+                    .Subcategories!
+                    .ToSelectList(_ => _.Name, _ => _.Name);
+            else
+                ViewData[SUBCATEGORIES] = new List<ProductSubcategory>()
+                    .ToSelectList(_ => _.Name, _ => _.Name);
 
             return View(product);
         }
 
-        public async Task<JsonResult> GetSubcategories(string categoryName)
+        public async Task<IActionResult> AddProduct()
         {
-            var category = await _productService.GetCategory(categoryName);
-            return Json(category.Subcategories);
+            await GetViewData();
+
+            var categories = (await _mediator.Send(new GetProductCategoriesQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList();
+
+            ViewData[CATEGORIES] = categories
+                .ToSelectList(_ => _.Name, _ => _.Name);
+
+            ViewData[SUBCATEGORIES] = new List<ProductSubcategory>()
+                .ToSelectList(_ => _.Name, _ => _.Name);
+
+            var viewModel = new ProductDetailViewModel
+            {
+                Product = new ProductViewModel
+                {
+                    SellStartDate = DateTime.Today
+                }
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct([ModelBinder(BinderType = typeof(AddProductViewModelBinder))] AddProductViewModel viewModel)
+        {
+            await _productService.AddProduct(viewModel);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { productNumber = viewModel.Product!.ProductNumber }
+            );
         }
 
         public async Task<IActionResult> UpdateProduct([ModelBinder(BinderType = typeof(EditProductViewModelBinder))] EditProductViewModel viewModel)
@@ -175,6 +178,51 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 nameof(Detail),
                 new { product.ProductNumber }
             );
+        }
+
+        private async Task GetViewData()
+        {
+            ViewData[CLASSES] = new List<string>
+            {
+                "High",
+                "Medium",
+                "Low"
+            }
+            .ToSelectList(_ => _, _ => _);
+
+
+            ViewData[PRODUCTLINES] = new List<string>
+            {
+                "Mountain",
+                "Road",
+                "Standard",
+                "Touring"
+            }
+            .ToSelectList(_ => _, _ => _);
+
+            ViewData[PRODUCTMODELS] = (await _mediator.Send(new GetProductModelsQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.Name, _ => _.Name);
+
+            ViewData[STYLES] = new List<string>
+            {
+                "Mens",
+                "Womens",
+                "Universal"
+            }
+            .ToSelectList(_ => _, _ => _);
+
+            ViewData[UNITMEASURES] = (await _mediator.Send(new GetUnitMeasuresQuery()))
+                .OrderBy(_ => _.Name)
+                .ToList()
+                .ToSelectList(_ => _.UnitMeasureCode!.Trim(), _ => $"{_.UnitMeasureCode!.Trim()} ({_.Name})");
+        }
+
+        public async Task<JsonResult> GetSubcategories(string categoryName)
+        {
+            var category = await _productService.GetCategory(categoryName);
+            return Json(category.Subcategories);
         }
     }
 }

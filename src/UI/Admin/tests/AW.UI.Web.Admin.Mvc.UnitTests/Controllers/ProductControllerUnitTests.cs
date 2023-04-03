@@ -76,6 +76,28 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             }
         }
 
+        public class AddProduct
+        {
+            [Theory, AutoMoqData]
+            public async Task AddProduct_Ok(
+                AddProductViewModel viewModel,
+                [Greedy] ProductController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.AddProduct(viewModel);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
+                viewResult.ActionName.Should().Be(nameof(ProductController.Detail));
+                viewResult.RouteValues!.Count.Should().Be(1);
+                viewResult.RouteValues.ContainsKey("productNumber");
+                viewResult.RouteValues.Values.ToList()[0].Should().Be(viewModel.Product!.ProductNumber);
+            }
+        }
+
         public class UpdateProduct
         {
             [Theory, AutoMoqData]
@@ -134,7 +156,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 var actionResult = await sut.DeleteProducts(productNumbers);
 
                 //Assert
-                var viewResult = actionResult.Should().BeOfType<OkResult>();
+                actionResult.Should().BeOfType<OkResult>();
             }
         }
 

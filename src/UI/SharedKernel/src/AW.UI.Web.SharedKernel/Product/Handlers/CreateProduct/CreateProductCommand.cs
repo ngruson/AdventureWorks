@@ -1,13 +1,14 @@
 ﻿using MediatR;
 
-namespace AW.Services.Product.Core.Handlers.CreateProduct
+namespace AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct
 {
-    public class CreateProductCommand : IRequest<Product>
+    public class CreateProductCommand : IRequest
     {
         public CreateProductCommand(Product product)
         {
             Product = product;
         }
+
         public Product Product { get; set; }
     }
 }

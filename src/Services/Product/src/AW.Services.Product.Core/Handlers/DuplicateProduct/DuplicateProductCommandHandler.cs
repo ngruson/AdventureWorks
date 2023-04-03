@@ -40,10 +40,9 @@ namespace AW.Services.Product.Core.Handlers.DuplicateProduct
 
             try
             {
-                var command = new CreateProductCommand
-                {
-                    Product = _mapper.Map<CreateProduct.Product>(product)
-                };
+                var command = new CreateProductCommand(
+                    _mapper.Map<CreateProduct.Product>(product)
+                );
 
                 int i = 0;
                 while (true)

@@ -1,0 +1,348 @@
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+@model ProductDetailViewModel;
+
+@{
+    ViewData["Title"] = "New Product";
+    var classes = ViewData[ProductController.CLASSES] as IEnumerable<SelectListItem>;
+    var productLines = ViewData[ProductController.PRODUCTLINES] as IEnumerable<SelectListItem>;
+    var productModels = ViewData[ProductController.PRODUCTMODELS] as IEnumerable<SelectListItem>;
+    var styles = ViewData[ProductController.STYLES] as IEnumerable<SelectListItem>;
+    var unitMeasures = ViewData[ProductController.UNITMEASURES] as IEnumerable<SelectListItem>;
+    var categories = ViewData[ProductController.CATEGORIES] as IEnumerable<SelectListItem>;
+    var subcategories = ViewData[ProductController.SUBCATEGORIES] as IEnumerable<SelectListItem>;
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">@Html.ActionLink("Products", "Index", "Product", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item active" aria-current="page">New Product</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">New Product</h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Card -->
+            <div class="card mb-3 mb-lg-5">
+                <!-- Header -->
+                <div class="card-header card-header-content-between">
+                    <h4 class="card-header-title">Product information</h4>
+                </div>
+                <!-- End Header-->
+                <!-- Body -->
+                <div class="card-body">
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-4">
+                                <label class="form-label">Name <span class="form-label-secondary">(Required)</span></label>
+                                <input asp-for="@Model.Product!.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Product!.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-4">
+                                <label class="form-label">Product number <span class="form-label-secondary">(Required)</span></label>
+                                <input asp-for="@Model.Product!.ProductNumber" class="form-control" />
+                                <span asp-validation-for="@Model.Product!.ProductNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-3">
+                            <div class="form-check form-switch">
+                                @Html.LabelFor(m => m.Product!.MakeFlag, new { @class = "form-check-label" })
+                                @Html.CheckBoxFor(m => m.Product!.MakeFlag, new { @class = "form-check-input" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-check form-switch">
+                                @Html.LabelFor(m => m.Product!.FinishedGoodsFlag, new { @class = "form-check-label" })
+                                @Html.CheckBoxFor(m => m.Product!.FinishedGoodsFlag, new { @class = "form-check-input" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.SafetyStockLevel, new { @class = "form-label" })
+                                <!-- Quantity -->
+                                <div class="quantity-counter">
+                                    <div class="js-quantity-counter row align-items-center">
+                                        <div class="col">
+                                            <span class="d-block small">Select quantity</span>
+                                            <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.SafetyStockLevel" value="@Model.Product!.SafetyStockLevel">
+                                        </div>
+                                        <!-- End Col -->
+
+                                        <div class="col-auto">
+                                            <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                            <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Quantity -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.ReorderPoint, new { @class = "form-label" })
+                                <!-- Quantity -->
+                                <div class="quantity-counter">
+                                    <div class="js-quantity-counter row align-items-center">
+                                        <div class="col">
+                                            <span class="d-block small">Select quantity</span>
+                                            <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.ReorderPoint" value="@Model.Product.ReorderPoint">
+                                        </div>
+                                        <!-- End Col -->
+
+                                        <div class="col-auto">
+                                            <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                            <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Quantity -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.ProductModelName, new { @class = "form-label" })
+                                <div class="tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Product!.ProductModelName, productModels, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.Color, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Product!.Color, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.DaysToManufacture, new { @class = "form-label" })
+                                <!-- Quantity -->
+                                <div class="quantity-counter">
+                                    <div class="js-quantity-counter row align-items-center">
+                                        <div class="col">
+                                            <span class="d-block small">Select quantity</span>
+                                            <input class="js-result form-control form-control-quantity-counter" type="text" name="Product.DaysToManufacture" value="@Model.Product.DaysToManufacture">
+                                        </div>
+                                        <!-- End Col -->
+
+                                        <div class="col-auto">
+                                            <a class="js-minus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0 1C0 0.723858 0.223858 0.5 0.5 0.5H7.5C7.77614 0.5 8 0.723858 8 1C8 1.27614 7.77614 1.5 7.5 1.5H0.5C0.223858 1.5 0 1.27614 0 1Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                            <a class="js-plus btn btn-outline-secondary btn-xs btn-icon rounded-circle" href="javascript:;">
+                                                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M4 0C4.27614 0 4.5 0.223858 4.5 0.5V3.5H7.5C7.77614 3.5 8 3.72386 8 4C8 4.27614 7.77614 4.5 7.5 4.5H4.5V7.5C4.5 7.77614 4.27614 8 4 8C3.72386 8 3.5 7.77614 3.5 7.5V4.5H0.5C0.223858 4.5 0 4.27614 0 4C0 3.72386 0.223858 3.5 0.5 3.5H3.5V0.5C3.5 0.223858 3.72386 0 4 0Z" fill="currentColor" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <!-- End Col -->
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                                <!-- End Quantity -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.Size, new { @class = "form-label" })
+                                <div class="input-group">
+                                    @Html.EditorFor(m => m.Product!.Size, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="input-group-append">
+                                        @Html.DropDownListFor(m => m.Product!.SizeUnitMeasureCode, unitMeasures, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.Weight, new { @class = "form-label" })
+                                <div class="input-group">
+                                    @Html.EditorFor(m => m.Product!.Weight, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="input-group-append">
+                                        @Html.DropDownListFor(m => m.Product!.WeightUnitMeasureCode, unitMeasures, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.ProductLine, new { @class = "form-label" })
+                                <div class="tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Product!.ProductLine, productLines, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.Class, new { @class = "form-label" })
+                                <div class="tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Product!.Class, classes, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.Style, new { @class = "form-label" })
+                                <div class="tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Product!.Style, styles, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                <label class="form-label">Sell start date <span class="form-label-secondary">(Required)</span></label>
+                                <input type="text" id="Product.SellStartDate" name="Product.SellStartDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select sell start date" value="@Model.Product.SellStartDate.ToShortDateString()"
+                                       data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                <span asp-validation-for="@Model.Product!.SellStartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.SellEndDate, new { @class = "form-label" })
+                                <input type="text" id="Product.SellEndDate" name="Product.SellEndDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select sell end date" value="@Model.Product.SellEndDate?.ToShortDateString()"
+                                       data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-4">
+                                @Html.LabelFor(m => m.Product!.DiscontinuedDate, new { @class = "form-label" })
+                                <input type="text" id="Product.DiscontinuedDate" name="Product.DiscontinuedDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select discontinued date" value="@Model.Product.DiscontinuedDate?.ToShortDateString()"
+                                       data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form -->
+                </div>
+                <!-- End Body -->
+            </div>
+            <!-- End Card -->
+        </div>
+        <div class="col-lg-4">
+            <!-- Card -->
+            <div class="card mb-3 mb-lg-5">
+                <!-- Header -->
+                <div class="card-header card-header-content-between">
+                    <h4 class="card-header-title">Pricing</h4>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body">
+                    <!-- Form -->
+                    <div class="mb-4">
+                        @Html.LabelFor(m => m.Product!.StandardCost, new { @class = "form-label" })
+                        @Html.EditorFor(m => m.Product!.StandardCost, new { htmlAttributes = new { @class = "js-input-mask form-control",
+                            data_hs_mask_options="{ \"mask\": \"$ 0,000.00\" }"} })
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(m => m.Product!.ListPrice, new { @class = "form-label" })
+                        @Html.EditorFor(m => m.Product!.ListPrice, new { htmlAttributes = new { @class = "js-input-mask form-control",
+                            data_hs_mask_options="{ \"mask\": \"$ 0,000.00\", \"reverse\": true }"}})
+                    </div>
+                </div>
+                <!-- End Body -->
+            </div>
+            <!-- Card -->
+            <div class="card">
+                <!-- Header -->
+                <div class="card-header card-header-content-between">
+                    <h4 class="card-header-title">Organization</h4>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body">
+                    <div class="mb-4">
+                        @Html.LabelFor(m => m.Product!.ProductCategoryName, new { @class = "form-label" })
+                        <div class="tom-select-custom">
+                            @Html.DropDownListFor(m => m.Product!.ProductCategoryName, categories, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(m => m.Product!.ProductSubcategoryName, new { @class = "form-label" })
+                        <div class="tom-select-custom">
+                            @Html.DropDownListFor(m => m.Product!.ProductSubcategoryName, subcategories, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </div>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        (function () {
+            // INITIALIZATION OF INPUT MASK
+            // =======================================================
+            HSCore.components.HSMask.init('.js-input-mask')
+        })();
+
+        $(document).ready(function () {
+            $('#Product_ProductCategoryName').change(function () {
+                var dropdown = $('#Product_ProductSubcategoryName');
+
+                if (this.value == "--Select--") {
+                    dropdown.empty();
+                    dropdown.prop('disabled', true);
+                }
+                else {
+                    dropdown.prop('disabled', false);
+                    getSubcategories(this.value, dropdown, "@Url.Action("GetSubcategories", new { categoryName = "js-category" })"
+                        .replace("js-category", this.value)
+                    );
+                }
+            });
+        });
+    </script>
+}

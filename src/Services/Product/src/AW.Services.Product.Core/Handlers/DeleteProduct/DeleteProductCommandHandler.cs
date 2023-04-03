@@ -21,7 +21,7 @@ namespace AW.Services.Product.Core.Handlers.DeleteProduct
         {
             _logger.LogInformation("Getting product");
             var product = await _repository.SingleOrDefaultAsync(
-                new GetProductSpecification(request.ProductNumber),
+                new GetProductSpecification(request.ProductNumber!),
                 cancellationToken
             );
             Guard.Against.ProductNull(product, request.ProductNumber!, _logger);

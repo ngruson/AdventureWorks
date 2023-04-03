@@ -111,6 +111,34 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             );
         }
 
+        public async Task<SharedKernel.Product.Handlers.CreateProduct.Product?> CreateProduct(SharedKernel.Product.Handlers.CreateProduct.Product product)
+        {
+            _logger.LogInformation("Call Product API to create product");
+            string requestUri = $"Product?&api-version=1.0";
+            var options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                },
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            string json = JsonSerializer.Serialize(product, options);
+            _logger.LogInformation("Calling POST method on {RequestUri}", requestUri);
+
+            using var response = await _client.PostAsync(
+                requestUri,
+                new StringContent(json, Encoding.UTF8, "application/json")
+            );
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+            var createdProduct = await stream.DeserializeAsync<SharedKernel.Product.Handlers.CreateProduct.Product?>(options);
+
+            _logger.LogInformation("Returning product");
+            return createdProduct;
+        }
+
         public async Task<SharedKernel.Product.Handlers.UpdateProduct.Product?> UpdateProduct(string key, SharedKernel.Product.Handlers.UpdateProduct.Product product)
         {
             _logger.LogInformation("Call Product API to update product");

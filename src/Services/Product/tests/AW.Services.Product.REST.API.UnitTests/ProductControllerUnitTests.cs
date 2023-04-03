@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.Infrastructure.ActionResults;
 using AW.Services.Product.Core.Exceptions;
+using AW.Services.Product.Core.Handlers.CreateProduct;
 using AW.Services.Product.Core.Handlers.DeleteProduct;
 using AW.Services.Product.Core.Handlers.DuplicateProduct;
 using AW.Services.Product.Core.Handlers.GetProduct;
@@ -115,6 +116,98 @@ namespace AW.Services.Product.REST.API.UnitTests
 
                 //Assert
                 actionResult.Should().BeOfType<NotFoundResult>();
+            }
+        }
+
+        public class AddProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnProductWhenProductIsAdded(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                CreateProductCommand command,
+                Core.Handlers.CreateProduct.Product product
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<CreateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(product);
+
+                //Act
+                var actionResult = await sut.CreateProduct(command.Product);
+
+                //Assert
+                var okObjectResult = actionResult as OkObjectResult;
+                okObjectResult.Should().NotBeNull();
+
+                var response = okObjectResult?.Value as Core.Handlers.CreateProduct.Product;
+                response.Should().BeEquivalentTo(product);
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnNotFoundResultWhenProductModelNotFoundExceptionIsThrown(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                CreateProductCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<CreateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ThrowsAsync(new ProductModelNotFoundException(command.Product!.ProductModelName!));
+
+                //Act
+                var actionResult = await sut.CreateProduct(command.Product);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnNotFoundResultWhenProductSubcategoryNotFoundExceptionIsThrown(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                CreateProductCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<CreateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ThrowsAsync(new ProductSubcategoryNotFoundException(command.Product!.ProductModelName!));
+
+                //Act
+                var actionResult = await sut.CreateProduct(command.Product);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile), typeof(Core.AutoMapper.MappingProfile))]
+            public async Task ReturnInternalServerErrorWhenOtherExceptionIsThrown(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] ProductController sut,
+                CreateProductCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<CreateProductCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ThrowsAsync(new Exception());
+
+                //Act
+                var actionResult = await sut.CreateProduct(command.Product);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
             }
         }
 

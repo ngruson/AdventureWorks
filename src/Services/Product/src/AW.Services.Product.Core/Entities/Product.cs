@@ -93,7 +93,7 @@ namespace AW.Services.Product.Core.Entities
         public virtual ProductSubcategory? ProductSubcategory { get; private set; }
         internal void SetSubcategory(ProductSubcategory subcategory)
         {
-            //ProductSubcategory = subcategory;
+            ProductSubcategory = subcategory;
             ProductSubcategoryId = subcategory.Id;
         }
 

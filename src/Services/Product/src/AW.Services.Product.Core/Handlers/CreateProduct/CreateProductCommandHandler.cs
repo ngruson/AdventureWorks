@@ -41,19 +41,21 @@ namespace AW.Services.Product.Core.Handlers.CreateProduct
             _logger.LogInformation("Map to Product entity");
             var newProduct = _mapper.Map<Entities.Product>(request.Product);
             
-            newProduct.SetSubcategory(                
-                await GetSubcategory(
-                    request.Product!.ProductSubcategoryName!,
-                    cancellationToken
-                )
-            );
+            if (!string.IsNullOrEmpty(request.Product!.ProductSubcategoryName!))
+                newProduct.SetSubcategory(                
+                    await GetSubcategory(
+                        request.Product!.ProductSubcategoryName!,
+                        cancellationToken
+                    )
+                );
 
-            newProduct.SetProductModel(
-                await GetProductModel(
-                    request.Product.ProductModelName!,
-                    cancellationToken
-                )
-            );
+            if (!string.IsNullOrEmpty(request.Product!.ProductModelName!))
+                newProduct.SetProductModel(
+                    await GetProductModel(
+                        request.Product.ProductModelName!,
+                        cancellationToken
+                    )
+                );
 
             if (!string.IsNullOrEmpty(request.Product.SizeUnitMeasureCode))
                 newProduct.SetSizeUnitMeasure(

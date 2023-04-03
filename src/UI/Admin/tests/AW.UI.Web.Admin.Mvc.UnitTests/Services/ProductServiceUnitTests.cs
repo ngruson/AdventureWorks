@@ -2,6 +2,7 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+using AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
@@ -112,7 +113,10 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 var viewModel = await sut.GetProductDetail(productNumber);
 
                 //Assert
-                viewModel.Product.Should().BeEquivalentTo(product);
+                viewModel.Product.Should().BeEquivalentTo(product, opt => opt
+                    .Excluding(_ => _.StandardCost)
+                    .Excluding(_ => _.ListPrice)
+                );
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -136,6 +140,28 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 await func.Should().ThrowAsync<ArgumentNullException>();
                 mockMediator.Verify(x => x.Send(
                     It.IsAny<GetProductQuery>(),
+                    It.IsAny<CancellationToken>()
+                ));
+            }
+        }
+
+        public class AddProduct
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task AddProductSucceeds(
+                [Frozen] Mock<IMediator> mockMediator,
+                ProductService sut,
+                AddProductViewModel viewModel
+            )
+            {
+                //Arrange
+
+                //Act
+                await sut.AddProduct(viewModel);
+
+                //Assert
+                mockMediator.Verify(_ => _.Send(
+                    It.IsAny<CreateProductCommand>(),
                     It.IsAny<CancellationToken>()
                 ));
             }

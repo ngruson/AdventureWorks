@@ -34,9 +34,34 @@ namespace AW.Services.Product.Core.Handlers.UpdateProduct
         {
             profile.CreateMap<Entities.Product, Product>()
                 .ReverseMap()
-                .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => Entities.ProductLine.FromName(src.ProductLine!, false)))
-                .ForMember(m => m.Class, opt => opt.MapFrom(src => Entities.Class.FromName(src.Class!, false)))
-                .ForMember(m => m.Style, opt => opt.MapFrom(src => Entities.Style.FromName(src.Style!, false)));
+                .ForMember(m => m.ProductModel, opt => opt.Ignore())
+                .ForMember(m => m.ProductLine, opt => opt.MapFrom(src => MapProductLine(src.ProductLine)))
+                .ForMember(m => m.Class, opt => opt.MapFrom(src => MapClass(src.Class)))
+                .ForMember(m => m.Style, opt => opt.MapFrom(src => MapStyle(src.Style)));
+        }
+
+        private static Entities.ProductLine? MapProductLine(string? productLine)
+        {
+            if (!string.IsNullOrEmpty(productLine))
+                return Entities.ProductLine.FromName(productLine, false);
+
+            return null;
+        }
+
+        private static Entities.Class? MapClass(string? @class)
+        {
+            if (!string.IsNullOrEmpty(@class))
+                return Entities.Class.FromName(@class, false);
+
+            return null;
+        }
+
+        private static Entities.Style? MapStyle(string? style)
+        {
+            if (!string.IsNullOrEmpty(style))
+                return Entities.Style.FromName(style, false);
+
+            return null;
         }
     }
 }

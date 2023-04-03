@@ -31,6 +31,23 @@ function getSalesPersons(territory, dropdown, url) {
     }
 }
 
+function getSubcategories(category, dropdown, url) {
+    if (category === "") {
+        dropdown.empty();
+        dropdown.append('<option selected="true" disabled>--Select--</option>');
+        dropdown.prop('selectedIndex', 0);
+    }
+    else {
+        dropdown.empty();
+        dropdown.append('<option selected="true" disabled>--Select--</option>');
+        $.getJSON(url, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name));
+            });
+        });
+    }
+}
+
 function getFlag(countryRegionCode) {
     if (countryRegionCode == "AU") {
         return "../assets/vendor/flag-icon-css/flags/1x1/au.svg"

@@ -86,7 +86,7 @@ namespace AW.Services.Product.REST.API
 
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient(provider =>
+            services.AddScoped(provider =>
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection")!);
@@ -100,7 +100,7 @@ namespace AW.Services.Product.REST.API
                     typeof(ProductConfiguration).Assembly
                 );
             });
-            services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetProductsQuery).Assembly);
             services.AddMediatR(config => config.RegisterServicesFromAssembly(
                 typeof(GetProductsQuery).Assembly)

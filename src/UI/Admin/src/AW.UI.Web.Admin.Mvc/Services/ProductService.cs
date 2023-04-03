@@ -10,6 +10,7 @@ using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
 using MediatR;
+using AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -82,20 +83,22 @@ namespace AW.UI.Web.Admin.Mvc.Services
             {
                 Product = _mapper.Map<ProductViewModel>(product)
             };
-        }
-
-        public async Task<ProductCategory> GetCategory(string categoryName)
-        {
-            var categories = await _mediator.Send(new GetProductCategoriesQuery());
-            var category = categories.Single(c => c.Name == categoryName);
-            return category;
-        }
+        }        
 
         private async Task UpdateProduct(string key, SharedKernel.Product.Handlers.UpdateProduct.Product product)
         {
             _logger.LogInformation("Updating product");
             await _mediator.Send(new UpdateProductCommand(key, product));
             _logger.LogInformation("Product updated successfully");
+        }
+
+        public async Task AddProduct(AddProductViewModel viewModel)
+        {            
+            var product = _mapper.Map<SharedKernel.Product.Handlers.CreateProduct.Product>(viewModel.Product);
+
+            _logger.LogInformation("Send command to add product");
+            await _mediator.Send(new CreateProductCommand(product));
+            _logger.LogInformation("Command was succesfully executed");
         }
 
         public async Task UpdateProduct(EditProductViewModel viewModel)
@@ -157,6 +160,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Product successfully duplicated");
 
             return product;
+        }
+
+        public async Task<ProductCategory> GetCategory(string categoryName)
+        {
+            var categories = await _mediator.Send(new GetProductCategoriesQuery());
+            var category = categories.Single(c => c.Name == categoryName);
+            return category;
         }
     }
 }

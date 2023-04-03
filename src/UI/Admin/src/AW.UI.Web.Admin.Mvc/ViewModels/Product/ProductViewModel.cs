@@ -6,6 +6,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 {
     public class ProductViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProducts.Product>
     {
+        [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
         
         [Display(Name = "Product number")]
@@ -26,10 +27,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
         public int ReorderPoint { get; set; }
 
         [Display(Name = "Standard cost")]
-        public decimal StandardCost { get; set; }
+        public string? StandardCost { get; set; }
 
         [Display(Name = "List price")]
-        public decimal ListPrice { get; set; }
+        public string? ListPrice { get; set; }
 
         public string? Size { get; set; }
         public string? SizeUnitMeasureCode { get; set; }

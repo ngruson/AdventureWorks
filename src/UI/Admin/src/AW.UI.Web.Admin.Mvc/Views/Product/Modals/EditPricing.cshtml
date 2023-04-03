@@ -28,10 +28,10 @@
                     <div class="row mb-4">
                         <div class="col-sm-6">
                             <div class="row">
-                            @Html.LabelFor(m => m.ListPrice, new { @class = "col-sm-6 col-form-label form-label" })
+                                @Html.LabelFor(m => m.ListPrice, new { @class = "col-sm-6 col-form-label form-label" })
                                 <div class="col-sm-6">
-                                @Html.EditorFor(m => m.ListPrice, new { htmlAttributes = new { @class = "js-input-mask form-control",
-                                    data_hs_mask_options="{ \"mask\": \"$ 0,000.00\" }"} })
+                                    @Html.EditorFor(m => m.ListPrice, new { htmlAttributes = new { @class = "js-input-mask form-control",
+                                        data_hs_mask_options="{ \"mask\": \"$ 0,000.00\" }"} })
                                 </div>
                             </div>
                         </div>

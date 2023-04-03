@@ -987,8 +987,7 @@
 
                                             <div id="navbarProductionProductsMenu" class="nav-collapse collapse @(requestPath == "/Product" ? "show" : "")" data-bs-parent="#navbarProductionMenu" hs-parent-area="#navbarProductionMenu">
                                                 <a asp-action="Index" asp-controller="Product" class="nav-link">Products</a>
-                                                <a class="nav-link " href="./ecommerce-product-details.html">Product Details</a>
-                                                <a class="nav-link " href="./ecommerce-add-product.html">Add Product</a>
+                                                <a asp-action="AddProduct" asp-controller="Product" class="nav-link">Add Product</a>
                                             </div>
                                         </div>
                                         <!-- End Collapse -->
