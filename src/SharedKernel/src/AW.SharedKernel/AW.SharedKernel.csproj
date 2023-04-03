@@ -14,7 +14,7 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Duende.AccessTokenManagement.OpenIdConnect" Version="1.1.0" />
     <PackageReference Include="FluentValidation" Version="11.5.1" />
-    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
