@@ -13,7 +13,6 @@ namespace AW.UI.Web.Admin.Mvc
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
             CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Customer, CustomerViewModel>()
-                //.ForMember(m => m.SalesOrders, opt => opt.Ignore())
                 .Include<SharedKernel.Customer.Handlers.GetCustomers.IndividualCustomer, IndividualCustomerViewModel>()
                 .Include<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer, StoreCustomerViewModel>();
 
@@ -31,8 +30,6 @@ namespace AW.UI.Web.Admin.Mvc
             CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Customer>()
                 .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>()
                 .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
-            //CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>();
-            //CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
         }
     }
 }

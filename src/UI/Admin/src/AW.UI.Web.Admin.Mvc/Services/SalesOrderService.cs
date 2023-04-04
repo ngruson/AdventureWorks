@@ -227,7 +227,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             {
                 var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(salesOrderToUpdate.Territory));
                 var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesOrder.SalesPerson);
-                Guard.Against.Null(salesPerson, _logger, nameof(salesPerson));
+                Guard.Against.Null(salesPerson, _logger);
 
                 salesOrderToUpdate.SalesPerson = new SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
                 {

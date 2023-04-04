@@ -3,6 +3,8 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
 using AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct;
+using AW.UI.Web.SharedKernel.Product.Handlers.DeleteProduct;
+using AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
@@ -363,6 +365,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task DeleteProductGivenProductExists(
+                [Frozen] Mock<IMediator> mediator,
                 ProductService sut,
                 string productNumber
             )
@@ -373,6 +376,11 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 await sut.DeleteProduct(productNumber);
 
                 //Assert
+                mediator.Verify(_ => _.Send(
+                        It.IsAny<DeleteProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
 
@@ -380,6 +388,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
             public async Task DuplicateProductGivenProductExists(
+                [Frozen] Mock<IMediator> mediator,
                 ProductService sut,
                 string productNumber
             )
@@ -390,6 +399,11 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 await sut.DuplicateProduct(productNumber);
 
                 //Assert
+                mediator.Verify(_ => _.Send(
+                        It.IsAny<DuplicateProductCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
     }

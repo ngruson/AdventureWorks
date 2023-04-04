@@ -38,7 +38,6 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels
             //Simple properties
             foreach (var item in form.Where(x => !x.Key.Contains('.')))
             {
-                var value = GetValueForKey(item.Key, item.Value);
                 json.Add(item.Key, item.Value.ToString());
             }
 
@@ -113,8 +112,6 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels
         private List<object> AddItemsForArray(IFormCollection form, string arrayName)
         {
             var result = new List<object>();
-
-            var temp = form.Where(x => ArrayPath(x.Key) == arrayName).ToList();
 
             var arrayItems = form.Where(x => ArrayPath(x.Key) == arrayName)
                 .Select(_ => ArrayItem(_.Key))

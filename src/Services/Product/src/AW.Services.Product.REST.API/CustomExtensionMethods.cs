@@ -89,9 +89,7 @@ namespace AW.Services.Product.REST.API
             services.AddScoped(provider =>
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
-                builder.UseSqlServer(configuration.GetConnectionString("DbConnection")!);
-                builder.EnableSensitiveDataLogging();
-                builder.LogTo(Console.WriteLine);
+                builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
 
                 return new AWContext(
                     provider.GetRequiredService<ILogger<AWContext>>(),

@@ -385,7 +385,11 @@ namespace AW.Services.Product.REST.API.UnitTests
                     It.IsAny<CancellationToken>()
                     )
                 )
-                .ThrowsAsync(new DuplicateProductException(command.ProductNumber!, new ArgumentException()));
+                .ThrowsAsync(new DuplicateProductException(
+                        command.ProductNumber!, 
+                        new ArgumentException(command.ProductNumber)
+                    )
+                );
 
                 //Act
                 var actionResult = await sut.DuplicateProduct(command);

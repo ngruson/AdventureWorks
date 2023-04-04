@@ -86,7 +86,7 @@ namespace AW.Services.Product.Core.Entities
         public ProductModel? ProductModel { get; private set; }
         internal void SetProductModel(ProductModel productModel)
         {
-            //ProductModel = productModel;
+            ProductModel = productModel;
             ProductModelId = productModel.Id;
         }
 

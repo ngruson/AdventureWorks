@@ -52,6 +52,8 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
             await sut.BindModelAsync(bindingContext);
 
             //Assert
+            requestMock.Verify(_ => _.Form);
+            contextMock.Verify(_ => _.Request);
         }
 
         [Theory, AutoMoqData]

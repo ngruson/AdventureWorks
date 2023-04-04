@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 {
     var config = serviceProvider.GetRequiredService<IConfiguration>();
-    var uri = config["ElasticSearchUri"];
 
     configuration
         .MinimumLevel.Verbose()

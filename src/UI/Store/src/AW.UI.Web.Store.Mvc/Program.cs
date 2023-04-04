@@ -40,8 +40,6 @@ var virtualPath = "/ui-web-store-mvc";
 
 app.Map(virtualPath, builder =>
 {
-    //builder.UseExceptionHandler("/Error");
-
     builder.UseForwardedHeaders(new ForwardedHeadersOptions
     {
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
