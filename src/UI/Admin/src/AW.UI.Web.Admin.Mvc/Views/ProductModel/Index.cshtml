@@ -1,0 +1,81 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.ProductModel;
+@{
+    ViewData["Title"] = "Product Models";
+    @model List<ProductModelViewModel>;
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center mb-3">
+        <div class="col-md mb-2 mb-md-0">
+            <h1 class="page-header-title">Product Models <span class="badge bg-soft-dark text-dark ms-2">@Model.Count</span></h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+
+<div class="card">
+    <!-- Header -->
+    <div class="card-header card-header-content-sm-between">
+        <div class="d-grid d-sm-flex justify-content-sm-end align-items-sm-center gap-2">
+            <!-- Datatable Info -->
+            <div id="datatableCounterInfo" style="display: none;">
+                <div class="d-flex align-items-center">
+                    <span class="fs-5 me-3">
+                        <span id="datatableCounter">0</span>
+                        Selected
+                    </span>
+                    <a class="btn btn-outline-danger btn-sm" href="#">
+                        <i class="bi-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            <!-- End Datatable Info -->
+        </div>
+    </div>
+    <!-- End Header-->
+    <!-- Table -->
+    <div class="table-responsive datatable-custom">
+        <table class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+               data-hs-datatables-options='{
+                   "order": [],
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatableWithPaginationPagination"
+                 }'>
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var productModel in Model)
+                {
+                    <tr>
+                        <td>@productModel.Name</td>
+                    </tr>
+                }                
+            </tbody>
+        </table>
+    </div>
+    <!-- End Table -->
+    <!-- Footer -->
+    <div class="card-footer">
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center justify-content-sm-end">
+            <nav id="datatableWithPaginationPagination" aria-label="Pagination"></nav>
+        </div>
+        <!-- End Pagination -->
+    </div>
+    <!-- End Footer -->
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init('.js-datatable')
+        })()
+    </script>
+}

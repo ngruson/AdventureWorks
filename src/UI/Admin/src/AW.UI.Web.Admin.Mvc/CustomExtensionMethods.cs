@@ -54,6 +54,7 @@ namespace AW.UI.Web.Admin.Mvc
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductModelService, ProductModelService>();
             services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
 
