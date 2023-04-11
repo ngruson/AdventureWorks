@@ -83,6 +83,7 @@
     <None Include="PostDeployment\Data\InsertProductDescription.sql" />
     <None Include="PostDeployment\Data\InsertCulture.sql" />
     <None Include="PostDeployment\Data\InsertProductModelProductDescriptionCulture.sql" />
+    <None Include="PostDeployment\Data\InsertLocation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PostDeployment\Script.PostDeployment.sql" />
@@ -94,5 +95,6 @@
     <Build Include="Tables\ProductDescription.sql" />
     <Build Include="Tables\Culture.sql" />
     <Build Include="Tables\ProductModelProductDescriptionCulture.sql" />
+    <Build Include="Tables\Location.sql" />
   </ItemGroup>
 </Project>

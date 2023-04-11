@@ -1,5 +1,4 @@
 ﻿using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetUnitMeasures;
 
@@ -14,7 +13,8 @@ namespace AW.UI.Web.SharedKernel.Interfaces.Api
         Task DeleteProduct(string productNumber);
         Task<Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber);
         Task<List<ProductCategory>?> GetCategories();
-        Task<List<ProductModel>?> GetProductModels();
+        Task<List<Product.Handlers.GetProductModels.ProductModel>?> GetProductModels();
+        Task<Product.Handlers.GetProductModel.ProductModel?> GetProductModel(string name);
         Task<List<UnitMeasure>?> GetUnitMeasures();
         
     }

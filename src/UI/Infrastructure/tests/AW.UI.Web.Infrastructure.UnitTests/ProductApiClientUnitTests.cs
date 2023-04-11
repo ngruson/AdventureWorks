@@ -345,5 +345,128 @@ namespace AW.UI.Web.Infrastructure.UnitTests
                     .WithMessage("Response status code does not indicate success: 404 (Not Found).");
             }
         }
+
+        public class GetProductModels
+        {
+            [Theory, MockHttpData]
+            public async Task ReturnProductModelsGivenProductModelsExist(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                List<SharedKernel.Product.Handlers.GetProductModels.ProductModel> productModels,
+                ProductApiClient sut
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(productModels,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
+
+                //Act
+                var response = await sut.GetProductModels();
+
+                //Assert
+                response.Should().BeEquivalentTo(productModels);
+            }
+
+            [Theory, MockHttpData]
+            public async Task ThrowHttpRequestExceptionGivenProductModelsNotFound(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = sut.GetProductModels;
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class GetProductModel
+        {
+            [Theory, MockHttpData]
+            public async Task ReturnProductModelGivenProductModelExist(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                SharedKernel.Product.Handlers.GetProductModel.ProductModel productModel,
+                ProductApiClient sut
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(productModel,
+                                new JsonSerializerOptions
+                                {
+                                    Converters =
+                                    {
+                                        new JsonStringEnumConverter()
+                                    },
+                                    IgnoreReadOnlyProperties = true,
+                                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                }),
+                                Encoding.UTF8,
+                                "application/json"
+                            )
+                        );
+
+                //Act
+                var response = await sut.GetProductModel(productModel.Name!);
+
+                //Assert
+                response.Should().BeEquivalentTo(productModel);
+            }
+
+            [Theory, MockHttpData]
+            public async Task ThrowHttpRequestExceptionGivenProductModelNotFound(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                ProductApiClient sut,
+                SharedKernel.Product.Handlers.GetProductModel.ProductModel productModel
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Get, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async() => await sut.GetProductModel(productModel.Name!);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
     }
 }

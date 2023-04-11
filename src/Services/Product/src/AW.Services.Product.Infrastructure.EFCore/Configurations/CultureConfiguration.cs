@@ -10,6 +10,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
         {
             builder.ToTable("Culture");
             builder.HasKey(_ => _.Id);
+
+            builder.Property(_ => _.Id)
+                .HasColumnName("CultureID");
         }
     }
 }

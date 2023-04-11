@@ -17,7 +17,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             [Theory, AutoMoqData]
             public async Task Index_ReturnsViewModel(
                 [Frozen] Mock<IProductModelService> productModelService,
-                List<ProductModelViewModel> productModels,
+                [Greedy] List<ProductModelViewModel> productModels,
                 [Greedy] ProductModelController sut
             )
             {

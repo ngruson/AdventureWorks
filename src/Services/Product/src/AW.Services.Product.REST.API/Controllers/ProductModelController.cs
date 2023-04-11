@@ -1,4 +1,5 @@
-﻿using AW.Services.Product.Core.Handlers.GetProductModels;
+﻿using AW.Services.Product.Core.Handlers.GetProductModel;
+using AW.Services.Product.Core.Handlers.GetProductModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,22 @@ namespace AW.Services.Product.REST.API.Controllers
 
             logger.LogInformation("Returning {Count} product models", productModels?.Count);
             return Ok(productModels);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetProductModel([FromRoute] GetProductModelQuery query)
+        {
+            logger.LogInformation("Sending the GetProductModel query");
+            var productModel = await mediator.Send(query);
+
+            if (productModel == null)
+            {
+                logger.LogInformation("Product model '{Name}' was not found", query.Name);
+                return new NotFoundResult();
+            }
+
+            logger.LogInformation("Returning product model");
+            return Ok(productModel);
         }
     }
 }

@@ -85,5 +85,15 @@ namespace AW.Services.Product.Core.GuardClauses
                 throw ex;
             }
         }
+
+        public static void LocationsNullOrEmpty(this IGuardClause guardClause, List<Entities.Location> locations, ILogger logger)
+        {
+            if (locations == null || locations.Count == 0)
+            {
+                var ex = new LocationsNotFoundException();
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
     }
 }

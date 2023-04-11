@@ -29,5 +29,12 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
                 await _productModelService.GetProductModels()
             );
         }
+
+        public async Task<IActionResult> Detail(string name)
+        {
+            return View(
+                await _productModelService.GetProductModel(name)
+            );
+        }
     }
 }

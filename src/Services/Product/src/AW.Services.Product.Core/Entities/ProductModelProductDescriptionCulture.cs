@@ -7,7 +7,7 @@
 
         public string? CultureID { get; set; }
 
-        public ProductDescription? ProductDescription { get; private set; }
-        public Culture? Culture { get; private set; }
+        public ProductDescription? ProductDescription { get; set; }
+        public Culture? Culture { get; set; }
     }
 }

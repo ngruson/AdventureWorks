@@ -1,6 +1,5 @@
 ﻿using AW.UI.Web.SharedKernel.Interfaces.Api;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetUnitMeasures;
 using Microsoft.Extensions.Logging;
@@ -179,7 +178,7 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             _logger.LogInformation("Product succesfully deleted");
         }
 
-        public async Task<List<ProductModel>?> GetProductModels()
+        public async Task<List<SharedKernel.Product.Handlers.GetProductModels.ProductModel>?> GetProductModels()
         {
             string requestUri = $"/product-api/ProductModel?api-version=1.0";
             _logger.LogInformation("Getting product models");
@@ -188,7 +187,28 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
 
-            return await stream.DeserializeAsync<List<ProductModel>>(
+            return await stream.DeserializeAsync<List<SharedKernel.Product.Handlers.GetProductModels.ProductModel>>(
+                new JsonSerializerOptions
+                {
+                    Converters =
+                    {
+                        new JsonStringEnumConverter()
+                    },
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }
+            );
+        }
+
+        public async Task<SharedKernel.Product.Handlers.GetProductModel.ProductModel?> GetProductModel(string name)
+        {
+            string requestUri = $"/product-api/ProductModel/{name}?api-version=1.0";
+            _logger.LogInformation("Getting product model");
+
+            using var response = await _client.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            return await stream.DeserializeAsync<SharedKernel.Product.Handlers.GetProductModel.ProductModel>(
                 new JsonSerializerOptions
                 {
                     Converters =

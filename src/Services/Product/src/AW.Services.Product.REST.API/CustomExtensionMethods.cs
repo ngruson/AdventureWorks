@@ -90,6 +90,8 @@ namespace AW.Services.Product.REST.API
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
+                builder.EnableSensitiveDataLogging();
+                builder.LogTo(Console.WriteLine);
 
                 return new AWContext(
                     provider.GetRequiredService<ILogger<AWContext>>(),

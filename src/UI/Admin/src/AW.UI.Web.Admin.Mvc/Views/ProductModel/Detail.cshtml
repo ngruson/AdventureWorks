@@ -1,0 +1,101 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.ProductModel;
+@using System.Xml;
+@{
+    ViewData["Title"] = $"Product model detail - {Model.Name}";
+    @model ProductModelViewModel;
+
+    var root = Model.Instructions?.SelectSingleNode("*[local-name()='root']");
+    var locations = Model.Instructions?.SelectNodes(
+        "/*[local-name()='root']/*[local-name()='Location']"
+    );
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">@Html.ActionLink("Product models", "Index", "ProductModel", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item active" aria-current="page">Product model details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.Name</h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Instructions</h4>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        @Model.Instructions?.SelectSingleNode("*[local-name()='root']")?.FirstChild?.InnerText
+        
+        @foreach (XmlNode location in locations!)
+        {
+            <div class="mt-3">
+                <h5>Location @location.Attributes?["LocationID"]?.InnerText</h5>
+
+                @location.FirstChild?.InnerText
+
+                @{
+                    var steps = location.SelectNodes("*[local-name()='step']");
+                }
+
+                <ul class="list-pointer list-pointer-soft-bg-primary mt-2">
+                    @foreach (XmlNode step in steps!)
+                    {
+                        <li class="list-pointer-item">@step.InnerText</li>
+                    }
+                </ul>
+                
+            </div>
+        }
+    </div>
+</div>
+<!-- End Card -->
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Descriptions</h4>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        <!-- Table -->
+        <div class="table-responsive datatable-custom">
+            <table class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                   data-hs-datatables-options='{
+                   "order": [],
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatableWithPaginationPagination"
+                 }'>
+                <thead class="thead-light">
+                    <tr>
+                        <th>Culture</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var description in Model.Descriptions!)
+                    {
+                        <tr>
+                            <td>@description.CultureName</td>
+                            <td>@description.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End Table -->
+    </div>
+</div>
+<!-- End Card -->

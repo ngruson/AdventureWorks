@@ -52,7 +52,7 @@
                 @foreach (var productModel in Model)
                 {
                     <tr>
-                        <td>@productModel.Name</td>
+                        <td>@Html.ActionLink(productModel.Name, "Detail", new { Name = productModel.Name })</td>
                     </tr>
                 }                
             </tbody>

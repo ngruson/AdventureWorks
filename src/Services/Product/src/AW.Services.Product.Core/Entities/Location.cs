@@ -1,15 +1,15 @@
+﻿using AW.Services.SharedKernel.Interfaces;
+
 namespace AW.Services.Product.Core.Entities
 {
-    public class Location
+    public class Location : IAggregateRoot
     {
         public int Id { get; set; }
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
-        public decimal CostRate { get; private set; }
+        public decimal CostRate { get; set; }
 
-        public decimal Availability { get; private set; }
-
-        public DateTime ModifiedDate { get; private set; }
+        public decimal Availability { get; set; }
 
         public List<ProductInventory> ProductInventory { get; internal set; } = new();
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Admin.Mvc.ViewModels.ProductModel;
+using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModel;
 using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
 using MediatR;
 
@@ -26,6 +27,17 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var vm = _mapper.Map<List<ProductModelViewModel>>(response);
 
             _logger.LogInformation("Returning product models");
+            return vm;
+        }
+
+        public async Task<ProductModelViewModel> GetProductModel(string name)
+        {
+            _logger.LogInformation("Getting product model");
+
+            var response = await _mediator.Send(new GetProductModelQuery(name));
+            var vm = _mapper.Map<ProductModelViewModel>(response);
+
+            _logger.LogInformation("Returning product model");
             return vm;
         }
     }
