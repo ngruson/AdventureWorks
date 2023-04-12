@@ -4,7 +4,7 @@ namespace AW.Services.Product.Core.Entities
 {
     public class Location : IAggregateRoot
     {
-        public int Id { get; set; }
+        public short Id { get; set; }
         public string? Name { get; set; }
 
         public decimal CostRate { get; set; }

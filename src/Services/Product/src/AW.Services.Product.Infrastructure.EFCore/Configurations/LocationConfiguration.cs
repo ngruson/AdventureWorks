@@ -10,6 +10,9 @@ namespace AW.Services.Product.Infrastructure.EFCore.Configurations
             builder.ToTable("Location");
             builder.HasKey(_ => _.Id);
 
+            builder.Property(_ => _.Id)
+                .HasColumnName("LocationId");
+
             builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50);

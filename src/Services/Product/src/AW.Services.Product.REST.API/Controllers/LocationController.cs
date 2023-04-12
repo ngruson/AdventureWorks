@@ -19,7 +19,7 @@ namespace AW.Services.Product.REST.API.Controllers
         ) => (this.logger, this.mediator) = (logger, mediator);
 
         [HttpGet]
-        public async Task<IActionResult> GetLocations([FromQuery] GetLocationsQuery query)
+        public async Task<IActionResult> GetLocations([FromRoute] GetLocationsQuery query)
         {
             logger.LogInformation("Sending the GetLocations query");
             var locations = await mediator.Send(query);
