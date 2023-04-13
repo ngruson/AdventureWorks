@@ -1,0 +1,29 @@
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@{
+    var categories = ViewData[ProductController.CATEGORIES] as IEnumerable<SelectListItem>;
+}
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasProductFilter" aria-labelledby="offcanvasProductFilterLabel">
+    <div class="offcanvas-header">
+        <h4 id="offcanvasProductFilterLabel" class="mb-0">Filters</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <span class="text-cap small">Category</span>
+
+        <div class="d-grid gap-2 mb-2">
+            @foreach (var category in categories!)
+            {
+                <!-- Form Check -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="productCategoryFilterRadio" value="" id="productCategoryFilterRadio_@category.Text">
+                    <label class="form-check-label" for="productCategoryFilterRadio_@category.Text">@category.Text</label>
+                </div>
+                <!-- End Form Check -->
+            }
+            <a class="link mt-2" href="javascript:;">
+                <i class="bi-x"></i> Clear
+            </a>
+        </div>
+    </div>
+</div>

@@ -40,38 +40,13 @@ namespace AW.UI.Web.Infrastructure.ApiClients
         }
 
         public async Task<GetProductsResult?> GetProducts(
-            int pageIndex,
-            int pageSize,
             string? category,
             string? subcategory,
             string? orderBy
         )
         {
-            string requestUri = $"/product-api/Product?api-version=1.0&pageIndex={pageIndex}&pageSize={pageSize}";
-            string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
-
-            var args = new List<object?> { pageIndex, pageSize };
-
-            if (!string.IsNullOrEmpty(category))
-            {
-                logMessage += ", category {Category}";
-                args.Add(category);
-                requestUri += $"&category={category}";
-            }
-            if (!string.IsNullOrEmpty(subcategory))
-            {
-                logMessage += ", subcategory {Subcategory}";
-                args.Add(subcategory);
-                requestUri += $"&subcategory={subcategory}";
-            }
-            if (!string.IsNullOrEmpty(orderBy))
-            {
-                logMessage += ", orderBy {OrderBy}";
-                args.Add(orderBy);
-                requestUri += $"&orderBy={orderBy}";
-            }
-
-            _logger.LogInformation(logMessage, args.ToArray());
+            string requestUri = $"/product-api/Product?api-version=1.0";
+            _logger.LogInformation("Getting products from API");
 
             using var response = await _client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();

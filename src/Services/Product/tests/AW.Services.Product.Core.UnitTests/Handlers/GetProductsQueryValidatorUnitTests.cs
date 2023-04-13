@@ -16,7 +16,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name)");
+            var query = new GetProductsQuery(category, subcategory, "asc(name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -33,7 +33,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var query = new GetProductsQuery(0, 10, category, subcategory, "desc(name)");
+            var query = new GetProductsQuery(category, subcategory, "desc(name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -50,7 +50,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var query = new GetProductsQuery(0, 10, category, subcategory, "fail(name)");
+            var query = new GetProductsQuery(category, subcategory, "fail(name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -68,7 +68,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var query = new GetProductsQuery(0, 10, category, subcategory, "asc_name)");
+            var query = new GetProductsQuery(category, subcategory, "asc_name)");
 
             //Act
             var result = sut.TestValidate(query);
@@ -86,7 +86,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name");
+            var query = new GetProductsQuery(category, subcategory, "asc(name");
 
             //Act
             var result = sut.TestValidate(query);

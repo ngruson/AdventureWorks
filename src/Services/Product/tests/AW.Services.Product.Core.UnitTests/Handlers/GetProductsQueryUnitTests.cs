@@ -1,4 +1,4 @@
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using AW.Services.Product.Core.AutoMapper;
 using AW.Services.Product.Core.Exceptions;
@@ -25,12 +25,12 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         {
             // Arrange
             productRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<GetProductsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(products);
 
-            var query = new GetProductsQuery(0, 10, category, subcategory, "");
+            var query = new GetProductsQuery(category, subcategory, "");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -58,15 +58,13 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         {
             // Arrange
             var query = new GetProductsQuery(
-                0,
-                10,
                 category,
                 subcategory,
                 ""
             );
 
             productRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<GetProductsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(new List<Entities.Product>());
@@ -78,7 +76,7 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
             await func.Should().ThrowAsync<ProductsNotFoundException>()
                 .WithMessage("Products not found");
             productRepoMock.Verify(x => x.ListAsync(
-                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<GetProductsSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
         }
@@ -94,12 +92,12 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         {
             //Arrange
             productRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<GetProductsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(products);
 
-            var query = new GetProductsQuery(0, 10, category, subcategory, "asc(name)");
+            var query = new GetProductsQuery(category, subcategory, "asc(name)");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
@@ -128,12 +126,12 @@ namespace AW.Services.Product.Core.UnitTests.Handlers
         {
             //Arrange
             productRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetProductsPaginatedSpecification>(),
+                It.IsAny<GetProductsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(products);
 
-            var query = new GetProductsQuery(0, 10, category, subcategory, "desc(name)");
+            var query = new GetProductsQuery(category, subcategory, "desc(name)");
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);

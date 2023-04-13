@@ -21,8 +21,6 @@ namespace AW.UI.Web.SharedKernel.Product.Handlers.GetProducts
         {
             _logger.LogInformation("Getting products from API");
             var productsResult = await _client.GetProducts(
-                request.PageIndex,
-                request.PageSize,
                 request.Category,
                 request.Subcategory,
                 request.OrderBy ?? "asc(productNumber)"

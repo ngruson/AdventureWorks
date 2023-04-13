@@ -31,23 +31,7 @@ namespace AW.Services.Product.REST.API.Controllers
         {
             try
             {
-                string logMessage = "Getting products with page index {PageIndex}, page size {PageSize}";
-                var args = new List<object> { query.PageIndex, query.PageSize };
-
-                if (!string.IsNullOrEmpty(query.Category))
-                {
-                    logMessage += ", category {Category}";
-                    args.Add(query.Category);
-                }
-                if (!string.IsNullOrEmpty(query.Subcategory))
-                {
-                    logMessage += ", subcategory {Subcategory}";
-                    args.Add(query.Subcategory);
-                }
-
-                logger.LogInformation(logMessage, args.ToArray());
-
-                logger.LogInformation("Sending the GetProducts query");
+                logger.LogInformation("Sending the GetProducts query with {Query}", query);
                 var result = await mediator.Send(query);
 
                 if (result == null || result.Products == null || !result.Products.Any())

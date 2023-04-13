@@ -12,7 +12,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel);
         Task DeleteProduct(string productNumber);
         Task<DuplicateProduct.Product> DuplicateProduct(string productNumber);
-        Task<ProductIndexViewModel> GetProducts(int pageIndex, int pageSize);
+        Task<ProductIndexViewModel> GetProducts();
         Task<ProductDetailViewModel> GetProductDetail(string productNumber);
         Task<GetProductCategories.ProductCategory> GetCategory(string categoryName);
     }

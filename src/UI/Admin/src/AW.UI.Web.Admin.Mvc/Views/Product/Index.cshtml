@@ -8,7 +8,7 @@
 <div class="page-header">
     <div class="row align-items-center mb-3">
         <div class="col-md mb-2 mb-md-0">
-            <h1 class="page-header-title">Products <span class="badge bg-soft-dark text-dark ms-2">@Model.PaginationInfo!.TotalItems</span></h1>
+            <h1 class="page-header-title">Products <span class="badge bg-soft-dark text-dark ms-2">@Model.Products.Count</span></h1>
         </div>
 
         <div class="col-md-auto">
@@ -22,6 +22,18 @@
 <div class="card">
     <!-- Header -->
     <div class="card-header card-header-content-sm-between">
+        <div class="mb-2 mb-md-0">
+            <form>
+                <!-- Search -->
+                <div class="input-group input-group-merge input-group-flush">
+                    <div class="input-group-prepend input-group-text">
+                        <i class="bi-search"></i>
+                    </div>
+                    <input id="datatableSearch" type="search" class="form-control" placeholder="Search products" aria-label="Search products">
+                </div>
+                <!-- End Search -->
+            </form>
+        </div>
         <div class="d-grid d-sm-flex justify-content-sm-end align-items-sm-center gap-2">
             <!-- Datatable Info -->
             <div id="datatableCounterInfo" style="display: none;">
@@ -36,6 +48,9 @@
                 </div>
             </div>
             <!-- End Datatable Info -->
+            <button class="btn btn-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProductFilter" aria-controls="offcanvasProductFilter">
+                <i class="bi-filter me-1"></i> Filters
+            </button>
             <!-- Dropdown -->
             <div class="dropdown">
                 <button type="button" class="btn btn-white w-100" id="showHideDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
@@ -183,18 +198,14 @@
     <!-- End Table -->
     <!-- Footer -->
     <div class="card-footer">
-        <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
-            <div class="col-sm-auto">
-                <div class="d-flex justify-content-center justify-content-sm-end">
-                    <!-- Pagination -->
-                    <partial name="_pagination" for="@Model.PaginationInfo" />
-                </div>
-            </div>
-            <!-- End Col -->
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center justify-content-sm-end">
+            <nav id="datatablePagination" aria-label="Pagination"></nav>
         </div>
-        <!-- End Row -->
+        <!-- End Pagination -->
     </div>
     <!-- End Footer -->
+
 </div>
 
 @section Scripts

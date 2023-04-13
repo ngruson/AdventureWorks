@@ -28,9 +28,7 @@ namespace AW.Services.Product.Core.Handlers.GetProducts
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting products from database");
 
-            var spec = new GetProductsPaginatedSpecification(
-                request.PageIndex, 
-                request.PageSize,
+            var spec = new GetProductsSpecification(
                 request.Category,
                 request.Subcategory,
                 OrderBy(request.OrderBy)

@@ -38,7 +38,7 @@ namespace AW.UI.Web.Store.Mvc.Controllers
             ViewData["pageSizeList"] = GetPageSizeList();
 
             var products = await _mediator.Send(new GetProductsQuery(
-                    page ?? 0, pageSize ?? 12, productCategory, productSubcategory
+                    productCategory, productSubcategory
                 )
             );
 

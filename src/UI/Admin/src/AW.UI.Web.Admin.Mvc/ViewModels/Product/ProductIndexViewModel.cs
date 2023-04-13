@@ -2,7 +2,10 @@
 {
     public class ProductIndexViewModel
     {
-        public List<ProductViewModel>? Products { get; set; }
-        public PaginationInfoViewModel? PaginationInfo { get; set; }
+        public ProductIndexViewModel(List<ProductViewModel> products)
+        {
+            Products = products;
+        }
+        public List<ProductViewModel> Products { get; set; }
     }
 }

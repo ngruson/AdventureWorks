@@ -18,8 +18,6 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
         {
             //Arrange
             mockProductApiClient.Setup(_ => _.GetProducts(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>()
@@ -33,8 +31,6 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
             result.Should().Be(products);
 
             mockProductApiClient.Verify(_ => _.GetProducts(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>()
@@ -57,8 +53,6 @@ namespace AW.UI.Web.SharedKernel.UnitTests.Product.Handlers
             await func.Should().ThrowAsync<ArgumentNullException>();
 
             mockProductApiClient.Verify(_ => _.GetProducts(
-                It.IsAny<int>(),
-                It.IsAny<int>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>()

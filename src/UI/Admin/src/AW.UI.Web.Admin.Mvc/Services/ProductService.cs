@@ -31,35 +31,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _mediator = mediator;
         }        
 
-        public async Task<ProductIndexViewModel> GetProducts(int pageIndex, int pageSize)
+        public async Task<ProductIndexViewModel> GetProducts()
         {
-            _logger.LogInformation(
-                "Getting products with {PageIndex} and {PageSize}",
-                pageIndex,
-                pageSize
-            );
-            var response = await _mediator.Send(new GetProductsQuery(
-                    pageIndex,
-                    pageSize,
-                    null, 
-                    null
-                )
-            );
+            _logger.LogInformation("Getting products");
+            var response = await _mediator.Send(new GetProductsQuery(null, null));
 
-            var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalProducts / pageSize).ToString());
-
-            var vm = new ProductIndexViewModel
-            {
-                Products = _mapper.Map<List<ProductViewModel>>(response.Products),
-                PaginationInfo = new PaginationInfoViewModel(
-                    response.TotalProducts,
-                    response.Products!.Count,
-                    pageIndex,
-                    totalPages,
-                    pageIndex == 0 ? "disabled" : "",
-                    pageIndex == totalPages - 1 ? "disabled" : ""
-                )
-            };
+            var vm = new ProductIndexViewModel(
+                _mapper.Map<List<ProductViewModel>>(response.Products)
+            );
 
             _logger.LogInformation("Returning {ViewModel}", vm);
             return vm;

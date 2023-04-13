@@ -24,17 +24,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
             )
             {
                 //Arrange
-                productService.Setup(x => x.GetProducts(
-                    It.IsAny<int>(),
-                    It.IsAny<int>()
-                ))
-                .ReturnsAsync(viewModel);
+                productService.Setup(x => x.GetProducts())
+                    .ReturnsAsync(viewModel);
 
                 //Act
-                var actionResult = await sut.Index(
-                    0
-                );
-
+                var actionResult = await sut.Index();
+                    
                 //Assert
                 var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
                 viewResult.Model.Should().Be(viewModel);

@@ -37,13 +37,10 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
             _productService = productService;
         }
 
-        public async Task<IActionResult> Index(int? pageId)
+        public async Task<IActionResult> Index()
         {
             return View(
-                await _productService.GetProducts(
-                    pageId ?? 0,
-                    Constants.ITEMS_PER_PAGE
-                )
+                await _productService.GetProducts()
             );
         }
 

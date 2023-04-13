@@ -3,11 +3,9 @@ using AW.Services.Product.Core.Common;
 
 namespace AW.Services.Product.Core.Specifications
 {
-    public class GetProductsPaginatedSpecification : Specification<Entities.Product>
+    public class GetProductsSpecification : Specification<Entities.Product>
     {
-        public GetProductsPaginatedSpecification(
-            int pageIndex, 
-            int pageSize, 
+        public GetProductsSpecification(
             string? category,
             string? subcategory,
             OrderByClause<Entities.Product>? orderByClause) : base()
@@ -20,9 +18,7 @@ namespace AW.Services.Product.Core.Specifications
                 .ThenInclude(ppp => ppp.ProductPhoto);
 
             Query
-                .Where(p => p.DiscontinuedDate == null && p.ListPrice > 0)
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize);
+                .Where(p => p.DiscontinuedDate == null && p.ListPrice > 0);
 
             if (!string.IsNullOrEmpty(category))
                 Query.Where(p => p.ProductSubcategory!.ProductCategory!.Name == category);
