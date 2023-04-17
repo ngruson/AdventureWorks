@@ -6,7 +6,7 @@ namespace AW.Services.HumanResources.Core.AutoMapper
     {
         public MappingProfile()
         {
-            ApplyMappingsFromAssembly(typeof(Handlers.GetAllEmployees.GetAllEmployeesQuery).Assembly);
+            ApplyMappingsFromAssembly(typeof(Handlers.GetEmployees.GetEmployeesQuery).Assembly);
         }
     }
 }

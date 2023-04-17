@@ -8,37 +8,35 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
 {
-    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, GetEmployeesResult?>
+    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, List<Employee>>
     {
         private readonly ILogger<GetEmployeesQueryHandler> _logger;
-        private readonly IMapper _mapper;
         private readonly IRepository<Entities.Employee> _repository;
+        private readonly IMapper _mapper;
 
         public GetEmployeesQueryHandler(
             ILogger<GetEmployeesQueryHandler> logger,
-            IMapper mapper,
-            IRepository<Entities.Employee> repository
-        ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
-        
-        public async Task<GetEmployeesResult?> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+            IRepository<Entities.Employee> repository,
+            IMapper mapper
+        )
         {
-            _logger.LogInformation("Handle called");
-            _logger.LogInformation("Getting customers from database");
+            _logger = logger;
+            _repository = repository;
+            _mapper = mapper;
+        }
 
-            var spec = new GetEmployeesPaginatedSpecification(
-                request.PageIndex,
-                request.PageSize
-            );
-            var countSpec = new CountEmployeesSpecification();
+        public async Task<List<Employee>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Getting employees for request {@Request}", request);
+
+            var spec = new GetEmployeesSpecification();
 
             var employees = await _repository.ListAsync(spec, cancellationToken);
             Guard.Against.EmployeesNullOrEmpty(employees, _logger);
 
-            _logger.LogInformation("Returning customers");
-            return new GetEmployeesResult(
-                employees: _mapper.Map<List<Employee>>(employees),
-                totalEmployees: await _repository.CountAsync(countSpec, cancellationToken)
-            );
+            _logger.LogInformation("Returning {Count} employees", employees.Count);
+
+            return _mapper.Map<List<Employee>>(employees);
         }
     }
 }

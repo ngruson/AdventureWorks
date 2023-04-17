@@ -1,9 +1,8 @@
 ﻿using MediatR;
 
-namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
+namespace AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployees
 {
     public class GetEmployeesQuery : IRequest<List<Employee>>
     {
-
     }
 }

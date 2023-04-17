@@ -29,7 +29,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger = logger;
             _mapper = mapper;
             _mediator = mediator;
-        }        
+        }
 
         public async Task<ProductIndexViewModel> GetProducts()
         {

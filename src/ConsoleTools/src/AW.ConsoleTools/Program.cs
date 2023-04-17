@@ -5,7 +5,7 @@ using AW.ConsoleTools.Handlers.AzureAD.CreateGroups;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUsers;
 using AW.ConsoleTools.Handlers.CreateLoginsForCustomers;
 using AW.Services.Customer.Core.Handlers.GetAllCustomers;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.IdentityServer.Core.Handlers.CreateLogin;
 using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
 using AW.Services.Product.Core.Handlers.StoreProductPhotos;
@@ -36,13 +36,13 @@ using IHost host = Host.CreateDefaultBuilder(args)
                 typeof(MappingProfile).Assembly, 
                 typeof(GetAllProductsWithPhotosQuery).Assembly,
                 typeof(GetAllCustomersQuery).Assembly,
-                typeof(GetAllEmployeesQuery).Assembly
+                typeof(GetEmployeesQuery).Assembly
             )
             .AddMediatR(config => config.RegisterServicesFromAssemblies(
                 typeof(Program).Assembly, 
                 typeof(GetAllProductsWithPhotosQuery).Assembly,
                 typeof(GetAllCustomersQuery).Assembly,
-                typeof(GetAllEmployeesQuery).Assembly,
+                typeof(GetEmployeesQuery).Assembly,
                 typeof(CreateLoginCommand).Assembly
              ))
             .AddScoped<IFileHandler, FileHandler>();

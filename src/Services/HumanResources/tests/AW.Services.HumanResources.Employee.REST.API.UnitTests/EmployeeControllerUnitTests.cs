@@ -1,4 +1,4 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetEmployee;
 using AW.Services.HumanResources.Core.Handlers.GetEmployees;
@@ -26,17 +26,12 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
             )
             {
                 //Arrange
-                var result = new GetEmployeesResult(
-                    employees: employees,
-                    totalEmployees: employees.Count
-                );
-
                 mockMediator.Setup(x => x.Send(
                         It.IsAny<GetEmployeesQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .ReturnsAsync(result);
+                .ReturnsAsync(employees);
 
                 //Act
                 var actionResult = await sut.GetEmployees(query);
@@ -45,10 +40,8 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult?.Value as GetEmployeesResult;
-                response?.TotalEmployees.Should().Be(employees.Count);
-                response?.Employees.Count.Should().Be(employees.Count);
-                response?.Employees.Should().BeEquivalentTo(employees);
+                var response = okObjectResult?.Value as List<Core.Handlers.GetEmployees.Employee>;
+                response.Should().BeEquivalentTo(employees);
             }
 
             [Theory]

@@ -10,7 +10,7 @@ using AW.SharedKernel.Api;
 using AW.Services.SharedKernel.EFCore;
 using MediatR;
 using AW.Services.SharedKernel.Interfaces;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -100,9 +100,9 @@ namespace AW.Services.HumanResources.Employee.REST.API
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetAllEmployeesQuery).Assembly);
+            services.AddAutoMapper(typeof(MappingProfile).Assembly, typeof(GetEmployeesQuery).Assembly);
             services.AddMediatR(config => config.RegisterServicesFromAssembly(
-                typeof(GetAllEmployeesQuery).Assembly)
+                typeof(GetEmployeesQuery).Assembly)
             );
 
             return services;

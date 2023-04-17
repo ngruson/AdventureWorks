@@ -2,7 +2,7 @@
 using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
@@ -17,9 +17,9 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task Handle_EmployeesExists_ReturnEmployees(
             [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
-            GetAllEmployeesQueryHandler sut,
+            GetEmployeesQueryHandler sut,
             List<NameFactory> names,
-            GetAllEmployeesQuery query
+            GetEmployeesQuery query
         )
         {
             // Arrange
@@ -34,7 +34,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             ).ToList();
 
             employeeRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetAllEmployeesSpecification>(),
+                It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(employees);
@@ -60,13 +60,13 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         [AutoMoqData]
         public async Task Handle_NoEmployeesExists_ThrowArgumentNullException(
             [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
-            GetAllEmployeesQueryHandler sut,
-            GetAllEmployeesQuery query
+            GetEmployeesQueryHandler sut,
+            GetEmployeesQuery query
         )
         {
             // Arrange            
             employeeRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetAllEmployeesSpecification>(),
+                It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(new List<Entities.Employee>());

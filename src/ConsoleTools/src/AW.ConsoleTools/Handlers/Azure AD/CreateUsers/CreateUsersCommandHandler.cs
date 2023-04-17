@@ -1,7 +1,7 @@
 ﻿using AW.ConsoleTools.Handlers.AzureAD.CreateUser;
 using AW.ConsoleTools.Handlers.AzureAD.GetGroup;
 using AW.ConsoleTools.Handlers.AzureAD.GetUser;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.SharedKernel.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -27,7 +27,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
         public async Task Handle(CreateUsersCommand request, CancellationToken cancellationToken)
         {
             var employees = await _mediator.Send(
-                new GetAllEmployeesQuery(),
+                new GetEmployeesQuery(),
                 cancellationToken
             );
             Guard.Against.Null(employees, _logger);

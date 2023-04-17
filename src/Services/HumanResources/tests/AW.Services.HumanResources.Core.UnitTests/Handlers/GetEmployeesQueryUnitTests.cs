@@ -34,7 +34,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             ).ToList();
 
             employeeRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetEmployeesPaginatedSpecification>(),
+                It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(employees);
@@ -49,14 +49,13 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert            
-            result!.Employees.Should().BeEquivalentTo(employees, opt => opt
+            result!.Should().BeEquivalentTo(employees, opt => opt
                 .Excluding(_ => _.Id)
                 .Excluding(_ => _.Title)
                 .Excluding(_ => _.Suffix)
                 .Excluding(_ => _.Gender)
                 .Excluding(_ => _.MaritalStatus)
             );
-            result.TotalEmployees.Should().Be(employees.Count);
             employeeRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<ISpecification<Entities.Employee>>(),
                 It.IsAny<CancellationToken>()
@@ -74,7 +73,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             // Arrange            
 #pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             employeeRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetEmployeesPaginatedSpecification>(),
+                It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((List<Entities.Employee>?)null);

@@ -4,7 +4,7 @@ using AW.ConsoleTools.Handlers.AzureAD.CreateUser;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUsers;
 using AW.ConsoleTools.Handlers.AzureAD.GetGroup;
 using AW.ConsoleTools.Handlers.AzureAD.GetUser;
-using AW.Services.HumanResources.Core.Handlers.GetAllEmployees;
+using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.SharedKernel.UnitTesting;
 using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
@@ -58,7 +58,7 @@ namespace AW.ConsoleTools.UnitTests
             };
 
             mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -86,7 +86,7 @@ namespace AW.ConsoleTools.UnitTests
 
             //Assert
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );
@@ -157,7 +157,7 @@ namespace AW.ConsoleTools.UnitTests
             };
 
             mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -184,7 +184,7 @@ namespace AW.ConsoleTools.UnitTests
 
             //Assert
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );
@@ -259,7 +259,7 @@ namespace AW.ConsoleTools.UnitTests
             };
 
             mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -294,7 +294,7 @@ namespace AW.ConsoleTools.UnitTests
 
             //Assert
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );
@@ -345,7 +345,7 @@ namespace AW.ConsoleTools.UnitTests
                 .WithMessage("Value cannot be null. (Parameter 'employees')");
 
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );
@@ -397,7 +397,7 @@ namespace AW.ConsoleTools.UnitTests
             };
 
             mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -411,7 +411,7 @@ namespace AW.ConsoleTools.UnitTests
                 .WithMessage("Value cannot be null. (Parameter 'group')");
 
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );
@@ -482,7 +482,7 @@ namespace AW.ConsoleTools.UnitTests
             };
 
             mockMediator.Setup(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -496,7 +496,7 @@ namespace AW.ConsoleTools.UnitTests
                 .WithMessage("Value cannot be null. (Parameter 'user')");
 
             mockMediator.Verify(_ => _.Send(
-                    It.IsAny<GetAllEmployeesQuery>(),
+                    It.IsAny<GetEmployeesQuery>(),
                     It.IsAny<CancellationToken>()
                 )
             );

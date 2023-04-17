@@ -2,9 +2,9 @@
 
 namespace AW.Services.HumanResources.Core.Specifications
 {
-    public class GetAllEmployeesSpecification : Specification<Entities.Employee>
+    public class GetEmployeesSpecification : Specification<Entities.Employee>
     {
-        public GetAllEmployeesSpecification()
+        public GetEmployeesSpecification()
         {
 
             Query.Include(_ => _.DepartmentHistory)

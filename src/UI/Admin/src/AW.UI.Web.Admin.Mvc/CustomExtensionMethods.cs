@@ -53,6 +53,7 @@ namespace AW.UI.Web.Admin.Mvc
             );
 
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductModelService, ProductModelService>();
             services.AddScoped<ISalesOrderService, SalesOrderService>();
@@ -108,6 +109,15 @@ namespace AW.UI.Web.Admin.Mvc
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
                 new[] { configuration["AuthN:ApiScopes:CustomerApiRead"]! }
+            );
+
+            services.AddHttpClient<IEmployeeApiClient, EmployeeApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["EmployeeAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:EmployeeApiRead"]! }
             );
 
             services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>

@@ -947,7 +947,29 @@
                         <div class="navbar-nav nav-compact">
                         </div>
                         <div id="navbarVerticalMenuPagesMenu">
-                            <!-- Collapse -->
+                            <div class="nav-item">
+                                <a class="nav-link dropdown-toggle @(requestPath == "/HumanResources" ? "active" : "")" href="#navbarHumanResourcesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesMenu" aria-expanded="true" aria-controls="navbarHumanResourcesMenu">
+                                    <i class="bi-person-badge nav-icon"></i>
+                                    <span class="nav-link-title">Human Resources</span>
+                                </a>
+
+                                <div id="navbarHumanResourcesMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
+                                    <div id="navbarEmployees">
+                                        <!-- Collapse -->
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/HumanResources/Employee" ? "collapsed" : "")" href="#navbarHumanResourcesEmployeesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesEmployeesMenu" aria-expanded="@(requestPath == "/HumanResources")" aria-controls="navbarHumanResourcesEmployeesMenu">
+                                                Employees
+                                            </a>
+
+                                            <div id="navbarHumanResourcesEmployeesMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Employees" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
+                                                <a asp-action="Index" asp-controller="Employee" class="nav-link @(requestPath == "/HumanResources/Employees" ? "active" : "")">Employees</a>
+                                                <a class="nav-link " href="./ecommerce-add-customers.html">Add Employee</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Collapse -->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="nav-item">
                                 <a class="nav-link dropdown-toggle @(requestPath == "/Customers" || requestPath == "/" ? "active" : "")" href="#navbarCustomerMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomerMenu" aria-expanded="true" aria-controls="navbarCustomerMenu">
                                     <i class="bi-person nav-icon"></i>

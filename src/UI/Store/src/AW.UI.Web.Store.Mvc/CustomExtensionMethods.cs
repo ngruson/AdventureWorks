@@ -8,7 +8,6 @@ using AW.UI.Web.Store.Mvc.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.IdentityModel.Tokens.Jwt;
-using MediatR;
 using AW.UI.Web.SharedKernel.Product.Caching;
 using AW.UI.Web.SharedKernel.ReferenceData.Caching;
 using AW.UI.Web.SharedKernel.SalesPerson.Caching;
@@ -64,6 +63,7 @@ namespace AW.UI.Web.Store.Mvc
         {
             string basketApiReadScope;
             string customerApiReadScope;
+            string employeeApiReadScope;
             string productApiReadScope;
             string referenceDataApiReadScope;
             string salesOrderApiReadScope;
@@ -75,6 +75,7 @@ namespace AW.UI.Web.Store.Mvc
 
                 basketApiReadScope = configuration["AuthN:IdSrv:ApiScopes:BasketApiRead"]!;
                 customerApiReadScope = configuration["AuthN:IdSrv:ApiScopes:CustomerApiRead"]!;
+                employeeApiReadScope = configuration["AuthN:IdSrv:ApiScopes:EmployeeApiRead"]!;
                 productApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ProductApiRead"]!;
                 referenceDataApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ReferenceDataApiRead"]!;
                 salesOrderApiReadScope = configuration["AuthN:IdSrv:ApiScopes:SalesOrderApiRead"]!;
@@ -84,6 +85,7 @@ namespace AW.UI.Web.Store.Mvc
             {
                 basketApiReadScope = configuration["AuthN:AzureAd:ApiScopes:BasketApiRead"]!;
                 customerApiReadScope = configuration["AuthN:AzureAd:ApiScopes:CustomerApiRead"]!;
+                employeeApiReadScope = configuration["AuthN:AzureAd:ApiScopes:EmployeeApiRead"]!;
                 productApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ProductApiRead"]!;
                 referenceDataApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ReferenceDataApiRead"]!;
                 salesOrderApiReadScope = configuration["AuthN:AzureAd:ApiScopes:SalesOrderApiRead"]!;
@@ -106,6 +108,15 @@ namespace AW.UI.Web.Store.Mvc
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
                 new[] { customerApiReadScope }
+            );
+
+            services.AddHttpClient<IEmployeeApiClient, EmployeeApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["EmployeeAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { employeeApiReadScope }
             );
 
             services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
