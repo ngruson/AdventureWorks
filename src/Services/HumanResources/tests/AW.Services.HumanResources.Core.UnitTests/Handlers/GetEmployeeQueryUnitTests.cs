@@ -24,8 +24,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             //Arrange
             var employee = new Entities.Employee
             {
-                LoginID = loginID,
-                MaritalStatus = Entities.MaritalStatus.Married
+                LoginID = loginID
             };
 
             employeeRepoMock.Setup(_ => _.SingleOrDefaultAsync(

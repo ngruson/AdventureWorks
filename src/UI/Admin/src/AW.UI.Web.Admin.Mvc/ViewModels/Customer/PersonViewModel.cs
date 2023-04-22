@@ -8,7 +8,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
     public class PersonViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.Person>
     {
         public string? Title { get; set; }
-        public PersonNameViewModel? Name { get; set; }
+        public EmployeeNameViewModel? Name { get; set; }
 
         public string? Suffix { get; set; }
 

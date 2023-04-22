@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EmployeeDepartmentHistory](
-	[EmployeeID] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeID] [int] NOT NULL,
 	[DepartmentID] [int] NOT NULL,
 	[ShiftID] [int] NOT NULL,
 	[StartDate] [date] NOT NULL,

@@ -12,6 +12,10 @@ namespace AW.Services.HumanResources.Core.Specifications
                 .ThenInclude(_ => _.Department);
 
             Query
+                .Include(_ => _.DepartmentHistory)
+                .ThenInclude(_ => _.Shift);
+
+            Query
                 .Where(c => c.LoginID == loginID);
 
         }

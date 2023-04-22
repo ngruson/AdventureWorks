@@ -12,6 +12,9 @@ namespace AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployees
         public string? JobTitle { get; set; }
 
         public DateTime BirthDate { get; set; }
+        public string? MaritalStatus { get; set; }
+
+        public string? Gender { get; set; }
 
         public DateTime HireDate { get; set; }
 

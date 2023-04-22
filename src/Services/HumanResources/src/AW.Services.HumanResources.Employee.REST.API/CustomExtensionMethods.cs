@@ -86,7 +86,7 @@ namespace AW.Services.HumanResources.Employee.REST.API
 
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient(provider =>
+            services.AddScoped(provider =>
             {
                 var builder = new DbContextOptionsBuilder<AWContext>();
                 builder.UseSqlServer(configuration.GetConnectionString("DbConnection"));

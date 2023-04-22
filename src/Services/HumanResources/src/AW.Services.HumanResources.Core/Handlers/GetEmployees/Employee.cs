@@ -12,20 +12,23 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
             DepartmentHistory = departmentHistory;
         }
 
-        public NameFactory? Name { get; internal set; }
-        public string? NationalIDNumber { get; internal set; }
+        public NameFactory? Name { get; set; }
+        public string? NationalIDNumber { get; set; }
 
-        public string? LoginID { get; internal set; }
+        public string? LoginID { get; set; }
 
-        public string? JobTitle { get; internal set; }
+        public string? JobTitle { get; set; }
 
-        public DateTime BirthDate { get; internal set; }
+        public DateTime BirthDate { get; set; }
+        public string? MaritalStatus { get; set; }
 
-        public DateTime HireDate { get; internal set; }
+        public string? Gender { get; set; }
 
-        public bool Salaried { get; internal set; }
+        public DateTime HireDate { get; set; }
 
-        public bool Current { get; internal set; }
+        public bool Salaried { get; set; }
+
+        public bool Current { get; set; }
 
         public List<EmployeeDepartmentHistory> DepartmentHistory { get; internal set; } = new();
     }

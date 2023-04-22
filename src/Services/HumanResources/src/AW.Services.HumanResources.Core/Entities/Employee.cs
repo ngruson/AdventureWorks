@@ -12,9 +12,9 @@ namespace AW.Services.HumanResources.Core.Entities
 
         public DateTime BirthDate { get; set; }
 
-        public MaritalStatus? MaritalStatus { get; set; }
+        public MaritalStatus? MaritalStatus { get; private set; }
 
-        public Gender? Gender { get; set; }
+        public Gender? Gender { get; private set; }
 
         public DateTime HireDate { get; set; }
 

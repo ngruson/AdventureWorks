@@ -74,7 +74,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.ModelBinder
                     ContactPerson = new PersonViewModel
                     {
                         Title = title,
-                        Name = new PersonNameViewModel
+                        Name = new EmployeeNameViewModel
                         {
                             FirstName = name.FirstName,
                             MiddleName = name.MiddleName,

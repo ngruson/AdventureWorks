@@ -3,9 +3,9 @@ using AW.SharedKernel.AutoMapper;
 using AW.SharedKernel.ValueTypes;
 using System.ComponentModel.DataAnnotations;
 
-namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
+namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
-    public class PersonNameViewModel : IMapFrom<NameFactory>, INameFactory
+    public class EmployeeNameViewModel : IMapFrom<NameFactory>, INameFactory
     {
         [Display(Name = "First name")]
         [Required]
@@ -23,7 +23,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<NameFactory, PersonNameViewModel>()
+            profile.CreateMap<NameFactory, EmployeeNameViewModel>()
                 .ReverseMap();
         }
     }

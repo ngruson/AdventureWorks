@@ -948,7 +948,7 @@
                         </div>
                         <div id="navbarVerticalMenuPagesMenu">
                             <div class="nav-item">
-                                <a class="nav-link dropdown-toggle @(requestPath == "/HumanResources" ? "active" : "")" href="#navbarHumanResourcesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesMenu" aria-expanded="true" aria-controls="navbarHumanResourcesMenu">
+                                <a class="nav-link dropdown-toggle @(requestPath.StartsWith("/HumanResources") ? "active" : "")" href="#navbarHumanResourcesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesMenu" aria-expanded="true" aria-controls="navbarHumanResourcesMenu">
                                     <i class="bi-person-badge nav-icon"></i>
                                     <span class="nav-link-title">Human Resources</span>
                                 </a>
@@ -961,8 +961,8 @@
                                                 Employees
                                             </a>
 
-                                            <div id="navbarHumanResourcesEmployeesMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Employees" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
-                                                <a asp-action="Index" asp-controller="Employee" class="nav-link @(requestPath == "/HumanResources/Employees" ? "active" : "")">Employees</a>
+                                            <div id="navbarHumanResourcesEmployeesMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Employee" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
+                                                <a asp-action="Index" asp-controller="Employee" class="nav-link @(requestPath == "/HumanResources/Employee" ? "active" : "")">Employees</a>
                                                 <a class="nav-link " href="./ecommerce-add-customers.html">Add Employee</a>
                                             </div>
                                         </div>

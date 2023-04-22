@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.SharedKernel.Extensions;
-using AW.UI.Web.Admin.Mvc.ViewModels;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
 using DeleteProduct = AW.UI.Web.SharedKernel.Product.Handlers.DeleteProduct;
 using DuplicateProduct = AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;

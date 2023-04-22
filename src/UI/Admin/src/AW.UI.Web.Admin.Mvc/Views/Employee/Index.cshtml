@@ -93,7 +93,13 @@
                                 <label class="form-check-label" for="employeesDataCheck-@employee.LoginID"></label>
                             </div>
                         </td>
-                        <td class="table-column-ps-0">@employee.LoginID</td>
+                        <td class="table-column-ps-0">
+                            <a asp-action="Detail" asp-route-loginID="@employee.LoginID">
+                                <div class="flex-grow-1 ms-3">
+                                    <span class="h5 text-inherit">@employee.LoginID</span>
+                                </div>
+                            </a>
+                        </td>
                         <td>@employee.Name!.FullName</td>
                         <td>@employee.JobTitle</td>
                         <td>@string.Format("{0:d}", employee.BirthDate)</td>

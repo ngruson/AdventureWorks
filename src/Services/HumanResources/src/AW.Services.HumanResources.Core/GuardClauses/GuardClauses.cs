@@ -26,6 +26,19 @@ namespace AW.Services.HumanResources.Core.GuardClauses
             }
         }
 
+        public static void EmployeeDepartmentHistoryNull(this IGuardClause guardClause, Entities.EmployeeDepartmentHistory? edh,
+            string loginID, string? departmentName, string? shiftName, DateTime startDate,
+            ILogger logger
+        )
+        {
+            if (edh == null)
+            {
+                var ex = new EmployeeDepartmentHistoryNotFoundException(loginID, departmentName, shiftName, startDate);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+        }
+
         public static void ShiftsNull(this IGuardClause guardClause, List<Entities.Shift> shifts, ILogger logger)
         {
             if (shifts == null)

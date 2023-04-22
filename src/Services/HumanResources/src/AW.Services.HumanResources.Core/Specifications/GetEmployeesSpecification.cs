@@ -10,6 +10,10 @@ namespace AW.Services.HumanResources.Core.Specifications
             Query.Include(_ => _.DepartmentHistory)
                 .ThenInclude(_ => _.Department);
 
+            Query
+                .Include(_ => _.DepartmentHistory)
+                .ThenInclude(_ => _.Shift);
+
             Query.OrderBy(_ => _.Id);
         }
     }

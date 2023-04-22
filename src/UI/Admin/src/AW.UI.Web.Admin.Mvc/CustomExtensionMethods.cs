@@ -111,6 +111,15 @@ namespace AW.UI.Web.Admin.Mvc
                 new[] { configuration["AuthN:ApiScopes:CustomerApiRead"]! }
             );
 
+            services.AddHttpClient<IDepartmentApiClient, DepartmentApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["DepartmentAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:DepartmentApiRead"]! }
+            );
+
             services.AddHttpClient<IEmployeeApiClient, EmployeeApiClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["EmployeeAPI:Uri"]!);
@@ -154,6 +163,15 @@ namespace AW.UI.Web.Admin.Mvc
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
                 new[] { configuration["AuthN:ApiScopes:SalesPersonApiRead"]! }
+            );
+
+            services.AddHttpClient<IShiftApiClient, ShiftApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["ShiftAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { configuration["AuthN:ApiScopes:ShiftApiRead"]! }
             );
 
             return services;

@@ -1,0 +1,139 @@
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@model AW.UI.Web.Admin.Mvc.ViewModels.Employee.EmployeeViewModel
+@{
+    var jobTitles = ViewData[EmployeeController.JOBTITLES] as IEnumerable<SelectListItem>;
+    var maritalStatuses = ViewData[EmployeeController.MARITALSTATUSES] as IEnumerable<SelectListItem>;
+    var genders = ViewData[EmployeeController.GENDERS] as IEnumerable<SelectListItem>;
+}
+
+<!-- Modal -->
+<div class="modal fade" id="editEmployee" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateEmployee", "Employee"))
+                {
+                    <input name="Key" type="hidden" value="@Model.LoginID">
+
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Name!.FirstName, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.Name!.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Name!.MiddleName, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.Name!.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Name!.LastName, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.Name!.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.NationalIDNumber, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.NationalIDNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.LoginID, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(m => m.LoginID, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.JobTitle, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.JobTitle, jobTitles, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.BirthDate, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <input type="text" id="Employee.BirthDate" name="Employee.BirthDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select birth date" value="@Model.BirthDate.ToShortDateString()"
+                                           data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                @Html.LabelFor(m => m.HireDate, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <input type="text" id="Employee.HireDate" name="Employee.HireDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select hire date" value="@Model.HireDate.ToShortDateString()"
+                                           data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.MaritalStatus, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.MaritalStatus, maritalStatuses, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Gender, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    @Html.DropDownListFor(m => m.Gender, genders, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <div class="row form-check form-switch">
+                                @Html.LabelFor(m => m.Salaried, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(m => m.Salaried, new { @class = "form-check-input"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row form-check form-switch">
+                                @Html.LabelFor(m => m.Current, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(m => m.Current, new { @class = "form-check-input"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-sm-3">
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Employee Information</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

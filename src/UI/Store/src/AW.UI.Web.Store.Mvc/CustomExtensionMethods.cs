@@ -63,11 +63,13 @@ namespace AW.UI.Web.Store.Mvc
         {
             string basketApiReadScope;
             string customerApiReadScope;
+            string departmentApiReadScope;
             string employeeApiReadScope;
             string productApiReadScope;
             string referenceDataApiReadScope;
             string salesOrderApiReadScope;
             string salesPersonApiReadScope;
+            string shiftApiReadScope;
 
             if (oidcConfig.IdentityProvider == IdentityProvider.IdentityServer)
             {
@@ -75,21 +77,25 @@ namespace AW.UI.Web.Store.Mvc
 
                 basketApiReadScope = configuration["AuthN:IdSrv:ApiScopes:BasketApiRead"]!;
                 customerApiReadScope = configuration["AuthN:IdSrv:ApiScopes:CustomerApiRead"]!;
+                departmentApiReadScope = configuration["AuthN:IdSrv:ApiScopes:DepartmentApiRead"]!;
                 employeeApiReadScope = configuration["AuthN:IdSrv:ApiScopes:EmployeeApiRead"]!;
                 productApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ProductApiRead"]!;
                 referenceDataApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ReferenceDataApiRead"]!;
                 salesOrderApiReadScope = configuration["AuthN:IdSrv:ApiScopes:SalesOrderApiRead"]!;
                 salesPersonApiReadScope = configuration["AuthN:IdSrv:ApiScopes:SalesPersonApiRead"]!;
+                shiftApiReadScope = configuration["AuthN:IdSrv:ApiScopes:ShiftApiRead"]!;
             }
             else
             {
                 basketApiReadScope = configuration["AuthN:AzureAd:ApiScopes:BasketApiRead"]!;
                 customerApiReadScope = configuration["AuthN:AzureAd:ApiScopes:CustomerApiRead"]!;
+                departmentApiReadScope = configuration["AuthN:AzureAd:ApiScopes:DepartmentApiRead"]!;
                 employeeApiReadScope = configuration["AuthN:AzureAd:ApiScopes:EmployeeApiRead"]!;
                 productApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ProductApiRead"]!;
                 referenceDataApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ReferenceDataApiRead"]!;
                 salesOrderApiReadScope = configuration["AuthN:AzureAd:ApiScopes:SalesOrderApiRead"]!;
                 salesPersonApiReadScope = configuration["AuthN:AzureAd:ApiScopes:SalesPersonApiRead"]!;
+                shiftApiReadScope = configuration["AuthN:AzureAd:ApiScopes:ShiftApiRead"]!;
             }
 
             services.AddHttpClient<IBasketApiClient, BasketApiClient>(client =>
@@ -108,6 +114,15 @@ namespace AW.UI.Web.Store.Mvc
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
                 new[] { customerApiReadScope }
+            );
+
+            services.AddHttpClient<IDepartmentApiClient, DepartmentApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["DepartmentAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { departmentApiReadScope }
             );
 
             services.AddHttpClient<IEmployeeApiClient, EmployeeApiClient>(client =>
@@ -153,6 +168,15 @@ namespace AW.UI.Web.Store.Mvc
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
                 new[] { salesPersonApiReadScope }
+            );
+
+            services.AddHttpClient<IShiftApiClient, ShiftApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["ShiftAPI:Uri"]!);
+            })
+            .AddUserAccessTokenHandler(
+                oidcConfig.IdentityProvider,
+                new[] { shiftApiReadScope }
             );
 
             return services;

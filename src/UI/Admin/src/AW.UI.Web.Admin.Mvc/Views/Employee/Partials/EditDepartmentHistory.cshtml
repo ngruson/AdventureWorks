@@ -1,0 +1,65 @@
+﻿@using AW.UI.Web.Admin.Mvc.Controllers;
+@using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
+@model List<EmployeeDepartmentHistoryViewModel>
+@{
+    var loginID = ViewData["loginID"];
+    var departments = ViewData[EmployeeController.DEPARTMENTS] as IEnumerable<SelectListItem>;
+    var shifts = ViewData[EmployeeController.SHIFTS] as IEnumerable<SelectListItem>;
+
+    int i = 0;
+
+    foreach (var depHist in Model)
+    {
+        i++;
+
+        <!-- Modal -->
+        <div class="modal fade" id="edit-department-history-@i" tabindex="-1" role="dialog" aria-labelledby="edit-department-history-@i-label" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit-department-history-@i-label">Edit Department History</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("UpdateDepartmentHistory", "Employee"))
+                        {
+                            <input name="LoginID" type="hidden" value="@loginID">
+
+                            <div class="row mb-4">
+                                @Html.LabelFor(m => depHist.Department!.Name, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    <select asp-for="@depHist.Department!.Name" asp-items="departments" name="DepartmentName" class="js-select form-select" placeholder="Select a department"></select>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                @Html.LabelFor(m => depHist.Shift!.Name, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8 tom-select-custom">
+                                    <select asp-for="@depHist.Shift!.Name" asp-items="shifts" name="ShiftName" class="js-select form-select" placeholder="Select a shift"></select>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                @Html.LabelFor(m => depHist.StartDate, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <input type="text" id="StartDate" name="StartDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select start date" value="@depHist.StartDate.ToShortDateString()"
+                                           data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                @Html.LabelFor(m => depHist.EndDate, new { @class = "col-sm-4 col-form-label form-label" })
+                                <div class="col-sm-8">
+                                    <input type="text" id="EndDate" name="EndDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select end date" value="@depHist.EndDate?.ToShortDateString()"
+                                           data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-sm-3">
+                                <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Update Department History</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
