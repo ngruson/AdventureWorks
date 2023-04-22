@@ -14,7 +14,12 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartmentHistory
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateDepartmentHistoryCommand, Entities.EmployeeDepartmentHistory>();
+            profile.CreateMap<UpdateDepartmentHistoryCommand, Entities.EmployeeDepartmentHistory>()
+                .ForMember(_ => _.EmployeeID, opt => opt.Ignore())
+                .ForMember(_ => _.DepartmentID, opt => opt.Ignore())
+                .ForMember(_ => _.ShiftID, opt => opt.Ignore())
+                .ForMember(_ => _.Department, opt => opt.Ignore())
+                .ForMember(_ => _.Shift, opt => opt.Ignore());
         }
     }
 }

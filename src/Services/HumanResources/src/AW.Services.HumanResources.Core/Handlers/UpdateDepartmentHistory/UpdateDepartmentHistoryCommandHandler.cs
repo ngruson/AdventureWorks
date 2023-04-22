@@ -63,6 +63,8 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartmentHistory
 
             _logger.LogInformation("Updating department history with new values");
             _mapper.Map(request, departmentHistory);
+            departmentHistory!.Department = department;
+            departmentHistory.Shift = shift;
 
             _logger.LogInformation("Saving employee to database");
             await _employeeRepository.SaveChangesAsync(cancellationToken);
