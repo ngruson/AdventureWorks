@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
+using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,8 @@ namespace AW.Services.HumanResources.Core.Handlers.GetDepartments
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting departments from database");
 
-            var departments = await _repository.ListAsync(cancellationToken);
+            var spec = new GetDepartmentsSpecification();
+            var departments = await _repository.ListAsync(spec, cancellationToken);
             Guard.Against.DepartmentsNull(departments, _logger);
 
             _logger.LogInformation("Returning departments");

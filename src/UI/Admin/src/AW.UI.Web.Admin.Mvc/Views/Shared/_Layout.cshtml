@@ -954,7 +954,7 @@
                                 </a>
 
                                 <div id="navbarHumanResourcesMenu" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenuPagesMenu" hs-parent-area="#navbarVerticalMenu">
-                                    <div id="navbarEmployees">
+                                    <div>
                                         <!-- Collapse -->
                                         <div class="nav-item">
                                             <a class="nav-link dropdown-toggle @(requestPath != "/HumanResources/Employee" ? "collapsed" : "")" href="#navbarHumanResourcesEmployeesMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesEmployeesMenu" aria-expanded="@(requestPath == "/HumanResources")" aria-controls="navbarHumanResourcesEmployeesMenu">
@@ -964,6 +964,17 @@
                                             <div id="navbarHumanResourcesEmployeesMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Employee" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
                                                 <a asp-action="Index" asp-controller="Employee" class="nav-link @(requestPath == "/HumanResources/Employee" ? "active" : "")">Employees</a>
                                                 <a class="nav-link " href="./ecommerce-add-customers.html">Add Employee</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Collapse -->
+                                        <!-- Collapse -->
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/HumanResources/Department" ? "collapsed" : "")" href="#navbarHumanResourcesDepartmentsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesDepartmentsMenu" aria-expanded="@(requestPath == "/HumanResources")" aria-controls="navbarHumanResourcesDepartmentsMenu">
+                                                Departments
+                                            </a>
+
+                                            <div id="navbarHumanResourcesDepartmentsMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Department" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
+                                                <a asp-action="Index" asp-controller="Department" class="nav-link @(requestPath == "/HumanResources/Department" ? "active" : "")">Departments</a>
                                             </div>
                                         </div>
                                         <!-- End Collapse -->

@@ -34,5 +34,26 @@ namespace AW.UI.Web.Infrastructure.ApiClients
                 }
             );
         }
+
+        public async Task<SharedKernel.Department.Handlers.GetDepartment.Department?> GetDepartment(string name)
+        {
+            string requestUri = $"/department-api/Department/{name}?api-version=1.0";
+            _logger.LogInformation("Getting department from API");
+
+            using var response = await _client.GetAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            return await stream.DeserializeAsync<SharedKernel.Department.Handlers.GetDepartment.Department>(
+                new JsonSerializerOptions
+                {
+                    Converters =
+                    {
+                        new JsonStringEnumConverter()
+                    },
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }
+            );
+        }
     }
 }
