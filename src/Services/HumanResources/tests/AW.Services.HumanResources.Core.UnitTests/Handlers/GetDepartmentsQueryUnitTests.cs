@@ -2,6 +2,7 @@
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
+using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -21,6 +22,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         {
             // Arrange
             departmentRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetDepartmentsSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(departments);
@@ -33,6 +35,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
                 .Excluding(_ => _.Id)
             );
             departmentRepoMock.Verify(x => x.ListAsync(
+                It.IsAny<GetDepartmentsSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
         }
