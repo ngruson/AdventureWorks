@@ -1,6 +1,4 @@
-﻿using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-
-namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
     public class EditEmployeeViewModel
     {

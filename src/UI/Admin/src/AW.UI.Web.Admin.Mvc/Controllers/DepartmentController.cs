@@ -1,4 +1,5 @@
 ﻿using AW.UI.Web.Admin.Mvc.Services;
+using AW.UI.Web.Admin.Mvc.ViewModels.Department;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 
@@ -21,6 +22,25 @@ namespace AW.UI.Web.Admin.Mvc.Controllers
         {
             return View(
                 await _departmentService.GetDepartments()
+            );
+        }
+
+        public async Task<IActionResult> Detail(string name)
+        {
+            var department = await _departmentService.GetDetail(
+                name
+            );
+
+            return View(department);
+        }
+
+        public async Task<IActionResult> UpdateDepartment(EditDepartmentViewModel viewModel)
+        {
+            await _departmentService.UpdateDepartment(viewModel);
+
+            return RedirectToAction(
+                nameof(Detail),
+                new { viewModel.Department!.Name }
             );
         }
     }

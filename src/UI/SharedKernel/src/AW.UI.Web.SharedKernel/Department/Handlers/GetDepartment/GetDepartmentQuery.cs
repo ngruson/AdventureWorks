@@ -2,7 +2,7 @@
 
 namespace AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment
 {
-    public class GetDepartmentQuery : IRequest<Department>
+    public class GetDepartmentQuery : IRequest<Department?>
     {
         public GetDepartmentQuery(string name)
         {

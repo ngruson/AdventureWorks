@@ -1,10 +1,11 @@
-using AutoFixture.Xunit2;
+﻿using AutoFixture.Xunit2;
+using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetDepartment;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
+using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
 using AW.Services.HumanResources.Department.REST.API.Controllers;
 using AW.SharedKernel.UnitTesting;
-using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -118,6 +119,57 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
                 //Assert
                 var notFoundResult = actionResult as NotFoundResult;
                 notFoundResult.Should().NotBeNull();
+            }
+        }
+
+        public class UpdateDepartment
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ReturnDepartmentWhenDepartmentExists(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] DepartmentController sut,
+                UpdateDepartmentCommand command,
+                Core.Handlers.UpdateDepartment.Department department
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<UpdateDepartmentCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(department);
+
+                //Act
+                var actionResult = await sut.UpdateDepartment(command);
+
+                //Assert
+                var okObjectResult = actionResult as OkObjectResult;
+                okObjectResult.Should().NotBeNull();
+
+                var response = okObjectResult?.Value as Core.Handlers.UpdateDepartment.Department;
+                response?.Should().Be(department);
+            }
+
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task ReturnNotFoundWhenDepartmentDoesNotExist(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Greedy] DepartmentController sut,
+                UpdateDepartmentCommand command
+            )
+            {
+                //Arrange
+                mockMediator.Setup(x => x.Send(
+                        It.IsAny<UpdateDepartmentCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new DepartmentNotFoundException(command.Department!.Name));
+
+                //Act
+                var actionResult = await sut.UpdateDepartment(command);
+
+                //Assert
+                actionResult.Should().BeOfType<NotFoundResult>();
             }
         }
     }

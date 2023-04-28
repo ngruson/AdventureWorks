@@ -1,6 +1,10 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
+using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment;
 using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
+using AW.UI.Web.SharedKernel.Department.Handlers.UpdateDepartment;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services
@@ -31,6 +35,40 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             _logger.LogInformation("Returning {ViewModel}", vm);
             return vm;
+        }
+
+        public async Task<DepartmentDetailViewModel> GetDetail(string name)
+        {
+            var department = await GetDepartment(name);
+
+            var vm = new DepartmentDetailViewModel
+            {
+                Department = _mapper.Map<DepartmentViewModel>(department)
+            };
+
+            _logger.LogInformation("Returning department");
+            return vm;
+        }
+
+        public async Task UpdateDepartment(EditDepartmentViewModel viewModel)
+        {
+            var department = await GetDepartment(viewModel.Key!);
+            var departmentToUpdate = _mapper.Map<SharedKernel.Department.Handlers.UpdateDepartment.Department>(department);
+            _mapper.Map(viewModel.Department, departmentToUpdate);
+
+            _logger.LogInformation("Updating employee");
+            await _mediator.Send(new UpdateDepartmentCommand(viewModel.Key!, departmentToUpdate));
+            _logger.LogInformation("Employee updated successfully");
+        }
+
+        private async Task<SharedKernel.Department.Handlers.GetDepartment.Department> GetDepartment(string name)
+        {
+            _logger.LogInformation("Getting department");
+            var department = await _mediator.Send(new GetDepartmentQuery(name));
+            _logger.LogInformation("Retrieved department");
+            Guard.Against.Null(department, _logger);
+
+            return department!;
         }
     }
 }

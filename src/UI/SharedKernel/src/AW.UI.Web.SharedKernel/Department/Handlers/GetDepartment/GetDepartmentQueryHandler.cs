@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment
 {
-    public class GetDepartmentQueryHandler : IRequestHandler<GetDepartmentQuery, Department>
+    public class GetDepartmentQueryHandler : IRequestHandler<GetDepartmentQuery, Department?>
     {
         private readonly ILogger<GetDepartmentQueryHandler> _logger;
         private readonly IDepartmentApiClient _client;
@@ -17,7 +17,7 @@ namespace AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment
             _client = client;
         }
 
-        public async Task<Department> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
+        public async Task<Department?> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting department from API");
             var department = await _client.GetDepartment(request.Name);

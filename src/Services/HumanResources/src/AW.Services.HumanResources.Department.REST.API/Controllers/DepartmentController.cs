@@ -1,6 +1,7 @@
-using AW.Services.HumanResources.Core.Exceptions;
+﻿using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetDepartment;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
+using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,24 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
             }
             catch (DepartmentNotFoundException)
             {
+                return new NotFoundResult();
+            }
+        }
+
+        [HttpPut("{name}")]
+        public async Task<IActionResult> UpdateDepartment(UpdateDepartmentCommand command)
+        {
+            try
+            {
+                _logger.LogInformation("Sending the UpdateDepartmentCommand command");
+                var updatedDepartment = await _mediator.Send(command);
+
+                _logger.LogInformation("Returning updated department");
+                return Ok(updatedDepartment);
+            }
+            catch (DepartmentNotFoundException)
+            {
+                _logger.LogInformation("Department not found");
                 return new NotFoundResult();
             }
         }
