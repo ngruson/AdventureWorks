@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using AW.UI.Web.SharedKernel.Interfaces.Api;
 using System.Text;
+using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
 
 namespace AW.UI.Web.Infrastructure.ApiClients
 {
@@ -56,6 +57,34 @@ namespace AW.UI.Web.Infrastructure.ApiClients
             );
         }
 
+        public async Task<SharedKernel.Department.Handlers.CreateDepartment.Department?> CreateDepartment(SharedKernel.Department.Handlers.CreateDepartment.Department department)
+        {
+            _logger.LogInformation("Call Department API to create department");
+            string requestUri = $"Department?&api-version=1.0";
+            var options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                },
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            string json = JsonSerializer.Serialize(department, options);
+            _logger.LogInformation("Calling POST method on {RequestUri}", requestUri);
+
+            using var response = await _client.PostAsync(
+                requestUri,
+                new StringContent(json, Encoding.UTF8, "application/json")
+            );
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+            var createdDepartment = await stream.DeserializeAsync<SharedKernel.Department.Handlers.CreateDepartment.Department?>(options);
+
+            _logger.LogInformation("Returning department");
+            return createdDepartment;
+        }
+
         public async Task<SharedKernel.Department.Handlers.UpdateDepartment.Department?> UpdateDepartment(SharedKernel.Department.Handlers.UpdateDepartment.UpdateDepartmentCommand command)
         {
             _logger.LogInformation("Call Department API to update department");
@@ -82,6 +111,18 @@ namespace AW.UI.Web.Infrastructure.ApiClients
 
             _logger.LogInformation("Returning updated department", updatedDepartment);
             return updatedDepartment;
+        }
+
+        public async Task DeleteDepartment(DeleteDepartmentCommand request)
+        {
+            _logger.LogInformation("Deleting department");
+            string requestUri = $"Department/{request.Name}?&api-version=1.0";
+            _logger.LogInformation("Calling DELETE method on {RequestUri}", requestUri);
+
+            using var response = await _client.DeleteAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+
+            _logger.LogInformation("Department succesfully deleted");
         }
     }
 }

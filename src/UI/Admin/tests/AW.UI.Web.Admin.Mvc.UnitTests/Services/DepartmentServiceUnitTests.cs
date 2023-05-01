@@ -3,6 +3,7 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Department;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
+using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
 using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment;
 using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
 using AW.UI.Web.SharedKernel.Department.Handlers.UpdateDepartment;
@@ -133,6 +134,29 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<UpdateDepartmentCommand>(),
                     It.IsAny<CancellationToken>()
                 ), Times.Never);
+            }
+        }
+
+        public class DeleteDepartment
+        {
+            [Theory, AutoMapperData(typeof(MappingProfile))]
+            public async Task delete_department_given_name(
+                [Frozen] Mock<IMediator> mediator,
+                DepartmentService sut,
+                string name
+            )
+            {
+                //Arrange
+
+                //Act
+                await sut.DeleteDepartment(name);
+
+                //Assert
+                mediator.Verify(_ => _.Send(
+                        It.IsAny<DeleteDepartmentCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
         }
     }

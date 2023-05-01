@@ -14,6 +14,8 @@ using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
+using FluentValidation;
+using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
 
 namespace AW.Services.HumanResources.Department.REST.API
 {
@@ -104,6 +106,7 @@ namespace AW.Services.HumanResources.Department.REST.API
             services.AddMediatR(config => config.RegisterServicesFromAssembly(
                 typeof(GetDepartmentsQuery).Assembly)
             );
+            services.AddValidatorsFromAssemblyContaining<CreateDepartmentCommandValidator>();
 
             return services;
         }

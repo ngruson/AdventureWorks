@@ -2,6 +2,8 @@
 using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+using AW.UI.Web.SharedKernel.Department.Handlers.CreateDepartment;
+using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
 using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment;
 using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
 using AW.UI.Web.SharedKernel.Department.Handlers.UpdateDepartment;
@@ -50,6 +52,15 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
+        public async Task CreateDepartment(CreateDepartmentViewModel viewModel)
+        {
+            var department = _mapper.Map<SharedKernel.Department.Handlers.CreateDepartment.Department>(viewModel.Department);
+
+            _logger.LogInformation("Send command to add department");
+            await _mediator.Send(new CreateDepartmentCommand(department));
+            _logger.LogInformation("Command was succesfully executed");
+        }
+
         public async Task UpdateDepartment(EditDepartmentViewModel viewModel)
         {
             var department = await GetDepartment(viewModel.Key!);
@@ -69,6 +80,13 @@ namespace AW.UI.Web.Admin.Mvc.Services
             Guard.Against.Null(department, _logger);
 
             return department!;
+        }
+
+        public async Task DeleteDepartment(string name)
+        {
+            _logger.LogInformation("Deleting department");
+            await _mediator.Send(new DeleteDepartmentCommand(name));
+            _logger.LogInformation("Department successfully deleted");
         }
     }
 }

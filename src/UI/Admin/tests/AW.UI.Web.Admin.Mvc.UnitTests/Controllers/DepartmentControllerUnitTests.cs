@@ -87,5 +87,42 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 departmentService.Verify(_ => _.UpdateDepartment(viewModel));
             }
         }
+
+        public class DeleteDepartments
+        {
+            [Theory, AutoMoqData]
+            public async Task delete_departments_given_department_names(
+                string[] departments,
+                [Greedy] DepartmentController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DeleteDepartments(departments);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+            }
+        }
+
+        public class DeleteDepartment
+        {
+            [Theory, AutoMoqData]
+            public async Task delete_department_given_department_exists(
+                string name,
+                [Greedy] DepartmentController sut
+            )
+            {
+                //Arrange
+
+                //Act
+                var actionResult = await sut.DeleteDepartment(name);
+
+                //Assert
+                var viewResult = actionResult.Should().BeAssignableTo<RedirectToActionResult>().Subject;
+                viewResult.ActionName.Should().Be(nameof(DepartmentController.Index));
+            }
+        }
     }
 }

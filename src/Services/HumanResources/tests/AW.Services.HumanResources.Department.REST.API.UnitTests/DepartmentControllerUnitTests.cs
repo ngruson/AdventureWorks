@@ -1,13 +1,19 @@
 ﻿using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
+using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
+using AW.Services.HumanResources.Core.Handlers.DeleteDepartment;
 using AW.Services.HumanResources.Core.Handlers.GetDepartment;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
 using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
 using AW.Services.HumanResources.Department.REST.API.Controllers;
+using AW.Services.Infrastructure.ActionResults;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -122,6 +128,88 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
             }
         }
 
+        public class CreateDepartment
+        {
+            [Theory, AutoMoqData]
+            public async Task return_ok_given_command_is_valid(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<IValidator<CreateDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                Core.Handlers.CreateDepartment.Department department
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        It.IsAny<CreateDepartmentCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult());
+
+                mockMediator.Setup(x => x.Send(
+                    It.IsAny<CreateDepartmentCommand>(),
+                    It.IsAny<CancellationToken>()
+                ))
+                .ReturnsAsync(department);
+
+                //Act
+                var actionResult = await sut.CreateDepartment(department);
+
+                //Assert
+                var okObjectResult = actionResult as OkObjectResult;
+                okObjectResult.Should().NotBeNull();
+
+                var response = okObjectResult?.Value as Core.Handlers.CreateDepartment.Department;
+                response?.Should().Be(department);
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_badrequest_given_command_is_invalid(
+                [Frozen] Mock<IValidator<CreateDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                Core.Handlers.CreateDepartment.Department department,
+                List<ValidationFailure> validationFailures
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        It.IsAny<CreateDepartmentCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult(validationFailures));
+
+                //Act
+                var actionResult = await sut.CreateDepartment(department);
+
+                //Assert
+                var result = actionResult as BadRequestObjectResult;
+                result!.Value.Should().BeOfType<ProblemHttpResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_internalservererror_given_exception_occurs(
+                [Frozen] Mock<IValidator<CreateDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                Core.Handlers.CreateDepartment.Department department
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        It.IsAny<CreateDepartmentCommand>(),
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new Exception());
+
+                //Act
+                var actionResult = await sut.CreateDepartment(department);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
+            }
+        }
+
         public class UpdateDepartment
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
@@ -170,6 +258,84 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
 
                 //Assert
                 actionResult.Should().BeOfType<NotFoundResult>();
+            }
+        }
+
+        public class DeleteDepartment
+        {
+            [Theory, AutoMoqData]
+            public async Task return_ok_given_command_is_valid(
+                [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<IValidator<DeleteDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                DeleteDepartmentCommand command
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult());
+
+                //Act
+                var actionResult = await sut.DeleteDepartment(command);
+
+                //Assert
+                actionResult.Should().BeOfType<OkResult>();
+
+                mockMediator.Verify(_ => _.Send(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_badrequest_given_command_is_invalid(
+                [Frozen] Mock<IValidator<DeleteDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                DeleteDepartmentCommand command,
+                List<ValidationFailure> validationFailures
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult(validationFailures));
+
+                //Act
+                var actionResult = await sut.DeleteDepartment(command);
+
+                //Assert
+                var result = actionResult as BadRequestObjectResult;
+                result!.Value.Should().BeOfType<ProblemHttpResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_internalservererror_given_exception_occurs(
+                [Frozen] Mock<IValidator<DeleteDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                DeleteDepartmentCommand command
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new Exception());
+
+                //Act
+                var actionResult = await sut.DeleteDepartment(command);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
             }
         }
     }

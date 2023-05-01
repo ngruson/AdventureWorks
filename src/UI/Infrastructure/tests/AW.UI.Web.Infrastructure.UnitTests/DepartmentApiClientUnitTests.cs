@@ -7,6 +7,7 @@ using AW.UI.Web.Infrastructure.ApiClients;
 using FluentAssertions;
 using RichardSzalay.MockHttp;
 using Xunit;
+using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
 
 namespace AW.UI.Web.Infrastructure.UnitTests
 {
@@ -129,6 +130,64 @@ namespace AW.UI.Web.Infrastructure.UnitTests
             }
         }
 
+        public class CreateDepartment
+        {
+            [Theory, MockHttpData]
+            public async Task return_updated_department_given_department(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                DepartmentApiClient sut,
+                SharedKernel.Department.Handlers.CreateDepartment.CreateDepartmentCommand command
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Post, $"{uri}*")
+                    .Respond(HttpStatusCode.OK,
+                        new StringContent(
+                            JsonSerializer.Serialize(command.Department, new JsonSerializerOptions
+                            {
+                                Converters =
+                                {
+                                    new JsonStringEnumConverter()
+                                },
+                                IgnoreReadOnlyProperties = true,
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            })
+                        )
+                    );
+
+                //Act
+                var response = await sut.CreateDepartment(command.Department);
+
+                //Assert
+                response.Should().BeEquivalentTo(command.Department);
+            }
+
+            [Theory, MockHttpData]
+            public async Task throw_httprequestexception_given_department_not_found(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                DepartmentApiClient sut,
+                SharedKernel.Department.Handlers.CreateDepartment.CreateDepartmentCommand command
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Post, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.CreateDepartment(command.Department);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
         public class UpdateDepartment
         {
             [Theory, MockHttpData]
@@ -180,6 +239,52 @@ namespace AW.UI.Web.Infrastructure.UnitTests
 
                 //Act
                 Func<Task> func = async () => await sut.UpdateDepartment(command);
+
+                //Assert
+                await func.Should().ThrowAsync<HttpRequestException>()
+                    .WithMessage("Response status code does not indicate success: 404 (Not Found).");
+            }
+        }
+
+        public class DeleteDepartment
+        {
+            [Theory, MockHttpData]
+            public async Task delete_department_ok(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                DepartmentApiClient sut,
+                DeleteDepartmentCommand command
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Delete, $"{uri}*")
+                    .Respond(HttpStatusCode.OK);
+
+                //Act
+                await sut.DeleteDepartment(command);
+
+                //Assert
+                1.Should().Be(1);
+            }
+
+            [Theory, MockHttpData]
+            public async Task throw_httprequestexception_given_department_does_not_exist(
+                [Frozen] MockHttpMessageHandler handler,
+                [Frozen] HttpClient httpClient,
+                Uri uri,
+                DepartmentApiClient sut,
+                DeleteDepartmentCommand command
+            )
+            {
+                //Arrange
+                httpClient.BaseAddress = uri;
+                handler.When(HttpMethod.Delete, $"{uri}*")
+                    .Respond(HttpStatusCode.NotFound);
+
+                //Act
+                Func<Task> func = async () => await sut.DeleteDepartment(command);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()

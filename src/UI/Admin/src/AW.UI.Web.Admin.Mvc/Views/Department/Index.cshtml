@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-md-auto">
-            @Html.ActionLink("Add department", "AddDepartment", "Department", null, new { @class = "btn btn-primary"})
+            @Html.ActionLink("Create department", "CreateDepartment", "Department", null, new { @class = "btn btn-primary"})
         </div>
         <!-- End Col -->
     </div>
@@ -30,7 +30,7 @@
                         <span id="datatableCounter">0</span>
                         Selected
                     </span>
-                    <a class="btn btn-outline-danger btn-sm" href="#">
+                    <a class="btn btn-outline-danger btn-sm" href="javascript:deleteSelected()">
                         <i class="bi-trash"></i> Delete
                     </a>
                 </div>
@@ -41,7 +41,7 @@
     <!-- End Header-->
 
     <div class="table-responsive datatable-custom">
-        <table class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+        <table id="datatable" class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
                data-hs-datatables-options='{
                  "columnDefs": [{
                       "targets": [0],
@@ -103,10 +103,53 @@
     {
     <!-- JS Plugins Init. -->
     <script>
+        function deleteSelected() {
+            var checked = $('#datatable td:first-child input[type="checkbox"]:checked');
+            if (checked.length > 0) {
+                if (confirm("Do you want to delete " + checked.length + " department(s)?")) {
+                    var departments = [];
+                    checked.each(function () {
+                        var department = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
+                        departments.push(department);
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: "DeleteDepartments",
+                        data: JSON.stringify(departments),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    });
+
+                    checked.each(function () {
+                        var row = $(this).closest("tr");
+                        row.remove();
+                    });
+                }
+            }
+        }
+
         (function () {
             // INITIALIZATION OF DATATABLES
             // =======================================================
-            HSCore.components.HSDatatables.init('.js-datatable')
+            HSCore.components.HSDatatables.init('.js-datatable', {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableCheckAll',
+                        counter: '#datatableCounter',
+                        counterInfo: '#datatableCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                              <img class="mb-3" src="~/assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                              <img class="mb-3" src="~/assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                            <p class="mb-0">No data to show</p>
+                                                            </div>`
+                }
+            });
         })()
     </script>
 }

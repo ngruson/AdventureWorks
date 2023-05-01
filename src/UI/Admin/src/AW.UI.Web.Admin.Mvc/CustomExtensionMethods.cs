@@ -35,7 +35,8 @@ namespace AW.UI.Web.Admin.Mvc
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddMicrosoftIdentityUI();
+            })
+            .AddMicrosoftIdentityUI();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

@@ -6,6 +6,8 @@ namespace AW.UI.Web.Admin.Mvc.Services
     {
         Task<List<DepartmentViewModel>> GetDepartments();
         Task<DepartmentDetailViewModel> GetDetail(string name);
+        Task CreateDepartment(CreateDepartmentViewModel viewModel);
         Task UpdateDepartment(EditDepartmentViewModel viewModel);
+        Task DeleteDepartment(string department);
     }
 }
