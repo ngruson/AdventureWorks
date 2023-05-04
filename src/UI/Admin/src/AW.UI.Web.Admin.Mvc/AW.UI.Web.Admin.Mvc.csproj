@@ -43,4 +43,8 @@
     <None Include="appsettings.Development.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Shift\" />
+  </ItemGroup>
+
 </Project>

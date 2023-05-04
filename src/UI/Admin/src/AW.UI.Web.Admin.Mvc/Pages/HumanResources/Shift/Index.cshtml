@@ -1,0 +1,163 @@
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift.IndexModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Shifts";
+}
+
+@Html.AntiForgeryToken()
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center mb-3">
+        <div class="col-md mb-2 mb-md-0">
+            <h1 class="page-header-title">Shifts <span class="badge bg-soft-dark text-dark ms-2">@Model.Shifts!.Count</span></h1>
+        </div>
+
+        <div class="col-md-auto">
+            <a asp-page="./Create" class="btn btn-primary">Create shift</a>
+        </div>
+        <!-- End Col -->
+    </div>
+</div>
+<!-- End Page Header-->
+
+<div class="card">
+    <!-- Header -->
+    <div class="card-header card-header-content-sm-between">
+        <div class="d-grid d-sm-flex justify-content-sm-end align-items-sm-center gap-2">
+            <!-- Datatable Info -->
+            <div id="datatableCounterInfo" style="display: none;">
+                <div class="d-flex align-items-center">
+                    <span class="fs-5 me-3">
+                        <span id="datatableCounter">0</span>
+                        Selected
+                    </span>
+                    <a class="btn btn-outline-danger btn-sm" href="javascript:deleteSelected()">
+                        <i class="bi-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            <!-- End Datatable Info -->
+        </div>
+    </div>
+    <!-- End Header-->
+
+    <div class="table-responsive datatable-custom">
+        <table id="datatable" class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+               data-hs-datatables-options='{
+                 "columnDefs": [{
+                      "targets": [0],
+                      "orderable": false
+                    }],
+                 "order": [],
+                 "search": "#datatableSearch",
+                 "isResponsive": false,
+                 "isShowPaging": false,
+                 "pagination": "datatableWithPaginationPagination"
+               }'>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="table-column-pe-0">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
+                            <label class="form-check-label" for="datatableCheckAll"></label>
+                        </div>
+                    </th>
+                    <th class="table-column-ps-0">Name</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var shift in Model.Shifts)
+                {
+                    <tr>
+                        <td class="table-column-pe-0">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dataCheck-@shift.Name">
+                                <label class="form-check-label" for="dataCheck-@shift.Name"></label>
+                            </div>
+                        </td>
+                        <td class="table-column-ps-0">
+                            <a asp-page="./Detail" asp-route-name="@shift.Name">
+                                <div class="flex-grow-1 ms-3">
+                                    <span class="h5 text-inherit">@shift.Name</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>@shift.StartTime</td>
+                        <td>@shift.EndTime</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- Footer -->
+    <div class="card-footer">
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center justify-content-sm-end">
+            <nav id="datatableWithPaginationPagination" aria-label="Pagination"></nav>
+        </div>
+        <!-- End Pagination -->
+    </div>
+    <!-- End Footer -->
+</div>
+
+@section Scripts
+    {
+    <!-- JS Plugins Init. -->
+    <script>
+        function deleteSelected() {
+            var checked = $('#datatable td:first-child input[type="checkbox"]:checked');
+            if (checked.length > 0) {
+                if (confirm("Do you want to delete " + checked.length + " shift(s)?")) {
+                    var shifts = [];
+                    checked.each(function () {
+                        var shift = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
+                        shifts.push(shift);
+                    });
+
+                    $.ajax({
+                        url: "Shift/Delete",
+                        type: "POST",
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        data: JSON.stringify(shifts),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    });
+
+                    checked.each(function () {
+                        var row = $(this).closest("tr");
+                        row.remove();
+                    });
+                }
+            }
+        }
+
+        (function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init('.js-datatable', {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableCheckAll',
+                        counter: '#datatableCounter',
+                        counterInfo: '#datatableCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                                                                      <img class="mb-3" src="~/assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                                                                      <img class="mb-3" src="~/assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                                                                    <p class="mb-0">No data to show</p>
+                                                                    </div>`
+                }
+            });
+        })()
+    </script>
+}

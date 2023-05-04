@@ -38,6 +38,8 @@ namespace AW.UI.Web.Admin.Mvc
             })
             .AddMicrosoftIdentityUI();
 
+            services.AddRazorPages();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.Secure = CookieSecurePolicy.Always;
@@ -60,6 +62,7 @@ namespace AW.UI.Web.Admin.Mvc
             services.AddScoped<IProductModelService, ProductModelService>();
             services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<ISalesPersonViewModelService, SalesPersonViewModelService>();
+            services.AddScoped<IShiftService, ShiftService>();
 
             services.AddScoped<ICache<AddressType>, AddressTypeCache>();
             services.AddScoped<ICache<ContactType>, ContactTypeCache>();

@@ -22,16 +22,19 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
     {
         private readonly ILogger<DepartmentController> _logger;
         private readonly IMediator _mediator;
-        private readonly IValidator<CreateDepartmentCommand> _adcValidator;
-        private readonly IValidator<DeleteDepartmentCommand> _ddcValidator;
+        private readonly IValidator<CreateDepartmentCommand> _createValidator;
+        private readonly IValidator<DeleteDepartmentCommand> _deleteValidator;
+        private readonly IValidator<UpdateDepartmentCommand> _updateValidator;
 
         public DepartmentController(
             ILogger<DepartmentController> logger, 
             IMediator mediator,
-            IValidator<CreateDepartmentCommand> adcValidator,
-            IValidator<DeleteDepartmentCommand> ddcValidator
+            IValidator<CreateDepartmentCommand> createValidator,
+            IValidator<DeleteDepartmentCommand> deleteValidator,
+            IValidator<UpdateDepartmentCommand> updateValidator
         ) =>
-            (_logger, _mediator, _adcValidator, _ddcValidator) = (logger, mediator, adcValidator, ddcValidator);
+            (_logger, _mediator, _createValidator, _deleteValidator, _updateValidator) = 
+                (logger, mediator, createValidator, deleteValidator, updateValidator);
 
         [HttpGet]
         public async Task<IActionResult> GetDepartments([FromQuery] GetDepartmentsQuery query)
@@ -76,7 +79,7 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
             try
             {
                 var command = new CreateDepartmentCommand(department);
-                var validationResult = await _adcValidator.ValidateAsync(command);
+                var validationResult = await _createValidator.ValidateAsync(command);
                 if (!validationResult.IsValid)
                     validationResult.AddToModelState(ModelState);
 
@@ -105,16 +108,32 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
         {
             try
             {
-                _logger.LogInformation("Sending the UpdateDepartmentCommand command");
-                var updatedDepartment = await _mediator.Send(command);
+                var validationResult = await _updateValidator.ValidateAsync(command);
+                if (!validationResult.IsValid)
+                    validationResult.AddToModelState(ModelState);
 
-                _logger.LogInformation("Returning updated department");
-                return Ok(updatedDepartment);
+                if (ModelState.IsValid)
+                {
+                    _logger.LogInformation("Sending the UpdateDepartmentCommand command");
+                    var updatedDepartment = await _mediator.Send(command);
+
+                    _logger.LogInformation("Returning updated department");
+                    return Ok(updatedDepartment);
+                }
+
+                return new BadRequestObjectResult(
+                    Results.ValidationProblem(validationResult.ToDictionary())
+                );
             }
             catch (DepartmentNotFoundException)
             {
                 _logger.LogInformation("Department not found");
                 return new NotFoundResult();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Something went wrong while updating department: {Message}", ex.Message);
+                return new InternalServerErrorObjectResult("Updating department failed");
             }
         }
 
@@ -123,7 +142,7 @@ namespace AW.Services.HumanResources.Department.REST.API.Controllers
         {
             try
             {
-                var validationResult = await _ddcValidator.ValidateAsync(command);
+                var validationResult = await _deleteValidator.ValidateAsync(command);
                 if (!validationResult.IsValid)
                     validationResult.AddToModelState(ModelState);
 

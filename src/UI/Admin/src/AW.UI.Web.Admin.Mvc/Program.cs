@@ -70,9 +70,10 @@ app.Map(virtualPath, builder =>
 
     builder.UseEndpoints(endpoints =>
     {
-        endpoints.MapControllerRoute(
-            name: "employee",
-            pattern: "HumanResources/{controller=Employee}/{action=Index}/{id?}");
+        endpoints.MapRazorPages();
+        //endpoints.MapControllerRoute(
+        //    name: "employee",
+        //    pattern: "HumanResources/{controller=Employee}/{action=Index}/{id?}");
         endpoints.MapControllerRoute(
             name: "default",
             pattern: "{controller=Customer}/{action=Index}/{id?}");

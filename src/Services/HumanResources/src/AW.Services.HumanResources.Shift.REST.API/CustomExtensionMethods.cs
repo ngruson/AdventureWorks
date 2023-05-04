@@ -14,6 +14,8 @@ using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using AW.Services.HumanResources.Core.Handlers.CreateShift;
+using FluentValidation;
 
 namespace AW.Services.HumanResources.Shift.REST.API
 {
@@ -104,6 +106,7 @@ namespace AW.Services.HumanResources.Shift.REST.API
             services.AddMediatR(config => config.RegisterServicesFromAssembly(
                 typeof(GetEmployeesQuery).Assembly)
             );
+            services.AddValidatorsFromAssemblyContaining<CreateShiftCommandValidator>();
 
             return services;
         }

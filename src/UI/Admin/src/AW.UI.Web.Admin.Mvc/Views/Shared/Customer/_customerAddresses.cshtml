@@ -1,4 +1,7 @@
-﻿@{
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
+@using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+@using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+@{
     @model IEnumerable<CustomerAddressViewModel>;
     var statesProvinces = ViewData["statesProvinces"] as List<StateProvince>;
     var countries = ViewData["countries"] as List<CountryRegion>;

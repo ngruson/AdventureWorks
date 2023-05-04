@@ -1,0 +1,68 @@
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift.DetailModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Shifts</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Shift details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.Shift!.Name</h1>
+            <div class="mt-2">
+                <a class="text-body me-3" asp-page-handler="delete" asp-route-name="@Model.Shift.Name">
+                    <i class="bi-trash me-1"></i> Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Shift</h4>
+        <a class="link" data-bs-toggle="modal" data-bs-target="#editShift" href="#">Edit</a>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        <!-- Form -->
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Shift!.Name, new { @class = "col-sm-3 col-form-label form-label" })
+                    <input type="text" class="form-control" value="@Model.Shift.Name" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Shift!.StartTime, new { @class = "col-sm-3 col-form-label form-label" })
+                    <input type="text" class="form-control" value="@Model.Shift.StartTime" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Shift!.EndTime, new { @class = "col-sm-3 col-form-label form-label" })
+                    <input type="text" class="form-control" value="@Model.Shift.EndTime" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Card -->
+
+<partial name="Edit" for="@Model.Shift" />

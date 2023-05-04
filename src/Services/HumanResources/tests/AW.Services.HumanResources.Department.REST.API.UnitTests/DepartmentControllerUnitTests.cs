@@ -213,14 +213,22 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
         public class UpdateDepartment
         {
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task ReturnDepartmentWhenDepartmentExists(
+            public async Task return_ok_given_department_is_updated(
                 [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<IValidator<UpdateDepartmentCommand>> validator,
                 [Greedy] DepartmentController sut,
                 UpdateDepartmentCommand command,
                 Core.Handlers.UpdateDepartment.Department department
             )
             {
                 //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult());
+
                 mockMediator.Setup(x => x.Send(
                     It.IsAny<UpdateDepartmentCommand>(),
                     It.IsAny<CancellationToken>()
@@ -239,13 +247,21 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
             }
 
             [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task ReturnNotFoundWhenDepartmentDoesNotExist(
+            public async Task return_notfound_given_department_does_not_exist(
                 [Frozen] Mock<IMediator> mockMediator,
+                [Frozen] Mock<IValidator<UpdateDepartmentCommand>> validator,
                 [Greedy] DepartmentController sut,
                 UpdateDepartmentCommand command
             )
             {
                 //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult());
+
                 mockMediator.Setup(x => x.Send(
                         It.IsAny<UpdateDepartmentCommand>(),
                         It.IsAny<CancellationToken>()
@@ -258,6 +274,52 @@ namespace AW.Services.HumanResources.Department.REST.API.UnitTests
 
                 //Assert
                 actionResult.Should().BeOfType<NotFoundResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_badrequest_given_command_is_invalid(
+                [Frozen] Mock<IValidator<UpdateDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                UpdateDepartmentCommand command,
+                List<ValidationFailure> validationFailures
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ReturnsAsync(new ValidationResult(validationFailures));
+
+                //Act
+                var actionResult = await sut.UpdateDepartment(command);
+
+                //Assert
+                var result = actionResult as BadRequestObjectResult;
+                result!.Value.Should().BeOfType<ProblemHttpResult>();
+            }
+
+            [Theory, AutoMoqData]
+            public async Task return_internalservererror_given_exception_occurs(
+                [Frozen] Mock<IValidator<UpdateDepartmentCommand>> validator,
+                [Greedy] DepartmentController sut,
+                UpdateDepartmentCommand command
+            )
+            {
+                //Arrange
+                validator.Setup(_ => _.ValidateAsync(
+                        command,
+                        It.IsAny<CancellationToken>()
+                    )
+                )
+                .ThrowsAsync(new Exception());
+
+                //Act
+                var actionResult = await sut.UpdateDepartment(command);
+
+                //Assert
+                actionResult.Should().BeOfType<InternalServerErrorObjectResult>();
             }
         }
 

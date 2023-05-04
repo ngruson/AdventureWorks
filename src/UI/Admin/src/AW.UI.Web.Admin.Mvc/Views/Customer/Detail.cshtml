@@ -1,6 +1,7 @@
-﻿@{
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
+@{
     ViewData["Title"] = $"Customer detail - {Model.Customer!.CustomerName}";
-    @model CustomerDetailViewModel;
+    @model CustomerDetailViewModel; 
 }
 
 @if (Model.Customer.CustomerType == CustomerType.Individual)

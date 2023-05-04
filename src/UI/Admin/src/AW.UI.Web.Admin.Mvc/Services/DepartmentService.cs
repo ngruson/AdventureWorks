@@ -67,9 +67,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
             var departmentToUpdate = _mapper.Map<SharedKernel.Department.Handlers.UpdateDepartment.Department>(department);
             _mapper.Map(viewModel.Department, departmentToUpdate);
 
-            _logger.LogInformation("Updating employee");
+            _logger.LogInformation("Updating department");
             await _mediator.Send(new UpdateDepartmentCommand(viewModel.Key!, departmentToUpdate));
-            _logger.LogInformation("Employee updated successfully");
+            _logger.LogInformation("Department updated successfully");
         }
 
         private async Task<SharedKernel.Department.Handlers.GetDepartment.Department> GetDepartment(string name)

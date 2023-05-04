@@ -978,6 +978,18 @@
                                             </div>
                                         </div>
                                         <!-- End Collapse -->
+                                        <!-- Collapse -->
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle @(requestPath != "/HumanResources/Shift" ? "collapsed" : "")" href="#navbarHumanResourcesShiftsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarHumanResourcesShiftsMenu" aria-expanded="@(requestPath == "/HumanResources")" aria-controls="navbarHumanResourcesShiftsMenu">
+                                                Shifts
+                                            </a>
+
+                                            <div id="navbarHumanResourcesShiftsMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Shift" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
+                                                <a href="HumanResources/Shift" class="nav-link @(requestPath == "/HumanResources/Shift" ? "active" : "")">Shifts</a>
+                                                @*@Html.ActionLink("Shifts", "Index", "Pages", null, new { @class = "nav-link @(requestPath == \"/HumanResources/Shift\" ? \"active\" : \"\")"})*@
+                                            </div>
+                                        </div>
+                                        <!-- End Collapse -->
                                     </div>
                                 </div>
                             </div>

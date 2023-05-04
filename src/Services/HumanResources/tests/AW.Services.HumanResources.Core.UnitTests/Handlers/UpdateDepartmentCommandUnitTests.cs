@@ -10,7 +10,7 @@ using Moq;
 
 namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 {
-    public class UpdateDepartmentCommandHandlerUnitTests
+    public class UpdateDepartmentCommandUnitTests
     {
         [Theory]
         [AutoMapperData(typeof(MappingProfile))]
