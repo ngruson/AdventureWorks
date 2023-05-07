@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class AddressViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Address>
+    public class AddressViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.Address>
     {
         [Display(Name = "Address line 1")]
         public string? AddressLine1 { get; set; }
@@ -20,9 +20,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Address, AddressViewModel>();
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Address, AddressViewModel>();
-            profile.CreateMap<AddressViewModel, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Address>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.Address, AddressViewModel>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.Address, AddressViewModel>();
+            profile.CreateMap<AddressViewModel, Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.Address>();
         }
     }
 }

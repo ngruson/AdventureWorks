@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
-    public class EditEmployeeEmployeeViewModel : IMapFrom<SharedKernel.Employee.Handlers.UpdateEmployee.Employee>
+    public class EditEmployeeEmployeeViewModel : IMapFrom<Infrastructure.Api.Employee.Handlers.UpdateEmployee.Employee>
     {
         public string? NationalIDNumber { get; set; }
 
@@ -25,7 +25,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Employee.Handlers.UpdateEmployee.Employee, EditEmployeeEmployeeViewModel>()
+            profile.CreateMap<Infrastructure.Api.Employee.Handlers.UpdateEmployee.Employee, EditEmployeeEmployeeViewModel>()
                 .ReverseMap();
         }
     }

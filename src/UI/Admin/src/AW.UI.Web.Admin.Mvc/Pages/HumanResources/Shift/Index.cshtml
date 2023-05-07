@@ -79,7 +79,8 @@
                             </div>
                         </td>
                         <td class="table-column-ps-0">
-                            <a asp-page="./Detail" asp-route-name="@shift.Name">
+                            @Html.HiddenFor(_ => shift.ObjectId)
+                            <a asp-page="./Detail" asp-route-objectId="@shift.ObjectId">
                                 <div class="flex-grow-1 ms-3">
                                     <span class="h5 text-inherit">@shift.Name</span>
                                 </div>
@@ -113,7 +114,9 @@
                 if (confirm("Do you want to delete " + checked.length + " shift(s)?")) {
                     var shifts = [];
                     checked.each(function () {
-                        var shift = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
+                        //var shift = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
+                        var shift = $('input#shift_ObjectId').val();
+                        alert(shift);
                         shifts.push(shift);
                     });
 

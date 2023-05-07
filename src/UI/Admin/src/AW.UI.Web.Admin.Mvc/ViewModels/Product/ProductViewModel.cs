@@ -4,7 +4,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 {
-    public class ProductViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProducts.Product>
+    public class ProductViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.GetProducts.Product>
     {
         [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
@@ -73,7 +73,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.Product, ProductViewModel>()
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProducts.Product, ProductViewModel>()
                 .ForMember(m => m.MakeFlag, opt => opt.Ignore())
                 .ForMember(m => m.FinishedGoodsFlag, opt => opt.Ignore())
                 .ForMember(m => m.Color, opt => opt.Ignore())
@@ -86,7 +86,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
                 .ForMember(m => m.DiscontinuedDate, opt => opt.Ignore())
                 .ForMember(m => m.ProductModelName, opt => opt.Ignore());
 
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.Product, ProductViewModel>();
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProduct.Product, ProductViewModel>();
         }
     }
 }

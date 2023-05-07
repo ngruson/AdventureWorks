@@ -51,12 +51,37 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMoqData]
-        public async Task validation_error_given_no_shift_name(
+        public async Task validation_error_given_no_shift_object_id(
             UpdateShiftCommandValidator sut,
             UpdateShiftCommand command
         )
         {
             //Arrange
+            command.Shift!.ObjectId = Guid.Empty;
+
+            //Act
+            var result = await sut.TestValidateAsync(command);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(command => command.Shift!.ObjectId)
+                .WithErrorMessage("ObjectId is required");
+        }
+
+        [Theory, AutoMoqData]
+        public async Task validation_error_given_no_shift_name(
+            [Frozen] Mock<IRepository<Entities.Shift>> repository,
+            UpdateShiftCommandValidator sut,
+            UpdateShiftCommand command
+        )
+        {
+            //Arrange
+            repository.Setup(_ => _.AnyAsync(
+                It.IsAny<GetShiftSpecification>(),
+                It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
+
             command.Shift!.Name = null;
 
             //Act

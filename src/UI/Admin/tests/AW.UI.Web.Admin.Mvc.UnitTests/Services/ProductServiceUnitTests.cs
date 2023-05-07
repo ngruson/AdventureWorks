@@ -2,12 +2,12 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.DeleteProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
-using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.CreateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.DeleteProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.DuplicateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProducts;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.UpdateProduct;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -27,7 +27,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             {
                 //Arrange
                 var products = Enumerable.Repeat(
-                    new SharedKernel.Product.Handlers.GetProducts.Product(), 
+                    new Infrastructure.Api.Product.Handlers.GetProducts.Product(), 
                     10
                 ).ToList();
 
@@ -57,7 +57,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductService sut,
                 string productNumber,
-                SharedKernel.Product.Handlers.GetProduct.Product product
+                Infrastructure.Api.Product.Handlers.GetProduct.Product product
             )
             {
                 //Arrange
@@ -89,7 +89,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<GetProductQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+                .ReturnsAsync((Infrastructure.Api.Product.Handlers.GetProduct.Product?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.GetProductDetail(productNumber);
@@ -132,7 +132,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductService sut,
                 EditProductViewModel viewModel,
-                SharedKernel.Product.Handlers.GetProduct.Product product
+                Infrastructure.Api.Product.Handlers.GetProduct.Product product
             )
             {
                 //Arrange
@@ -169,7 +169,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<GetProductQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+                .ReturnsAsync((Infrastructure.Api.Product.Handlers.GetProduct.Product?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.UpdateProduct(viewModel);
@@ -196,7 +196,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductService sut,
                 EditPricingViewModel viewModel,
-                SharedKernel.Product.Handlers.GetProduct.Product product
+                Infrastructure.Api.Product.Handlers.GetProduct.Product product
             )
             {
                 //Arrange
@@ -233,7 +233,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<GetProductQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+                .ReturnsAsync((Infrastructure.Api.Product.Handlers.GetProduct.Product?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.UpdatePricing(viewModel);
@@ -260,7 +260,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductService sut,
                 EditProductOrganizationViewModel viewModel,
-                SharedKernel.Product.Handlers.GetProduct.Product product
+                Infrastructure.Api.Product.Handlers.GetProduct.Product product
             )
             {
                 //Arrange
@@ -297,7 +297,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<GetProductQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((SharedKernel.Product.Handlers.GetProduct.Product?)null);
+                .ReturnsAsync((Infrastructure.Api.Product.Handlers.GetProduct.Product?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.UpdateProductOrganization(viewModel);

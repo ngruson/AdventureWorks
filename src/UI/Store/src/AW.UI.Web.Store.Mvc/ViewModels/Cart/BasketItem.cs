@@ -4,7 +4,7 @@ using System;
 
 namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 {
-    public record BasketItem : IMapFrom<SharedKernel.Basket.Handlers.GetBasket.BasketItem>
+    public record BasketItem : IMapFrom<Infrastructure.Api.Basket.Handlers.GetBasket.BasketItem>
     {
         public string? Id { get; init; }
         public string? ProductNumber { get; set; }
@@ -17,10 +17,10 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Basket.Handlers.GetBasket.BasketItem, BasketItem>()
+            profile.CreateMap<Infrastructure.Api.Basket.Handlers.GetBasket.BasketItem, BasketItem>()
                 .ReverseMap();
 
-            profile.CreateMap<SharedKernel.Basket.Handlers.Checkout.BasketItem, BasketItem>()
+            profile.CreateMap<Infrastructure.Api.Basket.Handlers.Checkout.BasketItem, BasketItem>()
                 .ReverseMap();
         }
     }

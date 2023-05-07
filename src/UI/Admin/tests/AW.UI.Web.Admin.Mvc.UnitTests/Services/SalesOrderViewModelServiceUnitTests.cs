@@ -1,9 +1,9 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -64,7 +64,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
         [Theory, AutoMapperData(typeof(MappingProfile))]
         public async Task GetSalesOrderDetail_ReturnsViewModel(
             [Frozen] Mock<IMediator> mockMediator,
-            SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
+            Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesOrder salesOrder,
             SalesOrderService sut
         )
         {

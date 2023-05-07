@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class CustomerViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Customer>
+    public class CustomerViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.Customer>
     {
         public AW.SharedKernel.Interfaces.CustomerType CustomerType { get; set; }
 
@@ -17,8 +17,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.Customer, CustomerViewModel>();
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, CustomerViewModel>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.Customer, CustomerViewModel>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.Customer, CustomerViewModel>();
         }
     }
 }

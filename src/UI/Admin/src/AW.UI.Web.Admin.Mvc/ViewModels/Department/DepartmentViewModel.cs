@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
 {
-    public class DepartmentViewModel : IMapFrom<SharedKernel.Department.Handlers.GetDepartments.Department>
+    public class DepartmentViewModel : IMapFrom<Infrastructure.Api.Department.Handlers.GetDepartments.Department>
     {
         [Display(Name = "Name")]
         [Required]
@@ -16,9 +16,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Department.Handlers.GetDepartments.Department, DepartmentViewModel>();
-            profile.CreateMap<SharedKernel.Department.Handlers.GetDepartment.Department, DepartmentViewModel>();
-            profile.CreateMap<DepartmentViewModel, SharedKernel.Department.Handlers.CreateDepartment.Department>();
+            profile.CreateMap<Infrastructure.Api.Department.Handlers.GetDepartments.Department, DepartmentViewModel>();
+            profile.CreateMap<Infrastructure.Api.Department.Handlers.GetDepartment.Department, DepartmentViewModel>();
+            profile.CreateMap<DepartmentViewModel, Infrastructure.Api.Department.Handlers.CreateDepartment.Department>();
         }
     }
 }

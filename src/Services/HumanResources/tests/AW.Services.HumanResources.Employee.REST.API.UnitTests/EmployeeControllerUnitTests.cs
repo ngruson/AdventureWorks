@@ -256,7 +256,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .Throws(new ShiftNotFoundException(command.ShiftName!));
+                .Throws(new ShiftNotFoundException(command.Shift));
 
                 //Act
                 var actionResult = await sut.AddDepartmentHistory(command);
@@ -340,7 +340,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .Throws(new ShiftNotFoundException(command.ShiftName!));
+                .Throws(new ShiftNotFoundException(command.ObjectId));
 
                 //Act
                 var actionResult = await sut.UpdateDepartmentHistory(command);
@@ -403,10 +403,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                     )
                 )
                 .Throws(new EmployeeDepartmentHistoryNotFoundException(
-                    command.LoginID!,
-                    command.DepartmentName,
-                    command.ShiftName,
-                    command.StartDate
+                    command.ObjectId
                 ));
 
                 //Act

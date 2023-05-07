@@ -1,6 +1,6 @@
 ﻿using AW.SharedKernel.AutoMapper;
 using System.Reflection;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
+using AW.UI.Web.Infrastructure.Api.Interfaces;
 
 namespace AW.UI.Web.Store.Mvc
 {
@@ -11,9 +11,9 @@ namespace AW.UI.Web.Store.Mvc
             ApplyMappingsFromAssembly(typeof(IProductApiClient).Assembly);
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-            CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.Customer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.Customer>()
-                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>()
-                .Include<SharedKernel.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
+            CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.Customer, Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.Customer>()
+                .Include<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer, Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.IndividualCustomer>()
+                .Include<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.StoreCustomer, Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.StoreCustomer>();
         }
     }
 }

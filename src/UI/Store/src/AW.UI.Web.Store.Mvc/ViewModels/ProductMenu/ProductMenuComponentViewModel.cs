@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+﻿using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
 
 namespace AW.UI.Web.Store.Mvc.ViewModels.ProductMenu
 {

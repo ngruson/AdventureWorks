@@ -2,11 +2,11 @@
 using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Department;
-using AW.UI.Web.SharedKernel.Department.Handlers.CreateDepartment;
-using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
-using AW.UI.Web.SharedKernel.Department.Handlers.UpdateDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.CreateDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.DeleteDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services
@@ -54,7 +54,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task CreateDepartment(CreateDepartmentViewModel viewModel)
         {
-            var department = _mapper.Map<SharedKernel.Department.Handlers.CreateDepartment.Department>(viewModel.Department);
+            var department = _mapper.Map<Infrastructure.Api.Department.Handlers.CreateDepartment.Department>(viewModel.Department);
 
             _logger.LogInformation("Send command to add department");
             await _mediator.Send(new CreateDepartmentCommand(department));
@@ -64,7 +64,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         public async Task UpdateDepartment(EditDepartmentViewModel viewModel)
         {
             var department = await GetDepartment(viewModel.Key!);
-            var departmentToUpdate = _mapper.Map<SharedKernel.Department.Handlers.UpdateDepartment.Department>(department);
+            var departmentToUpdate = _mapper.Map<Infrastructure.Api.Department.Handlers.UpdateDepartment.Department>(department);
             _mapper.Map(viewModel.Department, departmentToUpdate);
 
             _logger.LogInformation("Updating department");
@@ -72,7 +72,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Department updated successfully");
         }
 
-        private async Task<SharedKernel.Department.Handlers.GetDepartment.Department> GetDepartment(string name)
+        private async Task<Infrastructure.Api.Department.Handlers.GetDepartment.Department> GetDepartment(string name)
         {
             _logger.LogInformation("Getting department");
             var department = await _mediator.Send(new GetDepartmentQuery(name));

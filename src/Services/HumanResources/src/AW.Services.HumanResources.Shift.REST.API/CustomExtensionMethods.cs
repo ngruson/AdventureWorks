@@ -16,6 +16,9 @@ using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using AW.Services.HumanResources.Core.Handlers.CreateShift;
 using FluentValidation;
+using Ardalis.Result.AspNetCore;
+using AW.Services.HumanResources.Core.Handlers.UpdateShift;
+using AW.Services.HumanResources.Core.Handlers.DeleteShift;
 
 namespace AW.Services.HumanResources.Shift.REST.API
 {
@@ -27,6 +30,9 @@ namespace AW.Services.HumanResources.Shift.REST.API
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
+                options.AddResultConvention(resultStatusMap => resultStatusMap
+                    .AddDefaultMap()
+                );
             });
 
             return services;
@@ -81,6 +87,9 @@ namespace AW.Services.HumanResources.Shift.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
+            //services.AddEndpointsApiExplorer();
+            //services.AddSwaggerGen();
+            //Breaking change - Enable this when every API is a minimal API
             services.AddSwaggerDocumentation("Shift API");
 
             return services;

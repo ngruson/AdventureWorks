@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 {
-    public class ProductPhotoViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProduct.ProductPhoto>
+    public class ProductPhotoViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.GetProduct.ProductPhoto>
     {
         public byte[]? ThumbNailPhoto { get; set; }
 
@@ -15,8 +15,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.ProductPhoto, ProductPhotoViewModel>();
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.ProductPhoto, ProductPhotoViewModel>();
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProducts.ProductPhoto, ProductPhotoViewModel>();
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProduct.ProductPhoto, ProductPhotoViewModel>();
         }
     }
 }

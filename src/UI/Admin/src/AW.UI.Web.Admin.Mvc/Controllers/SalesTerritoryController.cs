@@ -1,4 +1,4 @@
-﻿using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+﻿using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

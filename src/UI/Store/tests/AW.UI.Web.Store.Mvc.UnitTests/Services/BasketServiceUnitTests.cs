@@ -6,9 +6,11 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using MediatR;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
-using AW.UI.Web.Store.Mvc;
+using AW.UI.Web.Infrastructure.Api.Interfaces;
+using AW.UI.Web.Infrastructure.Api.Basket.Handlers.GetBasket;
+using AW.UI.Web.Infrastructure.Api.Basket.Handlers.UpdateBasket;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProduct;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetPreferredAddress;
 
 namespace AW.UI.Web.Store.Mvc.UnitTests.Services
 {
@@ -20,23 +22,23 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
             public async Task GetBasket_BasketExist_ReturnsBasket(
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
-                SharedKernel.Basket.Handlers.GetBasket.Basket basket
+                Infrastructure.Api.Basket.Handlers.GetBasket.Basket basket
             )
             {
                 //Arrange
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<GetBasketQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(basket);
 
                 //Act
-                var response = await sut.GetBasketAsync<SharedKernel.Basket.Handlers.GetBasket.Basket>(basket.BuyerId);
+                var response = await sut.GetBasketAsync<Infrastructure.Api.Basket.Handlers.GetBasket.Basket>(basket.BuyerId);
 
                 //Assert
                 mockMediator.Verify(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<GetBasketQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -52,8 +54,8 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
-                SharedKernel.Product.Handlers.GetProduct.Product product,
+                Infrastructure.Api.Basket.Handlers.GetBasket.Basket basket,
+                Product product,
                 int quantity
             )
             {
@@ -67,14 +69,14 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                     });
                 
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<GetProductQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(product);
 
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<GetBasketQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
@@ -90,7 +92,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 //Assert
                 response.Should().Be(basket);
                 mockMediator.Verify(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<UpdateBasketCommand>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -101,27 +103,27 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
-                SharedKernel.Product.Handlers.GetProduct.Product product,
+                Infrastructure.Api.Basket.Handlers.GetBasket.Basket basket,
+                Product product,
                 int quantity
             )
             {
                 //Arrange
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<GetProductQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(product);
 
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<GetBasketQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
                 .ReturnsAsync(basket);
 
-                basket.Items.Add(new SharedKernel.Basket.Handlers.GetBasket.BasketItem
+                basket.Items.Add(new Infrastructure.Api.Basket.Handlers.GetBasket.BasketItem
                 {
                     ProductNumber = product.ProductNumber,
                     Quantity = 10
@@ -141,7 +143,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                     .ToList()[0].Quantity.Should().Be(10 + quantity);
 
                 mockMediator.Verify(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<UpdateBasketCommand>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -152,17 +154,17 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                SharedKernel.Product.Handlers.GetProduct.Product product,
+                Product product,
                 int quantity
             )
             {
                 //Arrange
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Product.Handlers.GetProduct.GetProductQuery>(),
+                        It.IsAny<GetProductQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .ReturnsAsync(null as SharedKernel.Product.Handlers.GetProduct.Product);
+                .ReturnsAsync(null as Product);
 
                 //Act
                 Func<Task> func = async () => await sut.AddBasketItemAsync(
@@ -176,7 +178,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                     .WithMessage("Value cannot be null. (Parameter 'product')");
 
                 mockMediator.Verify(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<UpdateBasketCommand>(),
                         It.IsAny<CancellationToken>()
                     ),
                     Times.Never
@@ -191,7 +193,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
                 ApplicationUser user,
-                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
+                Infrastructure.Api.Basket.Handlers.GetBasket.Basket basket,
                 List<int> quantityValues
             )
             {
@@ -203,7 +205,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 }
 
                 mockMediator.Setup(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.GetBasket.GetBasketQuery>(),
+                        It.IsAny<GetBasketQuery>(),
                         It.IsAny<CancellationToken>()
                     )
                 )
@@ -221,7 +223,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                     resultBasket.Items[i].Quantity.Should().Be(quantityValues[i]);
                 }
                 mockMediator.Verify(_ => _.Send(
-                        It.IsAny<SharedKernel.Basket.Handlers.UpdateBasket.UpdateBasketCommand>(),
+                        It.IsAny<UpdateBasketCommand>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -235,7 +237,7 @@ namespace AW.UI.Web.Store.Mvc.UnitTests.Services
                 [Frozen] Mock<IBasketApiClient> mockClient,
                 [Frozen] Mock<IMediator> mockMediator,
                 [Greedy] BasketService sut,
-                SharedKernel.Basket.Handlers.GetBasket.Basket basket,
+                Infrastructure.Api.Basket.Handlers.GetBasket.Basket basket,
                 ApplicationUser user
             )
             {

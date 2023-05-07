@@ -1,4 +1,6 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.GetShifts;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -6,8 +8,8 @@ namespace AW.UI.Web.Admin.Mvc.Services
     {
         Task<List<EmployeeViewModel>> GetEmployees();
         Task<EmployeeDetailViewModel> GetDetail(string loginID);
-        Task<List<SharedKernel.Department.Handlers.GetDepartments.Department>> GetDepartments();
-        Task<List<SharedKernel.Shift.Handlers.GetShifts.Shift>> GetShifts();
+        Task<List<Department>> GetDepartments();
+        Task<List<Shift>> GetShifts();
         Task<List<string>> GetJobTitles();
         Task UpdateEmployee(EditEmployeeViewModel viewModel);
         Task AddDepartmentHistory(AddDepartmentHistoryViewModel viewModel);

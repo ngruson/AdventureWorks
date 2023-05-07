@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 {
-    public class Basket : IMapFrom<SharedKernel.Basket.Handlers.GetBasket.Basket>
+    public class Basket : IMapFrom<Infrastructure.Api.Basket.Handlers.GetBasket.Basket>
     {
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
@@ -13,7 +13,7 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 
         public virtual void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Basket.Handlers.GetBasket.Basket, Basket>()
+            profile.CreateMap<Infrastructure.Api.Basket.Handlers.GetBasket.Basket, Basket>()
                 .ReverseMap();
         }
     }

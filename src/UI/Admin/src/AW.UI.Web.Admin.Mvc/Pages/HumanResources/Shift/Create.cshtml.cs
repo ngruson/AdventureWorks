@@ -24,7 +24,7 @@ namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift
 
             await _shiftService.CreateShift(Shift!);
 
-            return Page();
+            return RedirectToPage("Index");
         }
     }
 }

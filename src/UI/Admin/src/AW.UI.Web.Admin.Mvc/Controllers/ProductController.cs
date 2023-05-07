@@ -2,9 +2,9 @@
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product.ModelBinders;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetUnitMeasures;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModels;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetUnitMeasures;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;

@@ -12,13 +12,29 @@ namespace AW.SharedKernel.Api
 {
     public static class SwaggerExtensions
     {
-        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services, string apiName)
+        public static IServiceCollection AddSwaggerDocumentationWithVersion(this IServiceCollection services, string apiName)
         {
+            services.AddEndpointsApiExplorer();
+
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>(s =>
             {
                 var config = s.GetRequiredService<IConfiguration>();
                 var provider = s.GetRequiredService<IApiVersionDescriptionProvider>();
                 return new ConfigureSwaggerOptions(config, provider, apiName);
+            });
+            services.AddSwaggerGen();
+
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services, string apiName)
+        {
+            services.AddEndpointsApiExplorer();
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>(s =>
+            {
+                var config = s.GetRequiredService<IConfiguration>();
+                return new ConfigureSwaggerOptions(config, null, apiName);
             });
             services.AddSwaggerGen();
 
@@ -32,9 +48,10 @@ namespace AW.SharedKernel.Api
             string apiName)
         {
             var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
-            
+
             app
                 .UseSwagger()
+                .UseSwaggerUI()
                 .UseSwaggerUI(options =>
                 {
                     foreach (var groupName in provider.ApiVersionDescriptions.Select(_ => _.GroupName))
@@ -50,15 +67,38 @@ namespace AW.SharedKernel.Api
 
             return app;
         }
+
+        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app,
+            string virtualPath,
+            IConfiguration configuration,
+            string apiName)
+        {
+            var oidcConfig = new OpenIdConnectConfigurationBuilder(configuration).Build();
+
+            app
+                .UseSwagger()
+                .UseSwaggerUI()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint($"{virtualPath}/swagger/v1/swagger.json", apiName);
+                    options.RoutePrefix = string.Empty;
+                    options.DocumentTitle = $"{apiName} Documentation";
+                    options.OAuthClientId(oidcConfig?.OpenIdClientId);
+                    options.OAuthAppName("AdventureWorks");
+                    options.OAuthUsePkce();
+                });
+
+            return app;
+        }
     }
 
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        private readonly IApiVersionDescriptionProvider provider;
+        private readonly IApiVersionDescriptionProvider? provider;
         private readonly string apiName;
         private readonly OpenIdConnectConfiguration? oidcConfig;
 
-        public ConfigureSwaggerOptions(IConfiguration configuration, IApiVersionDescriptionProvider provider, string apiName)
+        public ConfigureSwaggerOptions(IConfiguration configuration, IApiVersionDescriptionProvider? provider, string apiName)
         {
             this.provider = provider;
             this.apiName = apiName;
@@ -75,16 +115,17 @@ namespace AW.SharedKernel.Api
             {
                 oauthScopeDic.Add(scope, $"Resource access: {scope}");
             }
-            foreach (var description in provider.ApiVersionDescriptions)
-            {
-                options.SwaggerDoc(
-                    description.GroupName,
-                    new OpenApiInfo
-                    {
-                        Title = $"{apiName} {description.ApiVersion}",
-                        Version = description.ApiVersion.ToString()
-                    });
-            }
+            if (provider != null)
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerDoc(
+                        description.GroupName,
+                        new OpenApiInfo
+                        {
+                            Title = $"{apiName} {description.ApiVersion}",
+                            Version = description.ApiVersion.ToString()
+                        });
+                }
             options.EnableAnnotations();
             options.CustomSchemaIds(x => x.FullName);
             options.DescribeAllParametersInCamelCase();

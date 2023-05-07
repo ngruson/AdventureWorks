@@ -1,5 +1,5 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {

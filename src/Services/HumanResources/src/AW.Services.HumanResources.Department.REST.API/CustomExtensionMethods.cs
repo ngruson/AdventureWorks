@@ -81,7 +81,7 @@ namespace AW.Services.HumanResources.Department.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Department API");
+            services.AddSwaggerDocumentationWithVersion("Department API");
 
             return services;
         }

@@ -4,7 +4,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.ProductModel
 {
-    public class ProductModelViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProductModels.ProductModel>
+    public class ProductModelViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.GetProductModels.ProductModel>
     {
         public string? Name { get; set; }
 
@@ -15,10 +15,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.ProductModel
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProductModels.ProductModel, ProductModelViewModel>()
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProductModels.ProductModel, ProductModelViewModel>()
                 .ForMember(_ => _.Instructions, opt => opt.Ignore())
                 .ForMember(_ => _.Descriptions, opt => opt.Ignore());
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProductModel.ProductModel, ProductModelViewModel>()
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProductModel.ProductModel, ProductModelViewModel>()
                 .ForMember(_ => _.Instructions, opt => opt.MapFrom(src => CreateXmlDocument(src.Instructions)));
         }
 

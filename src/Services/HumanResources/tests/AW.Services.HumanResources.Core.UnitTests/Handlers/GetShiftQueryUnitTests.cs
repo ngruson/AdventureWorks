@@ -1,6 +1,6 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
-using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetShift;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -14,7 +14,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_ShiftExists_ReturnShift(
+        public async Task return_success_given_shift_exists(
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
             GetShiftQueryHandler sut,
             GetShiftQuery query,
@@ -32,19 +32,21 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
+            result.IsSuccess.Should().BeTrue();
+
+            result.Value.Should().BeEquivalentTo(shift, opt => opt
+                .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
+            );
+
             shiftRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetShiftSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
-
-            result.Should().BeEquivalentTo(shift, opt => opt
-                .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
-            );
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_ShiftNotFound_ThrowArgumentNullException(
+        public async Task return_notfound_given_shift_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
             GetShiftQueryHandler sut,
             GetShiftQuery query
@@ -58,11 +60,10 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Shift?)null);
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ShiftNotFoundException>()
-                .WithMessage($"Shift '{query.Name}' not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
         }
     }
 }

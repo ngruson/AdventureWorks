@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AW.UI.Web.Admin.Mvc.ViewModels.ProductModel;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModel;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModel;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModels;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services

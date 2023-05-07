@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
 using MediatR;
-using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
+using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetStoreCustomer;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetAddressTypes;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetAddressTypes;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
+using UpdateCustomer = AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -156,14 +156,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
             _logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
             var storeCustomer = await _mediator.Send(new GetStoreCustomerQuery(viewModel?.AccountNumber));
-            var storeCustomerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
+            var storeCustomerToUpdate = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
 
             storeCustomerToUpdate.Name = viewModel?.Name;
             storeCustomerToUpdate.Territory = viewModel?.Territory;
             storeCustomerToUpdate.SalesPerson = viewModel?.SalesPerson;
 
             _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, storeCustomerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, storeCustomerToUpdate));
             _logger.LogInformation("Customer successfully updated");
         }
 
@@ -173,12 +173,12 @@ namespace AW.UI.Web.Admin.Mvc.Services
             Guard.Against.Null(viewModel, _logger);
 
             var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel?.AccountNumber));
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
 
-            customerToUpdate.Person = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Person>(viewModel?.Person);
+            customerToUpdate.Person = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Person>(viewModel?.Person);
 
             _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer successfully updated");
         }
 
@@ -212,14 +212,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var newAddress = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.CustomerAddress>(viewModel);
+            var newAddress = _mapper.Map<UpdateCustomer.CustomerAddress>(viewModel);
             Guard.Against.Null(newAddress, _logger);
             customerToUpdate.Addresses?.Add(newAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -232,14 +232,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
             var addressToUpdate = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == viewModel.AddressType);
             Guard.Against.Null(addressToUpdate, _logger);
             _mapper.Map(viewModel.Address, addressToUpdate?.Address);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -273,14 +273,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.Customer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
             var addressToDelete = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == addressType);
             Guard.Against.Null(addressToDelete, _logger);
             customerToUpdate.Addresses?.Remove(addressToDelete);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -369,15 +369,15 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
-            var contactToAdd = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomerContact>(
+            var contactToAdd = _mapper.Map<UpdateCustomer.StoreCustomerContact>(
                 viewModel.CustomerContact
             );
             customerToUpdate.Contacts?.Add(contactToAdd);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -390,14 +390,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
             var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == viewModel?.CustomerContact?.ContactPerson.Name!.FullName);
             Guard.Against.Null(contact, _logger);
             _mapper.Map(viewModel?.CustomerContact, contact);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -410,14 +410,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
             var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == contactName);
             Guard.Against.Null(contact, _logger);
             customerToUpdate.Contacts?.Remove(contact);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -430,7 +430,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
 
             var contact = customerToUpdate?.Contacts?.FirstOrDefault(c =>
@@ -446,7 +446,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             contact?.ContactPerson?.EmailAddresses?.Remove(personEmailAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
 
@@ -459,7 +459,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Retrieved customer {@Customer}", customer);
             Guard.Against.Null(customer, _logger);
 
-            var customerToUpdate = _mapper.Map<SharedKernel.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
+            var customerToUpdate = _mapper.Map<UpdateCustomer.IndividualCustomer>(customer);
             Guard.Against.Null(customerToUpdate, _logger);
 
             var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.FirstOrDefault(c =>
@@ -470,7 +470,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             customerToUpdate.Person?.EmailAddresses?.Remove(personEmailAddress);
 
             _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomerCommand(accountNumber, customerToUpdate));
+            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
             _logger.LogInformation("Customer updated successfully");
         }
     }

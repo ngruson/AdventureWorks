@@ -44,20 +44,15 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartmentHistory
             Guard.Against.DepartmentNull(department, request.DepartmentName!, _logger);
 
             _logger.LogInformation("Getting shift from database");
-            var shiftSpec = new GetShiftSpecification(request.ShiftName);
+            var shiftSpec = new GetShiftSpecification(request.Shift);
             var shift = await _shiftRepository.SingleOrDefaultAsync(shiftSpec, cancellationToken);
-            Guard.Against.ShiftNull(shift, request.ShiftName!, _logger);
+            Guard.Against.ShiftNull(shift, request.Shift, _logger);
 
             var departmentHistory = employee!.DepartmentHistory.SingleOrDefault(_ =>
-                _.Department!.Name == request.DepartmentName &&
-                _.Shift!.Name == request.ShiftName &&
-                _.StartDate == request.StartDate
+                _.ObjectId == request.ObjectId
             );
             Guard.Against.EmployeeDepartmentHistoryNull(departmentHistory,
-                request.LoginID!,
-                request.DepartmentName,
-                request.ShiftName,
-                request.StartDate,
+                request.ObjectId,
                 _logger
             );
 

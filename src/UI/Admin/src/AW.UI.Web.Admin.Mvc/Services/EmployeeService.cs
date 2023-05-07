@@ -2,15 +2,15 @@
 using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
-using AW.UI.Web.SharedKernel.Employee.Handlers.AddDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.DeleteDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployee;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployees;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetJobTitles;
-using AW.UI.Web.SharedKernel.Employee.Handlers.UpdateDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.UpdateEmployee;
-using AW.UI.Web.SharedKernel.Shift.Handlers.GetShifts;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.AddDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.DeleteDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployee;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployees;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetJobTitles;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateEmployee;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.GetShifts;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services
@@ -53,7 +53,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             };
         }
 
-        private async Task<SharedKernel.Employee.Handlers.GetEmployee.Employee> GetEmployee(string? loginID)
+        private async Task<Infrastructure.Api.Employee.Handlers.GetEmployee.Employee> GetEmployee(string? loginID)
         {
             _logger.LogInformation("Getting employee");
             var employee = await _mediator.Send(new GetEmployeeQuery(loginID));
@@ -63,7 +63,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return employee!;
         }
 
-        public async Task<List<SharedKernel.Department.Handlers.GetDepartments.Department>> GetDepartments()
+        public async Task<List<Infrastructure.Api.Department.Handlers.GetDepartments.Department>> GetDepartments()
         {
             _logger.LogInformation("Getting departments");
             var departments = await _mediator.Send(new GetDepartmentsQuery());
@@ -72,7 +72,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return departments;
         }
 
-        public async Task<List<SharedKernel.Shift.Handlers.GetShifts.Shift>> GetShifts()
+        public async Task<List<Infrastructure.Api.Shift.Handlers.GetShifts.Shift>> GetShifts()
         {
             _logger.LogInformation("Getting shifts");
             var shifts = await _mediator.Send(new GetShiftsQuery());
@@ -93,7 +93,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         public async Task UpdateEmployee(EditEmployeeViewModel viewModel)
         {
             var employee = await GetEmployee(viewModel!.Key);
-            var employeeToUpdate = _mapper.Map<SharedKernel.Employee.Handlers.UpdateEmployee.Employee>(employee);
+            var employeeToUpdate = _mapper.Map<Infrastructure.Api.Employee.Handlers.UpdateEmployee.Employee>(employee);
             _mapper.Map(viewModel.Employee, employeeToUpdate);
 
             _logger.LogInformation("Updating employee");

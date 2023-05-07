@@ -77,7 +77,7 @@ namespace AW.Services.Sales.SalesPerson.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Sales Person API");
+            services.AddSwaggerDocumentationWithVersion("Sales Person API");
 
             return services;
         }

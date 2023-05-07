@@ -1,6 +1,6 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using GetProductCategories = AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using DuplicateProduct = AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.DuplicateProduct;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -11,9 +11,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
         Task UpdatePricing(EditPricingViewModel viewModel);
         Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel);
         Task DeleteProduct(string productNumber);
-        Task<DuplicateProduct.Product> DuplicateProduct(string productNumber);
+        Task<Product> DuplicateProduct(string productNumber);
         Task<ProductIndexViewModel> GetProducts();
         Task<ProductDetailViewModel> GetProductDetail(string productNumber);
-        Task<GetProductCategories.ProductCategory> GetCategory(string categoryName);
+        Task<ProductCategory> GetCategory(string categoryName);
     }
 }

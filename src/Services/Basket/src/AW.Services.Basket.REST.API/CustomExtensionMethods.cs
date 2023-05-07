@@ -78,7 +78,7 @@ namespace AW.Services.Basket.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Basket API");
+            services.AddSwaggerDocumentationWithVersion("Basket API");
 
             return services;
         }

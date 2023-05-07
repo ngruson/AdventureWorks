@@ -1,4 +1,5 @@
-using AW.Services.HumanResources.Employee.REST.API;
+﻿using AW.Services.HumanResources.Employee.REST.API;
+using AW.Services.HumanResources.SharedKernel;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddCustomMvc()
+    .AddValidators()
     .AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()

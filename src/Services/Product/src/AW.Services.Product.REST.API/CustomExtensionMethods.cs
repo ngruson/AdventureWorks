@@ -79,7 +79,7 @@ namespace AW.Services.Product.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Product API");
+            services.AddSwaggerDocumentationWithVersion("Product API");
 
             return services;
         }

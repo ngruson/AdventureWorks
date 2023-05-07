@@ -11,7 +11,7 @@ namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift
         public DeleteModel(IShiftService shiftService) =>
             _shiftService = shiftService;
 
-        public async Task OnPostAsync([FromBody] string[] shifts)
+        public async Task OnPostAsync([FromBody] Guid[] shifts)
         {
             foreach (var shift in shifts)
             {

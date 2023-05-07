@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AW.Services.HumanResources.Core.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -27,36 +28,40 @@ namespace AW.Services.HumanResources.Core.GuardClauses
         }
 
         public static void EmployeeDepartmentHistoryNull(this IGuardClause guardClause, Entities.EmployeeDepartmentHistory? edh,
-            string loginID, string? departmentName, string? shiftName, DateTime startDate,
+            Guid objectId,
             ILogger logger
         )
         {
             if (edh == null)
             {
-                var ex = new EmployeeDepartmentHistoryNotFoundException(loginID, departmentName, shiftName, startDate);
+                var ex = new EmployeeDepartmentHistoryNotFoundException(objectId);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
                 throw ex;
             }
         }
 
-        public static void ShiftsNull(this IGuardClause guardClause, List<Entities.Shift> shifts, ILogger logger)
+        public static Result ShiftsNull(this IGuardClause guardClause, List<Entities.Shift> shifts, ILogger logger)
         {
             if (shifts == null)
             {
                 var ex = new ShiftsNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
-        public static void ShiftNull(this IGuardClause guardClause, Entities.Shift? shift, string name, ILogger logger)
+        public static Result ShiftNull(this IGuardClause guardClause, Entities.Shift? shift, Guid objectId, ILogger logger)
         {
             if (shift == null)
             {
-                var ex = new ShiftNotFoundException(name);
+                var ex = new ShiftNotFoundException(objectId);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
         public static void DepartmentsNull(this IGuardClause guardClause, List<Entities.Department> departments, ILogger logger)

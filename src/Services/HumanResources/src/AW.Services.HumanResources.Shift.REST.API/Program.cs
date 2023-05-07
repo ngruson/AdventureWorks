@@ -1,15 +1,25 @@
+﻿using Ardalis.Result.AspNetCore;
+using CreateShift = AW.Services.HumanResources.Core.Handlers.CreateShift;
+using AW.Services.HumanResources.Core.Handlers.DeleteShift;
+using AW.Services.HumanResources.Core.Handlers.GetShift;
+using AW.Services.HumanResources.Core.Handlers.GetShifts;
+using UpdateShift = AW.Services.HumanResources.Core.Handlers.UpdateShift;
+using AW.Services.HumanResources.SharedKernel;
 using AW.Services.HumanResources.Shift.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddCustomMvc()
-    .AddVersioning()
+    .AddValidators()
+    //Breaking change - Enable this when every API is a minimal API
+    //.AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
     .AddCustomIntegrations(builder.Configuration)
@@ -27,14 +37,51 @@ app.Map(virtualPath, builder =>
     });
 
     builder.UseCors("default");
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Shift API");
+    //Breaking change - Enable this when every API is a minimal API
+    //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, "Shift API");
+    builder.UseSwagger();
+    builder.UseSwaggerUI();
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();
     builder.UseEndpoints(endpoints =>
     {
-        endpoints.MapControllers();
+        endpoints.MapGet("/Shift", async ([FromServices] IMediator mediator) =>
+            (await mediator.Send(new GetShiftsQuery()))
+                .ToMinimalApiResult()
+        )
+        .WithName("GetShifts")
+        .WithOpenApi();
+
+        endpoints.MapGet("/Shift/{objectId}", async (Guid objectId, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new GetShiftQuery(objectId)))
+                .ToMinimalApiResult()
+        )
+        .WithName("GetShift")
+        .WithOpenApi();
+
+        endpoints.MapPost("/Shift", async ([FromBody] CreateShift.Shift shift, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new CreateShift.CreateShiftCommand(shift)))
+                .ToMinimalApiResult()
+        )
+        .WithName("CreateShift")
+        .WithOpenApi();
+
+        endpoints.MapPut("/Shift", async ([FromBody] UpdateShift.Shift shift, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new UpdateShift.UpdateShiftCommand(shift)))
+                .ToMinimalApiResult()
+        )
+        .WithName("UpdateShift")
+        .WithOpenApi();
+
+        endpoints.MapDelete("/Shift/{objectId}", async (Guid objectId, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new DeleteShiftCommand(objectId)))
+                .ToMinimalApiResult()
+        )
+        .WithName("DeleteShift")
+        .WithOpenApi();
+
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
             Predicate = _ => true,

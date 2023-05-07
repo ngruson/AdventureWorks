@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class CreditCardViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrder.CreditCard>
+    public class CreditCardViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.CreditCard>
     {
         public string? CardType { get; set; }
 
@@ -15,10 +15,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.CreditCard, CreditCardViewModel>()
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.CreditCard, CreditCardViewModel>()
                 .ForMember(m => m.CardNumber, opt => opt.MapFrom(src => MaskCardNumber(src.CardNumber!)));
 
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.CreditCard, CreditCardViewModel>()
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.CreditCard, CreditCardViewModel>()
                 .ForMember(m => m.CardNumber, opt => opt.MapFrom(src => MaskCardNumber(src.CardNumber!)));
         }
 

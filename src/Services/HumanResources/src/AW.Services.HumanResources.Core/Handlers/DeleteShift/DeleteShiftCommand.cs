@@ -1,9 +1,14 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.DeleteShift
 {
-    public class DeleteShiftCommand : IRequest
+    public class DeleteShiftCommand : IRequest<Result>
     {
-        public string? Name { get; set; }
+        public DeleteShiftCommand(Guid objectId)
+        {
+            ObjectId = objectId;
+        }
+        public Guid ObjectId { get; set; }
     }
 }

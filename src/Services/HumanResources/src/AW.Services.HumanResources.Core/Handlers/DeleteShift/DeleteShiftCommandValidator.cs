@@ -12,15 +12,15 @@ namespace AW.Services.HumanResources.Core.Handlers.DeleteShift
         {
             _shiftRepository = shiftRepository;
 
-            RuleFor(cmd => cmd.Name)
-                .NotEmpty().WithMessage("Name is required")
+            RuleFor(cmd => cmd.ObjectId)
+                .NotEmpty().WithMessage("ObjectId is required")
                 .MustAsync(Exist).WithMessage("Shift does not exist");
         }
 
-        private async Task<bool> Exist(string? name, CancellationToken cancellationToken)
+        private async Task<bool> Exist(Guid objectId, CancellationToken cancellationToken)
         {
             return await _shiftRepository.AnyAsync(
-                new GetShiftSpecification(name),
+                new GetShiftSpecification(objectId),
                 cancellationToken
             );
         }

@@ -1,9 +1,17 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetShift
 {
-    public class GetShiftQuery : IRequest<Shift>
+    public class GetShiftQuery : IRequest<Result<Shift>>
     {
-        public string? Name { get; set; }
+        public GetShiftQuery(Guid objectId)
+        {
+            ObjectId = objectId;
+        }
+
+        public Guid ObjectId { get; set; }
+
+        
     }
 }

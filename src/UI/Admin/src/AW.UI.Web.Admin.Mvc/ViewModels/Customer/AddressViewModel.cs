@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
-    public class AddressViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.Address>
+    public class AddressViewModel : IMapFrom<Infrastructure.Api.Customer.Handlers.GetCustomers.Address>
     {
         [Display(Name = "Address line 1")]
         [Required]
@@ -24,14 +24,14 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.Address, AddressViewModel>();
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.Address, AddressViewModel>()
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomers.Address, AddressViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomer.Address, AddressViewModel>()
                 .ReverseMap();
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.Address, AddressViewModel>()
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetIndividualCustomer.Address, AddressViewModel>()
                 .ReverseMap();
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.Address, AddressViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetStoreCustomer.Address, AddressViewModel>();
 
-            profile.CreateMap<AddressViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.Address>();
+            profile.CreateMap<AddressViewModel, Infrastructure.Api.Customer.Handlers.UpdateCustomer.Address>();
         }
     }
 }

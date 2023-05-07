@@ -1,28 +1,20 @@
 ﻿using FluentAssertions;
 using Moq;
-using System.Linq;
 using Xunit;
-using System.Collections.Generic;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using AW.SharedKernel.Interfaces;
-using System.Threading.Tasks;
 using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
-using AW.UI.Web.SharedKernel.Interfaces.Api;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
 using MediatR;
-using System.Threading;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetContactTypes;
-using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomers;
-using AW.UI.Web.SharedKernel.Customer.Handlers.UpdateCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetStoreCustomer;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetIndividualCustomer;
-using System;
 using AutoMapper;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetContactTypes;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetStoreCustomer;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
 {
@@ -38,7 +30,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             )
             {
                 //Arrange
-                var customers = Enumerable.Repeat(new SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
+                var customers = Enumerable.Repeat(new Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomersQuery>(),
@@ -47,7 +39,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 )
                 .ReturnsAsync(new GetCustomersResponse
                 {
-                    Customers = customers.Cast<SharedKernel.Customer.Handlers.GetCustomers.Customer>().ToList(),
+                    Customers = customers.Cast<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer>().ToList(),
                     TotalCustomers = customers.Count * 10
                 });
 
@@ -83,7 +75,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             )
             {
                 //Arrange
-                var customers = Enumerable.Repeat(new SharedKernel.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
+                var customers = Enumerable.Repeat(new Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer(), 10).ToList();
 
                 mockMediator.Setup(_ => _.Send(
                         It.IsAny<GetCustomersQuery>(),
@@ -92,7 +84,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 )
                 .ReturnsAsync(new GetCustomersResponse
                 {
-                    Customers = customers.Cast<SharedKernel.Customer.Handlers.GetCustomers.Customer>().ToList(),
+                    Customers = customers.Cast<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer>().ToList(),
                     TotalCustomers = customers.Count * 10
                 });
 
@@ -127,7 +119,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task GetCustomer_ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -159,7 +151,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 StoreCustomerViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -258,7 +250,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 CustomerAddressViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -288,7 +280,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 CustomerAddressViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -317,7 +309,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 CustomerAddressViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -328,7 +320,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .ReturnsAsync(null as SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer);
+                .ReturnsAsync(null as Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer);
 
                 //Act
 
@@ -350,7 +342,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 CustomerAddressViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -438,7 +430,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task DeleteAddress_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                SharedKernel.Customer.Handlers.GetCustomer.IndividualCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetCustomer.IndividualCustomer customer
             )
             {
                 //Arrange
@@ -498,7 +490,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 StoreCustomerContactViewModel viewModel,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange
@@ -528,7 +520,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
                 List<ContactType> contactTypes,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
+                Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 string contactName
             )
             {
@@ -564,7 +556,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 IMapper mapper,
                 CustomerService sut,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
+                Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer,
                 StoreCustomerContactViewModel viewModel
             )
             {
@@ -599,7 +591,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task DeleteContact_OK(
                 [Frozen] Mock<IMediator> mockMediator,
                 CustomerService sut,
-                SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
+                Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
             )
             {
                 //Arrange

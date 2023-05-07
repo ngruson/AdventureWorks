@@ -105,7 +105,7 @@ namespace AW.Services.Customer.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Customer API");
+            services.AddSwaggerDocumentationWithVersion("Customer API");
 
             return services;
         }

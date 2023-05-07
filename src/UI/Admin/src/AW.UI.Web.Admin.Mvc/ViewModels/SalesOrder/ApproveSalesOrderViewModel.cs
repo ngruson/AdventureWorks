@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class ApproveSalesOrderViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
+    public class ApproveSalesOrderViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
     {
         [Display(Name = "Sales order number")]
         public string? SalesOrderNumber { get; set; }
@@ -59,7 +59,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder, ApproveSalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesOrder, ApproveSalesOrderViewModel>()
                 .ForMember(m => m.OnlineOrdered, opt => opt.MapFrom(src => MapOnlineOrderFlag(src.OnlineOrderFlag)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson!.Name!.FullName!)))
                 .ForMember(m => m.CustomerName, opt => opt.MapFrom(src => src.Customer!.CustomerName))

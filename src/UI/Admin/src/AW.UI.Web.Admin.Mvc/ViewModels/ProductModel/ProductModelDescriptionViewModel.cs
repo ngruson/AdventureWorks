@@ -1,5 +1,5 @@
 ﻿using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModel;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModel;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.ProductModel
 {

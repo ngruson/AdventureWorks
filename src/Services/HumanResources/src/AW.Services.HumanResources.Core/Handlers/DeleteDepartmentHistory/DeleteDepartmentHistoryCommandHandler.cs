@@ -33,16 +33,11 @@ namespace AW.Services.HumanResources.Core.Handlers.DeleteDepartmentHistory
             Guard.Against.EmployeeNull(employee, request.LoginID!, _logger);
 
             var departmentHistory = employee!.DepartmentHistory.SingleOrDefault(_ =>
-                _.Department!.Name == request.DepartmentName &&
-                _.Shift!.Name == request.ShiftName &&
-                _.StartDate == request.StartDate
+                _.ObjectId == request.ObjectId
             );
             Guard.Against.EmployeeDepartmentHistoryNull(
                 departmentHistory,
-                request.LoginID!,
-                request.DepartmentName, 
-                request.ShiftName, 
-                request.StartDate,
+                request.ObjectId,
                 _logger
             );
 

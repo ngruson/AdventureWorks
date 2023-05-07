@@ -2,14 +2,14 @@
 using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using DeleteProduct = AW.UI.Web.SharedKernel.Product.Handlers.DeleteProduct;
-using DuplicateProduct = AW.UI.Web.SharedKernel.Product.Handlers.DuplicateProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
-using AW.UI.Web.SharedKernel.Product.Handlers.UpdateProduct;
+using DeleteProduct = AW.UI.Web.Infrastructure.Api.Product.Handlers.DeleteProduct;
+using DuplicateProduct = AW.UI.Web.Infrastructure.Api.Product.Handlers.DuplicateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProducts;
 using MediatR;
-using AW.UI.Web.SharedKernel.Product.Handlers.CreateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.CreateProduct;
+using UpdateProduct = AW.UI.Web.Infrastructure.Api.Product.Handlers.UpdateProduct;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -43,7 +43,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
-        private async Task<SharedKernel.Product.Handlers.GetProduct.Product> GetProduct(string? productNumber)
+        private async Task<Infrastructure.Api.Product.Handlers.GetProduct.Product> GetProduct(string? productNumber)
         {
             _logger.LogInformation("Getting product");
             var product = await _mediator.Send(new GetProductQuery(productNumber));
@@ -63,16 +63,16 @@ namespace AW.UI.Web.Admin.Mvc.Services
             };
         }        
 
-        private async Task UpdateProduct(string key, SharedKernel.Product.Handlers.UpdateProduct.Product product)
+        private async Task UpdateProduct(string key, UpdateProduct.Product product)
         {
             _logger.LogInformation("Updating product");
-            await _mediator.Send(new UpdateProductCommand(key, product));
+            await _mediator.Send(new UpdateProduct.UpdateProductCommand(key, product));
             _logger.LogInformation("Product updated successfully");
         }
 
         public async Task AddProduct(AddProductViewModel viewModel)
         {            
-            var product = _mapper.Map<SharedKernel.Product.Handlers.CreateProduct.Product>(viewModel.Product);
+            var product = _mapper.Map<Infrastructure.Api.Product.Handlers.CreateProduct.Product>(viewModel.Product);
 
             _logger.LogInformation("Send command to add product");
             await _mediator.Send(new CreateProductCommand(product));
@@ -82,7 +82,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         public async Task UpdateProduct(EditProductViewModel viewModel)
         {
             var product = await GetProduct(viewModel!.Key);
-            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
             _mapper.Map(viewModel.Product, productToUpdate);
 
             await UpdateProduct(viewModel.Key!, productToUpdate);
@@ -97,9 +97,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation(
                 "Mapping {Source} to {Target}",
                 viewModel.GetType().Name,
-                typeof(SharedKernel.Product.Handlers.UpdateProduct.Product).Name
+                typeof(UpdateProduct.Product).Name
             );
-            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
             _mapper.Map(viewModel.Product, productToUpdate);
 
             _logger.LogInformation("Updating product");
@@ -115,9 +115,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation(
                 "Mapping {Source} to {Target}",
                 viewModel.GetType().Name,
-                typeof(SharedKernel.Product.Handlers.UpdateProduct.Product).Name
+                typeof(UpdateProduct.Product).Name
             );
-            var productToUpdate = _mapper.Map<SharedKernel.Product.Handlers.UpdateProduct.Product>(product);
+            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
             _mapper.Map(viewModel.Product, productToUpdate);
 
             _logger.LogInformation("Updating product");
@@ -131,7 +131,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _logger.LogInformation("Product successfully deleted");
         }
 
-        public async Task<DuplicateProduct.Product> DuplicateProduct(string productNumber)
+        public async Task<Infrastructure.Api.Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber)
         {
             _logger.LogInformation("Duplicating product");
             var product = await _mediator.Send(new DuplicateProduct.DuplicateProductCommand(productNumber));

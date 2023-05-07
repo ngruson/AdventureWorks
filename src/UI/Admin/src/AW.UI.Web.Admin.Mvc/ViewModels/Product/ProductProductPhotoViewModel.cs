@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProducts;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 {
-    public class ProductProductPhotoViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProducts.ProductProductPhoto>
+    public class ProductProductPhotoViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.GetProducts.ProductProductPhoto>
     {
         public bool Primary { get; set; }
 
@@ -11,8 +13,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.ProductProductPhoto, ProductProductPhotoViewModel>();
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProduct.ProductProductPhoto, ProductProductPhotoViewModel>();
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProducts.ProductProductPhoto, ProductProductPhotoViewModel>();
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProduct.ProductProductPhoto, ProductProductPhotoViewModel>();
         }
     }
 }

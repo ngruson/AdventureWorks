@@ -33,9 +33,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var command = new DeleteDepartmentHistoryCommand
             {
                 LoginID = employee.LoginID,
-                DepartmentName = edh.Department!.Name,
-                ShiftName = edh.Shift!.Name,
-                StartDate = edh.StartDate
+                ObjectId = edh.ObjectId
             };
             await sut.Handle(command, CancellationToken.None);
 
@@ -92,11 +90,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             await func.Should().ThrowAsync<EmployeeDepartmentHistoryNotFoundException>()
-                .WithMessage($"Department history not found for employee {command.LoginID}, " +
-                    $"department {command.DepartmentName}, " +
-                    $"shift {command.ShiftName}, " +
-                    $"start date {command.StartDate.ToShortDateString()}"
-                );
+                .WithMessage($"Department history {command.ObjectId} not found");
         }
     }
 }

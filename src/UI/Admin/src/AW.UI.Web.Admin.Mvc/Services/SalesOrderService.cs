@@ -3,16 +3,16 @@ using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
 using AW.UI.Web.Admin.Mvc.ViewModels;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.ApproveSalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.UpdateSalesOrder;
-using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.ApproveSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
+using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DuplicateSalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.DeleteSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.DuplicateSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.DeleteSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder;
 
 namespace AW.UI.Web.Admin.Mvc.Services
 {
@@ -33,7 +33,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             _mediator = mediator;
         }
 
-        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, SharedKernel.SalesOrder.Handlers.GetSalesOrders.CustomerType? customerType)
+        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.CustomerType? customerType)
         {
             _logger.LogInformation("GetSalesOrders called");
 
@@ -70,7 +70,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
-        private async Task<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string? salesOrderNumber)
+        private async Task<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string? salesOrderNumber)
         {
             _logger.LogInformation("Getting sales order for {SalesOrderNumber}", salesOrderNumber);
             var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
@@ -80,7 +80,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return salesOrder;
         }
 
-        private async Task UpdateSalesOrder(SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
+        private async Task UpdateSalesOrder(Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
         {
             _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
             await _mediator.Send(new UpdateSalesOrderCommand(salesOrder));
@@ -142,7 +142,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             _mapper.Map(viewModel, salesOrderToUpdate);
@@ -156,14 +156,14 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(viewModel.Territory));
             var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesPerson);
 
             salesOrderToUpdate.Territory = viewModel.Territory;
-            salesOrderToUpdate.SalesPerson = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
+            salesOrderToUpdate.SalesPerson = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
 
             await UpdateSalesOrder(salesOrderToUpdate);
         }
@@ -193,7 +193,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             foreach (var updatedOrderLine in viewModel.SalesOrder?.OrderLines!)
@@ -211,7 +211,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel?.SalesOrder?.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel?.SalesOrder?.RevisionNumber!);
@@ -229,7 +229,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
                 var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesOrder.SalesPerson);
                 Guard.Against.Null(salesPerson, _logger);
 
-                salesOrderToUpdate.SalesPerson = new SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
+                salesOrderToUpdate.SalesPerson = new Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
                 {
                     Name = salesPerson?.Name
                 };
@@ -242,7 +242,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             _mapper.Map(viewModel.SalesOrder?.ShipToAddress, salesOrderToUpdate.ShipToAddress);
@@ -254,7 +254,7 @@ namespace AW.UI.Web.Admin.Mvc.Services
         {
             var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<SharedKernel.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
             Guard.Against.Null(salesOrderToUpdate, _logger);
 
             _mapper.Map(viewModel.SalesOrder?.BillToAddress, salesOrderToUpdate.BillToAddress);

@@ -23,16 +23,16 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
             )
             {
                 //Arrange
-                shiftService.Setup(_ => _.GetDetail(shift.Name!))
+                shiftService.Setup(_ => _.GetDetail(shift.ObjectId!))
                     .ReturnsAsync(shift);
 
                 //Act
-                await sut.OnGetAsync(shift.Name!);
+                await sut.OnGetAsync(shift.ObjectId!);
 
                 //Assert
                 sut.Shift.Should().BeEquivalentTo(shift);
 
-                shiftService.Verify(_ => _.GetDetail(shift.Name!));
+                shiftService.Verify(_ => _.GetDetail(shift.ObjectId!));
             }
         }
 
@@ -91,12 +91,12 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
                 //Arrange
 
                 //Act
-                var actual = await sut.OnPostDeleteAsync(shift.Name!);
+                var actual = await sut.OnGetDeleteAsync(shift.ObjectId!);
 
                 //Assert
                 var redirectToPageResult = actual.Should().BeOfType<RedirectToPageResult>().Subject;
                 redirectToPageResult.PageName.Should().Be("Index");
-                shiftService.Verify(_ => _.DeleteShift(shift.Name!));
+                shiftService.Verify(_ => _.DeleteShift(shift.ObjectId!));
             }
         }
     }

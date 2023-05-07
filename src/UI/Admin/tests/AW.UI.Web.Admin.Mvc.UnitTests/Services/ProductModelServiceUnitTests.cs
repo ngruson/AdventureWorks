@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModel;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductModels;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModel;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductModels;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -18,7 +18,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsProductModels(
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductModelService sut,
-                List<SharedKernel.Product.Handlers.GetProductModels.ProductModel> productModels
+                List<Infrastructure.Api.Product.Handlers.GetProductModels.ProductModel> productModels
             )
             {
                 //Arrange
@@ -45,7 +45,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsProductModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 ProductModelService sut,
-                SharedKernel.Product.Handlers.GetProductModel.ProductModel productModel
+                Infrastructure.Api.Product.Handlers.GetProductModel.ProductModel productModel
             )
             {
                 //Arrange

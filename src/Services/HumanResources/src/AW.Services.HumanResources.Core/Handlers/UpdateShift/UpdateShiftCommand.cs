@@ -1,16 +1,15 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.UpdateShift
 {
-    public class UpdateShiftCommand : IRequest<Shift>
+    public class UpdateShiftCommand : IRequest<Result<Shift>>
     {
-        public UpdateShiftCommand(string key, Shift shift)
+        public UpdateShiftCommand(Shift shift)
         {
-            Key = key;
             Shift = shift;
         }
 
-        public string Key { get; set; }
         public Shift? Shift { get; set; }
 
     }

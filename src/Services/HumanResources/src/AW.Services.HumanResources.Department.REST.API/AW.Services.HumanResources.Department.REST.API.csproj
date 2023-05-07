@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\..\SharedKernel\src\AW.Services.SharedKernel.EFCore\AW.Services.SharedKernel.EFCore.csproj" />
     <ProjectReference Include="..\AW.Services.HumanResources.Core\AW.Services.HumanResources.Core.csproj" />
     <ProjectReference Include="..\AW.Services.HumanResources.Infrastructure.EFCore\AW.Services.HumanResources.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\AW.Services.HumanResources.SharedKernel\AW.Services.HumanResources.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

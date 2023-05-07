@@ -1,0 +1,89 @@
+﻿using AutoFixture.Xunit2;
+using AW.SharedKernel.UnitTesting;
+using AW.UI.Web.Infrastructure.Api.Interfaces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Caching;
+using FluentAssertions;
+using Microsoft.Extensions.Caching.Memory;
+using Moq;
+using Xunit;
+
+namespace AW.UI.Web.Infrastructure.UnitTests.Api.ReferenceData.Caching
+{
+    public class AddressTypeCacheUnitTests
+    {
+        public class GetData
+        {
+            [Theory, AutoMoqData]
+            public async Task GetData_CacheNotSet_AddressTypesAddedToCache(
+                [Frozen] Mock<IMemoryCache> cacheMock,
+                [Frozen] Mock<IReferenceDataApiClient> mockClient,
+                AddressTypeCache sut,
+                List<Infrastructure.Api.ReferenceData.Handlers.GetAddressTypes.AddressType> addressTypes
+            )
+            {
+                //Arrange
+                mockClient.Setup(_ => _.GetAddressTypesAsync())
+                    .ReturnsAsync(addressTypes);
+
+                //Act
+                var result = await sut.GetData();
+
+                //Assert
+                result.Should().BeEquivalentTo(addressTypes);
+                cacheMock.Verify(_ => _.CreateEntry(
+                        It.IsAny<string>()
+                    )
+                );
+            }
+
+            [Theory, AutoMoqData]
+            public async Task GetData_AddressTypesAreCached_CacheIsNotSet(
+                [Frozen] Mock<IMemoryCache> cacheMock,
+                AddressTypeCache sut,
+                List<Infrastructure.Api.ReferenceData.Handlers.GetAddressTypes.AddressType> addressTypes
+            )
+            {
+                //Arrange
+                object value = addressTypes;
+                cacheMock.Setup(_ => _.TryGetValue(
+                        It.IsAny<object>(),
+                        out value!
+                    )
+                )
+                .Returns(true);
+
+                //Act
+                var result = await sut.GetData();
+
+                //Assert
+                result.Should().BeEquivalentTo(addressTypes);
+                cacheMock.Verify(_ => _.CreateEntry(
+                        It.IsAny<string>()
+                    ),
+                    Times.Never
+                );
+            }
+        }
+
+        public class GetDataWithPredicate
+        {
+            [Theory, AutoMoqData]
+            public async Task GetData_FilteredAddressTypes(
+                [Frozen] Mock<IReferenceDataApiClient> mockClient,
+                AddressTypeCache sut,
+                List<Infrastructure.Api.ReferenceData.Handlers.GetAddressTypes.AddressType> addressTypes
+            )
+            {
+                //Arrange
+                mockClient.Setup(_ => _.GetAddressTypesAsync())
+                    .ReturnsAsync(addressTypes);
+
+                //Act
+                var result = await sut.GetData(_ => _.Name == addressTypes[0].Name);
+
+                //Assert
+                result.Should().BeEquivalentTo(new[] { addressTypes[0] });
+            }
+        }
+    }
+}

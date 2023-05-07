@@ -1,6 +1,6 @@
 ﻿using AW.SharedKernel.Interfaces;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AW.UI.Web.Admin.Mvc.Services

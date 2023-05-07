@@ -50,9 +50,10 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             //Act
             var command = new UpdateDepartmentHistoryCommand
             {
+                ObjectId = departmentHistory.ObjectId,
                 LoginID = employee.LoginID,
                 DepartmentName = departmentHistory.Department!.Name,
-                ShiftName = departmentHistory.Shift!.Name,
+                Shift = departmentHistory.Shift!.ObjectId,
                 StartDate = departmentHistory.StartDate
             };
             await sut.Handle(command, CancellationToken.None);

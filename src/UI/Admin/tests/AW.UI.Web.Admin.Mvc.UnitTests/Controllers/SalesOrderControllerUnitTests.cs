@@ -2,13 +2,13 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Controllers;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 using AW.UI.Web.Admin.Mvc.Services;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
 {

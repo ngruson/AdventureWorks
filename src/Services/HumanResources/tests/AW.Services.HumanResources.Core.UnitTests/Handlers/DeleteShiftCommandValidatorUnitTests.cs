@@ -34,20 +34,20 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMoqData]
-        public async Task validation_error_given_no_name(
+        public async Task validation_error_given_empty_object_id(
             DeleteShiftCommandValidator sut,
             DeleteShiftCommand command
         )
         {
             //Arrange
-            command.Name = null;
+            command.ObjectId = Guid.Empty;
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Name)
-                .WithErrorMessage("Name is required");
+            result.ShouldHaveValidationErrorFor(command => command.ObjectId)
+                .WithErrorMessage("ObjectId is required");
         }
 
         [Theory, AutoMoqData]
@@ -69,7 +69,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Name)
+            result.ShouldHaveValidationErrorFor(command => command.ObjectId)
                 .WithErrorMessage("Shift does not exist");
         }
     }

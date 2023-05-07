@@ -2,17 +2,17 @@
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MediatR;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProduct;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetShipMethods;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetPreferredAddress;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
-using AW.UI.Web.SharedKernel.Basket.Handlers.GetBasket;
-using AW.UI.Web.SharedKernel.Basket.Handlers.UpdateBasket;
-using AW.UI.Web.SharedKernel.Basket.Handlers.Checkout;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Store.Mvc.ViewModels.Cart;
 using AW.UI.Web.Store.Mvc.ViewModels;
+using AW.UI.Web.Infrastructure.Api.Basket.Handlers.Checkout;
+using GetBasket = AW.UI.Web.Infrastructure.Api.Basket.Handlers.GetBasket;
+using GetProduct = AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProduct;
+using UpdateBasket = AW.UI.Web.Infrastructure.Api.Basket.Handlers.UpdateBasket;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetPreferredAddress;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetShipMethods;
 
 namespace AW.UI.Web.Store.Mvc.Services
 {
@@ -32,20 +32,20 @@ namespace AW.UI.Web.Store.Mvc.Services
         public async Task<T> GetBasketAsync<T>(string? userID)
         {
             _logger.LogInformation("GetBasket called");
-            var dto = await _mediator.Send(new GetBasketQuery(userID));
+            var dto = await _mediator.Send(new GetBasket.GetBasketQuery(userID));
             var response = _mapper.Map<T>(dto);
 
             return response;
         }
 
-        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket> AddBasketItemAsync(ApplicationUser user, string? productNumber, int quantity)
+        public async Task<Infrastructure.Api.Basket.Handlers.GetBasket.Basket> AddBasketItemAsync(ApplicationUser user, string? productNumber, int quantity)
         {
             _logger.LogInformation("Getting product for {ProductNumber}", productNumber);
-            var product = await _mediator.Send(new GetProductQuery(productNumber));
+            var product = await _mediator.Send(new GetProduct.GetProductQuery(productNumber));
             Guard.Against.Null(product, _logger);
 
             _logger.LogInformation("Getting basket for {UserId}", user.Id);
-            var currentBasket = await _mediator.Send(new GetBasketQuery(user.Id)) ?? new SharedKernel.Basket.Handlers.GetBasket.Basket { BuyerId = user.Id };
+            var currentBasket = await _mediator.Send(new GetBasket.GetBasketQuery(user.Id)) ?? new GetBasket.Basket { BuyerId = user.Id };
 
             var basketItem = currentBasket.Items.SingleOrDefault(i => i.ProductNumber == product?.ProductNumber);
             if (basketItem != null)
@@ -55,7 +55,7 @@ namespace AW.UI.Web.Store.Mvc.Services
             }
             else
             {
-                basketItem = new SharedKernel.Basket.Handlers.GetBasket.BasketItem
+                basketItem = new GetBasket.BasketItem
                 {
                     UnitPrice = product!.ListPrice,
                     ThumbnailPhoto = product.GetPrimaryPhoto()?.ThumbNailPhoto,
@@ -71,8 +71,8 @@ namespace AW.UI.Web.Store.Mvc.Services
 
             _logger.LogInformation("Updating basket");
             await _mediator.Send(
-                new UpdateBasketCommand(
-                    _mapper.Map<SharedKernel.Basket.Handlers.UpdateBasket.Basket>(currentBasket)
+                new UpdateBasket.UpdateBasketCommand(
+                    _mapper.Map<UpdateBasket.Basket>(currentBasket)
                 )
             );
 
@@ -80,9 +80,9 @@ namespace AW.UI.Web.Store.Mvc.Services
             return currentBasket;
         }
 
-        public async Task<SharedKernel.Basket.Handlers.GetBasket.Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities)
+        public async Task<GetBasket.Basket> SetQuantities(ApplicationUser user, Dictionary<string, int> quantities)
         {
-            var currentBasket = await _mediator.Send(new GetBasketQuery(user.Id));
+            var currentBasket = await _mediator.Send(new GetBasket.GetBasketQuery(user.Id));
 
             currentBasket.Items.ForEach(item =>
                 {
@@ -95,8 +95,8 @@ namespace AW.UI.Web.Store.Mvc.Services
 
             _logger.LogInformation("Updating basket");
             await _mediator.Send(
-                new UpdateBasketCommand(
-                    _mapper.Map<SharedKernel.Basket.Handlers.UpdateBasket.Basket>(currentBasket)
+                new UpdateBasket.UpdateBasketCommand(
+                    _mapper.Map<UpdateBasket.Basket>(currentBasket)
                 )
             );
 
@@ -104,7 +104,7 @@ namespace AW.UI.Web.Store.Mvc.Services
             return currentBasket;
         }
 
-        public async Task Checkout(SharedKernel.Basket.Handlers.Checkout.BasketCheckout basket, string customerNumber)
+        public async Task Checkout(Infrastructure.Api.Basket.Handlers.Checkout.BasketCheckout basket, string customerNumber)
         {
             basket.CustomerNumber = customerNumber;
 

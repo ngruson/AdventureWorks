@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetShifts;
@@ -12,7 +13,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
     public class GetShiftsQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_ShiftsExists_ReturnShifts(
+        public async Task return_success_given_shifts_exist(
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
             GetShiftsQueryHandler sut,
             GetShiftsQuery query,
@@ -28,8 +29,9 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
-            //Assert            
-            result.Should().BeEquivalentTo(shifts, opt => opt
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().BeEquivalentTo(shifts, opt => opt
                 .Excluding(_ => _.Id)
             );
             shiftRepoMock.Verify(x => x.ListAsync(
@@ -39,26 +41,25 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_NoShiftsExists_ThrowArgumentNullException(
+        public async Task return_notfound_given_shifts_do_not_exist(
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
             GetShiftsQueryHandler sut,
             GetShiftsQuery query
         )
         {
             // Arrange            
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            #pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             shiftRepoMock.Setup(x => x.ListAsync(
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((List<Entities.Shift>?)null);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            #pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<ShiftsNotFoundException>()
-                .WithMessage("No shifts found");
+            result.Status.Should().Be(ResultStatus.NotFound);
         }
     }
 }

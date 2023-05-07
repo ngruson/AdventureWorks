@@ -2,15 +2,15 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
-using AW.UI.Web.SharedKernel.Employee.Handlers.AddDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.DeleteDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployee;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetEmployees;
-using AW.UI.Web.SharedKernel.Employee.Handlers.GetJobTitles;
-using AW.UI.Web.SharedKernel.Employee.Handlers.UpdateDepartmentHistory;
-using AW.UI.Web.SharedKernel.Employee.Handlers.UpdateEmployee;
-using AW.UI.Web.SharedKernel.Shift.Handlers.GetShifts;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.AddDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.DeleteDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployee;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployees;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetJobTitles;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateEmployee;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.GetShifts;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -26,7 +26,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                List<SharedKernel.Employee.Handlers.GetEmployees.Employee> employees
+                List<Infrastructure.Api.Employee.Handlers.GetEmployees.Employee> employees
             )
             {
                 //Arrange
@@ -51,7 +51,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsDetailViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                SharedKernel.Employee.Handlers.GetEmployee.Employee employee,
+                Infrastructure.Api.Employee.Handlers.GetEmployee.Employee employee,
                 string loginID
             )
             {
@@ -83,7 +83,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnDepartments(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                List<SharedKernel.Department.Handlers.GetDepartments.Department> departments
+                List<Infrastructure.Api.Department.Handlers.GetDepartments.Department> departments
             )
             {
                 //Arrange
@@ -114,7 +114,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnShifts(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                List<SharedKernel.Shift.Handlers.GetShifts.Shift> shifts
+                List<Infrastructure.Api.Shift.Handlers.GetShifts.Shift> shifts
             )
             {
                 //Arrange

@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
 using AW.UI.Web.Store.Mvc.Controllers;
 using AW.UI.Web.Store.Mvc.ViewModels.Home;
 using FluentAssertions;

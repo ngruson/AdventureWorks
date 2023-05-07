@@ -2,11 +2,11 @@
 using AutoMapper;
 using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Shift;
-using AW.UI.Web.SharedKernel.Shift.Handlers.CreateShift;
-using AW.UI.Web.SharedKernel.Shift.Handlers.DeleteShift;
-using AW.UI.Web.SharedKernel.Shift.Handlers.GetShift;
-using AW.UI.Web.SharedKernel.Shift.Handlers.GetShifts;
-using AW.UI.Web.SharedKernel.Shift.Handlers.UpdateShift;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.CreateShift;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.DeleteShift;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.GetShift;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.GetShifts;
+using AW.UI.Web.Infrastructure.Api.Shift.Handlers.UpdateShift;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services
@@ -30,33 +30,33 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task CreateShift(ShiftViewModel viewModel)
         {
-            var shift = _mapper.Map<SharedKernel.Shift.Handlers.CreateShift.Shift>(viewModel);
+            var shift = _mapper.Map<Infrastructure.Api.Shift.Handlers.CreateShift.Shift>(viewModel);
 
             _logger.LogInformation("Send command to add shift");
             await _mediator.Send(new CreateShiftCommand(shift));
             _logger.LogInformation("Command was succesfully executed");
         }
 
-        public async Task DeleteShift(string name)
+        public async Task DeleteShift(Guid objectId)
         {
             _logger.LogInformation("Deleting shift");
-            await _mediator.Send(new DeleteShiftCommand(name));
+            await _mediator.Send(new DeleteShiftCommand(objectId));
             _logger.LogInformation("Shift successfully deleted");
         }
 
-        private async Task<SharedKernel.Shift.Handlers.GetShift.Shift> GetShift(string name)
+        private async Task<Infrastructure.Api.Shift.Handlers.GetShift.Shift> GetShift(Guid objectId)
         {
             _logger.LogInformation("Getting shift");
-            var shift = await _mediator.Send(new GetShiftQuery(name));
+            var shift = await _mediator.Send(new GetShiftQuery(objectId));
             _logger.LogInformation("Retrieved shift");
             Guard.Against.Null(shift, _logger);
 
             return shift!;
         }
 
-        public async Task<ShiftViewModel> GetDetail(string name)
+        public async Task<ShiftViewModel> GetDetail(Guid objectId)
         {
-            var shift = await GetShift(name);
+            var shift = await GetShift(objectId);
             var shiftViewModel = _mapper.Map<ShiftViewModel>(shift);
             _logger.LogInformation("Returning shift");
             return shiftViewModel;
@@ -75,12 +75,12 @@ namespace AW.UI.Web.Admin.Mvc.Services
 
         public async Task UpdateShift(ShiftViewModel viewModel)
         {
-            var shift = await GetShift(viewModel.Name!);
-            var shiftToUpdate = _mapper.Map<SharedKernel.Shift.Handlers.UpdateShift.Shift>(shift);
+            var shift = await GetShift(viewModel.ObjectId);
+            var shiftToUpdate = _mapper.Map<Infrastructure.Api.Shift.Handlers.UpdateShift.Shift>(shift);
             _mapper.Map(viewModel, shiftToUpdate);
 
             _logger.LogInformation("Updating shift");
-            await _mediator.Send(new UpdateShiftCommand(viewModel.Name!, shiftToUpdate));
+            await _mediator.Send(new UpdateShiftCommand(shiftToUpdate));
             _logger.LogInformation("Shift updated successfully");
         }
     }

@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
 {
-    public class EditDepartmentDepartmentViewModel : IMapFrom<SharedKernel.Department.Handlers.UpdateDepartment.Department>
+    public class EditDepartmentDepartmentViewModel : IMapFrom<Infrastructure.Api.Department.Handlers.UpdateDepartment.Department>
     {
         public string? Name { get; set; }
 
@@ -11,7 +11,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Department.Handlers.UpdateDepartment.Department, EditDepartmentDepartmentViewModel>()
+            profile.CreateMap<Infrastructure.Api.Department.Handlers.UpdateDepartment.Department, EditDepartmentDepartmentViewModel>()
                 .ReverseMap();
         }
     }

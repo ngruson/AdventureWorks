@@ -15,7 +15,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
             public async Task delete_shifts(
                 [Frozen] Mock<IShiftService> shiftService,
                 [Greedy] DeleteModel sut,
-                string[] shifts
+                Guid[] shifts
             )
             {
                 //Arrange
@@ -26,7 +26,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
                 //Assert
 
                 shiftService.Verify(_ => _.DeleteShift(
-                        It.IsAny<string>()
+                        It.IsAny<Guid>()
                     ), 
                     Times.Exactly(shifts.Length)
                 );

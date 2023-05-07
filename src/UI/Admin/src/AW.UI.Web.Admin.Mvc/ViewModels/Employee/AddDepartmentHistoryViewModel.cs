@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.SharedKernel.Employee.Handlers.AddDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.AddDepartmentHistory;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {

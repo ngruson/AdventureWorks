@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Store.Mvc.ViewModels.Product
 {
-    public class ProductViewModel : IMapFrom<SharedKernel.Product.Handlers.GetProducts.Product>
+    public class ProductViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.GetProducts.Product>
     {
         public string? Name { get; set; }
         public string? ProductNumber { get; set; }
@@ -23,7 +23,7 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Product.Handlers.GetProducts.Product, ProductViewModel>()
+            profile.CreateMap<Infrastructure.Api.Product.Handlers.GetProducts.Product, ProductViewModel>()
                 .ForMember(m => m.Color, opt => opt.Ignore())
                 .ForMember(m => m.ListPrice, opt => opt.MapFrom(src => src.ListPrice.ToString("C")))
                 .ForMember(m => m.ThumbNailPhoto, opt => opt.MapFrom(src => src.GetPrimaryPhoto()!.ThumbNailPhoto != null ?

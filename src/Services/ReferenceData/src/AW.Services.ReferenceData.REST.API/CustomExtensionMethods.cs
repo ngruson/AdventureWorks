@@ -71,7 +71,7 @@ namespace AW.Services.ReferenceData.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Reference Data API");
+            services.AddSwaggerDocumentationWithVersion("Reference Data API");
 
             return services;
         }

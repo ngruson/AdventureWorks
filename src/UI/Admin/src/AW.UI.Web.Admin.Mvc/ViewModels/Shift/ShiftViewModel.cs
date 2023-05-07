@@ -4,8 +4,10 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Shift
 {
-    public class ShiftViewModel : IMapFrom<SharedKernel.Shift.Handlers.GetShifts.Shift>
+    public class ShiftViewModel : IMapFrom<Infrastructure.Api.Shift.Handlers.GetShifts.Shift>
     {
+        public Guid ObjectId { get; set; }
+
         [Display(Name = "Name")]
         [Required]
         public string? Name { get; set; }
@@ -20,10 +22,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Shift
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Shift.Handlers.GetShifts.Shift, ShiftViewModel>();
-            profile.CreateMap<SharedKernel.Shift.Handlers.GetShift.Shift, ShiftViewModel>();
-            profile.CreateMap<ShiftViewModel, SharedKernel.Shift.Handlers.CreateShift.Shift>();
-            profile.CreateMap<ShiftViewModel, SharedKernel.Shift.Handlers.UpdateShift.Shift>();
+            profile.CreateMap<Infrastructure.Api.Shift.Handlers.GetShifts.Shift, ShiftViewModel>();
+            profile.CreateMap<Infrastructure.Api.Shift.Handlers.GetShift.Shift, ShiftViewModel>();
+            profile.CreateMap<ShiftViewModel, Infrastructure.Api.Shift.Handlers.CreateShift.Shift>();
+            profile.CreateMap<ShiftViewModel, Infrastructure.Api.Shift.Handlers.UpdateShift.Shift>();
         }
     }
 }

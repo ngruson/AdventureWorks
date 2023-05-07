@@ -1,6 +1,6 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.SalesPerson;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
-using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
 
 namespace AW.UI.Web.Admin.Mvc.Services

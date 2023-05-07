@@ -6,12 +6,8 @@ namespace AW.Services.HumanResources.Core.Exceptions
     [Serializable]
     public class EmployeeDepartmentHistoryNotFoundException : DomainException
     {
-        public EmployeeDepartmentHistoryNotFoundException(string loginID, string? departmentName, string? shiftName, DateTime startDate)
-            : base($"Department history not found for employee {loginID}, " +
-                  $"department {departmentName}, " +
-                  $"shift {shiftName}, " +
-                  $"start date {startDate.ToShortDateString()}"
-            )
+        public EmployeeDepartmentHistoryNotFoundException(Guid objectId)
+            : base($"Department history {objectId} not found")
         { }
 
         protected EmployeeDepartmentHistoryNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :

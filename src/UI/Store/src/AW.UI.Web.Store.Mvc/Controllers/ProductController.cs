@@ -1,13 +1,13 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using AW.SharedKernel.Extensions;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.Store.Mvc.ViewModels.Product;
 using AW.UI.Web.Store.Mvc.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProducts;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
 
 namespace AW.UI.Web.Store.Mvc.Controllers
 {

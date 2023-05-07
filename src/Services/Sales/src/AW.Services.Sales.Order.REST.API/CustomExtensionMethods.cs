@@ -100,7 +100,7 @@ namespace AW.Services.Sales.Order.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentation("Sales Order API");
+            services.AddSwaggerDocumentationWithVersion("Sales Order API");
 
             return services;
         }

@@ -3,10 +3,10 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Department;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using AW.UI.Web.SharedKernel.Department.Handlers.DeleteDepartment;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartment;
-using AW.UI.Web.SharedKernel.Department.Handlers.GetDepartments;
-using AW.UI.Web.SharedKernel.Department.Handlers.UpdateDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.DeleteDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartment;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
+using AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment;
 using FluentAssertions;
 using MediatR;
 using Moq;
@@ -22,7 +22,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
-                List<SharedKernel.Department.Handlers.GetDepartments.Department> departments
+                List<Infrastructure.Api.Department.Handlers.GetDepartments.Department> departments
             )
             {
                 //Arrange
@@ -47,7 +47,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ReturnsDetailViewModel(
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
-                SharedKernel.Department.Handlers.GetDepartment.Department department,
+                Infrastructure.Api.Department.Handlers.GetDepartment.Department department,
                 string name
             )
             {
@@ -80,7 +80,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
                 EditDepartmentViewModel viewModel,
-                SharedKernel.Department.Handlers.GetDepartment.Department department
+                Infrastructure.Api.Department.Handlers.GetDepartment.Department department
             )
             {
                 //Arrange
@@ -117,7 +117,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                     It.IsAny<GetDepartmentQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((SharedKernel.Department.Handlers.GetDepartment.Department?)null);
+                .ReturnsAsync((Infrastructure.Api.Department.Handlers.GetDepartment.Department?)null);
 
                 //Act
                 Func<Task> func = async () => await sut.UpdateDepartment(viewModel);

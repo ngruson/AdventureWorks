@@ -44,9 +44,9 @@ namespace AW.Services.HumanResources.Core.Handlers.AddDepartmentHistory
             Guard.Against.DepartmentNull(department, request.DepartmentName!, _logger);
 
             _logger.LogInformation("Getting shift from database");
-            var shiftSpec = new GetShiftSpecification(request.ShiftName);
+            var shiftSpec = new GetShiftSpecification(request.Shift);
             var shift = await _shiftRepository.SingleOrDefaultAsync(shiftSpec, cancellationToken);
-            Guard.Against.ShiftNull(shift, request.ShiftName!, _logger);
+            Guard.Against.ShiftNull(shift, request.Shift, _logger);
 
             foreach (var item in employee!.DepartmentHistory)
             {

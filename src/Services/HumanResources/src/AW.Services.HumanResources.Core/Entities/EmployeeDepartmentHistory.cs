@@ -2,6 +2,8 @@
 {
     public class EmployeeDepartmentHistory
     {
+        public int Id { get; set; }
+        public Guid ObjectId { get; set; }
         public int EmployeeID { get; set; }
         public int DepartmentID { get; set; }
         public int ShiftID { get; set; }

@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.Store.Mvc.Services;
 using AW.UI.Web.Store.Mvc.ViewModels;
 using AW.UI.Web.Store.Mvc.ViewModels.Cart;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AW.UI.Web.Store.Mvc.Controllers
 {
@@ -111,7 +107,7 @@ namespace AW.UI.Web.Store.Mvc.Controllers
                 {
                     var user = appUserParser.Parse(HttpContext.User);
                     await basketService.Checkout(
-                        mapper.Map<SharedKernel.Basket.Handlers.Checkout.BasketCheckout>(model.Basket),
+                        mapper.Map<Infrastructure.Api.Basket.Handlers.Checkout.BasketCheckout>(model.Basket),
                         user.CustomerNumber!
                     );
 

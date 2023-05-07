@@ -4,7 +4,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
-    public class EmployeeViewModel : IMapFrom<SharedKernel.Employee.Handlers.GetEmployees.Employee>
+    public class EmployeeViewModel : IMapFrom<Infrastructure.Api.Employee.Handlers.GetEmployees.Employee>
     {
         public EmployeeNameViewModel? Name { get; set; }
 
@@ -37,8 +37,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Employee.Handlers.GetEmployees.Employee, EmployeeViewModel>();
-            profile.CreateMap<SharedKernel.Employee.Handlers.GetEmployee.Employee, EmployeeViewModel>();
+            profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployees.Employee, EmployeeViewModel>();
+            profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployee.Employee, EmployeeViewModel>();
         }
     }
 }

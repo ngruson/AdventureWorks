@@ -15,9 +15,9 @@ namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift
         [BindProperty]
         public ShiftViewModel? Shift { get; set; }
 
-        public async Task OnGetAsync(string name)
+        public async Task OnGetAsync(Guid objectId)
         {
-            Shift = await _shiftService.GetDetail(name);
+            Shift = await _shiftService.GetDetail(objectId);
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -31,9 +31,9 @@ namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Shift
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(string name)
+        public async Task<IActionResult> OnGetDeleteAsync(Guid objectId)
         {
-            await _shiftService.DeleteShift(name);
+            await _shiftService.DeleteShift(objectId);
 
             return RedirectToPage("Index");
         }

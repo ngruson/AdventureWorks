@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class SalesOrderViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesOrder>
     {
         [Display(Name = "Revision number")]
         public string? RevisionNumber { get; set; }
@@ -79,13 +79,13 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.Status, opt => opt.MapFrom(src => SalesOrderStatus.FromName(src.Status.ToString(), false)))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))
                 .ForMember(m => m.SalesPerson, opt => opt.MapFrom(src => MapSalesPerson(src.SalesPerson!.Name!.FullName!)))
                 .ReverseMap();
 
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.Status, opt => opt.MapFrom(src => SalesOrderStatus.FromName(src.Status.ToString(), false)))
                 .ForMember(m => m.RevisionNumber, opt => opt.MapFrom(src => src.RevisionNumber.ToString()))
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber)))

@@ -3,7 +3,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 {
-    public class EditProductOrganizationProductViewModel : IMapFrom<SharedKernel.Product.Handlers.UpdateProduct.Product>
+    public class EditProductOrganizationProductViewModel : IMapFrom<Infrastructure.Api.Product.Handlers.UpdateProduct.Product>
     {
         public string? ProductNumber { get; set; }
         public string? ProductCategoryName { get; set; }
@@ -11,7 +11,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<EditProductOrganizationProductViewModel, SharedKernel.Product.Handlers.UpdateProduct.Product>()
+            profile.CreateMap<EditProductOrganizationProductViewModel, Infrastructure.Api.Product.Handlers.UpdateProduct.Product>()
                 .ForMember(m => m.Name, opt => opt.Ignore())
                 .ForMember(m => m.MakeFlag, opt => opt.Ignore())
                 .ForMember(m => m.FinishedGoodsFlag, opt => opt.Ignore())

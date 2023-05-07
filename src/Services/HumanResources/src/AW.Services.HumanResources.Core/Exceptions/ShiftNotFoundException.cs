@@ -6,8 +6,8 @@ namespace AW.Services.HumanResources.Core.Exceptions
     [Serializable]
     public class ShiftNotFoundException : DomainException
     {
-        public ShiftNotFoundException(string name)
-            : base($"Shift '{name}' not found")
+        public ShiftNotFoundException(Guid objectId)
+            : base($"Shift '{objectId}' not found")
         { }
 
         protected ShiftNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :

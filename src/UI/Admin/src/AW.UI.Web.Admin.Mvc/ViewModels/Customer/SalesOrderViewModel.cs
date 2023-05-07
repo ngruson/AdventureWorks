@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
 using System;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
-    public class SalesOrderViewModel : IMapFrom<SharedKernel.Customer.Handlers.GetCustomers.SalesOrder>
+    public class SalesOrderViewModel : IMapFrom<Infrastructure.Api.Customer.Handlers.GetCustomers.SalesOrder>
     {
         public DateTime OrderDate { get; set; }
 
@@ -13,7 +15,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public DateTime? ShipDate { get; set; }
 
-        public SalesOrderStatus Status { get; set; }
+        public Infrastructure.Api.Customer.Handlers.GetCustomers.SalesOrderStatus Status { get; set; }
 
         public bool OnlineOrderFlag { get; set; }
 
@@ -27,14 +29,14 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.SalesOrder, SalesOrderViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomers.SalesOrder, SalesOrderViewModel>();
 
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomer.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber!)));
 
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetIndividualCustomer.SalesOrder, SalesOrderViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetIndividualCustomer.SalesOrder, SalesOrderViewModel>();
 
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.SalesOrder, SalesOrderViewModel>()
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetStoreCustomer.SalesOrder, SalesOrderViewModel>()
                 .ForMember(m => m.PurchaseOrderNumber, opt => opt.MapFrom(src => MapPurchaseOrderNumber(src.PurchaseOrderNumber!)));
         }
 

@@ -4,17 +4,11 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Controllers;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using FluentAssertions;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers

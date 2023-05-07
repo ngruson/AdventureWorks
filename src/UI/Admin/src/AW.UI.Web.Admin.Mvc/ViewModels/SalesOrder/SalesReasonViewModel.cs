@@ -3,15 +3,15 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
 {
-    public class SalesReasonViewModel : IMapFrom<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesReason>
+    public class SalesReasonViewModel : IMapFrom<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesReason>
     {
         public string? Name { get; set; }
         public string? ReasonType { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrders.SalesReason, SalesReasonViewModel>();
-            profile.CreateMap<SharedKernel.SalesOrder.Handlers.GetSalesOrder.SalesReason, SalesReasonViewModel>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.SalesReason, SalesReasonViewModel>();
+            profile.CreateMap<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesReason, SalesReasonViewModel>();
         }
     }
 }

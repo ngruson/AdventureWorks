@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using System.Collections.Generic;
 using System.Linq;
 

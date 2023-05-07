@@ -4,7 +4,7 @@ using AW.SharedKernel.AutoMapper;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
-    public class EmployeeDepartmentHistoryViewModel : IMapFrom<SharedKernel.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory>
+    public class EmployeeDepartmentHistoryViewModel : IMapFrom<Infrastructure.Api.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory>
     {
         public DepartmentViewModel? Department { get; set; }
         public ShiftViewModel? Shift { get; set; }
@@ -17,8 +17,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
-            profile.CreateMap<SharedKernel.Employee.Handlers.GetEmployee.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
+            profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
+            profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployee.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
         }
     }
 }

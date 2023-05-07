@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AW.UI.Web.SharedKernel.SalesOrder.Handlers.GetSalesOrders;
 using MediatR;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetShipMethods;
-using AW.UI.Web.SharedKernel.SalesPerson.Handlers.GetSalesPersons;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetShipMethods;
+using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder.ModelBinders;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetCountries;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetStatesProvinces;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.Admin.Mvc.ViewModels;
 using Microsoft.Identity.Web;
+using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
 
 namespace AW.UI.Web.Admin.Mvc.Controllers
 {

@@ -117,7 +117,7 @@ namespace AW.Services.HumanResources.Shift.REST.API.UnitTests
                     It.IsAny<GetShiftQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ThrowsAsync(new ShiftNotFoundException(query.Name!));
+                .ThrowsAsync(new ShiftNotFoundException(query.ObjectId));
 
                 //Act
                 var actionResult = await sut.GetShift(query);
@@ -267,7 +267,7 @@ namespace AW.Services.HumanResources.Shift.REST.API.UnitTests
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .ThrowsAsync(new ShiftNotFoundException(command.Shift!.Name!));
+                .ThrowsAsync(new ShiftNotFoundException(command.Shift!.ObjectId));
 
                 //Act
                 var actionResult = await sut.UpdateShift(command);

@@ -1,7 +1,5 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProducts;
 using AW.UI.Web.Store.Mvc.Controllers;
 using AW.UI.Web.Store.Mvc.ViewModels.Product;
 using Microsoft.Extensions.Logging;
@@ -10,6 +8,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProducts;
 
 namespace AW.UI.Web.Store.Mvc.UnitTests.Controllers
 {

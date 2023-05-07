@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 {
-    public class Address : IMapFrom<SharedKernel.Basket.Handlers.Checkout.Address>
+    public class Address : IMapFrom<Infrastructure.Api.Basket.Handlers.Checkout.Address>
     {
         [Required]
         public string? AddressLine1 { get; set; }
@@ -19,10 +19,10 @@ namespace AW.UI.Web.Store.Mvc.ViewModels.Cart
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Address, SharedKernel.Basket.Handlers.Checkout.Address>()
+            profile.CreateMap<Address, Infrastructure.Api.Basket.Handlers.Checkout.Address>()
                 .ReverseMap();
 
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetPreferredAddress.Address, Address>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetPreferredAddress.Address, Address>();
         }
     }
 }

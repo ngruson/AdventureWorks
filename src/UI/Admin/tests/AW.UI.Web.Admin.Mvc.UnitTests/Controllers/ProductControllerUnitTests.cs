@@ -3,7 +3,8 @@ using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Controllers;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Admin.Mvc.ViewModels.Product;
-using AW.UI.Web.SharedKernel.Product.Handlers.GetProductCategories;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.DuplicateProduct;
+using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -181,7 +182,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
                 string productNumber,
                 [Frozen] Mock<IProductService> productService,
                 [Greedy] ProductController sut,
-                SharedKernel.Product.Handlers.DuplicateProduct.Product product
+                Product product
             )
             {
                 //Arrange

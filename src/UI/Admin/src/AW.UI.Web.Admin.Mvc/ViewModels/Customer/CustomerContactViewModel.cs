@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
-using AW.UI.Web.SharedKernel.Customer.Handlers.GetCustomer;
 using System.ComponentModel.DataAnnotations;
 
 namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 {
-    public class CustomerContactViewModel : IMapFrom<StoreCustomerContact>
+    public class CustomerContactViewModel : IMapFrom<Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomerContact>
     {
         [Display(Name = "Contact type")]
         [Required]
@@ -14,10 +13,10 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetCustomers.StoreCustomerContact, CustomerContactViewModel>();
-            profile.CreateMap<StoreCustomerContact, CustomerContactViewModel>();
-            profile.CreateMap<SharedKernel.Customer.Handlers.GetStoreCustomer.StoreCustomerContact, CustomerContactViewModel>();
-            profile.CreateMap<CustomerContactViewModel, SharedKernel.Customer.Handlers.UpdateCustomer.StoreCustomerContact>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomerContact, CustomerContactViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomerContact, CustomerContactViewModel>();
+            profile.CreateMap<Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomerContact, CustomerContactViewModel>();
+            profile.CreateMap<CustomerContactViewModel, Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomerContact>();
         }
     }
 }

@@ -18,7 +18,7 @@
             </nav>
             <h1 class="page-header-title">@Model.Shift!.Name</h1>
             <div class="mt-2">
-                <a class="text-body me-3" asp-page-handler="delete" asp-route-name="@Model.Shift.Name">
+                <a class="text-body me-3" asp-page-handler="delete" asp-route-objectId="@Model.Shift.ObjectId">
                     <i class="bi-trash me-1"></i> Delete
                 </a>
             </div>

@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Admin.Mvc.Controllers;
-using AW.UI.Web.SharedKernel.ReferenceData.Handlers.GetTerritories;
+using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
