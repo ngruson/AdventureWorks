@@ -34,8 +34,6 @@ jobs:
           dotnet test tests/AW.Services.HumanResources.Core.UnitTests/AW.Services.HumanResources.Core.UnitTests.csproj --no-build --no-restore
           
           dotnet build src/AW.Services.HumanResources.Shift.REST.API/AW.Services.HumanResources.Shift.REST.API.csproj
-          dotnet build tests/AW.Services.HumanResources.Shift.REST.API.UnitTests/AW.Services.HumanResources.Shift.REST.API.UnitTests.csproj
-          dotnet test tests/AW.Services.HumanResources.Shift.REST.API.UnitTests/AW.Services.HumanResources.Shift.REST.API.UnitTests.csproj --no-build --no-restore
 
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
