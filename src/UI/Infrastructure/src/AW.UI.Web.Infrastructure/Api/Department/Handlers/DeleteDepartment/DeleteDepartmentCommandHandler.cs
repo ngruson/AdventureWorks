@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using AW.SharedKernel.Extensions;
-using AW.UI.Web.Infrastructure.Api.Interfaces;
+﻿using AW.UI.Web.Infrastructure.Api.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +19,6 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.DeleteDepartment
 
         public async Task Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
         {
-            Guard.Against.NullOrEmpty(request.Name, _logger);
-
             _logger.LogInformation("Deleting department");
             await _client.DeleteDepartment(request);
             _logger.LogInformation("Department succesfully deleted");

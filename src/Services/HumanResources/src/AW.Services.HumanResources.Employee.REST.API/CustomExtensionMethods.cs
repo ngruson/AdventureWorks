@@ -14,6 +14,11 @@ using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
+using AW.Services.HumanResources.Core.Handlers.DeleteDepartment;
+using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
+using FluentValidation;
+using AW.Services.HumanResources.Core.Handlers.UpdateEmployee;
 
 namespace AW.Services.HumanResources.Employee.REST.API
 {

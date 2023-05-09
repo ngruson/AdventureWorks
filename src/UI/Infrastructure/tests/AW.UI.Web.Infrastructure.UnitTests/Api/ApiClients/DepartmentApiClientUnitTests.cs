@@ -102,7 +102,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.GetDepartment(department.Name!);
+                var response = await sut.GetDepartment(department.ObjectId);
 
                 //Assert
                 response.Should().BeEquivalentTo(department);
@@ -114,7 +114,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 DepartmentApiClient sut,
-                string name
+                Guid objectId
             )
             {
                 //Arrange
@@ -124,7 +124,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetDepartment(name);
+                Func<Task> func = async () => await sut.GetDepartment(objectId);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -219,7 +219,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.UpdateDepartment(command);
+                var response = await sut.UpdateDepartment(command.Department);
 
                 //Assert
                 response.Should().BeEquivalentTo(command.Department);
@@ -240,7 +240,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.UpdateDepartment(command);
+                Func<Task> func = async () => await sut.UpdateDepartment(command.Department);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()

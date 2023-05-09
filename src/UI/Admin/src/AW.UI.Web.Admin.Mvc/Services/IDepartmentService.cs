@@ -5,9 +5,9 @@ namespace AW.UI.Web.Admin.Mvc.Services
     public interface IDepartmentService
     {
         Task<List<DepartmentViewModel>> GetDepartments();
-        Task<DepartmentDetailViewModel> GetDetail(string name);
-        Task CreateDepartment(CreateDepartmentViewModel viewModel);
-        Task UpdateDepartment(EditDepartmentViewModel viewModel);
-        Task DeleteDepartment(string department);
+        Task<DepartmentViewModel> GetDetail(Guid objectId);
+        Task CreateDepartment(DepartmentViewModel viewModel);
+        Task UpdateDepartment(DepartmentViewModel viewModel);
+        Task DeleteDepartment(Guid objectId);
     }
 }

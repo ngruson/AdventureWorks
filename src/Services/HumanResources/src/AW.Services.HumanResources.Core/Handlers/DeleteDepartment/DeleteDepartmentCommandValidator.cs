@@ -12,15 +12,15 @@ namespace AW.Services.HumanResources.Core.Handlers.DeleteDepartment
         {
             _departmentRepository = departmentRepository;
 
-            RuleFor(cmd => cmd.Name)
-                .NotEmpty().WithMessage("Name is required")
+            RuleFor(cmd => cmd.ObjectId)
+                .NotEmpty().WithMessage("ObjectId is required")
                 .MustAsync(Exist).WithMessage("Department does not exist");
         }
 
-        private async Task<bool> Exist(string? name, CancellationToken cancellationToken)
+        private async Task<bool> Exist(Guid objectId, CancellationToken cancellationToken)
         {
             return await _departmentRepository.AnyAsync(
-                new GetDepartmentSpecification(name),
+                new GetDepartmentSpecification(objectId),
                 cancellationToken
             );
         }

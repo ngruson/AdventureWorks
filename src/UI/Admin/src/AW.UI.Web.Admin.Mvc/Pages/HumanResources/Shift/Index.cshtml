@@ -114,9 +114,7 @@
                 if (confirm("Do you want to delete " + checked.length + " shift(s)?")) {
                     var shifts = [];
                     checked.each(function () {
-                        //var shift = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
                         var shift = $('input#shift_ObjectId').val();
-                        alert(shift);
                         shifts.push(shift);
                     });
 

@@ -42,9 +42,10 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             .ReturnsAsync(shift);
 
             //Act
-            var actual = await sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
+            result.IsSuccess.Should().BeTrue();
 
             shiftRepoMock.Verify(x => x.AddAsync(
                 It.IsAny<Entities.Shift>(),

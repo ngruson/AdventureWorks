@@ -1,14 +1,15 @@
-﻿using AutoMapper;
+﻿using Ardalis.Result;
+using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartmentHistory
 {
-    public class UpdateDepartmentHistoryCommand : IRequest, IMapFrom<Entities.EmployeeDepartmentHistory>
+    public class UpdateDepartmentHistoryCommand : IRequest<Result>, IMapFrom<Entities.EmployeeDepartmentHistory>
     {
         public Guid ObjectId { get; set; }
         public string? LoginID { get; set; }
-        public string? DepartmentName { get; set; }
+        public Guid Department { get; set; }
         public Guid Shift { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

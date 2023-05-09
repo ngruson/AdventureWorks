@@ -1,18 +1,17 @@
-﻿@using AW.UI.Web.Admin.Mvc.Controllers;
-@model AW.UI.Web.Admin.Mvc.ViewModels.Department.DepartmentViewModel
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+@model DepartmentViewModel
 
 <!-- Modal -->
 <div class="modal fade" id="editDepartment" tabindex="-1" role="dialog" aria-labelledby="editDepartment-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDepartment-modal-label">Edit Department Information</h5>
+                <h5 class="modal-title" id="editDepartment-modal-label">Edit Department</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateDepartment", "Department"))
-                {
-                    <input name="Key" type="hidden" value="@Model.Name">
+                <form method="post">
+                    @Html.HiddenFor(_ => _.ObjectId)
 
                     <div class="row mb-4">
                         <div class="col-sm-4">
@@ -37,9 +36,9 @@
 
                     <div class="d-flex justify-content-end gap-sm-3">
                         <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update Department Information</button>
+                        <button type="submit" class="btn btn-primary">Update Department</button>
                     </div>
-                }
+                </form>
             </div>
         </div>
     </div>

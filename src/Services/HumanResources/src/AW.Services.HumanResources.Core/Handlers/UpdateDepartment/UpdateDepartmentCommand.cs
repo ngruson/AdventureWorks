@@ -1,16 +1,15 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartment
 {
-    public class UpdateDepartmentCommand : IRequest<Department>
+    public class UpdateDepartmentCommand : IRequest<Result<Department>>
     {
-        public UpdateDepartmentCommand(string key, Department department)
+        public UpdateDepartmentCommand(Department department)
         {
-            Key = key;
             Department = department;
         }
 
-        public string Key { get; set; }
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
     }
 }

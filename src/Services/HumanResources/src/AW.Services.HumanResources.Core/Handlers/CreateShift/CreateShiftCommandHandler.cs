@@ -42,7 +42,6 @@ namespace AW.Services.HumanResources.Core.Handlers.CreateShift
 
                 _logger.LogInformation("Saving new shift to database");
                 var shift = _mapper.Map<Entities.Shift>(request.Shift);
-                shift.ObjectId = Guid.NewGuid();
                 shift = await _shiftRepository.AddAsync(shift, cancellationToken);
 
                 _logger.LogInformation("Returning shift");

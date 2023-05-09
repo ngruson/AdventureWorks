@@ -4,10 +4,10 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.DeleteDepartment
 {
     public class DeleteDepartmentCommand : IRequest
     {
-        public DeleteDepartmentCommand(string name)
+        public DeleteDepartmentCommand(Guid objectId)
         {
-            Name = name;
+            ObjectId = objectId;
         }
-        public string Name { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

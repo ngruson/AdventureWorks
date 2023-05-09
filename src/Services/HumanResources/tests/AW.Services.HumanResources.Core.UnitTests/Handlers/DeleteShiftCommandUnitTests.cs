@@ -98,8 +98,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             [Frozen] Mock<IValidator<DeleteShiftCommand>> validatorMock,
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
             DeleteShiftCommandHandler sut,
-            DeleteShiftCommand command,
-            Entities.Shift shift
+            DeleteShiftCommand command
         )
         {
             //Arrange
@@ -123,7 +122,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             );
 
             shiftRepoMock.Verify(x => x.DeleteAsync(
-                    shift,
+                    It.IsAny<Entities.Shift>(),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never

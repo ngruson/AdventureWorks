@@ -1,18 +1,20 @@
-﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Department.IndexModel
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Departments";
-    @model List<DepartmentViewModel>;
 }
 
+@Html.AntiForgeryToken()
 <!-- Page Header -->
 <div class="page-header">
     <div class="row align-items-center mb-3">
         <div class="col-md mb-2 mb-md-0">
-            <h1 class="page-header-title">Departments <span class="badge bg-soft-dark text-dark ms-2">@Model.Count</span></h1>
+            <h1 class="page-header-title">Departments <span class="badge bg-soft-dark text-dark ms-2">@Model.Departments!.Count</span></h1>
         </div>
 
         <div class="col-md-auto">
-            @Html.ActionLink("Create department", "CreateDepartment", "Department", null, new { @class = "btn btn-primary"})
+            <a asp-page="./Create" class="btn btn-primary">Create department</a>
         </div>
         <!-- End Col -->
     </div>
@@ -66,17 +68,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var department in Model)
+                @foreach (var department in Model.Departments)
                 {
                     <tr>
                         <td class="table-column-pe-0">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="employeesDataCheck-@department.Name">
-                                <label class="form-check-label" for="employeesDataCheck-@department.Name"></label>
+                                <input type="checkbox" class="form-check-input" id="dataCheck-@department.ObjectId">
+                                <label class="form-check-label" for="dataCheck-@department.ObjectId"></label>
                             </div>
                         </td>
                         <td class="table-column-ps-0">
-                            <a asp-action="Detail" asp-route-name="@department.Name">
+                            @Html.HiddenFor(_ => department.ObjectId)
+                            <a asp-page="./Detail" asp-route-objectId="@department.ObjectId">
                                 <div class="flex-grow-1 ms-3">
                                     <span class="h5 text-inherit">@department.Name</span>
                                 </div>
@@ -109,13 +112,19 @@
                 if (confirm("Do you want to delete " + checked.length + " department(s)?")) {
                     var departments = [];
                     checked.each(function () {
-                        var department = $(this).closest("tr").find("td").eq(1).find("a").find("div").find("span").html();
+                        var department = $(this).closest("tr").find("td").eq(1).find("input#department_ObjectId").val();
+                        alert(department);
+                        //var department = $('input#department_ObjectId').val();
                         departments.push(department);
                     });
 
                     $.ajax({
+                        url: "Department/Delete",
                         type: "POST",
-                        url: "DeleteDepartments",
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
                         data: JSON.stringify(departments),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json"
@@ -144,10 +153,10 @@
                 },
                 language: {
                     zeroRecords: `<div class="text-center p-4">
-                                                              <img class="mb-3" src="~/assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
-                                                              <img class="mb-3" src="~/assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-                                                            <p class="mb-0">No data to show</p>
-                                                            </div>`
+                        <img class="mb-3" src="~/assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                        <img class="mb-3" src="~/assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                    <p class="mb-0">No data to show</p>
+                    </div>`
                 }
             });
         })()

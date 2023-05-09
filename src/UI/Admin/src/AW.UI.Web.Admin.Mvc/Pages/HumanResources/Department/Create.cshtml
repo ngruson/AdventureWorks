@@ -1,7 +1,8 @@
-﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Department.CreateModel
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Add new department";
-    @model CreateDepartmentViewModel;
 }
 
 <!-- Page Header-->
@@ -10,7 +11,9 @@
         <div class="col-sm mb-2 mb-sm-0">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-no-gutter">
-                    <li class="breadcrumb-item">@Html.ActionLink("Departments", "Index", "Department", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Departments</a>
+                    </li>
                     <li class="breadcrumb-item active" aria-current="page">Department details</li>
                 </ol>
             </nav>
@@ -23,27 +26,27 @@
 <div class="card mb-3 mb-lg-5">
     <!-- Header -->
     <div class="card-header card-header-content-between">
-        <h4 class="card-header-title">Department information</h4>
+        <h4 class="card-header-title">Department</h4>
     </div>
     <!-- End Header-->
     <!-- Body -->
     <div class="card-body">
         <!-- Form -->
-        @using (Html.BeginForm("CreateDepartment", "Department"))
-        {
+        <form method="post">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="row">
                 <div class="col-sm-3">
                     <div class="mb-4">
-                        @Html.LabelFor(m => m.Department!.Name, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.Department!.Name, new { @class = "form-label" })
                         @Html.EditorFor(m => m.Department!.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        <span asp-validation-for="@Model.Department!.Name" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
                     <div class="mb-4">
-                        @Html.LabelFor(m => m.Department!.GroupName, new { @class = "col-sm-3 col-form-label form-label" })
+                        @Html.LabelFor(m => m.Department!.GroupName, new { @class = "form-label" })
                         @Html.EditorFor(m => m.Department!.GroupName, new { htmlAttributes = new { @class = "form-control" } })
                         <span asp-validation-for="@Model.Department!.GroupName" class="text-danger"></span>
                     </div>
@@ -54,11 +57,10 @@
                 <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Create Department</button>
             </div>
-        }
+        </form>
     </div>
 </div>
 <!-- End Card -->
-
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

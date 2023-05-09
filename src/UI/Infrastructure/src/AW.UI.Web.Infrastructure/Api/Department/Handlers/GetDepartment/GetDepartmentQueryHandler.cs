@@ -20,7 +20,7 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartment
         public async Task<Department?> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting department from API");
-            var department = await _client.GetDepartment(request.Name);
+            var department = await _client.GetDepartment(request.ObjectId);
             Guard.Against.Null(department, _logger);
 
             _logger.LogInformation("Returning department");

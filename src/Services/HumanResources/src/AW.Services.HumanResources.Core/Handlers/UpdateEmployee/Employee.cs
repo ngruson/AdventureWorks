@@ -1,11 +1,18 @@
 ﻿using AutoMapper;
 using AW.Services.HumanResources.Core.Entities;
 using AW.SharedKernel.AutoMapper;
+using AW.SharedKernel.ValueTypes;
 
 namespace AW.Services.HumanResources.Core.Handlers.UpdateEmployee
 {
     public class Employee : IMapFrom<Entities.Employee>
     {
+        public string? Title { get; set; }
+
+        public NameFactory? Name { get; set; }
+        
+        public string? Suffix { get; set; }
+        
         public string? NationalIDNumber { get; set; }
 
         public string? LoginID { get; set; }

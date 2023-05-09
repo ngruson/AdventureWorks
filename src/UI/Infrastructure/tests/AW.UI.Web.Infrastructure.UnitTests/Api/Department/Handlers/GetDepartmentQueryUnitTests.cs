@@ -19,7 +19,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
         )
         {
             //Arrange
-            mockDepartmentApiClient.Setup(_ => _.GetDepartment(query.Name))
+            mockDepartmentApiClient.Setup(_ => _.GetDepartment(query.ObjectId))
                 .ReturnsAsync(department);
 
             //Act
@@ -27,7 +27,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
 
             //Assert
             result.Should().Be(department);
-            mockDepartmentApiClient.Verify(_ => _.GetDepartment(query.Name));
+            mockDepartmentApiClient.Verify(_ => _.GetDepartment(query.ObjectId));
         }
 
         [Theory, AutoMoqData]
@@ -38,7 +38,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
         )
         {
             //Arrange
-            mockDepartmentApiClient.Setup(_ => _.GetDepartment(query.Name))
+            mockDepartmentApiClient.Setup(_ => _.GetDepartment(query.ObjectId))
                 .ReturnsAsync((Infrastructure.Api.Department.Handlers.GetDepartment.Department?)null);
 
             //Act
@@ -47,7 +47,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
             //Assert
             await func.Should().ThrowAsync<ArgumentNullException>();
 
-            mockDepartmentApiClient.Verify(_ => _.GetDepartment(query.Name));
+            mockDepartmentApiClient.Verify(_ => _.GetDepartment(query.ObjectId));
         }
     }
 }

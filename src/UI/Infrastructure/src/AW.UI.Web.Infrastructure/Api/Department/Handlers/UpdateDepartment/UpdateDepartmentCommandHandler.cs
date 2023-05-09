@@ -24,7 +24,7 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment
             Guard.Against.Null(request.Department, _logger);
 
             _logger.LogInformation("Updating department");
-            await _client.UpdateDepartment(request);
+            await _client.UpdateDepartment(request.Department);
             _logger.LogInformation("Department succesfully updated");
         }
     }

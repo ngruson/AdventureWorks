@@ -1,17 +1,25 @@
-﻿using AW.Services.HumanResources.Department.REST.API;
-using AW.Services.HumanResources.SharedKernel;
+﻿using Ardalis.Result.AspNetCore;
+using CreateDepartment = AW.Services.HumanResources.Core.Handlers.CreateDepartment;
+using AW.Services.HumanResources.Core.Handlers.GetDepartment;
+using AW.Services.HumanResources.Core.Handlers.GetDepartments;
+using UpdateDepartment = AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
+using AW.Services.HumanResources.Department.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc;
+using AW.Services.HumanResources.Core.Handlers.DeleteDepartment;
+using AW.Services.HumanResources.SharedKernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddCustomMvc()
     .AddValidators()
-    .AddVersioning()
+    //Breaking change - Enable this when every API is a minimal API
+    //.AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
     .AddCustomIntegrations(builder.Configuration)
@@ -29,14 +37,49 @@ app.Map(virtualPath, builder =>
     });
 
     builder.UseCors("default");
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Department API");
+    //Breaking change - Enable this when every API is a minimal API
+    //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, "Department API");
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();
     builder.UseEndpoints(endpoints =>
     {
-        endpoints.MapControllers();
+        endpoints.MapGet("/Department", async ([FromServices] IMediator mediator) =>
+            (await mediator.Send(new GetDepartmentsQuery()))
+                .ToMinimalApiResult()
+        )
+        .WithName("GetDepartments")
+        .WithOpenApi();
+
+        endpoints.MapGet("/Department/{objectId}", async (Guid objectId, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new GetDepartmentQuery(objectId)))
+                .ToMinimalApiResult()
+        )
+        .WithName("GetDepartment")
+        .WithOpenApi();
+
+        endpoints.MapPost("/Department", async ([FromBody] CreateDepartment.Department department, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new CreateDepartment.CreateDepartmentCommand(department)))
+                .ToMinimalApiResult()
+        )
+        .WithName("CreateDepartment")
+        .WithOpenApi();
+
+        endpoints.MapPut("/Department", async ([FromBody] UpdateDepartment.Department department, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new UpdateDepartment.UpdateDepartmentCommand(department)))
+                .ToMinimalApiResult()
+        )
+        .WithName("UpdateDepartment")
+        .WithOpenApi();
+
+        endpoints.MapDelete("/Department/{objectId}", async (Guid objectId, [FromServices] IMediator mediator) =>
+            (await mediator.Send(new DeleteDepartmentCommand(objectId)))
+                .ToMinimalApiResult()
+        )
+        .WithName("DeleteDepartment")
+        .WithOpenApi();
+
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
             Predicate = _ => true,

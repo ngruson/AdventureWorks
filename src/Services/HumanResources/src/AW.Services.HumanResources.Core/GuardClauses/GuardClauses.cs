@@ -17,17 +17,19 @@ namespace AW.Services.HumanResources.Core.GuardClauses
             }
         }
 
-        public static void EmployeeNull(this IGuardClause guardClause, Entities.Employee? employee, string loginID, ILogger logger)
+        public static Result EmployeeNull(this IGuardClause guardClause, Entities.Employee? employee, string loginID, ILogger logger)
         {
             if (employee == null)
             {
                 var ex = new EmployeeNotFoundException(loginID);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
-        public static void EmployeeDepartmentHistoryNull(this IGuardClause guardClause, Entities.EmployeeDepartmentHistory? edh,
+        public static Result EmployeeDepartmentHistoryNull(this IGuardClause guardClause, Entities.EmployeeDepartmentHistory? edh,
             Guid objectId,
             ILogger logger
         )
@@ -36,8 +38,10 @@ namespace AW.Services.HumanResources.Core.GuardClauses
             {
                 var ex = new EmployeeDepartmentHistoryNotFoundException(objectId);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
         public static Result ShiftsNull(this IGuardClause guardClause, List<Entities.Shift> shifts, ILogger logger)
@@ -64,24 +68,28 @@ namespace AW.Services.HumanResources.Core.GuardClauses
             return Result.Success();
         }
 
-        public static void DepartmentsNull(this IGuardClause guardClause, List<Entities.Department> departments, ILogger logger)
+        public static Result DepartmentsNull(this IGuardClause guardClause, List<Entities.Department> departments, ILogger logger)
         {
             if (departments == null)
             {
                 var ex = new DepartmentsNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
-        public static void DepartmentNull(this IGuardClause guardClause, Entities.Department? department, string name, ILogger logger)
+        public static Result DepartmentNull(this IGuardClause guardClause, Entities.Department? department, Guid objectId, ILogger logger)
         {
             if (department == null)
             {
-                var ex = new DepartmentNotFoundException(name);
+                var ex = new DepartmentNotFoundException(objectId);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
     }
 }

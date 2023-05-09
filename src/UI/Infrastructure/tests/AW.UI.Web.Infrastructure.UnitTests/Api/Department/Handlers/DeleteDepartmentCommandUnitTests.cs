@@ -27,29 +27,5 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
                 It.IsAny<DeleteDepartmentCommand>()
             ));
         }
-
-        [Theory, AutoMoqData]
-        public async Task throw_argumentnullexception_given_empty_name(
-            [Frozen] Mock<IDepartmentApiClient> mockDepartmentApiClient,
-            DeleteDepartmentCommandHandler sut
-        )
-        {
-            //Arrange
-
-            //Act
-            Func<Task> func = async () => await sut.Handle(
-                new DeleteDepartmentCommand(null!),
-                CancellationToken.None
-            );
-
-            //Assert
-            await func.Should().ThrowAsync<ArgumentException>();
-
-            mockDepartmentApiClient.Verify(_ => _.DeleteDepartment(
-                    It.IsAny<DeleteDepartmentCommand>()
-                )
-                , Times.Never
-            );
-        }
     }
 }

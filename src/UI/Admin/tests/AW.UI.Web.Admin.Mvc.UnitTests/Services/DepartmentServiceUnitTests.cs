@@ -48,7 +48,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
                 Infrastructure.Api.Department.Handlers.GetDepartment.Department department,
-                string name
+                Guid objectId
             )
             {
                 //Arrange
@@ -60,10 +60,10 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(department);
 
                 //Act
-                var actual = await sut.GetDetail(name);
+                var viewModel = await sut.GetDetail(objectId);
 
                 //Assert
-                actual.Department.Should().BeEquivalentTo(department);
+                viewModel.Should().BeEquivalentTo(department);
 
                 mockMediator.Verify(_ => _.Send(
                         It.IsAny<GetDepartmentQuery>(),
@@ -79,7 +79,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task UpdateDepartmentGivenDepartmentExists(
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
-                EditDepartmentViewModel viewModel,
+                DepartmentViewModel viewModel,
                 Infrastructure.Api.Department.Handlers.GetDepartment.Department department
             )
             {
@@ -109,7 +109,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ThrowArgumentNullExceptionGivenDepartmentDoesNotExist(
                 [Frozen] Mock<IMediator> mockMediator,
                 DepartmentService sut,
-                EditDepartmentViewModel viewModel
+                DepartmentViewModel viewModel
             )
             {
                 //Arrange
@@ -143,13 +143,13 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task delete_department_given_name(
                 [Frozen] Mock<IMediator> mediator,
                 DepartmentService sut,
-                string name
+                Guid objectId
             )
             {
                 //Arrange
 
                 //Act
-                await sut.DeleteDepartment(name);
+                await sut.DeleteDepartment(objectId);
 
                 //Assert
                 mediator.Verify(_ => _.Send(

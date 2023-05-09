@@ -77,7 +77,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department!.GroupName)
+            result.ShouldHaveValidationErrorFor(command => command.Department.GroupName)
                 .WithErrorMessage("Group name is required");
         }
 
@@ -92,7 +92,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         {
             //Arrange
             departmentRepoMock.Setup(_ => _.AnyAsync(
-                    It.IsAny<GetDepartmentSpecification>(),
+                    It.IsAny<GetDepartmentByNameSpecification>(),
                     It.IsAny<CancellationToken>()
                 )
             )
@@ -104,7 +104,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department!.Name)
+            result.ShouldHaveValidationErrorFor(command => command.Department.Name)
                 .WithErrorMessage("Department already exists");
         }
     }

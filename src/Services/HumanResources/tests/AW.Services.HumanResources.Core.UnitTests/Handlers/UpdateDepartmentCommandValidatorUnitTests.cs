@@ -36,37 +36,27 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task validation_error_given_no_department(
-            UpdateDepartmentCommandValidator sut,
-            UpdateDepartmentCommand command
-        )
-        {
-            //Arrange
-            command.Department = null;
-
-            //Act
-            var result = await sut.TestValidateAsync(command);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department)
-                .WithErrorMessage("Department is required");
-        }
-
-        [Theory]
-        [AutoMoqData]
         public async Task validation_error_given_no_department_name(
+            [Frozen] Mock<IRepository<Entities.Department>> repository,
             UpdateDepartmentCommandValidator sut,
             UpdateDepartmentCommand command
         )
         {
             //Arrange
-            command.Department!.Name = null;
+            repository.Setup(_ => _.AnyAsync(
+                It.IsAny<GetDepartmentSpecification>(),
+                It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
+
+            command.Department.Name = null;
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department!.Name)
+            result.ShouldHaveValidationErrorFor(command => command.Department.Name)
                 .WithErrorMessage("Name is required");
         }
 
@@ -92,7 +82,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department!.GroupName)
+            result.ShouldHaveValidationErrorFor(command => command.Department.GroupName)
                 .WithErrorMessage("Group name is required");
         }
 
@@ -118,7 +108,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department!.Name)
+            result.ShouldHaveValidationErrorFor(command => command.Department.ObjectId)
                 .WithErrorMessage("Department does not exist");
         }
     }

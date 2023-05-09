@@ -4,10 +4,10 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartment
 {
     public class GetDepartmentQuery : IRequest<Department?>
     {
-        public GetDepartmentQuery(string name)
+        public GetDepartmentQuery(Guid objectId)
         {
-            Name = name;
+            ObjectId = objectId;
         }
-        public string Name { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

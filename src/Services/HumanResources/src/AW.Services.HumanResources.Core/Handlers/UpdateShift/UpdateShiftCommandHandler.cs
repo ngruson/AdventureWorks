@@ -44,9 +44,9 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateShift
                 }
 
                 _logger.LogInformation("Getting shift from database");
-                var spec = new GetShiftSpecification(request.Shift!.ObjectId);
+                var spec = new GetShiftSpecification(request.Shift.ObjectId);
                 var shift = await _shiftRepository.SingleOrDefaultAsync(spec, cancellationToken);
-                var result = Guard.Against.ShiftNull(shift, request.Shift!.ObjectId, _logger);
+                var result = Guard.Against.ShiftNull(shift, request.Shift.ObjectId, _logger);
                 if (!result.IsSuccess)
                     return result;
 

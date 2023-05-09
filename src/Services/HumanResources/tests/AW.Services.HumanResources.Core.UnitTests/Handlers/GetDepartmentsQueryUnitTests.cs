@@ -1,6 +1,6 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
-using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -13,7 +13,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
     public class GetDepartmentsQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_DepartmentsExists_ReturnDepartments(
+        public async Task return_success_given_departments_exist(
             [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
             GetDepartmentsQueryHandler sut,
             GetDepartmentsQuery query,
@@ -30,10 +30,12 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
-            //Assert            
-            result.Should().BeEquivalentTo(departments, opt => opt
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().BeEquivalentTo(departments, opt => opt
                 .Excluding(_ => _.Id)
             );
+            
             departmentRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<GetDepartmentsSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -42,7 +44,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_NoDepartmentsExists_ThrowArgumentNullException(
+        public async Task return_notfound_given_departments_do_not_exist(
             [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
             GetDepartmentsQueryHandler sut,
             GetDepartmentsQuery query
@@ -57,11 +59,10 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 #pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<DepartmentsNotFoundException>()
-                .WithMessage("No departments found");
+            result.Status.Should().Be(ResultStatus.NotFound);
         }
     }
 }

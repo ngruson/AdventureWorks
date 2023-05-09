@@ -10,7 +10,7 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateShift
             Shift = shift;
         }
 
-        public Shift? Shift { get; set; }
+        public Shift Shift { get; set; }
 
     }
 }

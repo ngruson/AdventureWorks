@@ -1,7 +1,7 @@
-﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Department;
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Department.DetailModel
 @{
-    ViewData["Title"] = $"Department detail - {Model.Department!.Name}";
-    @model DepartmentDetailViewModel;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Page Header-->
@@ -10,13 +10,15 @@
         <div class="col-sm mb-2 mb-sm-0">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-no-gutter">
-                    <li class="breadcrumb-item">@Html.ActionLink("Departments", "Index", "Department", null, new { @class="breadcrumb-link" })</li>
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Departments</a>
+                    </li>
                     <li class="breadcrumb-item active" aria-current="page">Department details</li>
                 </ol>
             </nav>
-            <h1 class="page-header-title">@Model.Department.Name</h1>           
+            <h1 class="page-header-title">@Model.Department!.Name</h1>
             <div class="mt-2">
-                <a class="text-body me-3" asp-action="DeleteDepartment" asp-route-name="@Model.Department.Name">
+                <a class="text-body me-3" asp-page-handler="delete" asp-route-objectId="@Model.Department.ObjectId">
                     <i class="bi-trash me-1"></i> Delete
                 </a>
             </div>
@@ -28,7 +30,7 @@
 <div class="card mb-3 mb-lg-5">
     <!-- Header -->
     <div class="card-header card-header-content-between">
-        <h4 class="card-header-title">Department information</h4>
+        <h4 class="card-header-title">Department</h4>
         <a class="link" data-bs-toggle="modal" data-bs-target="#editDepartment" href="#">Edit</a>
     </div>
     <!-- End Header-->
@@ -38,7 +40,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="mb-4">
-                    @Html.LabelFor(m => m.Department!.Name, new { @class = "col-sm-3 col-form-label form-label" })
+                    @Html.LabelFor(m => m.Department!.Name, new { @class = "form-label" })
                     <input type="text" class="form-control" value="@Model.Department.Name" readonly>
                 </div>
             </div>
@@ -46,7 +48,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="mb-4">
-                    @Html.LabelFor(m => m.Department!.GroupName, new { @class = "col-sm-3 col-form-label form-label" })
+                    @Html.LabelFor(m => m.Department!.GroupName, new { @class = "form-label" })
                     <input type="text" class="form-control" value="@Model.Department.GroupName" readonly>
                 </div>
             </div>
@@ -55,4 +57,4 @@
 </div>
 <!-- End Card -->
 
-<partial name="Partials/EditDepartment" for="@Model.Department" />
+<partial name="Edit" for="@Model.Department" />

@@ -1,17 +1,18 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetDepartment
 {
-    public class GetDepartmentQuery : IRequest<Department>
+    public class GetDepartmentQuery : IRequest<Result<Department>>
     {
         public GetDepartmentQuery()
         {
         }
-        public GetDepartmentQuery(string name)
+        public GetDepartmentQuery(Guid objectId)
         {
-            Name = name;
+            ObjectId = objectId;
         }
 
-        public string? Name { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

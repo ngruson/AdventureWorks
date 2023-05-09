@@ -234,7 +234,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .Throws(new DepartmentNotFoundException(command.DepartmentName!));
+                .Throws(new DepartmentNotFoundException(command.Department!));
 
                 //Act
                 var actionResult = await sut.AddDepartmentHistory(command);
@@ -318,7 +318,7 @@ namespace AW.Services.HumanResources.Employee.REST.API.UnitTests
                         It.IsAny<CancellationToken>()
                     )
                 )
-                .Throws(new DepartmentNotFoundException(command.DepartmentName!));
+                .Throws(new DepartmentNotFoundException(command.Department));
 
                 //Act
                 var actionResult = await sut.UpdateDepartmentHistory(command);

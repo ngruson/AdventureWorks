@@ -17,8 +17,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using AW.Services.HumanResources.Core.Handlers.CreateShift;
 using FluentValidation;
 using Ardalis.Result.AspNetCore;
-using AW.Services.HumanResources.Core.Handlers.UpdateShift;
 using AW.Services.HumanResources.Core.Handlers.DeleteShift;
+using AW.Services.HumanResources.Core.Handlers.UpdateShift;
 
 namespace AW.Services.HumanResources.Shift.REST.API
 {

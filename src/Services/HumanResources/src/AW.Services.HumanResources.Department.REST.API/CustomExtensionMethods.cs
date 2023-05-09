@@ -16,6 +16,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using AW.Services.HumanResources.Core.Handlers.GetDepartments;
 using FluentValidation;
 using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
+using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
+using AW.Services.HumanResources.Core.Handlers.DeleteDepartment;
 
 namespace AW.Services.HumanResources.Department.REST.API
 {
@@ -81,7 +83,7 @@ namespace AW.Services.HumanResources.Department.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentationWithVersion("Department API");
+            services.AddSwaggerDocumentation("Department API");
 
             return services;
         }

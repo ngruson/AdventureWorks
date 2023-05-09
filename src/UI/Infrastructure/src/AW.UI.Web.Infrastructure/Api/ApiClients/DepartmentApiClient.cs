@@ -37,9 +37,9 @@ namespace AW.UI.Web.Infrastructure.Api.ApiClients
             );
         }
 
-        public async Task<Department.Handlers.GetDepartment.Department?> GetDepartment(string name)
+        public async Task<Department.Handlers.GetDepartment.Department?> GetDepartment(Guid objectId)
         {
-            var requestUri = $"/department-api/Department/{name}?api-version=1.0";
+            var requestUri = $"/department-api/Department/{objectId}?api-version=1.0";
             _logger.LogInformation("Getting department from API");
 
             using var response = await _client.GetAsync(requestUri);
@@ -86,10 +86,10 @@ namespace AW.UI.Web.Infrastructure.Api.ApiClients
             return createdDepartment;
         }
 
-        public async Task<Department.Handlers.UpdateDepartment.Department?> UpdateDepartment(UpdateDepartmentCommand command)
+        public async Task<Department.Handlers.UpdateDepartment.Department?> UpdateDepartment(Department.Handlers.UpdateDepartment.Department department)
         {
             _logger.LogInformation("Call Department API to update department");
-            var requestUri = $"Department/{command.Key}?&api-version=1.0";
+            var requestUri = "Department?&api-version=1.0";
             var options = new JsonSerializerOptions
             {
                 Converters =
@@ -99,7 +99,7 @@ namespace AW.UI.Web.Infrastructure.Api.ApiClients
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            var json = JsonSerializer.Serialize(command, options);
+            var json = JsonSerializer.Serialize(department, options);
             _logger.LogInformation("Calling PUT method on {RequestUri} with {JSON}", requestUri, json);
 
             using var response = await _client.PutAsync(
@@ -117,7 +117,7 @@ namespace AW.UI.Web.Infrastructure.Api.ApiClients
         public async Task DeleteDepartment(DeleteDepartmentCommand request)
         {
             _logger.LogInformation("Deleting department");
-            var requestUri = $"Department/{request.Name}?&api-version=1.0";
+            var requestUri = $"Department/{request.ObjectId}?&api-version=1.0";
             _logger.LogInformation("Calling DELETE method on {RequestUri}", requestUri);
 
             using var response = await _client.DeleteAsync(requestUri);

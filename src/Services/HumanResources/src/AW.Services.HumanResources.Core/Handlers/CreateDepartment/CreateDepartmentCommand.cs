@@ -1,13 +1,14 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.CreateDepartment
 {
-    public class CreateDepartmentCommand : IRequest<Department>
+    public class CreateDepartmentCommand : IRequest<Result<CreatedDepartment>>
     {
-        public CreateDepartmentCommand(Department? department)
+        public CreateDepartmentCommand(Department department)
         {
             Department = department;
         }
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
     }
 }

@@ -11,6 +11,9 @@ namespace AW.Services.HumanResources.Infrastructure.EFCore.Configurations
 
             builder.Property(_ => _.Id)
                 .HasColumnName("DepartmentId");
+
+            builder.Property(_ => _.ObjectId)
+                .HasDefaultValue();
         }
     }
 }

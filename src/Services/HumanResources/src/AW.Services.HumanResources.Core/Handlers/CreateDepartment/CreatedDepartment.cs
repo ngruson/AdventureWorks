@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AW.SharedKernel.AutoMapper;
 
-namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartment
+namespace AW.Services.HumanResources.Core.Handlers.CreateDepartment
 {
-    public class Department : IMapFrom<Entities.Department>
+    public class CreatedDepartment : IMapFrom<Entities.Department>
     {
         public Guid ObjectId { get; set; }
         public string? Name { get; set; }
@@ -12,8 +12,7 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateDepartment
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Entities.Department, Department>()
-                .ReverseMap();
+            profile.CreateMap<Entities.Department, CreatedDepartment>();
         }
     }
 }

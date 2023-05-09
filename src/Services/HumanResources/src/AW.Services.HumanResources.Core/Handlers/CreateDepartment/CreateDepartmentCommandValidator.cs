@@ -26,7 +26,7 @@ namespace AW.Services.HumanResources.Core.Handlers.CreateDepartment
         private async Task<bool> NotExists(string? name, CancellationToken cancellationToken)
         {
             return !await _departmentRepository.AnyAsync(
-                new GetDepartmentSpecification(name),
+                new GetDepartmentByNameSpecification(name!),
                 cancellationToken
             );
         }

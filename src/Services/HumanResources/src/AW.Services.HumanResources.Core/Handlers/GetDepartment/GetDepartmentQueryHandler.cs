@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
 using AW.Services.HumanResources.Core.Specifications;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetDepartment
 {
-    public class GetDepartmentQueryHandler : IRequestHandler<GetDepartmentQuery, Department>
+    public class GetDepartmentQueryHandler : IRequestHandler<GetDepartmentQuery, Result<Department>>
     {
         private readonly ILogger<GetDepartmentQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -20,20 +21,24 @@ namespace AW.Services.HumanResources.Core.Handlers.GetDepartment
             IRepository<Entities.Department> repository
         ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
-        public async Task<Department> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
+        public async Task<Result<Department>> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handle called");
             _logger.LogInformation("Getting department from database");
 
             var spec = new GetDepartmentSpecification(
-                request.Name
+                request.ObjectId
             );
 
             var department = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.DepartmentNull(department, request.Name!, _logger);
+            var result = Guard.Against.DepartmentNull(department, request.ObjectId, _logger);
+            if (!result.IsSuccess)
+                return result;
 
             _logger.LogInformation("Returning department");
-            return _mapper.Map<Department>(department);
+            return Result.Success(
+                _mapper.Map<Department>(department)
+            );
         }
     }
 }

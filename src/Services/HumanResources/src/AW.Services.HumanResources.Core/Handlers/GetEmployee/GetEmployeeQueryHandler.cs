@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
 using AW.Services.HumanResources.Core.Specifications;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
 {
-    public class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, Employee>
+    public class GetEmployeeQueryHandler : IRequestHandler<GetEmployeeQuery, Result<Employee>>
     {
         private readonly ILogger<GetEmployeeQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -20,20 +21,31 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
             IRepository<Entities.Employee> repository
         ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
-        public async Task<Employee> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
+        public async Task<Result<Employee>> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Handle called");
-            _logger.LogInformation("Getting employee from database");
+            try
+            {
+                _logger.LogInformation("Getting employee from database");
 
-            var spec = new GetEmployeeSpecification(
-                request.LoginID
-            );
+                var spec = new GetEmployeeSpecification(
+                    request.LoginID
+                );
 
-            var employee = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.EmployeeNull(employee, request.LoginID!, _logger);
+                var employee = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
+                var result = Guard.Against.EmployeeNull(employee, request.LoginID!, _logger);
+                if (!result.IsSuccess)
+                    return result;
 
-            _logger.LogInformation("Returning employee");
-            return _mapper.Map<Employee>(employee);
+                _logger.LogInformation("Returning employee");
+                return Result.Success(
+                    _mapper.Map<Employee>(employee)
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred: {Message}", ex.Message);
+                return Result.Error(ex.Message);
+            }
         }
     }
 }

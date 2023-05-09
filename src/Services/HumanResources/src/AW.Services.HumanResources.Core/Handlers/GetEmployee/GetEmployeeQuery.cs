@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
 {
-    public class GetEmployeeQuery : IRequest<Employee>
+    public class GetEmployeeQuery : IRequest<Result<Employee>>
     {
         public GetEmployeeQuery()
         {

@@ -1,5 +1,5 @@
-﻿using AutoFixture.Xunit2;
-using AW.Services.HumanResources.Core.Exceptions;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.Handlers.UpdateDepartmentHistory;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -12,7 +12,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
     public class UpdateDepartmentHistoryCommandUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task UpdateDepartmentHistoryGivenEmployeeAndDepartmentExist(
+        public async Task return_success_given_department_history_was_updated(
             [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
             [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
             [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
@@ -52,13 +52,16 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             {
                 ObjectId = departmentHistory.ObjectId,
                 LoginID = employee.LoginID,
-                DepartmentName = departmentHistory.Department!.Name,
+                Department = departmentHistory.Department!.ObjectId,
                 Shift = departmentHistory.Shift!.ObjectId,
                 StartDate = departmentHistory.StartDate
             };
-            await sut.Handle(command, CancellationToken.None);
+
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
+            result.IsSuccess.Should().BeTrue();
+
             employeeRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
                 It.IsAny<CancellationToken>()
@@ -74,7 +77,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task ThrowEmployeeNotFoundExceptionGivenEmployeeDoesNotExist(
+        public async Task return_notfound_given_employee_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
             UpdateDepartmentHistoryCommandHandler sut,
             UpdateDepartmentHistoryCommand command
@@ -88,16 +91,27 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Employee?)null);
 
             //Act
-            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<EmployeeNotFoundException>()
-                .WithMessage($"Employee {command.LoginID} not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+            result.Errors.Should().Contain($"Employee {command.LoginID} not found");
+
+            employeeRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetEmployeeSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            employeeRepoMock.Verify(x => x.SaveChangesAsync(
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task ThrowDepartmentNotFoundExceptionGivenDepartmentDoesNotExist(
+        public async Task return_notfound_given_department_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
             [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
             UpdateDepartmentHistoryCommandHandler sut, 
@@ -120,11 +134,88 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Department?)null);
 
             //Act
-            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<DepartmentNotFoundException>()
-                .WithMessage($"Department '{command.DepartmentName}' not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+            result.Errors.Should().Contain($"Department '{command.Department}' not found");
+
+            employeeRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetEmployeeSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            departmentRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetDepartmentSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            employeeRepoMock.Verify(x => x.SaveChangesAsync(
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task return_notfound_given_shift_does_not_exist(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
+            [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
+            [Frozen] Mock<IRepository<Entities.Shift>> shiftRepoMock,
+            UpdateDepartmentHistoryCommandHandler sut,
+            UpdateDepartmentHistoryCommand command,
+            Entities.Employee employee,
+            Entities.Department department
+        )
+        {
+            // Arrange
+            employeeRepoMock.Setup(_ => _.SingleOrDefaultAsync(
+                    It.IsAny<GetEmployeeSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            ).
+            ReturnsAsync(employee);
+
+            departmentRepoMock.Setup(x => x.SingleOrDefaultAsync(
+                It.IsAny<GetDepartmentSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(department);
+
+            shiftRepoMock.Setup(x => x.SingleOrDefaultAsync(
+                It.IsAny<GetShiftSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync((Entities.Shift?)null);
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.NotFound);
+            result.Errors.Should().Contain($"Shift '{command.Shift}' not found");
+
+            employeeRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetEmployeeSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            departmentRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetDepartmentSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            shiftRepoMock.Verify(_ => _.SingleOrDefaultAsync(
+                It.IsAny<GetShiftSpecification>(),
+                It.IsAny<CancellationToken>()
+            ));
+
+            employeeRepoMock.Verify(x => x.SaveChangesAsync(
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
         }
     }
 }

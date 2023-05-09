@@ -974,7 +974,7 @@
                                             </a>
 
                                             <div id="navbarHumanResourcesDepartmentsMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Department" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
-                                                <a asp-action="Index" asp-controller="Department" class="nav-link @(requestPath == "/HumanResources/Department" ? "active" : "")">Departments</a>
+                                                <a href="@Url.Content("~/HumanResources/Department")" class="nav-link @(requestPath == "/HumanResources/Department" ? "active" : "")">Departments</a>
                                             </div>
                                         </div>
                                         <!-- End Collapse -->
@@ -985,8 +985,7 @@
                                             </a>
 
                                             <div id="navbarHumanResourcesShiftsMenu" class="nav-collapse collapse @(requestPath == "/HumanResources/Shift" ? "show" : "")" data-bs-parent="#navbarHumanResourcesMenu" hs-parent-area="#navbarHumanResourcesMenu">
-                                                <a href="HumanResources/Shift" class="nav-link @(requestPath == "/HumanResources/Shift" ? "active" : "")">Shifts</a>
-                                                @*@Html.ActionLink("Shifts", "Index", "Pages", null, new { @class = "nav-link @(requestPath == \"/HumanResources/Shift\" ? \"active\" : \"\")"})*@
+                                                <a href="@Url.Content("~/HumanResources/Shift")" class="nav-link @(requestPath == "/HumanResources/Shift" ? "active" : "")">Shifts</a>
                                             </div>
                                         </div>
                                         <!-- End Collapse -->

@@ -6,6 +6,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
 {
     public class DepartmentViewModel : IMapFrom<Infrastructure.Api.Department.Handlers.GetDepartments.Department>
     {
+        public Guid ObjectId { get; set; }
+
         [Display(Name = "Name")]
         [Required]
         public string? Name { get; set; }
@@ -19,6 +21,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Department
             profile.CreateMap<Infrastructure.Api.Department.Handlers.GetDepartments.Department, DepartmentViewModel>();
             profile.CreateMap<Infrastructure.Api.Department.Handlers.GetDepartment.Department, DepartmentViewModel>();
             profile.CreateMap<DepartmentViewModel, Infrastructure.Api.Department.Handlers.CreateDepartment.Department>();
+            profile.CreateMap<DepartmentViewModel, Infrastructure.Api.Department.Handlers.UpdateDepartment.Department>();
         }
     }
 }

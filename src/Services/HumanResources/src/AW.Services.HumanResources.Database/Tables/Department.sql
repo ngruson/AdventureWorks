@@ -1,9 +1,11 @@
 ﻿CREATE TABLE [dbo].[Department](
 	[DepartmentID] [int] IDENTITY(1,1) NOT NULL,
+    [ObjectID] uniqueidentifier NOT NULL DEFAULT NEWID(),
 	[Name] nvarchar(50) NOT NULL,
-	[GroupName] nvarchar(50) NOT NULL
- CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY CLUSTERED 
-(
-	[DepartmentID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+	[GroupName] nvarchar(50) NOT NULL,
+    CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY CLUSTERED 
+    (
+	    [DepartmentID] ASC
+    ),
+    CONSTRAINT UC_Department_ObjectID UNIQUE(ObjectID)
+)

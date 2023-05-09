@@ -2,7 +2,6 @@
 using AW.SharedKernel.UnitTesting;
 using AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment;
 using AW.UI.Web.Infrastructure.Api.Interfaces;
-using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -24,31 +23,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
 
             //Assert
             mockDepartmentApiClient.Verify(_ => _.UpdateDepartment(
-                It.IsAny<UpdateDepartmentCommand>()
+                It.IsAny<AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment.Department>()
             ));
-        }
-
-        [Theory, AutoMoqData]
-        public async Task ThrowArgumentNullExceptionGivenCommandIsInvalid(
-            [Frozen] Mock<IDepartmentApiClient> mockDepartmentApiClient,
-            UpdateDepartmentCommandHandler sut
-        )
-        {
-            //Arrange
-
-            //Act
-            Func<Task> func = async () => await sut.Handle(
-                new UpdateDepartmentCommand(null!, null!), CancellationToken.None
-            );
-
-            //Assert
-            await func.Should().ThrowAsync<ArgumentNullException>();
-
-            mockDepartmentApiClient.Verify(_ => _.UpdateDepartment(
-                    It.IsAny<UpdateDepartmentCommand>()
-                )
-                , Times.Never
-            );
         }
     }
 }

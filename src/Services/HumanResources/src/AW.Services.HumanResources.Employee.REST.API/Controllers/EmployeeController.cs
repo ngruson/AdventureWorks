@@ -50,9 +50,9 @@ namespace AW.Services.HumanResources.Employee.REST.API.Controllers
             
             try
             {
-                var employee = await _mediator.Send(query);
+                var result = await _mediator.Send(query);
                 _logger.LogInformation("Returning employee");
-                return Ok(employee);
+                return Ok(result.Value);
             }
             catch (EmployeeNotFoundException)
             {

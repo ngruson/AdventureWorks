@@ -12,9 +12,6 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateShift
         {
             _shiftRepository = shiftRepository;
 
-            RuleFor(cmd => cmd.Shift)
-                .NotNull().WithMessage("Shift is required");
-
             RuleFor(cmd => cmd.Shift!.ObjectId)
                 .NotEmpty().WithMessage("ObjectId is required")
                 .MustAsync(Exist).WithMessage("Shift does not exist");

@@ -34,23 +34,6 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         }
 
         [Theory, AutoMoqData]
-        public async Task validation_error_given_no_shift(
-            UpdateShiftCommandValidator sut,
-            UpdateShiftCommand command
-        )
-        {
-            //Arrange
-            command.Shift = null;
-
-            //Act
-            var result = await sut.TestValidateAsync(command);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Shift)
-                .WithErrorMessage("Shift is required");
-        }
-
-        [Theory, AutoMoqData]
         public async Task validation_error_given_no_shift_object_id(
             UpdateShiftCommandValidator sut,
             UpdateShiftCommand command
