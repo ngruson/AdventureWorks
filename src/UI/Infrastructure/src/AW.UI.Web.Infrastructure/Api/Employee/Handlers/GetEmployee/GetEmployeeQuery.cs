@@ -4,10 +4,10 @@ namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployee
 {
     public class GetEmployeeQuery : IRequest<Employee>
     {
-        public GetEmployeeQuery(string? loginID)
+        public GetEmployeeQuery(Guid objectId)
         {
-            LoginID = loginID;
+            ObjectId = objectId;
         }
-        public string? LoginID { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

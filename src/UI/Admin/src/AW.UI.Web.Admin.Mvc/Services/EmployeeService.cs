@@ -4,7 +4,9 @@ using AW.SharedKernel.Extensions;
 using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
 using AW.UI.Web.Infrastructure.Api.Department.Handlers.GetDepartments;
 using AW.UI.Web.Infrastructure.Api.Employee.Handlers.AddDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.CreateEmployee;
 using AW.UI.Web.Infrastructure.Api.Employee.Handlers.DeleteDepartmentHistory;
+using AW.UI.Web.Infrastructure.Api.Employee.Handlers.DeleteEmployee;
 using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployee;
 using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployees;
 using AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetJobTitles;
@@ -43,20 +45,16 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return vm;
         }
 
-        public async Task<EmployeeDetailViewModel> GetDetail(string loginID)
+        public async Task<EmployeeViewModel> GetDetail(Guid objectId)
         {
-            var employee = await GetEmployee(loginID);
-
-            return new EmployeeDetailViewModel
-            {
-                Employee = _mapper.Map<EmployeeViewModel>(employee)
-            };
+            var employee = await GetEmployee(objectId);
+            return _mapper.Map<EmployeeViewModel>(employee);
         }
 
-        private async Task<Infrastructure.Api.Employee.Handlers.GetEmployee.Employee> GetEmployee(string? loginID)
+        private async Task<Infrastructure.Api.Employee.Handlers.GetEmployee.Employee> GetEmployee(Guid objectId)
         {
             _logger.LogInformation("Getting employee");
-            var employee = await _mediator.Send(new GetEmployeeQuery(loginID));
+            var employee = await _mediator.Send(new GetEmployeeQuery(objectId));
             _logger.LogInformation("Retrieved employee");
             Guard.Against.Null(employee, _logger);
 
@@ -90,48 +88,73 @@ namespace AW.UI.Web.Admin.Mvc.Services
             return jobTitles;
         }
 
-        public async Task UpdateEmployee(EditEmployeeViewModel viewModel)
+        public async Task CreateEmployee(EmployeeViewModel viewModel)
         {
-            var employee = await GetEmployee(viewModel!.Key);
-            var employeeToUpdate = _mapper.Map<Infrastructure.Api.Employee.Handlers.UpdateEmployee.Employee>(employee);
-            _mapper.Map(viewModel.Employee, employeeToUpdate);
+            var employee = _mapper.Map<Infrastructure.Api.Employee.Handlers.CreateEmployee.Employee>(viewModel);
 
-            _logger.LogInformation("Updating employee");
-            await _mediator.Send(new UpdateEmployeeCommand(viewModel.Key!, employeeToUpdate));
-            _logger.LogInformation("Employee updated successfully");
+            _logger.LogInformation("Send command to create employee");
+            await _mediator.Send(new CreateEmployeeCommand(employee));
+            _logger.LogInformation("Command was succesfully executed");
         }
 
-        public async Task AddDepartmentHistory(AddDepartmentHistoryViewModel viewModel)
+        public async Task<EmployeeViewModel> UpdateEmployee(EmployeeViewModel viewModel)
+        {
+            var employee = await GetEmployee(viewModel.ObjectId);
+            var employeeToUpdate = _mapper.Map<Infrastructure.Api.Employee.Handlers.UpdateEmployee.Employee>(employee);
+            _mapper.Map(viewModel, employeeToUpdate);
+
+            _logger.LogInformation("Updating employee");
+            var updatedEmployee = await _mediator.Send(new UpdateEmployeeCommand(employeeToUpdate));
+            _logger.LogInformation("Employee updated successfully");
+
+            return _mapper.Map<EmployeeViewModel>(updatedEmployee);
+        }
+
+        public async Task DeleteEmployee(Guid objectId)
+        {
+            _logger.LogInformation("Deleting employee");
+            await _mediator.Send(new DeleteEmployeeCommand(objectId));
+            _logger.LogInformation("Employee successfully deleted");
+        }
+
+        public async Task<EmployeeViewModel> AddDepartmentHistory(EditDepartmentHistoryViewModel viewModel)
         {
             var command = _mapper.Map<AddDepartmentHistoryCommand>(viewModel);
 
             _logger.LogInformation("Adding department history");
             await _mediator.Send(command);
             _logger.LogInformation("Added department history successfully");
+
+            var employee = await GetDetail(viewModel.Employee);
+            return employee;
         }
 
-        public async Task UpdateDepartmentHistory(UpdateDepartmentHistoryViewModel viewModel)
+        public async Task<EmployeeViewModel> UpdateDepartmentHistory(EditDepartmentHistoryViewModel viewModel)
         {
             var command = _mapper.Map<UpdateDepartmentHistoryCommand>(viewModel);
 
             _logger.LogInformation("Updating department history");
             await _mediator.Send(command);
             _logger.LogInformation("Updating department history successfully");
+
+            var employee = await GetDetail(viewModel.Employee);
+            return employee;
         }
 
-        public async Task DeleteDepartmentHistory(string loginID, string departmentName, string shiftName, DateTime startDate)
+        public async Task<EmployeeViewModel> DeleteDepartmentHistory(Guid employee, Guid objectId)
         {
             var command = new DeleteDepartmentHistoryCommand
             {
-                LoginID = loginID,
-                DepartmentName = departmentName,
-                ShiftName = shiftName,
-                StartDate = startDate
+                Employee = employee,
+                ObjectId = objectId
             };
 
             _logger.LogInformation("Deleting department history");
             await _mediator.Send(command);
             _logger.LogInformation("Deleted department history successfully");
+
+            var emp = await GetDetail(employee);
+            return emp;
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using Ardalis.GuardClauses;
-using AW.SharedKernel.Extensions;
-using AW.UI.Web.Infrastructure.Api.Interfaces;
+﻿using AW.UI.Web.Infrastructure.Api.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateEmployee
 {
-    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand>
+    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, UpdatedEmployee>
     {
         private readonly ILogger<UpdateEmployeeCommandHandler> _logger;
         private readonly IEmployeeApiClient _client;
@@ -19,13 +17,13 @@ namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateEmployee
             _client = client;
         }
 
-        public async Task Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedEmployee> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            Guard.Against.Null(request.Employee, _logger);
-
             _logger.LogInformation("Updating employee");
-            await _client.UpdateEmployee(request.Key, request.Employee);
+            var updatedEmployee = await _client.UpdateEmployee(request.Employee);
             _logger.LogInformation("Employee succesfully updated");
+
+            return updatedEmployee!;
         }
     }
 }

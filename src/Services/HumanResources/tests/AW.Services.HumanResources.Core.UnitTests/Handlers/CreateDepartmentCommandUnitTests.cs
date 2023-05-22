@@ -2,7 +2,6 @@
 using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
-using AW.Services.HumanResources.Core.Handlers.CreateShift;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
@@ -89,8 +88,8 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         [Theory, AutoMoqData]
         public async Task return_error_given_exception_was_thrown(
             [Frozen] Mock<IRepository<Entities.Department>> departmentRepoMock,
-            CreateShiftCommandHandler sut,
-            CreateShiftCommand command
+            CreateDepartmentCommandHandler sut,
+            CreateDepartmentCommand command
         )
         {
             //Arrange

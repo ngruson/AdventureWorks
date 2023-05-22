@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using AW.SharedKernel.Extensions;
-using AW.UI.Web.Infrastructure.Api.Interfaces;
+﻿using AW.UI.Web.Infrastructure.Api.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +19,6 @@ namespace AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment
 
         public async Task Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
-            Guard.Against.Null(request.Department, _logger);
-
             _logger.LogInformation("Updating department");
             await _client.UpdateDepartment(request.Department);
             _logger.LogInformation("Department succesfully updated");

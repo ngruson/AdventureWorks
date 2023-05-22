@@ -1,11 +1,12 @@
-﻿using AW.Services.HumanResources.Core.Specifications;
+﻿using Ardalis.Result;
+using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetJobTitles
 {
-    public class GetJobTitlesQueryHandler : IRequestHandler<GetJobTitlesQuery, List<string>>
+    public class GetJobTitlesQueryHandler : IRequestHandler<GetJobTitlesQuery, Result<List<string>>>
     {
         private readonly ILogger<GetJobTitlesQueryHandler> _logger;
         private readonly IRepository<Entities.Employee> _repository;
@@ -19,7 +20,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetJobTitles
             _repository = repository;
         }
 
-        public async Task<List<string>> Handle(GetJobTitlesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<string>>> Handle(GetJobTitlesQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Getting job titles", request);
 

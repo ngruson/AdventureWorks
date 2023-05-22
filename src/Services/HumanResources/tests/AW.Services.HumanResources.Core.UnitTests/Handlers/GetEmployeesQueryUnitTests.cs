@@ -1,12 +1,10 @@
-﻿using Ardalis.Specification;
+﻿using Ardalis.Result;
 using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
-using AW.Services.HumanResources.Core.Exceptions;
 using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
-using AW.SharedKernel.ValueTypes;
 using FluentAssertions;
 using Moq;
 
@@ -15,76 +13,78 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
     public class GetEmployeesQueryUnitTests
     {
         [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_EmployeesExists_ReturnEmployees(
-            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
+        public async Task return_success_given_employees_exist(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
             GetEmployeesQueryHandler sut,
-            List<NameFactory> names,
-            GetEmployeesQuery query
+            GetEmployeesQuery query,
+            List<Entities.Employee> employees
         )
         {
             // Arrange
-
-            var employees = names.Select(_ =>
-            {
-                var emp = new Entities.Employee();
-                emp.SetName(_);
-                return emp;
-            }
-                
-            ).ToList();
-
-            employeeRepoMock.Setup(x => x.ListAsync(
+            employeeRepo.Setup(x => x.ListAsync(
                 It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(employees);
 
-            employeeRepoMock.Setup(x => x.CountAsync(
-                It.IsAny<CountEmployeesSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(employees.Count);
-
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
-            //Assert            
-            result!.Should().BeEquivalentTo(employees, opt => opt
+            //Assert
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().BeEquivalentTo(employees, opt => opt
                 .Excluding(_ => _.Id)
-                .Excluding(_ => _.Title)
-                .Excluding(_ => _.Suffix)
-                .Excluding(_ => _.Gender)
-                .Excluding(_ => _.MaritalStatus)
             );
-            employeeRepoMock.Verify(x => x.ListAsync(
-                It.IsAny<ISpecification<Entities.Employee>>(),
+
+            employeeRepo.Verify(x => x.ListAsync(
+                It.IsAny<GetEmployeesSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_NoEmployeesExists_ThrowArgumentNullException(
-            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
+        public async Task return_notfound_given_employees_do_not_exist(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
             GetEmployeesQueryHandler sut,
             GetEmployeesQuery query
         )
         {
             // Arrange            
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-            employeeRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetEmployeesSpecification>(),
+            #pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            employeeRepo.Setup(x => x.ListAsync(
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync((List<Entities.Employee>?)null);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            #pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<EmployeesNotFoundException>()
-                .WithMessage("No employees found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
+            GetEmployeesQueryHandler sut,
+            GetEmployeesQuery query
+        )
+        {
+            // Arrange
+            employeeRepo.Setup(x => x.ListAsync(
+                It.IsAny<GetEmployeesSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ThrowsAsync(new Exception());
+
+            //Act
+            var result = await sut.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
         }
     }
 }

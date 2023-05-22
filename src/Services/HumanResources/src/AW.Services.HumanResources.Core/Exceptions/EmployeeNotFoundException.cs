@@ -6,8 +6,8 @@ namespace AW.Services.HumanResources.Core.Exceptions
     [Serializable]
     public class EmployeeNotFoundException : DomainException
     {
-        public EmployeeNotFoundException(string loginID)
-            : base($"Employee {loginID} not found")
+        public EmployeeNotFoundException(Guid objectId)
+            : base($"Employee {objectId} not found")
         { }
 
         protected EmployeeNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :

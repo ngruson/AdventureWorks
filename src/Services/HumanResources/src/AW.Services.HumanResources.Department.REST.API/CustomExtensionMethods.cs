@@ -64,6 +64,16 @@ namespace AW.Services.HumanResources.Department.REST.API
             {
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+
+                services.AddAuthorizationBuilder()
+                    .AddPolicy("department-read", policy =>
+                        policy
+                            .RequireScope("department-api.read")
+                    )
+                    .AddPolicy("department-write", policy =>
+                        policy
+                            .RequireScope("department-api.write")
+                    );
             }
             else if (configuration["AuthN:IdP"] == "IdSrv")
             {

@@ -30,11 +30,10 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             ReturnsAsync(employee);
 
             //Act
-            var command = new DeleteDepartmentHistoryCommand
-            {
-                LoginID = employee.LoginID,
-                ObjectId = edh.ObjectId
-            };
+            var command = new DeleteDepartmentHistoryCommand(
+                employee.ObjectId,
+                edh.ObjectId
+            );
             var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
@@ -68,7 +67,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             result.Status.Should().Be(ResultStatus.NotFound);
-            result.Errors.Should().Contain($"Employee {command.LoginID} not found");
+            result.Errors.Should().Contain($"Employee {command.Employee} not found");
 
             employeeRepoMock.Verify(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),

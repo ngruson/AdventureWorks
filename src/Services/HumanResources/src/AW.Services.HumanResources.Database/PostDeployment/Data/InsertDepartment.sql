@@ -5,7 +5,7 @@ BEGIN
 	SET IDENTITY_INSERT [Department] ON
 
     INSERT [Department] ([DepartmentID],[Name],[GroupName])
-    SELECT 1,N'Engineering',N'Research and Development' UNION ALLf
+    SELECT 1,N'Engineering',N'Research and Development' UNION ALL
     SELECT 2,N'Tool Design',N'Research and Development' UNION ALL
     SELECT 3,N'Sales',N'Sales and Marketing' UNION ALL
     SELECT 4,N'Marketing',N'Sales and Marketing' UNION ALL

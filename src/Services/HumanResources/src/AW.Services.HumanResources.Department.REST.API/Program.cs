@@ -49,6 +49,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new GetDepartmentsQuery()))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("department-read")
         .WithName("GetDepartments")
         .WithOpenApi();
 
@@ -56,6 +57,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new GetDepartmentQuery(objectId)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("department-read")
         .WithName("GetDepartment")
         .WithOpenApi();
 
@@ -63,6 +65,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new CreateDepartment.CreateDepartmentCommand(department)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("department-write")
         .WithName("CreateDepartment")
         .WithOpenApi();
 
@@ -70,6 +73,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new UpdateDepartment.UpdateDepartmentCommand(department)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("department-write")
         .WithName("UpdateDepartment")
         .WithOpenApi();
 
@@ -77,6 +81,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new DeleteDepartmentCommand(objectId)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("department-write")
         .WithName("DeleteDepartment")
         .WithOpenApi();
 

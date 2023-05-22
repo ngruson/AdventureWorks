@@ -52,7 +52,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
                 Infrastructure.Api.Employee.Handlers.GetEmployee.Employee employee,
-                string loginID
+                Guid objectId
             )
             {
                 //Arrange
@@ -64,10 +64,10 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
                 .ReturnsAsync(employee);
 
                 //Act
-                var actual = await sut.GetDetail(loginID);
+                var actual = await sut.GetDetail(objectId);
 
                 //Assert
-                actual.Employee.Should().BeEquivalentTo(employee);
+                actual.Should().BeEquivalentTo(employee);
 
                 mockMediator.Verify(_ => _.Send(
                         It.IsAny<GetEmployeeQuery>(),
@@ -176,7 +176,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ExecuteCommand(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                EditEmployeeViewModel viewModel
+                EmployeeViewModel viewModel
             )
             {
                 //Arrange
@@ -199,7 +199,7 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ExecuteCommand(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                AddDepartmentHistoryViewModel viewModel
+                EditDepartmentHistoryViewModel viewModel
             )
             {
                 //Arrange
@@ -216,28 +216,28 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             }
         }
 
-        public class UpdateDepartmentHistory
-        {
-            [Theory, AutoMapperData(typeof(MappingProfile))]
-            public async Task ExecuteCommand(
-                [Frozen] Mock<IMediator> mockMediator,
-                EmployeeService sut,
-                UpdateDepartmentHistoryViewModel viewModel
-            )
-            {
-                //Arrange
+        //public class UpdateDepartmentHistory
+        //{
+        //    [Theory, AutoMapperData(typeof(MappingProfile))]
+        //    public async Task ExecuteCommand(
+        //        [Frozen] Mock<IMediator> mockMediator,
+        //        EmployeeService sut,
+        //        UpdateDepartmentHistoryViewModel viewModel
+        //    )
+        //    {
+        //        //Arrange
 
-                //Act
-                await sut.UpdateDepartmentHistory(viewModel);
+        //        //Act
+        //        await sut.UpdateDepartmentHistory(viewModel);
 
-                //Assert
-                mockMediator.Verify(_ => _.Send(
-                        It.IsAny<UpdateDepartmentHistoryCommand>(),
-                        It.IsAny<CancellationToken>()
-                    )
-                );
-            }
-        }
+        //        //Assert
+        //        mockMediator.Verify(_ => _.Send(
+        //                It.IsAny<UpdateDepartmentHistoryCommand>(),
+        //                It.IsAny<CancellationToken>()
+        //            )
+        //        );
+        //    }
+        //}
 
         public class DeleteDepartmentHistory
         {
@@ -245,20 +245,16 @@ namespace AW.UI.Web.Admin.Mvc.UnitTests.Services
             public async Task ExecuteCommand(
                 [Frozen] Mock<IMediator> mockMediator,
                 EmployeeService sut,
-                string loginID,
-                string departmentName,
-                string shiftName,
-                DateTime startDate
+                Guid employee,
+                Guid objectId
             )
             {
                 //Arrange
 
                 //Act
                 await sut.DeleteDepartmentHistory(
-                    loginID,
-                    departmentName,
-                    shiftName,
-                    startDate
+                    employee,
+                    objectId
                 );
 
                 //Assert

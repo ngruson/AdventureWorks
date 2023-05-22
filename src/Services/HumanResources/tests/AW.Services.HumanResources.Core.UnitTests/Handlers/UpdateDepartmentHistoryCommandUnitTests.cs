@@ -51,7 +51,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var command = new UpdateDepartmentHistoryCommand
             {
                 ObjectId = departmentHistory.ObjectId,
-                LoginID = employee.LoginID,
+                Employee = employee.ObjectId,
                 Department = departmentHistory.Department!.ObjectId,
                 Shift = departmentHistory.Shift!.ObjectId,
                 StartDate = departmentHistory.StartDate
@@ -95,7 +95,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             result.Status.Should().Be(ResultStatus.NotFound);
-            result.Errors.Should().Contain($"Employee {command.LoginID} not found");
+            result.Errors.Should().Contain($"Employee {command.Employee} not found");
 
             employeeRepoMock.Verify(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),

@@ -3,7 +3,6 @@ using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using AW.UI.Web.Infrastructure.Api.Interfaces;
-using AW.UI.Web.Infrastructure.Api.Department.Handlers.UpdateDepartment;
 using AW.UI.Web.Infrastructure.Api.Department.Handlers.DeleteDepartment;
 
 namespace AW.UI.Web.Infrastructure.Api.ApiClients

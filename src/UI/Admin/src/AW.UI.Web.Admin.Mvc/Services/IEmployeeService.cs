@@ -7,13 +7,16 @@ namespace AW.UI.Web.Admin.Mvc.Services
     public interface IEmployeeService
     {
         Task<List<EmployeeViewModel>> GetEmployees();
-        Task<EmployeeDetailViewModel> GetDetail(string loginID);
+        Task<EmployeeViewModel> GetDetail(Guid objectId);
         Task<List<Department>> GetDepartments();
         Task<List<Shift>> GetShifts();
         Task<List<string>> GetJobTitles();
-        Task UpdateEmployee(EditEmployeeViewModel viewModel);
-        Task AddDepartmentHistory(AddDepartmentHistoryViewModel viewModel);
-        Task UpdateDepartmentHistory(UpdateDepartmentHistoryViewModel viewModel);
-        Task DeleteDepartmentHistory(string loginID, string departmentName, string shiftName, DateTime startDate);
+        Task CreateEmployee(EmployeeViewModel viewModel);
+        Task<EmployeeViewModel> UpdateEmployee(EmployeeViewModel viewModel);
+        Task DeleteEmployee(Guid objectId);
+
+        Task<EmployeeViewModel> AddDepartmentHistory(EditDepartmentHistoryViewModel viewModel);
+        Task<EmployeeViewModel> UpdateDepartmentHistory(EditDepartmentHistoryViewModel viewModel);
+        Task<EmployeeViewModel> DeleteDepartmentHistory(Guid employee, Guid objectId);
     }
 }

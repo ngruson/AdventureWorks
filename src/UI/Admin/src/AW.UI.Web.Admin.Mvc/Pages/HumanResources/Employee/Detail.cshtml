@@ -1,0 +1,243 @@
+﻿@page
+@using AW.UI.Web.Admin.Mvc.Pages.HumanResources.Employee;
+@using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Employee.DetailModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Employees</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Employee details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.Employee!.Name!.FullName</h1>
+            <div class="mt-2">
+                <a class="text-body me-3" asp-page-handler="delete" asp-route-objectId="@Model.Employee.ObjectId">
+                    <i class="bi-trash me-1"></i> Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Employee information</h4>
+        <a class="link" data-bs-toggle="modal" data-bs-target="#editEmployee" href="#">Edit</a>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        <!-- Form -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.Title, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.Title" readonly>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.Suffix, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.Suffix" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.NationalIDNumber, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.NationalIDNumber" readonly>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.LoginID, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.LoginID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.JobTitle, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.JobTitle" readonly>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.BirthDate, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.BirthDate.ToShortDateString()" readonly>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.HireDate, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.HireDate.ToShortDateString()" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.MaritalStatus, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.MaritalStatus" readonly>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Employee!.Gender, new { @class = "form-label" })
+                    <input type="text" class="form-control" value="@Model.Employee.Gender" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row form-check form-switch">
+                    @Html.LabelFor(m => m.Employee!.Salaried, new { @class = "col-sm-4 col-form-label form-label" })
+                    <div class="col-sm-8">
+                        @Html.CheckBoxFor(m => m.Employee!.Salaried, new { @class = "form-check-input", disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row form-check form-switch">
+                    @Html.LabelFor(m => m.Employee!.Current, new { @class = "col-sm-4 col-form-label form-label" })
+                    <div class="col-sm-8">
+                        @Html.CheckBoxFor(m => m.Employee!.Current, new { @class = "form-check-input", disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Card -->
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Department history</h4>
+        <div class="d-grid d-sm-flex justify-content-sm-between align-items-sm-center gap-2">
+            <!-- Datatable Info -->
+            <div id="datatableDepartmentHistoryCounterInfo" style="display: none;">
+                <div class="d-flex align-items-center">
+                    <span class="fs-5 me-3">
+                        <span id="datatableDepartmentHistoryCounter">0</span>
+                        Selected
+                    </span>
+                    <a class="btn btn-outline-danger btn-sm">
+                        <i class="bi-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            <!-- End Datatable Info -->
+
+            <a class="link" data-bs-toggle="modal" data-bs-target="#addDepartmentHistory" href="#">Add department history</a>
+        </div>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        <!-- Table -->
+        <div class="table-responsive datatable-custom">
+            <table class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+            data-hs-datatables-options='{
+            "order": [],
+            "isResponsive": false,
+            "isShowPaging": false,
+            "pagination": "datatableWithPaginationPagination"
+            }'>
+                <thead class="thead-light">
+                    <tr>
+                        <th>Department</th>
+                        <th>Shift</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var depHist in Model.Employee.DepartmentHistory)
+                        {
+                            <tr>
+                                <td>@depHist.Department!.Name</td>
+                                <td>@depHist.Shift!.Name</td>
+                                <td>@depHist.StartDate.ToShortDateString()</td>
+                                <td>@depHist.EndDate?.ToShortDateString()</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Edit group">
+                                        <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#edit-department-history-@depHist.ObjectId">
+                                            <i class="bi-pencil me-1"></i>
+                                        </a>
+                                        <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#delete-department-history-@depHist.ObjectId">
+                                            <i class="bi-trash"></i>
+                                        </a>
+                                    </div>
+                                    @{
+                                        var editDepHist = new EditDepartmentHistoryViewModel(
+                                            Model.Employee.ObjectId,
+                                            depHist.ObjectId,
+                                            depHist.Department.ObjectId,
+                                            depHist.Shift.ObjectId,
+                                            depHist.StartDate,
+                                            depHist.EndDate,
+                                            //depHist,
+                                            Model.Departments!,
+                                            Model.Shifts!
+                                        );
+                                    }
+                                    <partial name="EditDepartmentHistory" for="@editDepHist" />
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="delete-department-history-@depHist.ObjectId" tabindex="-1" role="dialog" aria-labelledby="delete-department-history-label-@depHist.ObjectId" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="delete-department-history-label-@depHist.ObjectId">Delete Department History</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                                                    <a asp-page-handler="deleteDepartmentHistory" asp-route-employee="@Model.Employee.ObjectId" asp-route-objectId="@depHist.ObjectId" class="btn btn-primary">
+                                                        Delete Department History
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End Table -->
+    </div>
+</div>
+<!-- End Card -->
+
+<partial name="Edit" for="@Model" />
+@{
+    var departmentHistory = new EditDepartmentHistoryViewModel(
+        Model.Employee.ObjectId,
+        DateTime.Today,
+        Model.Departments!,
+        Model.Shifts!
+    );
+}
+<partial name="AddDepartmentHistory" for="@departmentHistory" />

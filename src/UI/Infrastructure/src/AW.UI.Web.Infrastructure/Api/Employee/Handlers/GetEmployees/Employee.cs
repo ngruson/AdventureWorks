@@ -4,7 +4,14 @@ namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployees
 {
     public class Employee
     {
+        public Guid ObjectId { get; set; }
+
+        public string? Title { get; set; }
+
         public NameFactory? Name { get; set; }
+
+        public string? Suffix { get; set; }
+
         public string? NationalIDNumber { get; set; }
 
         public string? LoginID { get; set; }

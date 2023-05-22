@@ -11,8 +11,6 @@
 	[HireDate] [date] NOT NULL,
 	[SalariedFlag] bit NOT NULL,
 	[CurrentFlag] bit NOT NULL,
-	[rowguid] [uniqueidentifier] NOT NULL,
-	[ModifiedDate] [datetime] NOT NULL,
 	CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 	([PersonID] ASC),
 	CONSTRAINT [FK_Employee_Person_PersonID] FOREIGN KEY([PersonID]) REFERENCES [Person] ([PersonID])
 ) ON [PRIMARY]

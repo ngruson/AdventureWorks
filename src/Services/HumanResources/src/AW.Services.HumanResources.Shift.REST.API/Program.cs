@@ -40,8 +40,6 @@ app.Map(virtualPath, builder =>
     //Breaking change - Enable this when every API is a minimal API
     //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
     builder.UseSwaggerDocumentation(virtualPath, app.Configuration, "Shift API");
-    builder.UseSwagger();
-    builder.UseSwaggerUI();
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();
@@ -51,6 +49,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new GetShiftsQuery()))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("shift-read")
         .WithName("GetShifts")
         .WithOpenApi();
 
@@ -58,6 +57,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new GetShiftQuery(objectId)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("shift-read")
         .WithName("GetShift")
         .WithOpenApi();
 
@@ -65,6 +65,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new CreateShift.CreateShiftCommand(shift)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("shift-write")
         .WithName("CreateShift")
         .WithOpenApi();
 
@@ -72,6 +73,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new UpdateShift.UpdateShiftCommand(shift)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("shift-write")
         .WithName("UpdateShift")
         .WithOpenApi();
 
@@ -79,6 +81,7 @@ app.Map(virtualPath, builder =>
             (await mediator.Send(new DeleteShiftCommand(objectId)))
                 .ToMinimalApiResult()
         )
+        .RequireAuthorization("shift-write")
         .WithName("DeleteShift")
         .WithOpenApi();
 

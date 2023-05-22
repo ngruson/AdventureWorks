@@ -1,0 +1,181 @@
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.HumanResources.Employee.CreateModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create new employee";
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Employees</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Employee details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">Create new employee</h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+<!-- Card -->
+<div class="card mb-3 mb-lg-5">
+    <!-- Header -->
+    <div class="card-header card-header-content-between">
+        <h4 class="card-header-title">Employee</h4>
+    </div>
+    <!-- End Header-->
+    <!-- Body -->
+    <div class="card-body">
+        <!-- Form -->
+        <form method="post">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row mb-4">
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Name!.FirstName, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.Name!.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            <span asp-validation-for="@Model.Employee!.Name!.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Name!.MiddleName, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.Name!.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Name!.LastName, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.Name!.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            <span asp-validation-for="@Model.Employee!.Name!.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Title, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Suffix, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.Suffix, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.NationalIDNumber, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.NationalIDNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            <span asp-validation-for="@Model.Employee!.NationalIDNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.LoginID, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.LoginID, new { htmlAttributes = new { @class = "form-control" } })
+                            <span asp-validation-for="@Model.Employee!.LoginID" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.JobTitle, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8 tom-select-custom">
+                            @Html.DropDownListFor(m => m.Employee!.JobTitle, Model.JobTitles, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            <span asp-validation-for="@Model.Employee!.JobTitle" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.BirthDate, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.BirthDate, new { htmlAttributes = new { @class = "js-flatpickr form-control flatpickr-custom", placeholder = "Select birth date", data_hs_flatpickr_options="{ \"dateFormat\": \"m/d/Y\" }"} })
+                            <span asp-validation-for="@Model.Employee!.BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.HireDate, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.EditorFor(m => m.Employee!.HireDate, new { htmlAttributes = new { @class = "js-flatpickr form-control flatpickr-custom", placeholder = "Select hire date", data_hs_flatpickr_options="{ \"dateFormat\": \"m/d/Y\" }"} })
+                            <span asp-validation-for="@Model.Employee!.HireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.MaritalStatus, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8 tom-select-custom">
+                            @Html.DropDownListFor(m => m.Employee!.MaritalStatus, Model.MaritalStatuses, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            <span asp-validation-for="@Model.Employee!.MaritalStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        @Html.LabelFor(m => m.Employee!.Gender, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8 tom-select-custom">
+                            @Html.DropDownListFor(m => m.Employee!.Gender, Model.Genders, null, new { @class = "js-select form-select", data_hs_tom_select_options = "{ 'searchInDropdown': false, 'hideSearch': true }" })
+                            <span asp-validation-for="@Model.Employee!.Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="row form-check form-switch">
+                        @Html.LabelFor(m => m.Employee!.Salaried, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(m => m.Employee!.Salaried, new { @class = "form-check-input"})
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row form-check form-switch">
+                        @Html.LabelFor(m => m.Employee!.Current, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(m => m.Employee!.Current, new { @class = "form-check-input"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-sm-3">
+                <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create Department</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Card -->
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

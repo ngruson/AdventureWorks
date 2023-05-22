@@ -17,8 +17,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using AW.Services.HumanResources.Core.Handlers.CreateShift;
 using FluentValidation;
 using Ardalis.Result.AspNetCore;
-using AW.Services.HumanResources.Core.Handlers.DeleteShift;
-using AW.Services.HumanResources.Core.Handlers.UpdateShift;
 
 namespace AW.Services.HumanResources.Shift.REST.API
 {
@@ -68,6 +66,16 @@ namespace AW.Services.HumanResources.Shift.REST.API
             {
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+
+                services.AddAuthorizationBuilder()
+                    .AddPolicy("shift-read", policy =>
+                        policy
+                            .RequireScope("shift-api.read")
+                    )
+                    .AddPolicy("shift-write", policy =>
+                        policy
+                            .RequireScope("shift-api.write")
+                    );
             }
             else if (configuration["AuthN:IdP"] == "IdSrv")
             {

@@ -20,7 +20,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Employee.Handlers
         {
             //Arrange
             mockEmployeeApiClient.Setup(_ => _.GetEmployee(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             )
             .ReturnsAsync(employee);
@@ -32,7 +32,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Employee.Handlers
             result.Should().Be(employee);
 
             mockEmployeeApiClient.Verify(_ => _.GetEmployee(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             );
         }
@@ -46,7 +46,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Employee.Handlers
         {
             //Arrange
             mockEmployeeApiClient.Setup(_ => _.GetEmployee(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             )
             .ReturnsAsync((Infrastructure.Api.Employee.Handlers.GetEmployee.Employee?)null);
@@ -58,7 +58,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Employee.Handlers
             await func.Should().ThrowAsync<ArgumentNullException>();
 
             mockEmployeeApiClient.Verify(_ => _.GetEmployee(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             );
         }

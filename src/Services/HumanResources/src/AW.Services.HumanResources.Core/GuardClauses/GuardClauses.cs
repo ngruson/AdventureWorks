@@ -7,21 +7,23 @@ namespace AW.Services.HumanResources.Core.GuardClauses
 {
     public static class GuardClauses
     {
-        public static void EmployeesNullOrEmpty(this IGuardClause guardClause, List<Entities.Employee> employees, ILogger logger)
+        public static Result EmployeesNullOrEmpty(this IGuardClause guardClause, List<Entities.Employee> employees, ILogger logger)
         {
             if (employees == null || employees.Count == 0)
             {
                 var ex = new EmployeesNotFoundException();
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
-                throw ex;
+                return Result.NotFound(ex.Message);
             }
+
+            return Result.Success();
         }
 
-        public static Result EmployeeNull(this IGuardClause guardClause, Entities.Employee? employee, string loginID, ILogger logger)
+        public static Result EmployeeNull(this IGuardClause guardClause, Entities.Employee? employee, Guid objectId, ILogger logger)
         {
             if (employee == null)
             {
-                var ex = new EmployeeNotFoundException(loginID);
+                var ex = new EmployeeNotFoundException(objectId);
                 logger.LogError(ex, "Exception: {Message}", ex.Message);
                 return Result.NotFound(ex.Message);
             }

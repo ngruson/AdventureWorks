@@ -4,6 +4,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployee
 {
     public class Department : IMapFrom<Entities.Department>
     {
+        public Guid ObjectId { get; set; }
         public string? Name { get; set; }
 
         public string? GroupName { get; set; }

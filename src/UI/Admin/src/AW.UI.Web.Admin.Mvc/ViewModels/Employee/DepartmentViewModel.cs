@@ -7,6 +7,9 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
     public class DepartmentViewModel : IMapFrom<Infrastructure.Api.Employee.Handlers.GetEmployees.Department>
     {
         [Display(Name = "Department")]
+        public Guid ObjectId { get; set; }
+
+        [Display(Name = "Department")]
         public string? Name { get; set; }
 
         public string? GroupName { get; set; }
@@ -15,6 +18,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
         {
             profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployees.Department, DepartmentViewModel>();
             profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployee.Department, DepartmentViewModel>();
+            profile.CreateMap<DepartmentViewModel, Infrastructure.Api.Employee.Handlers.UpdateEmployee.Department>()
+                .ReverseMap();
         }
     }
 }

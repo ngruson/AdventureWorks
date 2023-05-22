@@ -84,7 +84,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             result.Status.Should().Be(ResultStatus.NotFound);
-            result.Errors.Should().Contain($"Employee {command.LoginID} not found");
+            result.Errors.Should().Contain($"Employee {command.Employee} not found");
 
             employeeRepoMock.Verify(x => x.SaveChangesAsync(
                     It.IsAny<CancellationToken>()

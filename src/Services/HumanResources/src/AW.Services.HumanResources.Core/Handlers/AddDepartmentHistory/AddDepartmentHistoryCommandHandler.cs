@@ -37,9 +37,9 @@ namespace AW.Services.HumanResources.Core.Handlers.AddDepartmentHistory
             try
             {
                 _logger.LogInformation("Getting employee from database");
-                var spec = new GetEmployeeSpecification(request.LoginID);
+                var spec = new GetEmployeeSpecification(request.Employee);
                 var employee = await _employeeRepository.SingleOrDefaultAsync(spec, cancellationToken);
-                var result = Guard.Against.EmployeeNull(employee, request.LoginID!, _logger);
+                var result = Guard.Against.EmployeeNull(employee, request.Employee, _logger);
                 if (!result.IsSuccess)
                     return result;
 

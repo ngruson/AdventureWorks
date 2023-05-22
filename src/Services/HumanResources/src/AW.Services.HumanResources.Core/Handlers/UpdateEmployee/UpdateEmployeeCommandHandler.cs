@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.UpdateEmployee
 {
-    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Result<Employee>>
+    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Result<UpdatedEmployee>>
     {
         private readonly ILogger<UpdateEmployeeCommandHandler> _logger;
         private readonly IRepository<Entities.Employee> _employeeRepository;
@@ -31,7 +31,7 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateEmployee
             _validator = validator;
         }
 
-        public async Task<Result<Employee>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<UpdatedEmployee>> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -44,9 +44,9 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateEmployee
                 }
 
                 _logger.LogInformation("Getting employee from database");
-                var spec = new GetEmployeeSpecification(request.Key);
+                var spec = new GetEmployeeSpecification(request.Employee.ObjectId);
                 var employee = await _employeeRepository.SingleOrDefaultAsync(spec, cancellationToken);
-                var result = Guard.Against.EmployeeNull(employee, request.Key, _logger);
+                var result = Guard.Against.EmployeeNull(employee, request.Employee.ObjectId, _logger);
                 if (!result.IsSuccess)
                     return result;
 
@@ -58,7 +58,7 @@ namespace AW.Services.HumanResources.Core.Handlers.UpdateEmployee
 
                 _logger.LogInformation("Returning employee");
                 return Result.Success(
-                    _mapper.Map<Employee>(employee)
+                    _mapper.Map<UpdatedEmployee>(employee)
                 );
             }
             catch (Exception ex)

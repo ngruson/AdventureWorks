@@ -2,15 +2,13 @@
 
 namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.UpdateEmployee
 {
-    public class UpdateEmployeeCommand : IRequest
+    public class UpdateEmployeeCommand : IRequest<UpdatedEmployee>
     {
-        public UpdateEmployeeCommand(string key, Employee employee)
+        public UpdateEmployeeCommand(Employee employee)
         {
-            Key = key;
             Employee = employee;
         }
 
-        public string Key { get; set; }
         public Employee Employee { get; set; }
     }
 }

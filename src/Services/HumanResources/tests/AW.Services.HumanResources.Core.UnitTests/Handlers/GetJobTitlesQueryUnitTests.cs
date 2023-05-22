@@ -29,7 +29,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert            
-            result!.Should().BeEquivalentTo(jobTitles);
+            result.Value.Should().BeEquivalentTo(jobTitles);
 
             employeeRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<GetJobTitlesSpecification>(),

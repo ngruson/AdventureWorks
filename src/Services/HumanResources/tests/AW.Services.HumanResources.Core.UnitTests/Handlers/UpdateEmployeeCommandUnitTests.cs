@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using AutoFixture.Xunit2;
 using AW.Services.HumanResources.Core.AutoMapper;
-using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
 using AW.Services.HumanResources.Core.Handlers.UpdateEmployee;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -125,7 +124,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             result.Status.Should().Be(ResultStatus.NotFound);
-            result.Errors.Should().Contain($"Employee {command.Key} not found");
+            result.Errors.Should().Contain($"Employee {command.Employee.ObjectId} not found");
 
             employeeRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
@@ -133,6 +132,29 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
             ));
 
             employeeRepoMock.Verify(x => x.UpdateAsync(
+                    It.IsAny<Entities.Employee>(),
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
+        }
+
+        [Theory, AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
+            UpdateEmployeeCommandHandler sut,
+            UpdateEmployeeCommand command
+        )
+        {
+            //Arrange
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
+
+            employeeRepo.Verify(x => x.UpdateAsync(
                     It.IsAny<Entities.Employee>(),
                     It.IsAny<CancellationToken>()
                 ),

@@ -2,6 +2,7 @@
 {
     public class Shift
     {
+        public Guid ObjectId { get; set; }
         public string? Name { get; set; }
 
         public TimeSpan StartTime { get; set; }

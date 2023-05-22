@@ -105,7 +105,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.GetEmployee(employee.LoginID!);
+                var response = await sut.GetEmployee(employee.ObjectId);
 
                 //Assert
                 response.Should().BeEquivalentTo(employee);
@@ -117,7 +117,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 EmployeeApiClient sut,
-                string loginID
+                Guid objectId
             )
             {
                 //Arrange
@@ -127,7 +127,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetEmployee(loginID);
+                Func<Task> func = async () => await sut.GetEmployee(objectId);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -222,7 +222,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.UpdateEmployee(employee.LoginID!, employee);
+                var response = await sut.UpdateEmployee(employee);
 
                 //Assert
                 response.Should().BeEquivalentTo(employee);
@@ -243,7 +243,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.UpdateEmployee(employee.LoginID!, employee);
+                Func<Task> func = async () => await sut.UpdateEmployee(employee);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()

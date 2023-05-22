@@ -1,11 +1,10 @@
 ﻿using Ardalis.Specification;
-using System.Linq;
 
 namespace AW.Services.HumanResources.Core.Specifications
 {
     public class GetEmployeeSpecification : Specification<Entities.Employee>, ISingleResultSpecification<Entities.Employee>
     {
-        public GetEmployeeSpecification(string? loginID) : base()
+        public GetEmployeeSpecification(Guid objectId) : base()
         {
             Query
                 .Include(_ => _.DepartmentHistory)
@@ -16,7 +15,7 @@ namespace AW.Services.HumanResources.Core.Specifications
                 .ThenInclude(_ => _.Shift);
 
             Query
-                .Where(c => c.LoginID == loginID);
+                .Where(c => c.ObjectId == objectId);
 
         }
     }

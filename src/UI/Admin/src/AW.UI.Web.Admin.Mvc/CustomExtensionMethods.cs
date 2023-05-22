@@ -3,9 +3,6 @@ using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.OpenIdConnect;
 using AW.UI.Web.Admin.Mvc.Services;
 using AW.UI.Web.Infrastructure.Api.ApiClients;
-using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
-using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
-using AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
 using AW.UI.Web.Infrastructure.Api.Interfaces;
 using AW.UI.Web.Infrastructure.Api.Product.Caching;
 using AW.UI.Web.Infrastructure.Api.Product.Handlers.GetProductCategories;
@@ -16,9 +13,6 @@ using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetShipMethods;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
-using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder;
-using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders;
-using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder;
 using AW.UI.Web.Infrastructure.Api.SalesPerson.Caching;
 using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -137,7 +131,11 @@ namespace AW.UI.Web.Admin.Mvc
             })
             .AddUserAccessTokenHandler(
                 oidcConfig.IdentityProvider,
-                new[] { configuration["AuthN:ApiScopes:EmployeeApiRead"]! }
+                new[] 
+                { 
+                    configuration["AuthN:ApiScopes:EmployeeApiRead"]!,
+                    configuration["AuthN:ApiScopes:EmployeeApiWrite"]!
+                }
             );
 
             services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>

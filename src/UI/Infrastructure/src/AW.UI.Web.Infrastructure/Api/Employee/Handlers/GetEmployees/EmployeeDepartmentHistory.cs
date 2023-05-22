@@ -2,6 +2,7 @@
 {
     public class EmployeeDepartmentHistory
     {
+        public Guid ObjectId { get; set; }
         public Department? Department { get; set; }
         public Shift? Shift { get; set; }
 

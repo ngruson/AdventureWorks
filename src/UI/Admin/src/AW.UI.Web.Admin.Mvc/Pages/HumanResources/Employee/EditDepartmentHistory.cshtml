@@ -1,0 +1,54 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Employee;
+@model EditDepartmentHistoryViewModel
+@{
+}
+
+<!-- Modal -->
+<div class="modal fade" id="edit-department-history-@Model.ObjectId" tabindex="-1" role="dialog" aria-labelledby="edit-department-history-@Model.ObjectId-label" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-department-history-@Model.ObjectId-label">Edit Department History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="updateDepartmentHistory" method="post">
+                    @Html.HiddenFor(_ => _.Employee)
+                    @Html.HiddenFor(_ => _.ObjectId)
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Department, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8 tom-select-custom">
+                            @Html.DropDownListFor(m => m.Department, Model.Departments, null, new { @class = "js-select form-select", placeholder = "Select a department" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Shift, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8 tom-select-custom">
+                            @Html.DropDownListFor(m => m.Shift, Model.Shifts, null, new { @class = "js-select form-select", placeholder = "Select a shift" })
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.StartDate, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            <input type="text" id="editDepHist_StartDate" name="editDepHist.StartDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select start date" value="@Model.StartDate.ToShortDateString()"
+                                    data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.EndDate, new { @class = "col-sm-4 col-form-label form-label" })
+                        <div class="col-sm-8">
+                            <input type="text" id="editDepHist_EndDate" name="editDepHist.EndDate" class="js-flatpickr form-control flatpickr-custom" placeholder="Select end date" value="@Model.EndDate?.ToShortDateString()"
+                                    data-hs-flatpickr-options='{ "dateFormat": "m/d/Y" }'>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-sm-3">
+                        <button type="button" class="btn btn-white me-2 me-sm-0" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update Department History</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

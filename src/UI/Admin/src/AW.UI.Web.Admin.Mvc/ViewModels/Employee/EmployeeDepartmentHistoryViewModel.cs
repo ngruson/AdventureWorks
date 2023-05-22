@@ -6,6 +6,7 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
 {
     public class EmployeeDepartmentHistoryViewModel : IMapFrom<Infrastructure.Api.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory>
     {
+        public Guid ObjectId { get; set; }
         public DepartmentViewModel? Department { get; set; }
         public ShiftViewModel? Shift { get; set; }
 
@@ -19,6 +20,8 @@ namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee
         {
             profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployees.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
             profile.CreateMap<Infrastructure.Api.Employee.Handlers.GetEmployee.EmployeeDepartmentHistory, EmployeeDepartmentHistoryViewModel>();
+            profile.CreateMap<EmployeeDepartmentHistoryViewModel, Infrastructure.Api.Employee.Handlers.UpdateEmployee.EmployeeDepartmentHistory>()
+                .ReverseMap();
         }
     }
 }

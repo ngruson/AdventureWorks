@@ -12,7 +12,14 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
             DepartmentHistory = departmentHistory;
         }
 
+        public Guid ObjectId { get; set; }
+
+        public string? Title { get; set; }
+
         public NameFactory? Name { get; set; }
+
+        public string? Suffix { get; set; }
+
         public string? NationalIDNumber { get; set; }
 
         public string? LoginID { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
 using AW.Services.HumanResources.Core.Specifications;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
 {
-    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, List<Employee>>
+    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, Result<List<Employee>>>
     {
         private readonly ILogger<GetEmployeesQueryHandler> _logger;
         private readonly IRepository<Entities.Employee> _repository;
@@ -25,18 +26,30 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
             _mapper = mapper;
         }
 
-        public async Task<List<Employee>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<Employee>>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Getting employees for request {@Request}", request);
+            try
+            {
+                _logger.LogInformation("Getting employees for request {@Request}", request);
 
-            var spec = new GetEmployeesSpecification();
+                var spec = new GetEmployeesSpecification();
 
-            var employees = await _repository.ListAsync(spec, cancellationToken);
-            Guard.Against.EmployeesNullOrEmpty(employees, _logger);
+                var employees = await _repository.ListAsync(spec, cancellationToken);
+                var result = Guard.Against.EmployeesNullOrEmpty(employees, _logger);
+                if (!result.IsSuccess)
+                    return result;
 
-            _logger.LogInformation("Returning {Count} employees", employees.Count);
+                _logger.LogInformation("Returning {Count} employees", employees.Count);
 
-            return _mapper.Map<List<Employee>>(employees);
+                return Result.Success(
+                    _mapper.Map<List<Employee>>(employees)
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred: {Message}", ex.Message);
+                return Result.Error(ex.Message);
+            }
         }
     }
 }

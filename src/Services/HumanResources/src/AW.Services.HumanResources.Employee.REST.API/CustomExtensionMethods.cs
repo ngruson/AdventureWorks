@@ -14,11 +14,6 @@ using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.HumanResources.Core.AutoMapper;
 using AW.Services.HumanResources.Infrastructure.EFCore.Configurations;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using AW.Services.HumanResources.Core.Handlers.CreateDepartment;
-using AW.Services.HumanResources.Core.Handlers.DeleteDepartment;
-using AW.Services.HumanResources.Core.Handlers.UpdateDepartment;
-using FluentValidation;
-using AW.Services.HumanResources.Core.Handlers.UpdateEmployee;
 
 namespace AW.Services.HumanResources.Employee.REST.API
 {
@@ -65,6 +60,16 @@ namespace AW.Services.HumanResources.Employee.REST.API
             {
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+
+                services.AddAuthorizationBuilder()
+                    .AddPolicy("employee-read", policy =>
+                        policy
+                            .RequireScope("employee-api.read")
+                    )
+                    .AddPolicy("employee-write", policy =>
+                        policy
+                            .RequireScope("employee-api.write")
+                    );
             }
             else if (configuration["AuthN:IdP"] == "IdSrv")
             {
@@ -84,7 +89,7 @@ namespace AW.Services.HumanResources.Employee.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentationWithVersion("Employee API");
+            services.AddSwaggerDocumentation("Employee API");
 
             return services;
         }

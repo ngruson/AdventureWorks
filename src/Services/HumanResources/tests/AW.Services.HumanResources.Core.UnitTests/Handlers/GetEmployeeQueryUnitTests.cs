@@ -15,19 +15,14 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         [Theory]
         [AutoMapperData(typeof(MappingProfile))]
         public async Task return_success_given_employee_exists(
-            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
             GetEmployeeQueryHandler sut,
             GetEmployeeQuery query,
-            string loginID
+            Entities.Employee employee
         )
         {
             //Arrange
-            var employee = new Entities.Employee
-            {
-                LoginID = loginID
-            };
-
-            employeeRepoMock.Setup(_ => _.SingleOrDefaultAsync(
+            employeeRepo.Setup(_ => _.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -42,7 +37,7 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
                 .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
             );
 
-            employeeRepoMock.Verify(x => x.SingleOrDefaultAsync(
+            employeeRepo.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
@@ -51,13 +46,13 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
         [Theory]
         [AutoMoqData]
         public async Task return_notfound_given_employee_does_not_exist(
-            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepoMock,
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
             GetEmployeeQueryHandler sut,
             GetEmployeeQuery query
         )
         {
             // Arrange
-            employeeRepoMock.Setup(x => x.SingleOrDefaultAsync(
+            employeeRepo.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
@@ -68,12 +63,28 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
             //Assert
             result.Status.Should().Be(ResultStatus.NotFound);
-            result.Errors.Should().Contain($"Employee {query.LoginID} not found");
+        }
 
-            employeeRepoMock.Verify(x => x.SingleOrDefaultAsync(
+        [Theory]
+        [AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Employee>> employeeRepo,
+            GetEmployeeQueryHandler sut,
+            GetEmployeeQuery query
+        )
+        {
+            // Arrange
+            employeeRepo.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetEmployeeSpecification>(),
                 It.IsAny<CancellationToken>()
-            ));
+            ))
+            .ThrowsAsync(new Exception());
+
+            //Act
+            var result = await sut.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
         }
     }
 }

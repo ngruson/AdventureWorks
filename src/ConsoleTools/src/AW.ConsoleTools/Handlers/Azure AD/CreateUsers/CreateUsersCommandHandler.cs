@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
 using Ardalis.GuardClauses;
+using AW.Services.HumanResources.Core.GuardClauses;
 
 namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
 {
@@ -26,59 +27,62 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
 
         public async Task Handle(CreateUsersCommand request, CancellationToken cancellationToken)
         {
-            var employees = await _mediator.Send(
+            var result = await _mediator.Send(
                 new GetEmployeesQuery(),
                 cancellationToken
             );
-            Guard.Against.Null(employees, _logger);
-
-            foreach (var employee in employees)
+            Guard.Against.Null(result.Value);
+            
+            if (result.IsSuccess)
             {
-                var groupName = employee.DepartmentHistory?.First().Department?.GroupName;
-                
-                var group = await _mediator.Send(
-                    new GetGroupQuery(groupName!),
-                    cancellationToken
-                );
-                Guard.Against.Null(group, _logger);
-
-                var user = await _mediator.Send(
-                    new GetUserQuery(employee?.Name?.FullName!),
-                    cancellationToken
-                );
-
-                if (user == null)
+                foreach (var employee in result.Value)
                 {
-                    _logger.LogInformation("Creating user {DisplayName}", employee?.Name?.FullName);
+                    var groupName = employee.DepartmentHistory?.First().Department?.GroupName;
 
-                    await _mediator.Send(
-                        new CreateUserCommand(
-                            employee?.Name?.FullName!,
-                            employee?.LoginID!
-                        ),
+                    var group = await _mediator.Send(
+                        new GetGroupQuery(groupName!),
                         cancellationToken
                     );
-                    _logger.LogInformation("Succesfully created user {DisplayName}", employee?.Name?.FullName);
+                    Guard.Against.Null(group, _logger);
 
-                    _logger.LogInformation("Getting user {DisplayName}", employee?.Name?.FullName);
-                    user = await _mediator.Send(
+                    var user = await _mediator.Send(
                         new GetUserQuery(employee?.Name?.FullName!),
                         cancellationToken
                     );
-                    Guard.Against.Null(user, _logger);
-                }
-                else
-                    _logger.LogInformation("User {DisplayName} already exists", employee?.Name?.FullName);
 
-                if (user?.MemberOf?.FirstOrDefault(_ => _.Id == group.Id) == null)
-                {
-                    await _mediator.Send(new AddUserToGroupCommand(
-                            user?.DisplayName!,
-                            group.DisplayName!,
-                            group.Id!
-                        ),
-                        cancellationToken
-                    );
+                    if (user == null)
+                    {
+                        _logger.LogInformation("Creating user {DisplayName}", employee?.Name?.FullName);
+
+                        await _mediator.Send(
+                            new CreateUserCommand(
+                                employee?.Name?.FullName!,
+                                employee?.LoginID!
+                            ),
+                            cancellationToken
+                        );
+                        _logger.LogInformation("Succesfully created user {DisplayName}", employee?.Name?.FullName);
+
+                        _logger.LogInformation("Getting user {DisplayName}", employee?.Name?.FullName);
+                        user = await _mediator.Send(
+                            new GetUserQuery(employee?.Name?.FullName!),
+                            cancellationToken
+                        );
+                        Guard.Against.Null(user, _logger);
+                    }
+                    else
+                        _logger.LogInformation("User {DisplayName} already exists", employee?.Name?.FullName);
+
+                    if (user?.MemberOf?.FirstOrDefault(_ => _.Id == group.Id) == null)
+                    {
+                        await _mediator.Send(new AddUserToGroupCommand(
+                                user?.DisplayName!,
+                                group.DisplayName!,
+                                group.Id!
+                            ),
+                            cancellationToken
+                        );
+                    }
                 }
             }
         }

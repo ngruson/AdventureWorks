@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUser;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUsers;
@@ -336,13 +337,19 @@ namespace AW.ConsoleTools.UnitTests
         )
         {
             // Arrange
+            mockMediator.Setup(_ => _.Send(
+                It.IsAny<GetEmployeesQuery>(),
+                It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(Result.Success());
 
             //Act
             Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
 
             //Assert
             await func.Should().ThrowAsync<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'employees')");
+                .WithMessage("Value cannot be null. (Parameter 'result.Value')");
 
             mockMediator.Verify(_ => _.Send(
                     It.IsAny<GetEmployeesQuery>(),

@@ -10,7 +10,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Department.Handlers
     public class UpdateDepartmentCommandUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task UpdateDepartmentGivenCommandIsValid(
+        public async Task update_department(
             [Frozen] Mock<IDepartmentApiClient> mockDepartmentApiClient,
             UpdateDepartmentCommandHandler sut,
             UpdateDepartmentCommand command

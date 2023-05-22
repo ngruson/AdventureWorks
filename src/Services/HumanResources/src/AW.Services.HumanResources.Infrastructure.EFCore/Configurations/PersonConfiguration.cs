@@ -12,6 +12,9 @@ namespace AW.Services.HumanResources.Infrastructure.EFCore.Configurations
             builder.Property(_ => _.Id)
                 .HasColumnName("PersonID");
 
+            builder.Property(_ => _.ObjectId)
+                .HasDefaultValue();
+
             builder.OwnsOne(_ => _.Name)
                 .Property(_ => _.FirstName).HasColumnName("FirstName");
 

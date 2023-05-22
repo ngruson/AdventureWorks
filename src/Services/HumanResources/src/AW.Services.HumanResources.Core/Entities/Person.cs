@@ -5,6 +5,7 @@ namespace AW.Services.HumanResources.Core.Entities
     public abstract class Person
     {
         public int Id { get; set; }
+        public Guid ObjectId { get; set; }
 
         public string? Title { get; private set; }
 

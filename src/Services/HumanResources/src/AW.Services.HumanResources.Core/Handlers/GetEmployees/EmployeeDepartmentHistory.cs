@@ -4,6 +4,7 @@ namespace AW.Services.HumanResources.Core.Handlers.GetEmployees
 {
     public class EmployeeDepartmentHistory : IMapFrom<Entities.EmployeeDepartmentHistory>
     {
+        public Guid ObjectId { get; set; }
         public Department? Department { get; set; }
         public Shift? Shift { get; set; }
 
