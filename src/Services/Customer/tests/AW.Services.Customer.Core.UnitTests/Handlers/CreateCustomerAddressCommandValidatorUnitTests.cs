@@ -53,13 +53,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.AddressLine1 = string.Empty;
+            command.CustomerAddress.Address!.AddressLine1 = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.AddressLine1);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.AddressLine1);
         }
 
         [Theory]
@@ -70,13 +70,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.AddressLine2 = string.Empty;
+            command.CustomerAddress.Address!.AddressLine2 = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.AddressLine2);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.AddressLine2);
         }
 
         [Theory]
@@ -87,13 +87,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.PostalCode = string.Empty;
+            command.CustomerAddress.Address!.PostalCode = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.PostalCode);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.PostalCode);
         }
 
         [Theory]
@@ -104,13 +104,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.City = string.Empty;
+            command.CustomerAddress.Address!.City = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.City);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.City);
         }
 
         [Theory]
@@ -121,13 +121,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.StateProvinceCode = string.Empty;
+            command.CustomerAddress.Address!.StateProvinceCode = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.StateProvinceCode);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.StateProvinceCode);
         }
 
         [Theory]
@@ -138,13 +138,13 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         )
         {
             //Arrange
-            command.CustomerAddress.Address.CountryRegionCode = string.Empty;
+            command.CustomerAddress.Address!.CountryRegionCode = string.Empty;
 
             //Act
             var result = sut.TestValidate(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address.CountryRegionCode);
+            result.ShouldHaveValidationErrorFor(_ => _.CustomerAddress.Address!.CountryRegionCode);
         }
 
         [Theory]

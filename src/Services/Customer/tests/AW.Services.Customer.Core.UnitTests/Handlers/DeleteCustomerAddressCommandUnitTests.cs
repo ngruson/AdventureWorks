@@ -29,8 +29,8 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             customer.AddAddress(
                 new Entities.CustomerAddress(
                     command.AddressId,
-                    address.AddressType,
-                    address.Address
+                    address.AddressType!,
+                    address.Address!
                 )
             );
 
