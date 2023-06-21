@@ -1,10 +1,24 @@
-﻿using AW.Services.Customer.REST.API;
+﻿using Ardalis.Result.AspNetCore;
+using CreateCustomer = AW.Services.Customer.Core.Handlers.CreateCustomer;
+using GetCustomers = AW.Services.Customer.Core.Handlers.GetCustomers;
+using GetCustomer = AW.Services.Customer.Core.Handlers.GetCustomer;
+using AW.Services.Customer.Core.Handlers.GetPreferredAddress;
+using UpdateCustomer = AW.Services.Customer.Core.Handlers.UpdateCustomer;
+using AW.Services.Customer.REST.API;
 using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using AW.Services.Customer.Core.Handlers.DeleteCustomer;
+using System.Text.Json;
+using AW.Services.SharedKernel.JsonConverters;
+using System.Text.Json.Serialization;
+using AW.SharedKernel.JsonConverters;
+using AW.SharedKernel.Interfaces;
+using AW.Services.Customer.Core.Handlers.AddCustomersToCache;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((host, serviceProvider, configuration) =>
@@ -25,11 +39,30 @@ builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 
 builder.Services
     .AddCustomMvc()
-    .AddVersioning()
+    .AddValidators()
+    //Breaking change - Enable this when every API is a minimal API
+    //.AddVersioning()
+    .AddCaching(builder.Configuration)
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
     .AddCustomIntegrations(builder.Configuration)
     .AddCustomHealthCheck(builder.Configuration);
+
+builder.Services.ConfigureHttpJsonOptions(options => 
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    options.SerializerOptions.Converters.Add(new CustomerConverter<GetCustomers.Customer,
+        GetCustomers.StoreCustomer,
+        GetCustomers.IndividualCustomer>());
+    options.SerializerOptions.Converters.Add(new CustomerConverter<GetCustomer.Customer,
+        GetCustomer.StoreCustomer,
+        GetCustomer.IndividualCustomer>());
+    options.SerializerOptions.Converters.Add(new CustomerConverter<UpdateCustomer.Customer,
+        UpdateCustomer.StoreCustomer,
+        UpdateCustomer.IndividualCustomer>());
+    options.SerializerOptions.Converters.Add(new EmailAddressConverter());
+});
 
 var app = builder.Build();
 
@@ -43,14 +76,22 @@ app.Map(virtualPath, builder =>
     });
 
     builder.UseCors("default");
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Customer API");
+    //Breaking change - Enable this when every API is a minimal API
+    //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, "Customer API");
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();
     builder.UseEndpoints(endpoints =>
     {
-        endpoints.MapControllers();
+        endpoints.MapGroup("/customer")
+            .MapCustomerApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/caching")
+            .MapCachingApis()
+            .WithOpenApi();
+
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
             Predicate = _ => true,

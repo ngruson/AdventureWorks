@@ -1,7 +1,7 @@
-﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer
+﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
+
+public class PersonEmailAddress
 {
-    public class PersonEmailAddress
-    {
-        public string? EmailAddress { get; set; }
-    }
+    public Guid ObjectId { get; set; }
+    public string? EmailAddress { get; set; }
 }

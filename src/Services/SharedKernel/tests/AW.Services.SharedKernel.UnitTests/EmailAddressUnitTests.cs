@@ -1,6 +1,6 @@
+﻿using Ardalis.Result;
 using AW.Services.SharedKernel.ValueTypes;
 using FluentAssertions;
-using FluentAssertions.CSharpFunctionalExtensions;
 using Xunit;
 
 namespace AW.Services.SharedKernel.UnitTests
@@ -8,7 +8,7 @@ namespace AW.Services.SharedKernel.UnitTests
     public class EmailAddressUnitTests
     {
         [Fact]
-        public void Create_ValidEmailAddress_Success()
+        public void return_success_given_valid_emailaddress()
         {
             //Arrange
 
@@ -16,11 +16,11 @@ namespace AW.Services.SharedKernel.UnitTests
             var result = EmailAddress.Create("test@test.com");
 
             //Assert
-            result.Should().BeSuccess();
+            result.IsSuccess.Should().BeTrue();
         }
 
         [Fact]
-        public void Create_EmptyEmailAddress_Failure()
+        public void return_invalid_given_empty_emailaddress()
         {
             //Arrange
 
@@ -28,11 +28,11 @@ namespace AW.Services.SharedKernel.UnitTests
             var result = EmailAddress.Create("");
 
             //Assert
-            result.Should().BeFailure();
+            result.Status.Should().Be(ResultStatus.Invalid);
         }
 
         [Fact]
-        public void Create_NoAddSign_Failure()
+        public void return_invalid_given_no_add_sign()
         {
             //Arrange
 
@@ -40,11 +40,11 @@ namespace AW.Services.SharedKernel.UnitTests
             var result = EmailAddress.Create("testtest.com");
 
             //Assert
-            result.Should().BeFailure();
+            result.Status.Should().Be(ResultStatus.Invalid);
         }
 
         [Fact]
-        public void Create_WithSpace_Failure()
+        public void return_invalid_given_emailaddress_with_space()
         {
             //Arrange
 
@@ -52,7 +52,7 @@ namespace AW.Services.SharedKernel.UnitTests
             var result = EmailAddress.Create("t est@test.com");
 
             //Assert
-            result.Should().BeFailure();
+            result.Status.Should().Be(ResultStatus.Invalid);
         }
     }
 }

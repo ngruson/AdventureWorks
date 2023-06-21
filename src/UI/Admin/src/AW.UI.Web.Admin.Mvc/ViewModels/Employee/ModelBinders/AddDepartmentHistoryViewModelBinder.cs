@@ -1,6 +1,5 @@
-﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee.ModelBinders
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Employee.ModelBinders;
+
+public class AddDepartmentHistoryViewModelBinder : ViewModelModelBinder<EditDepartmentHistoryViewModel>
 {
-    public class AddDepartmentHistoryViewModelBinder : ViewModelModelBinder<EditDepartmentHistoryViewModel>
-    {
-    }
 }

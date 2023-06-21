@@ -8,30 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers
+namespace AW.UI.Web.Admin.Mvc.UnitTests.Controllers;
+
+public class ProductModelControllerUnitTests
 {
-    public class ProductModelControllerUnitTests
+    public class Index
     {
-        public class Index
+        [Theory, AutoMoqData]
+        public async Task Index_ReturnsViewModel(
+            [Frozen] Mock<IProductModelService> productModelService,
+            [Greedy] List<ProductModelViewModel> productModels,
+            [Greedy] ProductModelController sut
+        )
         {
-            [Theory, AutoMoqData]
-            public async Task Index_ReturnsViewModel(
-                [Frozen] Mock<IProductModelService> productModelService,
-                [Greedy] List<ProductModelViewModel> productModels,
-                [Greedy] ProductModelController sut
-            )
-            {
-                //Arrange
-                productModelService.Setup(x => x.GetProductModels())
-                    .ReturnsAsync(productModels);
+            //Arrange
+            productModelService.Setup(x => x.GetProductModels())
+                .ReturnsAsync(productModels);
 
-                //Act
-                var actionResult = await sut.Index();
+            //Act
+            var actionResult = await sut.Index();
 
-                //Assert
-                var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
-                viewResult.Model.Should().Be(productModels);
-            }
+            //Assert
+            var viewResult = actionResult.Should().BeAssignableTo<ViewResult>().Subject;
+            viewResult.Model.Should().Be(productModels);
         }
     }
 }

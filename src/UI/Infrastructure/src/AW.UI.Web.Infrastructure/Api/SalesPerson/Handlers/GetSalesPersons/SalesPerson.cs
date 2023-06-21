@@ -4,6 +4,7 @@ namespace AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons
 {
     public class SalesPerson
     {
+        public Guid ObjectId { get; set; }
         public string? Title { get; set; }
         public NameFactory? Name { get; set; }
         public string? Suffix { get; set; }

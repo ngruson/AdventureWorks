@@ -4,32 +4,31 @@ using AW.UI.Web.Infrastructure.Api.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer
+namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
+
+public class GetIndividualCustomerQueryHandler : IRequestHandler<GetIndividualCustomerQuery, IndividualCustomer>
 {
-    public class GetIndividualCustomerQueryHandler : IRequestHandler<GetIndividualCustomerQuery, IndividualCustomer>
+    private readonly ILogger<GetIndividualCustomerQueryHandler> _logger;
+    private readonly ICustomerApiClient _client;
+
+    public GetIndividualCustomerQueryHandler(ILogger<GetIndividualCustomerQueryHandler> logger, ICustomerApiClient client)
     {
-        private readonly ILogger<GetIndividualCustomerQueryHandler> _logger;
-        private readonly ICustomerApiClient _client;
+        _logger = logger;
+        _client = client;
+    }
 
-        public GetIndividualCustomerQueryHandler(ILogger<GetIndividualCustomerQueryHandler> logger, ICustomerApiClient client)
-        {
-            _logger = logger;
-            _client = client;
-        }
+    public async Task<IndividualCustomer> Handle(GetIndividualCustomerQuery request, CancellationToken cancellationToken)
+    {
+        Guard.Against.NullOrEmpty(request.ObjectId, _logger);
 
-        public async Task<IndividualCustomer> Handle(GetIndividualCustomerQuery request, CancellationToken cancellationToken)
-        {
-            Guard.Against.NullOrEmpty(request.AccountNumber, _logger);
+        _logger.LogInformation("Getting individual customer {ObjectId} from API", request.ObjectId);
+        var customer = await _client.GetCustomerAsync<IndividualCustomer>(
+            request.ObjectId
+        );
+        Guard.Against.Null(customer, _logger);
 
-            _logger.LogInformation("Getting individual customer {AccountNumber} from API", request.AccountNumber);
-            var customer = await _client.GetCustomerAsync<IndividualCustomer>(
-                request.AccountNumber
-            );
-            Guard.Against.Null(customer, _logger);
+        _logger.LogInformation("Returning individual customer {ObjectId}", request.ObjectId);
 
-            _logger.LogInformation("Returning individual customer {AccountNumber}", request.AccountNumber);
-
-            return customer!;
-        }
+        return customer!;
     }
 }

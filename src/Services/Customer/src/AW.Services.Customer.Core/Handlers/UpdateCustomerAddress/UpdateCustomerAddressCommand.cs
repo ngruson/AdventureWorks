@@ -1,16 +1,17 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
 {
-    public class UpdateCustomerAddressCommand : IRequest<Unit>
+    public class UpdateCustomerAddressCommand : IRequest<Result>
     {
-        public UpdateCustomerAddressCommand(string accountNumber, CustomerAddressDto? customerAddress)
+        public UpdateCustomerAddressCommand(Guid customerId, CustomerAddress? customerAddress)
         {
-            AccountNumber = accountNumber;
+            CustomerId = customerId;
             CustomerAddress = customerAddress;
         }
 
-        public string AccountNumber { get; private init; }
-        public CustomerAddressDto? CustomerAddress { get; private init; }
+        public Guid CustomerId { get; private init; }
+        public CustomerAddress? CustomerAddress { get; private init; }
     }
 }

@@ -11,140 +11,139 @@ using MediatR;
 using AW.UI.Web.Infrastructure.Api.Product.Handlers.CreateProduct;
 using UpdateProduct = AW.UI.Web.Infrastructure.Api.Product.Handlers.UpdateProduct;
 
-namespace AW.UI.Web.Admin.Mvc.Services
+namespace AW.UI.Web.Admin.Mvc.Services;
+
+public class ProductService : IProductService
 {
-    public class ProductService : IProductService
+    private readonly ILogger<ProductService> _logger;
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
+
+    public ProductService(
+        ILogger<ProductService> logger,
+        IMapper mapper,
+        IMediator mediator
+    )
     {
-        private readonly ILogger<ProductService> _logger;
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        _logger = logger;
+        _mapper = mapper;
+        _mediator = mediator;
+    }
 
-        public ProductService(
-            ILogger<ProductService> logger,
-            IMapper mapper,
-            IMediator mediator
-        )
+    public async Task<ProductIndexViewModel> GetProducts()
+    {
+        _logger.LogInformation("Getting products");
+        var response = await _mediator.Send(new GetProductsQuery(null, null));
+
+        var vm = new ProductIndexViewModel(
+            _mapper.Map<List<ProductViewModel>>(response.Products)
+        );
+
+        _logger.LogInformation("Returning {ViewModel}", vm);
+        return vm;
+    }
+
+    private async Task<Infrastructure.Api.Product.Handlers.GetProduct.Product> GetProduct(string? productNumber)
+    {
+        _logger.LogInformation("Getting product");
+        var product = await _mediator.Send(new GetProductQuery(productNumber));
+        _logger.LogInformation("Retrieved product");
+        Guard.Against.Null(product, _logger);
+
+        return product!;
+    }
+
+    public async Task<ProductDetailViewModel> GetProductDetail(string productNumber)
+    {
+        var product = await GetProduct(productNumber);
+
+        return new ProductDetailViewModel
         {
-            _logger = logger;
-            _mapper = mapper;
-            _mediator = mediator;
-        }
+            Product = _mapper.Map<ProductViewModel>(product)
+        };
+    }        
 
-        public async Task<ProductIndexViewModel> GetProducts()
-        {
-            _logger.LogInformation("Getting products");
-            var response = await _mediator.Send(new GetProductsQuery(null, null));
+    private async Task UpdateProduct(string key, UpdateProduct.Product product)
+    {
+        _logger.LogInformation("Updating product");
+        await _mediator.Send(new UpdateProduct.UpdateProductCommand(key, product));
+        _logger.LogInformation("Product updated successfully");
+    }
 
-            var vm = new ProductIndexViewModel(
-                _mapper.Map<List<ProductViewModel>>(response.Products)
-            );
+    public async Task AddProduct(AddProductViewModel viewModel)
+    {            
+        var product = _mapper.Map<Infrastructure.Api.Product.Handlers.CreateProduct.Product>(viewModel.Product);
 
-            _logger.LogInformation("Returning {ViewModel}", vm);
-            return vm;
-        }
+        _logger.LogInformation("Send command to add product");
+        await _mediator.Send(new CreateProductCommand(product));
+        _logger.LogInformation("Command was succesfully executed");
+    }
 
-        private async Task<Infrastructure.Api.Product.Handlers.GetProduct.Product> GetProduct(string? productNumber)
-        {
-            _logger.LogInformation("Getting product");
-            var product = await _mediator.Send(new GetProductQuery(productNumber));
-            _logger.LogInformation("Retrieved product");
-            Guard.Against.Null(product, _logger);
+    public async Task UpdateProduct(EditProductViewModel viewModel)
+    {
+        var product = await GetProduct(viewModel!.Key);
+        var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
+        _mapper.Map(viewModel.Product, productToUpdate);
 
-            return product!;
-        }
+        await UpdateProduct(viewModel.Key!, productToUpdate);
+    }
 
-        public async Task<ProductDetailViewModel> GetProductDetail(string productNumber)
-        {
-            var product = await GetProduct(productNumber);
+    public async Task UpdatePricing(EditPricingViewModel viewModel)
+    {
+        _logger.LogInformation("Getting product details");
+        var product = await GetProduct(viewModel!.Product!.ProductNumber);
+        _logger.LogInformation("Received product details");
 
-            return new ProductDetailViewModel
-            {
-                Product = _mapper.Map<ProductViewModel>(product)
-            };
-        }        
+        _logger.LogInformation(
+            "Mapping {Source} to {Target}",
+            viewModel.GetType().Name,
+            typeof(UpdateProduct.Product).Name
+        );
+        var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
+        _mapper.Map(viewModel.Product, productToUpdate);
 
-        private async Task UpdateProduct(string key, UpdateProduct.Product product)
-        {
-            _logger.LogInformation("Updating product");
-            await _mediator.Send(new UpdateProduct.UpdateProductCommand(key, product));
-            _logger.LogInformation("Product updated successfully");
-        }
+        _logger.LogInformation("Updating product");
+        await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
+    }
 
-        public async Task AddProduct(AddProductViewModel viewModel)
-        {            
-            var product = _mapper.Map<Infrastructure.Api.Product.Handlers.CreateProduct.Product>(viewModel.Product);
+    public async Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel)
+    {
+        _logger.LogInformation("Getting product details");
+        var product = await GetProduct(viewModel!.Product!.ProductNumber);
+        _logger.LogInformation("Received product details");
 
-            _logger.LogInformation("Send command to add product");
-            await _mediator.Send(new CreateProductCommand(product));
-            _logger.LogInformation("Command was succesfully executed");
-        }
+        _logger.LogInformation(
+            "Mapping {Source} to {Target}",
+            viewModel.GetType().Name,
+            typeof(UpdateProduct.Product).Name
+        );
+        var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
+        _mapper.Map(viewModel.Product, productToUpdate);
 
-        public async Task UpdateProduct(EditProductViewModel viewModel)
-        {
-            var product = await GetProduct(viewModel!.Key);
-            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
-            _mapper.Map(viewModel.Product, productToUpdate);
+        _logger.LogInformation("Updating product");
+        await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
+    }
 
-            await UpdateProduct(viewModel.Key!, productToUpdate);
-        }
+    public async Task DeleteProduct(string productNumber)
+    {
+        _logger.LogInformation("Deleting product");
+        await _mediator.Send(new DeleteProduct.DeleteProductCommand(productNumber));
+        _logger.LogInformation("Product successfully deleted");
+    }
 
-        public async Task UpdatePricing(EditPricingViewModel viewModel)
-        {
-            _logger.LogInformation("Getting product details");
-            var product = await GetProduct(viewModel!.Product!.ProductNumber);
-            _logger.LogInformation("Received product details");
+    public async Task<Infrastructure.Api.Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber)
+    {
+        _logger.LogInformation("Duplicating product");
+        var product = await _mediator.Send(new DuplicateProduct.DuplicateProductCommand(productNumber));
+        _logger.LogInformation("Product successfully duplicated");
 
-            _logger.LogInformation(
-                "Mapping {Source} to {Target}",
-                viewModel.GetType().Name,
-                typeof(UpdateProduct.Product).Name
-            );
-            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
-            _mapper.Map(viewModel.Product, productToUpdate);
+        return product;
+    }
 
-            _logger.LogInformation("Updating product");
-            await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
-        }
-
-        public async Task UpdateProductOrganization(EditProductOrganizationViewModel viewModel)
-        {
-            _logger.LogInformation("Getting product details");
-            var product = await GetProduct(viewModel!.Product!.ProductNumber);
-            _logger.LogInformation("Received product details");
-
-            _logger.LogInformation(
-                "Mapping {Source} to {Target}",
-                viewModel.GetType().Name,
-                typeof(UpdateProduct.Product).Name
-            );
-            var productToUpdate = _mapper.Map<UpdateProduct.Product>(product);
-            _mapper.Map(viewModel.Product, productToUpdate);
-
-            _logger.LogInformation("Updating product");
-            await UpdateProduct(viewModel.Product.ProductNumber!, productToUpdate);
-        }
-
-        public async Task DeleteProduct(string productNumber)
-        {
-            _logger.LogInformation("Deleting product");
-            await _mediator.Send(new DeleteProduct.DeleteProductCommand(productNumber));
-            _logger.LogInformation("Product successfully deleted");
-        }
-
-        public async Task<Infrastructure.Api.Product.Handlers.DuplicateProduct.Product> DuplicateProduct(string productNumber)
-        {
-            _logger.LogInformation("Duplicating product");
-            var product = await _mediator.Send(new DuplicateProduct.DuplicateProductCommand(productNumber));
-            _logger.LogInformation("Product successfully duplicated");
-
-            return product;
-        }
-
-        public async Task<ProductCategory> GetCategory(string categoryName)
-        {
-            var categories = await _mediator.Send(new GetProductCategoriesQuery());
-            var category = categories.Single(c => c.Name == categoryName);
-            return category;
-        }
+    public async Task<ProductCategory> GetCategory(string categoryName)
+    {
+        var categories = await _mediator.Send(new GetProductCategoriesQuery());
+        var category = categories.Single(c => c.Name == categoryName);
+        return category;
     }
 }

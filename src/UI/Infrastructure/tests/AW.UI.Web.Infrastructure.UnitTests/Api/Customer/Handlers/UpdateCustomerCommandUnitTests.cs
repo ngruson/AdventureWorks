@@ -11,69 +11,42 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
     public class UpdateCustomerCommandUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task Handle_WithCustomerNumber_CustomerReturned(
+        public async Task ok_given_updated_customer(
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
             UpdateCustomerCommandHandler sut,
-            UpdateCustomerCommand command,
             StoreCustomer customer
         )
         {
             //Arrange
+            var command = new UpdateCustomerCommand(customer);
+
             mockCustomerApiClient.Setup(_ => _.UpdateCustomerAsync(
-                    It.IsAny<string>(),
                     It.IsAny<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer>()
                 )
             )
             .ReturnsAsync(customer);
 
             //Act
-            var result = await sut.Handle(command, CancellationToken.None);
+            await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().Be(customer);
-
             mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
                     It.IsAny<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer>()
                 )
             );
         }
 
         [Theory, AutoMoqData]
-        public async Task Handle_WithoutCustomerNumber_ThrowsArgumentException(
+        public async Task throw_argumentnullexception_given_customer_not_found(
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
             UpdateCustomerCommandHandler sut,
-            UpdateCustomerCommand command
+            StoreCustomer customer
         )
         {
             //Arrange
-            command.AccountNumber = "";
+            var command = new UpdateCustomerCommand(customer);
 
-            //Act
-            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
-
-            //Assert
-            await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Required input request.AccountNumber was empty. (Parameter 'request.AccountNumber')");
-
-            mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer>()
-                ),
-                Times.Never
-            );
-        }
-
-        [Theory, AutoMoqData]
-        public async Task Handle_ReturnedCustomerNull_ThrowsArgumentNullException(
-            [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
-            UpdateCustomerCommandHandler sut,
-            UpdateCustomerCommand command
-        )
-        {
-            //Arrange
             mockCustomerApiClient.Setup(_ => _.UpdateCustomerAsync(
-                    It.IsAny<string>(),
                     It.IsAny<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer>()
                 )
             )
@@ -87,7 +60,6 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
                 .WithMessage("Value cannot be null. (Parameter 'customer')");
 
             mockCustomerApiClient.Verify(x => x.UpdateCustomerAsync(
-                    It.IsAny<string>(),
                     It.IsAny<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer>()
                 )
             );

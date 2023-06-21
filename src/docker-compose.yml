@@ -22,6 +22,9 @@ services:
       ports:
         - "44395:44395"
 
+  admin-cache:
+    image: redis:alpine
+
   basketdata:
     image: redis:alpine
 
@@ -80,9 +83,11 @@ services:
     build:
       context: .
       dockerfile: Services/Customer/src/AW.Services.Customer.REST.API/Dockerfile
+    depends_on:
+      - admin-cache
     environment:
-        - ASPNETCORE_URLS=http://*:80
-        - ASPNETCORE_ENVIRONMENT=Development
+    - ASPNETCORE_URLS=http://*:80
+    - ASPNETCORE_ENVIRONMENT=Development
   
   adventureworks.hr.department-api:
     build:

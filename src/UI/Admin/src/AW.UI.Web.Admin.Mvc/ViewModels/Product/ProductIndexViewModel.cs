@@ -1,11 +1,10 @@
-﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Product;
+
+public class ProductIndexViewModel
 {
-    public class ProductIndexViewModel
+    public ProductIndexViewModel(List<ProductViewModel> products)
     {
-        public ProductIndexViewModel(List<ProductViewModel> products)
-        {
-            Products = products;
-        }
-        public List<ProductViewModel> Products { get; set; }
+        Products = products;
     }
+    public List<ProductViewModel> Products { get; set; }
 }

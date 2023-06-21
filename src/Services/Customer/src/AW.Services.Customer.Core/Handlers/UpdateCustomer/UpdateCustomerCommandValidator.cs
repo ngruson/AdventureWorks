@@ -18,18 +18,19 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
             RuleFor(cmd => cmd.Customer!.AccountNumber)
                 .NotEmpty().WithMessage("Account number is required")
                 .MaximumLength(10).WithMessage("Account number must not exceed 10 characters")
+                .When(cmd => cmd.Customer != null);
+
+            RuleFor(_ => _.Customer!.ObjectId)
                 .MustAsync(CustomerExists).WithMessage("Customer does not exist")
                 .When(cmd => cmd.Customer != null);
         }
 
-        private async Task<bool> CustomerExists(string accountNumber, CancellationToken cancellationToken)
+        private async Task<bool> CustomerExists(Guid objectId, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.SingleOrDefaultAsync(
-                new GetCustomerSpecification(accountNumber),
+            return await customerRepository.AnyAsync(
+                new GetCustomerSpecification(objectId),
                 cancellationToken
             );
-
-            return customer != null;
         }
     }
 }

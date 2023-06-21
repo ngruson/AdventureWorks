@@ -1,14 +1,13 @@
 ﻿using MediatR;
 
-namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer
-{
-    public class GetCustomerQuery : IRequest<Customer?>
-    {
-        public GetCustomerQuery(string? accountNumber)
-        {
-            AccountNumber = accountNumber;
-        }
+namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
 
-        public string? AccountNumber { get; set; }
+public class GetCustomerQuery : IRequest<Customer?>
+{
+    public GetCustomerQuery(Guid objectId)
+    {
+        ObjectId = objectId;
     }
+
+    public Guid ObjectId { get; private init; }
 }

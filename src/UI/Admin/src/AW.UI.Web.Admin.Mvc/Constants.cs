@@ -1,7 +1,6 @@
-﻿namespace AW.UI.Web.Admin.Mvc
+﻿namespace AW.UI.Web.Admin.Mvc;
+
+public static class Constants
 {
-    public static class Constants
-    {
-        public const int ITEMS_PER_PAGE = 10;
-    }
+    public const int ITEMS_PER_PAGE = 10;
 }

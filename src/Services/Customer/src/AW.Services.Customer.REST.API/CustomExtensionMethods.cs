@@ -16,6 +16,22 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using System.IdentityModel.Tokens.Jwt;
+using Ardalis.Result.AspNetCore;
+using FluentValidation;
+using AW.Services.Customer.Core.Handlers.CreateCustomer;
+using AW.Services.Customer.Core.Handlers.CreateCustomerAddress;
+using AW.Services.Customer.Core.Handlers.CreateIndividualCustomerEmailAddress;
+using AW.Services.Customer.Core.Handlers.CreateIndividualCustomerPhone;
+using AW.Services.Customer.Core.Handlers.CreateStoreCustomerContact;
+using AW.Services.Customer.Core.Handlers.DeleteCustomer;
+using AW.Services.Customer.Core.Handlers.DeleteCustomerAddress;
+using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddress;
+using AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone;
+using AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact;
+using AW.Services.Customer.Core.Handlers.GetPreferredAddress;
+using AW.Services.Customer.Core.Handlers.UpdateCustomer;
+using AW.Services.Customer.Core.Handlers.UpdateCustomerAddress;
+using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 
 namespace AW.Services.Customer.REST.API
 {
@@ -27,21 +43,44 @@ namespace AW.Services.Customer.REST.API
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelStateFilterAttribute));
+                options.AddResultConvention(resultStatusMap => resultStatusMap
+                    .AddDefaultMap()
+                );
             });
 
-            services.AddTransient<CustomerConverter<Core.Models.GetCustomers.Customer,
-                Core.Models.GetCustomers.StoreCustomer,
-                Core.Models.GetCustomers.IndividualCustomer>>();
-            services.AddTransient<CustomerConverter<Core.Models.GetCustomer.Customer,
-                Core.Models.GetCustomer.StoreCustomer,
-                Core.Models.GetCustomer.IndividualCustomer>>();
-            services.AddTransient<CustomerConverter<Core.Models.UpdateCustomer.Customer,
-                Core.Models.UpdateCustomer.StoreCustomer,
-                Core.Models.UpdateCustomer.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Handlers.GetCustomers.Customer,
+                Core.Handlers.GetCustomers.StoreCustomer,
+                Core.Handlers.GetCustomers.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Handlers.GetCustomer.Customer,
+                Core.Handlers.GetCustomer.StoreCustomer,
+                Core.Handlers.GetCustomer.IndividualCustomer>>();
+            services.AddTransient<CustomerConverter<Core.Handlers.UpdateCustomer.Customer,
+                Core.Handlers.UpdateCustomer.StoreCustomer,
+                Core.Handlers.UpdateCustomer.IndividualCustomer>>();
             services.AddTransient<EmailAddressConverter>();
 
             services.AddOptions<ConfigureJsonOptions>();
             services.AddSingleton<IConfigureOptions<JsonOptions>, ConfigureJsonOptions>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<CreateCustomerCommand>, CreateCustomerCommandValidator>();
+            services.AddScoped<IValidator<CreateCustomerAddressCommand>, CreateCustomerAddressCommandValidator>();
+            services.AddScoped<IValidator<CreateIndividualCustomerEmailAddressCommand>, CreateIndividualCustomerEmailAddressCommandValidator>();
+            services.AddScoped<IValidator<CreateIndividualCustomerPhoneCommand>, CreateIndividualCustomerPhoneCommandValidator>();
+            services.AddScoped<IValidator<CreateStoreCustomerContactCommand>, CreateStoreCustomerContactCommandValidator>();
+            services.AddScoped<IValidator<DeleteCustomerCommand>, DeleteCustomerCommandValidator>();
+            services.AddScoped<IValidator<DeleteCustomerAddressCommand>, DeleteCustomerAddressCommandValidator>();
+            services.AddScoped<IValidator<DeleteIndividualCustomerEmailAddressCommand>, DeleteIndividualCustomerEmailAddressCommandValidator>();
+            services.AddScoped<IValidator<DeleteIndividualCustomerPhoneCommand>, DeleteIndividualCustomerPhoneCommandValidator>();
+            services.AddScoped<IValidator<DeleteStoreCustomerContactCommand>, DeleteStoreCustomerContactCommandValidator>();
+            services.AddScoped<IValidator<GetPreferredAddressQuery>, GetPreferredAddressQueryValidator>();
+            services.AddScoped<IValidator<UpdateCustomerCommand>, UpdateCustomerCommandValidator>();
+            services.AddScoped<IValidator<UpdateCustomerAddressCommand>, UpdateCustomerAddressCommandValidator>();
+            services.AddScoped<IValidator<UpdateStoreCustomerContactCommand>, UpdateStoreCustomerContactCommandValidator>();
 
             return services;
         }
@@ -78,6 +117,17 @@ namespace AW.Services.Customer.REST.API
             return services;
         }
 
+        public static IServiceCollection AddCaching(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.GetConnectionString("RedisConnection");
+                options.InstanceName = "admin-cache";
+            });
+
+            return services;
+        }
+
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
@@ -86,6 +136,16 @@ namespace AW.Services.Customer.REST.API
             {
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApi(configuration.GetSection("AuthN:AzureAd"));
+
+                services.AddAuthorizationBuilder()
+                    .AddPolicy("customer-read", policy =>
+                        policy
+                            .RequireScope("customer-api.read")
+                    )
+                    .AddPolicy("customer-write", policy =>
+                        policy
+                            .RequireScope("customer-api.write")
+                    );
             }
             else if (configuration["AuthN:IdP"] == "IdSrv")
             {
@@ -105,7 +165,7 @@ namespace AW.Services.Customer.REST.API
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerDocumentationWithVersion("Customer API");
+            services.AddSwaggerDocumentation("Customer API");
 
             return services;
         }

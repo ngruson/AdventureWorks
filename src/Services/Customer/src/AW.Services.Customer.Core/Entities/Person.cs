@@ -1,5 +1,4 @@
 ﻿using AW.SharedKernel.ValueTypes;
-using System.Collections.Generic;
 
 namespace AW.Services.Customer.Core.Entities
 {
@@ -12,6 +11,8 @@ namespace AW.Services.Customer.Core.Entities
         }
         private Person() { }
         public int Id { get; set; }
+
+        public Guid ObjectId { get; set; }
 
         public string? Title { get; private set; }
 

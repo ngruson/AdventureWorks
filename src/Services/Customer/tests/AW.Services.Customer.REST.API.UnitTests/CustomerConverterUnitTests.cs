@@ -1,5 +1,4 @@
-﻿using GetCust = AW.Services.Customer.Core.Handlers.GetCustomer;
-using AW.SharedKernel.JsonConverters;
+﻿using AW.SharedKernel.JsonConverters;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using System.Text.Json;
@@ -7,6 +6,7 @@ using System.Text.Json.Serialization;
 using Xunit;
 using Microsoft.Extensions.Logging;
 using Moq;
+using AW.Services.Customer.Core.Handlers.GetCustomer;
 
 namespace AW.Services.Customer.REST.API.UnitTests
 {
@@ -17,8 +17,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Serialize_WithGetCustomersStore_ReturnsStoreCustomer(
-                GetCust.StoreCustomerDto storeCustomer,
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomers.Customer, Core.Models.GetCustomers.StoreCustomer, Core.Models.GetCustomers.IndividualCustomer>>> mockLogger
+                StoreCustomer storeCustomer,
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, Core.Handlers.GetCustomer.StoreCustomer, Core.Handlers.GetCustomer.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -30,9 +30,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomers.Customer,
-                            Core.Models.GetCustomers.StoreCustomer,
-                            Core.Models.GetCustomers.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            StoreCustomer,
+                            IndividualCustomer>(
                                 mockLogger.Object    
                             )
                     }
@@ -114,8 +114,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Serialize_WithGetCustomersIndividual_ReturnsIndividualCustomer(
-                GetCust.IndividualCustomerDto individualCustomer,
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomers.Customer, Core.Models.GetCustomers.StoreCustomer, Core.Models.GetCustomers.IndividualCustomer>>> mockLogger
+                IndividualCustomer individualCustomer,
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, StoreCustomer, IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -127,9 +127,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomers.Customer,
-                            Core.Models.GetCustomers.StoreCustomer,
-                            Core.Models.GetCustomers.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            Core.Handlers.GetCustomer.StoreCustomer,
+                            Core.Handlers.GetCustomer.IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
@@ -195,7 +195,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Deserialize_WithValidJson_ReturnsStoreCustomer(
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomers.Customer, Core.Models.GetCustomers.StoreCustomer, Core.Models.GetCustomers.IndividualCustomer>>> mockLogger
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, Core.Handlers.GetCustomer.StoreCustomer, Core.Handlers.GetCustomer.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -253,16 +253,16 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomers.Customer,
-                            Core.Models.GetCustomers.StoreCustomer,
-                            Core.Models.GetCustomers.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            Core.Handlers.GetCustomer.StoreCustomer,
+                            Core.Handlers.GetCustomer.IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
                 };
 
                 //Act
-                var storeCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomers.StoreCustomer>(json, serializeOptions);
+                var storeCustomer = JsonSerializer.Deserialize<Core.Handlers.GetCustomer.StoreCustomer>(json, serializeOptions);
 
                 //Assert
                 storeCustomer?.AccountNumber.Should().Be("AW00000001");
@@ -277,11 +277,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 storeCustomer?.Contacts?[0].ContactPerson?.Name?.MiddleName.Should().Be("V");
                 storeCustomer?.Contacts?[0].ContactPerson?.Name?.LastName.Should().Be("Yang");
                 storeCustomer?.Contacts?[0].ContactPerson?.Suffix.Should().BeNull();
-                storeCustomer?.Contacts?[0].ContactPerson?.EmailAddresses.Count.Should().Be(1);
-                storeCustomer?.Contacts?[0].ContactPerson?.EmailAddresses[0].EmailAddress.Should().Be("jon24@adventure-works.com");
-                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers.Count.Should().Be(1);
-                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers[0].PhoneNumberType.Should().Be("Cell");
-                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers[0].PhoneNumber.Should().Be("398-555-0132");
+                storeCustomer?.Contacts?[0].ContactPerson?.EmailAddresses!.Count.Should().Be(1);
+                storeCustomer?.Contacts?[0].ContactPerson?.EmailAddresses![0].EmailAddress.Should().Be("jon24@adventure-works.com");
+                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers!.Count.Should().Be(1);
+                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers![0].PhoneNumberType.Should().Be("Cell");
+                storeCustomer?.Contacts?[0].ContactPerson?.PhoneNumbers![0].PhoneNumber.Should().Be("398-555-0132");
                 storeCustomer?.Addresses.Count.Should().Be(1);
                 storeCustomer?.Addresses[0].AddressType.Should().Be("Main Office");
                 storeCustomer?.Addresses[0].Address?.AddressLine1.Should().Be("2251 Elliot Avenue");
@@ -295,7 +295,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Deserialize_WithValidJson_ReturnsIndividualCustomer(
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomers.Customer, Core.Models.GetCustomers.StoreCustomer, Core.Models.GetCustomers.IndividualCustomer>>> mockLogger
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, Core.Handlers.GetCustomer.StoreCustomer, Core.Handlers.GetCustomer.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -346,16 +346,16 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomers.Customer,
-                            Core.Models.GetCustomers.StoreCustomer,
-                            Core.Models.GetCustomers.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            Core.Handlers.GetCustomer.StoreCustomer,
+                            Core.Handlers.GetCustomer.IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
                 };
 
                 //Act
-                var individualCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomers.IndividualCustomer>(json, serializeOptions);
+                var individualCustomer = JsonSerializer.Deserialize<IndividualCustomer>(json, serializeOptions);
 
                 //Assert
                 individualCustomer?.AccountNumber.Should().Be("AW00011000");
@@ -387,8 +387,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Serialize_WithGetCustomerStore_ReturnsStoreCustomer(
-                GetCust.StoreCustomerDto storeCustomer,
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomer.Customer, Core.Models.GetCustomer.StoreCustomer, Core.Models.GetCustomer.IndividualCustomer>>> mockLogger
+                StoreCustomer storeCustomer,
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, StoreCustomer, IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -400,9 +400,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomer.Customer,
-                            Core.Models.GetCustomer.StoreCustomer,
-                            Core.Models.GetCustomer.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            StoreCustomer,
+                            IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
@@ -484,8 +484,8 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Serialize_WithGetCustomerIndividual_ReturnsIndividualCustomer(
-                GetCust.IndividualCustomerDto individualCustomer,
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomer.Customer, Core.Models.GetCustomer.StoreCustomer, Core.Models.GetCustomer.IndividualCustomer>>> mockLogger
+                IndividualCustomer individualCustomer,
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, StoreCustomer, Core.Handlers.GetCustomer.IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -497,9 +497,9 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomer.Customer,
-                            Core.Models.GetCustomer.StoreCustomer,
-                            Core.Models.GetCustomer.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            StoreCustomer,
+                            IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
@@ -565,7 +565,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [Theory]
             [AutoMoqData]
             public void Deserialize_WithValidJson_ReturnsStoreCustomer(
-                Mock<ILogger<CustomerConverter<Core.Models.GetCustomer.Customer, Core.Models.GetCustomer.StoreCustomer, Core.Models.GetCustomer.IndividualCustomer>>> mockLogger
+                Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, StoreCustomer, IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -623,16 +623,16 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomer.Customer,
-                            Core.Models.GetCustomer.StoreCustomer,
-                            Core.Models.GetCustomer.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            StoreCustomer,
+                            IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
                 };
 
                 //Act
-                var storeCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomer.StoreCustomer>(json, serializeOptions);
+                var storeCustomer = JsonSerializer.Deserialize<StoreCustomer>(json, serializeOptions);
 
                 //Assert
                 storeCustomer?.AccountNumber.Should().Be("AW00000001");
@@ -652,20 +652,20 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 storeCustomer?.Contacts[0].ContactPerson?.PhoneNumbers?.Count.Should().Be(1);
                 storeCustomer?.Contacts[0].ContactPerson?.PhoneNumbers?[0].PhoneNumberType.Should().Be("Cell");
                 storeCustomer?.Contacts[0].ContactPerson?.PhoneNumbers?[0].PhoneNumber.Should().Be("398-555-0132");
-                storeCustomer?.Addresses.Count.Should().Be(1);
-                storeCustomer?.Addresses[0].AddressType.Should().Be("Main Office");
-                storeCustomer?.Addresses[0].Address!.AddressLine1.Should().Be("2251 Elliot Avenue");
-                storeCustomer?.Addresses[0].Address!.AddressLine2.Should().BeNull();
-                storeCustomer?.Addresses[0].Address!.PostalCode.Should().Be("98104");
-                storeCustomer?.Addresses[0].Address!.City.Should().Be("Seattle");
-                storeCustomer?.Addresses[0].Address!.StateProvinceCode.Should().Be("WA");
-                storeCustomer?.Addresses[0].Address!.CountryRegionCode.Should().Be("US");
+                storeCustomer?.Addresses!.Count.Should().Be(1);
+                storeCustomer?.Addresses![0].AddressType.Should().Be("Main Office");
+                storeCustomer?.Addresses![0].Address!.AddressLine1.Should().Be("2251 Elliot Avenue");
+                storeCustomer?.Addresses![0].Address!.AddressLine2.Should().BeNull();
+                storeCustomer?.Addresses![0].Address!.PostalCode.Should().Be("98104");
+                storeCustomer?.Addresses![0].Address!.City.Should().Be("Seattle");
+                storeCustomer?.Addresses![0].Address!.StateProvinceCode.Should().Be("WA");
+                storeCustomer?.Addresses![0].Address!.CountryRegionCode.Should().Be("US");
             }
 
             [Theory]
             [AutoMoqData]
             public void Deserialize_WithValidJson_ReturnsIndividualCustomer(
-                   Mock<ILogger<CustomerConverter<Core.Models.GetCustomer.Customer, Core.Models.GetCustomer.StoreCustomer, Core.Models.GetCustomer.IndividualCustomer>>> mockLogger
+                   Mock<ILogger<CustomerConverter<Core.Handlers.GetCustomer.Customer, StoreCustomer, IndividualCustomer>>> mockLogger
             )
             {
                 //Arrange
@@ -716,16 +716,16 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     {
                         new JsonStringEnumConverter(),
                         new CustomerConverter<
-                            Core.Models.GetCustomer.Customer,
-                            Core.Models.GetCustomer.StoreCustomer,
-                            Core.Models.GetCustomer.IndividualCustomer>(
+                            Core.Handlers.GetCustomer.Customer,
+                            StoreCustomer,
+                            IndividualCustomer>(
                                 mockLogger.Object
                             )
                     }
                 };
 
                 //Act
-                var individualCustomer = JsonSerializer.Deserialize<Core.Models.GetCustomer.IndividualCustomer>(json, serializeOptions);
+                var individualCustomer = JsonSerializer.Deserialize<IndividualCustomer>(json, serializeOptions);
 
                 //Assert
                 individualCustomer?.AccountNumber.Should().Be("AW00011000");
@@ -741,14 +741,14 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 individualCustomer?.Person?.PhoneNumbers!.Count.Should().Be(1);
                 individualCustomer?.Person?.PhoneNumbers![0].PhoneNumberType.Should().Be("Cell");
                 individualCustomer?.Person?.PhoneNumbers![0].PhoneNumber.Should().Be("398-555-0132");
-                individualCustomer?.Addresses.Count.Should().Be(1);
-                individualCustomer?.Addresses[0].AddressType.Should().Be("Home");
-                individualCustomer?.Addresses[0].Address!.AddressLine1.Should().Be("3761 N. 14th St");
-                individualCustomer?.Addresses[0].Address!.AddressLine2.Should().BeNull();
-                individualCustomer?.Addresses[0].Address!.PostalCode.Should().Be("4700");
-                individualCustomer?.Addresses[0].Address!.City.Should().Be("Rockhampton");
-                individualCustomer?.Addresses[0].Address!.StateProvinceCode.Should().Be("QLD");
-                individualCustomer?.Addresses[0].Address!.CountryRegionCode.Should().Be("AU");
+                individualCustomer?.Addresses!.Count.Should().Be(1);
+                individualCustomer?.Addresses![0].AddressType.Should().Be("Home");
+                individualCustomer?.Addresses![0].Address!.AddressLine1.Should().Be("3761 N. 14th St");
+                individualCustomer?.Addresses![0].Address!.AddressLine2.Should().BeNull();
+                individualCustomer?.Addresses![0].Address!.PostalCode.Should().Be("4700");
+                individualCustomer?.Addresses![0].Address!.City.Should().Be("Rockhampton");
+                individualCustomer?.Addresses![0].Address!.StateProvinceCode.Should().Be("QLD");
+                individualCustomer?.Addresses![0].Address!.CountryRegionCode.Should().Be("AU");
             }
         }
     }

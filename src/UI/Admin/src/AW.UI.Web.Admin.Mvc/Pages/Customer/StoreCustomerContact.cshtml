@@ -1,0 +1,175 @@
+﻿@page
+@model AW.UI.Web.Admin.Mvc.Pages.Customer.StoreCustomerContactModel
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = $"Store customer contact - {Model.CustomerContact!.ContactPerson.Name!.FullName}";
+    var customerId = ViewData["customerId"];
+    var customerName = ViewData["customerName"];
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Customers</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-page="./DetailStore" asp-route-objectid="@customerId" class="breadcrumb-link">@customerName</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Customer Contact</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.CustomerContact!.ContactPerson.Name!.FullName</h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            <div>
+                <div class="card-body">
+                    <!-- Media -->
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="flex-grow-1 mx-3">
+                            <div class="d-flex mb-1">
+                                <h3 class="mb-0 me-3">Contact info</h3>
+                            </div>
+                        </div>
+
+                        <div class="d-none d-sm-inline-block ms-auto text-end">
+                            <!-- Dropdown -->
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-white btn-sm" id="actionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions <i class="bi-chevron-down"></i>
+                                </button>
+
+                                <div class="dropdown-menu mt-1" aria-labelledby="actionsDropdown">
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-store-customer-contact" href="#">
+                                        <i class="bi-pencil dropdown-item-icon"></i> Edit
+                                    </a>
+                                    <a class="dropdown-item text-danger" href="#">
+                                        <i class="bi-trash dropdown-item-icon text-danger"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End Dropdown -->
+                        </div>
+                    </div>
+                    <!-- End Media -->
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Title, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactPerson.Title" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.FirstName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.FirstName" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.MiddleName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.MiddleName" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Name!.LastName, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactPerson.Name!.LastName" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactPerson.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactPerson.Suffix" class="form-control" readonly />
+                        </div>
+                    </div>
+                    @*@if (Model.IsNewContact)
+                    {
+                        <div class="js-add-field row mb-4"
+                             data-hs-add-field-options='{
+                                    "template": "#addEmailFieldTemplate",
+                                    "container": "#addEmailFieldContainer0",
+                                    "defaultCreated": 0
+                                  }'>
+                            <label class="col-sm-3 col-form-label form-label">Email address</label>
+                            <div class="col-sm-9">
+                                <input name="newEmail[0]" class="form-control" />
+                                <div id="addEmailFieldContainer0"></div>
+                                <a href="javascript:;" class="js-create-field form-link">
+                                    <i class="bi-plus-circle me-1"></i> Add email address
+                                </a>
+                            </div>
+                        </div>
+                    }*@
+                    
+                    <div class="row mb-4">
+                        <label class="col-sm-3 col-form-label form-label">
+                            Email
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.CustomerContact?.ContactPerson.EmailAddresses.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="CustomerContact!.ContactPerson.EmailAddresses[i].EmailAddress" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-sm-3 col-form-label form-label">
+                            Phone
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.CustomerContact?.ContactPerson.PhoneNumbers.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="CustomerContact!.ContactPerson.PhoneNumbers[i].PhoneNumber" class="form-control" readonly />
+                                    </div>
+                                    <div class="col">
+                                        <input asp-for="CustomerContact!.ContactPerson.PhoneNumbers[i].PhoneNumberType" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.CustomerContact!.ContactType, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="CustomerContact!.ContactType" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+                <!-- End Body -->
+            </div>
+        </div>
+        <!-- End Card-->
+    </div>
+</div>
+
+<partial name="EditStoreCustomerContact" for="@Model" />
+
+@section Scripts {
+    <script>
+        (function () {
+            // INITIALIZATION OF ADD FIELD
+            // =======================================================
+            new HSAddField('.js-add-field')
+        })();
+    </script>
+}

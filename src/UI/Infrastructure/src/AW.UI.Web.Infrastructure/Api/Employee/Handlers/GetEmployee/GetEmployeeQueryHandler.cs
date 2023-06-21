@@ -19,7 +19,7 @@ namespace AW.UI.Web.Infrastructure.Api.Employee.Handlers.GetEmployee
 
         public async Task<Employee> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Getting employee {LoginID} from API", request.ObjectId);
+            _logger.LogInformation("Getting employee {ObjectId} from API", request.ObjectId);
             var employee = await _client.GetEmployee(request.ObjectId);
             Guard.Against.Null(employee, _logger);
 

@@ -1,6 +1,6 @@
-﻿using AutoFixture.Xunit2;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
 using AW.Services.Customer.Core.AutoMapper;
-using AW.Services.Customer.Core.Exceptions;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -15,7 +15,7 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_CustomerExists_ReturnCustomer(
+        public async Task return_success_given_customer_exists(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomerQueryHandler sut,
             GetCustomerQuery query,
@@ -33,20 +33,21 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            result.Should().NotBeNull();
+            result.IsSuccess.Should().BeTrue();
+
             customerRepoMock.Verify(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ));
 
-            result.Should().BeEquivalentTo(customer, opt => opt
+            result.Value.Should().BeEquivalentTo(customer, opt => opt
                 .Excluding(_ => _.Path.EndsWith("Id", StringComparison.InvariantCultureIgnoreCase))
             );
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_CustomerNotFound_ThrowArgumentNullException(
+        public async Task return_notfound_given_customer_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomerQueryHandler sut,
             GetCustomerQuery query
@@ -60,11 +61,32 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Customer?)null);
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<CustomerNotFoundException>()
-                .WithMessage($"Customer {query.AccountNumber} not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            GetCustomerQueryHandler sut,
+            GetCustomerQuery query
+        )
+        {
+            // Arrange
+            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
+                It.IsAny<GetCustomerSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ThrowsAsync(new Exception());
+
+            //Act
+            var result = await sut.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
         }
     }
 }

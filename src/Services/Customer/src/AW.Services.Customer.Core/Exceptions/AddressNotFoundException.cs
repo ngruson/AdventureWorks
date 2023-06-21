@@ -1,5 +1,4 @@
 ﻿using AW.Services.Infrastructure;
-using System;
 using System.Runtime.Serialization;
 
 namespace AW.Services.Customer.Core.Exceptions
@@ -7,8 +6,8 @@ namespace AW.Services.Customer.Core.Exceptions
     [Serializable]
     public class AddressNotFoundException : DomainException
     {
-        public AddressNotFoundException(string accountNumber, string addressType)
-            : base($"{addressType} address for customer {accountNumber} not found")
+        public AddressNotFoundException(Guid objectId)
+            : base($"Address {objectId} not found")
         { }
 
         protected AddressNotFoundException(SerializationInfo serializationInfo, StreamingContext streamingContext) :

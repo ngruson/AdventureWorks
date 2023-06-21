@@ -7,6 +7,10 @@ using AW.SharedKernel.UnitTesting;
 using AutoFixture.Xunit2;
 using AW.Services.SharedKernel.Interfaces;
 using AW.Services.Customer.Core.Exceptions;
+using Ardalis.Result;
+using FluentValidation;
+using FluentValidation.Results;
+using AW.Services.Customer.Core.Handlers.UpdateStoreCustomerContact;
 
 namespace AW.Services.Customer.Core.UnitTests.Handlers
 {
@@ -14,14 +18,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMoqData]
-        public async Task Handle_ExistingCustomer_ReturnUpdatedCustomer(
+        public async Task return_updatedcustomer_given_customer_exists(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandHandler sut,
             string accountNumber
         )
         {
             //Act
-            var command = new UpdateCustomerCommand(new StoreCustomerDto
+            var command = new UpdateCustomerCommand(new StoreCustomer
             {
                 AccountNumber = accountNumber
             });
@@ -29,23 +33,55 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            result.Should().NotBeNull();
+            result.IsSuccess.Should().BeTrue();
+
             customerRepoMock.Verify(x => x.UpdateAsync(
                 It.IsAny<Entities.Customer>(),
                 It.IsAny<CancellationToken>()
             ));
         }
 
+        [Theory, AutoMoqData]
+        public async Task return_invalid_given_command_is_invalid(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            [Frozen] Mock<IValidator<UpdateCustomerCommand>> validator,
+            UpdateCustomerCommandHandler sut,
+            UpdateCustomerCommand command,
+            List<ValidationFailure> failures
+        )
+        {
+            // Arrange
+            validator.Setup(_ => _.ValidateAsync(
+                    command,
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(new ValidationResult(failures));
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Invalid);
+
+            customerRepoMock.Verify(x => x.UpdateAsync(
+                    It.IsAny<Entities.Customer>(),
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
+        }
+
         [Theory]
         [AutoMoqData]
-        public async Task Handle_CustomerDoesNotExist_ThrowArgumentNullException(
+        public async Task return_notfound_given_customer_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerCommandHandler sut,
             string accountNumber
         )
         {
             // Arrange
-            var command = new UpdateCustomerCommand(new StoreCustomerDto
+            var command = new UpdateCustomerCommand(new StoreCustomer
             {
                 AccountNumber = accountNumber
             });
@@ -57,11 +93,33 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             .ReturnsAsync((Entities.Customer?)null);
 
             //Act
-            Func<Task> func = async () => await sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<CustomerNotFoundException>()
-                .WithMessage($"Customer {command.Customer!.AccountNumber} not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+        }
+
+        [Theory, AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepo,
+            UpdateCustomerCommandHandler sut,
+            UpdateCustomerCommand command
+        )
+        {
+            //Arrange
+
+            //Act
+            var result = await sut.Handle(command, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
+
+            customerRepo.Verify(x => x.UpdateAsync(
+                    It.IsAny<Entities.Customer>(),
+                    It.IsAny<CancellationToken>()
+                ),
+                Times.Never
+            );
         }
     }
 }

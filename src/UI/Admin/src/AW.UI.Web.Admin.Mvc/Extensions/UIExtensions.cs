@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq.Expressions;
 
-namespace AW.UI.Web.Admin.Mvc.Extensions
+namespace AW.UI.Web.Admin.Mvc.Extensions;
+
+public static class UIExtensions
 {
-    public static class UIExtensions
+    public static List<SelectListItem> ToSelectList<T>(this List<T> list, Expression<Func<T, string?>> valueExpr, Expression<Func<T, string?>> textExpr, bool addSelectItem = true)
     {
-        public static List<SelectListItem> ToSelectList<T>(this List<T> list, Expression<Func<T, string?>> valueExpr, Expression<Func<T, string?>> textExpr)
+        var items = list
+        .Select(item => new SelectListItem()
         {
-            var items = list
-            .Select(item => new SelectListItem()
-            {
-                Value = valueExpr.Compile().Invoke(item),
-                Text = textExpr.Compile().Invoke(item)
-            })
-            .ToList();
+            Value = valueExpr.Compile().Invoke(item),
+            Text = textExpr.Compile().Invoke(item)
+        })
+        .ToList();
 
-            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
+        if (addSelectItem)
+        {
+            var selectItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
+            items.Insert(0, selectItem);
         }
 
-
+        return items;
     }
 }

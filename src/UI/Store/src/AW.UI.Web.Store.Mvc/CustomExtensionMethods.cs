@@ -21,6 +21,7 @@ using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.Infrastructure.Api.Product.Caching;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
+using AW.SharedKernel.JsonConverters;
 
 namespace AW.UI.Web.Store.Mvc
 {
@@ -55,6 +56,10 @@ namespace AW.UI.Web.Store.Mvc
             services.AddScoped<ICache<ShipMethod>, ShipMethodCache>();
             services.AddScoped<ICache<StateProvince>, StatesProvinceCache>();
             services.AddScoped<ICache<Territory>, TerritoryCache>();
+
+            services.AddScoped<CustomerConverter<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
+                Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
+                Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>>();
 
             return services;
         }

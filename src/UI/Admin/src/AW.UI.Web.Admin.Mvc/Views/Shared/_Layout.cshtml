@@ -139,7 +139,7 @@
     <header id="header" class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-container navbar-bordered bg-white">
         <div class="navbar-nav-wrap">
             <!-- Logo -->
-            <a class="navbar-brand" href="./index.html" aria-label="Front">
+            <a class="navbar-brand" href="@Url.Content("~/Customer")" aria-label="Front">
                 <img class="navbar-brand-logo" src="~/assets/svg/logos/logo.svg" alt="Logo" data-hs-theme-appearance="default">
                 <img class="navbar-brand-logo" src="~/assets/svg/logos-light/logo.svg" alt="Logo" data-hs-theme-appearance="dark">
                 <img class="navbar-brand-logo-mini" src="~/assets/svg/logos/logo-short.svg" alt="Logo" data-hs-theme-appearance="default">
@@ -1006,7 +1006,7 @@
                                             </a>
 
                                             <div id="navbarCustomerCustomersMenu" class="nav-collapse collapse @(requestPath == "/Customers" || requestPath == "" ? "show" : "")" data-bs-parent="#navbarCustomerMenu" hs-parent-area="#navbarCustomerMenu">
-                                                <a asp-action="Index" asp-controller="Customer" class="nav-link @(requestPath == "/Customers" || requestPath == "" ? "active" : "")">Customers</a>
+                                                <a href="@Url.Content("~/Customer")" class="nav-link @(requestPath == "/Customers" || requestPath == "" ? "active" : "")">Customers</a>
                                                 <a class="nav-link " href="./ecommerce-add-customers.html">Add Customers</a>
                                             </div>
                                         </div>

@@ -1,9 +1,8 @@
 ﻿CREATE TABLE CountryRegion(
 	CountryRegionCode [nvarchar](3) NOT NULL,
+    [ObjectID] uniqueidentifier NOT NULL DEFAULT NEWID(),
 	Name nvarchar(50) NOT NULL
- CONSTRAINT [PK_CountryRegion_CountryRegionCode] PRIMARY KEY CLUSTERED 
-(
-	[CountryRegionCode] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+    CONSTRAINT [PK_CountryRegion_CountryRegionCode] PRIMARY KEY CLUSTERED ( [CountryRegionCode] ASC ),
+    CONSTRAINT UC_CountryRegion_ObjectID UNIQUE(ObjectID)
 ) ON [PRIMARY]
 GO

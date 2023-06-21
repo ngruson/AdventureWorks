@@ -4,34 +4,27 @@ using AW.UI.Web.Infrastructure.Api.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer
+namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
+
+public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
+    private readonly ILogger<UpdateCustomerCommandHandler> _logger;
+    private readonly ICustomerApiClient _client;
+
+    public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger, ICustomerApiClient client)
     {
-        private readonly ILogger<UpdateCustomerCommandHandler> _logger;
-        private readonly ICustomerApiClient _client;
+        _logger = logger;
+        _client = client;
+    }
 
-        public UpdateCustomerCommandHandler(ILogger<UpdateCustomerCommandHandler> logger, ICustomerApiClient client)
-        {
-            _logger = logger;
-            _client = client;
-        }
+    public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Updating customer {ObjectId}", request.Customer.ObjectId);
+        var customer = await _client.UpdateCustomerAsync(
+            request.Customer!
+        );
+        Guard.Against.Null(customer, _logger);
 
-        public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
-        {
-            Guard.Against.NullOrEmpty(request.AccountNumber, _logger);
-            Guard.Against.Null(request.Customer, _logger);
-
-            _logger.LogInformation("Updating customer {AccountNumber}", request.AccountNumber);
-            var customer = await _client.UpdateCustomerAsync(
-                request.AccountNumber,
-                request.Customer!
-            );
-            Guard.Against.Null(customer, _logger);
-
-            _logger.LogInformation("Returning updated customer {AccountNumber}", request.AccountNumber);
-
-            return customer!;
-        }
+        _logger.LogInformation("Customer was updated successfully");
     }
 }

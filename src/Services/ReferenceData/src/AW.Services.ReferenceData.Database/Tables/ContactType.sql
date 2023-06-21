@@ -1,8 +1,7 @@
 ﻿CREATE TABLE ContactType(
 	[ContactTypeID] [int] IDENTITY(1,1) NOT NULL,
+    [ObjectID] uniqueidentifier NOT NULL DEFAULT NEWID(),
 	[Name] [nvarchar](50) NOT NULL
- CONSTRAINT [PK_ContactType_ContactTypeID] PRIMARY KEY CLUSTERED 
-(
-	[ContactTypeID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+    CONSTRAINT [PK_ContactType_ContactTypeID] PRIMARY KEY CLUSTERED ( [ContactTypeID] ASC ),
+    CONSTRAINT UC_ContactType_ObjectID UNIQUE(ObjectID)
 ) ON [PRIMARY]

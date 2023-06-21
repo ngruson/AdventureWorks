@@ -1,10 +1,18 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
 {
-    public class DeleteStoreCustomerContactCommand : IRequest<Unit>
+    public class DeleteStoreCustomerContactCommand : IRequest<Result>
     {
-        public string? AccountNumber { get; set; }
-        public StoreCustomerContactDto? CustomerContact { get; set; }
+        public DeleteStoreCustomerContactCommand() { }
+        public DeleteStoreCustomerContactCommand(Guid customerId, Guid contactId) 
+        {
+            CustomerId = customerId;
+            ContactId = contactId;
+        }
+
+        public Guid CustomerId { get; set; }
+        public Guid ContactId { get; set; }
     }
 }

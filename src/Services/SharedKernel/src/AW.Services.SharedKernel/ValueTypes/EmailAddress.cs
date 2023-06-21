@@ -1,6 +1,6 @@
-﻿using CSharpFunctionalExtensions;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
+using Ardalis.Result;
 
 namespace AW.Services.SharedKernel.ValueTypes
 {
@@ -15,14 +15,21 @@ namespace AW.Services.SharedKernel.ValueTypes
             Value = emailAddress;
         }
 
-        private EmailAddress() { }
+        public EmailAddress() { }
 
         public static Result<EmailAddress> Create(string emailAddress)
         {
             emailAddress = (emailAddress ?? string.Empty).Trim();
 
             if (!IsValidEmailAddress(emailAddress))
-                return Result.Failure<EmailAddress>("Email address is invalid");
+            {
+                var errors = new List<ValidationError>
+                {
+                    new ValidationError { ErrorMessage = "Email address is invalid" }
+                };
+                
+                return Result.Invalid(errors);
+            }
 
             return Result.Success(new EmailAddress(emailAddress));
         }

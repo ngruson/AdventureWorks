@@ -1,7 +1,6 @@
-﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Customer;
+
+public class CustomerDetailViewModel
 {
-    public class CustomerDetailViewModel
-    {
-        public CustomerViewModel? Customer { get; set; }
-    }
+    public CustomerViewModel? Customer { get; set; }
 }

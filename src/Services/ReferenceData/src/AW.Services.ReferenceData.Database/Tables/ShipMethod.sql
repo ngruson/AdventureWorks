@@ -1,12 +1,10 @@
 ﻿CREATE TABLE [dbo].[ShipMethod]
 (
 	[ShipMethodID] [int] IDENTITY(1,1) NOT NULL,
+    [ObjectID] uniqueidentifier NOT NULL DEFAULT NEWID(),
 	[Name] nvarchar(50) NOT NULL,
 	[ShipBase] [money] NOT NULL,
 	[ShipRate] [money] NOT NULL
- CONSTRAINT [PK_ShipMethod_ShipMethodID] PRIMARY KEY CLUSTERED 
-(
-	[ShipMethodID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+    CONSTRAINT [PK_ShipMethod_ShipMethodID] PRIMARY KEY CLUSTERED ( [ShipMethodID] ASC ),
+    CONSTRAINT UC_ShipMethod_ObjectID UNIQUE(ObjectID)
+)

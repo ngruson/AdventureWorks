@@ -1,15 +1,12 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using AW.UI.Web.Admin.Mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AW.SharedKernel.Interfaces;
 using AW.SharedKernel.Extensions;
 using MediatR;
 using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetStatesProvinces;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetContactTypes;
-using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
 using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomer;
 using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetStoreCustomer;
 using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
@@ -17,461 +14,370 @@ using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetAddressTypes;
 using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetCountries;
 using UpdateCustomer = AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
+using AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetCustomers;
+using AW.SharedKernel.ValueTypes;
 
-namespace AW.UI.Web.Admin.Mvc.Services
+namespace AW.UI.Web.Admin.Mvc.Services;
+
+public class CustomerService : ICustomerService
 {
-    public class CustomerService : ICustomerService
+    private readonly ILogger<CustomerService> _logger;
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
+
+    public CustomerService(
+        ILogger<CustomerService> logger,
+        IMapper mapper,
+        IMediator mediator
+    )
     {
-        private readonly ILogger<CustomerService> _logger;
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        _logger = logger;
+        _mapper = mapper;
+        _mediator = mediator;
+    }
 
-        public CustomerService(
-            ILogger<CustomerService> logger,
-            IMapper mapper,
-            IMediator mediator
-        )
+    public async Task<List<CustomerViewModel>> GetCustomers()
+    {
+        _logger.LogInformation("Getting customers from cache");
+
+        var customers = await _mediator.Send(new GetCustomersQuery());
+
+        _logger.LogInformation("Returning customers");
+        return _mapper.Map<List<CustomerViewModel>>(customers);
+    }
+
+    public async Task<StoreCustomerViewModel> GetDetailStore(Guid objectId)
+    {
+        var customer = await GetCustomer(objectId);
+        return _mapper.Map<StoreCustomerViewModel>(customer);
+    }
+
+    public async Task<IndividualCustomerViewModel> GetDetailIndividual(Guid objectId)
+    {
+        var customer = await GetCustomer(objectId);
+        return _mapper.Map<IndividualCustomerViewModel>(customer);
+    }
+
+    private async Task<Infrastructure.Api.Customer.Handlers.GetCustomer.Customer> GetCustomer(Guid objectId)
+    {
+        _logger.LogInformation("Getting customer");
+        var customer = await _mediator.Send(new GetCustomerQuery(objectId));
+        _logger.LogInformation("Retrieved customer");
+        Guard.Against.Null(customer, _logger);
+
+        return customer!;
+    }
+
+    public async Task<List<Territory>> GetTerritories()
+    {
+        _logger.LogInformation("Send GetTerritories query");
+        var territories = await _mediator.Send(new GetTerritoriesQuery());
+        _logger.LogInformation("Received territories");
+
+        return territories;
+    }       
+
+    public List<SelectListItem> GetCustomerTypes()
+    {
+        _logger.LogInformation("GetCustomerTypes called.");
+
+        var items = new List<SelectListItem>
         {
-            _logger = logger;
-            _mapper = mapper;
-            _mediator = mediator;
-        }
-
-        public async Task<CustomersIndexViewModel> GetCustomers(int pageIndex, int pageSize, string? territory, CustomerType? customerType, string? accountNumber)
-        {
-            _logger.LogInformation("GetCustomers called");
-            var response = await _mediator.Send(new GetCustomersQuery(
-                    pageIndex,
-                    pageSize,
-                    territory,
-                    customerType,
-                    accountNumber
-                )
-            );
-
-            var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalCustomers / pageSize).ToString());
-
-            var vm = new CustomersIndexViewModel
-            {
-                Customers = _mapper.Map<List<CustomerViewModel>>(response.Customers),
-                Territories = await GetTerritories(),
-                CustomerTypes = GetCustomerTypes(),
-                PaginationInfo = new PaginationInfoViewModel(
-                    response.TotalCustomers,
-                    response.Customers!.Count,
-                    pageIndex,
-                    totalPages,
-                    pageIndex == 0 ? "disabled" : "",
-                    pageIndex == totalPages - 1 ? "disabled" : ""
-                )
-            };
-
-            return vm;
-        }
-
-        public async Task<CustomerViewModel> GetCustomer(string? accountNumber)
-        {
-            _logger.LogInformation("GetCustomer called");
-            var customer = await _mediator.Send(new GetCustomerQuery(accountNumber));
-
-            return _mapper.Map<CustomerViewModel>(customer);
-        }
-
-        public async Task<IEnumerable<SelectListItem>?> GetTerritories()
-        {
-            _logger.LogInformation("GetTerritories called.");
-            var territories = await _mediator.Send(new GetTerritoriesQuery());
-
-            var items = territories
-                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            items.Insert(0, new SelectListItem { Value = "", Text = "--Select--", Selected = true });
-
-            return items;
-        }       
-
-        private List<SelectListItem> GetCustomerTypes()
-        {
-            _logger.LogInformation("GetCustomerTypes called.");
-
-            var items = new List<SelectListItem>
-            {
-                new SelectListItem() { Value = "", Text = "All", Selected = true },
-                new SelectListItem() { Value = "Individual", Text = "Individual"},
-                new SelectListItem() { Value = "Store", Text = "Store" }
-            };
-
-            return items;
-        }
-
-        public async Task<IEnumerable<SelectListItem>?> GetSalesPersons(string territory)
-        {
-            _logger.LogInformation("GetSalesPersons called.");
-            var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(territory));
-
-            var items = salesPersons
-                .Select(t => new SelectListItem() { Value = t.Name?.FullName, Text = t.Name?.FullName })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            return items;
-        }
-
-        public async Task<IEnumerable<SelectListItem>?> GetAddressTypes()
-        {
-            _logger.LogInformation("GetAddressTypes called.");
-            var addressTypes = await _mediator.Send(new GetAddressTypesQuery());
-
-            var items = addressTypes
-                .Select(t => new SelectListItem() { Value = t.Name, Text = t.Name })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            items.Insert(0, new SelectListItem { Value = "", Text = "--Select", Selected = true });
-
-            return items;
-        }
-
-        public async Task<IEnumerable<SelectListItem>?> GetCountries()
-        {
-            _logger.LogInformation("GetCountries called.");
-            var countries = await _mediator.Send(new GetCountriesQuery());
-
-            var items = countries
-                .Select(t => new SelectListItem() { Value = t.CountryRegionCode, Text = t.Name })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            items.Insert(0, new SelectListItem { Value = "", Text = "--Select", Selected = true });
-
-            return items;
-        }
-
-        public async Task UpdateStore(StoreCustomerViewModel? viewModel)
-        {
-            _logger.LogInformation("UpdateStore called with view model {@ViewModel}", viewModel);
-            Guard.Against.Null(viewModel, _logger);
-
-            _logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
-            var storeCustomer = await _mediator.Send(new GetStoreCustomerQuery(viewModel?.AccountNumber));
-            var storeCustomerToUpdate = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer>(storeCustomer);
-
-            storeCustomerToUpdate.Name = viewModel?.Name;
-            storeCustomerToUpdate.Territory = viewModel?.Territory;
-            storeCustomerToUpdate.SalesPerson = viewModel?.SalesPerson;
-
-            _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, storeCustomerToUpdate));
-            _logger.LogInformation("Customer successfully updated");
-        }
-
-        public async Task UpdateIndividual(IndividualCustomerViewModel? viewModel)
-        {
-            _logger.LogInformation("UpdateIndividual called with view model {@ViewModel}", viewModel);
-            Guard.Against.Null(viewModel, _logger);
-
-            var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel?.AccountNumber));
-            var customerToUpdate = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>(customer);
-
-            customerToUpdate.Person = _mapper.Map<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Person>(viewModel?.Person);
-
-            _logger.LogInformation("Calling Customer API to update customer");
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
-            _logger.LogInformation("Customer successfully updated");
-        }
-
-        //public EditCustomerAddressViewModel AddAddress(string accountNumber, string customerName)
-        //{
-        //    _logger.LogInformation("AddAddress called");
-
-        //    var vm = new EditCustomerAddressViewModel
-        //    {
-        //        IsNewAddress = true,
-        //        AccountNumber = accountNumber,
-        //        CustomerName = customerName,
-        //        CustomerAddress = new CustomerAddressViewModel
-        //        {
-        //            Address = new AddressViewModel
-        //            {
-        //                CountryRegionCode = "US"
-        //            }
-        //        }
-        //    };
-
-        //    return vm;
-        //}
-
-        public async Task AddAddress(CustomerAddressViewModel viewModel, string? accountNumber)
-        {
-            _logger.LogInformation("AddAddress called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var newAddress = _mapper.Map<UpdateCustomer.CustomerAddress>(viewModel);
-            Guard.Against.Null(newAddress, _logger);
-            customerToUpdate.Addresses?.Add(newAddress);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task UpdateAddress(CustomerAddressViewModel viewModel, string? accountNumber)
-        {
-            _logger.LogInformation("UpdateAddress called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var addressToUpdate = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == viewModel.AddressType);
-            Guard.Against.Null(addressToUpdate, _logger);
-            _mapper.Map(viewModel.Address, addressToUpdate?.Address);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task<IEnumerable<SelectListItem>?> GetStatesProvinces(string countryRegionCode)
-        {
-            _logger.LogInformation("GetStateProvinces called.");
-            var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(countryRegionCode));
-
-            var items = statesProvinces
-                .OrderBy(c => c.Name)
-                .Select(c => new SelectListItem() { Value = c.StateProvinceCode, Text = c.Name })
-                .ToList();
-
-            items.Insert(0, new SelectListItem { Value = "", Text = "--Select--", Selected = true });
-
-            return items;
-        }
-
-        public async Task<IEnumerable<StateProvince>?> GetStatesProvincesJson(string? country)
-        {
-            var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(country));
-            return statesProvinces;
-        }
-
-        public async Task DeleteAddress(string? accountNumber, string? addressType)
-        {
-            _logger.LogInformation("DeleteAddress called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var addressToDelete = customerToUpdate.Addresses?.FirstOrDefault(a => a?.AddressType == addressType);
-            Guard.Against.Null(addressToDelete, _logger);
-            customerToUpdate.Addresses?.Remove(addressToDelete);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        private async Task<IEnumerable<SelectListItem>> GetContactTypes()
-        {
-            _logger.LogInformation("GetContactTypes called.");
-            var contactTypes = await _mediator.Send(new GetContactTypesQuery());
-            Guard.Against.Null(contactTypes, _logger);
-
-            var items = contactTypes
-                .Select(at => new SelectListItem() { Value = at.Name, Text = at.Name })
-                .ToList();
-
-            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
-        }
-
-        public IEnumerable<SelectListItem> GetPhoneNumberTypes()
-        {
-            var phoneNumberTypes = new[] { "Cell", "Home", "Work" };
-            var items = phoneNumberTypes.Select(
-                    _ => new SelectListItem(_, _)
-                )
-                .ToList();
-
-            var allItem = new SelectListItem() { Value = "", Text = "--Select--", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
-        }
-
-        public async Task<StoreCustomerContactViewModel> GetCustomerContact(string? accountNumber, string? contactName)
-        {
-            _logger.LogInformation("GetCustomerContact called");
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(accountNumber));
-
-            var contact = customer.Contacts.FirstOrDefault(c =>
-                c.ContactPerson?.Name?.FullName == contactName
-            );
-
-            var vm = new StoreCustomerContactViewModel
-            {
-                IsNewContact = false,
-                AccountNumber = accountNumber,
-                CustomerName = customer.Name,
-                CustomerContact = _mapper.Map<CustomerContactViewModel>(contact),
-                ContactTypes = await GetContactTypes(),
-                PhoneNumberTypes = GetPhoneNumberTypes()
-            };
-
-            return vm;
-        }
-
-        public async Task<StoreCustomerContactViewModel> AddContact(string? accountNumber, string? customerName)
-        {
-            _logger.LogInformation("AddContact called");
-
-            var vm = new StoreCustomerContactViewModel
-            {
-                IsNewContact = true,
-                AccountNumber = accountNumber,
-                CustomerName = customerName,
-                CustomerContact = new CustomerContactViewModel
-                {
-                    ContactPerson = new PersonViewModel
-                    {
-                        EmailAddresses = new(),
-                        PhoneNumbers = new()
-                    }
-                },
-                ContactTypes = await GetContactTypes(),
-                PhoneNumberTypes = GetPhoneNumberTypes()
-            };
-
-            return vm;
-        }
-
-        public async Task AddContact(StoreCustomerContactViewModel viewModel)
-        {
-            _logger.LogInformation("AddContact called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel.AccountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.AccountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var contactToAdd = _mapper.Map<UpdateCustomer.StoreCustomerContact>(
-                viewModel.CustomerContact
-            );
-            customerToUpdate.Contacts?.Add(contactToAdd);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel.AccountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task UpdateContact(StoreCustomerContactViewModel? viewModel)
-        {
-            _logger.LogInformation("UpdateContact called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", viewModel?.AccountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel?.AccountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == viewModel?.CustomerContact?.ContactPerson.Name!.FullName);
-            Guard.Against.Null(contact, _logger);
-            _mapper.Map(viewModel?.CustomerContact, contact);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(viewModel?.AccountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task DeleteContact(string? accountNumber, string? contactName)
-        {
-            _logger.LogInformation("DeleteContact called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-            var contact = customerToUpdate.Contacts?.FirstOrDefault(c => c?.ContactPerson?.Name?.FullName == contactName);
-            Guard.Against.Null(contact, _logger);
-            customerToUpdate.Contacts?.Remove(contact);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task DeleteContactEmailAddress(string? accountNumber, string? contactName, string? emailAddress)
-        {
-            _logger.LogInformation("DeleteContactEmailAddress called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetStoreCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-
-            var contact = customerToUpdate?.Contacts?.FirstOrDefault(c =>
-                c?.ContactPerson?.Name?.FullName == contactName
-            );
-            Guard.Against.Null(contact, _logger);
-
-            var personEmailAddress = contact?.ContactPerson?.EmailAddresses?.FirstOrDefault(c =>
-                c?.EmailAddress == emailAddress
-            );
-            Guard.Against.Null(personEmailAddress, _logger);
-
-            contact?.ContactPerson?.EmailAddresses?.Remove(personEmailAddress);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
-
-        public async Task DeleteIndividualCustomerEmailAddress(string? accountNumber, string? emailAddress)
-        {
-            _logger.LogInformation("DeleteContactEmailAddress called");
-
-            _logger.LogInformation("Getting customer for {AccountNumber}", accountNumber);
-            var customer = await _mediator.Send(new GetIndividualCustomerQuery(accountNumber));
-            _logger.LogInformation("Retrieved customer {@Customer}", customer);
-            Guard.Against.Null(customer, _logger);
-
-            var customerToUpdate = _mapper.Map<UpdateCustomer.IndividualCustomer>(customer);
-            Guard.Against.Null(customerToUpdate, _logger);
-
-            var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.FirstOrDefault(c =>
-                c?.EmailAddress == emailAddress
-            );
-            Guard.Against.Null(personEmailAddress, _logger);
-
-            customerToUpdate.Person?.EmailAddresses?.Remove(personEmailAddress);
-
-            _logger.LogInformation("Updating customer {@Customer}", customer);
-            await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(accountNumber, customerToUpdate));
-            _logger.LogInformation("Customer updated successfully");
-        }
+            new SelectListItem() { Value = "", Text = "All", Selected = true },
+            new SelectListItem() { Value = "Individual", Text = "Individual"},
+            new SelectListItem() { Value = "Store", Text = "Store" }
+        };
+
+        return items;
+    }
+
+    public async Task<List<SalesPerson>> GetSalesPersons(string? territory)
+    {
+        _logger.LogInformation("Send GetSalesPersons query");
+        var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(territory));
+        _logger.LogInformation("Received sales persons");
+
+        return salesPersons;
+    }
+
+    public async Task<List<AddressType>> GetAddressTypes()
+    {
+        _logger.LogInformation("Send GetAddressTypes query");
+        var addressTypes = await _mediator.Send(new GetAddressTypesQuery());
+        _logger.LogInformation("Received address types");
+
+        return addressTypes;
+    }
+
+    public async Task<List<CountryRegion>> GetCountries()
+    {
+        _logger.LogInformation("GetCountries called.");
+        var countries = await _mediator.Send(new GetCountriesQuery());
+        countries = countries.OrderBy(_ => _.Name).ToList();
+        _logger.LogInformation("Received countries");
+
+        return countries;
+    }
+
+    public async Task<StoreCustomerViewModel> UpdateStore(StoreCustomerViewModel viewModel)
+    {
+        _logger.LogInformation("Mapping CustomerViewModel to UpdateCustomerRequest");
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.ObjectId));
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
+        customerToUpdate.Name = viewModel.Name;
+        customerToUpdate.Territory = viewModel.Territory;
+        customerToUpdate.SalesPerson = viewModel.SalesPerson;
+
+        _logger.LogInformation("Calling Customer API to update customer");
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer successfully updated");
+
+        return await GetDetailStore(viewModel.ObjectId);
+    }
+
+    public async Task<IndividualCustomerViewModel> UpdateIndividual(IndividualCustomerViewModel viewModel)
+    {
+        var customer = await _mediator.Send(new GetIndividualCustomerQuery(viewModel.ObjectId));
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.IndividualCustomer>(customer);
+        customerToUpdate.Person.Name = _mapper.Map<NameFactory>(viewModel.Person!.Name);
+
+        _logger.LogInformation("Calling Customer API to update customer");
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer successfully updated");
+
+        return await GetDetailIndividual(viewModel.ObjectId);
+    }
+
+    public async Task<T> AddAddress<T>(EditCustomerAddressViewModel viewModel)
+    {
+        _logger.LogInformation("AddAddress called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", viewModel.CustomerId);
+        var customer = await _mediator.Send(new GetCustomerQuery(viewModel.CustomerId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+        var newAddress = _mapper.Map<UpdateCustomer.CustomerAddress>(viewModel);
+        newAddress.ObjectId = Guid.NewGuid();
+        newAddress.Address!.ObjectId = Guid.NewGuid();
+        customerToUpdate.Addresses?.Add(newAddress);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+
+        customer = await _mediator.Send(new GetCustomerQuery(viewModel.CustomerId));
+        return _mapper.Map<T>(customer);
+    }
+
+    public async Task<T> UpdateAddress<T>(EditCustomerAddressViewModel viewModel)
+    {
+        _logger.LogInformation("UpdateAddress called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", viewModel.CustomerId);
+        var customer = await _mediator.Send(new GetCustomerQuery(viewModel.CustomerId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+        var addressToUpdate = customerToUpdate.Addresses?.SingleOrDefault(_ => _?.ObjectId == viewModel.ObjectId);
+        Guard.Against.Null(addressToUpdate, _logger);
+        _mapper.Map(viewModel, addressToUpdate);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+
+        customer = await _mediator.Send(new GetCustomerQuery(viewModel.CustomerId));
+        return _mapper.Map<T>(customer);
+    }
+
+    public async Task<T> DeleteAddress<T>(Guid customerId, Guid objectId)
+    {
+        _logger.LogInformation("DeleteAddress called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", customerId);
+        var customer = await _mediator.Send(new GetCustomerQuery(customerId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+        var addressToDelete = customerToUpdate.Addresses?.FirstOrDefault(_ => _?.ObjectId == objectId);
+        Guard.Against.Null(addressToDelete, _logger);
+        customerToUpdate.Addresses?.Remove(addressToDelete);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+
+        customer = await _mediator.Send(new GetCustomerQuery(customerId));
+        return _mapper.Map<T>(customer);
+    }
+
+    public async Task<List<StateProvince>> GetStatesProvinces(string countryRegionCode)
+    {
+        _logger.LogInformation("GetStatesProvinces called.");
+        var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(countryRegionCode));
+        statesProvinces = statesProvinces.OrderBy(_ => _.Name).ToList();
+        _logger.LogInformation("Received states/provinces");
+
+        return statesProvinces;
+    }
+
+    public async Task<IEnumerable<StateProvince>?> GetStatesProvincesJson(string? country)
+    {
+        var statesProvinces = await _mediator.Send(new GetStatesProvincesQuery(country));
+        statesProvinces = statesProvinces.OrderBy(_ => _.Name).ToList();
+        return statesProvinces;
+    }
+
+    public async Task<List<ContactType>> GetContactTypes()
+    {
+        _logger.LogInformation("GetContactTypes called.");
+        var contactTypes = await _mediator.Send(new GetContactTypesQuery());
+        Guard.Against.Null(contactTypes, _logger);
+
+        return contactTypes;
+    }
+
+    public List<string> GetPhoneNumberTypes()
+    {
+        return new List<string> { "Cell", "Home", "Work" };
+    }
+
+    public async Task<StoreCustomerContactViewModel> GetCustomerContact(Guid customerId, Guid objectId)
+    {
+        _logger.LogInformation("GetCustomerContact called");
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(customerId));
+        Guard.Against.Null(customer, _logger);
+
+        var contact = customer!.Contacts.FirstOrDefault(_ =>
+            _.ObjectId == objectId
+        );
+        Guard.Against.Null(contact, _logger);
+
+        return _mapper.Map<StoreCustomerContactViewModel>(contact);
+    }
+
+    public async Task AddContact(StoreCustomerContactViewModel viewModel)
+    {
+        _logger.LogInformation("AddContact called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", viewModel.ObjectId);
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(viewModel.ObjectId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
+        var contactToAdd = _mapper.Map<UpdateCustomer.StoreCustomerContact>(viewModel);
+        customerToUpdate.Contacts?.Add(contactToAdd);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+    }
+
+    public async Task<StoreCustomerContactViewModel> UpdateContact(Guid customerId, EditStoreCustomerContactViewModel viewModel)
+    {
+        _logger.LogInformation("UpdateContact called");
+
+        _logger.LogInformation("Getting customer", customerId);
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(customerId));
+        _logger.LogInformation("Retrieved customer", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+        var contact = customerToUpdate.Contacts!.FirstOrDefault(_ => _!.ObjectId == viewModel.CustomerContact!.ObjectId);
+        Guard.Against.Null(contact, _logger);
+        _mapper.Map(viewModel.CustomerContact, contact);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+
+        return _mapper.Map<StoreCustomerContactViewModel>(contact);
+    }
+
+    public async Task<StoreCustomerViewModel> DeleteContact(Guid customerId, Guid objectId)
+    {
+        _logger.LogInformation("DeleteContact called");
+
+        _logger.LogInformation("Getting customer", customerId);
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(customerId));
+        _logger.LogInformation("Retrieved customer", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
+        var contact = customerToUpdate.Contacts!.FirstOrDefault(_ => _!.ObjectId == objectId);
+        Guard.Against.Null(contact, _logger);
+        customerToUpdate.Contacts?.Remove(contact);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
+
+        return await GetDetailStore(customerId);
+    }
+
+    public async Task DeleteContactEmailAddress(Guid objectId, string? contactName, string? emailAddress)
+    {
+        _logger.LogInformation("DeleteContactEmailAddress called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", objectId);
+        var customer = await _mediator.Send(new GetStoreCustomerQuery(objectId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+
+        var contact = customerToUpdate?.Contacts?.FirstOrDefault(c =>
+            c?.ContactPerson?.Name?.FullName == contactName
+        );
+        Guard.Against.Null(contact, _logger);
+
+        var personEmailAddress = contact?.ContactPerson?.EmailAddresses?.FirstOrDefault(c =>
+            c?.EmailAddress == emailAddress
+        );
+        Guard.Against.Null(personEmailAddress, _logger);
+
+        contact?.ContactPerson?.EmailAddresses?.Remove(personEmailAddress);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate!));
+        _logger.LogInformation("Customer updated successfully");
+    }
+
+    public async Task DeleteIndividualCustomerEmailAddress(Guid objectId, string? emailAddress)
+    {
+        _logger.LogInformation("DeleteContactEmailAddress called");
+
+        _logger.LogInformation("Getting customer {ObjectId}", objectId);
+        var customer = await _mediator.Send(new GetIndividualCustomerQuery(objectId));
+        _logger.LogInformation("Retrieved customer {@Customer}", customer);
+        Guard.Against.Null(customer, _logger);
+
+        var customerToUpdate = _mapper.Map<UpdateCustomer.IndividualCustomer>(customer);
+        Guard.Against.Null(customerToUpdate, _logger);
+
+        var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.FirstOrDefault(c =>
+            c?.EmailAddress == emailAddress
+        );
+        Guard.Against.Null(personEmailAddress, _logger);
+
+        customerToUpdate.Person?.EmailAddresses?.Remove(personEmailAddress);
+
+        _logger.LogInformation("Updating customer {@Customer}", customer);
+        await _mediator.Send(new UpdateCustomer.UpdateCustomerCommand(customerToUpdate));
+        _logger.LogInformation("Customer updated successfully");
     }
 }

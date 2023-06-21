@@ -24,24 +24,15 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer> list,
-                CustomerApiClient sut,
-                Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>>> mockLogger
+                List<Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer> customers,
+                CustomerApiClient sut
             )
             {
                 //Arrange
-                foreach (var item in list)
+                foreach (var customer in customers)
                 {
-                    item.CustomerType = CustomerType.Store;
+                    customer.CustomerType = CustomerType.Store;
                 }
-
-                var customers = new Infrastructure.Api.Customer.Handlers.GetCustomers.GetCustomersResponse
-                {
-                    Customers = list.ToList<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer>(),
-                    TotalCustomers = list.Count
-                };
 
                 httpClient.BaseAddress = uri;
 
@@ -57,7 +48,6 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                             Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
                                             Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
                                             Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>(
-                                                mockLogger.Object
                                             )
                                     },
                                 IgnoreReadOnlyProperties = true,
@@ -70,16 +60,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
 
                 //Act
                 var response = await sut.GetCustomersAsync(
-                    0,
-                    10,
-                    "territory",
-                    CustomerType.Individual,
-                    "accountNumber"
+                    CustomerType.Store
                 );
 
                 //Assert
-                response?.TotalCustomers.Should().Be(list.Count);
-                response?.Customers.Should().BeEquivalentTo(list);
+                response?.Should().BeEquivalentTo(customers);
             }
 
             [Theory, MockHttpData]
@@ -87,7 +72,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                List<Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer> list,
+                List<Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer> customers,
                 CustomerApiClient sut,
                 Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
                     Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
@@ -95,16 +80,10 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
             )
             {
                 //Arrange
-                foreach (var item in list)
+                foreach (var customer in customers)
                 {
-                    item.CustomerType = CustomerType.Individual;
+                    customer.CustomerType = CustomerType.Individual;
                 }
-
-                var customers = new Infrastructure.Api.Customer.Handlers.GetCustomers.GetCustomersResponse
-                {
-                    Customers = list.ToList<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer>(),
-                    TotalCustomers = list.Count
-                };
 
                 httpClient.BaseAddress = uri;
 
@@ -119,9 +98,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
                                             Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
-                                            Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>(
-                                                mockLogger.Object
-                                            )
+                                            Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -133,16 +110,11 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
 
                 //Act
                 var response = await sut.GetCustomersAsync(
-                    0,
-                    10,
-                    "territory",
-                    CustomerType.Individual,
-                    "accountNumber"
+                    CustomerType.Individual
                 );
 
                 //Assert
-                response?.TotalCustomers.Should().Be(list.Count);
-                response?.Customers.Should().BeEquivalentTo(list);
+                response?.Should().BeEquivalentTo(customers);
             }
 
             [Theory, MockHttpData]
@@ -160,13 +132,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetCustomersAsync(
-                    0,
-                    10,
-                    null,
-                    null,
-                    null
-                );
+                Func<Task> func = async () => await sut.GetCustomersAsync(null);
 
                 //Assert
                 await func.Should().ThrowAsync<HttpRequestException>()
@@ -203,9 +169,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.Customer.Handlers.GetCustomer.Customer,
                                             Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer,
-                                            Infrastructure.Api.Customer.Handlers.GetCustomer.IndividualCustomer>(
-                                                mockLogger.Object
-                                            )
+                                            Infrastructure.Api.Customer.Handlers.GetCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -216,7 +180,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.GetCustomerAsync(customer.AccountNumber);
+                var response = await sut.GetCustomerAsync(customer.ObjectId);
 
                 //Assert
                 response.Should().BeEquivalentTo(customer);
@@ -227,7 +191,8 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] MockHttpMessageHandler handler,
                 [Frozen] HttpClient httpClient,
                 Uri uri,
-                CustomerApiClient sut
+                CustomerApiClient sut,
+                Guid objectId
             )
             {
                 //Arrange
@@ -237,7 +202,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     .Respond(HttpStatusCode.NotFound);
 
                 //Act
-                Func<Task> func = async () => await sut.GetCustomerAsync("AW00000001");
+                Func<Task> func = async () => await sut.GetCustomerAsync(objectId);
 
                 //Assert
                 await func.Should().ThrowAsync<CustomerApiClientException>()
@@ -341,9 +306,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer,
                                             Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer,
-                                            Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>(
-                                                mockLogger.Object
-                                            )
+                                            Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -354,7 +317,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.UpdateCustomerAsync("1", customer);
+                var response = await sut.UpdateCustomerAsync(customer);
 
                 //Assert
                 response.Should().BeEquivalentTo(customer);
@@ -387,9 +350,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer,
                                             Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer,
-                                            Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>(
-                                                mockLogger.Object
-                                            )
+                                            Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>()
                                     },
                                 IgnoreReadOnlyProperties = true,
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -400,7 +361,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                     );
 
                 //Act
-                var response = await sut.UpdateCustomerAsync("1", customer);
+                var response = await sut.UpdateCustomerAsync(customer);
 
                 //Assert
                 response.Should().BeEquivalentTo(customer);

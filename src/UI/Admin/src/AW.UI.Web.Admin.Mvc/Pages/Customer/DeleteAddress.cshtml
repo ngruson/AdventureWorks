@@ -1,0 +1,26 @@
+﻿@using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
+@{
+    @model CustomerAddressViewModel;
+
+    var customerId = ViewData["customerId"];
+}
+
+<div class="modal fade" id="delete-address-@Model.ObjectId" tabindex="-1" role="dialog" aria-labelledby="delete-address-label-@Model.ObjectId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-address-label-@Model.ObjectId">Delete Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                <form method="post" asp-page-handler="deleteAddress" asp-route-customerid="@customerId" asp-route-objectid="@Model.ObjectId">
+                    <button type="submit" class="btn btn-primary">Delete Address</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

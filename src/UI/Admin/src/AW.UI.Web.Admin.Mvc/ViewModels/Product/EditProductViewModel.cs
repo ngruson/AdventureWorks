@@ -1,8 +1,7 @@
-﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Product
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.Product;
+
+public class EditProductViewModel
 {
-    public class EditProductViewModel
-    {
-        public string? Key { get; set; }
-        public EditProductProductViewModel? Product { get; set; }
-    }
+    public string? Key { get; set; }
+    public EditProductProductViewModel? Product { get; set; }
 }

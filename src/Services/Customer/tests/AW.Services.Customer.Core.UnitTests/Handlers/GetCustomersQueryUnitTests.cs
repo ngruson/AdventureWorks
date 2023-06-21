@@ -1,6 +1,7 @@
+﻿using Ardalis.Result;
 using Ardalis.Specification;
 using AutoFixture.Xunit2;
-using AW.Services.Customer.Core.Exceptions;
+using AW.Services.Customer.Core.AutoMapper;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -14,46 +15,37 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     public class GetCustomersQueryUnitTests
     {
         [Theory]
-        [AutoMoqData]
-        public async Task Handle_CustomersExists_ReturnCustomers(
+        [AutoMapperData(typeof(MappingProfile))]
+        public async Task return_success_given_customers_exists(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomersQueryHandler sut,
-            List<Entities.Customer> customers,
+            List<Entities.IndividualCustomer> customers,
             GetCustomersQuery query
         )
         {
             // Arrange
             customerRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetCustomersPaginatedSpecification>(),
+                It.IsAny<GetCustomersSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(customers);
-
-            customerRepoMock.Setup(x => x.CountAsync(
-                It.IsAny<CountCustomersSpecification>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(customers.Count);
+            .ReturnsAsync(customers.Cast<Entities.Customer>().ToList());
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            result.Should().NotBeNull();
+            result.IsSuccess.Should().BeTrue();
+
             customerRepoMock.Verify(x => x.ListAsync(
                 It.IsAny<ISpecification<Entities.Customer>>(),
                 It.IsAny<CancellationToken>()
             ));
-            customerRepoMock.Verify(x => x.CountAsync(
-                It.IsAny<ISpecification<Entities.Customer>>(),
-                It.IsAny<CancellationToken>()
-            ));
-            result!.TotalCustomers.Should().Be(customers.Count);
+            result.Value.Count.Should().Be(customers.Count);
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task Handle_NoCustomersExists_ThrowArgumentNullException(
+        public async Task return_notfound_given_customers_does_not_exist(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             GetCustomersQueryHandler sut,
             GetCustomersQuery query
@@ -61,17 +53,38 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
         {
             // Arrange            
             customerRepoMock.Setup(x => x.ListAsync(
-                It.IsAny<GetCustomersPaginatedSpecification>(),
+                It.IsAny<GetCustomersSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
             .ReturnsAsync(new List<Entities.Customer>());
 
             //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+            var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            await func.Should().ThrowAsync<CustomersNotFoundException>()
-                .WithMessage("Customers not found");
+            result.Status.Should().Be(ResultStatus.NotFound);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task return_error_given_exception_was_thrown(
+            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+            GetCustomersQueryHandler sut,
+            GetCustomersQuery query
+        )
+        {
+            // Arrange
+            customerRepoMock.Setup(x => x.ListAsync(
+                It.IsAny<GetCustomersSpecification>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ThrowsAsync(new Exception());
+
+            //Act
+            var result = await sut.Handle(query, CancellationToken.None);
+
+            //Assert
+            result.Status.Should().Be(ResultStatus.Error);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace AW.Services.Customer.Core.Entities
         protected IPreferredAddressFactory? preferredAddressFactory;
 
         public int Id { get; set; }
+        public Guid ObjectId { get; set; }
         public abstract CustomerType CustomerType { get; }
         public string? AccountNumber { get; protected set; }
         public string? Territory { get; private set; }

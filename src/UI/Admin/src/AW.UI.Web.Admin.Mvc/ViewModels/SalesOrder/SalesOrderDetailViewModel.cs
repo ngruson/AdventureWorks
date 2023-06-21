@@ -1,7 +1,6 @@
-﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder
+﻿namespace AW.UI.Web.Admin.Mvc.ViewModels.SalesOrder;
+
+public class SalesOrderDetailViewModel
 {
-    public class SalesOrderDetailViewModel
-    {
-        public SalesOrderViewModel? SalesOrder { get; set; }
-    }
+    public SalesOrderViewModel? SalesOrder { get; set; }
 }

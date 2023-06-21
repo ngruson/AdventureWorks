@@ -1,5 +1,6 @@
-﻿using AutoFixture.Xunit2;
-using AW.Services.Customer.Core.Handlers.AddCustomer;
+﻿using Ardalis.Result;
+using AutoFixture.Xunit2;
+using AW.Services.Customer.Core.Handlers.CreateCustomer;
 using AW.Services.Customer.Core.Handlers.DeleteCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.Customer.Core.Handlers.GetCustomers;
@@ -23,14 +24,14 @@ namespace AW.Services.Customer.REST.API.UnitTests
             public async Task GetCustomers_ShouldReturnCustomers_WhenGivenCustomers(
                 
                 [Frozen] Mock<IMediator> mockMediator,
-                List<Core.Handlers.GetCustomer.StoreCustomerDto> customers,
+                List<Core.Handlers.GetCustomer.StoreCustomer> customers,
                 [Greedy] CustomerController sut,
                 GetCustomersQuery query
             )
             {
                 //Arrange
-                var dto = new GetCustomersDto(
-                    customers.ToList<Core.Handlers.GetCustomer.CustomerDto>(),
+                var dto = new CustomersResult(
+                    customers.ToList<Core.Handlers.GetCustomer.Customer>(),
                     customers.Count
                 );
 
@@ -44,11 +45,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var okObjectResult = actionResult as OkObjectResult;
                 okObjectResult.Should().NotBeNull();
 
-                var response = okObjectResult?.Value as Models.GetCustomers.GetCustomersResult;
-                response?.TotalCustomers.Should().Be(customers.Count);
-                response?.Customers!.Count.Should().Be(customers.Count);
-                response?.Customers![0].AccountNumber.Should().Be(customers[0].AccountNumber);
-                response?.Customers![1].AccountNumber.Should().Be(customers[1].AccountNumber);
+                var result = okObjectResult?.Value as Result<CustomersResult>;
+                result!.Value.TotalCustomers.Should().Be(customers.Count);
+                result!.Value.Customers!.Count.Should().Be(customers.Count);
+                result!.Value.Customers![0].AccountNumber.Should().Be(customers[0].AccountNumber);
+                result!.Value.Customers![1].AccountNumber.Should().Be(customers[1].AccountNumber);
             }
 
             [Theory]
@@ -64,7 +65,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     It.IsAny<GetCustomersQuery>(), 
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((GetCustomersDto?)null);
+                .ReturnsAsync((GetCustomers?)null);
 
                 //Act
                 var actionResult = await sut.GetCustomers(query);
@@ -81,7 +82,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [AutoMoqData]
             public async Task GetCustomer_ShouldReturnCustomer_GivenCustomer(
                 [Frozen] Mock<IMediator> mockMediator,
-                Core.Handlers.GetCustomer.StoreCustomerDto customer,
+                Core.Handlers.GetCustomer.StoreCustomer customer,
                 [Greedy] CustomerController sut,
                 GetCustomerQuery query
             )
@@ -118,7 +119,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                     It.IsAny<GetCustomerQuery>(),
                     It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync((Core.Handlers.GetCustomer.CustomerDto?)null);
+                .ReturnsAsync((Core.Handlers.GetCustomer.Customer?)null);
 #pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
                 //Act
@@ -189,7 +190,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
             [AutoMoqData]
             public async Task AddCustomer_ShouldReturnCustomer_GivenCustomer(
                 [Greedy] CustomerController sut,
-                AddCustomerCommand command
+                CreateCustomerCommand command
             )
             {
                 //Act
@@ -199,7 +200,7 @@ namespace AW.Services.Customer.REST.API.UnitTests
                 var createdResult = actionResult as CreatedResult;
                 createdResult.Should().NotBeNull();
 
-                var customer = createdResult?.Value as Core.Handlers.AddCustomer.CustomerDto;
+                var customer = createdResult?.Value as Core.Handlers.CreateCustomer.Customer;
                 customer.Should().NotBeNull();
             }
         }
@@ -214,11 +215,11 @@ namespace AW.Services.Customer.REST.API.UnitTests
             )
             {
                 //Arrange
-                var dto = new Core.Handlers.UpdateCustomer.StoreCustomerDto
+                var dto = new Core.Handlers.UpdateCustomer.StoreCustomer
                 {
                     AccountNumber = accountNumber,
-                    Addresses = new List<Core.Handlers.UpdateCustomer.CustomerAddressDto>(),
-                    Contacts = new List<Core.Handlers.UpdateCustomer.StoreCustomerContactDto>()
+                    Addresses = new List<Core.Handlers.UpdateCustomer.CustomerAddress>(),
+                    Contacts = new List<Core.Handlers.UpdateCustomer.StoreCustomerContact>()
                 };
 
                 var customer = new Core.Models.UpdateCustomer.StoreCustomer

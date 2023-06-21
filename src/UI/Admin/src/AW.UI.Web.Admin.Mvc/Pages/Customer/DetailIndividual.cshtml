@@ -1,0 +1,374 @@
+﻿@page
+@using AW.UI.Web.Admin.Mvc.ViewModels.Customer;
+@model AW.UI.Web.Admin.Mvc.Pages.Customer.DetailIndividualModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var territories = ViewData["territories"] as IEnumerable<SelectListItem>; ;
+}
+
+<!-- Page Header-->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item">
+                        <a asp-page="./Index" class="breadcrumb-link">Customers</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Customer details</li>
+                </ol>
+            </nav>
+            <h1 class="page-header-title">@Model.Customer!.CustomerName</h1>
+        </div>
+    </div>
+</div>
+<!-- End Page Header-->
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            <form method="post">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Customer!.ObjectId)
+                @Html.HiddenFor(m => m.Customer!.Person!.ObjectId)
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="flex-grow-1 mx-3">
+                            <div class="d-flex mb-1">
+                                <h3 class="mb-0 me-3">@Model.Customer.Person!.Name!.FullName</h3>
+                                @Html.HiddenFor(m => m.Customer!.Person!.Name!.FullName)
+
+                                <!-- Dropdown -->
+                                <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="top">
+                                    <button type="button" class="btn btn-white btn-icon btn-xs rounded-circle" id="editDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi-pencil-fill"></i>
+                                    </button>
+
+                                    <div class="dropdown-menu dropdown-card mt-1" aria-labelledby="editDropdown" style="min-width: 20rem;">
+                                        <!-- Card -->
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Customer!.Person!.Name!.FirstName, new { @class = "form-label" })
+                                                        <input asp-for="Customer!.Person!.Name!.FirstName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Customer!.Person!.Name!.MiddleName, new { @class = "form-label" })
+                                                        <input asp-for="Customer!.Person!.Name!.MiddleName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        @Html.LabelFor(m => m.Customer!.Person!.Name!.LastName, new { @class = "form-label" })
+                                                        <input asp-for="Customer!.Person!.Name!.LastName" class="form-control" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-end gap-2 mt-3">
+                                                    <button type="button" class="btn btn-white btn-sm">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Body -->
+                                    </div>
+                                </div>
+                                <!-- End Dropdown -->
+                            </div>
+                        </div>
+
+                        <div class="d-none d-sm-inline-block ms-auto text-end">
+                            <!-- Dropdown -->
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-white btn-sm" id="actionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions <i class="bi-chevron-down"></i>
+                                </button>
+
+                                <div class="dropdown-menu mt-1" aria-labelledby="actionsDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bi-envelope dropdown-item-icon"></i> Email
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="#">
+                                        <i class="bi-trash dropdown-item-icon text-danger"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End Dropdown -->
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Customer!.AccountNumber, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="Customer!.AccountNumber" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Customer!.Person!.Title, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="Customer!.Person!.Title" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Customer!.Person!.Suffix, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="Customer!.Person!.Suffix" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        @Html.LabelFor(m => m.Customer!.Territory, new { @class = "col-sm-3 col-form-label form-label" })
+                        <div class="col-sm-9">
+                            <input asp-for="Customer!.Territory" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-sm-3 col-form-label form-label">
+                            Email
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.Customer.Person.EmailAddresses.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="Customer!.Person!.EmailAddresses[i].EmailAddress" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-sm-3 col-form-label form-label">
+                            Phone
+                        </label>
+                        <div class="col-sm-9">
+                            @for (int i = 0; i < Model.Customer.Person.PhoneNumbers.Count; i++)
+                            {
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <input asp-for="Customer!.Person!.PhoneNumbers[i].PhoneNumber" class="form-control" readonly />
+                                    </div>
+                                    <div class="col">
+                                        <input asp-for="Customer!.Person!.PhoneNumbers[i].PhoneNumberType" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End Card -->
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header card-header-content-sm-between">
+                <div class="d-grid gap-2 mb-2 mb-sm-0">
+                    <h4 class="card-header-title">Sales orders</h4>
+
+                    <!-- Datatable Info -->
+                    <div id="datatableSalesOrdersCounterInfo" style="display: none;">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-5 me-3">
+                                <span id="datatableSalesOrdersCounter">0</span>
+                                Selected
+                            </span>
+                            <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                                <i class="bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Datatable Info -->
+                </div>
+            </div>
+            <!-- End Header -->
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Table -->
+                <div class="table-responsive datatable-custom">
+                    <table id="datatableSalesOrders" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                        "columnDefs": [{
+                            "targets": [0, 5],
+                            "orderable": false
+                        }],
+                        "order": [],
+                        "info": {
+                            "totalQty": "#datatableWithPaginationInfoTotalQty"
+                        },
+                        "search": "#datatableSearch",
+                        "entries": "#datatableEntries",
+                        "pageLength": 12,
+                        "isResponsive": false,
+                        "isShowPaging": false,
+                        "pagination": "datatablePagination"
+                    }'>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="table-column-pe-0">
+                                    <div class="form-check">
+                                        <input id="datatableSalesOrdersCheckAll" type="checkbox" class="form-check-input">
+                                        <label class="form-check-label" for="datatableSalesOrdersCheckAll"></label>
+                                    </div>
+                                </th>
+                                <th class="table-column-ps-0">Sales order number</th>
+                                <th>Order date</th>
+                                <th>Ship date</th>
+                                <th>Due date</th>
+                                <th>Status</th>
+                                <th>Online ordered</th>
+                                <th>Total due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var salesOrder in Model.Customer.SalesOrders)
+                            {
+                                <tr>
+                                    <td class="table-column-pe-0">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="ordersCheck-@salesOrder.SalesOrderNumber">
+                                            <label class="form-check-label" for="ordersCheck-@salesOrder.SalesOrderNumber"></label>
+                                        </div>
+                                    </td>
+                                    <td class="table-column-ps-0">
+                                        @Html.ActionLink(salesOrder.SalesOrderNumber, "Detail", "SalesOrder", new { salesOrder.SalesOrderNumber })
+                                    </td>
+                                    <td>@salesOrder.OrderDate.ToShortDateString()</td>
+                                    <td>@salesOrder.ShipDate?.ToShortDateString()</td>
+                                    <td>@salesOrder.DueDate.ToShortDateString()</td>
+                                    <td>@salesOrder.Status</td>
+                                    <td>@Html.CheckBoxFor(m => @salesOrder.OnlineOrderFlag, new { disabled = "disabled"})</td>
+                                    <td>@string.Format(new CultureInfo("en-US"), "{0:C}", @salesOrder.TotalDue)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    <div class="col-lg-4">
+        <!-- Card -->
+        <div class="card mb-3 mb-lg-5">
+            <!-- Body -->
+            <div class="card-body">
+                <!-- List Group -->
+                <ul class="list-group list-group-flush list-group-no-gutters">
+                    @foreach (var customerAddress in Model.Customer.Addresses)
+                    {
+                        <li class="list-group-item">
+                            <div class="d-flex">
+                                <div class="me-auto">
+                                    <h5>@customerAddress.AddressType address</h5>
+                                </div>
+                                <div>
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#edit-address-@customerAddress.ObjectId" href="#">
+                                        <i class="bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="btn btn-white btn-icon btn-xs rounded-circle" data-bs-toggle="modal" data-bs-target="#delete-address-@customerAddress.ObjectId" href="#">
+                                        <i class="bi-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <partial name="EditAddress" for="@customerAddress" />
+                            <partial name="DeleteAddress" for="@customerAddress" />
+
+                            <span class="d-block text-body">
+                                @customerAddress.Address.AddressLine1<br>
+                                @if (!string.IsNullOrEmpty(customerAddress.Address.AddressLine2))
+                                {
+                                    @customerAddress.Address.AddressLine2
+
+                                    <br>
+                                }
+                                @(customerAddress.Address.PostalCode), @(customerAddress.Address.City), @(customerAddress.Address.StateProvinceCode)<br>
+                                @Html.HiddenFor(_ => customerAddress.Address.StateProvinceCode, new { data_objectid = customerAddress.ObjectId })
+                                @(customerAddress.Address.CountryRegionCode) <img class="avatar avatar-xss avatar-circle ms-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" onload="this.onload=null; this.src=getFlag('@customerAddress.Address.CountryRegionCode')">
+                            </span>
+                        </li>
+                    }
+                    <li class="list-group-item">
+                        <a data-bs-toggle="modal" data-bs-target="#addAddressModal" href="#">Add new address</a>
+                        @{
+                            var newAddress = new CustomerAddressViewModel();
+                            newAddress.Address.CountryRegionCode = "US";
+                        }
+                        <partial name="AddAddress" for="@newAddress" />
+                    </li>
+                </ul>
+                <!-- End List Group -->
+            </div>
+            <!-- End Body -->
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).on('ready', function () {
+
+            HSCore.components.HSDatatables.init($('#datatableSalesOrders'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableSalesOrdersCheckAll',
+                        counter: '#datatableSalesOrdersCounter',
+                        counterInfo: '#datatableSalesOrdersCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: `<div class="text-center p-4">
+                            <img class="mb-3" src="../assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+                            <img class="mb-3" src="../assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+                        <p class="mb-0">No data to show</p>
+                        </div>`
+                }
+            });
+
+            var addressModals = $(".address-modal");
+
+            for (const modal of addressModals) {
+                modal.addEventListener("show.bs.modal", function (event) {
+                    var dropdown = $("#customerAddress_Address_StateProvinceCode.js-select");
+                    var country = $("#customerAddress_Address_CountryRegionCode");
+                    var objectId = modal.getAttribute("data-objectid");
+                    var stateProvinceCode = $("#customerAddress_Address_StateProvinceCode[data-objectid=" + objectId + "]")
+                        .val();
+                    
+                    getStatesProvinces(
+                        country.val(), 
+                        dropdown, 
+                        stateProvinceCode, 
+                        '@Url.Page("DetailIndividual")?handler=getStatesProvinces&country=js-country'
+                            .replace("js-country", country.val())
+                    );
+                });
+            }
+
+            $(".js-select-country").change(function (e) {
+                var country = this.value;
+                var dropdown = $("#newAddress_Address_StateProvinceCode");
+                
+                getStatesProvinces(
+                    country,
+                    dropdown,
+                    "",
+                    '@Url.Page("DetailIndividual")?handler=getStatesProvinces&country=js-country'
+                        .replace("js-country", country)
+                );
+            });
+        });
+    </script>
+}

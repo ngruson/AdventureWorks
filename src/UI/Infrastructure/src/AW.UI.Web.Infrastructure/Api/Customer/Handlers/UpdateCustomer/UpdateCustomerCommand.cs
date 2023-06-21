@@ -1,16 +1,13 @@
 ﻿using MediatR;
 
-namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer
-{
-    public class UpdateCustomerCommand : IRequest<Customer>
-    {
-        public UpdateCustomerCommand(string? accountNumber, Customer? customer)
-        {
-            AccountNumber = accountNumber;
-            Customer = customer;
-        }
+namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
 
-        public string? AccountNumber { get; set; }
-        public Customer? Customer { get; set; }
+public class UpdateCustomerCommand : IRequest
+{
+    public UpdateCustomerCommand(Customer customer)
+    {
+        Customer = customer;
     }
+
+    public Customer Customer { get; set; }
 }

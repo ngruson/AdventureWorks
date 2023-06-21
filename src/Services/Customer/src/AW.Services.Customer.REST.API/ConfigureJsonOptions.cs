@@ -1,44 +1,55 @@
-﻿using AW.SharedKernel.JsonConverters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using AW.Services.SharedKernel.JsonConverters;
+using AW.SharedKernel.JsonConverters;
 
 namespace AW.Services.Customer.REST.API
 {
     public class ConfigureJsonOptions : IConfigureOptions<JsonOptions>
     {
         private readonly CustomerConverter<
-            Core.Models.GetCustomers.Customer,
-            Core.Models.GetCustomers.StoreCustomer,
-            Core.Models.GetCustomers.IndividualCustomer> _converterGetCustomers;
+            Core.Handlers.GetCustomers.Customer,
+            Core.Handlers.GetCustomers.StoreCustomer,
+            Core.Handlers.GetCustomers.IndividualCustomer> _converterGetCustomers;
 
         private readonly CustomerConverter<
-            Core.Models.GetCustomer.Customer,
-            Core.Models.GetCustomer.StoreCustomer,
-            Core.Models.GetCustomer.IndividualCustomer> _converterGetCustomer;
+            Core.Handlers.GetCustomer.Customer,
+            Core.Handlers.GetCustomer.StoreCustomer,
+            Core.Handlers.GetCustomer.IndividualCustomer> _converterGetCustomer;
 
         private readonly CustomerConverter<
-            Core.Models.UpdateCustomer.Customer,
-            Core.Models.UpdateCustomer.StoreCustomer,
-            Core.Models.UpdateCustomer.IndividualCustomer> _converterUpdateCustomer;
+            Core.Handlers.UpdateCustomer.Customer,
+            Core.Handlers.UpdateCustomer.StoreCustomer,
+            Core.Handlers.UpdateCustomer.IndividualCustomer> _converterUpdateCustomer;
 
         private readonly EmailAddressConverter _emailAddressConverter;
 
         public ConfigureJsonOptions(
-            CustomerConverter<Core.Models.GetCustomers.Customer,
-                Core.Models.GetCustomers.StoreCustomer,
-                Core.Models.GetCustomers.IndividualCustomer> converterGetCustomers,
-            CustomerConverter<Core.Models.GetCustomer.Customer,
-                Core.Models.GetCustomer.StoreCustomer,
-                Core.Models.GetCustomer.IndividualCustomer> converterGetCustomer,
-            CustomerConverter<Core.Models.UpdateCustomer.Customer,
-                Core.Models.UpdateCustomer.StoreCustomer,
-                Core.Models.UpdateCustomer.IndividualCustomer> converterUpdateCustomer,
-            EmailAddressConverter emailAddressConverter
-        ) => (_converterGetCustomers, _converterGetCustomer, _converterUpdateCustomer, _emailAddressConverter) = 
-                (converterGetCustomers, converterGetCustomer, converterUpdateCustomer, emailAddressConverter);
+            CustomerConverter<
+                Core.Handlers.GetCustomers.Customer,
+                Core.Handlers.GetCustomers.StoreCustomer,
+                Core.Handlers.GetCustomers.IndividualCustomer
+            > converterGetCustomers,
+            CustomerConverter<
+                Core.Handlers.GetCustomer.Customer,
+                Core.Handlers.GetCustomer.StoreCustomer,
+                Core.Handlers.GetCustomer.IndividualCustomer
+            > converterGetCustomer,
+            CustomerConverter<
+                Core.Handlers.UpdateCustomer.Customer,
+                Core.Handlers.UpdateCustomer.StoreCustomer,
+                Core.Handlers.UpdateCustomer.IndividualCustomer
+            > converterUpdateCustomer,
+            EmailAddressConverter emailAddressConverter)
+        {
+            _converterGetCustomers = converterGetCustomers;
+            _converterGetCustomer = converterGetCustomer;
+            _converterUpdateCustomer = converterUpdateCustomer;
+            _emailAddressConverter = emailAddressConverter;
+        }
+                
 
         public void Configure(JsonOptions options)
         {

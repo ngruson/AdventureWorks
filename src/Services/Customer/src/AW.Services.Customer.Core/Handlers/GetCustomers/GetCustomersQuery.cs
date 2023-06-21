@@ -1,26 +1,19 @@
-﻿using AW.Services.Customer.Core.Handlers.GetCustomer;
+﻿using Ardalis.Result;
+using AW.SharedKernel.Interfaces;
 using MediatR;
 
-namespace AW.Services.Customer.Core.Handlers.GetCustomers
-{
-    public class GetCustomersQuery : IRequest<GetCustomersDto?>
-    {
-        public GetCustomersQuery()
-        {
-        }
-        public GetCustomersQuery(int pageIndex, int pageSize, CustomerType? customerType, string territory, string accountNumber)
-        {
-            PageIndex = pageIndex;
-            PageSize = pageSize;
-            CustomerType = customerType;
-            Territory = territory;
-            AccountNumber = accountNumber;
-        }
+namespace AW.Services.Customer.Core.Handlers.GetCustomers;
 
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public CustomerType? CustomerType { get; set; }
-        public string? Territory { get; set; }
-        public string? AccountNumber { get; set; }
+public class GetCustomersQuery : IRequest<Result<List<Customer>>>
+{
+    public GetCustomersQuery() { }
+
+    public GetCustomersQuery(CustomerType? customerType = null, bool includeDetails = false)
+    {
+        CustomerType = customerType;
+        IncludeDetails = includeDetails;
     }
+
+    public CustomerType? CustomerType { get; private init; }
+    public bool IncludeDetails { get; private init; }
 }

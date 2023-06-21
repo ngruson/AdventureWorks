@@ -14,252 +14,251 @@ using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.DeleteSalesOrder;
 using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder;
 using AW.UI.Web.Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder;
 
-namespace AW.UI.Web.Admin.Mvc.Services
+namespace AW.UI.Web.Admin.Mvc.Services;
+
+public class SalesOrderService : ISalesOrderService
 {
-    public class SalesOrderService : ISalesOrderService
+    private readonly ILogger<SalesOrderService> _logger;
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
+
+    public SalesOrderService(
+        ILogger<SalesOrderService> logger,
+        IMapper mapper,
+        IMediator mediator
+    )
     {
-        private readonly ILogger<SalesOrderService> _logger;
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
+        _logger = logger;
+        _mapper = mapper;
+        _mediator = mediator;
+    }
 
-        public SalesOrderService(
-            ILogger<SalesOrderService> logger,
-            IMapper mapper,
-            IMediator mediator
-        )
-        {
-            _logger = logger;
-            _mapper = mapper;
-            _mediator = mediator;
-        }
+    public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.CustomerType? customerType)
+    {
+        _logger.LogInformation("GetSalesOrders called");
 
-        public async Task<SalesOrderIndexViewModel> GetSalesOrders(int pageIndex, int pageSize, string territory, Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.CustomerType? customerType)
-        {
-            _logger.LogInformation("GetSalesOrders called");
-
-            var response = await _mediator.Send(
-                new GetSalesOrdersQuery(
-                    pageIndex,
-                    pageSize,
-                    territory,
-                    customerType
-                )
-            );
-
-            var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalSalesOrders / pageSize).ToString());
-
-            var vm = new SalesOrderIndexViewModel(
-                _mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
-                await GetTerritories(),
-                GetCustomerTypes(),
+        var response = await _mediator.Send(
+            new GetSalesOrdersQuery(
+                pageIndex,
+                pageSize,
                 territory,
-                string.Empty,
-                new PaginationInfoViewModel(
-                    response.TotalSalesOrders,
-                    response.SalesOrders!.Count,
-                    pageIndex,
-                    totalPages,
-                    pageIndex == 0 ? "disabled" : "",
-                    pageIndex == totalPages - 1 ? "disabled" : ""
-                )
-            );
+                customerType
+            )
+        );
 
-            vm.PaginationInfo.Next = vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1 ? "disabled" : "";
-            vm.PaginationInfo.Previous = vm.PaginationInfo.ActualPage == 0 ? "disabled" : "";
+        var totalPages = int.Parse(Math.Ceiling((decimal)response.TotalSalesOrders / pageSize).ToString());
 
-            return vm;
+        var vm = new SalesOrderIndexViewModel(
+            _mapper.Map<List<SalesOrderViewModel>>(response.SalesOrders),
+            await GetTerritories(),
+            GetCustomerTypes(),
+            territory,
+            string.Empty,
+            new PaginationInfoViewModel(
+                response.TotalSalesOrders,
+                response.SalesOrders!.Count,
+                pageIndex,
+                totalPages,
+                pageIndex == 0 ? "disabled" : "",
+                pageIndex == totalPages - 1 ? "disabled" : ""
+            )
+        );
+
+        vm.PaginationInfo.Next = vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1 ? "disabled" : "";
+        vm.PaginationInfo.Previous = vm.PaginationInfo.ActualPage == 0 ? "disabled" : "";
+
+        return vm;
+    }
+
+    private async Task<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string? salesOrderNumber)
+    {
+        _logger.LogInformation("Getting sales order for {SalesOrderNumber}", salesOrderNumber);
+        var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+        _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
+        Guard.Against.Null(salesOrder, _logger);
+
+        return salesOrder;
+    }
+
+    private async Task UpdateSalesOrder(Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
+    {
+        _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
+        await _mediator.Send(new UpdateSalesOrderCommand(salesOrder));
+        _logger.LogInformation("Sales order updated successfully");
+    }
+
+    private async Task<List<SelectListItem>> GetTerritories()
+    {
+        _logger.LogInformation("GetTerritories called.");
+        var territories = await _mediator.Send(new GetTerritoriesQuery());
+
+        var items = territories
+            .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
+            .OrderBy(b => b.Text)
+            .ToList();
+
+        var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
+        items.Insert(0, allItem);
+
+        return items;
+    }
+
+    private List<SelectListItem> GetCustomerTypes()
+    {
+        _logger.LogInformation("GetCustomerTypes called.");
+
+        var items = new List<SelectListItem>
+        {
+            new SelectListItem() { Value = "", Text = "All", Selected = true },
+            new SelectListItem() { Value = "Individual", Text = "Individual"},
+            new SelectListItem() { Value = "Store", Text = "Store" }
+        };
+
+        return items;
+    }
+
+    public async Task<SalesOrderDetailViewModel> GetSalesOrderDetail(string salesOrderNumber)
+    {
+        _logger.LogInformation("GetSalesOrder called");
+        var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+
+        var vm = new SalesOrderDetailViewModel
+        {
+            SalesOrder = _mapper.Map<SalesOrderViewModel>(salesOrder)
+        };
+
+        return vm;
+    }
+
+    public async Task<ApproveSalesOrderViewModel> GetSalesOrderForApproval(string salesOrderNumber)
+    {
+        _logger.LogInformation("GetSalesOrderForApproval called");
+        var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+
+        return _mapper.Map<ApproveSalesOrderViewModel>(salesOrder);
+    }
+
+    public async Task UpdateSalesOrder(SalesOrderViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
+
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
+
+        _mapper.Map(viewModel, salesOrderToUpdate);
+
+        _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
+        await _mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
+        _logger.LogInformation("Sales order updated successfully");
+    }
+
+    public async Task UpdateSalesOrder(ApproveSalesOrderViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
+
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
+
+        var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(viewModel.Territory));
+        var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesPerson);
+
+        salesOrderToUpdate.Territory = viewModel.Territory;
+        salesOrderToUpdate.SalesPerson = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
+
+        await UpdateSalesOrder(salesOrderToUpdate);
+    }
+
+    public async Task ApproveSalesOrder(string salesOrderNumber)
+    {
+        _logger.LogInformation("Approving sales order {SalesOrderNumber}", salesOrderNumber);
+        await _mediator.Send(new ApproveSalesOrderCommand(salesOrderNumber));
+        _logger.LogInformation("Sales order approved successfully");
+    }
+
+    public async Task DuplicateSalesOrder(string salesOrderNumber)
+    {
+        _logger.LogInformation("Duplicating sales order {SalesOrderNumber}", salesOrderNumber);
+        await _mediator.Send(new DuplicateSalesOrderCommand(salesOrderNumber));
+        _logger.LogInformation("Sales order duplicated successfully");
+    }
+
+    public async Task DeleteSalesOrder(string salesOrderNumber)
+    {
+        _logger.LogInformation("Deleting sales order {SalesOrderNumber}", salesOrderNumber);
+        await _mediator.Send(new DeleteSalesOrderCommand(salesOrderNumber));
+        _logger.LogInformation("Sales order deleted successfully");
+    }
+
+    public async Task UpdateOrderlines(UpdateOrderlinesViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
+
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
+
+        foreach (var updatedOrderLine in viewModel.SalesOrder?.OrderLines!)
+        {
+            var orderLine = salesOrderToUpdate.OrderLines?.SingleOrDefault(_ => _.ProductNumber == updatedOrderLine.ProductNumber);
+            Guard.Against.Null(orderLine);
+
+            orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty!);
         }
 
-        private async Task<Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.SalesOrder> GetSalesOrder(string? salesOrderNumber)
+        await UpdateSalesOrder(salesOrderToUpdate);
+    }
+
+    public async Task UpdateOrderInfo(UpdateOrderInfoViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel?.SalesOrder?.SalesOrderNumber);
+
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
+
+        salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel?.SalesOrder?.RevisionNumber!);
+        salesOrderToUpdate.OnlineOrderFlag = viewModel!.SalesOrder!.OnlineOrderFlag;
+        salesOrderToUpdate.DueDate = viewModel.SalesOrder.DueDate;
+        salesOrderToUpdate.ShipDate = viewModel.SalesOrder.ShipDate;
+        salesOrderToUpdate.PurchaseOrderNumber = viewModel.SalesOrder.PurchaseOrderNumber;
+        salesOrderToUpdate.AccountNumber = viewModel.SalesOrder.AccountNumber;
+        salesOrderToUpdate.ShipMethod = viewModel.SalesOrder.ShipMethod;
+        salesOrderToUpdate.Territory = viewModel.SalesOrder.Territory;
+
+        if (!string.IsNullOrEmpty(viewModel.SalesOrder.SalesPerson))
         {
-            _logger.LogInformation("Getting sales order for {SalesOrderNumber}", salesOrderNumber);
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
-            _logger.LogInformation("Retrieved sales order {@SalesOrder}", salesOrder);
-            Guard.Against.Null(salesOrder, _logger);
+            var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(salesOrderToUpdate.Territory));
+            var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesOrder.SalesPerson);
+            Guard.Against.Null(salesPerson, _logger);
 
-            return salesOrder;
-        }
-
-        private async Task UpdateSalesOrder(Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder salesOrder)
-        {
-            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await _mediator.Send(new UpdateSalesOrderCommand(salesOrder));
-            _logger.LogInformation("Sales order updated successfully");
-        }
-
-        private async Task<List<SelectListItem>> GetTerritories()
-        {
-            _logger.LogInformation("GetTerritories called.");
-            var territories = await _mediator.Send(new GetTerritoriesQuery());
-
-            var items = territories
-                .Select(t => new SelectListItem() { Value = t.Name, Text = $"{t.Name} ({t.CountryRegionCode})" })
-                .OrderBy(b => b.Text)
-                .ToList();
-
-            var allItem = new SelectListItem() { Value = "", Text = "All", Selected = true };
-            items.Insert(0, allItem);
-
-            return items;
-        }
-
-        private List<SelectListItem> GetCustomerTypes()
-        {
-            _logger.LogInformation("GetCustomerTypes called.");
-
-            var items = new List<SelectListItem>
+            salesOrderToUpdate.SalesPerson = new Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
             {
-                new SelectListItem() { Value = "", Text = "All", Selected = true },
-                new SelectListItem() { Value = "Individual", Text = "Individual"},
-                new SelectListItem() { Value = "Store", Text = "Store" }
+                Name = salesPerson?.Name
             };
-
-            return items;
         }
 
-        public async Task<SalesOrderDetailViewModel> GetSalesOrderDetail(string salesOrderNumber)
-        {
-            _logger.LogInformation("GetSalesOrder called");
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+        await UpdateSalesOrder(salesOrderToUpdate);
+    }
 
-            var vm = new SalesOrderDetailViewModel
-            {
-                SalesOrder = _mapper.Map<SalesOrderViewModel>(salesOrder)
-            };
+    public async Task UpdateShipToAddress(UpdateAddressViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
-            return vm;
-        }
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
 
-        public async Task<ApproveSalesOrderViewModel> GetSalesOrderForApproval(string salesOrderNumber)
-        {
-            _logger.LogInformation("GetSalesOrderForApproval called");
-            var salesOrder = await _mediator.Send(new GetSalesOrderQuery(salesOrderNumber));
+        _mapper.Map(viewModel.SalesOrder?.ShipToAddress, salesOrderToUpdate.ShipToAddress);
 
-            return _mapper.Map<ApproveSalesOrderViewModel>(salesOrder);
-        }
+        await UpdateSalesOrder(salesOrderToUpdate);
+    }
 
-        public async Task UpdateSalesOrder(SalesOrderViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
+    public async Task UpdateBillToAddress(UpdateAddressViewModel viewModel)
+    {
+        var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
 
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
+        var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
+        Guard.Against.Null(salesOrderToUpdate, _logger);
 
-            _mapper.Map(viewModel, salesOrderToUpdate);
+        _mapper.Map(viewModel.SalesOrder?.BillToAddress, salesOrderToUpdate.BillToAddress);
 
-            _logger.LogInformation("Updating sales order {@SalesOrder}", salesOrder);
-            await _mediator.Send(new UpdateSalesOrderCommand(salesOrderToUpdate));
-            _logger.LogInformation("Sales order updated successfully");
-        }
-
-        public async Task UpdateSalesOrder(ApproveSalesOrderViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrderNumber);
-
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
-
-            var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(viewModel.Territory));
-            var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesPerson);
-
-            salesOrderToUpdate.Territory = viewModel.Territory;
-            salesOrderToUpdate.SalesPerson = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson>(salesPerson);
-
-            await UpdateSalesOrder(salesOrderToUpdate);
-        }
-
-        public async Task ApproveSalesOrder(string salesOrderNumber)
-        {
-            _logger.LogInformation("Approving sales order {SalesOrderNumber}", salesOrderNumber);
-            await _mediator.Send(new ApproveSalesOrderCommand(salesOrderNumber));
-            _logger.LogInformation("Sales order approved successfully");
-        }
-
-        public async Task DuplicateSalesOrder(string salesOrderNumber)
-        {
-            _logger.LogInformation("Duplicating sales order {SalesOrderNumber}", salesOrderNumber);
-            await _mediator.Send(new DuplicateSalesOrderCommand(salesOrderNumber));
-            _logger.LogInformation("Sales order duplicated successfully");
-        }
-
-        public async Task DeleteSalesOrder(string salesOrderNumber)
-        {
-            _logger.LogInformation("Deleting sales order {SalesOrderNumber}", salesOrderNumber);
-            await _mediator.Send(new DeleteSalesOrderCommand(salesOrderNumber));
-            _logger.LogInformation("Sales order deleted successfully");
-        }
-
-        public async Task UpdateOrderlines(UpdateOrderlinesViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
-
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
-
-            foreach (var updatedOrderLine in viewModel.SalesOrder?.OrderLines!)
-            {
-                var orderLine = salesOrderToUpdate.OrderLines?.SingleOrDefault(_ => _.ProductNumber == updatedOrderLine.ProductNumber);
-                Guard.Against.Null(orderLine);
-
-                orderLine.OrderQty = short.Parse(updatedOrderLine.OrderQty!);
-            }
-
-            await UpdateSalesOrder(salesOrderToUpdate);
-        }
-
-        public async Task UpdateOrderInfo(UpdateOrderInfoViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel?.SalesOrder?.SalesOrderNumber);
-
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
-
-            salesOrderToUpdate.RevisionNumber = byte.Parse(viewModel?.SalesOrder?.RevisionNumber!);
-            salesOrderToUpdate.OnlineOrderFlag = viewModel!.SalesOrder!.OnlineOrderFlag;
-            salesOrderToUpdate.DueDate = viewModel.SalesOrder.DueDate;
-            salesOrderToUpdate.ShipDate = viewModel.SalesOrder.ShipDate;
-            salesOrderToUpdate.PurchaseOrderNumber = viewModel.SalesOrder.PurchaseOrderNumber;
-            salesOrderToUpdate.AccountNumber = viewModel.SalesOrder.AccountNumber;
-            salesOrderToUpdate.ShipMethod = viewModel.SalesOrder.ShipMethod;
-            salesOrderToUpdate.Territory = viewModel.SalesOrder.Territory;
-
-            if (!string.IsNullOrEmpty(viewModel.SalesOrder.SalesPerson))
-            {
-                var salesPersons = await _mediator.Send(new GetSalesPersonsQuery(salesOrderToUpdate.Territory));
-                var salesPerson = salesPersons.SingleOrDefault(_ => _.Name?.FullName == viewModel.SalesOrder.SalesPerson);
-                Guard.Against.Null(salesPerson, _logger);
-
-                salesOrderToUpdate.SalesPerson = new Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesPerson
-                {
-                    Name = salesPerson?.Name
-                };
-            }
-
-            await UpdateSalesOrder(salesOrderToUpdate);
-        }
-
-        public async Task UpdateShipToAddress(UpdateAddressViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
-
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
-
-            _mapper.Map(viewModel.SalesOrder?.ShipToAddress, salesOrderToUpdate.ShipToAddress);
-
-            await UpdateSalesOrder(salesOrderToUpdate);
-        }
-
-        public async Task UpdateBillToAddress(UpdateAddressViewModel viewModel)
-        {
-            var salesOrder = await GetSalesOrder(viewModel.SalesOrder?.SalesOrderNumber);
-
-            var salesOrderToUpdate = _mapper.Map<Infrastructure.Api.SalesOrder.Handlers.UpdateSalesOrder.SalesOrder>(salesOrder);
-            Guard.Against.Null(salesOrderToUpdate, _logger);
-
-            _mapper.Map(viewModel.SalesOrder?.BillToAddress, salesOrderToUpdate.BillToAddress);
-
-            await UpdateSalesOrder(salesOrderToUpdate);
-        }
+        await UpdateSalesOrder(salesOrderToUpdate);
     }
 }

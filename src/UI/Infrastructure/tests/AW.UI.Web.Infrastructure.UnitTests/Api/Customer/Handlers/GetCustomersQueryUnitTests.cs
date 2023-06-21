@@ -15,32 +15,27 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
             GetCustomersQueryHandler sut,
             GetCustomersQuery query,
-            GetCustomersResponse customersResponse
+            List<StoreCustomer> customers
         )
         {
             //Arrange
             mockCustomerApiClient.Setup(_ => _.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string?>(),
-                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>(),
-                    It.IsAny<string?>()
+                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>()
                 )
             )
-            .ReturnsAsync(customersResponse);
+            .ReturnsAsync(customers
+                .Cast<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer?>()
+                .ToList()
+             );
 
             //Act
             var result = await sut.Handle(query, CancellationToken.None);
 
             //Assert
-            result.Should().Be(customersResponse);
+            result.Should().BeEquivalentTo(customers);
 
             mockCustomerApiClient.Verify(_ => _.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string?>(),
-                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>(),
-                    It.IsAny<string?>()
+                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>()
                 )
             );
         }
@@ -54,14 +49,10 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
         {
             //Arrange
             mockCustomerApiClient.Setup(_ => _.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string?>(),
-                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>(),
-                    It.IsAny<string?>()
+                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>()
                 )
             )
-            .ReturnsAsync((GetCustomersResponse?)null);
+            .ReturnsAsync((List<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer?>?)null);
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
@@ -71,11 +62,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
                 .WithMessage("Value cannot be null. (Parameter 'customers')");
 
             mockCustomerApiClient.Verify(_ => _.GetCustomersAsync(
-                    It.IsAny<int>(),
-                    It.IsAny<int>(),
-                    It.IsAny<string?>(),
-                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>(),
-                    It.IsAny<string?>()
+                    It.IsAny<AW.SharedKernel.Interfaces.CustomerType?>()
                 )
             );
         }

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using AW.Services.Customer.Core.GuardClauses;
 using AW.Services.Customer.Core.Specifications;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomer
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerDto>
+    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, Result<Customer>>
     {
         private readonly ILogger<GetCustomerQueryHandler> _logger;
         private readonly IMapper _mapper;
@@ -20,20 +21,31 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomer
             IRepository<Entities.Customer> repository
         ) => (_logger, _mapper, _repository) = (logger, mapper, repository);
 
-        public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
+        public async Task<Result<Customer>> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Handle called");
-            _logger.LogInformation("Getting customer from database");
+            try
+            {
+                _logger.LogInformation("Getting customer from database");
 
-            var spec = new GetCustomerSpecification(
-                request.AccountNumber
-            );
+                var spec = new GetCustomerSpecification(
+                    request.ObjectId
+                );
 
-            var customer = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
-            Guard.Against.CustomerNull(customer, request.AccountNumber!, _logger);
+                var customer = await _repository.SingleOrDefaultAsync(spec, cancellationToken);
+                var result = Guard.Against.CustomerNull(customer, request.ObjectId, _logger);
+                if (!result.IsSuccess)
+                    return result;
 
-            _logger.LogInformation("Returning customer");
-            return _mapper.Map<CustomerDto>(customer);
+                _logger.LogInformation("Returning customer");
+                return Result.Success(
+                    _mapper.Map<Customer>(customer)
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred: {Message}", ex.Message);
+                return Result.Error(ex.Message);
+            }
         }
     }
 }

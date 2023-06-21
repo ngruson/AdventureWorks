@@ -5,6 +5,7 @@ namespace AW.Services.Customer.Core.Entities
     public class SalesOrder
     {
         public int Id { get; set; }
+        public Guid ObjectId { get; set; }
         public DateTime OrderDate { get; private set; }
 
         public DateTime DueDate { get; private set; }

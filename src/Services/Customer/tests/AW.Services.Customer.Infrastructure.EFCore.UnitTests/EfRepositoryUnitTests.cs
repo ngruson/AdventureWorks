@@ -1,4 +1,4 @@
-using Ardalis.Specification;
+﻿using Ardalis.Specification;
 using Entities = AW.Services.Customer.Core.Entities;
 using AW.Services.Customer.Core.Specifications;
 using FluentAssertions;
@@ -40,13 +40,13 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
         [Theory]
         [AutoMoqData]
         public async Task SingleOrDefaultAsync_ReturnsObject(
-            List<string> customerNumbers,
+            List<Guid> ids,
             [Frozen] Mock<AWContext> mockContext
         )
         {
             //Arrange
-            var customers = customerNumbers
-                .Select(customerNumber => new Entities.IndividualCustomer(customerNumber))
+            var customers = ids
+                .Select(id => new Entities.IndividualCustomer {  ObjectId =  id })
                 .Cast<Entities.Customer>()
                 .ToList();
 
@@ -57,7 +57,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var spec = new GetCustomerSpecification(customers[0].AccountNumber!);
+            var spec = new GetCustomerSpecification(customers[0].ObjectId);
             var result = await repository.SingleOrDefaultAsync(spec);
 
             //Assert
@@ -103,7 +103,7 @@ namespace AW.Services.Customer.Infrastructure.EFCore.UnitTests
             var repository = new EfRepository<Entities.Customer>(mockContext.Object);
 
             //Act
-            var spec = new GetCustomersPaginatedSpecification(0, 10, Entities.CustomerType.Store, string.Empty, string.Empty);
+            var spec = new GetCustomersSpecification(Entities.CustomerType.Store);
             var list = await repository.ListAsync(spec);
 
             //Assert

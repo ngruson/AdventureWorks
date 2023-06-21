@@ -7,31 +7,30 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Department
+namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Department;
+
+public class IndexModelUnitTests
 {
-    public class IndexModelUnitTests
+    public class Get
     {
-        public class Get
+        [Theory, AutoMoqData]
+        public async Task get_departments(
+            [Frozen] Mock<IDepartmentService> departmentService,
+            [Greedy] IndexModel sut,
+            List<DepartmentViewModel> departments
+        )
         {
-            [Theory, AutoMoqData]
-            public async Task get_departments(
-                [Frozen] Mock<IDepartmentService> departmentService,
-                [Greedy] IndexModel sut,
-                List<DepartmentViewModel> departments
-            )
-            {
-                //Arrange
-                departmentService.Setup(_ => _.GetDepartments())
-                    .ReturnsAsync(departments);
+            //Arrange
+            departmentService.Setup(_ => _.GetDepartments())
+                .ReturnsAsync(departments);
 
-                //Act
-                await sut.OnGetAsync();
+            //Act
+            await sut.OnGetAsync();
 
-                //Assert
-                sut.Departments.Should().BeEquivalentTo(departments);
+            //Assert
+            sut.Departments.Should().BeEquivalentTo(departments);
 
-                departmentService.Verify(_ => _.GetDepartments());
-            }
+            departmentService.Verify(_ => _.GetDepartments());
         }
     }
 }

@@ -1,19 +1,20 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.GetPreferredAddress
 {
-    public class GetPreferredAddressQuery : IRequest<AddressDto?>
+    public class GetPreferredAddressQuery : IRequest<Result<AddressDto?>>
     {
         public GetPreferredAddressQuery()
         {
         }
-        public GetPreferredAddressQuery(string accountNumber, string addressType)
+        public GetPreferredAddressQuery(Guid customerId, string addressType)
         {
-            AccountNumber = accountNumber;
+            CustomerId = customerId;
             AddressType = addressType;
         }
 
-        public string? AccountNumber { get; set; }
+        public Guid CustomerId { get; set; }
         public string? AddressType { get; set; }
     }
 }

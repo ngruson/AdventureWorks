@@ -3,6 +3,7 @@ using AW.Services.Customer.Core.Handlers.UpdateCustomerAddress;
 using AW.Services.Customer.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
+using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using Xunit;
@@ -13,76 +14,62 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
     {
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_ValidCommand_NoValidationError(
+        public async Task no_validation_errors_given_valid_command(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
-            Entities.StoreCustomer customer,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
-            accountNumber = accountNumber[..10];
-            var command = new UpdateCustomerAddressCommand(accountNumber, customerAddress);
+            customerAddress.Address!.PostalCode = customerAddress.Address.PostalCode![0..15];
+            customerAddress.Address.City = customerAddress.Address.City![0..30];
+            customerAddress.Address.StateProvinceCode = customerAddress.Address.StateProvinceCode![0..3];
+            customerAddress.Address.CountryRegionCode = customerAddress.Address.CountryRegionCode![0..3];
 
-            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            customerRepoMock.Setup(x => x.AnyAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(customer);
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldNotHaveValidationErrorFor(command => command.AccountNumber);
-            result.ShouldNotHaveValidationErrorFor(command => command.CustomerAddress);
+            result.IsValid.Should().BeTrue();
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithEmptyAccountNumber_ValidationError(
+        public async Task validation_error_given_no_accountnumber(
             UpdateCustomerAddressCommandValidator sut,
-            CustomerAddressDto customerAddress
+            CustomerAddress customerAddress
         )
         {
             //Arrange
-            var command = new UpdateCustomerAddressCommand(string.Empty, customerAddress);
+            var command = new UpdateCustomerAddressCommand(Guid.Empty, customerAddress);
 
             //Act
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
-                .WithErrorMessage("Account number is required");
+            result.ShouldHaveValidationErrorFor(command => command.CustomerId);
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithAccountNumberTooLong_ValidationError(
-            UpdateCustomerAddressCommandValidator sut,
-            UpdateCustomerAddressCommand command
-        )
-        {
-            //Act
-            var result = await sut.TestValidateAsync(command);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
-                .WithErrorMessage("Account number must not exceed 10 characters");
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public async Task TestValidate_CustomerNotFound_ValidationError(
+        public async Task validation_error_given_customer_notfound(
             [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
             UpdateCustomerAddressCommandValidator sut,
-            CustomerAddressDto customerAddress,
-            string accountNumber
+            CustomerAddress customerAddress,
+            Guid customerId
         )
         {
             //Arrange
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
 
             customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
@@ -94,19 +81,27 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             var result = await sut.TestValidateAsync(command);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(command => command.AccountNumber)
+            result.ShouldHaveValidationErrorFor(command => command.CustomerId)
                 .WithErrorMessage("Customer does not exist");
         }
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutCustomerAddress_ValidationError(
+        public async Task validation_error_given_no_customer_address(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber
+            Guid customerId
         )
         {
             //Arrange
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], null);
+            var command = new UpdateCustomerAddressCommand(customerId, null);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -118,20 +113,28 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutAddressType_ValidationError(
+        public async Task validation_error_given_no_address_type(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber
+            Guid customerId
         )
         {
             //Arrange
             var command = new UpdateCustomerAddressCommand(
-                accountNumber[..10], 
-                new CustomerAddressDto
+                customerId, 
+                new CustomerAddress
                 {
                     AddressType = "",
-                    Address = new AddressDto()
+                    Address = new Address()
                 }
             );
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -143,18 +146,26 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutAddress_ValidationError(
+        public async Task validation_error_given_no_address(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
+            Guid customerId,
             string addressType
         )
         {
             //Arrange
-            var customerAddress = new CustomerAddressDto 
+            var customerAddress = new CustomerAddress 
             {
                 AddressType = addressType
             };
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -166,15 +177,23 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutAddressLine1_ValidationError(
+        public async Task validation_error_given_no_addressline1(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
             customerAddress.Address!.AddressLine1 = "";
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -186,10 +205,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_AddressLine1TooLong_ValidationError(
+        public async Task validation_error_given_addressline1_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
@@ -197,7 +217,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 customerAddress.Address.AddressLine1 +
                 customerAddress.Address.AddressLine1;
 
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -209,10 +236,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_AddressLine2TooLong_ValidationError(
+        public async Task validation_error_given_addressline2_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
@@ -220,7 +248,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 customerAddress.Address.AddressLine2 +
                 customerAddress.Address.AddressLine2;
 
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);            
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -232,15 +267,23 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutPostalCode_ValidationError(
+        public async Task validation_error_given_no_postalcode(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
             customerAddress.Address!.PostalCode = "";
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -252,14 +295,22 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_PostalCodeTooLong_ValidationError(
+        public async Task validation_error_given_postalcode_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -271,16 +322,24 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutCity_ValidationError(
+        public async Task validation_error_given_no_city(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
             customerAddress.Address!.PostalCode = customerAddress.Address!.PostalCode![..15];
             customerAddress.Address.City = "";
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -292,10 +351,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_CityTooLong_ValidationError(
+        public async Task validation_error_given_city_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
@@ -305,7 +365,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             customerAddress.Address.CountryRegionCode = customerAddress.Address!.CountryRegionCode![..3];
             customerAddress.Address.City = "a".PadRight(35, 'b');
 
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -317,10 +384,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutStateProvince_ValidationError(
+        public async Task validation_error_given_no_stateprovince(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
@@ -328,7 +396,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             customerAddress.Address.City = customerAddress.Address!.City![..30];
             customerAddress.Address.StateProvinceCode = "";
 
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -340,16 +415,24 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_StateProvinceTooLong_ValidationError(
+        public async Task validation_error_given_stateprovince_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
             customerAddress.Address!.PostalCode = customerAddress.Address!.PostalCode![..15];
             customerAddress.Address.City = customerAddress.Address!.City![..30];
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -361,10 +444,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_WithoutCountry_ValidationError(
+        public async Task validation_error_given_no_country(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
@@ -372,7 +456,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             customerAddress.Address.City = customerAddress.Address!.City![..30];
             customerAddress.Address.StateProvinceCode = customerAddress.Address!.StateProvinceCode![..3];
             customerAddress.Address.CountryRegionCode = "";
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -384,17 +475,25 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_CountryTooLong_ValidationError(
+        public async Task validation_error_given_country_toolong(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddress
+            Guid customerId,
+            CustomerAddress customerAddress
         )
         {
             //Arrange
             customerAddress.Address!.PostalCode = customerAddress.Address!.PostalCode![..15];
             customerAddress.Address.City = customerAddress.Address!.City![..30];
             customerAddress.Address.StateProvinceCode = customerAddress.Address!.StateProvinceCode![..3];
-            var command = new UpdateCustomerAddressCommand(accountNumber[..10], customerAddress);
+            var command = new UpdateCustomerAddressCommand(customerId, customerAddress);
+
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
 
             //Act
             var result = await sut.TestValidateAsync(command);
@@ -406,12 +505,12 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task TestValidate_AddressAlreadyExists_ValidationError(
-            [Frozen] Mock<IRepository<Entities.Customer>> customerRepoMock,
+        public async Task validation_error_given_address_already_exists(
+            [Frozen] Mock<IRepository<Entities.Customer>> repository,
             Entities.StoreCustomer customer,
             UpdateCustomerAddressCommandValidator sut,
-            string accountNumber,
-            CustomerAddressDto customerAddressDto
+            Guid customerId,
+            CustomerAddress customerAddressDto
         )
         {
             //Arrange
@@ -432,11 +531,11 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
             var address = customer.Addresses.ToList()[0]!;
 
             var command = new UpdateCustomerAddressCommand(
-                accountNumber[..10], 
-                new CustomerAddressDto
+                customerId, 
+                new CustomerAddress
                 {
                     AddressType = address.AddressType!,
-                    Address = new AddressDto
+                    Address = new Address
                     {
                         AddressLine1 = address.Address!.AddressLine1,
                         AddressLine2 = address.Address!.AddressLine2,
@@ -448,7 +547,14 @@ namespace AW.Services.Customer.Core.UnitTests.Handlers
                 }
             );
 
-            customerRepoMock.Setup(x => x.SingleOrDefaultAsync(
+            repository.Setup(_ => _.AnyAsync(
+                    It.IsAny<GetCustomerSpecification>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .ReturnsAsync(true);
+
+            repository.Setup(x => x.SingleOrDefaultAsync(
                 It.IsAny<GetCustomerSpecification>(),
                 It.IsAny<CancellationToken>()
             ))

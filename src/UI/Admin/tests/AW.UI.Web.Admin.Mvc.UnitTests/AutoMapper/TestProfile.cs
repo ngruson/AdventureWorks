@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 
-namespace AW.UI.Web.Admin.Mvc.UnitTests.AutoMapper
+namespace AW.UI.Web.Admin.Mvc.UnitTests.AutoMapper;
+
+public class TestProfile : Profile
 {
-    public class TestProfile : Profile
-    {
-    }
 }

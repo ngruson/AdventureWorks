@@ -29,5 +29,17 @@ namespace AW.SharedKernel.Extensions
 
             return input;
         }
+
+        public static Guid NullOrEmpty(this IGuardClause guardClause, Guid input, ILogger logger, string? message = null, [CallerArgumentExpression("input")] string? parameterName = null)
+        {
+            if (input == Guid.Empty)
+            {
+                var ex = new ArgumentException(message ?? $"Required input {parameterName} was empty.", parameterName);
+                logger.LogError(ex, "Exception: {Message}", ex.Message);
+                throw ex;
+            }
+
+            return input;
+        }
     }
 }

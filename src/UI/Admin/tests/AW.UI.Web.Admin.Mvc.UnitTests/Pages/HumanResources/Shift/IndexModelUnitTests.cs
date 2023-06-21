@@ -7,31 +7,30 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
+namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift;
+
+public class IndexModelUnitTests
 {
-    public class IndexModelUnitTests
+    public class Get
     {
-        public class Get
+        [Theory, AutoMoqData]
+        public async Task get_shifts(
+            [Frozen] Mock<IShiftService> shiftService,
+            [Greedy] IndexModel sut,
+            List<ShiftViewModel> shifts
+        )
         {
-            [Theory, AutoMoqData]
-            public async Task get_shifts(
-                [Frozen] Mock<IShiftService> shiftService,
-                [Greedy] IndexModel sut,
-                List<ShiftViewModel> shifts
-            )
-            {
-                //Arrange
-                shiftService.Setup(_ => _.GetShifts())
-                    .ReturnsAsync(shifts);
+            //Arrange
+            shiftService.Setup(_ => _.GetShifts())
+                .ReturnsAsync(shifts);
 
-                //Act
-                await sut.OnGetAsync();
+            //Act
+            await sut.OnGetAsync();
 
-                //Assert
-                sut.Shifts.Should().BeEquivalentTo(shifts);
+            //Assert
+            sut.Shifts.Should().BeEquivalentTo(shifts);
 
-                shiftService.Verify(_ => _.GetShifts());
-            }
+            shiftService.Verify(_ => _.GetShifts());
         }
     }
 }

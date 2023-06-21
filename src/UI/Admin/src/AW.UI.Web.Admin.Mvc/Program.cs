@@ -33,6 +33,7 @@ builder.Services
     .AddHttpClients(builder.Configuration, oidcConfig!)
     .AddCustomIntegrations()
     .AddCustomAuthentication(builder.Configuration, oidcConfig!)
+    .AddCaching(builder.Configuration)
     .AddCustomHealthCheck(builder.Configuration);
 
 var app = builder.Build();
@@ -74,9 +75,9 @@ app.Map(virtualPath, builder =>
         //endpoints.MapControllerRoute(
         //    name: "employee",
         //    pattern: "HumanResources/{controller=Employee}/{action=Index}/{id?}");
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Customer}/{action=Index}/{id?}");
+        //endpoints.MapControllerRoute(
+        //    name: "default",
+        //    pattern: "{controller=Customer}/{action=Index}/{id?}");
 
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions
         {

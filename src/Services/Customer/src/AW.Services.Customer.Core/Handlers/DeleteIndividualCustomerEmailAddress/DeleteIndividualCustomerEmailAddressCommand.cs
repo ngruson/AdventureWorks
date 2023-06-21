@@ -1,17 +1,17 @@
-﻿using AW.Services.SharedKernel.ValueTypes;
+﻿using Ardalis.Result;
 using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddress
 {
-    public class DeleteIndividualCustomerEmailAddressCommand : IRequest<Unit>
+    public class DeleteIndividualCustomerEmailAddressCommand : IRequest<Result>
     {
-        public DeleteIndividualCustomerEmailAddressCommand(string accountNumber, EmailAddress emailAddress)
+        public DeleteIndividualCustomerEmailAddressCommand(Guid customerId, Guid emailAddressId)
         {
-            AccountNumber = accountNumber;
-            EmailAddress = emailAddress;
+            CustomerId = customerId;
+            EmailAddressId = emailAddressId;
         }
 
-        public string AccountNumber { get; private init; }
-        public EmailAddress EmailAddress { get; private init; }
+        public Guid CustomerId { get; private init; }
+        public Guid EmailAddressId { get; private init; }
     }
 }

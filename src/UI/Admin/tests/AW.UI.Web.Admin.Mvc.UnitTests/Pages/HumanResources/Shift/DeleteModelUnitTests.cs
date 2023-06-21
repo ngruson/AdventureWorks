@@ -5,32 +5,31 @@ using AW.UI.Web.Admin.Mvc.Services;
 using Moq;
 using Xunit;
 
-namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift
+namespace AW.UI.Web.Admin.Mvc.UnitTests.Pages.HumanResources.Shift;
+
+public class DeleteModelUnitTests
 {
-    public class DeleteModelUnitTests
+    public class Get
     {
-        public class Get
+        [Theory, AutoMoqData]
+        public async Task delete_shifts(
+            [Frozen] Mock<IShiftService> shiftService,
+            [Greedy] DeleteModel sut,
+            Guid[] shifts
+        )
         {
-            [Theory, AutoMoqData]
-            public async Task delete_shifts(
-                [Frozen] Mock<IShiftService> shiftService,
-                [Greedy] DeleteModel sut,
-                Guid[] shifts
-            )
-            {
-                //Arrange
+            //Arrange
 
-                //Act
-                await sut.OnPostAsync(shifts);
+            //Act
+            await sut.OnPostAsync(shifts);
 
-                //Assert
+            //Assert
 
-                shiftService.Verify(_ => _.DeleteShift(
-                        It.IsAny<Guid>()
-                    ), 
-                    Times.Exactly(shifts.Length)
-                );
-            }
+            shiftService.Verify(_ => _.DeleteShift(
+                    It.IsAny<Guid>()
+                ), 
+                Times.Exactly(shifts.Length)
+            );
         }
     }
 }

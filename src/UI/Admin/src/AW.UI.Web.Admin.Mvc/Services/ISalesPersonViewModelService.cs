@@ -1,9 +1,8 @@
 ﻿using AW.UI.Web.Admin.Mvc.ViewModels.SalesPerson;
 
-namespace AW.UI.Web.Admin.Mvc.Services
+namespace AW.UI.Web.Admin.Mvc.Services;
+
+public interface ISalesPersonViewModelService
 {
-    public interface ISalesPersonViewModelService
-    {
-        Task<SalesPersonIndexViewModel> GetSalesPersons(string? territory = null);
-    }
+    Task<SalesPersonIndexViewModel> GetSalesPersons(string? territory = null);
 }

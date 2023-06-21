@@ -60,9 +60,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.Customer,
                                             Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.StoreCustomer,
-                                            Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer>(
-                                                mockLogger.Object
-                                        )
+                                            Infrastructure.Api.SalesOrder.Handlers.GetSalesOrders.IndividualCustomer>()
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -134,9 +132,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                                         new CustomerConverter<
                                             Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.Customer,
                                             Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.StoreCustomer,
-                                            Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>(
-                                                mockLogger.Object
-                                            )
+                                            Infrastructure.Api.SalesOrder.Handlers.GetSalesOrder.IndividualCustomer>()
                                     },
                                     IgnoreReadOnlyProperties = true,
                                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

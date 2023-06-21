@@ -4,40 +4,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Identity.Web;
 
-namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Department
+namespace AW.UI.Web.Admin.Mvc.Pages.HumanResources.Department;
+
+[AuthorizeForScopes(ScopeKeySection = "AuthN:ApiScopes:DepartmentApiRead")]
+public class DetailModel : PageModel
 {
-    [AuthorizeForScopes(ScopeKeySection = "AuthN:ApiScopes:DepartmentApiRead")]
-    public class DetailModel : PageModel
+    private readonly IDepartmentService _departmentService;
+
+    public DetailModel(IDepartmentService departmentService) =>
+        _departmentService = departmentService;
+
+    [BindProperty]
+    public DepartmentViewModel? Department { get; set; }
+
+    public async Task OnGetAsync(Guid objectId)
     {
-        private readonly IDepartmentService _departmentService;
+        Department = await _departmentService.GetDetail(objectId);
+    }
 
-        public DetailModel(IDepartmentService departmentService) =>
-            _departmentService = departmentService;
-
-        [BindProperty]
-        public DepartmentViewModel? Department { get; set; }
-
-        public async Task OnGetAsync(Guid objectId)
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
-            Department = await _departmentService.GetDetail(objectId);
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            await _departmentService.UpdateDepartment(Department!);
             return Page();
         }
 
-        public async Task<IActionResult> OnGetDeleteAsync(Guid objectId)
-        {
-            await _departmentService.DeleteDepartment(objectId);
+        await _departmentService.UpdateDepartment(Department!);
+        return Page();
+    }
 
-            return RedirectToPage("Index");
-        }
+    public async Task<IActionResult> OnGetDeleteAsync(Guid objectId)
+    {
+        await _departmentService.DeleteDepartment(objectId);
+
+        return RedirectToPage("Index");
     }
 }

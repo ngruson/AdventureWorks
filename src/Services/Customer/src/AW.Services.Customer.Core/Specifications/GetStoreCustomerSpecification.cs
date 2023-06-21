@@ -4,10 +4,10 @@ namespace AW.Services.Customer.Core.Specifications
 {
     public class GetStoreCustomerSpecification : Specification<Entities.StoreCustomer>, ISingleResultSpecification<Entities.StoreCustomer>
     {
-        public GetStoreCustomerSpecification(string accountNumber) : base()
+        public GetStoreCustomerSpecification(Guid objectId) : base()
         {
             Query
-                .Where(c => c.AccountNumber == accountNumber);
+                .Where(c => c.ObjectId == objectId);
         }
     }
 }

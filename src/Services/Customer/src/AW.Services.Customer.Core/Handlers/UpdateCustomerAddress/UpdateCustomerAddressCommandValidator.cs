@@ -14,9 +14,8 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
         {
             this.customerRepository = customerRepository;
 
-            RuleFor(cmd => cmd.AccountNumber)
-                .NotEmpty().WithMessage("Account number is required")
-                .MaximumLength(10).WithMessage("Account number must not exceed 10 characters")
+            RuleFor(cmd => cmd.CustomerId)
+                .NotEmpty()
                 .MustAsync(CustomerExist).WithMessage("Customer does not exist");
 
             RuleFor(cmd => cmd.CustomerAddress)
@@ -67,7 +66,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
         private async Task<bool> UniqueAddress(UpdateCustomerAddressCommand command, CancellationToken cancellationToken)
         {
             var customer = await customerRepository.SingleOrDefaultAsync(
-                new GetCustomerSpecification(command.AccountNumber),
+                new GetCustomerSpecification(command.CustomerId),
                 cancellationToken
             );
 
@@ -87,14 +86,12 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomerAddress
             return address == null;
         }
 
-        private async Task<bool> CustomerExist(string accountNumber, CancellationToken cancellationToken)
+        private async Task<bool> CustomerExist(Guid objectId, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.SingleOrDefaultAsync(
-                new GetCustomerSpecification(accountNumber),
+            return await customerRepository.AnyAsync(
+                new GetCustomerSpecification(objectId),
                 cancellationToken
             );
-
-            return customer != null;
         }
     }
 }

@@ -4,7 +4,7 @@ using AW.ConsoleTools.DependencyInjection;
 using AW.ConsoleTools.Handlers.AzureAD.CreateGroups;
 using AW.ConsoleTools.Handlers.AzureAD.CreateUsers;
 using AW.ConsoleTools.Handlers.CreateLoginsForCustomers;
-using AW.Services.Customer.Core.Handlers.GetAllCustomers;
+using AW.Services.Customer.Core.Handlers.GetCustomer;
 using AW.Services.HumanResources.Core.Handlers.GetEmployees;
 using AW.Services.IdentityServer.Core.Handlers.CreateLogin;
 using AW.Services.Product.Core.Handlers.GetAllProductsWithPhotos;
@@ -35,13 +35,13 @@ using IHost host = Host.CreateDefaultBuilder(args)
             .AddAutoMapper(
                 typeof(MappingProfile).Assembly, 
                 typeof(GetAllProductsWithPhotosQuery).Assembly,
-                typeof(GetAllCustomersQuery).Assembly,
+                typeof(GetCustomerQuery).Assembly,
                 typeof(GetEmployeesQuery).Assembly
             )
             .AddMediatR(config => config.RegisterServicesFromAssemblies(
                 typeof(Program).Assembly, 
                 typeof(GetAllProductsWithPhotosQuery).Assembly,
-                typeof(GetAllCustomersQuery).Assembly,
+                typeof(GetCustomerQuery).Assembly,
                 typeof(GetEmployeesQuery).Assembly,
                 typeof(CreateLoginCommand).Assembly
              ))

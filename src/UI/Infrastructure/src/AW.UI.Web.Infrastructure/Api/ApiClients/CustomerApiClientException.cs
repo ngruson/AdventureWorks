@@ -1,24 +1,22 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace AW.UI.Web.Infrastructure.Api.ApiClients
+namespace AW.UI.Web.Infrastructure.Api.ApiClients;
+
+[Serializable]
+public class CustomerApiClientException : Exception
 {
-    [Serializable]
-    public class CustomerApiClientException : Exception
-    {
-        public CustomerApiClientException()
-        { }
+    public CustomerApiClientException()
+    { }
 
-        protected CustomerApiClientException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
+    protected CustomerApiClientException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    { }
 
-        public CustomerApiClientException(string message)
-            : base(message)
-        { }
+    public CustomerApiClientException(string message)
+        : base(message)
+    { }
 
-        public CustomerApiClientException(string message, Exception innerException)
-            : base(message, innerException)
-        { }
-    }
+    public CustomerApiClientException(string message, Exception innerException)
+        : base(message, innerException)
+    { }
 }

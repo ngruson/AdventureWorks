@@ -1,8 +1,14 @@
-﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetStoreCustomer
+﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetStoreCustomer;
+
+public class StoreCustomerContact
 {
-    public class StoreCustomerContact
+    public StoreCustomerContact() { }
+    public StoreCustomerContact(Guid objectId)
     {
-        public string? ContactType { get; set; }
-        public Person? ContactPerson { get; set; }
+        ObjectId = objectId;
     }
+
+    public Guid ObjectId { get; set; }
+    public string? ContactType { get; set; }
+    public Person? ContactPerson { get; set; }
 }

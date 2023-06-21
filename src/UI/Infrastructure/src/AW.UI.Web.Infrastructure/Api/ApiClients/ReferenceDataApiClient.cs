@@ -9,146 +9,145 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AW.UI.Web.Infrastructure.Api.ApiClients
+namespace AW.UI.Web.Infrastructure.Api.ApiClients;
+
+public class ReferenceDataApiClient : IReferenceDataApiClient
 {
-    public class ReferenceDataApiClient : IReferenceDataApiClient
+    private readonly HttpClient client;
+    private readonly ILogger<ReferenceDataApiClient> logger;
+
+    public ReferenceDataApiClient(HttpClient client, ILogger<ReferenceDataApiClient> logger) =>
+        (this.client, this.logger) = (client, logger);
+
+    public async Task<List<AddressType>?> GetAddressTypesAsync()
     {
-        private readonly HttpClient client;
-        private readonly ILogger<ReferenceDataApiClient> logger;
+        var requestUri = "AddressType?api-version=1.0";
+        logger.LogInformation("Getting address types");
 
-        public ReferenceDataApiClient(HttpClient client, ILogger<ReferenceDataApiClient> logger) =>
-            (this.client, this.logger) = (client, logger);
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
 
-        public async Task<List<AddressType>?> GetAddressTypesAsync()
+        return await stream.DeserializeAsync<List<AddressType>?>(new JsonSerializerOptions
         {
-            var requestUri = "AddressType?api-version=1.0";
-            logger.LogInformation("Getting address types");
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<AddressType>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
 
-        public async Task<List<ContactType>?> GetContactTypesAsync()
+    public async Task<List<ContactType>?> GetContactTypesAsync()
+    {
+        var requestUri = "ContactType?api-version=1.0";
+        logger.LogInformation("Getting contact types");
+
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
+
+        return await stream.DeserializeAsync<List<ContactType>?>(new JsonSerializerOptions
         {
-            var requestUri = "ContactType?api-version=1.0";
-            logger.LogInformation("Getting contact types");
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<ContactType>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
 
-        public async Task<List<CountryRegion>?> GetCountriesAsync()
+    public async Task<List<CountryRegion>?> GetCountriesAsync()
+    {
+        var requestUri = "CountryRegion?api-version=1.0";
+        logger.LogInformation("Getting countries");
+
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
+
+        return await stream.DeserializeAsync<List<CountryRegion>?>(new JsonSerializerOptions
         {
-            var requestUri = "CountryRegion?api-version=1.0";
-            logger.LogInformation("Getting countries");
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<CountryRegion>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
 
-        public async Task<List<ShipMethod>?> GetShipMethodsAsync()
+    public async Task<List<ShipMethod>?> GetShipMethodsAsync()
+    {
+        var requestUri = "ShipMethod?api-version=1.0";
+        logger.LogInformation("Getting shipping methods");
+
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
+
+        return await stream.DeserializeAsync<List<ShipMethod>?>(new JsonSerializerOptions
         {
-            var requestUri = "ShipMethod?api-version=1.0";
-            logger.LogInformation("Getting shipping methods");
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<ShipMethod>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
 
-        public async Task<List<StateProvince>?> GetStatesProvincesAsync(string? countryRegionCode = null)
+    public async Task<List<StateProvince>?> GetStatesProvincesAsync(string? countryRegionCode = null)
+    {
+        var requestUri = "StateProvince?api-version=1.0";
+        logger.LogInformation("Getting states/provinces");
+
+        if (!string.IsNullOrEmpty(countryRegionCode))
+            requestUri += $"&countryRegionCode={countryRegionCode}";
+
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
+
+        return await stream.DeserializeAsync<List<StateProvince>?>(new JsonSerializerOptions
         {
-            var requestUri = "StateProvince?api-version=1.0";
-            logger.LogInformation("Getting states/provinces");
-
-            if (!string.IsNullOrEmpty(countryRegionCode))
-                requestUri += $"&countryRegionCode={countryRegionCode}";
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<StateProvince>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+    }
 
-        public async Task<List<Territory>?> GetTerritoriesAsync(string? countryRegionCode = null)
+    public async Task<List<Territory>?> GetTerritoriesAsync(string? countryRegionCode = null)
+    {
+        var requestUri = "Territory?api-version=1.0";
+        logger.LogInformation("Getting territories");
+
+        if (!string.IsNullOrEmpty(countryRegionCode))
+            requestUri += $"&countryRegionCode={countryRegionCode}";
+
+        logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
+        using var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var stream = await response.Content.ReadAsStreamAsync();
+
+        return await stream.DeserializeAsync<List<Territory>?>(new JsonSerializerOptions
         {
-            var requestUri = "Territory?api-version=1.0";
-            logger.LogInformation("Getting territories");
-
-            if (!string.IsNullOrEmpty(countryRegionCode))
-                requestUri += $"&countryRegionCode={countryRegionCode}";
-
-            logger.LogInformation("Calling GET operation to {RequestUri}", $"{client.BaseAddress}/{requestUri}");
-            using var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return await stream.DeserializeAsync<List<Territory>?>(new JsonSerializerOptions
+            Converters =
             {
-                Converters =
-                {
-                    new JsonStringEnumConverter()
-                },
-                IgnoreReadOnlyProperties = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        }
+                new JsonStringEnumConverter()
+            },
+            IgnoreReadOnlyProperties = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
     }
 }

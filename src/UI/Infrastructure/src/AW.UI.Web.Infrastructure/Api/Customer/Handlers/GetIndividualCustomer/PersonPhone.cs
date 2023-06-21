@@ -1,8 +1,8 @@
-﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer
+﻿namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
+
+public class PersonPhone
 {
-    public class PersonPhone
-    {
-        public string? PhoneNumberType { get; set; }
-        public string? PhoneNumber { get; set; }
-    }
+    public Guid ObjectId { get; set; }
+    public string? PhoneNumberType { get; set; }
+    public string? PhoneNumber { get; set; }
 }

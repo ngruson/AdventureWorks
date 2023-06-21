@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using AW.Services.Customer.Core.Handlers.GetAllCustomers;
+using AW.Services.Customer.Core.Handlers.GetCustomers;
 using AW.Services.IdentityServer.Core.Handlers.CreateLogin;
+using AW.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -24,20 +25,25 @@ namespace AW.ConsoleTools.Handlers.CreateLoginsForCustomers
         {
             logger.LogInformation("Getting all individual customers");
             var customers = await mediator.Send(
-                new GetAllCustomersQuery { CustomerType = CustomerType.Individual },
+                new GetCustomersQuery(CustomerType.Individual),
                 cancellationToken
             );
 
-            logger.LogInformation("Found {Count} individual customers", customers.Count);
+            logger.LogInformation("Found {Count} individual customers", customers.Value.Count);
 
             int i = 1;
-            foreach (var customer in customers.Cast<IndividualCustomerDto>())
+            foreach (var customer in customers.Value.Cast<IndividualCustomer>())
             {
                 if (customer.Person!.EmailAddresses.Count > 0)
                 {
                     var command = mapper.Map<CreateLoginCommand>(customer);
 
-                    logger.LogInformation("Creating login for customer {Counter} of {Total}: {@Customer}", i, customers.Count, command);
+                    logger.LogInformation(
+                        "Creating login for customer {Counter} of {Total}: {@Customer}", 
+                        i, 
+                        customers.Value.Count, 
+                        command
+                    );
 
                     await mediator.Send(
                         command,

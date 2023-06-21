@@ -11,7 +11,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
     public class GetStoreCustomerQueryUnitTests
     {
         [Theory, AutoMoqData]
-        public async Task Handle_WithCustomerNumber_CustomerReturned(
+        public async Task return_customer_given_customer_found(
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
             GetStoreCustomerQueryHandler sut,
             GetStoreCustomerQuery query,
@@ -20,7 +20,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
         {
             //Arrange
             mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<StoreCustomer>(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             )
             .ReturnsAsync(customer);
@@ -32,37 +32,36 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
             result.Should().Be(customer);
 
             mockCustomerApiClient.Verify(x => x.GetCustomerAsync<StoreCustomer>(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             );
         }
 
         [Theory, AutoMoqData]
-        public async Task Handle_WithoutCustomerNumber_ThrowsArgumentException(
+        public async Task throw_argumentexception_given_empty_objectid(
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
-            GetStoreCustomerQueryHandler sut,
-            GetStoreCustomerQuery query
+            GetStoreCustomerQueryHandler sut
         )
         {
             //Arrange
-            query.AccountNumber = "";
+            var query = new GetStoreCustomerQuery(Guid.Empty);
 
             //Act
             Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
 
             //Assert
             await func.Should().ThrowAsync<ArgumentException>()
-                .WithMessage("Required input request.AccountNumber was empty. (Parameter 'request.AccountNumber')");
+                .WithMessage("Required input request.ObjectId was empty. (Parameter 'request.ObjectId')");
 
             mockCustomerApiClient.Verify(x => x.GetCustomerAsync<StoreCustomer>(
-                    It.IsAny<string>()
+                    query.ObjectId
                 ),
                 Times.Never
             );
         }
 
         [Theory, AutoMoqData]
-        public async Task Handle_ReturnedCustomerNull_ThrowsArgumentNullException(
+        public async Task throw_argumentnullexception_given_customer_not_found(
             [Frozen] Mock<ICustomerApiClient> mockCustomerApiClient,
             GetStoreCustomerQueryHandler sut,
             GetStoreCustomerQuery query
@@ -70,7 +69,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
         {
             //Arrange
             mockCustomerApiClient.Setup(_ => _.GetCustomerAsync<StoreCustomer>(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             )
             .ReturnsAsync((StoreCustomer?)null);
@@ -83,7 +82,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.Customer.Handlers
                 .WithMessage("Value cannot be null. (Parameter 'customer')");
 
             mockCustomerApiClient.Verify(x => x.GetCustomerAsync<StoreCustomer>(
-                    It.IsAny<string>()
+                    query.ObjectId
                 )
             );
         }

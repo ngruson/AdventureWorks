@@ -3,32 +3,31 @@ using AW.UI.Web.Infrastructure.Api.ReferenceData.Handlers.GetTerritories;
 using AW.UI.Web.Infrastructure.Api.SalesPerson.Handlers.GetSalesPersons;
 using MediatR;
 
-namespace AW.UI.Web.Admin.Mvc.Services
+namespace AW.UI.Web.Admin.Mvc.Services;
+
+public class SalesPersonViewModelService : ISalesPersonViewModelService
 {
-    public class SalesPersonViewModelService : ISalesPersonViewModelService
+    private readonly ILogger<SalesPersonViewModelService> logger;
+    private readonly IMediator mediator;
+
+    public SalesPersonViewModelService(
+        ILogger<SalesPersonViewModelService> logger,
+        IMediator mediator
+    ) =>
+        (this.logger, this.mediator) = (logger, mediator);
+
+    public async Task<SalesPersonIndexViewModel> GetSalesPersons(string? territory = null)
     {
-        private readonly ILogger<SalesPersonViewModelService> logger;
-        private readonly IMediator mediator;
+        logger.LogInformation("GetSalesPersons called");
 
-        public SalesPersonViewModelService(
-            ILogger<SalesPersonViewModelService> logger,
-            IMediator mediator
-        ) =>
-            (this.logger, this.mediator) = (logger, mediator);
+        var salesPersons = await mediator.Send(new GetSalesPersonsQuery(territory));
 
-        public async Task<SalesPersonIndexViewModel> GetSalesPersons(string? territory = null)
+        var vm = new SalesPersonIndexViewModel
         {
-            logger.LogInformation("GetSalesPersons called");
+            SalesPersons = salesPersons,
+            Territories = await mediator.Send(new GetTerritoriesQuery())
+        };
 
-            var salesPersons = await mediator.Send(new GetSalesPersonsQuery(territory));
-
-            var vm = new SalesPersonIndexViewModel
-            {
-                SalesPersons = salesPersons,
-                Territories = await mediator.Send(new GetTerritoriesQuery())
-            };
-
-            return vm;
-        }
+        return vm;
     }
 }

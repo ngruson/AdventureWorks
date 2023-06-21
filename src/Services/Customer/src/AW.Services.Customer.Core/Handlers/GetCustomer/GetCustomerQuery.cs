@@ -1,17 +1,18 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace AW.Services.Customer.Core.Handlers.GetCustomer
 {
-    public class GetCustomerQuery : IRequest<CustomerDto>
+    public class GetCustomerQuery : IRequest<Result<Customer>>
     {
         public GetCustomerQuery()
         {
         }
-        public GetCustomerQuery(string accountNumber)
+        public GetCustomerQuery(Guid objectId)
         {
-            AccountNumber = accountNumber;
+            ObjectId = objectId;
         }
 
-        public string? AccountNumber { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }
