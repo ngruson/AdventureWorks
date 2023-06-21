@@ -3,7 +3,7 @@ name: product-api
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
     - src/Services/Product/**
     - .github/workflows/product-api.yml

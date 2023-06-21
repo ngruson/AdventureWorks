@@ -3,7 +3,7 @@ name: shift-api-pull-request
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ master ]    
+    branches: [ main ]    
     paths:
     - src/Services/HumanResources/**
     - .github/workflows/shift-api.yml

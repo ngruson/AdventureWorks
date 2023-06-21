@@ -3,7 +3,7 @@ name: department-api
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
     - src/Services/HumanResources/**
     - .github/workflows/department-api.yml

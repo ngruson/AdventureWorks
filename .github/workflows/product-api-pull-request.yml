@@ -3,7 +3,7 @@ name: product-api-pull-request
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ master ]    
+    branches: [ main ]    
     paths:
     - src/Services/Product/**
     - .github/workflows/product-api.yml
