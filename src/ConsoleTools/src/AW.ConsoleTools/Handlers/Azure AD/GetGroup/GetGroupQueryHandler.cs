@@ -37,7 +37,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetGroup
                     cancellationToken
                 );
 
-            var group = groupsResponse!.Value!.FirstOrDefault(_ => _.DisplayName == request.GroupName);
+            var group = groupsResponse!.Value!.Find(_ => _.DisplayName == request.GroupName);
             Guard.Against.Null(group, _logger);
             
             var result = _mapper.Map<Group>(group);

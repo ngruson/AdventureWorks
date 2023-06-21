@@ -5,18 +5,6 @@ namespace AW.Services.Customer.Core.Handlers.GetCustomers;
 
 public class IndividualCustomer : Customer, IMapFrom<Entities.IndividualCustomer>
 {
-    private CustomerType _customerType = CustomerType.Individual;
-    public override CustomerType CustomerType
-    {
-        get
-        {
-            return _customerType;
-        }
-        set
-        {
-            _customerType = value;
-        }
-
-    }
+    public override CustomerType CustomerType { get; set; } = CustomerType.Individual;
     public Person? Person { get; set; }
 }

@@ -8,7 +8,7 @@ public class GetCustomersQuery : IRequest<Result<List<Customer>>>
 {
     public GetCustomersQuery() { }
 
-    public GetCustomersQuery(CustomerType? customerType = null, bool includeDetails = false)
+    public GetCustomersQuery(CustomerType? customerType, bool includeDetails = false)
     {
         CustomerType = customerType;
         IncludeDetails = includeDetails;

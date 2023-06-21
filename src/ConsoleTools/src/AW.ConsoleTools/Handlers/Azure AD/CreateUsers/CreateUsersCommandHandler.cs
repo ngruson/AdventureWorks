@@ -37,7 +37,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
             {
                 foreach (var employee in result.Value)
                 {
-                    var groupName = employee.DepartmentHistory?.First().Department?.GroupName;
+                    var groupName = employee.DepartmentHistory?[0].Department?.GroupName;
 
                     var group = await _mediator.Send(
                         new GetGroupQuery(groupName!),
@@ -73,7 +73,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateUsers
                     else
                         _logger.LogInformation("User {DisplayName} already exists", employee?.Name?.FullName);
 
-                    if (user?.MemberOf?.FirstOrDefault(_ => _.Id == group.Id) == null)
+                    if (user?.MemberOf?.Find(_ => _.Id == group.Id) == null)
                     {
                         await _mediator.Send(new AddUserToGroupCommand(
                                 user?.DisplayName!,

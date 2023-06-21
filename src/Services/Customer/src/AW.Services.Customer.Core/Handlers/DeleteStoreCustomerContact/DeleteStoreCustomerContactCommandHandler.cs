@@ -45,7 +45,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteStoreCustomerContact
                     return result;
 
                 _logger.LogInformation("Removing phone from contact");
-                var contact = storeCustomer!.Contacts.FirstOrDefault(
+                var contact = storeCustomer!.Contacts.Find(
                     c => c.ObjectId == request.ContactId
                 );
                 result = Guard.Against.StoreContactNull(contact,

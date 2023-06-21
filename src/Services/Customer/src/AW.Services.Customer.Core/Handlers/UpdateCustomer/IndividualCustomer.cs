@@ -6,19 +6,7 @@ namespace AW.Services.Customer.Core.Handlers.UpdateCustomer
 {
     public class IndividualCustomer : Customer, IMapFrom<Entities.IndividualCustomer>
     {
-        private CustomerType _customerType = CustomerType.Store;
-        public override CustomerType CustomerType
-        {
-            get
-            {
-                return _customerType;
-            }
-            set
-            {
-                _customerType = value;
-            }
-
-        }
+        public override CustomerType CustomerType { get; set; } = CustomerType.Store;        
         public Person Person { get; set; } = new Person();
 
         public void Mapping(Profile profile)

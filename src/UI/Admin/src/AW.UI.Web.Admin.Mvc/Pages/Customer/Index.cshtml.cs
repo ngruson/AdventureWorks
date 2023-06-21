@@ -23,7 +23,6 @@ public class IndexModel : PageModel
     public string? TerritoryFilterApplied { get; set; }
     public CustomerType? CustomerTypeFilterApplied { get; set; }
     public string? AccountNumber { get; set; }
-    //public PaginationInfoViewModel? PaginationInfo { get; set; }
 
     public async Task OnGetAsync()
     {
@@ -32,14 +31,5 @@ public class IndexModel : PageModel
         Territories = (await _customerService.GetTerritories()).ToSelectList(
             _ => _.ObjectId.ToString(), _ => _.Name);
         CustomerTypes = _customerService.GetCustomerTypes();
-
-        //PaginationInfo = new PaginationInfoViewModel(
-        //    response.TotalCustomers,
-        //    response.Customers!.Count,
-        //    pageId ?? 0,
-        //    totalPages,
-        //    pageId == 0 ? "disabled" : "",
-        //    pageId == totalPages - 1 ? "disabled" : ""
-        //);
     }
 }

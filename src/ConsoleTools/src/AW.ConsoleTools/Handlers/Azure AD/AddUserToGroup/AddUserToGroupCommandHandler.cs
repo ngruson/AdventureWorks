@@ -50,7 +50,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.AddUserToGroup
                     cancellationToken
                 );
 
-            var user = usersResponse!.Value!.FirstOrDefault(_ => _.DisplayName == request.UserName);
+            var user = usersResponse!.Value!.Find(_ => _.DisplayName == request.UserName);
             Guard.Against.Null(user, _logger);
 
             return user;

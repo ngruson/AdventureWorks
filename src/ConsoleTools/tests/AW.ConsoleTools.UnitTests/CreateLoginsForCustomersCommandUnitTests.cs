@@ -27,7 +27,7 @@ public class CreateLoginsForCustomersCommandUnitTests
             )
         )
         .ReturnsAsync(
-            customers.Cast<Customer?>().ToList()
+            customers.Cast<Customer>().ToList()
         );
 
         //Act

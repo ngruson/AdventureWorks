@@ -72,13 +72,6 @@ app.Map(virtualPath, builder =>
     builder.UseEndpoints(endpoints =>
     {
         endpoints.MapRazorPages();
-        //endpoints.MapControllerRoute(
-        //    name: "employee",
-        //    pattern: "HumanResources/{controller=Employee}/{action=Index}/{id?}");
-        //endpoints.MapControllerRoute(
-        //    name: "default",
-        //    pattern: "{controller=Customer}/{action=Index}/{id?}");
-
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions
         {
             Predicate = _ => true,

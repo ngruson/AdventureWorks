@@ -21,7 +21,7 @@ public interface ICustomerService
     Task<T> DeleteAddress<T>(Guid customerId, Guid objectId);
     Task<IEnumerable<StateProvince>?> GetStatesProvincesJson(string? country);
     Task AddContact(StoreCustomerContactViewModel viewModel);
-    Task<StoreCustomerContactViewModel> GetCustomerContact(Guid objectId, Guid contactId);
+    Task<StoreCustomerContactViewModel> GetCustomerContact(Guid customerId, Guid contactId);
     Task<StoreCustomerContactViewModel> UpdateContact(Guid customerId, EditStoreCustomerContactViewModel viewModel);
     Task<StoreCustomerViewModel> DeleteContact(Guid customerId, Guid objectId);
     Task DeleteContactEmailAddress(Guid objectId, string? contactName, string? emailAddress);

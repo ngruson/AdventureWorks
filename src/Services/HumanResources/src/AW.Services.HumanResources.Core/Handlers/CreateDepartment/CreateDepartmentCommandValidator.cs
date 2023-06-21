@@ -12,9 +12,6 @@ namespace AW.Services.HumanResources.Core.Handlers.CreateDepartment
         {
             _departmentRepository = departmentRepository;
 
-            RuleFor(cmd => cmd.Department)
-                .NotNull().WithMessage("Department is required");
-
             RuleFor(cmd => cmd.Department!.Name)
                 .NotEmpty().WithMessage("Name is required")
                 .MustAsync(NotExists).WithMessage("Department already exists");

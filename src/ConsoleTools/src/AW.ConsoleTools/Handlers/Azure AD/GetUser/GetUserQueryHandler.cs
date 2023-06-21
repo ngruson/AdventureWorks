@@ -35,7 +35,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.GetUser
                     cancellationToken
                 );
 
-            var user = usersResponse!.Value!.FirstOrDefault(_ => _.DisplayName == request.UserName);
+            var user = usersResponse!.Value!.Find(_ => _.DisplayName == request.UserName);
             
             if (user == null)
             {

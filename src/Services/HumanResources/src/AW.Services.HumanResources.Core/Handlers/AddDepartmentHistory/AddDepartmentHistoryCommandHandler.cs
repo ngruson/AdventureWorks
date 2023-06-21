@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
-using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -15,21 +14,18 @@ namespace AW.Services.HumanResources.Core.Handlers.AddDepartmentHistory
         private readonly IRepository<Entities.Department> _departmentRepository;
         private readonly IRepository<Entities.Employee> _employeeRepository;
         private readonly IRepository<Entities.Shift> _shiftRepository;
-        private readonly IMapper _mapper;
 
         public AddDepartmentHistoryCommandHandler(
             ILogger<AddDepartmentHistoryCommandHandler> logger,
             IRepository<Entities.Department> departmentRepository,
             IRepository<Entities.Employee> employeeRepository,
-            IRepository<Entities.Shift> shiftRepository,
-            IMapper mapper
+            IRepository<Entities.Shift> shiftRepository
         )
         {
             _logger = logger;
             _departmentRepository = departmentRepository;
             _employeeRepository = employeeRepository;
             _shiftRepository = shiftRepository;
-            _mapper = mapper;
         }
 
         public async Task<Result> Handle(AddDepartmentHistoryCommand request, CancellationToken cancellationToken)

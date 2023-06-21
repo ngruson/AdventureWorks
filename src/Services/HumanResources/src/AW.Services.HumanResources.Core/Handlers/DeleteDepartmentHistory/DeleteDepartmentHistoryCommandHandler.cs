@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
-using AutoMapper;
 using AW.Services.HumanResources.Core.GuardClauses;
 using AW.Services.HumanResources.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
@@ -13,17 +12,14 @@ namespace AW.Services.HumanResources.Core.Handlers.DeleteDepartmentHistory
     {
         private readonly ILogger<DeleteDepartmentHistoryCommandHandler> _logger;
         private readonly IRepository<Entities.Employee> _employeeRepository;
-        private readonly IMapper _mapper;
 
         public DeleteDepartmentHistoryCommandHandler(
             ILogger<DeleteDepartmentHistoryCommandHandler> logger,
-            IRepository<Entities.Employee> employeeRepository,
-            IMapper mapper
+            IRepository<Entities.Employee> employeeRepository
         )
         {
             _logger = logger;
             _employeeRepository = employeeRepository;
-            _mapper = mapper;
         }
 
         public async Task<Result> Handle(DeleteDepartmentHistoryCommand request, CancellationToken cancellationToken)

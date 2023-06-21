@@ -45,7 +45,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerEmailAddres
                     return result;
 
                 _logger.LogInformation("Removing address from customer");
-                var emailAddress = individualCustomer!.Person!.EmailAddresses.FirstOrDefault(
+                var emailAddress = individualCustomer!.Person!.EmailAddresses.Find(
                     e => e.ObjectId == request.EmailAddressId
                 );
                 result = Guard.Against.EmailAddressNull(

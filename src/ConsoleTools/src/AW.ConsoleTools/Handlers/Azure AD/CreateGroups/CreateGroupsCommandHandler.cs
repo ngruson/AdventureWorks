@@ -33,7 +33,7 @@ namespace AW.ConsoleTools.Handlers.AzureAD.CreateGroups
 
             groupNames.ForEach(async groupName =>
             {
-                if (!groups!.Value!.Any(group => group.DisplayName == groupName))
+                if (!groups!.Value!.Exists(group => group.DisplayName == groupName))
                 {
                     _logger.LogInformation("Creating AAD group {GroupName}", groupName);
 

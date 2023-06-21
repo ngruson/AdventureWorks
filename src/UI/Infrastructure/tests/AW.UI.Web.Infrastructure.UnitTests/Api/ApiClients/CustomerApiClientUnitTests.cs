@@ -73,10 +73,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 List<Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer> customers,
-                CustomerApiClient sut,
-                Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.GetCustomers.Customer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomers.StoreCustomer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomers.IndividualCustomer>>> mockLogger
+                CustomerApiClient sut
             )
             {
                 //Arrange
@@ -148,10 +145,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer customer,
-                CustomerApiClient sut,
-                Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.GetCustomer.Customer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomer.StoreCustomer,
-                    Infrastructure.Api.Customer.Handlers.GetCustomer.IndividualCustomer>>> mockLogger
+                CustomerApiClient sut
             )
             {
                 //Arrange
@@ -285,10 +279,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer customer,
-                CustomerApiClient sut,
-                Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer, 
-                    Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer, 
-                    Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>>> mockLogger
+                CustomerApiClient sut
             )
             {
                 //Arrange
@@ -329,10 +320,7 @@ namespace AW.UI.Web.Infrastructure.UnitTests.Api.ApiClients
                 [Frozen] HttpClient httpClient,
                 Uri uri,
                 Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer customer,
-                CustomerApiClient sut,
-                Mock<ILogger<CustomerConverter<Infrastructure.Api.Customer.Handlers.UpdateCustomer.Customer, 
-                    Infrastructure.Api.Customer.Handlers.UpdateCustomer.StoreCustomer, 
-                    Infrastructure.Api.Customer.Handlers.UpdateCustomer.IndividualCustomer>>> mockLogger
+                CustomerApiClient sut
             )
             {
                 //Arrange

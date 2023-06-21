@@ -7,17 +7,6 @@ namespace AW.Services.Customer.Core.Handlers.CreateCustomer
     public class Person : IMapFrom<Entities.Person>
     {
         public Person() { }
-        //public Person(string title, NameFactory name, string suffix,
-        //       List<PersonEmailAddress>? emailAddresses,
-        //       List<PersonPhone>? phoneNumbers
-        //)
-        //{
-        //    Title = title;
-        //    Name = name;
-        //    Suffix = suffix;
-        //    EmailAddresses = emailAddresses;
-        //    PhoneNumbers = phoneNumbers;
-        //}
 
         public Guid ObjectId { get; set; }
         public string? Title { get; set; }

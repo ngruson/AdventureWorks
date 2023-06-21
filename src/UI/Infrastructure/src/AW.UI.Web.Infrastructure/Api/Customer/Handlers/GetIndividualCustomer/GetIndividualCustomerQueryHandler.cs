@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.GetIndividualCustomer;
 
-public class GetIndividualCustomerQueryHandler : IRequestHandler<GetIndividualCustomerQuery, IndividualCustomer>
+public class GetIndividualCustomerQueryHandler : IRequestHandler<GetIndividualCustomerQuery, IndividualCustomer?>
 {
     private readonly ILogger<GetIndividualCustomerQueryHandler> _logger;
     private readonly ICustomerApiClient _client;
@@ -17,7 +17,7 @@ public class GetIndividualCustomerQueryHandler : IRequestHandler<GetIndividualCu
         _client = client;
     }
 
-    public async Task<IndividualCustomer> Handle(GetIndividualCustomerQuery request, CancellationToken cancellationToken)
+    public async Task<IndividualCustomer?> Handle(GetIndividualCustomerQuery request, CancellationToken cancellationToken)
     {
         Guard.Against.NullOrEmpty(request.ObjectId, _logger);
 

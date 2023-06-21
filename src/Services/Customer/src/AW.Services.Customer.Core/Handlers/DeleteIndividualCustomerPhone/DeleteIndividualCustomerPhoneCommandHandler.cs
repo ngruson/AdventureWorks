@@ -45,7 +45,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteIndividualCustomerPhone
                     return result;
 
                 _logger.LogInformation("Removing phone from customer");
-                var phone = individualCustomer!.Person!.PhoneNumbers.FirstOrDefault(
+                var phone = individualCustomer!.Person!.PhoneNumbers.Find(
                     _ => _.ObjectId == request.PhoneId
                 );
                 result = Guard.Against.PhoneNumberNull(

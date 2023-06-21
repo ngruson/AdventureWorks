@@ -14,7 +14,7 @@ namespace AW.UI.Web.Infrastructure.Api.Interfaces
         Task<Employee.Handlers.UpdateEmployee.UpdatedEmployee?> UpdateEmployee(Employee.Handlers.UpdateEmployee.Employee employee);
         Task DeleteEmployee(DeleteEmployeeCommand request);
         Task AddDepartmentHistory(AddDepartmentHistoryCommand command);
-        Task UpdateDepartmentHistory(UpdateDepartmentHistoryCommand request);
-        Task DeleteDepartmentHistory(DeleteDepartmentHistoryCommand request);
+        Task UpdateDepartmentHistory(UpdateDepartmentHistoryCommand command);
+        Task DeleteDepartmentHistory(DeleteDepartmentHistoryCommand command);
     }
 }

@@ -29,24 +29,6 @@ namespace AW.Services.HumanResources.Core.UnitTests.Handlers
 
         [Theory]
         [AutoMoqData]
-        public async Task validation_error_given_no_department(
-            CreateDepartmentCommandValidator sut,
-            CreateDepartmentCommand command
-        )
-        {
-            //Arrange
-            command.Department = null;
-
-            //Act
-            var result = await sut.TestValidateAsync(command);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(command => command.Department)
-                .WithErrorMessage("Department is required");
-        }
-
-        [Theory]
-        [AutoMoqData]
         public async Task validation_error_given_no_department_name(
             CreateDepartmentCommandValidator sut,
             CreateDepartmentCommand command

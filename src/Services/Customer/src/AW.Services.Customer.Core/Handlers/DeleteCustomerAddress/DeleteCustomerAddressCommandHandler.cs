@@ -45,7 +45,7 @@ namespace AW.Services.Customer.Core.Handlers.DeleteCustomerAddress
                     return result;
 
                 _logger.LogInformation("Removing address from customer");
-                var customerAddress = customer!.Addresses.FirstOrDefault(
+                var customerAddress = customer!.Addresses.Find(
                     a => a.ObjectId == request.AddressId
                 );
                 result = Guard.Against.AddressNull(

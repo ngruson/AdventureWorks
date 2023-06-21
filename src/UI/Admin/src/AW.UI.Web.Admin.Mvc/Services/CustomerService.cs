@@ -210,7 +210,7 @@ public class CustomerService : ICustomerService
 
         var customerToUpdate = _mapper.Map<UpdateCustomer.Customer>(customer);
         Guard.Against.Null(customerToUpdate, _logger);
-        var addressToDelete = customerToUpdate.Addresses?.FirstOrDefault(_ => _?.ObjectId == objectId);
+        var addressToDelete = customerToUpdate.Addresses?.Find(_ => _?.ObjectId == objectId);
         Guard.Against.Null(addressToDelete, _logger);
         customerToUpdate.Addresses?.Remove(addressToDelete);
 
@@ -253,15 +253,13 @@ public class CustomerService : ICustomerService
         return new List<string> { "Cell", "Home", "Work" };
     }
 
-    public async Task<StoreCustomerContactViewModel> GetCustomerContact(Guid customerId, Guid objectId)
+    public async Task<StoreCustomerContactViewModel> GetCustomerContact(Guid customerId, Guid contactId)
     {
         _logger.LogInformation("GetCustomerContact called");
         var customer = await _mediator.Send(new GetStoreCustomerQuery(customerId));
         Guard.Against.Null(customer, _logger);
 
-        var contact = customer!.Contacts.FirstOrDefault(_ =>
-            _.ObjectId == objectId
-        );
+        var contact = customer!.Contacts.Find(_ => _.ObjectId == contactId);
         Guard.Against.Null(contact, _logger);
 
         return _mapper.Map<StoreCustomerContactViewModel>(contact);
@@ -296,7 +294,7 @@ public class CustomerService : ICustomerService
 
         var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
         Guard.Against.Null(customerToUpdate, _logger);
-        var contact = customerToUpdate.Contacts!.FirstOrDefault(_ => _!.ObjectId == viewModel.CustomerContact!.ObjectId);
+        var contact = customerToUpdate.Contacts!.Find(_ => _!.ObjectId == viewModel.CustomerContact!.ObjectId);
         Guard.Against.Null(contact, _logger);
         _mapper.Map(viewModel.CustomerContact, contact);
 
@@ -317,7 +315,7 @@ public class CustomerService : ICustomerService
         Guard.Against.Null(customer, _logger);
 
         var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
-        var contact = customerToUpdate.Contacts!.FirstOrDefault(_ => _!.ObjectId == objectId);
+        var contact = customerToUpdate.Contacts!.Find(_ => _!.ObjectId == objectId);
         Guard.Against.Null(contact, _logger);
         customerToUpdate.Contacts?.Remove(contact);
 
@@ -340,12 +338,12 @@ public class CustomerService : ICustomerService
         var customerToUpdate = _mapper.Map<UpdateCustomer.StoreCustomer>(customer);
         Guard.Against.Null(customerToUpdate, _logger);
 
-        var contact = customerToUpdate?.Contacts?.FirstOrDefault(c =>
+        var contact = customerToUpdate?.Contacts?.Find(c =>
             c?.ContactPerson?.Name?.FullName == contactName
         );
         Guard.Against.Null(contact, _logger);
 
-        var personEmailAddress = contact?.ContactPerson?.EmailAddresses?.FirstOrDefault(c =>
+        var personEmailAddress = contact?.ContactPerson?.EmailAddresses?.Find(c =>
             c?.EmailAddress == emailAddress
         );
         Guard.Against.Null(personEmailAddress, _logger);
@@ -369,7 +367,7 @@ public class CustomerService : ICustomerService
         var customerToUpdate = _mapper.Map<UpdateCustomer.IndividualCustomer>(customer);
         Guard.Against.Null(customerToUpdate, _logger);
 
-        var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.FirstOrDefault(c =>
+        var personEmailAddress = customerToUpdate.Person?.EmailAddresses?.Find(c =>
             c?.EmailAddress == emailAddress
         );
         Guard.Against.Null(personEmailAddress, _logger);

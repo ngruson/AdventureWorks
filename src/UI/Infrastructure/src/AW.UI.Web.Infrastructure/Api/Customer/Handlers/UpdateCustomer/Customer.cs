@@ -4,9 +4,9 @@ namespace AW.UI.Web.Infrastructure.Api.Customer.Handlers.UpdateCustomer;
 
 public abstract class Customer : ICustomer
 {
-    public Customer() { }
+    protected Customer() { }
 
-    public Customer(Guid objectId)
+    protected Customer(Guid objectId)
     {
         ObjectId = objectId;
     }
