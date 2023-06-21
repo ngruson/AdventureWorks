@@ -34,10 +34,8 @@ public class AddCustomersToCacheCommandHandler : IRequestHandler<AddCustomersToC
     {
         try
         {
-            bool force = true;
-
             var byteArray = await _cache.GetAsync(CacheKeyConstants.AllCustomersKey, cancellationToken);
-            if ((force) || byteArray.IsNullOrEmpty())
+            if (byteArray.IsNullOrEmpty())
             {
                 _logger.LogInformation("Cache is empty, add customers to cache");
 
