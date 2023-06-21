@@ -710,8 +710,7 @@ public class CustomerServiceUnitTests
         public async Task throw_argumentnullexception_given_customer_not_found(
             [Frozen] Mock<IMediator> mockMediator,
             CustomerService sut,
-            StoreCustomerContactViewModel viewModel,
-            Infrastructure.Api.Customer.Handlers.GetStoreCustomer.StoreCustomer customer
+            StoreCustomerContactViewModel viewModel
         )
         {
             //Arrange
