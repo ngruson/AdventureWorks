@@ -1,10 +1,13 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using Ardalis.Result;
+using MediatR;
 
-namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories
+namespace AW.Services.ReferenceData.Core.Handlers.Territory.GetTerritories;
+
+public class GetTerritoriesQuery : IRequest<Result<List<Territory>>>
 {
-    public class GetTerritoriesQuery : IRequest<List<Territory>>
+    public GetTerritoriesQuery(string? countryRegionCode)
     {
-        public string? CountryRegionCode { get; set; }
+        CountryRegionCode = countryRegionCode;
     }
+    public string? CountryRegionCode { get; set; }
 }

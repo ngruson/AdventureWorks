@@ -2,6 +2,7 @@
 {
     public class AddressType
     {
+        public Guid ObjectId { get; set; }
         public string? Name { get; set; }
     }
 }

@@ -1,9 +1,8 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using Ardalis.Result;
+using MediatR;
 
-namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries
+namespace AW.Services.ReferenceData.Core.Handlers.CountryRegion.GetCountries;
+
+public class GetCountriesQuery : IRequest<Result<List<Country>>>
 {
-    public class GetCountriesQuery : IRequest<List<Country>>
-    {
-    }
 }

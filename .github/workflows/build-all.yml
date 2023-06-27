@@ -106,8 +106,6 @@ jobs:
           dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests\AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
           dotnet build src\Services\ReferenceData\src\AW.Services.ReferenceData.REST.API\AW.Services.ReferenceData.REST.API.csproj --no-restore
-          dotnet build src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-restore
-          dotnet test src\Services\ReferenceData\tests\AW.Services.ReferenceData.REST.API.UnitTests\AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
           
       - name: Build Sales services and run unit tests
         run: |

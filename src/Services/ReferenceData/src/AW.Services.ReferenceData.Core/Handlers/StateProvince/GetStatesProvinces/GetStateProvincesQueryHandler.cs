@@ -1,32 +1,30 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using AW.Services.ReferenceData.Core.GuardClauses;
 using AW.Services.ReferenceData.Core.Specifications;
 using AW.Services.SharedKernel.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces
+namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
+
+public class GetStatesProvincesQueryHandler : IRequestHandler<GetStatesProvincesQuery, Result<List<StateProvince>>>
 {
-    public class GetStatesProvincesQueryHandler : IRequestHandler<GetStatesProvincesQuery, List<StateProvince>>
+    private readonly ILogger<GetStatesProvincesQueryHandler> _logger;
+    private readonly IMapper _mapper;
+    private readonly IRepository<Entities.StateProvince> _repository;
+
+    public GetStatesProvincesQueryHandler(
+        ILogger<GetStatesProvincesQueryHandler> logger,
+        IRepository<Entities.StateProvince> repository,
+        IMapper mapper) =>
+            (_logger, _mapper, _repository) = (logger, mapper, repository);
+
+    public async Task<Result<List<StateProvince>>> Handle(GetStatesProvincesQuery request, CancellationToken cancellationToken)
     {
-        private readonly ILogger<GetStatesProvincesQueryHandler> _logger;
-        private readonly IMapper _mapper;
-        private readonly IRepository<Entities.StateProvince> _repository;
-
-        public GetStatesProvincesQueryHandler(
-            ILogger<GetStatesProvincesQueryHandler> logger,
-            IRepository<Entities.StateProvince> repository,
-            IMapper mapper) =>
-                (_logger, _mapper, _repository) = (logger, mapper, repository);
-
-        public async Task<List<StateProvince>> Handle(GetStatesProvincesQuery request, CancellationToken cancellationToken)
+        try
         {
-            _logger.LogInformation("Handle called");
-
             List<Entities.StateProvince> statesProvinces;
             if (string.IsNullOrEmpty(request.CountryRegionCode))
             {
@@ -40,11 +38,18 @@ namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinc
                 var spec = new GetStatesProvincesSpecification(request.CountryRegionCode);
                 statesProvinces = await _repository.ListAsync(spec, cancellationToken);
             }
-            
-            Guard.Against.StatesProvincesNullOrEmpty(statesProvinces, _logger);
+
+            var result = Guard.Against.StatesProvincesNullOrEmpty(statesProvinces, _logger);
+            if (!result.IsSuccess)
+                return result;
 
             _logger.LogInformation("Returning state/provinces");
             return _mapper.Map<List<StateProvince>>(statesProvinces);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("An error occurred: {Message}", ex.Message);
+            return Result.Error(ex.Message);
         }
     }
 }

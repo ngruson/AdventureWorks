@@ -1,10 +1,13 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using Ardalis.Result;
+using MediatR;
 
-namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces
+namespace AW.Services.ReferenceData.Core.Handlers.StateProvince.GetStatesProvinces;
+
+public class GetStatesProvincesQuery : IRequest<Result<List<StateProvince>>>
 {
-    public class GetStatesProvincesQuery : IRequest<List<StateProvince>>
+    public GetStatesProvincesQuery(string? countryRegionCode)
     {
-        public string? CountryRegionCode { get; set; }
+        CountryRegionCode = countryRegionCode;
     }
+    public string? CountryRegionCode { get; set; }
 }

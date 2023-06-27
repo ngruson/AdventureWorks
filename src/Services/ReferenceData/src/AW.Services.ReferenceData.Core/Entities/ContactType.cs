@@ -1,15 +1,14 @@
 ﻿using AW.Services.SharedKernel.Interfaces;
 
-namespace AW.Services.ReferenceData.Core.Entities
-{
-    public class ContactType : IAggregateRoot
-    {
-        public ContactType(string name)
-        {
-            Name = name;
-        }
-        public int Id { get; set; }
+namespace AW.Services.ReferenceData.Core.Entities;
 
-        public string Name { get; private set; }
+public class ContactType : IAggregateRoot
+{
+    public ContactType(string name)
+    {
+        Name = name;
     }
+    public int Id { get; set; }
+    public Guid ObjectId { get; private set; }
+    public string Name { get; private set; }
 }
