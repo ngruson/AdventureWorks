@@ -1,23 +1,20 @@
 ﻿using AW.Services.SharedKernel.Interfaces;
 
-namespace AW.Services.ReferenceData.Core.Entities
+namespace AW.Services.ReferenceData.Core.Entities;
+
+public class StateProvince : IAggregateRoot
 {
-    public class StateProvince : IAggregateRoot
+    public StateProvince(CountryRegion countryRegion, string name)
     {
-        public StateProvince(CountryRegion countryRegion, string name)
-        {
-            CountryRegion = countryRegion;
-            Name = name;
-        }
-        private StateProvince() { }
-
-        public int Id { get; set; }
-        public string? StateProvinceCode { get; private set; }
-
-        public CountryRegion? CountryRegion { get; private set; }
-
-        public bool IsOnlyStateProvinceFlag { get; private set; }
-
-        public string? Name { get; private set; }
+        CountryRegion = countryRegion;
+        Name = name;
     }
+    private StateProvince() { }
+
+    public int Id { get; private set; }
+    public Guid ObjectId { get; private set; }
+    public string? StateProvinceCode { get; private set; }
+    public CountryRegion? CountryRegion { get; private set; }
+    public bool IsOnlyStateProvinceFlag { get; private set; }
+    public string? Name { get; private set; }
 }

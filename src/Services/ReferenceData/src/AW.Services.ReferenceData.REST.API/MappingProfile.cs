@@ -2,14 +2,13 @@
 using AW.SharedKernel.AutoMapper;
 using System.Reflection;
 
-namespace AW.Services.ReferenceData.REST.API
+namespace AW.Services.ReferenceData.REST.API;
+
+public class MappingProfile : BaseMappingProfile
 {
-    public class MappingProfile : BaseMappingProfile
+    public MappingProfile() : base()
     {
-        public MappingProfile() : base()
-        {
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-            ApplyMappingsFromAssembly(typeof(GetAddressTypesQuery).Assembly);
-        }
+        ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+        ApplyMappingsFromAssembly(typeof(GetAddressTypesQuery).Assembly);
     }
 }

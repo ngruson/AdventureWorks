@@ -3,7 +3,6 @@ using AW.SharedKernel.Api;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +24,8 @@ builder.Host.UseSerilog((host, serviceProvider, configuration) =>
 
 builder.Services
     .AddCustomMvc()
-    .AddVersioning()
+    //Breaking change - Enable this when every API is a minimal API
+    //.AddVersioning()
     .AddCustomAuthentication(builder.Configuration)
     .AddCustomSwagger()
     .AddCustomIntegrations(builder.Configuration)
@@ -43,14 +43,38 @@ app.Map(virtualPath, builder =>
     });
 
     builder.UseCors("default");
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, provider, "Reference Data API");
+    //Breaking change - Enable this when every API is a minimal API
+    //var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+    builder.UseSwaggerDocumentation(virtualPath, app.Configuration, "Reference Data API");
     builder.UseRouting();
     builder.UseAuthentication();
     builder.UseAuthorization();
     builder.UseEndpoints(endpoints =>
     {
-        endpoints.MapControllers();
+        endpoints.MapGroup("/addresstype")
+            .MapAddressTypeApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/contacttype")
+            .MapContactTypeApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/countryregion")
+            .MapCountryRegionApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/shipmethod")
+            .MapShipMethodApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/stateprovince")
+            .MapStateProvinceApis()
+            .WithOpenApi();
+
+        endpoints.MapGroup("/territory")
+            .MapTerritoryApis()
+            .WithOpenApi();
+
         endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
         {
             Predicate = _ => true,
@@ -76,3 +100,4 @@ finally
 {
     Log.CloseAndFlush();
 }
+

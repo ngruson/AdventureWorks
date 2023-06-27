@@ -1,62 +1,77 @@
+﻿using Ardalis.Result;
 using AutoFixture.Xunit2;
-using AW.Services.ReferenceData.Core.Exceptions;
 using AW.Services.ReferenceData.Core.Handlers.ContactType.GetContactTypes;
 using AW.Services.SharedKernel.Interfaces;
 using AW.SharedKernel.UnitTesting;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace AW.Services.ReferenceData.Core.UnitTests
+namespace AW.Services.ReferenceData.Core.UnitTests;
+
+public class GetContactTypesQueryUnitTests
 {
-    public class GetContactTypesQueryUnitTests
+    [Theory, AutoMapperData(typeof(MappingProfile))]
+    public async Task return_success_given_contacttypes_exist(
+        List<Entities.ContactType> contactTypes,
+        [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
+        GetContactTypesQueryHandler sut,
+        GetContactTypesQuery query
+    )
     {
-        [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_ContactTypesExists_ReturnContactTypes(
-            List<Entities.ContactType> contactTypes,
-            [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
-            GetContactTypesQueryHandler sut,
-            GetContactTypesQuery query
-        )
-        {
-            //Arrange            
-            contactTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(contactTypes);
+        //Arrange            
+        contactTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(contactTypes);
 
-            //Act
-            var result = await sut.Handle(query, CancellationToken.None);
+        //Act
+        var result = await sut.Handle(query, CancellationToken.None);
 
-            //Assert
-            result.Should().NotBeNull();
-            contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
-            
-            for (int i = 0; i < result.Count; i++)
-            {
-                result[i].Name.Should().Be(contactTypes[i].Name);
-            }
-        }
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(contactTypes, opt => opt
+            .Excluding(_ => _.Id)
+        );
 
-        [Theory, AutoMapperData(typeof(MappingProfile))]
-        public async Task Handle_NoContactTypesExists_ThrowContactTypesNotFoundException(
-            [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
-            GetContactTypesQueryHandler sut,
-            GetContactTypesQuery query
-        )
-        {
-            //Arrange
-            contactTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<Entities.ContactType>());
+        contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
+    }
 
-            //Act
-            Func<Task> func = async () => await sut.Handle(query, CancellationToken.None);
+    [Theory, AutoMapperData(typeof(MappingProfile))]
+    public async Task return_notfound_given_no_contacttypes_exist(
+        [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
+        GetContactTypesQueryHandler sut,
+        GetContactTypesQuery query
+    )
+    {
+        //Arrange
+        contactTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<Entities.ContactType>());
 
-            //Assert
-            await func.Should().ThrowAsync<ContactTypesNotFoundException>();
-            contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
-        }
+        //Act
+        var result = await sut.Handle(query, CancellationToken.None);
+
+        //Assert
+        result.Status.Should().Be(ResultStatus.NotFound);
+
+        contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
+    }
+
+    [Theory, AutoMapperData(typeof(MappingProfile))]
+    public async Task return_error_given_exception_was_thrown(
+        [Frozen] Mock<IRepository<Entities.ContactType>> contactTypeRepoMock,
+        GetContactTypesQueryHandler sut,
+        GetContactTypesQuery query
+    )
+    {
+        //Arrange
+        contactTypeRepoMock.Setup(x => x.ListAsync(It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+
+        //Act
+        var result = await sut.Handle(query, CancellationToken.None);
+
+        //Assert
+        result.Status.Should().Be(ResultStatus.Error);
+
+        contactTypeRepoMock.Verify(x => x.ListAsync(It.IsAny<CancellationToken>()));
     }
 }

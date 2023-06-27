@@ -35,5 +35,3 @@ jobs:
           dotnet test tests/AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests/AW.Services.ReferenceData.Infrastructure.EFCore.UnitTests.csproj --no-build --no-restore
           
           dotnet build src/AW.Services.ReferenceData.REST.API/AW.Services.ReferenceData.REST.API.csproj
-          dotnet build tests/AW.Services.ReferenceData.REST.API.UnitTests/AW.Services.ReferenceData.REST.API.UnitTests.csproj
-          dotnet test tests/AW.Services.ReferenceData.REST.API.UnitTests/AW.Services.ReferenceData.REST.API.UnitTests.csproj --no-build --no-restore

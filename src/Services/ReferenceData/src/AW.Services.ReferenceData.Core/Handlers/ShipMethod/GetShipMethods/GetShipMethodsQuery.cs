@@ -1,9 +1,8 @@
-﻿using MediatR;
-using System.Collections.Generic;
+﻿using Ardalis.Result;
+using MediatR;
 
-namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods
+namespace AW.Services.ReferenceData.Core.Handlers.ShipMethod.GetShipMethods;
+
+public class GetShipMethodsQuery : IRequest<Result<List<ShipMethod>>>
 {
-    public class GetShipMethodsQuery : IRequest<List<ShipMethod>>
-    {
-    }
 }
